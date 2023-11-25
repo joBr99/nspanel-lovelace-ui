@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.11 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.12 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -25,8 +25,7 @@ durchführen und FlashNextion wiederholen.
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
 *****************************************************************************************************************************
-
-Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment' und 'moment-parseformat' eingetragen sein
+Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment', 'moment-parseformat' und 'dayjs' eingetragen sein
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#8--einstellungen-in-js-adapter-instanz
 *****************************************************************************************************************************
 
@@ -58,17 +57,19 @@ ReleaseNotes:
         - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
         - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
         - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
-        - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism), some Minor Fixes
-	- 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
-        - 21.11.2023 - v4.3.3.10 Code optimization
+        - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism)
+        - 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
         - 24.11.2023 - v4.3.3.11 Add autoCreateALias to PageQR
+        - 24.11.2023 - v4.3.3.12 Separation of page creation and page updates in cardPower
+        - 24.11.2023 - v4.3.3.12 Add alwaysOnDisplay to cardPower - Leave display on if the alwaysOnDisplay parameter is "true"
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
-***********************************************************************************************************
-* Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
-***********************************************************************************************************
+***************************************************************************************************************
+* DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
+* EN: In order for the script to create the aliases, “setObect” must be set in the JavaScript instance!       *
+***************************************************************************************************************
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
@@ -87,8 +88,8 @@ Mögliche Seiten-Ansichten:
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
-    cardChart Page      - Balken-Diagramme aus History, SQL ider InfluxDB
-    cardLChart Page     - Linien-Diagramme aus History, SQL ider InfluxDB
+    cardChart Page      - Balken-Diagramme aus History, SQL oder InfluxDB
+    cardLChart Page     - Linien-Diagramme aus History, SQL oder InfluxDB
 
     Vollständige Liste zur Einrichtung unter:
     https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Card-Definitionen-(Seiten)
@@ -160,56 +161,68 @@ Upgrades in Konsole:
 
 /******************************* Begin CONFIG Parameter *******************************/
 
-// liefert bei true detailliertere Meldundgen im Log.
+// DE: liefert bei true detailliertere Meldundgen im Log.
+// EN: if true, provides more detailed messages in the log.
 let Debug: boolean = false;
 
 
 /***** 1. Tasmota-Config *****/
 
-    // Anpassen an die Verzeichnisse der MQTT-Adapter-Instanz
+    // DE: Anpassen an die Verzeichnisse der MQTT-Adapter-Instanz
+    // EN: Adapt to the MQTT adapter instance directories
     const NSPanelReceiveTopic: string = 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT';
     const NSPanelSendTopic: string = 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend';
 
-    // nur ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
+    // DE: nur ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
+    // EN: only change if the user was renamed in Tasmota before compiling (default Tasmota: admin)
     const tasmota_web_admin_user: string = 'admin';
     
-    // setzten, falls "Web Admin Password" in Tasmota vergeben
+    // DE: setzten, falls "Web Admin Password" in Tasmota vergeben
+    // EN set if "Web Admin Password" is assigned in Tasmota
     const tasmota_web_admin_password: string = '';
 
-    // Setzen der bevorzugten Tasmota32-Version (für Updates)
+    // DE: Setzen der bevorzugten Tasmota32-Version (für Updates)
+    // EN: Set preferred Tasmota32 version (for updates)
     const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
-        // Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
-        // 'tasmota32-nspanel.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
+        // DE: Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
+        // EN: Other versions can also be used, such as:
+        // 'tasmota32-nspanel.bin' or 'tasmota32.bin' or 'tasmota32-DE.bin' or etc.
 
 
-/***** 2. Verzeichnisse in 0_userdata.0... *****/
+/***** 2. Directories in 0_userdata.0... *****/
 
-    // Anpassen an das jeweilige NSPanel
+    // DE: Anpassen an das jeweilige NSPanel
+    // EN: Adapt to the respective NSPanel
     const NSPanel_Path = '0_userdata.0.NSPanel.1.';
 
-    // Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm/cardUnlock)
+    // DE: Pfad für gemeinsame Nutzung durch mehrere Panels (bei Nutzung der cardAlarm/cardUnlock)
+    // EN: Path for sharing between multiple panels (when using cardAlarm/cardUnlock)
     const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
 
-/***** 3. Wetteradapter Config *****/
+/***** 3. Weather adapter Config *****/
 
-    // Mögliche Wetteradapter 'accuweather.0.' oder 'daswetter.0.'
+    // DE: Mögliche Wetteradapter 'accuweather.0.' oder 'daswetter.0.'
+    // EN: Possible weather adapters 'accuweather.0.' or 'the weather.0.'
     const weatherAdapterInstance: string = 'accuweather.0.';
     
-    // Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
+    // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
+    // EN: Possible values: 'Min', 'Max' or 'MinMax' in the screensaver
     const weatherScreensaverTempMinMax: string = 'MinMax';
 
-    // Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
+    // DE: Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
+    // EN: This alias is automatically created for the selected weather and can be adjusted accordingly
     const weatherEntityPath: string = 'alias.0.Wetter';
 
 
-/***** 4. Farbkonstanten zur Nutzung in den PageItems *****/
+/***** 4. Color constants for use in the PageItems *****/
 
-    // Bei Bedarf können weitere Farben definiert werden
-    const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blau-Off - Original Entity Off
-    const HMIOn:            RGB = { red:   3, green: 169, blue: 244 };     // Blau-On
+    // DE: Bei Bedarf können weitere Farben definiert werden
+    // EN: If necessary, additional colors can be defined
+    const HMIOff:           RGB = { red:  68, green: 115, blue: 158 };     // Blue-Off - Original Entity Off
+    const HMIOn:            RGB = { red:   3, green: 169, blue: 244 };     // Blue-On
     const HMIDark:          RGB = { red:  29, green:  29, blue:  29 };     // Original Background Color
-    const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - schönere Farbübergänge
+    const Off:              RGB = { red: 253, green: 128, blue:   0 };     // Orange-Off - nicer color transitions
     const On:               RGB = { red: 253, green: 216, blue:  53 };
     const MSRed:            RGB = { red: 251, green: 105, blue:  98 };
     const MSYellow:         RGB = { red: 255, green: 235, blue: 156 };
@@ -290,33 +303,39 @@ let Debug: boolean = false;
     const swWindy:          RGB = { red: 150, green: 150, blue: 150};
 
 
-/***** 5. Script - Parameter *****/
+/***** 5. Script - Parameters *****/
  
-    // Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.
+    // DE: Für diese Option muss der Haken in setObjects in deiner javascript.X. Instanz gesetzt sein.
+    // EN: This option requires the check mark in setObjects in your javascript.X. instance must be set.
     const autoCreateAlias = true;
 
-    //Verzeichnis für Auto-Aliase (wird per Default aus dem NSPanel-Verzeichnis gebildet und muss nicht verändert werden)
+    // DE: Verzeichnis für Auto-Aliase (wird per Default aus dem NSPanel-Verzeichnis gebildet und muss nicht verändert werden)
+    // EN: Directory for auto aliases (is created by default from the NSPanel directory and does not need to be changed)
     const AliasPath: string = 'alias.0.' + NSPanel_Path.substring(13, NSPanel_Path.length);
 
-    // Default-Farbe für Off-Zustände
+    // DE: Default-Farbe für Off-Zustände
+    // EN: Default color for off states
     const defaultOffColorParam: any = Off;
     
-    // Default-Farbe für On-Zustände
+    // DE: Default-Farbe für On-Zustände
+    // EN: Default color for on states
     const defaultOnColorParam: any = On;
 
     const defaultColorParam: any = Off;
     
-    // Default-Hintergrundfarbe HMIDark oder Black
+    // DE: Default-Hintergrundfarbe HMIDark oder Black
+    // EN: Default background color HMIDark or Black
     const defaultBackgroundColorParam: any = HMIDark;
 
 /******************************** End CONFIG Parameter ********************************/
 
 //-- Anfang für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich ----------------
-  //-- siehe https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-
-
+//-- Start for your own pages -- some self-defined aliases required ----------------
+  
+	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
 
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
+//-- END for your own pages -- some self-defined aliases required ------------------------
 
 
 /***********************************************************************************************
@@ -324,11 +343,24 @@ let Debug: boolean = false;
  **  https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Service-Men%C3%BC             **
  ***********************************************************************************************/
 
-/* Wenn das Service Menü abgesichert werden soll, kann eine cardUnlock vorgeschaltet werden. 
+/* DE: German
+   Wenn das Service Menü abgesichert werden soll, kann eine cardUnlock vorgeschaltet werden. 
    Für diesen Fall ist folgende Vorgehensweise erforderlich:
    - cardUnlock Seite "Unlock_Service" in der Config unter pages auskommentieren ("//" entfernen)
    - Servicemenü aus pages "NSPanel_Service" unter pages kommentieren ("//" hinzufügen)
 */ 
+
+/*************************************************************************************************
+  ** Service pages with auto alias (subsequent pages are automatically created with alias)      **
+  ** https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Service-Men%C3%BC               **
+  ************************************************************************************************/
+
+/* EN: English
+    If the service menu needs to be secured, a cardUnlock can be installed upstream.
+    In this case, the following procedure is required:
+    - comment out cardUnlock page "Unlock_Service" in the config under pages (remove "//")
+    - Comment service menu from pages "NSPanel_Service" under pages (add "//")
+*/
 
 //Level 0 (if service pages are used with cardUnlock)
 let Unlock_Service = <PageUnlock>
@@ -699,7 +731,7 @@ let NSPanel_Service_SubPage = <PageEntities>
                     ]
                 };
 
-// Ende der Service Pages
+// End of Service Pages
 
 /***********************************************************************
  **                                                                   **
@@ -743,7 +775,11 @@ export const config = <Config> {
                     NSPanel_FirmwareNextion,            //Auto-Alias Service Page
     ],
 
-//---- Anfang     Screensaver Einstellungen / Screensaver settings ---------------------
+/***********************************************************************
+ **                                                                   **
+ **                    Screensaver Configuration                      **
+ **                                                                   **
+ ***********************************************************************/
     leftScreensaverEntity:
         [
              // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
@@ -849,27 +885,43 @@ export const config = <Config> {
             ScreensaverEntityOnColor: On, 
             ScreensaverEntityOffColor: HMIOff 
         },
-// ------ Ende der Screensaver Einstellungen --------------------
+// ------ DE: Ende der Screensaver Einstellungen --------------------
+// ------ EN: End of screensaver settings ---------------------------
 
 
-
-//-------Anfang     Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
+    // DE: Konfiguration des linken Schalters des NSPanels
+    // EN: Configuration of the left switch of the NSPanel
     button1: {
-        mode: null,     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
-        page: null,     // Zielpage - Verwendet wenn mode = page (bisher button1Page)
-        entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
-        setValue: null  // Zielwert - Verwendet wenn mode = set
+        // DE: Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
+        // EN: Possible values if Rule2 defined: 'page', 'toggle', 'set' - If not defined --> mode: null
+        mode: null,
+        // DE: Zielpage - Verwendet wenn mode = page
+        // EN: Target page - Used if mode = page
+        page: null,
+        // DE: Zielentity - Verwendet wenn mode = set oder toggle
+        // EN: Target entity - Used if mode = set or toggle
+        entity: null,
+        // DE: Zielwert - Verwendet wenn mode = set
+        // EN: Target value - Used if mode = set
+        setValue: null
     },
+
+    // DE: Konfiguration des rechten Schalters des NSPanels
+    // EN: Configuration of the right switch of the NSPanel
     button2: {
-        mode: null,     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
-        page: null,     // Zielpage - Verwendet wenn mode = page (bisher button2Page)
-        entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
-        setValue: null  // Zielwert - Verwendet wenn mode = set
+        mode: null,
+        page: null,
+        entity: null,
+        setValue: null
     },
-//--------- Ende   Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
 
 
-    // WICHTIG !! Parameter nicht ändern  WICHTIG!! 
+    // DE: WICHTIG !! Parameter nicht ändern  WICHTIG!!
+    // EN: IMPORTANT !! Do not change parameters IMPORTANT!!
     panelRecvTopic: NSPanelReceiveTopic,
     panelSendTopic: NSPanelSendTopic,
     weatherEntity: weatherEntityPath,
@@ -879,9 +931,10 @@ export const config = <Config> {
     defaultBackgroundColor: defaultBackgroundColorParam,
 };
 
-// _________________________________ Ab hier keine Konfiguration mehr _____________________________________
+// _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
+// _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.11';
+const scriptVersion: string = 'v4.3.3.12';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -892,6 +945,8 @@ const Icons = new IconsSelector();
 let timeoutSlider: any;
 let vwIconColor = [];
 let weatherForecast: boolean;
+let pageCounter: number = 0;
+let alwaysOn: boolean = false;
 
 const request = require('request');
 const dayjs = require('dayjs');
@@ -953,12 +1008,12 @@ async function CheckConfigParameters() {
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'daswetter') {
             if (existsObject(weatherAdapterInstance + 'NextHours.Location_1.Day_1.current.symbol_value') == false)  {
-                console.error('Wetter-Adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
+                console.error('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
             }
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'accuweather') {
             if (existsObject(weatherAdapterInstance + 'Current.WeatherIcon') == false)  {
-                console.error('Wetter-Adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
+                console.error('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
             }
         }
 
@@ -1045,10 +1100,10 @@ async function CheckDebugMode() {
 
         if(getState(NSPanel_Path + 'Config.ScripgtDebugStatus').val){
             Debug = true;
-            console.log('Debugmodus aktiviert');
+            console.log('Debug mode activated');
         }else{
             Debug = false;
-            console.log('Debugmodus deaktiviert');
+            console.log('Debug mode disabled');
         }
 
     } catch (err) {
@@ -1335,7 +1390,7 @@ async function Init_bExit_Page_Change() {
 }
 Init_bExit_Page_Change();
 
-//Dimmode über Trigger über BWM
+//Dim mode via trigger via motion detector
 async function Init_Dimmode_Trigger() {
     try {
         if (existsState(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode') == false ) { 
@@ -1725,7 +1780,7 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
 async function InitWeatherForecast() {
     try {
         if (isSetOptionActive) {
-            //----Möglichkeit, im Screensaver zwischen Accu-Weather Forecast oder selbstdefinierten Werten zu wählen---------------------------------
+            //----Ability to choose between Accu-Weather Forecast or self-defined values in the screensaver---------------------------------
             if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false ||
                 existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false ||
                 existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
@@ -1755,7 +1810,7 @@ InitWeatherForecast();
 async function InitDimmode() {
     try {
         if (isSetOptionActive) {
-            // Screensaver nachts auf dunkel ("brightnessNight: z.B. 2") oder aus ("brightnessNight:0")
+            // Screensaver on dark at night ("brightnessNight: e.g. 2") or off ("brightnessNight:0")
             if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
                 await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
                 await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.State>{ val: 8, ack: true });
@@ -1824,22 +1879,22 @@ InitDimmode();
 
 //--------------------End Dimmode
 
-// Datenpunkte für Nachricht an Screensaver
+// Data points for message to screensaver
 const screensaverNotifyHeading = NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading';
 const screensaverNotifyText = NSPanel_Path + 'ScreensaverInfo.popupNotifyText';
 
-// Datenpunkte für Nachricht popupNotify Page
+// Data points for message popupNotify Page
 const popupNotifyHeading = NSPanel_Path + 'popupNotify.popupNotifyHeading';
 const popupNotifyHeadingColor = NSPanel_Path + 'popupNotify.popupNotifyHeadingColor';
 const popupNotifyText = NSPanel_Path + 'popupNotify.popupNotifyText';
 const popupNotifyTextColor = NSPanel_Path + 'popupNotify.popupNotifyTextColor';
-const popupNotifyInternalName = NSPanel_Path + 'popupNotify.popupNotifyInternalName'; // Wird mit Button-Action zurückgeschrieben
+const popupNotifyInternalName = NSPanel_Path + 'popupNotify.popupNotifyInternalName'; // Written back with button action
 const popupNotifyButton1TextColor = NSPanel_Path + 'popupNotify.popupNotifyButton1TextColor';
 const popupNotifyButton1Text = NSPanel_Path + 'popupNotify.popupNotifyButton1Text';
 const popupNotifyButton2TextColor = NSPanel_Path + 'popupNotify.popupNotifyButton2TextColor';
 const popupNotifyButton2Text = NSPanel_Path + 'popupNotify.popupNotifyButton2Text';
-const popupNotifySleepTimeout = NSPanel_Path + 'popupNotify.popupNotifySleepTimeout'; // in sek. / wenn 0, dann bleibt die Nachricht stehen
-const popupNotifyAction = NSPanel_Path + 'popupNotify.popupNotifyAction'; // Antwort aus dem Panel true/false
+const popupNotifySleepTimeout = NSPanel_Path + 'popupNotify.popupNotifySleepTimeout'; // in sec. / if 0, then the message remains
+const popupNotifyAction = NSPanel_Path + 'popupNotify.popupNotifyAction'; // Response from the panel true/false
 const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';
 const popupNotifyFontIdText = NSPanel_Path + 'popupNotify.popupNotifyFontIdText';  // 1 - 5
 const popupNotifyIcon = NSPanel_Path + 'popupNotify.popupNotifyIcon';  // 1 - 5
@@ -1887,7 +1942,7 @@ async function InitPopupNotify() {
             }
         });
 
-        // popupNotify - Notification an separate Seite
+        // popupNotify - Notification to a separate page
         //on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
         on({ id: [].concat([popupNotifyText]), change: 'any' }, async() => {
 
@@ -1933,11 +1988,9 @@ InitPopupNotify();
 let subscriptions: any = {};
 let screensaverEnabled: boolean = false;
 let pageId = 0;
-
-// Neu für Subpages
 let activePage = undefined;
 
-//Uhrzeit an NSPanel senden
+//Send time to NSPanel
 let scheduleSendTime = schedule('* * * * *', () => {
     try {
         SendTime();
@@ -1947,10 +2000,10 @@ let scheduleSendTime = schedule('* * * * *', () => {
     }
 });
 
-//Wechsel zwischen Screensaver Entities und WeatherForecast
+//Switch between Screensaver Entities and WeatherForecast
 let scheduleSwichScreensaver = schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
     try {
-        //WeatherForecast true/false Umschaltung verzögert
+        //WeatherForecast true/false Switchover delayed
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
@@ -1987,7 +2040,7 @@ function InitHWButton2Color() {
 }
 InitHWButton2Color();
 
-//Wechsel zwischen Datenpunkten und Weather-Forecast im Screensaver
+//Switch between data points and weather forecast in the screensaver
 on({id: [].concat([NSPanel_Path + "ScreensaverInfo.weatherForecast"]), change: "ne"}, async function (obj) {
     try {    
         weatherForecast = obj.state.val;
@@ -2011,19 +2064,19 @@ let scheduleSendDate = schedule('0 * * * *', () => {
     SendDate();
 });
 
-// 3:30 Uhr Startup durchführen und aktuelle TFT-Version empfangen
+// 3:30 a.m. Perform startup and receive current TFT version
 let scheduleStartup = schedule({ hour: 3, minute: 30 }, async () => {
     await setStateAsync(config.panelSendTopic, 'pageType~pageStartup');
 });
 
-// Updates vergleichen aktuell alle 12 Stunden
+// Updates currently compare every 12 hours
 let scheduleCheckUpdates = schedule('{"time":{"start":"00:00","end":"23:59","mode":"hours","interval":12},"period":{"days":1}}', () => {
     get_tasmota_status0();
     get_panel_update_data();
     check_updates();
 });
 
-// Mit Start auf Updates checken
+// Check for updates with Start
 get_locales();
 get_locales_servicemenu();
 setState(config.panelSendTopic, 'pageType~pageStartup');
@@ -2132,13 +2185,13 @@ async function check_updates() {
 
                         if (Debug) console.log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt');
 
-                        // Tasmota Upgrade durchführen
+                        // Perform Tasmota upgrade
                         update_tasmota_firmware();
-                        // Aktuelle Tasmota Version = Online Tasmota Version
+                        // Current Tasmota version = online Tasmota version
 
                         await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val, ack: true });
                     } else {
-                        // Auf Tasmota-Updates hinweisen
+                        // Point out Tasmota updates
                         if (Debug) console.log('Tasmota-Firmware => Automatische Updates aus, manuelles Update nötig');
 
                         InternalName = 'TasmotaFirmwareUpdate';
@@ -2148,7 +2201,7 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Tasmota-Version auf NSPanel aktuell');
+                if (Debug) console.log('Already the latest Tasmota version on NSPanel');
             }
         }
 
@@ -2158,18 +2211,18 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) console.log('Auto-Updates eingeschaltet - Update Berry-Driver wird durchgeführt');
+                        if (Debug) console.log('Auto-updates switched on - Berry driver update is carried out');
 
                         // Tasmota Berry-Driver Update durchführen
                         update_berry_driver_version();
                         // Aktuelle Berry-Driver Version = Online Berry-Driver Version
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Berry_Driver.onlineVersion').val, ack: true });
 
-                        if (Debug) console.log('Berry-Driver automatisch aktualisiert');
+                        if (Debug) console.log('Berry driver updated automatically');
 
                     } else {
                         //Auf BerryDriver-Update hinweisen
-                        if (Debug) console.log('Berry-Driver => Automatische Updates aus, manuelles Update nötig');
+                        if (Debug) console.log('Berry Driver => Automatic updates off, manual update required');
 
                         InternalName = 'BerryDriverUpdate';
                         Headline = 'Berry-Driver Update';
@@ -2178,7 +2231,7 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Berry-Driver auf NSPanel aktuell');
+                if (Debug) console.log('Already the latest Berry driver on NSPanel');
             }
         }
 
@@ -2188,18 +2241,18 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) console.log('Auto-Updates eingeschaltet - Update TFT-Firmware wird durchgeführt');
+                        if (Debug) console.log('Auto-updates switched on - update TFT firmware is carried out');
 
                         // TFT-Firmware Update durchführen
                         update_tft_firmware();
                         // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
                         await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
 
-                        if (Debug) console.log('Display_Firmware automatisch aktualisiert');
+                        if (Debug) console.log('Display firmware updated automatically');
 
                     } else {
                         // Auf TFT-Firmware hinweisen
-                        if (Debug) console.log('Display-Firmware => Automatische Updates aus, manuelles Update nötig');
+                        if (Debug) console.log('Display firmware => Automatic updates off, manual update required');
 
                         InternalName = 'TFTFirmwareUpdate';
                         Headline = 'TFT-Firmware Update';
@@ -2208,7 +2261,7 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Display_Firmware auf NSPanel aktuell');
+                if (Debug) console.log('Already the latest display firmware on NSPanel');
             }
         }
         if (Update) {
@@ -2234,7 +2287,7 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
         const val = obj.state ? obj.state.val : false;
         if (!val) {
             if (Debug) {
-                console.log('Es wurde Button1 gedrückt');
+                console.log('Button1 was pressed');
             }
         } else if (val) {
             
@@ -2249,7 +2302,7 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
                 }
             }
             if (Debug) {
-                console.log('Es wurde Button2 gedrückt');
+                console.log('Button2 was pressed');
             }
         }
     } catch (err) {
@@ -2311,9 +2364,9 @@ function get_online_tasmota_firmware_version() {
         }, async (error, response, result) => {
             try {
                 if (isSetOptionActive) {
-                    const Tasmota_JSON = JSON.parse(result);                       // JSON Resultat in Variable Schreiben
-                    const TasmotaTagName = Tasmota_JSON.tag_name;                  // JSON nach "tag_name" filtern und in Variable schreiben
-                    const TasmotaVersionOnline = TasmotaTagName.replace(/v/i, ''); // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
+                    const Tasmota_JSON = JSON.parse(result);                       // Write JSON result to variable
+                    const TasmotaTagName = Tasmota_JSON.tag_name;                  // Filter JSON by "tag_name" and write to variable
+                    const TasmotaVersionOnline = TasmotaTagName.replace(/v/i, ''); // Filter unnecessary "v" from variable and write to release variable
 
                     await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     setObject(AliasPath + 'Tasmota_Firmware.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
@@ -2497,9 +2550,9 @@ function check_version_tft_firmware() {
         }, async (error, response, result) => {
             if (result) {
                 try {
-                    let NSPanel_JSON = JSON.parse(result);                      // JSON Resultat in Variable Schreiben
+                    let NSPanel_JSON = JSON.parse(result);                      // Write JSON result to variable
                     let NSPanelTagName = NSPanel_JSON.tag_name;                 // created_at; published_at; name ; draft ; prerelease
-                    let NSPanelVersion = NSPanelTagName.replace(/v/i, '');      // Aus Variable überflüssiges "v" filtern und in Release-Variable schreiben
+                    let NSPanelVersion = NSPanelTagName.replace(/v/i, '');      // Filter unnecessary "v" from variable and write to release variable
 
                     await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
@@ -3911,7 +3964,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                 }
             }
 
-            //Attribute hinzufügen, wenn im Alias definiert
+            //Add attributes if defined in alias
             let i_list = Array.prototype.slice.apply($('[state.id="' + id + '.*"]'));
             let bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
             
@@ -4225,16 +4278,16 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
                     + name + '~'                                        // Heading
                     + GetNavigationString(pageId) + '~'                 // Page Navigation
                     + id + '~'                                          // internalNameEntity
-                    + currentTemp + temperatureUnit+ '~'                // Ist-Temperatur (String)
-                    + destTemp + '~'                                    // Soll-Temperatur (numerisch ohne Komma)
+                    + currentTemp + temperatureUnit+ '~'                // Actual temperature (string)
+                    + destTemp + '~'                                    // Target temperature (numeric without comma)
                     + statusStr + '~'                                   // Mode
-                    + minTemp + '~'                                     // Thermostat Min-Temperatur
-                    + maxTemp + '~'                                     // Thermostat Max-Temperatur
-                    + stepTemp + '~'                                    // Schritte für Soll (5°C)
+                    + minTemp + '~'                                     // Thermostat min temperature
+                    + maxTemp + '~'                                     // Thermostat max temperatur
+                    + stepTemp + '~'                                    // Steps for Target (5°C)
                     + icon_res                                      	// Icons Status
-                    + findLocale('thermostat', 'Currently') + '~'       // Bezeichner vor Aktueller Raumtemperatur
+                    + findLocale('thermostat', 'Currently') + '~'       // Identifier in front of Current room temperature
                     + findLocale('thermostat', 'State') + '~~'          // Bezeichner vor State
-                    + temperatureUnit + '~'                      	// iconTemperature dstTempTwoTempMode
+                    + temperatureUnit + '~'                      	    // iconTemperature dstTempTwoTempMode
                     + destTemp2 + '~'                                   // dstTempTwoTempMode --> Wenn Wert, dann 2 Temp
                     + thermoPopup                                       // PopUp
 
@@ -4441,7 +4494,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         let v1Adapter = vInstance.split('.');
         let v2Adapter = v1Adapter[0];
         
-        // Etwas magic um die ID des Alias zu ändern, da Speaker keine Property sondern getrennte Objekte sind
+        // Some magic to change the ID of the alias, since speakers are not a property but separate objects
         if(v2Adapter == 'squeezeboxrpc') {
             if(getObject(id).type != 'channel') {
                 id = id + '.' + page.items[0].mediaDevice;
@@ -4472,7 +4525,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let author = getState(id + '.ARTIST').val;
             let shuffle = getState(id + '.SHUFFLE').val;
 
-            //Neue Adapter/Player
+            //New Adapter/Player
             let media_icon = Icons.GetIcon('playlist-music');
 
             //Spotify-Premium
@@ -4872,7 +4925,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
                 if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[4] !== '') {
                     arm1 = page.items[0].actionStringArray[4];
                 } else {
-                    arm1 = findLocale('alarm_control_panel', 'disarm');      //'Deaktivieren'; //arm1*~*
+                    arm1 = findLocale('alarm_control_panel', 'disarm');     //'Deactivate'; //arm1*~*
                 } 
                 arm1ActionName = 'D1';                                      //arm1ActionName*~*
                 arm2 = '';                                                  //arm2*~*
@@ -5011,7 +5064,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
             createAutoUnlockAlias(id, dpPath)            
         }
 
-        let unlock1 = findLocale('lock', 'UNLOCK');                                    //unlock1*~*
+        let unlock1 = findLocale('lock', 'UNLOCK');                     //unlock1*~*
         let unlock1ActionName = 'U1';                                   //unlock1ActionName*~*
 
         let iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
@@ -5060,7 +5113,7 @@ async function createAutoQRAlias(id:string, dpPath:string) {
                     await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', { type: 'string' });
                     setObject(id, { _id: id, type: 'channel', common: { role: 'info', name: 'QR Page' }, native: {} });
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
-                    console.warn('Daten für die QR Page unter ' + dpPath + 'Daten anpassen. Hinweise im Wiki beachten.');
+                    console.warn('Adjust data for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.');
                 }
             }
         }
@@ -5068,8 +5121,6 @@ async function createAutoQRAlias(id:string, dpPath:string) {
         console.warn('error at function createAutoQRkAlias: ' + err.message);
     } 
 }
-
-
 
 function GenerateQRPage(page: PageQR): Payload[] {
     try {
@@ -5104,10 +5155,10 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let optionalValue2: any;
         for (let w = 0; w < tempstr.length - 1; w++) {
             if (tempstr[w].substring(5, 6) == 'T') {
-                tempstr[w].slice(7) == 'undefined' ? console.warn('Daten (T) für die QR Page unter ' + dpPath + 'Daten anpassen. Hinweise im Wiki beachten.') : '' ;
+                tempstr[w].slice(7) == 'undefined' ? console.warn('Adjust data (T) for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.') : '' ;
             }            
             if (tempstr[w].substring(0, 1) == 'S') {
-                tempstr[w].slice(2) == 'undefined' ? console.warn('Daten (S) für die QR Page unter ' + dpPath + 'Daten anpassen. Hinweise im Wiki beachten.') : optionalValue1 = tempstr[w].slice(2);
+                tempstr[w].slice(2) == 'undefined' ? console.warn('Adjust data (S) for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.') : optionalValue1 = tempstr[w].slice(2);
             }
             if (tempstr[w].substring(0, 1) == 'P') {
                 optionalValue2 = tempstr[w].slice(2);
@@ -5178,19 +5229,18 @@ function subscribePowerSubscriptions(id: string): void {
     on({id: id + '.ACTUAL', change: "ne"}, async function () {
         (function () { if (timeoutPower) { clearTimeout(timeoutPower); timeoutPower = null; } })();
         timeoutPower = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage);
-            }
+            GeneratePage(activePage);
         },25)
     });
 } 
 
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
+
         let obj:object;
         let demoMode = false;        
         if (page.items[0].id == undefined){
-            console.log("Kein PageItem definiert - cardPower Demo-Modus aktiv");
+            console.log("No PageItem defined - cardPower demo mode active");
             demoMode = true;
         }
 
@@ -5198,21 +5248,42 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         if (Debug) {
             console.log('GeneratePowerPage PageItem.id = ' + page.items[0].id);
         }
-        
+
         let heading = 'cardPower Example';
         if (demoMode != true) {
             let id = page.items[0].id
             unsubscribePowerSubscriptions();
-            subscribePowerSubscriptions(id);
 
             let o = getObject(id);
             heading = page.heading !== undefined ? page.heading : o.common.name.de;
 
-             obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
+            obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
         }
         
         let out_msgs: Array<Payload> = [];
-        out_msgs.push({ payload: 'pageType~cardPower' });
+
+        // Leave the display on if the alwaysOnDisplay parameter is specified (true)
+        if (page.type == 'cardPower' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
+            out_msgs.push({ payload: 'pageType~cardPower' });
+            if (page.items[0].alwaysOnDisplay != undefined) {
+                if (page.items[0].alwaysOnDisplay) {
+                    pageCounter = 1;
+                    if (alwaysOn == false) {
+                        alwaysOn = true;
+                        SendToPanel({ payload: 'timeout~0' });
+                        subscribePowerSubscriptions(page.items[0].id);
+                    }
+                }
+            }
+        } else if (page.type == 'cardPower' && pageCounter == 1) {
+            subscribePowerSubscriptions(page.items[0].id);
+        } else {
+            out_msgs.push({ payload: 'pageType~cardPower' });
+        }
+
+        if (Debug) {
+            console.log('GeneratePowerPage PageItem.id = ' + page.items[0].id);
+        }
 
         //Demo Data if no pageItem present
         let array_icon_color = [White, MSGreen, MSYellow, MSGreen, MSYellow, MSGreen, MSRed];
@@ -5220,7 +5291,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let array_powerspeed = ['', '10', '-20', '-40', '-10', '-10', '-50'];
         let array_powerstate = ['', '0,5 kW', '0,9 kW', '2,8 kW', '0,2 kW', '0,1 kW', '4,6 kW'];
 
-        let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10];
+        let arrayColorScale = [colorScale0, colorScale1, colorScale2, colorScale3, colorScale4, colorScale5, colorScale6, colorScale7, colorScale8, colorScale9, colorScale10, White];
 
         if (!demoMode) {
             for (let obji = 1; obji < 7; obji++) {
@@ -5366,6 +5437,16 @@ function triggerButton(id: string): boolean{
 
 function HandleButtonEvent(words: any): void {
     try {
+
+        pageCounter = 0;
+
+        // Turn off the display if the alwaysOnDisplay parameter was specified
+        if (alwaysOn == true) {
+            unsubscribePowerSubscriptions();
+            alwaysOn = false;
+            SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
+        }
+
         let tempid = words[2].split('?');
         let id = tempid[0];
         let buttonAction = words[3];
@@ -5395,7 +5476,7 @@ function HandleButtonEvent(words: any): void {
 
         switch (buttonAction) {
             case 'bUp':
-                if (pageId < 0) { // Prüfen, ob button1page oder button2page
+                if (pageId < 0) { // Check whether button1page or button2page
                     pageId = 0;
                     UnsubscribeWatcher();
                     GeneratePage(config.pages[pageId]);
@@ -5558,7 +5639,7 @@ function HandleButtonEvent(words: any): void {
                             break;
                         case 'socket':
                         case 'light':
-	                        // Änderung für Monobutton	
+	                        // Change for monobutton	
                             let pageItem = findPageItem(id);	
 							if(pageItem.monobutton != undefined && pageItem.monobutton == true){	
 								triggerButton(id + ".SET");
@@ -5575,7 +5656,7 @@ function HandleButtonEvent(words: any): void {
                             break;
                         case 'rgb':
                         case 'rgbSingle':
-                        case 'hue': // Armilar
+                        case 'hue':
                             toggleState(id + '.ON_ACTUAL');
                         case 'media':
                             if (tempid[1] == 'repeat') {
@@ -5651,7 +5732,6 @@ function HandleButtonEvent(words: any): void {
                     } else {
                         setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
                     }
-                //    setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
                 }, 250);
                 break;
             case 'tiltOpen':
@@ -5673,7 +5753,6 @@ function HandleButtonEvent(words: any): void {
                     } else {
                         setIfExists(id + '.TILT_SET', parseInt(words[4])) ? true : setIfExists(id + '.TILT_ACTUAL', parseInt(words[4]));
                     }
-                    //    setIfExists(id + '.TILT_SET', parseInt(words[4])) ? true : setIfExists(id + '.TILT_ACTUAL', parseInt(words[4]));
                 }, 250);
                 break;
             case 'brightnessSlider':
@@ -5741,14 +5820,14 @@ function HandleButtonEvent(words: any): void {
                     case 'rgbSingle':
                         let pageItem = findPageItem(id);
                         if (pageItem.colormode == "xy") {
-                            //Für z.B. Deconz XY
+                            //For e.g. Deconz XY
                             setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
                             if (Debug) {
                                 console.log('HandleButtonEvent colorWeel colorMode=xy -> rgb_to_cie Wert: ' + rgb_to_cie(rgb.red, rgb.green, rgb.blue));
                             }
                         }
                         else {
-                            //Für RGB
+                            //For RGB
                             setIfExists(id + ".RGB", ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue));
                         }
                         break;
@@ -5989,7 +6068,7 @@ function HandleButtonEvent(words: any): void {
                 } else {
                     let HVACMode = getState(words[2] + '.MODE').val;
 
-                    // Event ist an ein eigenes Objekt gebunden
+                    // Event is bound to its own object
                     if(existsObject(words[2] + '.' + words[4])) {
                         switch(words[4]) {
                             case 'SWING':
@@ -5999,13 +6078,13 @@ function HandleButtonEvent(words: any): void {
                                     setIfExists(words[2] + '.' + 'SWING', 0);
                                 }
                                 break;
-                            default: // Power und Eco koennen einfach getoggelt werden
+                            default: // Power and Eco can easily be toggled
                                 setIfExists(words[2] + '.' + words[4], !getState(words[2] + '.' + words[4]).val);
                                 break;
                         }
                     }
 
-                    // Event ist ein Modus der Liste (Moduswechsel)
+                    // Event is a mode of the list (mode change)
                     let HVACModeList = getObject(words[2] + '.MODE').common.states;
                     for(const statekey in HVACModeList) {
                         if(HVACModeList[statekey] == words[4]) {
@@ -6050,7 +6129,7 @@ function HandleButtonEvent(words: any): void {
             case 'mode-preset_modes':
                 setIfExists(id + '.MODE', parseInt(words[4]));
                 break; 
-            case 'A1': // Alarm-Page Alarm 1 aktivieren
+            case 'A1': // Alarm page - activate alarm 1
                 if (words[4] != '') {
                     setIfExists(id + '.TYPE', 'A1');
                     setIfExists(id + '.PIN', words[4]);
@@ -6061,7 +6140,7 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage);
                 },250);
                 break;
-            case 'A2': // Alarm-Page Alarm 2 aktivieren
+            case 'A2': // Alarm page - activate alarm 2
                 if (words[4] != '') {
                     setIfExists(id + '.TYPE', 'A2');
                     setIfExists(id + '.PIN', words[4]);
@@ -6072,7 +6151,7 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage);
                 },250);
                 break;
-            case 'A3': // Alarm-Page Alarm 3 aktivieren
+            case 'A3': // Alarm page - activate alarm 3
                 if (words[4] != '') {
                     setIfExists(id + '.TYPE', 'A3');
                     setIfExists(id + '.PIN', words[4]);
@@ -6083,7 +6162,7 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage);
                 },250);
                 break;
-            case 'A4': // Alarm-Page Alarm 4 aktivieren
+            case 'A4': // Alarm page - activate alarm 4
                 if (words[4] != '') {
                     setIfExists(id + '.TYPE', 'A4');
                     setIfExists(id + '.PIN', words[4]);
@@ -6094,7 +6173,7 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage);
                 },250);
                 break;
-            case 'D1': // Alarm-Page Alarm Deaktivieren
+            case 'D1': // Alarm page - deactivate alarm 4
                 if (Debug) {
                     console.log('HandleButtonEvent Alarmpage D1 -> PIN: ' + getState(id + '.PIN').val);
                 }
@@ -6267,8 +6346,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             val = getState(id + '.SET').val;	
                             RegisterDetailEntityWatcher(id + '.SET', pageItem, type);	
                         }
-                        //val = getState(id + '.SET').val;
-                        //RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
                     }
 
                     icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
@@ -6286,17 +6363,17 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
                     
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   // entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'              // entityUpdateDetail
                             + id + '~'
-                            + icon + '~'   // iconId
-                            + iconColor + '~'   // iconColor
-                            + switchVal + '~'   // buttonState
-                            + 'disable' + '~'   // sliderBrightnessPos
-                            + 'disable' + '~'   // sliderColorTempPos
-                            + 'disable' + '~'   // colorMode
-                            + ''        + '~'   // Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   // Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + icon + '~'                                 // iconId
+                            + iconColor + '~'                            // iconColor
+                            + switchVal + '~'                            // buttonState
+                            + 'disable' + '~'                            // sliderBrightnessPos
+                            + 'disable' + '~'                            // sliderColorTempPos
+                            + 'disable' + '~'                            // colorMode
+                            + ''        + '~'                            // Color identifier
+                            + findLocale('lights', 'Temperature') + '~'  // Temperature identifier
+                            + findLocale('lights', 'Brightness') + '~'   // Brightness identifier
                             + effect_supported
                     });
                 }
@@ -6323,7 +6400,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             brightness = getState(id + '.ACTUAL').val;
                         }
                     } else {
-                        console.warn('function GenerateDetailPage  role:dimmer -> Alisas-Datenpunkt: ' + id + '.ACTUAL could not be read');
+                        console.warn('function GenerateDetailPage  role:dimmer -> Alias-Datenpoint: ' + id + '.ACTUAL could not be read');
                     }
 
                     if (val === true) {
@@ -6341,17 +6418,17 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
 
                     out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'   //entityUpdateDetail
+                        payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
                             + id + '~'
-                            + icon + '~'        //iconId
-                            + iconColor + '~'   //iconColor
-                            + switchVal + '~'   //buttonState
-                            + brightness + '~'  //sliderBrightnessPos
-                            + 'disable' + '~'   //sliderColorTempPos
-                            + 'disable' + '~'   //colorMod
-                            + ''        + '~'   //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~'   //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + icon + '~'                                //iconId
+                            + iconColor + '~'                           //iconColor
+                            + switchVal + '~'                           //buttonState
+                            + brightness + '~'                          //sliderBrightnessPos
+                            + 'disable' + '~'                           //sliderColorTempPos
+                            + 'disable' + '~'                           //colorMod
+                            + ''        + '~'                           //Color-identifier
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-identifier
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-identifier
                             + effect_supported
                     });
                 }
@@ -6389,7 +6466,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
                             let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                            //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
                         }
                     }
                     let colorTemp: any;
@@ -6401,11 +6477,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
                             }
-                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
                         colorTemp = 'disable';
-                        //console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     let effect_supported = 'disable';
@@ -6422,9 +6496,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + brightness + '~'                          //sliderBrightnessPos
                             + colorTemp + '~'                           //sliderColorTempPos
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color'   + '~'                           //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + 'Color'   + '~'                           //Color-identifier
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-identifier
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-identifier
                             + effect_supported
                     });
                 }
@@ -6461,7 +6535,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             colorMode = 'enable';
                             let rgb = <RGB>{ red: Math.round(getState(id + '.RED').val), green: Math.round(getState(id + '.GREEN').val), blue: Math.round(getState(id + '.BLUE').val) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                            //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
                         }
                     }
                     let colorTemp: any;
@@ -6473,11 +6546,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
                             }
-                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
                         colorTemp = 'disable';                        
-                        //console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     let effect_supported = 'disable';
@@ -6494,9 +6565,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + brightness + '~'                          //sliderBrightnessPos
                             + colorTemp + '~'                           //sliderColorTempPos
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'                             //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + 'Color' + '~'                             //Color-identifier
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-identifier
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-identifier
                             + effect_supported
                     });
                 }
@@ -6537,7 +6608,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             let hexBlue = parseInt(hex[5] + hex[6], 16);
                             let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                            //RegisterDetailEntityWatcher(id + '.HUE', pageItem, type);
                         }
                     }
 
@@ -6550,11 +6620,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
                             }
-                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
                         colorTemp = 'disable';
-                    //    console.warn('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
                     }
 
                     let effect_supported = 'disable';
@@ -6571,9 +6639,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + brightness + '~'                          //sliderBrightnessPos
                             + colorTemp + '~'                           //sliderColorTempPos
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'                             //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + 'Color' + '~'                             //Color-identifier
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-identifier
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-identifier
                             + effect_supported
                     });
                 }
@@ -6614,7 +6682,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
                             }
-                            //RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type);
                         }
                     } else {
                         console.warn('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
@@ -6634,9 +6701,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + brightness + '~'                          //sliderBrightnessPos
                             + colorTemp + '~'                           //sliderColorTempPos
                             + colorMode + '~'                           //colorMode   (if hue-alias without hue-datapoint, then disable)
-                            + 'Color' + '~'                             //Color-Bezeichnung
-                            + findLocale('lights', 'Temperature') + '~' //Temperature-Bezeichnung
-                            + findLocale('lights', 'Brightness') + '~'  //Brightness-Bezeichnung
+                            + 'Color' + '~'                             //Color-identifier
+                            + findLocale('lights', 'Temperature') + '~' //Temperature-identifier
+                            + findLocale('lights', 'Brightness') + '~'  //Brightness-identifier
                             + effect_supported
                     });
                 }
@@ -6972,7 +7039,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
                         actualState = formatInSelText(actualState[0]);
-                        //Limit 900 Zeichen, danach Speicherüberlauf --> Soweit kürzen wie möglich
+                        //Limit 900 characters, then memory overflow --> Shorten as much as possible
                         let temp_array = [];
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
                         for (let track_index=0; track_index < 45; track_index++) {
@@ -7379,7 +7446,7 @@ function HandleScreensaverUpdate(): void {
                         let pformat = parseFormat(val);
                         if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
                         if (moment(val, pformat, true).isValid()) { 
-                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                            let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
                             if (config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat !== undefined) {
                                 val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat);
                             } else {
@@ -7444,7 +7511,7 @@ function HandleScreensaverUpdate(): void {
                         let pformat = parseFormat(val);
                         if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
                         if (moment(val, pformat, true).isValid()) { 
-                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                            let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
                             if (config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
                                 val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
                             } else {
@@ -7840,7 +7907,7 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
                             valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0);
                         }
                     }
-                    //begrenzung falls valueScale kleiner/größer ist als 0-10
+                    //limit if valueScale is smaller/larger than 0-10
                     if (valueScale > 10) valueScale = 10;
                     if (valueScale < 0) valueScale = 0;
 
@@ -8497,6 +8564,7 @@ type PageItem = {
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
     actionStringArray: (string[] | undefined),
+    alwaysOnDisplay: (boolean | undefined),
 }
 
 type DimMode = {
