@@ -233,7 +233,6 @@ def cache_template(template):
 
 def get_template(template):
     global template_cache
-    print(f"xxxxxxxxxxxx: {template_cache}")
     if template in template_cache:
         return template_cache[template].get("result")
     else:

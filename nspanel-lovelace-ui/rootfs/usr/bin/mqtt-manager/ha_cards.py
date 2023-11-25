@@ -18,7 +18,6 @@ class HAEntity(panel_cards.Entity):
         for p in ["color_overwrite", "icon_overwrite", "value_overwrite"]:
             val = getattr(self, p)
             if val and "ha:" in val:
-                print(f"yyyyyyyyyyy {val}")
                 libs.home_assistant.cache_template(val)
 
     def render(self, cardType=""):
@@ -601,7 +600,72 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id):
 
     match detail_type:
         case 'popupShutter' | 'cover':
-            print(f"not implemented {detail_type}")
+            entityType   = "cover"
+            device_class = attributes.get("device_class", "window")
+            icon_id      = ha_icons.get_icon_ha(entityType, state)
+
+            pos = attributes.get("current_position")
+            if pos is None:
+                pos_status = state
+                pos = "disable"
+            else:
+                pos_status = pos
+
+            pos_translation = ""
+            icon_up   = ""
+            icon_stop = ""
+            icon_down = ""
+            icon_up_status = "disable"
+            icon_stop_status = "disable"
+            icon_down_status = "disable"
+            textTilt = ""
+            iconTiltLeft = ""
+            iconTiltStop = ""
+            iconTiltRight = ""
+            iconTiltLeftStatus = "disable"
+            iconTiltStopStatus = "disable"
+            iconTiltRightStatus = "disable"
+            tilt_pos = "disable"
+
+            bits = attributes.get("supported_features")
+
+            # position supported
+            if bits & 0b00001111:
+                pos_translation = get_translation(locale, "frontend.ui.card.cover.position")
+            if bits & 0b00000001: # SUPPORT_OPEN
+                if ( pos != 100 and not (state == "open" and pos == "disable") ):
+                    icon_up_status = "enable"
+                icon_up   = ha_icons.get_action_icon(etype=entityType, action="open", device_class=device_class)
+            if bits & 0b00000010: # SUPPORT_CLOSE
+                if ( pos != 0 and not (state == "closed" and pos == "disable") ):
+                    icon_down_status = "enable"
+                icon_down = ha_icons.get_action_icon(etype=entityType, action="close", device_class=device_class)
+            #if bits & 0b00000100: # SUPPORT_SET_POSITION
+            if bits & 0b00001000: # SUPPORT_STOP
+                icon_stop = ha_icons.get_action_icon(etype=entityType, action="stop", device_class=device_class)
+                icon_stop_status = "enable"
+
+            # tilt supported
+            if bits & 0b11110000:
+                textTilt = get_translation(locale, "frontend.ui.card.cover.tilt_position")
+            if bits & 0b00010000: # SUPPORT_OPEN_TILT
+                iconTiltLeft = get_icon_char('arrow-top-right')
+                iconTiltLeftStatus = "enable"
+            if bits & 0b00100000: # SUPPORT_CLOSE_TILT
+                iconTiltRight = get_icon_char('arrow-bottom-left')
+                iconTiltRightStatus = "enable"
+            if bits & 0b01000000: # SUPPORT_STOP_TILT
+                iconTiltStop = get_icon_char('stop')
+                iconTiltStopStatus = "enable"
+            if bits & 0b10000000: # SUPPORT_SET_TILT_POSITION
+                tilt_pos = attributes.get("current_tilt_position", 0)
+                if(tilt_pos == 0):
+                    iconTiltRightStatus = "disable"
+                if(tilt_pos == 100):
+                    iconTiltLeftStatus  = "disable"
+
+            return f'{entity_id}~{pos}~{pos_translation}: {pos_status}~{pos_translation}~{icon_id}~{icon_up}~{icon_stop}~{icon_down}~{icon_up_status}~{icon_stop_status}~{icon_down_status}~{textTilt}~{iconTiltLeft}~{iconTiltStop}~{iconTiltRight}~{iconTiltLeftStatus}~{iconTiltStopStatus}~{iconTiltRightStatus}~{tilt_pos}'
+
         case 'popupLight' | 'light':
             switch_val = 1 if state == "on" else 0
             icon_color = 6666
@@ -638,7 +702,29 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id):
             color_temp_translation = get_translation(locale, "frontend.ui.card.light.color_temperature")
             return f'{entity_id}~~{icon_color}~{switch_val}~{brightness}~{color_temp}~{color}~{color_translation}~{color_temp_translation}~{brightness_translation}~{effect_supported}'
         case 'popupFan' | 'fan':
-            print(f"not implemented {detail_type}")
+            switch_val = 1 if state == "on" else 0
+            icon_color = ha_colors.get_entity_color("fan", state, attributes)
+            speed = attributes.get("percentage")
+            percentage_step = attributes.get("percentage_step")
+            speedMax = 100
+            if percentage_step is None:
+                speed = "disable"
+            else:
+                if speed is None:
+                    speed = 0
+                speed = round(speed/percentage_step)
+                speedMax = int(100/percentage_step)
+
+            speed_translation = get_translation(locale, "frontend.ui.card.fan.speed")
+
+            preset_mode = attributes.get("preset_mode", "")
+            preset_modes = attributes.get("preset_modes", [])
+            if preset_modes is not None:
+                preset_modes = "?".join(attributes.get("preset_modes", []))
+            else:
+                preset_modes = ""
+
+            return f'{entity_id}~~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}'
         case 'popupThermo' | 'climate':
             print(f"not implemented {detail_type}")
         case 'popupInSel' | 'input_select' | 'select':
