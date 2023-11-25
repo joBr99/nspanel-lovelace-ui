@@ -87,6 +87,10 @@ class LovelaceUIPanel:
             for e in c.entities:
                 e.prerender()
         self.screensaver = Screensaver(self.settings["locale"], self.settings["screensaver"], self)
+        if self.screensaver.statusIcon1:
+            self.screensaver.statusIcon1.prerender()
+        if self.screensaver.statusIcon2:
+            self.screensaver.statusIcon2.prerender()
         for e in self.screensaver.entities:
             e.prerender()
 

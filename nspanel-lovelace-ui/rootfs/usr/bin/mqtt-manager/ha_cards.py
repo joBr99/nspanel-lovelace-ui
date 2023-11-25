@@ -25,9 +25,9 @@ class HAEntity(panel_cards.Entity):
 
     def render(self, cardType=""):
 
+        icon_overwrite = self.icon_overwrite
         if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
-            self.icon_overwrite = libs.home_assistant.get_template(self.icon_overwrite)
-
+            icon_overwrite = libs.home_assistant.get_template(self.icon_overwrite)
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
@@ -52,7 +52,7 @@ class HAEntity(panel_cards.Entity):
 
         # HA Entities
         entity_type_panel = "text"
-        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.icon_overwrite)
+        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=icon_overwrite)
         color = ha_colors.get_entity_color(
             self.etype, self.state, self.attributes, self.color_overwrite)
         name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
