@@ -25,10 +25,12 @@ class HAEntity(panel_cards.Entity):
 
     def render(self, cardType=""):
 
-        if "icon" in self.config and self.config.get("icon").startswith("ha:"):
-            self.icon_overwrite = libs.home_assistant.get_template(self.config.get("icon"))
-        if "color" in self.config and self.config.get("color").startswith("ha:"):
-            self.color_overwrite = libs.home_assistant.get_template(self.config.get("color"))
+        config_icon = self.config.get("icon", None)
+        if config_icon and isinstance(config_icon, str) and config_icon.startswith("ha:"):
+            self.icon_overwrite = libs.home_assistant.get_template(config_icon)
+        config_color = self.config.get("color", None)
+        if config_color and isinstance(config_color, str) and config_color.startswith("ha:"):
+            self.color_overwrite = libs.home_assistant.get_template(config_color)
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
