@@ -30,7 +30,7 @@ class HAEntity(panel_cards.Entity):
             self.icon_overwrite = libs.home_assistant.get_template(config_icon)
         config_color = self.config.get("color", None)
         if config_color and isinstance(config_color, str) and config_color.startswith("ha:"):
-            self.color_overwrite = libs.home_assistant.get_template(config_color)
+            self.color_overwrite = libs.home_assistant.get_template(config_color)[3:]
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
