@@ -14,4 +14,16 @@ if test -f "$CONFIG_FILE"; then
 else
     cp /usr/bin/mqtt-manager/panels.yaml.example $CONFIG_FILE
 fi
-python /usr/bin/mqtt-manager/main.py
+
+declare LOGLEVEL
+declare logtofile
+LOGLEVEL=$(bashio::config 'loglevel')
+logtofile=$(bashio::config 'logtofile')
+
+export LOGLEVEL
+
+if [[ "$logtofile" == "true" ]]; then
+    python /usr/bin/mqtt-manager/main.py 2>&1 | tee /config/out.log
+else
+    python /usr/bin/mqtt-manager/main.py
+fi
