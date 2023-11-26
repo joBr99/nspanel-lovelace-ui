@@ -19,14 +19,14 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             dimmode = sleepBrightness
         elif libs.home_assistant.is_existent(sleepBrightness):
             involved_entities.append(sleepBrightness)
-            dimmode = int(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10))
+            dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
 
     if screenBrightness:
         if isinstance(screenBrightness, int):
             dimValueNormal = screenBrightness
         elif libs.home_assistant.is_existent(screenBrightness):
             involved_entities.append(screenBrightness)
-            dimValueNormal = int(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100))
+            dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
 
     # force sleep brightness to zero in case sleepTracking is active
     if sleepTracking:
