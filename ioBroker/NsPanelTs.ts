@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.12 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.13 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -62,13 +62,16 @@ ReleaseNotes:
         - 24.11.2023 - v4.3.3.11 Add autoCreateALias to PageQR
         - 24.11.2023 - v4.3.3.12 Separation of page creation and page updates in cardPower
         - 24.11.2023 - v4.3.3.12 Add alwaysOnDisplay to cardPower - Leave display on if the alwaysOnDisplay parameter is "true"
+        - 25.11.2023 - v4.3.3.13 Separation of page creation and page updates in cardMedia
+        - 25.11.2023 - v4.3.3.13 Add alwaysOnDisplay to cardMedia - Leave display on if the alwaysOnDisplay parameter is "true"
+        - 25.11.2023 - v4.3.3.13 Fix Sonos Repeat/Shuffle
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
 ***************************************************************************************************************
-* DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObect" gesetzt sein! *
-* EN: In order for the script to create the aliases, “setObect” must be set in the JavaScript instance!       *
+* DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
+* EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
 ***************************************************************************************************************
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
@@ -4333,7 +4336,7 @@ function unsubscribeMediaSubscriptions(): void {
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
-    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']).concat([id + '.SHUFFLE']).concat([id + '.REPEAT']), change: "ne"}, async function () {
+    on({id: [].concat([id + '.STATE']).concat([id + '.VOLUME']).concat([id + '.ARTIST']).concat([id + '.ALBUM']).concat([id + '.TITLE']).concat([id + '.SHUFFLE']).concat([id + '.REPEAT']), change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -4516,9 +4519,30 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance);
         }
 
-        out_msgs.push({ payload: 'pageType~cardMedia' });
+        //out_msgs.push({ payload: 'pageType~cardMedia' });
+
+        // Leave the display on if the alwaysOnDisplay parameter is specified (true)
+        if (page.type == 'cardMedia' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
+            out_msgs.push({ payload: 'pageType~cardMedia' });
+            if (page.items[0].alwaysOnDisplay != undefined) {
+                if (page.items[0].alwaysOnDisplay) {
+                    pageCounter = 1;
+                    if (alwaysOn == false) {
+                        alwaysOn = true;
+                        SendToPanel({ payload: 'timeout~0' });
+                        subscribeMediaSubscriptions(page.items[0].id);
+                    }
+                }
+            }
+        } else if (page.type == 'cardMedia' && pageCounter == 1) {
+            subscribeMediaSubscriptions(page.items[0].id);
+        } else {
+            out_msgs.push({ payload: 'pageType~cardMedia' });
+        }
+
+
         if (existsObject(id)) {
-            subscribeMediaSubscriptions(id);
+            //subscribeMediaSubscriptions(id);
 
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
@@ -4617,7 +4641,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('refresh'); } //Volumio: refresh playlist
 
 
-            //Für alle Player
+            //For all players
             if (getState(id + '.STATE').val) {
                 onoffbutton = 65535;
                 iconplaypause = Icons.GetIcon('pause'); //pause
@@ -4657,8 +4681,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
             }
             //-------------------------------------------------------------------------------------------------------------
-            // nachfolgend alle Alexa-Devices (ist Online / Player- und Commands-Verzeichnis vorhanden) auflisten und verketten
-            // Wenn Konstante alexaSpeakerList mind. einen Eintrag enthÃ¤lt, wird die Konstante verwendet - ansonsten Alle Devices aus dem Alexa Adapter
+            // All Alexa devices (the online / player and commands directory is available) are listed and linked below
+            // If the constant alexaSpeakerList contains at least one entry, the constant is used - otherwise all devices from the Alexa adapter
             let speakerListArray: Array<string> = [];
             if (page.items[0].speakerList && page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
@@ -4797,10 +4821,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
             } else if (v2Adapter == 'sonos') {
-                if (getState(id + '.REPEAT').val == 'all') {
+                if (getState(id + '.REPEAT').val == 1) {
                     repeatIcon = Icons.GetIcon('repeat-variant');
                     repeatIconCol = rgb_dec565(HMIOn);
-                } else if (getState(id + '.REPEAT').val == 'one') {
+                } else if (getState(id + '.REPEAT').val == 2) {
                     repeatIcon = Icons.GetIcon('repeat-once');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
@@ -5438,13 +5462,10 @@ function triggerButton(id: string): boolean{
 function HandleButtonEvent(words: any): void {
     try {
 
-        pageCounter = 0;
-
         // Turn off the display if the alwaysOnDisplay parameter was specified
         if (alwaysOn == true) {
             unsubscribePowerSubscriptions();
-            alwaysOn = false;
-            SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
+            unsubscribeMediaSubscriptions();
         }
 
         let tempid = words[2].split('?');
@@ -5462,6 +5483,12 @@ function HandleButtonEvent(words: any): void {
 
         if (words[2] == 'bNext' || words[2] == 'bPrev' || words[2] == 'bUp' || words[2] == 'bHome' || words[2] == 'bSubNext' || words[2] == 'bSubPrev' ) {
             buttonAction = words[2];
+            pageCounter = 0;
+            // Turn off the display if the alwaysOnDisplay parameter was specified
+            if (alwaysOn == true) {
+                alwaysOn = false;
+                SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
+            }
         }
 
         if (Debug) {
@@ -5563,8 +5590,9 @@ function HandleButtonEvent(words: any): void {
                             pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
                         }
                     }
-		           activePage = config.pages[pageId];
-	        	} 
+		            activePage = config.pages[pageId];
+	        	}
+                pageCounter = 0; 
                 GeneratePage(activePage);
                 break;
             case 'bHome':
@@ -5668,40 +5696,53 @@ function HandleButtonEvent(words: any): void {
                                 switch (deviceAdapterRP) {
                                     case 'spotify-premium':
                                         let stateSpotifyRepeat = getState(id + '.REPEAT').val
-                                        if (stateSpotifyRepeat == 'off') {
-                                            setIfExists(id + '.REPEAT', 'context');
-                                        } else if (stateSpotifyRepeat == 'context') {
-                                            setIfExists(id + '.REPEAT', 'track');
-                                        } else if (stateSpotifyRepeat == 'track') {
-                                            setIfExists(id + '.REPEAT', 'off');
+                                        if (stateSpotifyRepeat == 'none') {
+                                            setIfExists(id + '.REPEAT', 'all');
+                                        } else if (stateSpotifyRepeat == 'all') {
+                                            setIfExists(id + '.REPEAT', 'one');
+                                        } else if (stateSpotifyRepeat == 'one') {
+                                            setIfExists(id + '.REPEAT', 'none');
                                         }
+                                        GeneratePage(activePage);
+                                        break;
+                                    case 'sonos':
+                                        let stateSonosRepeat = getState(id + '.REPEAT').val
+                                        if (stateSonosRepeat == 0) {
+                                            setIfExists(id + '.REPEAT', 1);
+                                        } else if (stateSonosRepeat == 1) {
+                                            setIfExists(id + '.REPEAT', 2);
+                                        } else if (stateSonosRepeat == 2) {
+                                            setIfExists(id + '.REPEAT', 0);
+                                        }
+                                        GeneratePage(activePage);
                                         break;
                                     case 'alexa2':
                                         try {
-                                            if (getState(id + '.REPEAT').val == 'false') {
-                                                setIfExists(id + '.REPEAT', true);
-                                            } else {
-                                                setIfExists(id + '.REPEAT', false);
-                                            }
+                                            setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
                                         } catch (err) {
                                             console.warn('ALEXA2: Repeat kann nicht verändert werden');
                                         }
+                                        GeneratePage(activePage);
                                         break;
                                     case 'volumio':
                                         request({ url:`${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`, headers: {'User-Agent': 'ioBroker'} }, 
                                             async (error, response, result)=>{}); /* nothing todo @ error */
+                                            GeneratePage(activePage);
                                         break;
                                     case 'squeezeboxrpc':
                                         try {
                                             switch(getState(id + '.REPEAT').val) {
                                                 case 0:
                                                     setIfExists(id + '.REPEAT', 1);
+                                                    GeneratePage(activePage);
                                                     break;
                                                 case 1:
-                                                    setIfExists(id + '.REPEAT', 2);
+                                                    setIfExists(id + '.REPEAT', 2)
+                                                    GeneratePage(activePage);
                                                     break;
                                                 case 2:
                                                     setIfExists(id + '.REPEAT', 0);
+                                                    GeneratePage(activePage);
                                                     break;
                                             }
                                         } catch (err) {
@@ -5847,6 +5888,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
+                GeneratePage(activePage);
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
@@ -5870,17 +5912,38 @@ function HandleButtonEvent(words: any): void {
                         setIfExists(id + '.PLAY', true);
                     }
                 }
+                GeneratePage(activePage);
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
+                GeneratePage(activePage);
                 break;
             case 'media-shuffle':
-                if ((findPageItem(id).adapterPlayerInstance).startsWith("volumio")) { findPageItem(id).playList = []; break; } //Volumio: empty playlist $uha-20230103
-                if (getState(id + '.SHUFFLE').val == 'off') {
-                    setIfExists(id + '.SHUFFLE', 'on');
-                } else {
-                    setIfExists(id + '.SHUFFLE', 'off');
+                if ((findPageItem(id).adapterPlayerInstance).startsWith("volumio")) { 
+                    findPageItem(id).playList = []; break; 
+                } //Volumio: empty playlist $uha-20230103
+                if ((findPageItem(id).adapterPlayerInstance).startsWith("spotify")) {
+                    if (getState(id + '.SHUFFLE').val == 'off') {
+                        setIfExists(id + '.SHUFFLE', 'on');
+                    } else {
+                        setIfExists(id + '.SHUFFLE', 'off');
+                    }
                 }
+                if ((findPageItem(id).adapterPlayerInstance).startsWith("alexa")) {
+                    if (getState(id + '.SHUFFLE').val == false) {
+                        setIfExists(id + '.SHUFFLE', true);
+                    } else {
+                        setIfExists(id + '.SHUFFLE', false);
+                    }
+                }
+                if ((findPageItem(id).adapterPlayerInstance).startsWith("sonos")) {
+                    if (getState(id + '.SHUFFLE').val == false) {
+                        setIfExists(id + '.SHUFFLE', true);
+                    } else {
+                        setIfExists(id + '.SHUFFLE', false);
+                    }
+                }
+                GeneratePage(activePage);
                 break;
             case 'volumeSlider':
                 setIfExists(id + '.VOLUME', parseInt(words[4]))
@@ -5980,11 +6043,14 @@ function HandleButtonEvent(words: any): void {
                 let adapterRP = adapterInstanceRP.split('.');
                 let deviceAdapterRP = adapterRP[0];
 
+                console.log(pageItemRP.repeatList[words[4]])
                 switch (deviceAdapterRP) {
                     case 'spotify-premium':
                         setIfExists(id + '.REPEAT', pageItemRP.repeatList[words[4]]);
+                        GeneratePage(activePage);
                         break;
                     case 'alexa2':
+                        GeneratePage(activePage);
                         break;
                 }
                 break;
@@ -6018,6 +6084,7 @@ function HandleButtonEvent(words: any): void {
                 } else {
                     setIfExists(id + '.STOP', true);
                 }
+                GeneratePage(activePage);
                 break;
             case 'timer-start':
                 if (words[4] != undefined) {
@@ -7106,6 +7173,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             + actualState + '~'
                             + optionalString
                     });
+                    GeneratePage(activePage);
                 } else if (o.common.role == 'buttonSensor') {
 
                     let actualValue: string = '';
