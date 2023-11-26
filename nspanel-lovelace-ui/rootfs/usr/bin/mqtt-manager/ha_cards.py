@@ -25,14 +25,13 @@ class HAEntity(panel_cards.Entity):
 
     def render(self, cardType=""):
 
-        icon_overwrite = self.icon_overwrite
-        if self.icon_overwrite and self.icon_overwrite.startswith("ha:"):
-            icon_overwrite = libs.home_assistant.get_template(self.icon_overwrite)
-
+        if "icon" in self.config and self.config.get("icon").startswith("ha:"):
+            self.icon_overwrite = libs.home_assistant.get_template(self.config.get("icon"))
+        if "color" in self.config and self.config.get("color").startswith("ha:"):
+            self.color_overwrite = libs.home_assistant.get_template(self.config.get("color"))
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
-            self.icon_overwrite = icon_overwrite
             if self.etype == "navigate" and "status" in self.config:
                 status_out = HAEntity(self.locale,
                                     {
@@ -54,10 +53,10 @@ class HAEntity(panel_cards.Entity):
 
         # HA Entities
         entity_type_panel = "text"
-        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=icon_overwrite)
-        print(f"xxxx{icon_overwrite} {icon_char}")
-        color = ha_colors.get_entity_color(
-            self.etype, self.state, self.attributes, self.color_overwrite)
+        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.icon_overwrite)
+
+        color = ha_colors.get_entity_color(self.etype, self.state, self.attributes, self.color_overwrite)
+
         name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
         if self.name_overwrite:
             name = self.name_overwrite
