@@ -1,15 +1,29 @@
 nspanels:
-  tasmota_nspdev2:
-    name: test
-    panelRecvTopic: "tele/tasmota_nspdev2/RESULT"
-    panelSendTopic: "cmnd/tasmota_nspdev2/CustomSend"
+  name_of_your_panel:
+    panelRecvTopic: "tele/tasmota_topic/RESULT"
+    panelSendTopic: "cmnd/tasmota_topic/CustomSend"
     timeFormat: "%H:%M"
     timeZone: "Europe/Berlin"
     dateFormat: "full"
-    locale: "en_US"
+    locale: "de_DE"
+    #updateMode: "auto-notify"
+    sleepTimeout: 20
+    sleepTracking: person.johannes
+    sleepBrightness: 10
+    sleepOverride:
+      entity: switch.deckenbeleuchtung_wohnzimmer
+      brightness: 10
     screensaver:
+      doubleTapToUnlock: True
       entities:
-        - entity: switch.decorative_lights
+        - entity: weather.k3ll3r
+          attr: temperature
+        - entity: weather.k3ll3r
+          day: 1
+        - entity: weather.k3ll3r
+          day: 2
+        - entity: weather.k3ll3r
+          day: 3
     cards:
       - type: cardEntities
         title: Test Entities Card
@@ -18,15 +32,6 @@ nspanels:
           - entity: switch.decorative_lights
           - entity: lock.front_door
           - entity: scene.test
-      - type: cardEntities
-        title: Test Entities Card2
-        entities:
-          - entity: vacuum.5_fifth_floor
-      - type: cardGrid
-        title: Test Entities Card3
-        entities:
-          - entity: vacuum.5_fifth_floor
-          - entity: navigate.test
     hiddenCards:
       - type: cardEntities
         key: test
