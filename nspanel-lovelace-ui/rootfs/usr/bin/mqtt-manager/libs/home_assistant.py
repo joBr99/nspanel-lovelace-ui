@@ -213,7 +213,7 @@ def execute_script(entity_name: str, domain: str, service: str, service_data: di
         raise TimeoutError("Did not recive respose in time to HA script call")
     except Exception as e:
         logging.exception("Failed to call Home Assisatant script.")
-        return False
+        return {}
 
 def cache_template(template):
     global next_id, response_buffer
