@@ -7198,8 +7198,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
                         actualState = formatInSelText(actualState[0]);
-                        console.log(actualState);
-                        console.log(globalTracklist);
+                        if (Debug) console.log(actualState);
+                        if (Debug) console.log(globalTracklist);
                         //Limit 900 characters, then memory overflow --> Shorten as much as possible
                         let temp_array = [];
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
