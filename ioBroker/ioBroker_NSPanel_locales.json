@@ -2512,6 +2512,10 @@
          "en-US":"Equalizer",
          "de-DE":"Equalizer"
       },
+      "favorites":{
+         "en-US":"Favorites",
+         "de-DE":"Favoriten"
+      },
       "no_speaker_found":{
          "en-US":"No Speaker found",
          "de-DE":"Kein Latsprecher gefunden"
