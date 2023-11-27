@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.13 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.14 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -65,6 +65,7 @@ ReleaseNotes:
         - 25.11.2023 - v4.3.3.13 Separation of page creation and page updates in cardMedia
         - 25.11.2023 - v4.3.3.13 Add alwaysOnDisplay to cardMedia - Leave display on if the alwaysOnDisplay parameter is "true"
         - 25.11.2023 - v4.3.3.13 Fix Sonos Repeat/Shuffle
+        - 25.11.2023 - v4.3.3.14 Refactoring Sonos-Player (with Playlist, Tracklist, Favorites, Eqalizer (if no Favorites))
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -240,6 +241,7 @@ let Debug: boolean = false;
     const Black:            RGB = { red:   0, green:   0, blue:   0 };
     const colorSpotify:     RGB = { red:  30, green: 215, blue:  96 };
     const colorAlexa:       RGB = { red:  49, green: 196, blue: 243 };
+    const colorSonos:       RGB = { red: 216, green: 161, blue:  88 };
     const colorRadio:       RGB = { red: 255, green: 127, blue:   0 };
     const BatteryFull:      RGB = { red:  96, green: 176, blue:  62 };
     const BatteryEmpty:     RGB = { red: 179, green:  45, blue:  25 };
@@ -937,7 +939,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.13';
+const scriptVersion: string = 'v4.3.3.14';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -4341,6 +4343,9 @@ function subscribeMediaSubscriptions(id: string): void {
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
                 GeneratePage(activePage);
+                setTimeout(async function () {
+                    GeneratePage(activePage);
+                }, 3000);
             }
         },50)
     });
@@ -4519,8 +4524,6 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance);
         }
 
-        //out_msgs.push({ payload: 'pageType~cardMedia' });
-
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardMedia' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
             out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -4535,6 +4538,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
         } else if (page.type == 'cardMedia' && pageCounter == 1) {
+            alwaysOn = true;
             subscribeMediaSubscriptions(page.items[0].id);
         } else {
             out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -4542,7 +4546,6 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
 
         if (existsObject(id)) {
-            //subscribeMediaSubscriptions(id);
 
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
@@ -4578,13 +4581,17 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
             //Sonos
             if (v2Adapter == 'sonos') {
-                media_icon = Icons.GetIcon('music');
+                media_icon = Icons.GetIcon('alpha-s-circle');
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLenght = name.length;
                 if (nameLenght == 0) {
                     name = 'Sonos Player';
                 }
-                author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                if ((getState(id + '.ALBUM').val).length > 0) {
+                    author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                } else {
+                    author = getState(id + '.ARTIST').val;
+                }
                 if ((getState(id + '.ARTIST').val).length == 0) {
                     author = findLocale('media','no_music_to_control');
                 }
@@ -4777,6 +4784,20 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             } else if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
                 let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join(''))).val);
                 globalTracklist = lmstracklist;
+            } else if(v2Adapter == 'sonos' && existsObject(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.playlist_set'].join('')))) {
+                let lmstracklist = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.queue'].join(''))).val;
+                let lmstracklistTemp = lmstracklist.split(', ');
+                let trackList: string = '[';
+                for (let i=0; i < lmstracklistTemp.length; i++) {
+                    let trackTemp = lmstracklistTemp[i].split(' - ');
+                    trackList = trackList + '{"id":"' + i + '","name":"' + trackTemp[0] + '","title":"' + trackTemp[1] + '"}'
+                    if (i < lmstracklistTemp.length -1) {
+                        trackList = trackList + ',';
+                    } 
+                };
+                trackList = trackList + ']';
+                if (Debug) console.log(trackList);
+                globalTracklist = trackList;
             }
             
             if (globalTracklist!= null && globalTracklist.length != 0) {
@@ -4799,6 +4820,15 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                         Icons.GetIcon('equalizer-outline') + '~' + 
                                         equalizerListIconCol + '~' + 
                                         findLocale('media','equalizer') + '~' + + '~' + 
+                                        'media3~'
+            } else if (page.items[0].equalizerList == undefined && v2Adapter == 'sonos') {
+                let equalizerListIconCol = rgb_dec565(HMIOn);
+                //equalizerListString is used for favariteList
+                equalizerListString =   'input_sel' + '~' + 
+                                        id + '?favorites' + '~' + 
+                                        Icons.GetIcon('playlist-star') + '~' + 
+                                        equalizerListIconCol + '~' + 
+                                        findLocale('media','favorites') + '~' + + '~' + 
                                         'media3~'
             }
 
@@ -5592,8 +5622,18 @@ function HandleButtonEvent(words: any): void {
                     }
 		            activePage = config.pages[pageId];
 	        	}
-                pageCounter = 0; 
-                GeneratePage(activePage);
+                if (words[2] == 'popupInSel' && activePage.type == 'cardMedia') {
+                    if (Debug) console.log('Leave popupInsel without any action')
+                    pageCounter = 0;
+                    GeneratePage(activePage);
+                    setTimeout(async function () {
+                        pageCounter = 1;
+                        GeneratePage(activePage);
+                    }, 3000);
+                } else {
+                    pageCounter = 0; 
+                    GeneratePage(activePage);
+                }
                 break;
             case 'bHome':
                 if (Debug) {
@@ -5981,6 +6021,12 @@ function HandleButtonEvent(words: any): void {
                         pageItem.mediaDevice = pageItem.speakerList[words[4]];
                         break;
                 }
+                pageCounter = 0;
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
                 break;
             case 'mode-playlist':
                 let pageItemPL = findPageItem(id);
@@ -6004,6 +6050,11 @@ function HandleButtonEvent(words: any): void {
                         let tempListItem = pageItemPL.playList[words[4]].split('.');
                         setState(adapterInstancePL + 'Echo-Devices.' + pageItemPL.mediaDevice + '.Music-Provider.' + tempListItem[0], tempListItem[1]);
                         break;
+                    case 'sonos':
+                        let strDevicePLSonos = pageItemPL.playList[words[4]].split('.');
+                        if (Debug) console.log(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set')
+                        setState(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set', strDevicePLSonos[0]);
+                        break;                    
                     case 'volumio':
                         let strDevicePL = pageItemPL.playList[words[4]];
                         request({ url:`${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`, headers: {'User-Agent': 'ioBroker'} }, 
@@ -6013,6 +6064,12 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
                 }
+                pageCounter = 0;
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
                 break;
             case 'mode-tracklist':
                 let pageItemTL = findPageItem(id);
@@ -6025,6 +6082,8 @@ function HandleButtonEvent(words: any): void {
                         let trackArray = (function () { try {return JSON.parse(getState(pageItemTL.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
                         setState(adapterInstanceTL + 'player.trackId', getAttr(trackArray, words[4] + '.id'));
                         break;
+                    case 'sonos':
+                        setState(adapterInstanceTL + 'root.' + pageItemTL.mediaDevice + '.current_track_number', parseInt(words[4]) + 1);
                     case 'alexa2':
                         if (Debug) console.log('Aktuell hat alexa2 keine Tracklist');
                         break;
@@ -6036,6 +6095,12 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
                 }
+                pageCounter = 0;
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
                 break;
             case 'mode-repeat':
                 let pageItemRP = findPageItem(id);
@@ -6043,7 +6108,7 @@ function HandleButtonEvent(words: any): void {
                 let adapterRP = adapterInstanceRP.split('.');
                 let deviceAdapterRP = adapterRP[0];
 
-                console.log(pageItemRP.repeatList[words[4]])
+                if (Debug) console.log(pageItemRP.repeatList[words[4]]);
                 switch (deviceAdapterRP) {
                     case 'spotify-premium':
                         setIfExists(id + '.REPEAT', pageItemRP.repeatList[words[4]]);
@@ -6059,9 +6124,24 @@ function HandleButtonEvent(words: any): void {
                 if (Debug) console.log('HandleButtonEvent mode-equalizer -> id: ' + id);
                 let lastIndex = (id.split('.')).pop();
                 setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList[words[4]]);
+                pageCounter = 0;
+                GeneratePage(activePage);
                 setTimeout(async function () {
-                    GenerateDetailPage('popupInSel','equalizer', pageItemEQ);
-                }, 2000);
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
+                break;
+            case 'mode-favorites':
+                let pageItemFav = findPageItem(id);
+                if (Debug) console.log(getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set').val);
+                let favListArray = getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_list_array').val;
+                setState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set', favListArray[words[4]]);
+                pageCounter = 0;
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
                 break;
             case 'mode-insel':
                 setIfExists(id + '.VALUE', parseInt(words[4]));
@@ -7068,6 +7148,16 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                                 tempPlayList[i] = formatInSelText(tPlayList[i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                        } else if (vAdapter == 'sonos') {
+                            if (Debug) console.log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set');
+                            if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
+                            }
+                            let tempPlayList = [];
+                            for (let i = 0; i < pageItem.playList.length; i++) {
+                                tempPlayList[i] = formatInSelText(pageItem.playList[i]);
+                            }
+                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                         } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
                             actualState = ''; //todo: no actual playlistname saving
                             let tempPlayList = []; let tempPll = 0;
@@ -7100,12 +7190,16 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             globalTracklist = pageItem.globalTracklist;
                         }else if(vAdapter == 'squeezeboxrpc') {
                             actualState = getState(pageItem.id + '.TITLE').val;
+                        }else if(vAdapter == 'sonos') {
+                            actualState = getState(pageItem.id + '.TITLE').val;
                         } else {
                             actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                         }
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
                         actualState = formatInSelText(actualState[0]);
+                        console.log(actualState);
+                        console.log(globalTracklist);
                         //Limit 900 characters, then memory overflow --> Shorten as much as possible
                         let temp_array = [];
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
@@ -7155,14 +7249,24 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         for (let i = 0; i < pageItem.equalizerList.length; i++) {
                             tempEQList[i] = formatInSelText(pageItem.equalizerList[i]);
                         }
-                        optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
 
-                        //optionalString = pageItem.equalizerList.join('?');
+                        optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
                         mode = 'equalizer';
                     } else if (optional == 'repeat') {
                         actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
                         optionalString = pageItem.repeatList.join('?');
                         mode = 'repeat';
+                    } else if (optional == 'favorites') {
+                        if (Debug) console.log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val)
+                        actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
+                        
+                        let tempFavList = [];
+                        let favList = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_list_array').val;
+                        for (let i = 0; i < favList.length; i++) {
+                            tempFavList[i] = formatInSelText(favList[i]);
+                        }
+                        optionalString = tempFavList != undefined ? tempFavList.join('?') : '';
+                        mode = 'favorites';
                     }
 
                     out_msgs.push({
