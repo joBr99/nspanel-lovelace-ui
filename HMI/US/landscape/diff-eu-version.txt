@@ -46,7 +46,7 @@
 │              vis tTmp,0
 │   --- HMI/n2t-out/cardThermo.txt
 ├── +++ HMI/US/landscape/n2t-out/cardThermo.txt
-│ @@ -28,14 +28,18 @@
+│ @@ -28,14 +28,19 @@
 │              vis tSend,0
 │              vis tInstruction,0
 │              vis tTmp,0
@@ -58,6 +58,7 @@
 │ +            vis btUp,0
 │ +            vis btDown,0
 │ +            vis tCF,0
+│ +            vis btDetail,0
 │              //tEntity.txt=tHeading.txt
 │              // disable all buttons
 │              vis bt0,0
@@ -65,7 +66,7 @@
 │              vis bt2,0
 │              vis bt3,0
 │              vis bt4,0
-│ @@ -1014,14 +1018,28 @@
+│ @@ -1014,14 +1019,28 @@
 │                                              vis xTempDest1,1
 │                                              vis btDown1,1
 │                                              vis tCF1,1
