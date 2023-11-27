@@ -40,6 +40,10 @@ Page cardThermo
             vis xTempMin1,0
             vis xTempMax1,0
             vis xTempStep1,0
+            vis xTempDest,0
+            vis btUp,0
+            vis btDown,0
+            vis tCF,0
             //tEntity.txt=tHeading.txt
             // disable all buttons
             vis bt0,0
@@ -1742,6 +1746,20 @@ Timer tmSerial
                                             vis xTempDest2,1
                                             vis bDown2,1
                                             vis tCF2,1
+                                        }else
+                                        {
+                                            vis btUp,1
+                                            vis xTempDest,1
+                                            vis btDown,1
+                                            vis tCF,1
+                                            vis btUp1,0
+                                            vis xTempDest1,0
+                                            vis btDown1,0
+                                            vis tCF1,0
+                                            vis bUp2,0
+                                            vis xTempDest2,0
+                                            vis bDown2,0
+                                            vis tCF2,0
                                         }
                                         //Show btDetail
                                         spstr strCommand.txt,tTmp.txt,"~",58
