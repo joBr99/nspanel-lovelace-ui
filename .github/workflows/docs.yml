@@ -24,7 +24,7 @@ jobs:
       - run: pip install mkdocs-material mkdocs-video markdown-include mike
       - run: cp HMI/README.md docs/hmi-serial-protocol.md
       #- run: mkdocs gh-deploy --force
-      - run: mike deploy --push --rebase --update-aliases dev
+      - run: mike deploy --push --update-aliases dev
 
 
 
