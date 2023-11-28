@@ -42,6 +42,8 @@ extra_css:
 extra:
   analytics:
     provider: custom
+  version:
+    provider: mike
 
 markdown_extensions:
     - admonition
