@@ -60,8 +60,8 @@ screensaver2
 	248  Unique line(s) of event code
 cardThermo
 	57   Component(s)
-	568  Line(s) of event code
-	336  Unique line(s) of event code
+	569  Line(s) of event code
+	337  Unique line(s) of event code
 cardAlarm
 	43   Component(s)
 	510  Line(s) of event code
@@ -98,5 +98,5 @@ cardEntities
 Total
 	23   Page(s)
 	875  Component(s)
-	10706 Line(s) of event code
-	2465 Unique line(s) of event code
+	10707 Line(s) of event code
+	2466 Unique line(s) of event code

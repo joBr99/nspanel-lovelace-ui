@@ -36,6 +36,7 @@ Page cardThermo
             vis btUp,0
             vis btDown,0
             vis tCF,0
+            vis btDetail,0
             //tEntity.txt=tHeading.txt
             // disable all buttons
             vis bt0,0
