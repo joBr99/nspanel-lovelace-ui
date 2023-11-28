@@ -25,5 +25,5 @@ jobs:
       - run: cp HMI/README.md docs/hmi-serial-protocol.md
       - run: git config --global user.name Docs deploy
       - run: git config --global user.email docs@dummy.bot.com
-      - run: mike set-default stable
+      #- run: mike set-default stable
       - run: mike deploy --push --update-aliases stable
