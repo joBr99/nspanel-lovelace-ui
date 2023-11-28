@@ -57,6 +57,8 @@ hadashboard:
 
 Please add the following minimal configuration to your apps.yaml, which is located in `config/appdaemon/apps/apps.yaml`
 
+Note: You need to move your `apps.yaml` to this location if it isn't there.
+
 ```yaml
 ---
 nspanel-1:
