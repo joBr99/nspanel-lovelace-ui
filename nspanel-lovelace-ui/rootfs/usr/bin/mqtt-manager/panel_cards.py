@@ -19,7 +19,6 @@ class Card:
     def render(self):
         raise NotImplementedError
 
-
 class Entity:
     def __init__(self, locale, config, panel):
         self.iid = iid()

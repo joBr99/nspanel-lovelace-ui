@@ -533,6 +533,30 @@ class AlarmCard(HACard):
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
         libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
 
+
+class UnlockCard(HACard):
+    def __init__(self, locale, config, panel):
+        super().__init__(locale, config, panel)
+
+    def render(self):
+
+        color = rgb_dec565([255,0,0])
+        icon = get_icon_char("lock")
+        supported_modes = ["cardUnlock-unlock"]
+
+        entity_id = self.config.get("entity")
+
+        # add padding to arm buttons
+        arm_buttons = ""
+        for b in supported_modes:
+            arm_buttons += f'~{get_translation(self.locale, "frontend.ui.card.lock.unlock")}~{b}'
+            if len(supported_modes) < 4:
+                arm_buttons += "~"*((4-len(supported_modes))*2)
+        numpad = "enable"
+
+        result = f"{self.title}~{self.gen_nav()}~{entity_id}{arm_buttons}~{icon}~{color}~{numpad}~disable~"
+        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+
 class Screensaver(HACard):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
@@ -594,6 +618,8 @@ def card_factory(locale, settings, panel):
             card = ClimateCard(locale, settings, panel)
         case 'cardAlarm':
             card = AlarmCard(locale, settings, panel)
+        case 'cardUnlock':
+            card = UnlockCard(locale, settings, panel)
         case _:
             logging.error("card type %s not implemented", settings["type"])
             return "NotImplemented", None
