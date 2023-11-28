@@ -5,10 +5,8 @@
 You have most likely an error in your MQTT configuration somewhere. To find the error follow theese steps:
 
 1. Check the location of your apps.yaml
-
 With the AppDaemon Addon >= 15 the config dir has been moved.
 It's required to configure the location back to the old one, this is done by the `app_dir` line in your `appdaemon.yaml`.
-
 This also requires you to move your apps.yaml to this location. Please make sure your apps.yaml is at `/config/appdaemon/apps/apps.yaml` and move it otherwise.
 
 2. Check your appdaemon log. (Settings > Add-ons > AppDaemon > Log)
