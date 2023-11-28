@@ -16,9 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material mkdocs-video markdown-include
+      - run: pip install mkdocs-material mkdocs-video markdown-include mike
       - run: cp HMI/README.md docs/hmi-serial-protocol.md
-      - run: mkdocs gh-deploy --force
+      #- run: mkdocs gh-deploy --force
+      - run: mike deploy --push --rebase --update-aliases dev
+
+
+
+
+
+
