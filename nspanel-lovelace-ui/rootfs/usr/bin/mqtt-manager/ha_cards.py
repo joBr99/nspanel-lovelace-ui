@@ -544,7 +544,7 @@ class UnlockCard(HACard):
         icon = get_icon_char("lock")
         supported_modes = ["cardUnlock-unlock"]
 
-        entity_id = self.config.get("entity")
+        entity_id = self.config.get("destination")
 
         # add padding to arm buttons
         arm_buttons = ""
