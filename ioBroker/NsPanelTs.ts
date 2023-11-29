@@ -4790,15 +4790,18 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 globalTracklist = lmstracklist;
             } else if(v2Adapter == 'sonos' && existsObject(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.playlist_set'].join('')))) {
                 let lmstracklist = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.queue'].join(''))).val;
+                lmstracklist = lmstracklist.replace(/\s*[\[{(].*?[)}\]]\s*/g, '');
                 let lmstracklistTemp = lmstracklist.split(', ');
                 let trackList: string = '[';
-                for (let i=0; i < lmstracklistTemp.length; i++) {
-                    let trackTemp = lmstracklistTemp[i].split(' - ');
-                    trackList = trackList + '{"id":"' + i + '","name":"' + trackTemp[0] + '","title":"' + trackTemp[1] + '"}'
-                    if (i < lmstracklistTemp.length -1) {
-                        trackList = trackList + ',';
-                    } 
-                };
+                if (getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {                
+                    for (let i=0; i < lmstracklistTemp.length; i++) {
+                        let trackTemp = lmstracklistTemp[i].split(' - ');
+                        trackList = trackList + '{"id":"' + i + '","name":"' + trackTemp[0] + '","title":"' + trackTemp[1] + '"}'
+                        if (i < lmstracklistTemp.length -1) {
+                            trackList = trackList + ',';
+                        } 
+                    }
+                }
                 trackList = trackList + ']';
                 if (Debug) console.log(trackList);
                 globalTracklist = trackList;
