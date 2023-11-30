@@ -132,10 +132,17 @@ class LovelaceUIPanel:
             if etype in ['light', 'timer', 'cover', 'input_select', 'select', 'fan']:
                 # figure out iid of entity
                 entity_id_iid = ""
-                for e in self.current_card.get_iid_entities():
-                    if entity_id == e[1]:
-                        entity_id_iid = f'iid.{e[0]}'
-                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, sendTopic=self.sendTopic))
+                for e in self.current_card.entities:
+                    if entity_id == e.entity_id:
+                        entity_id_iid = e.iid
+
+                    effectList = None
+                    if etype=="light":
+                        effectList = e.config.get("effectList")
+                if etype in ['input_select', 'media_player']:
+                    libs.panel_cmd.entityUpdateDetail2(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, sendTopic=self.sendTopic, options_list=effectList))
+                else:
+                    libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, sendTopic=self.sendTopic, options_list=effectList))
 
         involved_entities = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
@@ -150,6 +157,8 @@ class LovelaceUIPanel:
 
 
     def render_current_page(self, switchPages=False, requested=False):
+        if not self.current_card:
+            return
         if switchPages:
             libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
         if requested:
@@ -180,6 +189,13 @@ class LovelaceUIPanel:
         featExperimentalSliders = self.settings.get("featExperimentalSliders", 0)
         libs.panel_cmd.dimmode(self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
 
+    def get_default_card(self, card_iid):
+        defaultCard = self.settings.get("defaultCard")
+        if defaultCard:
+            card = self.searchCard(card_iid)
+            if card:
+                return card
+        return list(self.cards.values())[0]
 
     def customrecv_event_callback(self, msg):
         logging.debug("Recv Message from NsPanel (%s): %s", self.name, msg)
@@ -217,8 +233,7 @@ class LovelaceUIPanel:
 
                     # in case privious_cards is empty add a default card
                     if len(self.privious_cards) == 0:
-                        self.privious_cards.append(
-                            list(self.cards.values())[0]) # TODO: Impelement default card config
+                        self.privious_cards.append(self.get_default_card)
                     self.current_card = self.privious_cards.pop()
                     self.render_current_page(switchPages=True)
                     return
@@ -236,8 +251,9 @@ class LovelaceUIPanel:
                             case 'navigate':
                                 card_iid = entity_id.split(".")[1]
                                 if card_iid == "UP":
+                                    if len(self.privious_cards) == 0:
+                                        self.privious_cards.append(self.get_default_card)
                                     self.current_card = self.privious_cards.pop()
-                                    # TODO Handle privious_cards empty with default card
                                     self.render_current_page(switchPages=True)
                                 else:
                                     self.privious_cards.append(self.current_card)
@@ -260,6 +276,15 @@ class LovelaceUIPanel:
                 # replace iid with real entity id
                 if entity_id.startswith("iid."):
                     iid = entity_id.split(".")[1]
-                    if iid in self.entity_iids:
-                        entity_id = self.entity_iids[iid]
-                libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], sendTopic=self.sendTopic))
+                    for e in self.current_card.entities:
+                        if e.iid == iid:
+                            entity_id = e.entity_id
+                            effectList = None
+                            if entity_id.startswith("light"):
+                                effectList = e.config.get("effectList")
+                if entity_id.split(".")[0] in ['input_select', 'media_player']:
+                    libs.panel_cmd.entityUpdateDetail2(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], sendTopic=self.sendTopic, options_list=effectList))
+                else:
+                    libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], sendTopic=self.sendTopic))
+
+

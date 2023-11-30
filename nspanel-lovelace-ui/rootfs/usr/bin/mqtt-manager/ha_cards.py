@@ -625,7 +625,7 @@ def card_factory(locale, settings, panel):
             return "NotImplemented", None
     return card.iid, card
 
-def detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=None):
+def detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=None, options_list=None):
     data = libs.home_assistant.get_entity_data(ha_entity_id)
     if data:
         state = data.get("state")
@@ -763,8 +763,25 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=None):
             return f'{entity_id}~~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}'
         case 'popupThermo' | 'climate':
             print(f"not implemented {detail_type}")
-        case 'popupInSel' | 'input_select' | 'select':
-            print(f"not implemented {detail_type}")
+        case 'popupInSel' | 'input_select' | 'select' | 'media_player':
+            options = []
+            icon_color = 0
+            icon_color = ha_colors.get_entity_color(detail_type, state, attributes)
+            state = state
+            if detail_type in ["input_select", "select"]:
+                options = attributes.get("options", [])
+            elif detail_type == "light":
+                if options_list is not None:
+                    options = options_list
+                else:
+                    options = attributes.get("effect_list", [])[:15]
+            elif detail_type == "media_player":
+                state = attributes.get("source", "")
+                options = attributes.get("source_list", [])
+            options = "?".join(options)
+            return f"{entity_id}~~{icon_color}~{detail_type}~{state}~{options}~"
+
+
         case 'popupTimer' | 'timer':
             icon_color = ha_colors.get_entity_color("timer", state, attributes)
             if state in ["idle", "paused"]:

@@ -42,5 +42,8 @@ def dimmode(topic, dimValue, dimValueNormal, backgroundColor, fontColor, featExp
 def entityUpdateDetail(topic, data):
     custom_send(topic, f"entityUpdateDetail~{data}")
 
+def entityUpdateDetail2(topic, data):
+    custom_send(topic, f"entityUpdateDetail2~{data}")
+
 def statusUpdate(topic, data):
     custom_send(topic, f"statusUpdate~{data}")
