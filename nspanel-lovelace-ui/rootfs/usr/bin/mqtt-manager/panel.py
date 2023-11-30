@@ -192,7 +192,7 @@ class LovelaceUIPanel:
     def get_default_card(self):
         defaultCard = self.settings.get("defaultCard")
         if defaultCard and "." in defaultCard:
-            card = self.searchCard(defaultCard.split(".")[0])
+            card = self.searchCard(defaultCard.split(".")[1])
             if card:
                 return card
         return list(self.cards.values())[0]
