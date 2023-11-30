@@ -252,7 +252,7 @@ class LovelaceUIPanel:
                                 card_iid = entity_id.split(".")[1]
                                 if card_iid == "UP":
                                     if len(self.privious_cards) == 0:
-                                        self.privious_cards.append(self.get_default_card)
+                                        self.privious_cards.append(self.get_default_card())
                                     self.current_card = self.privious_cards.pop()
                                     self.render_current_page(switchPages=True)
                                 else:
