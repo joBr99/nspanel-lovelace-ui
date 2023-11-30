@@ -232,7 +232,7 @@ class LovelaceUIPanel:
                         return
 
                     # in case privious_cards is empty add a default card
-                    if len(self.privious_cards) == 0:
+                    if len(self.privious_cards) == 0 or self.settings.get("defaultCard"):
                         self.privious_cards.append(self.get_default_card())
                     self.current_card = self.privious_cards.pop()
                     self.render_current_page(switchPages=True)
