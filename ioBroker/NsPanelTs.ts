@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.14 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.15 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -59,6 +59,7 @@ ReleaseNotes:
         - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
         - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism)
         - 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
+        - 23.11.2023 - v4.3.3.10 Code Optimization in Config Area
         - 24.11.2023 - v4.3.3.11 Add autoCreateALias to PageQR
         - 24.11.2023 - v4.3.3.12 Separation of page creation and page updates in cardPower
         - 24.11.2023 - v4.3.3.12 Add alwaysOnDisplay to cardPower - Leave display on if the alwaysOnDisplay parameter is "true"
@@ -66,6 +67,7 @@ ReleaseNotes:
         - 25.11.2023 - v4.3.3.13 Add alwaysOnDisplay to cardMedia - Leave display on if the alwaysOnDisplay parameter is "true"
         - 25.11.2023 - v4.3.3.13 Fix Sonos Repeat/Shuffle
         - 25.11.2023 - v4.3.3.14 Refactoring Sonos-Player (with Playlist, Tracklist, Favorites, Eqalizer (if no Favorites))
+        - 29.11.2023 - v4.3.3.15 Fix cardMedia Volume-Slider / Add Init Release to Startup
         
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -939,7 +941,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.14';
+const scriptVersion: string = 'v4.3.3.15';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2679,8 +2681,9 @@ function update_tft_firmware() {
             }, async function () {
                 await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                 await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
+                Init_Release();
             });
-
+            
         } catch (err) {
             console.warn('error request in function update_tft_firmware: ' + err.message);
         }
@@ -2801,6 +2804,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     pageId = 0;
                     GeneratePage(config.pages[0]);
                     if (Debug) console.log('HandleMessage -> Startup');
+                    Init_Release();
                     break;
                 case 'sleepReached':
                     useMediaEvents = false;
@@ -4786,15 +4790,18 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 globalTracklist = lmstracklist;
             } else if(v2Adapter == 'sonos' && existsObject(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.playlist_set'].join('')))) {
                 let lmstracklist = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.queue'].join(''))).val;
+                lmstracklist = lmstracklist.replace(/\s*[\[{(].*?[)}\]]\s*/g, '');
                 let lmstracklistTemp = lmstracklist.split(', ');
                 let trackList: string = '[';
-                for (let i=0; i < lmstracklistTemp.length; i++) {
-                    let trackTemp = lmstracklistTemp[i].split(' - ');
-                    trackList = trackList + '{"id":"' + i + '","name":"' + trackTemp[0] + '","title":"' + trackTemp[1] + '"}'
-                    if (i < lmstracklistTemp.length -1) {
-                        trackList = trackList + ',';
-                    } 
-                };
+                if (getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {                
+                    for (let i=0; i < lmstracklistTemp.length; i++) {
+                        let trackTemp = lmstracklistTemp[i].split(' - ');
+                        trackList = trackList + '{"id":"' + i + '","name":"' + trackTemp[0] + '","title":"' + trackTemp[1] + '"}'
+                        if (i < lmstracklistTemp.length -1) {
+                            trackList = trackList + ',';
+                        } 
+                    }
+                }
                 trackList = trackList + ']';
                 if (Debug) console.log(trackList);
                 globalTracklist = trackList;
@@ -5986,7 +5993,14 @@ function HandleButtonEvent(words: any): void {
                 GeneratePage(activePage);
                 break;
             case 'volumeSlider':
-                setIfExists(id + '.VOLUME', parseInt(words[4]))
+                (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
+                timeoutSlider = setTimeout(async function () {
+                    setIfExists(id + '.VOLUME', parseInt(words[4]));
+                    setTimeout(async function () {
+                        pageCounter = 1;
+                        GeneratePage(activePage);
+                    }, 3000);
+                }, 20);
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
