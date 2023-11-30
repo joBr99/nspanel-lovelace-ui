@@ -189,10 +189,10 @@ class LovelaceUIPanel:
         featExperimentalSliders = self.settings.get("featExperimentalSliders", 0)
         libs.panel_cmd.dimmode(self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
 
-    def get_default_card(self, card_iid):
+    def get_default_card(self):
         defaultCard = self.settings.get("defaultCard")
         if defaultCard:
-            card = self.searchCard(card_iid)
+            card = self.searchCard(defaultCard)
             if card:
                 return card
         return list(self.cards.values())[0]
@@ -233,7 +233,7 @@ class LovelaceUIPanel:
 
                     # in case privious_cards is empty add a default card
                     if len(self.privious_cards) == 0:
-                        self.privious_cards.append(self.get_default_card)
+                        self.privious_cards.append(self.get_default_card())
                     self.current_card = self.privious_cards.pop()
                     self.render_current_page(switchPages=True)
                     return
