@@ -1389,7 +1389,7 @@ on({id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change
 async function Init_bExit_Page_Change() {
     try {
         if (existsState(NSPanel_Path + 'ScreensaverInfo.bExitPage') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', null, true, { type: 'number' });
+            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', -1, true, { type: 'number' });
         }
     } catch (err) { 
         console.warn('error at function Init_bExit_Page_Change: ' + err.message); 
@@ -1415,7 +1415,7 @@ async function InitActiveBrightness() {
             if (existsState(NSPanel_Path + 'ScreensaverInfo.activeBrightness') == false ||
                 existsState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness') == false) {
                 await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeBrightness', 100, { type: 'number' });         
-                await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', null, { type: 'number' });
+                await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', -1, { type: 'number' });
             }
             //Create Alias activeBrightness
             setObject(AliasPath + 'ScreensaverInfo.activeBrightness', {type: 'channel', common: {role: 'slider', name:'activeBrightness'}, native: {}});
@@ -1432,14 +1432,19 @@ on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightnes
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
 
-        if (obj.state.val != null) {
-            console.log('error at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active);
-            SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+        if (obj.state.val != null && obj.state.val != -1) {
+            if (obj.state.val < -1 || obj.state.val > 100) {
+                console.log('activeDimmodeBrightness value only between -1 and 100');
+                setStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', -1, true);
+            } else {
+                console.log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active);
+                SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+            }
         } else {
             InitDimmode();
         }
-    } catch (err) { 
-        console.warn('error at trigger activeDimmodeBrightness: ' + err.message); 
+    } catch (err) {
+        console.warn('error at trigger activeDimmodeBrightness: ' + err.message);
     }
 });
 
@@ -1871,7 +1876,7 @@ async function InitDimmode() {
                 ScreensaverDimmode(timeDimMode);
             });
 
-            if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null) {
+            if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
                 SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
             } else {
                 ScreensaverDimmode(timeDimMode);
@@ -5603,7 +5608,7 @@ function HandleButtonEvent(words: any): void {
                 if (words[2] == 'screensaver') {
                     if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val) {
                         if (words[4] >= 2) {
-                            if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
+                            if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != -1) {
                                 pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val;
                             }
                         } else {
@@ -5623,7 +5628,7 @@ function HandleButtonEvent(words: any): void {
                         if (getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText').val != '') {
                             setIfExists(NSPanel_Path + 'ScreensaverInfo.popupNotifyText', '');
                         }
-                        if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null) {
+                        if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != -1) {
                             pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
                         }
                     }
