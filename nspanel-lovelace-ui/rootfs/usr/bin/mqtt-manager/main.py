@@ -59,7 +59,7 @@ def process_output_to_panel():
 
 def connect():
     global settings, panel_out_queue
-    if settings["mqtt_server"]:
+    if settings["mqtt_server"] and not settings["use_ha_api"]:
         MqttManager(settings, panel_out_queue, panel_in_queues)
     else:
         logging.info("MQTT values not configured, will not connect.")
