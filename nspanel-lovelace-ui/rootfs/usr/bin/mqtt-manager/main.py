@@ -59,7 +59,7 @@ def process_output_to_panel():
 
 def connect():
     global settings, panel_out_queue
-    if settings["mqtt_server"] and not settings["use_ha_api"]:
+    if "mqtt_server" in settings and not "use_ha_api" in settings:
         MqttManager(settings, panel_out_queue, panel_in_queues)
     else:
         logging.info("MQTT values not configured, will not connect.")
@@ -73,7 +73,7 @@ def connect():
 
     while not libs.home_assistant.ws_connected:
         time.sleep(1)
-    if settings["use_ha_api"]:
+    if settings.get("use_ha_api"):
         libs.home_assistant.subscribe_to_nspanel_events(on_ha_panel_event)
         send_to_panel_thread = threading.Thread(target=process_output_to_panel, args=())
         send_to_panel_thread.daemon = True
