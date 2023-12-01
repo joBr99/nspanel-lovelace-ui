@@ -134,7 +134,7 @@ class LovelaceUIPanel:
                 entity_id_iid = ""
                 for e in self.current_card.entities:
                     if entity_id == e.entity_id:
-                        entity_id_iid = e.iid
+                        entity_id_iid = f'iid.{e.iid}'
 
                     effectList = None
                     if etype=="light":
