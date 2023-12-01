@@ -188,6 +188,10 @@ if __name__ == '__main__':
     if (get_config(get_config_file())):
         connect()
         setup_panels()
+
+        # main thread sleep forever
+        while True:
+            sleep(100)
     else:
         while True:
           time.sleep(100)
