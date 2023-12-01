@@ -4399,7 +4399,7 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.VOLUME');
             unsubscribe(mediaID + '.REPEAT');
             unsubscribe(mediaID + '.SHUFFLE');
-            unsubscribe(mediaID + '.CUEUE');
+            unsubscribe(mediaID + '.QUEUE');
             unsubscribe(mediaID + '.DURATION');
             unsubscribe(mediaID + '.ELAPSED');
         }
@@ -4414,7 +4414,7 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.VOLUME');
             unsubscribe(mediaID + '.REPEAT');
             unsubscribe(mediaID + '.SHUFFLE');
-            unsubscribe(mediaID + '.CUEUE');
+            unsubscribe(mediaID + '.QUEUE');
             unsubscribe(mediaID + '.DURATION');
             unsubscribe(mediaID + '.ELAPSED');
         }
@@ -4443,7 +4443,7 @@ function subscribeMediaSubscriptions(id: string): void {
 } 
 
 function subscribeMediaSubscriptionsSonosAdd(id: string): void {
-    on({id: [].concat([id + '.CUEUE'])
+    on({id: [].concat([id + '.QUEUE'])
               .concat([id + '.DURATION'])
               .concat([id + '.ELAPSED']), change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
@@ -4541,9 +4541,9 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                     }
                 }
                 //Add Sonos Add Datapoints > v4.3.3.15
-                if (existsObject(id + '.CUEUE') == false) {
+                if (existsObject(id + '.QUEUE') == false) {
                     let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
-                    await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'CUEUE' });
+                    await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'QUEUE' });
                     await createAliasAsync(id + '.DURATION', dpPath + '.current_duration_s', true, <iobJS.StateCommon>{ type: 'string', role: 'media.duration.text', name: 'DURATION' });
                     await createAliasAsync(id + '.ELAPSED', dpPath + '.current_elapsed_s', true, <iobJS.StateCommon>{ type: 'string', role: 'media.elapsed.text', name: 'ELAPSED' });
                 }
