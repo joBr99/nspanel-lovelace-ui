@@ -33,9 +33,33 @@ def on_ha_update(entity_id):
     for queue in panel_in_queues.values():
         queue.put(("HA:", entity_id))
 
+def on_ha_panel_event(device_id, msg):
+    global panel_in_queues
+
+    if device_id in panel_in_queues.keys():
+        queue = panel_in_queues[device_id]
+        queue.put(("MQTT:", msg))
+
+def process_output_to_panel():
+    while True:
+        msg = panel_out_queue.get()
+
+        #client.publish(msg[0], msg[1])
+        #apis.ha_api.call_service(service="esphome/" + self._api_panel_name + "_nspanelui_api_call", command=2, data=msg)
+        service = msg[0] + "_nspanelui_api_call"
+        service_data = {
+            "data": msg[1],
+            "command":2
+            }
+        libs.home_assistant.send_msg_to_panel(
+            service = service,
+            service_data = service_data
+        )
+
+
 def connect():
     global settings, panel_out_queue
-    if settings["mqtt_server"] != "":
+    if settings["mqtt_server"]:
         MqttManager(settings, panel_out_queue, panel_in_queues)
     else:
         logging.info("MQTT values not configured, will not connect.")
@@ -46,6 +70,14 @@ def connect():
         libs.home_assistant.connect()
     else:
         logging.info("Home Assistant values not configured, will not connect.")
+
+    while not libs.home_assistant.ws_connected:
+        time.sleep(1)
+    if settings["use_ha_api"]:
+        libs.home_assistant.subscribe_to_nspanel_events(on_ha_panel_event)
+        send_to_panel_thread = threading.Thread(target=process_output_to_panel, args=())
+        send_to_panel_thread.daemon = True
+        send_to_panel_thread.start()
 
 def setup_panels():
     global settings, panel_in_queues

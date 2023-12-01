@@ -70,7 +70,8 @@ def on_message(ws, message):
         for template, template_cache_entry in template_cache.items():
             if entity_id in template_cache_entry.get("listener-entities", []):
                 cache_template(template)
-
+    elif json_msg["type"] == "event" and json_msg["event"]["event_type"] == "esphome.nspanel.data":
+        nspanel_data_callback(json_msg["event"]["data"]["device_id"], json_msg["event"]["data"]["CustomRecv"])
     elif json_msg["type"] == "result" and not json_msg["success"]:
         logging.error("Failed result: ")
         logging.error(json_msg)
@@ -143,6 +144,15 @@ def subscribe_to_events():
     }
     send_message(json.dumps(msg))
 
+def subscribe_to_nspanel_events(nsp_callback):
+    global next_id, nspanel_data_callback
+    nspanel_data_callback = nsp_callback
+    msg = {
+        "id": next_id,
+        "type": "subscribe_events",
+        "event_type": "esphome.nspanel.data"
+    }
+    send_message(json.dumps(msg))
 
 def _get_all_states():
     global next_id, request_all_states_id
@@ -158,6 +168,10 @@ def send_entity_update(entity_id):
     global on_ha_update
     on_ha_update(entity_id)
 
+def nspanel_data_callback(device_id, msg):
+    global nspanel_data_callback
+    nspanel_data_callback(device_id, msg)
+
 def call_service(entity_name: str, domain: str, service: str, service_data: dict) -> bool:
     global next_id
     try:
@@ -170,6 +184,22 @@ def call_service(entity_name: str, domain: str, service: str, service_data: dict
             "target": {
                 "entity_id": entity_name
             },
+        }
+        send_message(json.dumps(msg))
+        return True
+    except Exception as e:
+        logging.exception("Failed to call Home Assisatant service.")
+        return False
+
+def send_msg_to_panel(service: str, service_data: dict) -> bool:
+    global next_id
+    try:
+        msg = {
+            "id": next_id,
+            "type": "call_service",
+            "domain": "esphome",
+            "service": service,
+            "service_data": service_data,
         }
         send_message(json.dumps(msg))
         return True
