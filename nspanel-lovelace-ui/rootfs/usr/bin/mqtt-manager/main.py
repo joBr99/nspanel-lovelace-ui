@@ -191,7 +191,7 @@ if __name__ == '__main__':
 
         # main thread sleep forever
         while True:
-            sleep(100)
+            time.sleep(100)
     else:
         while True:
           time.sleep(100)

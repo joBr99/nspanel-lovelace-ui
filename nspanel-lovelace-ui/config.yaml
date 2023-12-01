@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: NSPanel Lovelace UI Addon
-version: "4.7.67"
+version: "4.7.68"
 slug: nspanel-lovelace-ui
 description: NSPanel Lovelace UI Addon
 services:
