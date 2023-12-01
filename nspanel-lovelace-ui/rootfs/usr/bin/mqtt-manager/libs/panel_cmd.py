@@ -5,45 +5,44 @@ def init(mqtt_client_from_manager):
     mqtt_client = mqtt_client_from_manager
 
 
-def custom_send(topic, msg):
-    global mqtt_client
-    mqtt_client.publish(topic, msg)
+def custom_send(msg_out_queue, topic, msg):
+    msg_out_queue.put((topic, msg))
     logging.debug("Sent Message to NsPanel (%s): %s", topic, msg)
 
 
-def page_type(topic, target_page):
+def page_type(msg_out_queue, topic, target_page):
     if target_page == "cardUnlock":
         target_page = "cardAlarm"
-    custom_send(topic, f"pageType~{target_page}")
+    custom_send(msg_out_queue, topic, f"pageType~{target_page}")
 
 
-def send_time(topic, time, addTimeText=""):
-    custom_send(topic, f"time~{time}~{addTimeText}")
+def send_time(msg_out_queue, topic, time, addTimeText=""):
+    custom_send(msg_out_queue, topic, f"time~{time}~{addTimeText}")
 
 
-def send_date(topic, date):
-    custom_send(topic, f"date~{date}")
+def send_date(msg_out_queue, topic, date):
+    custom_send(msg_out_queue, topic, f"date~{date}")
 
 
-def entityUpd(topic, data):
-    custom_send(topic, f"entityUpd~{data}")
+def entityUpd(msg_out_queue, topic, data):
+    custom_send(msg_out_queue, topic, f"entityUpd~{data}")
 
-def weatherUpdate(topic, data):
-    custom_send(topic, f"weatherUpdate~{data}")
+def weatherUpdate(msg_out_queue, topic, data):
+    custom_send(msg_out_queue, topic, f"weatherUpdate~{data}")
 
-def timeout(topic, timeout):
-    custom_send(topic, f"timeout~{timeout}")
+def timeout(msg_out_queue, topic, timeout):
+    custom_send(msg_out_queue, topic, f"timeout~{timeout}")
 
-def dimmode(topic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders):
+def dimmode(msg_out_queue, topic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders):
     if dimValue==dimValueNormal:
         dimValue=dimValue-1
-    custom_send(topic, f"dimmode~{dimValue}~{dimValueNormal}~{backgroundColor}~{fontColor}~{featExperimentalSliders}")
+    custom_send(msg_out_queue, topic, f"dimmode~{dimValue}~{dimValueNormal}~{backgroundColor}~{fontColor}~{featExperimentalSliders}")
 
-def entityUpdateDetail(topic, data):
-    custom_send(topic, f"entityUpdateDetail~{data}")
+def entityUpdateDetail(msg_out_queue, topic, data):
+    custom_send(msg_out_queue, topic, f"entityUpdateDetail~{data}")
 
-def entityUpdateDetail2(topic, data):
-    custom_send(topic, f"entityUpdateDetail2~{data}")
+def entityUpdateDetail2(msg_out_queue, topic, data):
+    custom_send(msg_out_queue, topic, f"entityUpdateDetail2~{data}")
 
-def statusUpdate(topic, data):
-    custom_send(topic, f"statusUpdate~{data}")
+def statusUpdate(msg_out_queue, topic, data):
+    custom_send(msg_out_queue, topic, f"statusUpdate~{data}")

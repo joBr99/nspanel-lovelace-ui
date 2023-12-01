@@ -297,7 +297,7 @@ class EntitiesCard(HACard):
         result = f"{self.title}~{self.gen_nav()}"
         for e in self.entities:
             result += e.render(cardType=self.type)
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class QRCard(HACard):
     def __init__(self, locale, config, panel):
@@ -311,7 +311,7 @@ class QRCard(HACard):
         result = f"{self.title}~{self.gen_nav()}~{self.qrcode}"
         for e in self.entities:
             result += e.render()
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class PowerCard(HACard):
     def __init__(self, locale, config, panel):
@@ -329,7 +329,7 @@ class PowerCard(HACard):
             #    if isinstance(speed, str):
             #        speed = apis.ha_api.render_template(speed)
             result += f"~{speed}"
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class MediaCard(HACard):
     def __init__(self, locale, config, panel):
@@ -366,7 +366,7 @@ class MediaCard(HACard):
         for e in self.entities[1:]:
             button_str += e.render()
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{title}~~{author}~~{volume}~{iconplaypause}~{onoffbutton}~{shuffleBtn}{media_icon}{button_str}"
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class ClimateCard(HACard):
     def __init__(self, locale, config, panel):
@@ -461,7 +461,7 @@ class ClimateCard(HACard):
             detailPage = "0"
 
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class AlarmCard(HACard):
     def __init__(self, locale, config, panel):
@@ -531,7 +531,7 @@ class AlarmCard(HACard):
         if len(supported_modes) < 4:
             arm_buttons += "~"*((4-len(supported_modes))*2)
         result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}{arm_buttons}~{icon}~{color}~{numpad}~{flashing}~{add_btn}"
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 
 class UnlockCard(HACard):
@@ -555,7 +555,7 @@ class UnlockCard(HACard):
         numpad = "enable"
 
         result = f"{self.title}~{self.gen_nav()}~{entity_id}{arm_buttons}~{icon}~{color}~{numpad}~disable~"
-        libs.panel_cmd.entityUpd(self.panel.sendTopic, result)
+        libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class Screensaver(HACard):
     def __init__(self, locale, config, panel):
@@ -583,7 +583,7 @@ class Screensaver(HACard):
         result = ""
         for e in self.entities:
             result += e.render(cardType=self.type)
-        libs.panel_cmd.weatherUpdate(self.panel.sendTopic, result[1:])
+        libs.panel_cmd.weatherUpdate(self.panel.msg_out_queue, self.panel.sendTopic, result[1:])
 
         statusUpdateResult = ""
         icon1font = ""
@@ -601,7 +601,7 @@ class Screensaver(HACard):
         else:
             statusUpdateResult += "~~"
 
-        libs.panel_cmd.statusUpdate(self.panel.sendTopic, f"{statusUpdateResult}~{icon1font}~{icon2font}")
+        libs.panel_cmd.statusUpdate(self.panel.msg_out_queue, self.panel.sendTopic, f"{statusUpdateResult}~{icon1font}~{icon2font}")
 
 
 def card_factory(locale, settings, panel):
@@ -625,7 +625,7 @@ def card_factory(locale, settings, panel):
             return "NotImplemented", None
     return card.iid, card
 
-def detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=None, options_list=None):
+def detail_open(locale, detail_type, ha_entity_id, entity_id, msg_out_queue, sendTopic=None, options_list=None):
     data = libs.home_assistant.get_entity_data(ha_entity_id)
     if data:
         state = data.get("state")
@@ -804,8 +804,8 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=None, op
                 #update timer in a second
                 def update_time():
                     time.sleep(1)
-                    out = detail_open(locale, detail_type, ha_entity_id, entity_id, sendTopic=sendTopic)
-                    libs.panel_cmd.entityUpdateDetail(sendTopic, out)
+                    out = detail_open(locale, detail_type, ha_entity_id, entity_id, msg_out_queue, sendTopic=sendTopic)
+                    libs.panel_cmd.entityUpdateDetail(msg_out_queue, sendTopic, out)
                 tt = threading.Thread(target=update_time, args=())
                 tt.daemon = True
                 tt.start()

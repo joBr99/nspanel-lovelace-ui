@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 import logging
-import paho.mqtt.client as mqtt
 import time
-import json
 import subprocess
 import libs.home_assistant
 import libs.panel_cmd
 import yaml
-from uuid import getnode as get_mac
 from panel import LovelaceUIPanel
 import os
 import threading
@@ -16,52 +13,65 @@ from watchdog.observers import Observer
 import signal
 import sys
 from queue import Queue
+from mqtt import MqttManager
 
 logging.getLogger("watchdog").propagate = False
 
 settings = {}
 panels = {}
-panel_queues = {}
+panel_in_queues = {}
+panel_out_queue = Queue(maxsize=20)
 last_settings_file_mtime = 0
 mqtt_connect_time = 0
 has_sent_reload_command = False
-mqtt_client_name = "NSPanelLovelaceManager_" + str(get_mac())
-client = mqtt.Client(mqtt_client_name)
+
 logging.basicConfig(level=logging.DEBUG)
 
-def on_connect(client, userdata, flags, rc):
-    global settings
-    logging.info("Connected to MQTT Server")
-    # subscribe to panelRecvTopic of each panel
-    for settings_panel in settings["nspanels"].values():
-        client.subscribe(settings_panel["panelRecvTopic"])
-
 def on_ha_update(entity_id):
-    global panel_queues
-    for queue in panel_queues.values():
+    global panel_in_queues
+    # send HA updates to all panels
+    for queue in panel_in_queues.values():
         queue.put(("HA:", entity_id))
 
-def on_message(client, userdata, msg):
-    global panel_queues
-    try:
-        if msg.payload.decode() == "":
-            return
-        parts = msg.topic.split('/')
-        if msg.topic in panel_queues.keys():
-            data = json.loads(msg.payload.decode('utf-8'))
-            if "CustomRecv" in data:
-                queue = panel_queues[msg.topic]
-                queue.put(("MQTT:", data["CustomRecv"]))
-        else:
-            logging.debug("Received unhandled message on topic: %s", msg.topic)
+def connect():
+    global settings, panel_out_queue
+    if settings["mqtt_server"] != "":
+        MqttManager(settings, panel_out_queue, panel_in_queues)
+    else:
+        logging.info("MQTT values not configured, will not connect.")
 
-    except Exception:  # pylint: disable=broad-exception-caught
-        logging.exception("Something went wrong during processing of message:")
-        try:
-            logging.error(msg.payload.decode('utf-8'))
-        except:  # pylint: disable=bare-except
-            logging.error(
-                "Something went wrong when processing the exception message, couldn't decode payload to utf-8.")
+    # MQTT Connected, start APIs if configured
+    if settings["home_assistant_address"] != "" and settings["home_assistant_token"] != "":
+        libs.home_assistant.init(settings, on_ha_update)
+        libs.home_assistant.connect()
+    else:
+        logging.info("Home Assistant values not configured, will not connect.")
+
+def setup_panels():
+    global settings, panel_in_queues
+    # Create NsPanel object
+    for name, settings_panel in settings["nspanels"].items():
+        if "timeZone" not in settings_panel:
+            settings_panel["timeZone"] = settings.get("timeZone", "Europe/Berlin")
+        if "locale" not in settings_panel:
+            settings_panel["timezone"] = settings.get("locale", "en_US")
+        if "hiddenCards" not in settings_panel:
+            settings_panel["hiddenCards"] = settings.get("hiddenCards", [])
+
+        msg_in_queue = Queue(maxsize=20)
+        panel_in_queues[settings_panel["panelRecvTopic"]] = msg_in_queue
+        panel_thread = threading.Thread(target=panel_thread_target, args=(msg_in_queue, name, settings_panel, panel_out_queue))
+        panel_thread.daemon = True
+        panel_thread.start()
+
+def panel_thread_target(queue_in, name, settings_panel, queue_out):
+    panel = LovelaceUIPanel(name, settings_panel, queue_out)
+    while True:
+        msg = queue_in.get()
+        if msg[0] == "MQTT:":
+            panel.customrecv_event_callback(msg[1])
+        elif msg[0] == "HA:":
+            panel.ha_event_callback(msg[1])
 
 def get_config_file():
     CONFIG_FILE = os.getenv('CONFIG_FILE')
@@ -109,79 +119,6 @@ def get_config(file):
             settings["is_addon"] = True
     return True
 
-def connect():
-    global settings, home_assistant, client
-    client.on_connect = on_connect
-    client.on_message = on_message
-    client.username_pw_set(
-        settings["mqtt_username"], settings["mqtt_password"])
-    # Wait for connection
-    connection_return_code = 0
-    mqtt_server = settings["mqtt_server"]
-    mqtt_port = int(settings["mqtt_port"])
-    logging.info("Connecting to %s:%i as %s",
-                 mqtt_server, mqtt_port, mqtt_client_name)
-    while True:
-        try:
-            client.connect(mqtt_server, mqtt_port, 5)
-            break  # Connection call did not raise exception, connection is sucessfull
-        except:  # pylint: disable=bare-except
-            logging.exception(
-                "Failed to connect to MQTT %s:%i. Will try again in 10 seconds. Code: %s", mqtt_server, mqtt_port, connection_return_code)
-            time.sleep(10.)
-
-    # MQTT Connected, start APIs if configured
-    if settings["home_assistant_address"] != "" and settings["home_assistant_token"] != "":
-        libs.home_assistant.init(settings, on_ha_update)
-        libs.home_assistant.connect()
-    else:
-        logging.info("Home Assistant values not configured, will not connect.")
-
-    libs.panel_cmd.init(client)
-
-    setup_panels()
-
-def loop():
-    global client
-    # Loop MQTT
-    client.loop_forever()
-
-def setup_panels():
-    global settings, panel_queues
-    # Create NsPanel object
-    for name, settings_panel in settings["nspanels"].items():
-        if "timeZone" not in settings_panel:
-            settings_panel["timeZone"] = settings.get("timeZone", "Europe/Berlin")
-        if "locale" not in settings_panel:
-            settings_panel["timezone"] = settings.get("locale", "en_US")
-        if "hiddenCards" not in settings_panel:
-            settings_panel["hiddenCards"] = settings.get("hiddenCards", [])
-
-        #panels[name] = LovelaceUIPanel(name, settings_panel)
-
-        mqtt_queue = Queue(maxsize=20)
-        panel_queues[settings_panel["panelRecvTopic"]] = mqtt_queue
-        panel_thread = threading.Thread(target=panel_thread_target, args=(mqtt_queue, name, settings_panel))
-        panel_thread.daemon = True
-
-        panel_thread.start()
-
-def panel_thread_target(queue, name, settings_panel):
-    panel = LovelaceUIPanel(name, settings_panel)
-    while True:
-        msg = queue.get()
-        #print(msg)
-        if msg[0] == "MQTT:":
-            panel.customrecv_event_callback(msg[1])
-        elif msg[0] == "HA:":
-            panel.ha_event_callback(msg[1])
-
-
-
-
-
-
-
 def config_watch():
     class ConfigChangeEventHandler(FileSystemEventHandler):
         def __init__(self, base_paths):
@@ -218,7 +155,7 @@ if __name__ == '__main__':
     threading.Thread(target=config_watch).start()
     if (get_config(get_config_file())):
         connect()
-        loop()
+        setup_panels()
     else:
         while True:
           time.sleep(100)

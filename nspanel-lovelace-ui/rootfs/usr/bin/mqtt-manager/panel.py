@@ -12,13 +12,13 @@ import ha_control
 
 class LovelaceUIPanel:
 
-    def __init__(self, name_panel, settings_panel):
+    def __init__(self, name_panel, settings_panel, msg_out_queue):
         self.name = name_panel
         self.settings = settings_panel
+        self.msg_out_queue = msg_out_queue
         self.sendTopic = self.settings["panelSendTopic"]
         self.recvTopic = self.settings["panelRecvTopic"]
         self.model = self.settings.get("model", "eu")
-
 
         self.current_card = None
         self.privious_cards = []
@@ -94,7 +94,7 @@ class LovelaceUIPanel:
         for e in self.screensaver.entities:
             e.prerender()
 
-        libs.panel_cmd.page_type(self.sendTopic, "pageStartup")
+        libs.panel_cmd.page_type(self.msg_out_queue, self.sendTopic, "pageStartup")
 
 
     def schedule_thread_target(self):
@@ -106,13 +106,13 @@ class LovelaceUIPanel:
         use_timezone = tz.gettz(self.settings["timeZone"])
         time_string = datetime.datetime.now(
             use_timezone).strftime(self.settings["timeFormat"])
-        libs.panel_cmd.send_time(self.sendTopic, time_string)
+        libs.panel_cmd.send_time(self.msg_out_queue, self.sendTopic, time_string)
 
     def update_date(self):
         dateformat = self.settings["dateFormat"]
         date_string = babel.dates.format_date(
             datetime.datetime.now(), dateformat, locale=self.settings["locale"])
-        libs.panel_cmd.send_date(self.sendTopic, date_string)
+        libs.panel_cmd.send_date(self.msg_out_queue, self.sendTopic, date_string)
 
     def searchCard(self, iid):
         if iid in self.navigate_keys:
@@ -140,9 +140,9 @@ class LovelaceUIPanel:
                     if etype=="light":
                         effectList = e.config.get("effectList")
                 if etype in ['input_select', 'media_player']:
-                    libs.panel_cmd.entityUpdateDetail2(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, sendTopic=self.sendTopic, options_list=effectList))
+                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
                 else:
-                    libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, sendTopic=self.sendTopic, options_list=effectList))
+                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
 
         involved_entities = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
@@ -160,15 +160,9 @@ class LovelaceUIPanel:
         if not self.current_card:
             return
         if switchPages:
-            libs.panel_cmd.page_type(self.sendTopic, self.current_card.type)
+            libs.panel_cmd.page_type(self.msg_out_queue, self.sendTopic, self.current_card.type)
         if requested:
             self.current_card.render()
-        # send sleepTimeout
-        #sleepTimeout = self.settings.get("sleepTimeout", 20)
-        #if self.current_card.config.get("sleepTimeout"):
-        #    sleepTimeout = self.current_card.config.get("sleepTimeout")
-        #libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
-        #self.dimmode()
 
     def dimmode(self):
         # send dimmode
@@ -187,7 +181,7 @@ class LovelaceUIPanel:
             backgroundColor = 0
         fontColor = ""
         featExperimentalSliders = self.settings.get("featExperimentalSliders", 0)
-        libs.panel_cmd.dimmode(self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
+        libs.panel_cmd.dimmode(self.msg_out_queue, self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
 
     def get_default_card(self):
         defaultCard = self.settings.get("defaultCard")
@@ -214,7 +208,7 @@ class LovelaceUIPanel:
                 sleepTimeout = self.settings.get("sleepTimeout", 20)
                 if self.current_card.config.get("sleepTimeout"):
                     sleepTimeout = self.current_card.config.get("sleepTimeout")
-                libs.panel_cmd.timeout(self.sendTopic, sleepTimeout)
+                libs.panel_cmd.timeout(self.msg_out_queue, self.sendTopic, sleepTimeout)
                 self.dimmode()
 
             if msg[1] == "sleepReached":
@@ -288,8 +282,8 @@ class LovelaceUIPanel:
                             if entity_id.startswith("light"):
                                 effectList = e.config.get("effectList")
                 if entity_id.split(".")[0] in ['input_select', 'media_player']:
-                    libs.panel_cmd.entityUpdateDetail2(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], sendTopic=self.sendTopic, options_list=effectList))
+                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
                 else:
-                    libs.panel_cmd.entityUpdateDetail(self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], sendTopic=self.sendTopic))
+                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], self.msg_out_queue, sendTopic=self.sendTopic))
 
 
