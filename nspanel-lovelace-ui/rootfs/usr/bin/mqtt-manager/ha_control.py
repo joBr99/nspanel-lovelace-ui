@@ -156,19 +156,20 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
             }
             call_ha_service(entity_id, f"alarm_{btype}", service_data=service_data)
         case 'mode-preset_modes' | 'mode-swing_modes' | 'mode-fan_modes':
+            attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
             mapping = {
                 'mode-preset_modes': 'preset_modes',
                 'mode-swing_modes': 'swing_modes',
-                'mode-fan_modes': 'fan_mode'
+                'mode-fan_modes': 'fan_modes'
             }
             if btype in mapping:
-                modes = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get(mapping[btype], [])
+                modes = attr.get(mapping[btype], [])
                 if modes:
                     mode = modes[int(value)]
                     service_data = {
-                        mapping[btype]: mode
+                        mapping[btype][:-1]: mode
                     }
-                    call_ha_service(entity_id, f"set_{mapping[btype]}", service_data=service_data)
+                    call_ha_service(entity_id, f"set_{mapping[btype][:-1]}", service_data=service_data)
         case 'mode-input_select' | 'mode-select':
             options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("options", [])
             if options:

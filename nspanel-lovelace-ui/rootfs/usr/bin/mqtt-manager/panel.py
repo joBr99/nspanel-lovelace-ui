@@ -129,7 +129,7 @@ class LovelaceUIPanel:
 
             # send update for detail popup in case it's open
             etype = entity_id.split('.')[0]
-            if etype in ['light', 'timer', 'cover', 'input_select', 'select', 'fan']:
+            if etype in ['light', 'timer', 'cover', 'input_select', 'select', 'fan', 'climate']:
                 # figure out iid of entity
                 entity_id_iid = ""
                 for e in self.current_card.entities:

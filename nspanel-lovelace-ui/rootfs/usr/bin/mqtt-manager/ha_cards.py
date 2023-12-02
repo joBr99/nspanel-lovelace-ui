@@ -460,7 +460,7 @@ class ClimateCard(HACard):
         if any(x in ["preset_modes", "swing_modes", "fan_modes"] for x in main_entity.attributes):
             detailPage = "0"
 
-        result = f"{self.title}~{self.gen_nav()}~{main_entity.entity_id}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
+        result = f"{self.title}~{self.gen_nav()}~iid.{main_entity.iid}~{current_temp} {temperature_unit}~{dest_temp}~{state_value}~{min_temp}~{max_temp}~{step_temp}{icon_res}~{currently_translation}~{state_translation}~{action_translation}~{temperature_unit_icon}~{dest_temp2}~{detailPage}"
         libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 
 class AlarmCard(HACard):
@@ -762,7 +762,30 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id, msg_out_queue, sen
 
             return f'{entity_id}~~{icon_color}~{switch_val}~{speed}~{speedMax}~{speed_translation}~{preset_mode}~{preset_modes}'
         case 'popupThermo' | 'climate':
-            print(f"not implemented {detail_type}")
+            icon_id      = ha_icons.get_icon_ha("climate", state)
+            icon_color  = ha_colors.get_entity_color("climate", state, attributes)
+
+            modes_out = ""
+            for mode in ["preset_modes", "swing_modes", "fan_modes"]:
+                heading = get_translation(locale, f"frontend.ui.card.climate.{mode[:-1]}")
+                cur_mode = attributes.get(mode[:-1], "")
+                modes = attributes.get(mode, [])
+                if modes is not None:
+                    if mode == "preset_modes":
+                        translated_modes = []
+                        for elem in modes:
+                            translated_modes.append(get_translation(locale, f"frontend.state_attributes.climate.preset_mode.{elem}"))
+                        cur_mode = get_translation(locale, f"frontend.state_attributes.climate.preset_mode.{cur_mode}")
+                        modes_res = "?".join(translated_modes)
+                    else:
+                        modes_res = "?".join(modes)
+                    if modes:
+                        modes_out += f"{heading}~{mode}~{cur_mode}~{modes_res}~"
+
+            return f"{entity_id}~{icon_id}~{icon_color}~{modes_out}"
+
+
+
         case 'popupInSel' | 'input_select' | 'select' | 'media_player':
             hatype = ha_entity_id.split(".")[0]
             options = []
