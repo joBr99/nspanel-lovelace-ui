@@ -375,9 +375,8 @@ class ClimateCard(HACard):
     def render(self):
         main_entity = self.entities[0]
 
-        #TODO: temp unit
-        temp_unit = "celsius"
-        if(temp_unit == "celsius"):
+        temp_unit = self.panel.temp_unit
+        if temp_unit == "celsius":
             temperature_unit_icon = get_icon_char("temperature-celsius")
             temperature_unit = "°C"
 
@@ -411,7 +410,12 @@ class ClimateCard(HACard):
 
         min_temp     = int(main_entity.attributes.get("min_temp", 0)*10)
         max_temp     = int(main_entity.attributes.get("max_temp", 0)*10)
-        step_temp    = int(main_entity.attributes.get("target_temp_step", 0.5)*10)
+
+        if temp_unit == "celsius":
+            step_default = 0.5
+        else:
+            step_default = 0.5
+        step_temp    = int(main_entity.attributes.get("target_temp_step", step_default)*10)
         icon_res_list = []
         icon_res = ""
 

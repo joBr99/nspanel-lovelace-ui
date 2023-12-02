@@ -20,6 +20,8 @@ class LovelaceUIPanel:
         self.recvTopic = self.settings["panelRecvTopic"]
         self.model = self.settings.get("model", "eu")
 
+        self.temp_unit = self.settings("temp_unit", "celsius")
+
         self.current_card = None
         self.privious_cards = []
         self.cards = {}
