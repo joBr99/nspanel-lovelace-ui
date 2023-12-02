@@ -51,7 +51,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
     else:
         return dimmode, dimValueNormal
 
-def handle_buttons(entity_id, btype, value):
+def handle_buttons(entity_id, btype, value, entity_config):
     match btype:
         case 'button':
             button_press(entity_id, value)
@@ -186,7 +186,7 @@ def handle_buttons(entity_id, btype, value):
                 }
                 call_ha_service(entity_id, "select_source", service_data=service_data)
         case 'mode-light':
-            options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("effect_list", [])
+            options = entity_config.get("effectList", libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("effect_list", []))
             if options:
                 option = options[int(value)]
                 service_data = {

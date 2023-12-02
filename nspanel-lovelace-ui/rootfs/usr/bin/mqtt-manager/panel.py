@@ -139,10 +139,13 @@ class LovelaceUIPanel:
                     effectList = None
                     if etype=="light":
                         effectList = e.config.get("effectList")
-                if etype in ['input_select', 'media_player']:
-                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
+                if etype == 'light':
+                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], "popupInSel", entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
+                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], "popupLight", entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic))
+                elif etype in ['input_select', 'media_player']:
+                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic))
                 else:
-                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
+                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic))
 
         involved_entities = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
@@ -238,10 +241,18 @@ class LovelaceUIPanel:
                     return
 
                 # replace iid with real entity id
+                #if entity_id.startswith("iid."):
+                #    iid = entity_id.split(".")[1]
+                #    if iid in self.entity_iids:
+                #        entity_id = self.entity_iids[iid]
+
+                # replace iid with real entity id
                 if entity_id.startswith("iid."):
                     iid = entity_id.split(".")[1]
-                    if iid in self.entity_iids:
-                        entity_id = self.entity_iids[iid]
+                    for e in self.current_card.entities:
+                        if e.iid == iid:
+                            entity_id = e.entity_id
+                            entity_config = e.config
 
                 match btype:
                     case 'button':
@@ -260,7 +271,7 @@ class LovelaceUIPanel:
                                     self.render_current_page(switchPages=True)
                             # send ha stuff to ha
                             case _:
-                                ha_control.handle_buttons(entity_id, btype, value)
+                                ha_control.handle_buttons(entity_id, btype, value, entity_config)
                     case 'cardUnlock-unlock':
                         card_iid = entity_id.split(".")[1]
                         if int(self.current_card.config.get("pin")) == int(value):
@@ -268,7 +279,7 @@ class LovelaceUIPanel:
                             self.current_card = self.searchCard(card_iid)
                             self.render_current_page(switchPages=True)
                     case _:
-                        ha_control.handle_buttons(entity_id, btype, value)
+                        ha_control.handle_buttons(entity_id, btype, value, entity_config)
 
             if msg[1] == "pageOpenDetail":
                 entity_id = msg[3]
@@ -281,7 +292,7 @@ class LovelaceUIPanel:
                             effectList = None
                             if entity_id.startswith("light"):
                                 effectList = e.config.get("effectList")
-                if entity_id.split(".")[0] in ['input_select', 'media_player']:
+                if msg[2] == "popupInSel": #entity_id.split(".")[0] in ['input_select', 'media_player']:
                     libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
                 else:
                     libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], self.msg_out_queue, sendTopic=self.sendTopic))

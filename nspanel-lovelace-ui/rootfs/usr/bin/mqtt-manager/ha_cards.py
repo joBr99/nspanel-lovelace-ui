@@ -764,22 +764,24 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id, msg_out_queue, sen
         case 'popupThermo' | 'climate':
             print(f"not implemented {detail_type}")
         case 'popupInSel' | 'input_select' | 'select' | 'media_player':
+            hatype = ha_entity_id.split(".")[0]
             options = []
             icon_color = 0
             icon_color = ha_colors.get_entity_color(detail_type, state, attributes)
             state = state
-            if detail_type in ["input_select", "select"]:
+            if hatype in ["input_select", "select"]:
                 options = attributes.get("options", [])
-            elif detail_type == "light":
+            elif hatype == "light":
                 if options_list is not None:
                     options = options_list
                 else:
                     options = attributes.get("effect_list", [])[:15]
-            elif detail_type == "media_player":
+                state = attributes.get("effect")
+            elif hatype == "media_player":
                 state = attributes.get("source", "")
                 options = attributes.get("source_list", [])
             options = "?".join(options)
-            return f"{entity_id}~~{icon_color}~{detail_type}~{state}~{options}~"
+            return f"{entity_id}~~{icon_color}~{hatype}~{state}~{options}~"
 
 
         case 'popupTimer' | 'timer':
