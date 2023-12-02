@@ -51,7 +51,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
     else:
         return dimmode, dimValueNormal
 
-def handle_buttons(entity_id, btype, value, entity_config):
+def handle_buttons(entity_id, btype, value, entity_config=None):
     match btype:
         case 'button':
             button_press(entity_id, value)

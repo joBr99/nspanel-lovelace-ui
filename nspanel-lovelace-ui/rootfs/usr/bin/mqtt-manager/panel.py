@@ -271,7 +271,7 @@ class LovelaceUIPanel:
                                     self.render_current_page(switchPages=True)
                             # send ha stuff to ha
                             case _:
-                                ha_control.handle_buttons(entity_id, btype, value, entity_config)
+                                ha_control.handle_buttons(entity_id, btype, value, entity_config=entity_config)
                     case 'cardUnlock-unlock':
                         card_iid = entity_id.split(".")[1]
                         if int(self.current_card.config.get("pin")) == int(value):
@@ -279,7 +279,7 @@ class LovelaceUIPanel:
                             self.current_card = self.searchCard(card_iid)
                             self.render_current_page(switchPages=True)
                     case _:
-                        ha_control.handle_buttons(entity_id, btype, value, entity_config)
+                        ha_control.handle_buttons(entity_id, btype, value)
 
             if msg[1] == "pageOpenDetail":
                 entity_id = msg[3]
