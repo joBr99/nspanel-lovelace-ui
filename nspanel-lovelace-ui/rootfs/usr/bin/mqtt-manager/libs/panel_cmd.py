@@ -1,10 +1,5 @@
 import logging
 
-def init(mqtt_client_from_manager):
-    global mqtt_client
-    mqtt_client = mqtt_client_from_manager
-
-
 def custom_send(msg_out_queue, topic, msg):
     msg_out_queue.put((topic, msg))
     logging.debug("Sent Message to NsPanel (%s): %s", topic, msg)
