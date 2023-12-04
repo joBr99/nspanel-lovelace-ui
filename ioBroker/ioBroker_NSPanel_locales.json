@@ -2533,6 +2533,22 @@
          "zh-CN":"没有音乐可以控制",
          "zh-TW":"沒有音樂可以控制"
       },
+      "on":{
+         "en-US":"On",
+         "de-DE":"An",
+      },      
+      "off":{
+         "en-US":"Off",
+         "de-DE":"Aus",
+      },
+      "seek":{
+         "en-US":"Seek",
+         "de-DE":"Suchen",
+      },
+      "crossfade":{
+         "en-US":"Crossfade",
+         "de-DE":"Überblenden",
+      }, 
       "speaker":{
          "en-US":"Speakerlist",
          "de-DE":"Wiedergabegeräte",
