@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.16 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.17 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -70,7 +70,8 @@ ReleaseNotes:
         - 29.11.2023 - v4.3.3.15 Fix cardMedia Volume-Slider / Add Init Release to Startup
         - 30.11.2023 - v4.3.3.16 Beautification of the Sonos player Strings / Add Duration & Elapsed
         - 01.12.2023 - v4.3.3.16 Fix Datapoints with Value null 
-        - 02.12.2023 - v4.3.3.16 Request replaced by Axios 
+        - 02.12.2023 - v4.3.3.16 Request replaced by Axios
+        - 04.12.2023 - v4.3.3.17 Add SEEK and CROSSFADE to Sonos cardMedia
 
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -943,7 +944,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.16';
+const scriptVersion: string = 'v4.3.3.17';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -4729,7 +4730,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLenght = name.length;
                 if (nameLenght == 0) {
-                    name = 'Sonos Player';
+                    name = page.heading;
                 } else if (nameLenght > 16) {
                     name = name.slice(0,16) + '...'
                 }
@@ -4976,7 +4977,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                     id + '?tracklist' + '~' + 
                                     Icons.GetIcon('animation-play-outline') + '~' + 
                                     trackListIconCol + '~' + 
-                                    findLocale('media','tracklist') + '~' + + '~' + 
+                                    findLocale('media','tracklist') + '~' +
                                     'media2~'
             }
 
@@ -4989,7 +4990,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                         id + '?equalizer' + '~' + 
                                         Icons.GetIcon('equalizer-outline') + '~' + 
                                         equalizerListIconCol + '~' + 
-                                        findLocale('media','equalizer') + '~' + + '~' + 
+                                        findLocale('media','equalizer') + '~' +
                                         'media3~'
             } else if (page.items[0].equalizerList == undefined && v2Adapter == 'sonos') {
                 let equalizerListIconCol = rgb_dec565(HMIOn);
@@ -4998,7 +4999,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                         id + '?favorites' + '~' + 
                                         Icons.GetIcon('playlist-star') + '~' + 
                                         equalizerListIconCol + '~' + 
-                                        findLocale('media','favorites') + '~' + + '~' + 
+                                        findLocale('media','favorites') + '~' +
                                         'media3~'
             }
 
@@ -5055,6 +5056,34 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                                         'media4'
             }
 
+            //popUp Tools
+            let toolsString: string = '~~~~~~'
+            let toolsIconCol = rgb_dec565(colMediaIcon);
+            if (v2Adapter == 'sonos') {
+                if (page.items[0].crossfade == undefined || page.items[0].crossfade == false) {
+                    toolsString =   'input_sel' + '~' + 
+                                    id + '?seek' + '~' + 
+                                    media_icon + '~' + 
+                                    toolsIconCol + '~' + 
+                                    findLocale('media','seek') + '~' +
+                                    'media5~'
+                } else {
+                    toolsString =   'input_sel' + '~' + 
+                                    id + '?crossfade' + '~' + 
+                                    media_icon + '~' + 
+                                    toolsIconCol + '~' + 
+                                    findLocale('media','crossfade') + '~' +
+                                    'media5~'
+                }
+            } else {
+                toolsString =   'button' + '~' + 
+                                id + '' + '~' + 
+                                media_icon + '~' + 
+                                toolsIconCol + '~' + 
+                                findLocale('media','tools') + '~' +
+                                'media5~'
+            }
+
             out_msgs.push({
                 payload: 'entityUpd~' +                   //entityUpd
                     name + '~' +                          //heading
@@ -5068,10 +5097,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     iconplaypause + '~' +                 //playpauseicon
                     onoffbutton + '~' +                   //On/Off Button Color
                     shuffle_icon + '~' +                  //iconShuffle                     --> Code
-                    'button' + '~' +                      //type                MediaIcon   --> Code
-                    id + '~' +                            //internalNameEntity  MediaIcon   --> Code
-                    media_icon + '~' +                    //icon                MediaIcon
-                    rgb_dec565(colMediaIcon) + '~~~' +    //iconColor           MediaIcon
+                    toolsString +
                     speakerListString +
                     playListString +
                     trackListString +
@@ -5898,7 +5924,7 @@ function HandleButtonEvent(words: any): void {
                             toggleState(id + '.ON_ACTUAL');
                         case 'media':
                             if (tempid[1] == undefined) {
-                                console.log('Logo click');
+                                if (Debug) console.log('Logo click');
                                 GeneratePage(activePage);
                             } else if (tempid[1] == 'repeat') {
                                 let pageItemRepeat = findPageItem(id);
@@ -6279,7 +6305,7 @@ function HandleButtonEvent(words: any): void {
             case 'mode-tracklist':
                 let pageItemTL = findPageItem(id);
                 let adapterInstanceTL = pageItemTL.adapterPlayerInstance;
-                let adapterTL = adapterInstanceTL.split('.')
+                let adapterTL = adapterInstanceTL.split('.');
                 let deviceAdapterTL = adapterTL[0];
 
                 switch (deviceAdapterTL) {
@@ -6341,6 +6367,50 @@ function HandleButtonEvent(words: any): void {
                 if (Debug) console.log('HandleButtonEvent mode-equalizer -> id: ' + id);
                 let lastIndex = (id.split('.')).pop();
                 setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList[words[4]]);
+                pageCounter = 0;
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
+                break;
+            case 'mode-seek':
+                let pageItemSeek = findPageItem(id);
+                let adapterInstanceSK = pageItemSeek.adapterPlayerInstance;
+                let adapterSK = adapterInstanceSK.split('.');
+                let deviceAdapterSK = adapterSK[0];
+                switch (deviceAdapterSK) {
+                    case 'spotify-premium':
+                        break;
+                    case 'sonos':
+                        if (Debug) console.log('HandleButtonEvent mode-seek -> id: ' + id);
+                        setState(adapterInstanceSK + 'root.' + pageItemSeek.mediaDevice + '.seek', parseInt(words[4]) * 10);
+                        break;
+                }
+                pageCounter = 0;
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    pageCounter = 1;
+                    GeneratePage(activePage);
+                }, 3000);
+                break;
+            case 'mode-crossfade':
+                let pageItemCrossfade = findPageItem(id);
+                let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance;
+                let adapterCF = adapterInstanceCF.split('.');
+                let deviceAdapterCF = adapterCF[0];
+                switch (deviceAdapterCF) {
+                    case 'spotify-premium':
+                        break;
+                    case 'sonos':
+                        if (Debug) console.log('HandleButtonEvent mode-crossfade -> id: ' + id);
+                        let cfState: boolean = false;
+                        if (parseInt(words[4]) == 0 ) { 
+                            cfState = true; 
+                        } 
+                        setState(adapterInstanceCF + 'root.' + pageItemCrossfade.mediaDevice + '.crossfade', cfState);
+                        break;
+                }
                 pageCounter = 0;
                 GeneratePage(activePage);
                 setTimeout(async function () {
@@ -7311,7 +7381,6 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
             }
 
             if (type == 'popupInSel') {
-                //console.log(o.common.role);
                 if (o.common.role == 'media') {
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
@@ -7319,8 +7388,49 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                     let vTempAdapter = (pageItem.adapterPlayerInstance).split('.');
                     let vAdapter = vTempAdapter[0];
-
-                    if (optional == 'speakerlist') {
+                    if (optional == 'seek') {
+                        let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
+                        if (actualStateTemp >= 95) {
+                            actualState = '100%';
+                        } else if (actualStateTemp >= 85) {
+                            actualState = '90%';
+                        } else if (actualStateTemp >= 75) {
+                            actualState = '80%';
+                        } else if (actualStateTemp >= 65) {
+                            actualState = '70%';
+                        } else if (actualStateTemp >= 55) {
+                            actualState = '60%';
+                        } else if (actualStateTemp >= 45) {
+                            actualState = '50%';
+                        } else if (actualStateTemp >= 35) {
+                            actualState = '40%';
+                        } else if (actualStateTemp >= 25) {
+                            actualState = '30%';
+                        } else if (actualStateTemp >= 15) {
+                            actualState = '20%';
+                        } else if (actualStateTemp >= 5) {
+                            actualState = '10%';
+                        } else if (actualStateTemp >= 0) {
+                            actualState = '0%';
+                        }
+                        if (vAdapter == 'sonos') {
+                            optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
+                        }
+                        mode = 'seek';
+                    } else if (optional == 'crossfade') {
+                        if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade')) {
+                            let actualStateTemp: boolean = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade').val;
+                            if (actualStateTemp) {
+                                actualState = findLocale('media', 'on');
+                            } else {
+                                actualState = findLocale('media', 'off');
+                            }
+                        }
+                        if (vAdapter == 'sonos') {
+                            optionalString = findLocale('media', 'on') + '?' + findLocale('media', 'off');
+                        }
+                        mode = 'crossfade';
+                    } else if (optional == 'speakerlist') {
                         if (vAdapter == 'spotify-premium') {
                             if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
                                 actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
@@ -8958,6 +9068,7 @@ type PageItem = {
     fontSize: (number | undefined),
     actionStringArray: (string[] | undefined),
     alwaysOnDisplay: (boolean | undefined),
+    crossfade: (boolean | undefined),
 }
 
 type DimMode = {
