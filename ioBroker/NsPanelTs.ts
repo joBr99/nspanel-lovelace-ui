@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.16 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.17 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -71,6 +71,7 @@ ReleaseNotes:
         - 30.11.2023 - v4.3.3.16 Beautification of the Sonos player Strings / Add Duration & Elapsed
         - 01.12.2023 - v4.3.3.16 Fix Datapoints with Value null 
         - 02.12.2023 - v4.3.3.16 Request replaced by Axios 
+        - 04.12.2023 - v4.3.3.17 Add SEEK and CROSSFADE to Sonos cardMedia
 
         Todo:
         - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -5096,12 +5097,6 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     iconplaypause + '~' +                 //playpauseicon
                     onoffbutton + '~' +                   //On/Off Button Color
                     shuffle_icon + '~' +                  //iconShuffle                     --> Code
-                    /*
-                    'fan' + '~' +                         //type                MediaIcon   --> Code
-                    id + '~' +                            //internalNameEntity  MediaIcon   --> Code
-                    media_icon + '~' +                    //icon                MediaIcon
-                    rgb_dec565(colMediaIcon) + '~' +      //iconColor           MediaIcon
-                    '~~' + */
                     toolsString +
                     speakerListString +
                     playListString +
@@ -5929,9 +5924,8 @@ function HandleButtonEvent(words: any): void {
                             toggleState(id + '.ON_ACTUAL');
                         case 'media':
                             if (tempid[1] == undefined) {
-                                console.log('Logo click');
-                                GenerateDetailPage('popupMedia', '', findPageItem(id))
-                                //GeneratePage(activePage);
+                                if (Debug) console.log('Logo click');
+                                GeneratePage(activePage);
                             } else if (tempid[1] == 'repeat') {
                                 let pageItemRepeat = findPageItem(id);
                                 let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
