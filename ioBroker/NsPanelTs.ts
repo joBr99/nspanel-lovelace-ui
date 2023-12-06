@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.17 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.18 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -72,9 +72,11 @@ ReleaseNotes:
         - 01.12.2023 - v4.3.3.16 Fix Datapoints with Value null 
         - 02.12.2023 - v4.3.3.16 Request replaced by Axios
         - 04.12.2023 - v4.3.3.17 Add SEEK and CROSSFADE to Sonos cardMedia
+        - 05.12.2023 - v4.3.3.18 Add (ELAPSED/DURATION) to v2Adapter alexa2
+        - 06.12.2023 - v4.3.3.18 Replace missing Type console.log --> log(message, 'serverity')
 
         Todo:
-        - XX.XX.XXXX - v4.4.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
+        - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -168,6 +170,7 @@ Upgrades in Konsole:
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.3.tft
 ---------------------------------------------------------------------------------------
 */
+
 /******************************* Begin CONFIG Parameter *******************************/
 
 // DE: liefert bei true detailliertere Meldundgen im Log.
@@ -944,7 +947,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.17';
+const scriptVersion: string = 'v4.3.3.18';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -977,7 +980,7 @@ async function Init_dayjs() {
         } 
         dayjs.locale(getDayjsLocale());
     } catch (err) { 
-        console.warn('error at function init_dayjs: ' + err.message); 
+        log('error at function init_dayjs: ' + err.message,'warn'); 
     }        
 }
 Init_dayjs();
@@ -1011,25 +1014,25 @@ onStop (function scriptStop () {
 async function CheckConfigParameters() {
     try {
         if (existsObject(config.panelRecvTopic) == false) {
-            console.error('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> is not reachable. Please Check Parameters!');
+            log('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> is not reachable. Please Check Parameters!','error');
         }
         if (existsObject(config.panelSendTopic) == false) {
-            console.error('Config-Parameter: << config.panelSendTopic - ' + config.panelSendTopic + ' >> is not reachable. Please Check Parameters!');
+            log('Config-Parameter: << config.panelSendTopic - ' + config.panelSendTopic + ' >> is not reachable. Please Check Parameters!','error');
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'daswetter') {
             if (existsObject(weatherAdapterInstance + 'NextHours.Location_1.Day_1.current.symbol_value') == false)  {
-                console.error('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
+                log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!','error');
             }
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'accuweather') {
             if (existsObject(weatherAdapterInstance + 'Current.WeatherIcon') == false)  {
-                console.error('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!');
+                log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!','error');
             }
         }
 
         let weatherAdapterInstanceArray: any = weatherAdapterInstance.split(".");
         weatherAdapterInstanceNumber = weatherAdapterInstanceArray[1];
-        if (Debug) console.log('Number of weatherAdapterInstance: ' + weatherAdapterInstanceNumber);
+        if (Debug) log('Number of weatherAdapterInstance: ' + weatherAdapterInstanceNumber,'info');
 
         const adapterList = $('system.adapter.*.alive');
         adapterList.each(function(id, i) {
@@ -1041,7 +1044,7 @@ async function CheckConfigParameters() {
                     setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion);
                     let jsVersion = common.version.split('.');
                     let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
-                    if (jsV<61) console.error('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version);
+                    if (jsV<61) log('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version, 'error');
                 }     
             }
         });
@@ -1052,26 +1055,26 @@ async function CheckConfigParameters() {
             setIfExists(NSPanel_Path + 'IoBroker.NodeJSVersion',  'v' + nodeVersion);
             let nodeJSVersion = (getState(id).val).split('.');
             if (parseInt(nodeJSVersion[0]) < 18) {
-                console.warn('nodeJS must be at least v18.X.X. Currently: v' + getState(id).val + '! Please Update your System! --> iob nodejs-update 18');
+                log('nodeJS must be at least v18.X.X. Currently: v' + getState(id).val + '! Please Update your System! --> iob nodejs-update 18', );
             }
             if (parseInt(nodeJSVersion[0])%2 != 0) {
-                console.warn('nodeJS does not have an even version number. An odd version number is a developer version. Please correct nodeJS version');
+                log('nodeJS does not have an even version number. An odd version number is a developer version. Please correct nodeJS version','info');
             }
         });
         if (existsObject(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == false && config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
-            console.warn('mrIcon1ScreensaverEntity data point in the config not available - please adjust');
+            log('mrIcon1ScreensaverEntity data point in the config not available - please adjust','warn');
         } 
         if (existsObject(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == false && config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
-            console.warn('mrIcon2ScreensaverEntity data point in the config not available - please adjust');
+            log('mrIcon2ScreensaverEntity data point in the config not available - please adjust','warn');
         } 
         if (CheckEnableSetObject) {
-            console.log('setObjects enabled - create Alias Channels possible');
+            log('setObjects enabled - create Alias Channels possible','info');
             isSetOptionActive = true;
         } else {    
-            console.warn('setObjects disabled - Please enable setObjects in JS-Adapter Instance - create Alias Channels not possible');
+            log('setObjects disabled - Please enable setObjects in JS-Adapter Instance - create Alias Channels not possible', 'warn');
         } 
     } catch (err) { 
-        console.warn('error at function CheckConfigParameters: ' + err.message); 
+        log('error at function CheckConfigParameters: ' + err.message, 'warn'); 
     }
 }
 CheckConfigParameters();
@@ -1094,7 +1097,7 @@ async function InitIoBrokerInfo() {
         }
         setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
     } catch (err) {
-        console.log('error at funktion InitIoBrokerInfo ' + err.message);
+        log('error at funktion InitIoBrokerInfo ' + err.message, 'warn');
     }
 }
 InitIoBrokerInfo();
@@ -1110,14 +1113,14 @@ async function CheckDebugMode() {
 
         if(getState(NSPanel_Path + 'Config.ScripgtDebugStatus').val){
             Debug = true;
-            console.log('Debug mode activated');
+            log('Debug mode activated','info');
         }else{
             Debug = false;
-            console.log('Debug mode disabled');
+            log('Debug mode disabled','info');
         }
 
     } catch (err) {
-        console.warn('error at function CheckDebugModus: ' + err.message); 
+        log('error at function CheckDebugModus: ' + err.message,'warn'); 
     } 
 }
 CheckDebugMode();
@@ -1139,36 +1142,36 @@ async function CheckMQTTPorts() {
             exec('iob l i --port --enabled', async (error, result, stderr) => {
                 if (error == null){
                     if (result != undefined) {
-                        console.log('Start MQTT-Port-Check -------------------------------------');
+                        log('Start MQTT-Port-Check -------------------------------------', 'info');
                         let resultString1 = result.split('+');
                         for (let i: number = 1; i < resultString1.length -1; i++) {
                             let resultString2: any = resultString1[i].split(':')
                             let adapterInstanceName: string = resultString2[0].substring(16);
                             let adapterInstancePort: string = resultString2[3].substring(1,5);
-                            console.log('-- '+ adapterInstanceName + ' - ' +  adapterInstancePort);
+                            log('-- '+ adapterInstanceName + ' - ' +  adapterInstancePort, 'info');
                             adapterArray[i] = adapterInstanceName.trim();
                             portArray[i] = adapterInstancePort.trim();
                         }
                         let mqttInstance = adapterArray.indexOf(instanceName);
                         for (let j: number = 1; j < portArray.length; j++) {
                             if (portArray[j] == portArray[mqttInstance] && adapterArray[j] == adapterArray[mqttInstance]) {
-                                console.log('- MQTT-Port-Check OK: Instance of Adapter: ' + adapterArray[j] + ' is running on Port:' + portArray[j]);
+                                log('- MQTT-Port-Check OK: Instance of Adapter: ' + adapterArray[j] + ' is running on Port:' + portArray[j], 'info');
                             } else if (portArray[j] == portArray[mqttInstance] && adapterArray[j] != adapterArray[mqttInstance]) {     
-                                console.warn('Instance of Adapter: ' + adapterArray[j] + ' is running on same Port:' + portArray[j] + ' as ' + adapterArray[mqttInstance]);
-                                console.warn('Please Change Port of Instance: ' + adapterArray[j]);
+                                log('Instance of Adapter: ' + adapterArray[j] + ' is running on same Port:' + portArray[j] + ' as ' + adapterArray[mqttInstance], 'warn');
+                                log('Please Change Port of Instance: ' + adapterArray[j], 'warn');
                             }
                         }
-                        console.log('End MQTT-Port-Check ---------------------------------------');
+                        log('End MQTT-Port-Check ---------------------------------------','info');
                     }
                     
                 } else if (error.toString().substring(0,21) == 'exec is not available') {
-                    console.warn('MQTT-Portcheck not possible - exec is not available. Please enable exec option in JS-Adapter instance settings');
-                    console.warn('MQTT-Portcheck nicht möglich - exec ist nicht verfügbar. Bitte Haken bei -- Kommando Exec erlauben -- in JS-Adapter-Instanz setzen');
+                    log('MQTT-Portcheck not possible - exec is not available. Please enable exec option in JS-Adapter instance settings', 'warn');
+                    log('MQTT-Portcheck nicht möglich - exec ist nicht verfügbar. Bitte Haken bei -- Kommando Exec erlauben -- in JS-Adapter-Instanz setzen', 'warn');
                 }   
             });
         }
     } catch (err) { 
-        console.warn('error at function CheckMQTTPorts: ' + err.message); 
+        log('error at function CheckMQTTPorts: ' + err.message, 'warn'); 
     }
 }
 
@@ -1192,11 +1195,11 @@ async function Init_Release() {
 
         let currentFW = 0;
         let findFWIndex = 0;
-        console.log('Desired TFT Firmware: ' + desired_display_firmware_version + ' / ' + tft_version);
+        log('Desired TFT Firmware: ' + desired_display_firmware_version + ' / ' + tft_version, 'info');
         if (existsObject(NSPanel_Path + 'Display_Firmware.currentVersion')) {
             currentFW = parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val);
             findFWIndex = FWVersion.indexOf(currentFW);
-            console.log('Installed TFT Firmware: ' + currentFW + ' / v' + FWRelease[findFWIndex]);
+            log('Installed TFT Firmware: ' + currentFW + ' / v' + FWRelease[findFWIndex], 'info');
         }
         //Create Long Term
         if (existsObject(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion') == false) {
@@ -1215,7 +1218,7 @@ async function Init_Release() {
             await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version);
         }
     } catch (err) { 
-        console.warn('error at function Init_Release: ' + err.message); 
+        log('error at function Init_Release: ' + err.message, 'warn'); 
     }
 }
 Init_Release();
@@ -1277,17 +1280,17 @@ async function InitConfigParameters() {
             }
         }
     } catch (err) { 
-        console.warn('error at function InitConfigParameters: ' + err.message); 
+        log('error at function InitConfigParameters: ' + err.message, 'warn'); 
     }
 }
 InitConfigParameters();
 
 on({id: [].concat(NSPanel_Path + 'Config.ScripgtDebugStatus'), change: "ne"}, async function (obj) {
     try {
-        obj.state.val ? console.log('Debugmodus aktiviert') : console.log('Debugmodus deaktiviert');
+        obj.state.val ? log('Debug mode activated', 'info') : log('Debug mode disabled', 'info');
         Debug = obj.state.val
     } catch (err) { 
-        console.warn('error at Trigger ScripgtDebugStatus: ' + err.message); 
+        log('error at Trigger ScripgtDebugStatus: ' + err.message, 'warn'); 
     }
 });
 
@@ -1306,7 +1309,7 @@ on({id: [].concat(NSPanel_Path + 'Config.localeNumber')
             setStateAsync(NSPanel_Path + 'Config.temperatureUnit', tempunitList[obj.state.val]);
         }
     } catch (err) { 
-        console.warn('error at Trigger temperatureUnitNumber + localeNumber: ' + err.message); 
+        log('error at Trigger temperatureUnitNumber + localeNumber: ' + err.message, 'warn'); 
     }
 });
 
@@ -1317,12 +1320,12 @@ async function Init_ScreensaverAdvanced() {
             await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean' });
         }
     } catch (err) { 
-        console.warn('error at function Init_ScreensaverAdvanced: ' + err.message); 
+        log('error at function Init_ScreensaverAdvanced: ' + err.message, 'warn'); 
     }
 }
 Init_ScreensaverAdvanced();
 
-// prüft ob setObjects() für die Instanz zur Verfügung steht (true/false)
+// checks whether setObjects() is available for the instance (true/false)
 function CheckEnableSetObject() { 
     var enableSetObject = getObject("system.adapter.javascript." + instance).native.enableSetObject;
     return enableSetObject;
@@ -1341,7 +1344,7 @@ async function Init_ActivePageData() {
             await createStateAsync(NSPanel_Path + 'ActivePage.id0', '', true, { type: 'string' });
         }
     } catch (err) { 
-        console.warn('error at function Init_ActivePageData: ' + err.message); 
+        log('error at function Init_ActivePageData: ' + err.message, 'warn'); 
     }
 }
 Init_ActivePageData();
@@ -1353,7 +1356,7 @@ async function Init_Screensaver_Backckground_Color_Switch() {
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', 0, true, { type: 'number' });
         }
     } catch (err) { 
-        console.warn('error at function Init_Screensaver_Backckground_Color_Switch: ' + err.message); 
+        log('error at function Init_Screensaver_Backckground_Color_Switch: ' + err.message, 'warn'); 
     }
 }
 Init_Screensaver_Backckground_Color_Switch();
@@ -1365,7 +1368,7 @@ on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async 
             HandleScreensaverUpdate();
         }
     } catch (err) { 
-        console.warn('error at trigger bgColorIndicator: ' + err.message); 
+        log('error at trigger bgColorIndicator: ' + err.message, 'warn'); 
     }
 });
 
@@ -1375,7 +1378,7 @@ on({id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: "ne"}, 
         if (obj.state.val) setState( NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', false );
         //setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err) { 
-        console.warn('error at trigger Screensaver Advanced: ' + err.message); 
+        log('error at trigger Screensaver Advanced: ' + err.message, 'warn'); 
     }
 });
 
@@ -1384,7 +1387,7 @@ on({id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change
         if (obj.state.val) setState( NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false );
         //setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err) { 
-        console.warn('error at trigger Screensaver Alternativ: ' + err.message); 
+        log('error at trigger Screensaver Alternativ: ' + err.message, 'warn'); 
     }
 });
 
@@ -1395,7 +1398,7 @@ async function Init_bExit_Page_Change() {
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', -1, true, { type: 'number' });
         }
     } catch (err) { 
-        console.warn('error at function Init_bExit_Page_Change: ' + err.message); 
+        log('error at function Init_bExit_Page_Change: ' + err.message, 'warn'); 
     }
 }
 Init_bExit_Page_Change();
@@ -1407,7 +1410,7 @@ async function Init_Dimmode_Trigger() {
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode', false, true, { type: 'boolean' });
         }
     } catch (err) { 
-        console.warn('error at function Init_Dimmode_Trigger: ' + err.message); 
+        log('error at function Init_Dimmode_Trigger: ' + err.message, 'warn'); 
     }
 }
 Init_Dimmode_Trigger();
@@ -1426,7 +1429,7 @@ async function InitActiveBrightness() {
             await createAliasAsync(AliasPath + 'ScreensaverInfo.activeBrightness.SET', NSPanel_Path + 'ScreensaverInfo.activeBrightness', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
     } catch (err) {
-        console.warn('error at function InitActiveBrightness: ' + err.message);
+        log('error at function InitActiveBrightness: ' + err.message, 'warn');
     }
 }
 InitActiveBrightness();
@@ -1437,17 +1440,17 @@ on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightnes
 
         if (obj.state.val != null && obj.state.val != -1) {
             if (obj.state.val < -1 || obj.state.val > 100) {
-                console.log('activeDimmodeBrightness value only between -1 and 100');
+                log('activeDimmodeBrightness value only between -1 and 100', 'info');
                 setStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', -1, true);
             } else {
-                console.log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active);
+                log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
                 SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
             }
         } else {
             InitDimmode();
         }
     } catch (err) {
-        console.warn('error at trigger activeDimmodeBrightness: ' + err.message);
+        log('error at trigger activeDimmodeBrightness: ' + err.message, 'warn');
     }
 });
 
@@ -1460,7 +1463,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"},
             InitDimmode();
         }
      } catch (err) { 
-        console.warn('error at trigger Trigger_Dimmode: ' + err.message); 
+        log('error at trigger Trigger_Dimmode: ' + err.message, 'warn'); 
     }
 });
 
@@ -1472,7 +1475,7 @@ async function InitRebootPanel() {
             await createAliasAsync(AliasPath + 'Config.rebootNSPanel.SET', NSPanel_Path + 'Config.rebootNSPanel', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SET' });
         }
     } catch (err) {
-        console.warn('error at function InitRebootPanel: ' + err.message);
+        log('error at function InitRebootPanel: ' + err.message, 'warn');
     }
 }
 InitRebootPanel();
@@ -1488,24 +1491,24 @@ on({id: AliasPath + 'Config.rebootNSPanel.SET', change: "any"}, async function (
                 .then(async function (response) {
                     if (response.status === 200) {
                         SendToPanel({ payload: 'pageType~pageStartup' });              
-                        console.log('Tasmota Reboot');
+                        log('Tasmota Reboot', 'info');
                         setStateAsync(AliasPath + 'Config.rebootNSPanel.SET', false);
-                        console.log("Name: " + name);
-                        console.log("Instanz: " + instance);
+                        log("Name: " + name, 'info');
+                        log("Instanz: " + instance, 'info');
                     } else {
-                        console.warn('Axios Status - Requesting locales: ' + response.state);
+                        log('Axios Status - Requesting locales: ' + response.state, 'warn');
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    log(error, 'warn');
                 })
                 .finally(function () {
                     if (Debug) {
-                        console.log('Reboot NSPanel... done');
+                        log('Reboot NSPanel... done', 'info');
                     }
                 });
         } catch (err) {
-            console.warn('error at Trigger Restart NSPanel: ' + err.message);
+            log('error at Trigger Restart NSPanel: ' + err.message, 'warn');
         }
     }
 });
@@ -1526,7 +1529,7 @@ async function InitUpdateDatapoints() {
             }
         }
     } catch (err) {
-        console.warn('function InitUpdateDatapoints: ' + err.message);
+        log('function InitUpdateDatapoints: ' + err.message, 'warn');
     }
 }
 InitUpdateDatapoints();
@@ -1537,20 +1540,20 @@ on({id: [].concat(NSPanel_Path + 'Config.Update.UpdateTasmota')
     try {
         switch (obj.id) {
             case NSPanel_Path + 'Config.Update.UpdateTasmota':
-                if (Debug) console.log('Tasmota Upgrade durchführen');
+                if (Debug) log('Tasmota Upgrade durchführen', 'info');
                 update_tasmota_firmware();
                 break;
             case NSPanel_Path + 'Config.Update.UpdateBerry':
-                if (Debug) console.log('Berry Driver Update durchführen')
+                if (Debug) log('Berry Driver Update durchführen', 'info')
                 update_berry_driver_version();
                 break;
             case NSPanel_Path + 'Config.Update.UpdateNextion':
-                if (Debug) console.log('FlashNextion durchführen')
+                if (Debug) log('FlashNextion durchführen', 'info')
                 update_tft_firmware();
                 break;
         } 
     } catch (err) { 
-        console.warn('error at Trigger Update Firmware: ' + err.message); 
+        log('error at Trigger Update Firmware: ' + err.message, 'warn'); 
     }
 });
 
@@ -1572,7 +1575,7 @@ async function Init_Relays() {
             await createAliasAsync(AliasPath + 'Relay.2.SET', NSPanel_Path + 'Relay.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
         }
     } catch (err) { 
-        console.warn('error at function Init_Relays: ' + err.message); 
+        log('error at function Init_Relays: ' + err.message, 'warn'); 
     }
 }
 Init_Relays();
@@ -1596,7 +1599,7 @@ async function InitAlternateMRIconsSize() {
             await createAliasAsync(AliasPath + 'Config.MRIcons.alternateMRIconSize.2.SET', NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
         }
     } catch (err) { 
-        console.warn('error at function InitAlternateMRIconsSize: ' + err.message); 
+        log('error at function InitAlternateMRIconsSize: ' + err.message, 'warn'); 
     }
 }
 InitAlternateMRIconsSize();
@@ -1625,7 +1628,7 @@ async function InitDateformat() {
             }
         }    
     } catch (err) { 
-        console.warn('error at function InitDateformat: ' + err.message); 
+        log('error at function InitDateformat: ' + err.message, 'warn'); 
     }
 }
 InitDateformat();
@@ -1648,7 +1651,7 @@ on({id: [].concat(String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday')
         }
         SendDate();
     } catch (err) { 
-        console.warn('error at Trigger Config.Dateformat: ' + err.message); 
+        log('error at Trigger Config.Dateformat: ' + err.message, 'warn'); 
     }
 });
 
@@ -1662,16 +1665,16 @@ on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) 
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(response.data);
+                        log(response.data, 'info');
                     }
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             })
             
     } catch (err) { 
-        console.warn('error at Trigger Relay1/2: ' + err.message); 
+        log('error at Trigger Relay1/2: ' + err.message, 'warn'); 
     }
 });
 
@@ -1702,7 +1705,7 @@ async function SubscribeMRIcons () {
             });
         }
     } catch (err) { 
-        console.warn('error at function SubscribeMRIcons: ' + err.message); 
+        log('error at function SubscribeMRIcons: ' + err.message, 'warn'); 
     }
 }
 SubscribeMRIcons();
@@ -1715,40 +1718,40 @@ async function CreateWeatherAlias () {
                 try {
                     if (isSetOptionActive) {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value')) {
-                            console.log('Weather alias for daswetter.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now'); 
+                            log('Weather alias for daswetter.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info'); 
                             setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
                             await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
                             await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.temp_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
                             await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
                             await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
                         } else {
-                            console.log('weather alias for daswetter.' + weatherAdapterInstanceNumber + '. already exists');
+                            log('weather alias for daswetter.' + weatherAdapterInstanceNumber + '. already exists', 'info');
                         }
                     }    
                 } catch (err) {
-                    console.log('error at function CreateWeatherAlias daswetter.' + weatherAdapterInstanceNumber + '. : ' + err.message);
+                    log('error at function CreateWeatherAlias daswetter.' + weatherAdapterInstanceNumber + '. : ' + err.message, 'warn');
                 }
             } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                 try {
                     if (isSetOptionActive) {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.' + weatherAdapterInstanceNumber + '.Current.WeatherIcon')) {
-                            console.log('Weather alias for accuweather.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now'); 
+                            log('Weather alias for accuweather.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info'); 
                             setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name:'media'}, native: {}});
                             await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.' + weatherAdapterInstanceNumber + '.Current.WeatherIcon', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ICON' });
                             await createAliasAsync(config.weatherEntity + '.TEMP', 'accuweather.' + weatherAdapterInstanceNumber + '.Current.Temperature', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature', name: 'TEMP' });
                             await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Temperature.Minimum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN' });
                             await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Temperature.Maximum', true, <iobJS.StateCommon>{ type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX' });
                         } else {
-                            console.log('weather alias for accuweather.' + weatherAdapterInstanceNumber + '. already exists');
+                            log('weather alias for accuweather.' + weatherAdapterInstanceNumber + '. already exists', 'info');
                         }
                     }
                 } catch (err) {
-                    console.log('error at function CreateWeatherAlias accuweather.' + weatherAdapterInstanceNumber + '.: ' + err.message);
+                    log('error at function CreateWeatherAlias accuweather.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         } 
     } catch (err) { 
-        console.warn('error at function CreateWeatherAlias: ' + err.message); 
+        log('error at function CreateWeatherAlias: ' + err.message, 'warn'); 
     }  
 }
 CreateWeatherAlias();
@@ -1761,7 +1764,7 @@ async function InitPageNavi() {
             await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: {"pagetype": "page","pageId": 0}, ack: true });
         }
     } catch (err) {
-        console.warn('error at function InitPageNavi: ' + err.message);
+        log('error at function InitPageNavi: ' + err.message, 'warn');
     }
 }
 InitPageNavi();
@@ -1778,7 +1781,7 @@ on({id: [].concat([NSPanel_Path + 'PageNavi']), change: "any"}, async function (
             }
         }
     } catch (err) { 
-        console.warn('error at Trigger PageNavi: ' + err.message); 
+        log('error at Trigger PageNavi: ' + err.message, 'warn'); 
     }
 });
 
@@ -1788,28 +1791,28 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
         let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
         if (Debug) {
-            console.log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark));
+            log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark), 'info');
         }
         if (Debug) {
-            console.log('function ScreensaverDimmode Dimmode=' + timeDimMode.dimmodeOn);
+            log('function ScreensaverDimmode Dimmode=' + timeDimMode.dimmodeOn, 'info');
         }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
                 if (Debug) {
-                    console.log('function ScreensaverDimmode -> Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active);
+                    log('function ScreensaverDimmode -> Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
                 }
             } else {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
                 if (Debug) {
-                    console.log('function ScreensaverDimmode -> Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active);
+                    log('function ScreensaverDimmode -> Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
                 }
             }
         } else {
             SendToPanel({ payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
         }
     } catch (err) {
-        console.warn('error at function ScreensaverDimmode: ' + err.message);
+        log('error at function ScreensaverDimmode: ' + err.message, 'warn');
     }
 }
 
@@ -1838,7 +1841,7 @@ async function InitWeatherForecast() {
             await createAliasAsync(AliasPath + 'ScreensaverInfo.entityChangeTime.SET', NSPanel_Path + 'ScreensaverInfo.entityChangeTime', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
     } catch (err) {
-        console.warn('error at function InitWeatherForecast: ' + err.message);
+        log('error at function InitWeatherForecast: ' + err.message, 'warn');
     }
 }
 InitWeatherForecast();
@@ -1900,7 +1903,7 @@ async function InitDimmode() {
             }
         }
     } catch (err) {
-        console.warn('error at function InitDimmode: ' + err.message);
+        log('error at function InitDimmode: ' + err.message, 'warn');
     }
 }
 InitDimmode();
@@ -2008,7 +2011,7 @@ async function InitPopupNotify() {
 
         });
     } catch (err) {
-        console.warn('error at function InitPopupNotify: ' + err.message);
+        log('error at function InitPopupNotify: ' + err.message, 'warn');
     }
 }
 InitPopupNotify();
@@ -2024,7 +2027,7 @@ let scheduleSendTime = schedule('* * * * *', () => {
         SendTime();
         HandleScreensaverUpdate();
     } catch (err) {
-        console.warn('error at schedule SendTime: ' + err.message);
+        log('error at schedule SendTime: ' + err.message, 'warn');
     }
 });
 
@@ -2038,7 +2041,7 @@ let scheduleSwichScreensaver = schedule('*/' + getState(NSPanel_Path + 'Screensa
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         }
     } catch (err) {
-        console.warn('error at schedule entityChangeTime: ' + err.message);
+        log('error at schedule entityChangeTime: ' + err.message, 'warn');
     }
 });
 
@@ -2050,7 +2053,7 @@ function InitHWButton1Color() {
             });
         }
     } catch (err) {
-        console.warn('error at function InitHWButton1Color: ' + err.message);
+        log('error at function InitHWButton1Color: ' + err.message, 'warn');
     }
 }
 InitHWButton1Color();
@@ -2063,7 +2066,7 @@ function InitHWButton2Color() {
             });
         }
     } catch (err) {
-        console.warn('error at function InitHWButton2Color: ' + err.message);
+        log('error at function InitHWButton2Color: ' + err.message, 'warn');
     }
 }
 InitHWButton2Color();
@@ -2074,7 +2077,7 @@ on({id: [].concat([NSPanel_Path + "ScreensaverInfo.weatherForecast"]), change: "
         weatherForecast = obj.state.val;
         HandleScreensaverUpdate();
     } catch (err) {
-        console.warn('error at trigger weatherForecast: ' + err.message);
+        log('error at trigger weatherForecast: ' + err.message, 'warn');
     }
 });
 
@@ -2084,7 +2087,7 @@ on({id: [].concat(config.weatherEntity + '.TEMP')
     try {    
         HandleScreensaverUpdate();
     } catch (err) {
-        console.warn('error at trigger weatherForecast .TEMP + .ICON: ' + err.message);
+        log('error at trigger weatherForecast .TEMP + .ICON: ' + err.message, 'warn');
     }
 });
 
@@ -2128,14 +2131,14 @@ function getDayjsLocale(): String {
             return locale.substring(0, 2);
         }
     } catch (err) {
-        console.warn('error in function getDayjsLocale: ' + err.message);
+        log('error in function getDayjsLocale: ' + err.message, 'warn');
     }
 }
 
 async function get_locales() {
     try {
         if (Debug) {
-            console.log('Requesting locales');
+            log('Requesting locales', 'info');
         }
         let urlString: string = 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales.json';
 
@@ -2143,27 +2146,27 @@ async function get_locales() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(JSON.stringify(response.data));
+                        log(JSON.stringify(response.data), 'info');
                     }
                     await createStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.State>{ val: JSON.stringify(response.data), ack: true });
                 } else {
-                    console.warn('Axios Status - Requesting locales: ' + response.state);
+                    log('Axios Status - Requesting locales: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
 
     } catch (err) {
-        console.warn('error requesting locales in function get_locales: ' + err.message);
+        log('error requesting locales in function get_locales: ' + err.message, 'warn');
     }
 }
 
 async function get_locales_servicemenu() {
     try {
         if (Debug) {
-            console.log('Requesting locales Service Menu');
+            log('Requesting locales Service Menu', 'info');
         }
         let urlString: string = 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/ioBroker/ioBroker_NSPanel_locales_service.json';
 
@@ -2171,26 +2174,26 @@ async function get_locales_servicemenu() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(JSON.stringify(response.data));
+                        log(JSON.stringify(response.data), 'info');
                     }
                     await createStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.State>{ val: JSON.stringify(response.data), ack: true });
                 } else {
-                    console.warn('Axios Status - Requesting locales Service Menu: ' + response.state);
+                    log('Axios Status - Requesting locales Service Menu: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
 
     } catch (err) {
-        console.warn('error requesting locales in function get_locales_servicemenu: ' + err.message);
+        log('error requesting locales in function get_locales_servicemenu: ' + err.message, 'warn');
     }
 }
 
 async function check_updates() {
     try {
-        if (Debug) console.log('Check-Updates');
+        if (Debug) log('Check-Updates', 'info');
 
         let Update: boolean = false;
 
@@ -2214,7 +2217,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) console.log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt');
+                        if (Debug) log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt', 'info');
 
                         // Perform Tasmota upgrade
                         update_tasmota_firmware();
@@ -2223,7 +2226,7 @@ async function check_updates() {
                         await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Tasmota_Firmware.onlineVersion').val, ack: true });
                     } else {
                         // Point out Tasmota updates
-                        if (Debug) console.log('Tasmota-Firmware => Automatische Updates aus, manuelles Update nötig');
+                        if (Debug) log('Tasmota-Firmware => Automatische Updates aus, manuelles Update nötig', 'info');
 
                         InternalName = 'TasmotaFirmwareUpdate';
                         Headline = 'Tasmota-Firmware Update';
@@ -2232,7 +2235,7 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Already the latest Tasmota version on NSPanel');
+                if (Debug) log('Already the latest Tasmota version on NSPanel', 'info');
             }
         }
 
@@ -2242,18 +2245,18 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) console.log('Auto-updates switched on - Berry driver update is carried out');
+                        if (Debug) log('Auto-updates switched on - Berry driver update is carried out', 'info');
 
                         // Tasmota Berry-Driver Update durchführen
                         update_berry_driver_version();
                         // Aktuelle Berry-Driver Version = Online Berry-Driver Version
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Berry_Driver.onlineVersion').val, ack: true });
 
-                        if (Debug) console.log('Berry driver updated automatically');
+                        if (Debug) log('Berry driver updated automatically', 'info');
 
                     } else {
                         //Auf BerryDriver-Update hinweisen
-                        if (Debug) console.log('Berry Driver => Automatic updates off, manual update required');
+                        if (Debug) log('Berry Driver => Automatic updates off, manual update required', 'info');
 
                         InternalName = 'BerryDriverUpdate';
                         Headline = 'Berry-Driver Update';
@@ -2262,7 +2265,7 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Already the latest Berry driver on NSPanel');
+                if (Debug) log('Already the latest Berry driver on NSPanel', 'info');
             }
         }
 
@@ -2272,18 +2275,18 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) console.log('Auto-updates switched on - update TFT firmware is carried out');
+                        if (Debug) log('Auto-updates switched on - update TFT firmware is carried out', 'info');
 
                         // TFT-Firmware Update durchführen
                         update_tft_firmware();
                         // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
                         await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
 
-                        if (Debug) console.log('Display firmware updated automatically');
+                        if (Debug) log('Display firmware updated automatically', 'info');
 
                     } else {
                         // Auf TFT-Firmware hinweisen
-                        if (Debug) console.log('Display firmware => Automatic updates off, manual update required');
+                        if (Debug) log('Display firmware => Automatic updates off, manual update required', 'info');
 
                         InternalName = 'TFTFirmwareUpdate';
                         Headline = 'TFT-Firmware Update';
@@ -2292,7 +2295,7 @@ async function check_updates() {
                     }
                 }
             } else {
-                if (Debug) console.log('Already the latest display firmware on NSPanel');
+                if (Debug) log('Already the latest display firmware on NSPanel', 'info');
             }
         }
         if (Update) {
@@ -2309,7 +2312,7 @@ async function check_updates() {
         }
 
     } catch (err) {
-        console.warn('error at function check_updates: ' + err.message);
+        log('error at function check_updates: ' + err.message, 'warn');
     }
 }
 
@@ -2318,7 +2321,7 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
         const val = obj.state ? obj.state.val : false;
         if (!val) {
             if (Debug) {
-                console.log('Button1 was pressed');
+                log('Button1 was pressed', 'info');
             }
         } else if (val) {
             
@@ -2333,11 +2336,11 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
                 }
             }
             if (Debug) {
-                console.log('Button2 was pressed');
+                log('Button2 was pressed', 'info');
             }
         }
     } catch (err) {
-        console.warn('error at Trigger popupNotifyAction: ' + err.message);
+        log('error at Trigger popupNotifyAction: ' + err.message, 'warn');
     }
 });
 
@@ -2363,7 +2366,7 @@ async function get_panel_update_data() {
             check_online_display_firmware();
         }
     } catch (err) {
-        console.warn('error at function get_panel_update_data: ' + err.message);
+        log('error at function get_panel_update_data: ' + err.message, 'warn');
     }
 }
 
@@ -2373,19 +2376,19 @@ function get_current_tasmota_ip_address() {
         const infoObj = JSON.parse(getState(infoObjId).val);
 
         if (Debug) {
-            console.log(`get_current_tasmota_ip_address: ${infoObj.Info2.IPAddress}`);
+            log(`get_current_tasmota_ip_address: ${infoObj.Info2.IPAddress}`, 'info');
         }
 
         return infoObj.Info2.IPAddress;
     } catch (err) {
-        console.warn('error at function get_current_tasmota_ip_address: ' + err.message);
+        log('error at function get_current_tasmota_ip_address: ' + err.message, 'warn');
     }
 }
 
 function get_online_tasmota_firmware_version() {
     try {
         if (Debug) {
-            console.log('Requesting tasmota firmware version');
+            log('Requesting tasmota firmware version', 'info');
         }
 
         let urlString: string = 'https://api.github.com/repositories/80286288/releases/latest';
@@ -2394,7 +2397,7 @@ function get_online_tasmota_firmware_version() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(JSON.stringify(response.data));
+                        log(JSON.stringify(response.data), 'info');
                     }
                     if (isSetOptionActive) {
                         const Tasmota_JSON = JSON.parse(JSON.stringify(response.data));// Write JSON result to variable
@@ -2404,25 +2407,25 @@ function get_online_tasmota_firmware_version() {
                         setObject(AliasPath + 'Tasmota_Firmware.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
                         await createAliasAsync(AliasPath + 'Tasmota_Firmware.onlineVersion.ACTUAL', NSPanel_Path + 'Tasmota_Firmware.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });                
                         await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
-                        if (Debug) console.log('online tasmota firmware version => ' + TasmotaVersionOnline);
+                        if (Debug) log('online tasmota firmware version => ' + TasmotaVersionOnline, 'info');
                     }  
                 } else {
-                    console.warn('Axios Status - online tasmota firmware version: ' + response.state);
+                    log('Axios Status - online tasmota firmware version: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
             
     } catch (err) {
-        console.warn('error requesting firmware in function get_online_tasmota_firmware_version: ' + err.message);
+        log('error requesting firmware in function get_online_tasmota_firmware_version: ' + err.message, 'warn');
     }
 }
 
 function get_current_berry_driver_version() {
     try {
         if (Debug) {
-            console.log('Requesting current berry driver version');
+            log('Requesting current berry driver version', 'info');
         }
 
         let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`;
@@ -2434,7 +2437,7 @@ function get_current_berry_driver_version() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(JSON.stringify(response.data));
+                        log(JSON.stringify(response.data), 'info');
                     }
                     if (isSetOptionActive) {
                         const BerryDriverVersionCurrent: string = JSON.parse(JSON.stringify(response.data)).nlui_driver_version;
@@ -2444,25 +2447,25 @@ function get_current_berry_driver_version() {
                             setObject(AliasPath + 'Display.BerryDriver', {type: 'channel', common: {role: 'info', name: 'Berry Driver'}, native: {}});
                             await createAliasAsync(AliasPath + 'Display.BerryDriver.ACTUAL', NSPanel_Path + 'Berry_Driver.currentVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                         }
-                        if (Debug) console.log('current berry driver version => ' + BerryDriverVersionCurrent);
+                        if (Debug) log('current berry driver version => ' + BerryDriverVersionCurrent, 'info');
                     }
                 } else {
-                    console.warn('Axios Status - current berry driver version: ' + response.state);
+                    log('Axios Status - current berry driver version: ' + response.state, 'info');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
 
     } catch (err) {
-        console.warn('error requesting firmware in function get_current_berry_driver_version: ' + err.message);
+        log('error requesting firmware in function get_current_berry_driver_version: ' + err.message, 'warn');
     }
 }
 
 function get_tasmota_status0() {
     try {
         if (Debug) {
-            console.log('Requesting tasmota status0');
+           log('Requesting tasmota status0', 'info');
         }
         
         let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Status0`;
@@ -2474,7 +2477,7 @@ function get_tasmota_status0() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(JSON.stringify(response.data));
+                        log(JSON.stringify(response.data), 'info');
                     }
                     if (isSetOptionActive) {
                         await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
@@ -2507,9 +2510,9 @@ function get_tasmota_status0() {
                             await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.RSSI, ack: true });
                             await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
                             await setStateAsync(NSPanel_Path + 'Tasmota.Product', <iobJS.State>{ val: 'SONOFF NSPanel', ack: true });
-                            if (Debug) console.log('current tasmota firmware version => ' + tasmoVersion);
+                            if (Debug) log('current tasmota firmware version => ' + tasmoVersion, 'info');
                         } catch (err) {
-                            console.warn('error setState in function get_tasmota_status0' + err.message);
+                            log('error setState in function get_tasmota_status0' + err.message, 'warn');
                         }
                         if (autoCreateAlias) {
                             setObject(AliasPath + 'Tasmota.Uptime', {type: 'channel', common: {role: 'info', name: 'Uptime'}, native: {}});
@@ -2537,15 +2540,15 @@ function get_tasmota_status0() {
                         }
                     }
                 } else {
-                    console.warn('Axios Status - get_tasmota_status0: ' + response.state);
+                    log('Axios Status - get_tasmota_status0: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
             
     } catch (err) {
-        console.warn('error requesting firmware in function get_tasmota_status0: ' + err.message);
+        log('error requesting firmware in function get_tasmota_status0: ' + err.message, 'warn');
     }
 }
 
@@ -2553,7 +2556,7 @@ function get_online_berry_driver_version() {
     try {
         if (NSPanel_Path + 'Config.Update.activ') {
             if (Debug) {
-                console.log('Requesting online berry driver version');
+                log('Requesting online berry driver version', 'info');
             }
 
             let urlString = 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be';
@@ -2562,7 +2565,7 @@ function get_online_berry_driver_version() {
                 .then(async function (response) {
                     if (response.status === 200) {
                         if (Debug) {
-                            console.log(response.data);
+                            log(response.data, 'info');
                         }
                         if (isSetOptionActive) {
                             const BerryDriverVersionOnline = response.data.substring((response.data.indexOf('version_of_this_script = ') + 24), response.data.indexOf('version_of_this_script = ') + 27).replace(/\s+/g, '');
@@ -2570,26 +2573,26 @@ function get_online_berry_driver_version() {
                             setObject(AliasPath + 'Berry_Driver.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
                             await createAliasAsync(AliasPath + 'Berry_Driver.onlineVersion.ACTUAL', NSPanel_Path + 'Berry_Driver.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                             await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
-                            if (Debug) console.log('online berry driver version => ' + BerryDriverVersionOnline);
+                            if (Debug) log('online berry driver version => ' + BerryDriverVersionOnline, 'info');
                         }
                     } else {
-                        console.warn('Axios Status - get_online_berry_driver_version: ' + response.state);
+                        log('Axios Status - get_online_berry_driver_version: ' + response.state, 'warn');
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    log(error, 'warn');
                 });
 
         }
     } catch (err) {
-        console.warn('error requesting firmware in function get_online_berry_driver_version: ' + err.message);
+        log('error requesting firmware in function get_online_berry_driver_version: ' + err.message, 'warn');
     }
 }
 
 function check_version_tft_firmware() {
     try {
         if (Debug) {
-            console.log('Requesting online TFT version');
+            log('Requesting online TFT version', 'info');
         }
 
         let urlString = 'https://api.github.com/repos/joBr99/nspanel-lovelace-ui/releases/latest';
@@ -2598,7 +2601,7 @@ function check_version_tft_firmware() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(JSON.stringify(response.data));
+                        log(JSON.stringify(response.data), 'info');
                     }
                     let NSPanel_JSON = JSON.parse(JSON.stringify(response.data)); // Write JSON result to variable
                     let NSPanelTagName = NSPanel_JSON.tag_name;                   // created_at; published_at; name ; draft ; prerelease
@@ -2606,24 +2609,24 @@ function check_version_tft_firmware() {
 
                     await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
-                    if (Debug) console.log('online TFT firmware version => ' + NSPanelVersion);
+                    if (Debug) log('online TFT firmware version => ' + NSPanelVersion, 'info');
                 } else {
-                    console.warn('Axios Status - check_version_tft_firmware: ' + response.state);
+                    log('Axios Status - check_version_tft_firmware: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
 
     } catch (err) {
-        console.warn('error requesting firmware in function check_version_tft_firmware: ' + err.message);
+        log('error requesting firmware in function check_version_tft_firmware: ' + err.message, 'warn');
     }
 }
 
 function check_online_display_firmware() {
     try {
         if (Debug) {
-            console.log('Requesting online firmware version');
+            log('Requesting online firmware version', 'info');
         }
 
         let urlString = 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/apps/nspanel-lovelace-ui/nspanel-lovelace-ui.py';
@@ -2632,23 +2635,23 @@ function check_online_display_firmware() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(response.data);
+                        log(response.data, 'info');
                     }
                     let desired_display_firmware_version = response.data.substring((response.data.indexOf('desired_display_firmware_version =') + 34), response.data.indexOf('desired_display_firmware_version =') + 38).replace(/\s+/g, '');
 
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
-                    if (Debug) console.log('online display firmware version => ' + desired_display_firmware_version);
+                    if (Debug) log('online display firmware version => ' + desired_display_firmware_version, 'info');
                 } else {
-                    console.warn('Axios Status - check_online_display_firmware: ' + response.state);
+                    log('Axios Status - check_online_display_firmware: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
 
     } catch (err) {
-        console.warn('error requesting firmware in function check_online_display_firmware: ' + err.message);
+        log('error requesting firmware in function check_online_display_firmware: ' + err.message, 'warn');
     }
 }
 
@@ -2674,7 +2677,7 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                 }
             }    
         } catch (err) {
-            console.warn('error at trigger rceiving CustomRecv: ' + err.message);
+            log('error at trigger rceiving CustomRecv: ' + err.message, 'warn');
         }
     }
 });
@@ -2691,18 +2694,18 @@ function update_berry_driver_version() {
             .then(async function (response) {
                 if (response.status === 200) {
                     if (Debug) {
-                        console.log(response.data);
+                        log(response.data, 'info');
                     }
                 } else {
-                    console.warn('Axios Status - update_berry_driver_version: ' + response.state);
+                    log('Axios Status - update_berry_driver_version: ' + response.state, 'warn');
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                log(error, 'warn');
             });
 
     } catch (err) {
-        console.warn('error at function update_berry_driver_version: ' + err.message);
+        log('error at function update_berry_driver_version: ' + err.message,  'warn');
     }
 }
 
@@ -2719,8 +2722,8 @@ function update_tft_firmware() {
             desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
         }
 
-        console.log('Start TFT-Upgrade for: ' + getState(NSPanel_Path + 'NSPanel_Version').val + ' Version');
-        console.log('Install NextionTFT: ' + desired_display_firmware_url);
+        log('Start TFT-Upgrade for: ' + getState(NSPanel_Path + 'NSPanel_Version').val + ' Version', 'info');
+        log('Install NextionTFT: ' + desired_display_firmware_url, 'info');
 
         try {
     
@@ -2733,21 +2736,21 @@ function update_tft_firmware() {
                 .then(async function (response) {
                     if (response.status === 200) {
                         if (Debug) {
-                            console.log(response.data);
+                            log(response.data, 'info');
                         }
                         await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
                         await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
                         Init_Release();
                     } else {
-                        console.warn('Axios Status - update_tft_firmware: ' + response.state);
+                        log('Axios Status - update_tft_firmware: ' + response.state, 'warn');
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    log(error, 'warn');
                 });
             
         } catch (err) {
-            console.warn('error request in function update_tft_firmware: ' + err.message);
+            log('error request in function update_tft_firmware: ' + err.message, 'warn');
         }
     }
 }
@@ -2764,14 +2767,14 @@ function update_tasmota_firmware() {
                 .then(async function (response) {
                     if (response.status === 200) {
                         if (Debug) {
-                            console.log(response.data);
+                            log(response.data, 'info');
                         }
                     } else {
-                        console.warn('Axios Status - update_tasmota_firmware ==> set OTA: ' + response.state);
+                        log('Axios Status - update_tasmota_firmware ==> set OTA: ' + response.state, 'warn');
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    log(error, 'warn');
                 });
 
             urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`;
@@ -2783,19 +2786,19 @@ function update_tasmota_firmware() {
                 .then(async function (response) {
                     if (response.status === 200) {
                         if (Debug) {
-                            console.log(response.data);
+                            log(response.data, 'info');
                         }
                     } else {
-                        console.warn('Axios Status - update_tasmota_firmware: ' + response.state);
+                        log('Axios Status - update_tasmota_firmware: ' + response.state, 'warn');
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    log(error, 'warn');
                 });
 
         }    
     } catch (err) {
-        console.warn('error request in function update_tasmota_firmware: ' + err.message);
+        log('error request in function update_tasmota_firmware: ' + err.message, 'warn');
     }
 }
 
@@ -2804,16 +2807,16 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
         if (getState(NSPanel_Path + 'Config.Update.activ').val == 0) {
             let Tasmota_JSON: any = JSON.parse(obj.state.val);
             if (Tasmota_JSON.Info1.Version.indexOf('safeboot') != -1) {
-                console.warn('Tasmota in Safeboot - Please wait while upgrading');
+                log('Tasmota in Safeboot - Please wait while upgrading', 'warn');
                 update_tasmota_firmware();
             } else {
-                console.log('Tasmota upgrade complete. New Version: ' + Tasmota_JSON.Info1.Version);
+                log('Tasmota upgrade complete. New Version: ' + Tasmota_JSON.Info1.Version, 'info');
                 get_tasmota_status0();
                 //check_updates();
             }
         }
     } catch (err) {
-        console.warn('error at trigger with reading senor-data: '+ err.message);
+        log('error at trigger with reading senor-data: '+ err.message, 'warn');
     }
 });
 
@@ -2828,11 +2831,11 @@ on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
                 let split = json.CustomRecv.split(',');
                 HandleMessage(split[0], split[1], parseInt(split[2]), split);
             } catch (err) {
-                console.warn('error json.split in  Trigger panelRecTopic: ' + err.message);
+                log('error json.split in  Trigger panelRecTopic: ' + err.message, 'warn');
             }
         }
     } catch (err) {
-        console.warn('error at Trigger panelRecTopic: ' + err.message);
+        log('error at Trigger panelRecTopic: ' + err.message, 'warn');
     }
 });
 
@@ -2842,7 +2845,7 @@ async function SendToPanel(val: Payload | Payload[]) {
             val.forEach(function (id) {
                 setStateAsync(config.panelSendTopic, id.payload);
                 if (Debug) {
-                    console.log('function SendToPanel payload: ' + id.payload);
+                    log('function SendToPanel payload: ' + id.payload, 'info');
                 }
             });
         } else {
@@ -2850,7 +2853,7 @@ async function SendToPanel(val: Payload | Payload[]) {
         }
 
     } catch (err) {
-        console.warn('error at function SendToPanel: ' + err.message);
+        log('error at function SendToPanel: ' + err.message, 'warn');
     }
 }
 
@@ -2858,14 +2861,14 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     try {
         if ((obj.state ? obj.state.val : '') == 'armed' || (obj.state ? obj.state.val : '') == 'disarmed' || (obj.state ? obj.state.val : '') == 'triggered') {
             if (Debug) {
-                console.log('Trigger AlarmState aktivePage: ' + activePage);
+                log('Trigger AlarmState aktivePage: ' + activePage, 'info');
             }
             if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
                 GeneratePage(activePage);
             }
         }
     } catch (err) {
-        console.warn('error at Trigger AlarmState: ' + err.message);
+        log('error at Trigger AlarmState: ' + err.message, 'warn');
     }
 });
 
@@ -2879,7 +2882,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     HandleStartupProcess();
                     pageId = 0;
                     GeneratePage(config.pages[0]);
-                    if (Debug) console.log('HandleMessage -> Startup');
+                    if (Debug) log('HandleMessage -> Startup', 'info');
                     Init_Release();
                     break;
                 case 'sleepReached':
@@ -2888,7 +2891,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     if (pageId < 0)
                         pageId = 0;
                     HandleScreensaver();
-                    if (Debug) console.log('HandleMessage -> sleepReached');
+                    if (Debug) log('HandleMessage -> sleepReached', 'info');
                     break;
                 case 'pageOpenDetail':
                     screensaverEnabled = false;
@@ -2897,7 +2900,7 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     let pageItem = findPageItem(tempPageItem[0]);
                     if (pageItem !== undefined) {
                         if (Debug) {
-                            console.log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                            log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
                         }
                         SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
                     }
@@ -2906,21 +2909,25 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     screensaverEnabled = false;
                     HandleButtonEvent(words);
                     if (Debug) {
-                        console.log('HandleMessage -> buttonPress2 ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4]);
+                        log('HandleMessage -> buttonPress2 ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
                     }
+                    break;
+                case 'renderCurrentPage':
+                    // Event only for HA at this Moment
+                    if (Debug) log('renderCurrentPage', 'info');
                     break;
                 case 'button1':
                 case 'button2':
                     screensaverEnabled = false;
                     HandleHardwareButton(method);
-                    if (Debug) console.log('HandleMessage -> button1 /  button2')
+                    if (Debug) log('HandleMessage -> button1 /  button2', 'info')
                     break;
                 default:
                     break;
             }
         }
     } catch (err) {
-        console.warn('error at function HandleMessage: ' + err.message);
+        log('error at function HandleMessage: ' + err.message, 'warn');
     }
 }
 
@@ -2930,7 +2937,7 @@ function findPageItem(searching: String): PageItem {
         let pageItem = activePage.items.find(e => e.id === searching);
 
         if (pageItem !== undefined) {
-            if (Debug) console.log('findPageItem -> pageItem ' + pageItem);
+            if (Debug) log('findPageItem -> pageItem ' + pageItem, 'info');
             return pageItem;
         }
 
@@ -2940,11 +2947,11 @@ function findPageItem(searching: String): PageItem {
             return pageItem === undefined;
         });
 
-        if (Debug) console.log('findPageItem -> pageItem SubPage ' + pageItem);
+        if (Debug) log('findPageItem -> pageItem SubPage ' + pageItem, 'info');
 
         return pageItem;
     } catch (err) {
-        console.warn('error at function findPageItem: ' + err.message);
+        log('error at function findPageItem: ' + err.message, 'warn');
     }
 }
 
@@ -2992,9 +2999,9 @@ function GeneratePage(page: Page): void {
         }
     } catch (err) {
         if (err.message == "Cannot read properties of undefined (reading 'type')") {
-            console.log('Please wait a few seconds longer when launching the NSPanel. Not all parameters are loaded yet.');
+            log('Please wait a few seconds longer when launching the NSPanel. Not all parameters are loaded yet.', 'warn');
         } else {
-            console.warn('error at function GeneratePage: ' + err.message);
+            log('error at function GeneratePage: ' + err.message, 'warn');
         }
     }
 }
@@ -3007,7 +3014,7 @@ function HandleHardwareButton(method: string): void {
         }
         switch(buttonConfig.mode) {
             case 'page':
-                if (Debug) console.log('HandleHardwareButton -> Mode Page');
+                if (Debug) log('HandleHardwareButton -> Mode Page', 'info');
                 if (buttonConfig.page) {
                     if(method == 'button1') {
                         pageId = -1;
@@ -3018,7 +3025,7 @@ function HandleHardwareButton(method: string): void {
                     break;
                 }
             case 'toggle':
-                if (Debug) console.log('HandleHardwareButton -> Mode Toggle');
+                if (Debug) log('HandleHardwareButton -> Mode Toggle', 'info');
                 if (buttonConfig.entity) {
                     let current = getState(buttonConfig.entity).val;
                     setState(buttonConfig.entity, !current);
@@ -3026,7 +3033,7 @@ function HandleHardwareButton(method: string): void {
                 screensaverEnabled = true;
                 break;
             case 'set':
-                if (Debug) console.log('HandleHardwareButton -> Mode Set');
+                if (Debug) log('HandleHardwareButton -> Mode Set', 'info');
                 if (buttonConfig.entity) {
                     setState(buttonConfig.entity, buttonConfig.setValue);
                 }
@@ -3034,7 +3041,7 @@ function HandleHardwareButton(method: string): void {
                 break;
         }
     } catch (err) {
-        console.warn('error at function HandleHardwareButton: ' + err.message);
+        log('error at function HandleHardwareButton: ' + err.message, 'warn');
     }
 }
 
@@ -3059,9 +3066,9 @@ function SendDate(): void {
         }
     } catch (err) {
         if (err.message = 'Cannot convert undefined or null to object') {
-            console.log('Datumsformat noch nicht initialisiert');
+            log('Datumsformat noch nicht initialisiert', 'info');
         } else {
-            console.warn('error at function SendDate: ' + err.message);
+            log('error at function SendDate: ' + err.message, 'warn');
         }
     }
 }
@@ -3074,7 +3081,7 @@ function SendTime(): void {
 
         SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
     } catch (err) {
-        console.warn('error at function SendTime: ' + err.message);
+        log('error at function SendTime: ' + err.message, 'warn');
     }
 }
 
@@ -3085,7 +3092,7 @@ function GenerateEntitiesPage(page: PageEntities): Payload[] {
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
     } catch (err) {
-        console.warn('error at function GenerateEntitiesPage: ' + err.message);
+        log('error at function GenerateEntitiesPage: ' + err.message, 'warn');
     }
 }
 
@@ -3095,7 +3102,7 @@ function GenerateGridPage(page: PageGrid): Payload[] {
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err) {
-        console.warn('error at function GenerateGridPage: ' + err.message);
+        log('error at function GenerateGridPage: ' + err.message, 'warn');
     }
 }
 
@@ -3105,7 +3112,7 @@ function GenerateGridPage2(page: PageGrid2): Payload[] {
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err) {
-        console.warn('error at function GenerateGridPage2: ' + err.message);
+        log('error at function GenerateGridPage2: ' + err.message, 'warn');
     }
 }
 
@@ -3157,10 +3164,10 @@ function GeneratePageElements(page: Page): string {
                 pageData += CreateEntity(page.items[index], index + 1, page.useColor);
             }
         }
-        if (Debug) console.log('GeneratePageElements pageData ' + pageData);
+        if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
         return pageData;
     } catch (err) {
-        console.warn('error at function GeneratePageElements: ' + err.message);
+        log('error at function GeneratePageElements: ' + err.message, 'warn');
     }
 }
 
@@ -3241,7 +3248,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
  
-                    if (Debug) console.log('CreateEntity statisch Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText)
+                    if (Debug) log('CreateEntity statisch Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText, 'info')
                     return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
  
                 } else if (pageItem.id != null && pageItem.targetPage != undefined) {
@@ -3364,7 +3371,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                             if (existsState(pageItem.id + '.USERICON')) {
                                 iconId = Icons.GetIcon(getState(pageItem.id + '.USERICON').val);
-                                if (Debug) console.log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val);
+                                if (Debug) log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val, 'info');
                                 RegisterEntityWatcher(pageItem.id + '.USERICON');
                             }
  
@@ -3393,7 +3400,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         //      return '~delete~~~~~';
                     }
  
-                    if (Debug) console.log('CreateEntity Dynamische Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText)
+                    if (Debug) log('CreateEntity Dynamische Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info')
                     return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
  
                 } else {
@@ -3402,7 +3409,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) console.log('CreateEntity Standard ~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText)
+                    if (Debug) log('CreateEntity Standard ~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info')
                     return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
                 }
             }
@@ -3427,7 +3434,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
                     
-                    if (Debug) console.log('CreateEntity Icon role socket/light ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role socket/light ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'hue':
@@ -3457,7 +3464,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role hue ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role hue ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'ct':
@@ -3477,7 +3484,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role ct ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role ct ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'rgb':
@@ -3507,7 +3514,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
  
-                    if (Debug) console.log('CreateEntity Icon role rgb ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role rgb ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'cie':
@@ -3539,7 +3546,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
  
-                    if (Debug) console.log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'dimmer':
@@ -3559,7 +3566,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role dimmer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role dimmer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'blind':
@@ -3567,7 +3574,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
  
-                    if (Debug) console.log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~');
+                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~', 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~';
  
                 case 'gate':
@@ -3588,7 +3595,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role gate ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState);
+                    if (Debug) log('CreateEntity Icon role gate ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
  
                 case 'door':
@@ -3609,7 +3616,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role door/window ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState);
+                    if (Debug) log('CreateEntity Icon role door/window ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
  
                 case 'motion': 
@@ -3624,7 +3631,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('motion-sensor');
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role motion ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity Icon role motion ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'info':
@@ -3686,7 +3693,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     if (existsState(pageItem.id + '.USERICON')) {
                         iconId = Icons.GetIcon(getState(pageItem.id + '.USERICON').val);
-                        if (Debug) console.log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val);
+                        if (Debug) log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val, 'info');
                         RegisterEntityWatcher(pageItem.id + '.USERICON');
                     }
  
@@ -3698,8 +3705,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) console.log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat');
-                    if (Debug) console.log('CreateEntity  ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit);
+                    if (Debug) log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat', 'info');
+                    if (Debug) log('CreateEntity  ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
  
                 case 'buttonSensor':
@@ -3709,7 +3716,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let inSelText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) console.log('CreateEntity  Icon role buttonSensor ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText);
+                    if (Debug) log('CreateEntity  Icon role buttonSensor ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
  
                 case 'button':
@@ -3718,7 +3725,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) console.log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText);
+                    if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
  
                 case 'level.timer':
@@ -3732,7 +3739,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         RegisterEntityWatcher(pageItem.id + '.STATE');
                     }
  
-                    if (Debug) console.log('CreateEntity  Icon role level.timeer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText);
+                    if (Debug) log('CreateEntity  Icon role level.timeer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
  
                 case 'level.mode.fan':
@@ -3753,7 +3760,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) console.log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal);
+                    if (Debug) log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
                     
                 case 'lock':
@@ -3775,7 +3782,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                     }
  
-                    if (Debug) console.log('CreateEntity  Icon role lock ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState);
+                    if (Debug) log('CreateEntity  Icon role lock ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
  
                 case 'slider':
@@ -3784,7 +3791,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     iconColor = GetIconColor(pageItem, false, useColors);
  
-                    if (Debug) console.log('CreateEntity  Icon role slider ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue);
+                    if (Debug) log('CreateEntity  Icon role slider ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
  
                 case 'volumeGroup':
@@ -3806,7 +3813,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = Icons.GetIcon('volume-mute');
                     }
  
-                    if (Debug) console.log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue);
+                    if (Debug) log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
  
                 case 'warning':
@@ -3823,7 +3830,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = itemInfo; 
                     }
  
-                    if (Debug) console.log('CreateEntity  Icon role warning ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo);
+                    if (Debug) log('CreateEntity  Icon role warning ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo, 'info');
                     return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
  
                 case 'timeTable':
@@ -3841,21 +3848,21 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
     
                     iconColor = (!itemVerspaetung) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
     
-                    if (Debug) console.log('CreateEntity  Icon role timeTable ~' + type + '~' + itemRichtung + '~' + iconId + '~' + iconColor + '~' + itemRichtung + '~' + itemUhrzeit);
+                    if (Debug) log('CreateEntity  Icon role timeTable ~' + type + '~' + itemRichtung + '~' + iconId + '~' + iconColor + '~' + itemRichtung + '~' + itemUhrzeit, 'info');
                     return '~' + type + '~' + itemRichtung + '~' + iconId + '~' + iconColor + '~' + itemRichtung + '~' + itemUhrzeit;
     
                 default:
-                    if (Debug) console.log('CreateEntity Icon keine passende Rolle gefunden');
+                    if (Debug) log('CreateEntity Icon keine passende Rolle gefunden', 'warn');
                     return '~delete~~~~~';
             }    
         }
-        if (Debug) console.log('CreateEntity  return ~delete~~~~~');
+        if (Debug) log('CreateEntity  return ~delete~~~~~', 'info');
         return '~delete~~~~~';
     } catch (err) {
         if (err.message == "Cannot read properties of undefined (reading 'common')") {
-            console.warn('Found Alias without channel: ' + pageItem.id + '! Please correct the Alias');
+            log('Found Alias without channel: ' + pageItem.id + '! Please correct the Alias', 'warn');
         } else {
-            console.warn('error at function CreateEntity: ' + err.message);
+            log('error at function CreateEntity: ' + err.message, 'warn');
         }
     }
 }
@@ -3865,7 +3872,7 @@ function findLocale(controlsObject: string, controlsState: string): string {
     const strJson = getState(NSPanel_Path + 'NSPanel_locales_json').val;
 
     if (Debug) {
-        console.log(controlsObject + ' - ' + controlsState);
+        log(controlsObject + ' - ' + controlsState, 'info');
     }
 
     try {
@@ -3881,10 +3888,10 @@ function findLocale(controlsObject: string, controlsState: string): string {
     } catch (err) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
             if (Debug) {
-                console.log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState);
+                log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState, 'info');
             }
         } else {
-            console.warn('error at function findLocale: ' + err.message);
+            log('error at function findLocale: ' + err.message, 'warn');
         }
         return controlsState;
     }
@@ -3895,7 +3902,7 @@ function findLocaleServMenu(controlsState: string): string {
     const strJson = getState(NSPanel_Path + 'NSPanel_locales_service_json').val;
 
     if (Debug) {
-        console.log(controlsState);
+        log(controlsState, 'info');
     }
 
     try {
@@ -3915,10 +3922,10 @@ function findLocaleServMenu(controlsState: string): string {
     } catch (err) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
             if (Debug) {
-                console.log('function findLocale: missing translation: ' + controlsState);
+                log('function findLocale: missing translation: ' + controlsState, 'info');
             }
         } else {
-            console.warn('error at function findLocale: ' + err.message);
+            log('error at function findLocale: ' + err.message, 'warn');
         }
         return controlsState;
     }
@@ -3950,7 +3957,7 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
 
         return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
     } catch (err) {
-        console.warn('error at function GetIconColor: ' + err.message);
+        log('error at function GetIconColor: ' + err.message, 'warn');
     }
 }
 
@@ -3972,7 +3979,7 @@ function RegisterEntityWatcher(id: string): void {
             }
         }));
     } catch (err) {
-        console.warn('error at function RegisterEntityWatcher: ' + err.message);
+        log('error at function RegisterEntityWatcher: ' + err.message, 'warn');
     }
 }
 
@@ -3986,7 +3993,7 @@ function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: strin
             SendToPanel(GenerateDetailPage(type, undefined, pageItem));
         }))
     } catch (err) {
-        console.warn('error at function RegisterDetailEntityWatcher: ' + err.message);
+        log('error at function RegisterDetailEntityWatcher: ' + err.message, 'warn');
     }
 }
 
@@ -4006,7 +4013,7 @@ function GetUnitOfMeasurement(id: string): string {
 
         return '';
     } catch (err) {
-        console.warn('error at function GetUnitOfMeasurement: ' + err.message);
+        log('error at function GetUnitOfMeasurement: ' + err.message, 'warn');
     }
 }
 
@@ -4381,11 +4388,11 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         }
 
         if (Debug) {
-            console.log('GenerateThermoPage payload: ' + out_msgs);
+            log('GenerateThermoPage payload: ' + out_msgs, 'info');
         }
         return out_msgs;
     } catch (err) {
-        console.warn('error at function GenerateThermoPage: ' + err.message);
+        log('error at function GenerateThermoPage: ' + err.message, 'warn');
     }
 }
 
@@ -4420,7 +4427,7 @@ function unsubscribeMediaSubscriptions(): void {
             unsubscribe(mediaID + '.ELAPSED');
         }
     }
-    if (Debug) console.log('unsubscribeMediaSubscriptions gestartet');
+    if (Debug) log('unsubscribeMediaSubscriptions gestartet', 'info');
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
@@ -4459,12 +4466,27 @@ function subscribeMediaSubscriptionsSonosAdd(id: string): void {
     });
 } 
 
+function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
+    on({id: [].concat([id + '.DURATION'])
+              .concat([id + '.ELAPSED']), change: "any"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage);
+                setTimeout(async function () {
+                    GeneratePage(activePage);
+                }, 50);
+            }
+        },50)
+    });
+} 
+
 async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlayerInstance: string) {
     if (autoCreateAlias) {
         if (isSetOptionActive) {
             if (adapterPlayerInstance == 'alexa2.0.') {
                 if (existsObject(id) == false){
-                    console.log('Alexa Alias ' + id + ' does not exist - will be created now');
+                    log('Alexa Alias ' + id + ' does not exist - will be created now', 'info');
 
                     let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
                     try {
@@ -4483,14 +4505,20 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT' });
                         await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });        
                     } catch (err) {
-                        console.warn('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message);
+                        log('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message, 'warn');
                     }
+                }
+                //Add Alexa Datapoints > v4.3.3.18
+                if (existsObject(id + '.DURATION') == false) {
+                    let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
+                    await createAliasAsync(id + '.DURATION', dpPath + '.Player.mediaLength', true, <iobJS.StateCommon>{ type: 'string', role: 'media.duration.text', name: 'DURATION' });
+                    await createAliasAsync(id + '.ELAPSED', dpPath + '.Player.mediaProgressStr', true, <iobJS.StateCommon>{ type: 'string', role: 'media.elapsed.text', name: 'ELAPSED' });
                 }
             }
 
             if (adapterPlayerInstance == 'spotify-premium.0.') {
                 if (existsObject(id) == false){
-                    console.log('Spotify Alias ' + id + ' does not exist - will be created now');
+                    log('Spotify Alias ' + id + ' does not exist - will be created now', 'info');
 
                     let dpPath: string = adapterPlayerInstance;
                     try {
@@ -4511,14 +4539,14 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
                     
                     } catch (err) {
-                        console.warn('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message);
+                        log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
                     }
                 }
             }
 
             if (adapterPlayerInstance == 'sonos.0.') {
                 if (existsObject(id) == false){
-                    console.log('Sonos Alias ' + id + ' does not exist - will be created now');
+                    log('Sonos Alias ' + id + ' does not exist - will be created now', 'info');
 
                     let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
                     try {
@@ -4538,10 +4566,10 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
                         await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
                     } catch (err) {
-                        console.warn('error at function createAutoMediaAlias Adapter sonos: ' + err.message);
+                        log('error at function createAutoMediaAlias Adapter sonos: ' + err.message, 'warn');
                     }
                 }
-                //Add Sonos Add Datapoints > v4.3.3.15
+                //Add Sonos Datapoints > v4.3.3.15
                 if (existsObject(id + '.QUEUE') == false) {
                     let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
                     await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'QUEUE' });
@@ -4552,7 +4580,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
 
             if (adapterPlayerInstance.startsWith('volumio')) {
                 if (existsObject(id) == false){
-                    console.log('Volumio Alias ' + id + ' does not exist - will be created now');
+                    log('Volumio Alias ' + id + ' does not exist - will be created now', 'info');
 
                     let dpPath: string = adapterPlayerInstance;
                     try {
@@ -4572,14 +4600,14 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
                         await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'string', role: 'media.state', name: 'status' });
                     } catch (err) {
-                        console.warn('error function createAutoMediaAlias Adapter volumio: ' + err.message);
+                        log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
                     }
                 }
             }
 
             if (adapterPlayerInstance.startsWith('squeezeboxrpc')) {           
                 if (existsObject(id) == false){
-                    console.log('Squeezebox Alias ' + id + ' does not exist - will be created now');
+                    log('Squeezebox Alias ' + id + ' does not exist - will be created now', 'info');
 
                     let dpPath: string = adapterPlayerInstance + '.Players.' + mediaDevice;
                     try {
@@ -4598,7 +4626,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
                         await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
                     } catch (err) {
-                        console.warn('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message);
+                        log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
                     }
                 }
             }
@@ -4651,6 +4679,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         subscribeMediaSubscriptions(page.items[0].id);
                         if (v2Adapter == 'sonos') {
                             subscribeMediaSubscriptionsSonosAdd(page.items[0].id);
+                        } else if (v2Adapter == 'alexa2') {
+                            subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);
                         }
                     }
                 }
@@ -4660,6 +4690,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             subscribeMediaSubscriptions(page.items[0].id);
             if (v2Adapter == 'sonos') {
                 subscribeMediaSubscriptionsSonosAdd(page.items[0].id);
+            } else if (v2Adapter == 'alexa2') {
+                subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);
             }
         } else if (page.type == 'cardMedia' && pageCounter == -1) {
             //Do Nothing
@@ -4674,7 +4706,24 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 title = title.slice(0, 27) + '...';
             }
             if (existsObject(id + '.DURATION') && existsObject(id + '.ELAPSED')) {
-                if (v2Adapter == 'sonos' && getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {
+                if (v2Adapter == 'alexa2') {
+                    if (Debug) log(getState(id + '.DURATION').val, 'info');
+                    let Seconds = parseInt(getState(id + '.DURATION').val)%60 < 10 ? '0' : '' 
+                    let Duration = Math.floor(getState(id + '.DURATION').val/60) + ":" + Seconds +  getState(id + '.DURATION').val%60 
+                    let vElapsed = getState(id + '.ELAPSED').val;
+                    if (vElapsed.length == 5) {
+                        if(parseInt(vElapsed.slice(0,2)) < 9) {
+                            vElapsed = vElapsed.slice(1);    
+                        }
+                    } 
+                    let vDuration = Duration;
+                    if (vDuration.length == 5) {
+                        if(parseInt(vDuration.slice(0,2)) < 9) {
+                            vDuration = vDuration.slice(1);    
+                        }
+                    } 
+                    title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                } else if (v2Adapter == 'sonos' && getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {
                     let vElapsed = getState(id + '.ELAPSED').val;
                     if (vElapsed.length == 5) {
                         if(parseInt(vElapsed.slice(0,2)) < 9) {
@@ -4758,7 +4807,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
             //Alexa2
             if (v2Adapter == 'alexa2') {
-                media_icon = Icons.GetIcon('music-circle');
+                media_icon = Icons.GetIcon('alpha-a-circle');
                 name = getState(id + '.ALBUM').val;
                 let nameLength = name.length;
                 if (name.substring(0,9) == 'Playlist:') {
@@ -4898,16 +4947,16 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         .then(async function (response) {
                             if (response.status === 200) {
                                 if (Debug) {
-                                    console.log(JSON.stringify(response.data));
+                                    log(JSON.stringify(response.data), 'info');
                                 }
                                 page.items[0].playList = JSON.parse(JSON.stringify(response.data));
-                                if (Debug) console.log('volumio-playlist: ' + page.items[0].playList); 
+                                if (Debug) log('volumio-playlist: ' + page.items[0].playList, 'info'); 
                             } else {
-                                console.warn('Axios Status - get_volumio-playlist: ' + response.state);
+                                log('Axios Status - get_volumio-playlist: ' + response.state, 'warn');
                             }
                         })
                         .catch(function (error) {
-                            console.log(error);
+                            log(error, 'warn');
                         });
 
                     }
@@ -4923,6 +4972,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             } 
 
             //InSel Tracklist
+            globalTracklist = ''
+            if (v2Adapter == 'spotify-premium') {
+                globalTracklist = ' ' //Todo
+            }
             let trackListString: string = '~~~~~~'
             let trackListIconCol = rgb_dec565(HMIOff);
             if (v2Adapter == 'volumio') { /* Volumio: get queue */
@@ -4934,17 +4987,21 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         .then(async function (response) {
                             if (response.status === 200) {
                                 if (Debug) {
-                                    console.log(JSON.stringify(response.data));
+                                    log(JSON.stringify(response.data), 'info');
                                 }
                                 const QUEUELIST = JSON.parse(JSON.stringify(response.data));
                                 page.items[0].globalTracklist = QUEUELIST.queue;
-                                if (Debug) { for (let i_index in QUEUELIST.queue) console.log('volumio-queue: ' + QUEUELIST.queue[i_index]); } 
+                                if (Debug) { 
+                                    for (let i_index in QUEUELIST.queue) { 
+                                        log('volumio-queue: ' + QUEUELIST.queue[i_index], 'info'); 
+                                    }
+                                } 
                             } else {
-                                console.warn('Axios Status - get_volumio-queue: ' + response.state);
+                                log('Axios Status - get_volumio-queue: ' + response.state, 'warn');
                             }
                         })
                         .catch(function (error) {
-                            console.log(error);
+                            log(error, 'warn');
                         });
 
                 }, 2000);
@@ -4967,11 +5024,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     }
                 }
                 trackList = trackList + ']';
-                if (Debug) console.log(trackList);
+                if (Debug) log(trackList, 'info');
                 globalTracklist = trackList;
             }
             
-            if (globalTracklist!= null && globalTracklist.length != 0) {
+            if (globalTracklist != null && globalTracklist.length != 0) {
                 trackListIconCol = rgb_dec565(HMIOn);
                 trackListString =   'input_sel' + '~' + 
                                     id + '?tracklist' + '~' + 
@@ -5106,19 +5163,19 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             });
         }
         if (Debug) {
-            console.log('GenerateMediaPage payload: ' + out_msgs);
+            log('GenerateMediaPage payload: ' + out_msgs, 'info');
         }
         return out_msgs
     } catch (err) {
-        console.warn('error at function GenerateMediaPage: ' + err.message);
+        log('error at function GenerateMediaPage: ' + err.message, 'warn');
     }
 }
 
 async function createAutoAlarmAlias (id: string, nsPath: string){
     try {
         if (Debug){
-            console.log('Alarm Alias Path: ' + id);
-            console.log('Alarm 0_userdata Path: ' + nsPath);
+            log('Alarm Alias Path: ' + id, 'info');
+            log('Alarm 0_userdata Path: ' + nsPath, 'info');
         }
         if (autoCreateAlias) {
             if (isSetOptionActive) {
@@ -5138,7 +5195,7 @@ async function createAutoAlarmAlias (id: string, nsPath: string){
             }
         }
     } catch (err) {
-        console.warn('error at function createAutoAlarmAlias: ' + err.message);
+        log('error at function createAutoAlarmAlias: ' + err.message, 'warn');
     }
 }
 
@@ -5168,7 +5225,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             let flashing = 'disable';
 
             if (Debug) {
-                console.log('GenerateAlarmPage pageid: ' + id);
+                log('GenerateAlarmPage pageid: ' + id, 'info');
             }
 
             if (entityState == 'armed' || entityState == 'triggered') {
@@ -5214,7 +5271,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
 
             if (Debug) {
-                console.log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4);
+                log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4, 'info');
             }
 
             if (entityState == 'armed') {
@@ -5262,20 +5319,20 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             });
 
             if (Debug) {
-                console.log('GenerateAlarmPage payload: ' + out_msgs);
+                log('GenerateAlarmPage payload: ' + out_msgs, 'info');
             }
             return out_msgs;
         }
     } catch (err) {
-        console.warn('error at function GenerateAlarmPage: ' + err.message);
+        log('error at function GenerateAlarmPage: ' + err.message, 'warn');
     }
 }
 
 async function createAutoUnlockAlias(id: string, dpPath: string) {
     try {
         if (Debug){
-            console.log('Unlock Alias Path: ' + id);
-            console.log('Unlock 0_userdata Path: ' + dpPath);
+            log('Unlock Alias Path: ' + id, 'info');
+            log('Unlock 0_userdata Path: ' + dpPath, 'info');
         }
         if (autoCreateAlias) {
             if (isSetOptionActive) {
@@ -5289,7 +5346,7 @@ async function createAutoUnlockAlias(id: string, dpPath: string) {
             }
         }
     } catch (err) {
-        console.warn('error at function createAutoUnlockAlias: ' + err.message);
+        log('error at function createAutoUnlockAlias: ' + err.message, 'warn');
     }
     
 }
@@ -5342,20 +5399,20 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
             });
 
         if (Debug) {
-            console.log('GenerateUnlockPage payload: ' + out_msgs);
+            log('GenerateUnlockPage payload: ' + out_msgs, 'info');
         }
         return out_msgs;
         
     } catch (err) {
-        console.warn('error at function GenerateUnlockPage: ' + err.message);
+        log('error at function GenerateUnlockPage: ' + err.message, 'warn');
     }
 }
 
 async function createAutoQRAlias(id:string, dpPath:string) {
     try {
         if (Debug){
-            console.log('QRPage Alias Path: ' + id);
-            console.log('QRPage 0_userdata Path: ' + dpPath);
+            log('QRPage Alias Path: ' + id, 'info');
+            log('QRPage 0_userdata Path: ' + dpPath, 'info');
         }
         if (autoCreateAlias) {
             if (isSetOptionActive) {
@@ -5363,12 +5420,12 @@ async function createAutoQRAlias(id:string, dpPath:string) {
                     await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', { type: 'string' });
                     setObject(id, { _id: id, type: 'channel', common: { role: 'info', name: 'QR Page' }, native: {} });
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
-                    console.warn('Adjust data for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.');
+                    log('Adjust data for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.', 'warn');
                 }
             }
         }
     } catch (err) {
-        console.warn('error at function createAutoQRkAlias: ' + err.message);
+        log('error at function createAutoQRkAlias: ' + err.message, 'warn');
     } 
 }
 
@@ -5405,10 +5462,10 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let optionalValue2: any;
         for (let w = 0; w < tempstr.length - 1; w++) {
             if (tempstr[w].substring(5, 6) == 'T') {
-                tempstr[w].slice(7) == 'undefined' ? console.warn('Adjust data (T) for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.') : '' ;
+                tempstr[w].slice(7) == 'undefined' ? log('Adjust data (T) for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.', 'warn') : '' ;
             }            
             if (tempstr[w].substring(0, 1) == 'S') {
-                tempstr[w].slice(2) == 'undefined' ? console.warn('Adjust data (S) for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.') : optionalValue1 = tempstr[w].slice(2);
+                tempstr[w].slice(2) == 'undefined' ? log('Adjust data (S) for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.', 'warn') : optionalValue1 = tempstr[w].slice(2);
             }
             if (tempstr[w].substring(0, 1) == 'P') {
                 optionalValue2 = tempstr[w].slice(2);
@@ -5450,12 +5507,12 @@ function GenerateQRPage(page: PageQR): Payload[] {
         });
 
         if (Debug) {
-            console.log('GenerateQRPage payload: ' + out_msgs);
+            log('GenerateQRPage payload: ' + out_msgs, 'info');
         }
         return out_msgs;
 
     } catch (err) {
-        console.warn('error at function GenerateQRPage: ' + err.message);
+        log('error at function GenerateQRPage: ' + err.message, 'warn');
     }
 }
 
@@ -5472,7 +5529,7 @@ function unsubscribePowerSubscriptions(): void {
             unsubscribe(powerID + '.ACTUAL');
         }
     }
-    if (Debug) console.log('unsubscribePowerSubscriptions getstartet');
+    if (Debug) log('unsubscribePowerSubscriptions getstartet', 'info');
 } 
 
 function subscribePowerSubscriptions(id: string): void {
@@ -5490,13 +5547,13 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         let obj:object;
         let demoMode = false;        
         if (page.items[0].id == undefined){
-            console.log("No PageItem defined - cardPower demo mode active");
+            log('No PageItem defined - cardPower demo mode active', 'info');
             demoMode = true;
         }
 
         activePage = page;
         if (Debug) {
-            console.log('GeneratePowerPage PageItem.id = ' + page.items[0].id);
+            log('GeneratePowerPage PageItem.id = ' + page.items[0].id, 'info');
         }
 
         let heading = 'cardPower Example';
@@ -5532,7 +5589,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         }
 
         if (Debug) {
-            console.log('GeneratePowerPage PageItem.id = ' + page.items[0].id);
+            log('GeneratePowerPage PageItem.id = ' + page.items[0].id, 'info');
         }
 
         //Demo Data if no pageItem present
@@ -5567,7 +5624,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             power_string = power_string + array_powerstate[i+1] + '~';                // optionalValue~
             power_string = power_string + array_powerspeed[i+1] + '~';                // speed~
 
-            if (Debug) console.log(power_string);
+            if (Debug) log(power_string, 'info');
         }
 
         power_string = power_string.substring(0, power_string.length - 1);
@@ -5595,11 +5652,11 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             // 1st to 6th Item
                 power_string
         });
-        if (Debug) console.log('GeneratePowerPage payload: ' + out_msgs);
+        if (Debug) log('GeneratePowerPage payload: ' + out_msgs, 'info');
         return out_msgs;
 
     } catch (err) {
-        console.warn('error at function GeneratePowerPage: ' + err.message);
+        log('error at function GeneratePowerPage: ' + err.message, 'warn');
     }
 }
 
@@ -5627,11 +5684,11 @@ function GenerateChartPage(page: PageChart): Payload[] {
                         txt
         });     
 
-        if (Debug) console.log('GenerateChartPage payload: ' + out_msgs);
+        if (Debug) log('GenerateChartPage payload: ' + out_msgs, 'info');
         return out_msgs;
 
     } catch (err) {
-        console.warn('error at function GenerateChartPage: ' + err.message);
+        log('error at function GenerateChartPage: ' + err.message, 'warn');
     }
 }
 
@@ -5652,7 +5709,7 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
 
         return false;
     } catch (err) {
-        console.warn('error at function setIfExists: ' + err.message);
+        log('error at function setIfExists: ' + err.message, 'warn');
     }
 }
 
@@ -5665,7 +5722,7 @@ function toggleState(id: string): boolean {
         }
         return false;
     } catch (err) {
-        console.warn('error at function toggleState: ' + err.message);
+        log('error at function toggleState: ' + err.message, 'warn');
     }
 }
 
@@ -5680,7 +5737,7 @@ function triggerButton(id: string): boolean{
 		}	
 		return false;	
 	}  catch (err) {	
-        console.warn('error at function triggerButton: ' + err.message);	
+        log('error at function triggerButton: ' + err.message, 'warn');	
     }		
 }	
 // End Monobutton
@@ -5699,7 +5756,7 @@ function HandleButtonEvent(words: any): void {
         let buttonAction = words[3];
 
         if (Debug) {
-            console.log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId);
+            log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId, 'info');
         }
 
         if ((words[2]).substring(0, 8) == 'navigate') {
@@ -5718,7 +5775,7 @@ function HandleButtonEvent(words: any): void {
         }
 
         if (Debug) {
-            console.log('HandleButtonEvent buttonAction: ' + buttonAction);
+            log('HandleButtonEvent buttonAction: ' + buttonAction, 'info');
         }
 
         if (buttonAction.startsWith('swipe')) {
@@ -5787,7 +5844,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'bExit':
                 if (Debug) {
-                    console.log('HandleButtonEvent -> bExit: ' + words[2] + ' - ' + words[4] + ' - ' + pageId);
+                    log('HandleButtonEvent -> bExit: ' + words[2] + ' - ' + words[4] + ' - ' + pageId, 'info');
                 }
                 if (words[2] == 'screensaver') {
                     if (getState(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick').val) {
@@ -5819,7 +5876,7 @@ function HandleButtonEvent(words: any): void {
 		            activePage = config.pages[pageId];
 	        	}
                 if (words[2] == 'popupInSel' && activePage.type == 'cardMedia') {
-                    if (Debug) console.log('Leave popupInsel without any action')
+                    if (Debug) log('Leave popupInsel without any action', 'info')
                     pageCounter = 0;
                     GeneratePage(activePage);
                     setTimeout(async function () {
@@ -5833,7 +5890,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'bHome':
                 if (Debug) {
-                    console.log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId);
+                    log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId, 'info');
                 }
                 UnsubscribeWatcher();
                 if (activePage.home != undefined) {
@@ -5924,7 +5981,7 @@ function HandleButtonEvent(words: any): void {
                             toggleState(id + '.ON_ACTUAL');
                         case 'media':
                             if (tempid[1] == undefined) {
-                                if (Debug) console.log('Logo click');
+                                if (Debug) log('Logo click', 'info');
                                 GeneratePage(activePage);
                             } else if (tempid[1] == 'repeat') {
                                 let pageItemRepeat = findPageItem(id);
@@ -5959,7 +6016,7 @@ function HandleButtonEvent(words: any): void {
                                         try {
                                             setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
                                         } catch (err) {
-                                            console.warn('ALEXA2: Repeat kann nicht verändert werden');
+                                            log('ALEXA2: Repeat kann nicht verändert werden', 'warn');
                                         }
                                         GeneratePage(activePage);
                                         break;
@@ -5969,15 +6026,15 @@ function HandleButtonEvent(words: any): void {
                                             .then(async function (response) {
                                                 if (response.status === 200) {
                                                     if (Debug) {
-                                                        console.log(response.data);
+                                                        log(response.data, 'info');
                                                     }
                                                     GeneratePage(activePage);
                                                 } else {
-                                                    console.warn('Axios Status - adapterInstanceRepeat: ' + response.state);
+                                                    log('Axios Status - adapterInstanceRepeat: ' + response.state, 'warn');
                                                 }
                                             })
                                             .catch(function (error) {
-                                                console.log(error);
+                                                log(error, 'warn');
                                             });
                                         break;
                                     case 'squeezeboxrpc':
@@ -5997,7 +6054,7 @@ function HandleButtonEvent(words: any): void {
                                                     break;
                                             }
                                         } catch (err) {
-                                            console.warn('Squeezebox: Repeat kann nicht verändert werden');
+                                            log('Squeezebox: Repeat kann nicht verändert werden', 'warn');
                                         }
                                         break;
                                 }
@@ -6094,10 +6151,10 @@ function HandleButtonEvent(words: any): void {
                 let colorCoordinates = words[4].split('|');
                 let rgb = pos_to_color(colorCoordinates[0], colorCoordinates[1]);
                 if (Debug) {
-                    console.log('HandleButtonEvent colorWeel -> rgb-Wert: ' + rgb);
+                    log('HandleButtonEvent colorWeel -> rgb-Wert: ' + rgb, 'info');
                 }
                 if (Debug) {
-                    console.log('HandleButtonEvent colorWeel -> getHue-Werte: ' + getHue(rgb.red, rgb.green, rgb.blue));
+                    log('HandleButtonEvent colorWeel -> getHue-Werte: ' + getHue(rgb.red, rgb.green, rgb.blue), 'info');
                 }
                 let o = getObject(id);
                 switch (o.common.role) {
@@ -6115,7 +6172,7 @@ function HandleButtonEvent(words: any): void {
                             //For e.g. Deconz XY
                             setIfExists(id + ".RGB", rgb_to_cie(rgb.red, rgb.green, rgb.blue));
                             if (Debug) {
-                                console.log('HandleButtonEvent colorWeel colorMode=xy -> rgb_to_cie Wert: ' + rgb_to_cie(rgb.red, rgb.green, rgb.blue));
+                                log('HandleButtonEvent colorWeel colorMode=xy -> rgb_to_cie Wert: ' + rgb_to_cie(rgb.red, rgb.green, rgb.blue), 'info');
                             }
                         }
                         else {
@@ -6146,7 +6203,7 @@ function HandleButtonEvent(words: any): void {
                 let adaInstanceSplit = pageItemTemp.adapterPlayerInstance.split('.');
                 if (adaInstanceSplit[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
-                    if (Debug) console.log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor);
+                    if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
                     let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
                     if (stateVal == 0) {
                         setState(adapterPlayerInstanceStateSeceltor, 1);
@@ -6156,7 +6213,7 @@ function HandleButtonEvent(words: any): void {
                         setState(adapterPlayerInstanceStateSeceltor, 1);
                     }
                 } else {
-                    if (Debug) console.log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val);
+                    if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
                     if (getState(id + '.STATE').val === true) {
                         setIfExists(id + '.PAUSE', true);
                     } else {
@@ -6224,7 +6281,7 @@ function HandleButtonEvent(words: any): void {
                         for (let i_index in i_list) {
                             let i = i_list[i_index];
                             if ((getState(i).val) === pageItem.speakerList[words[4]]) {
-                                if (Debug) console.log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList[words[4]]);
+                                if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList[words[4]], 'info');
                                 let deviceId = i;
                                 deviceId = deviceId.split('.');
                                 setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList[words[4]]);
@@ -6256,7 +6313,7 @@ function HandleButtonEvent(words: any): void {
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
                         let strDevicePI = pageItemPL.playList[words[4]];
-                        if (Debug) console.log('HandleButtonEvent mode-playlist Spotify -> strDevicePI:  ' + strDevicePI);
+                        if (Debug) log('HandleButtonEvent mode-playlist Spotify -> strDevicePI:  ' + strDevicePI, 'info');
                         let playlistListString = (getState(adapterInstancePL + 'playlists.playlistListString').val).split(';');
                         let playlistListIds = (getState(adapterInstancePL + 'playlists.playlistListIds').val).split(';');
                         let playlistIndex = playlistListString.indexOf(strDevicePI);
@@ -6271,7 +6328,7 @@ function HandleButtonEvent(words: any): void {
                         break;
                     case 'sonos':
                         let strDevicePLSonos = pageItemPL.playList[words[4]].split('.');
-                        if (Debug) console.log(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set')
+                        if (Debug) log(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set', 'info')
                         setState(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set', strDevicePLSonos[0]);
                         break;                    
                     case 'volumio':
@@ -6281,14 +6338,14 @@ function HandleButtonEvent(words: any): void {
                             .then(async function (response) {
                                 if (response.status === 200) {
                                     if (Debug) {
-                                        console.log(JSON.stringify(response.data));
+                                        log(JSON.stringify(response.data), 'info');
                                     }
                                 } else {
-                                    console.warn('Axios Status - mode-playlist: ' + response.state);
+                                    log('Axios Status - mode-playlist: ' + response.state, 'warn');
                                 }
                             })
                             .catch(function (error) {
-                                console.log(error);
+                                log(error, 'warn');
                             });
                         break;
                     case 'squeezeboxrpc':
@@ -6316,7 +6373,7 @@ function HandleButtonEvent(words: any): void {
                     case 'sonos':
                         setState(adapterInstanceTL + 'root.' + pageItemTL.mediaDevice + '.current_track_number', parseInt(words[4]) + 1);
                     case 'alexa2':
-                        if (Debug) console.log('Aktuell hat alexa2 keine Tracklist');
+                        if (Debug) log('Aktuell hat alexa2 keine Tracklist', 'info');
                         break;
                     case 'volumio':
                         let urlString: string = `${getState(adapterInstanceTL+'info.host').val}/api/commands/?cmd=play&N=${words[4]}`;
@@ -6324,14 +6381,14 @@ function HandleButtonEvent(words: any): void {
                             .then(async function (response) {
                                 if (response.status === 200) {
                                     if (Debug) {
-                                        console.log(JSON.stringify(response.data));
+                                        log(JSON.stringify(response.data), 'info');
                                     }
                                 } else {
-                                    console.warn('Axios Status - mode-tracklist: ' + response.state);
+                                    log('Axios Status - mode-tracklist: ' + response.state, 'warn');
                                 }
                             })
                             .catch(function (error: any) {
-                                console.log(error);
+                                log(error, 'warn');
                             });
                         break;
                     case 'squeezeboxrpc':
@@ -6351,7 +6408,7 @@ function HandleButtonEvent(words: any): void {
                 let adapterRP = adapterInstanceRP.split('.');
                 let deviceAdapterRP = adapterRP[0];
 
-                if (Debug) console.log(pageItemRP.repeatList[words[4]]);
+                if (Debug) log(pageItemRP.repeatList[words[4]], 'warn');
                 switch (deviceAdapterRP) {
                     case 'spotify-premium':
                         setIfExists(id + '.REPEAT', pageItemRP.repeatList[words[4]]);
@@ -6364,7 +6421,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-equalizer':
                 let pageItemEQ = findPageItem(id);
-                if (Debug) console.log('HandleButtonEvent mode-equalizer -> id: ' + id);
+                if (Debug) log('HandleButtonEvent mode-equalizer -> id: ' + id, 'info');
                 let lastIndex = (id.split('.')).pop();
                 setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList[words[4]]);
                 pageCounter = 0;
@@ -6383,7 +6440,7 @@ function HandleButtonEvent(words: any): void {
                     case 'spotify-premium':
                         break;
                     case 'sonos':
-                        if (Debug) console.log('HandleButtonEvent mode-seek -> id: ' + id);
+                        if (Debug) log('HandleButtonEvent mode-seek -> id: ' + id, 'info');
                         setState(adapterInstanceSK + 'root.' + pageItemSeek.mediaDevice + '.seek', parseInt(words[4]) * 10);
                         break;
                 }
@@ -6403,7 +6460,7 @@ function HandleButtonEvent(words: any): void {
                     case 'spotify-premium':
                         break;
                     case 'sonos':
-                        if (Debug) console.log('HandleButtonEvent mode-crossfade -> id: ' + id);
+                        if (Debug) log('HandleButtonEvent mode-crossfade -> id: ' + id, 'info');
                         let cfState: boolean = false;
                         if (parseInt(words[4]) == 0 ) { 
                             cfState = true; 
@@ -6420,7 +6477,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-favorites':
                 let pageItemFav = findPageItem(id);
-                if (Debug) console.log(getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set').val);
+                if (Debug) log(getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set').val, 'info');
                 let favListArray = getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_list_array').val;
                 setState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set', favListArray[words[4]]);
                 pageCounter = 0;
@@ -6609,10 +6666,10 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'D1': // Alarm page - deactivate alarm 4
                 if (Debug) {
-                    console.log('HandleButtonEvent Alarmpage D1 -> PIN: ' + getState(id + '.PIN').val);
+                    log('HandleButtonEvent Alarmpage D1 -> PIN: ' + getState(id + '.PIN').val, 'info');
                 }
                 if (Debug) {
-                    console.log('HandleButtonEvent Alarmpage D1 -> words[4]: ' + words[4]);
+                    log('HandleButtonEvent Alarmpage D1 -> words[4]: ' + words[4], 'info');
                 }
                 if (words[4] != '') {
                     if (getState(id + '.PIN').val == words[4]) {
@@ -6644,7 +6701,7 @@ function HandleButtonEvent(words: any): void {
                 break;
         }
     } catch (err) {
-        console.warn('error at function HandleButtonEvent: ' + err.message);
+        log('error at function HandleButtonEvent: ' + err.message, 'warn');
     }
 }
 
@@ -6653,7 +6710,7 @@ function GetNavigationString(pageId: number): string {
     try {
 
         if (Debug) {
-            console.log('GetNavigationString Übergabe pageId: ' + pageId);
+            log('GetNavigationString Übergabe pageId: ' + pageId, 'info');
         }
 
         var navigationString:string = "";
@@ -6748,12 +6805,12 @@ function GetNavigationString(pageId: number): string {
         }
 
     } catch (err) {
-        console.warn('error at function GetNavigationString: ' + err.message);
+        log('error at function GetNavigationString: ' + err.message, 'warn');
     }
 }
 
 function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
-    if (Debug) console.log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id);
+    if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id;
@@ -6834,7 +6891,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             brightness = getState(id + '.ACTUAL').val;
                         }
                     } else {
-                        console.warn('function GenerateDetailPage  role:dimmer -> Alias-Datenpoint: ' + id + '.ACTUAL could not be read');
+                        log('function GenerateDetailPage  role:dimmer -> Alias-Datenpoint: ' + id + '.ACTUAL could not be read', 'warn');
                     }
 
                     if (val === true) {
@@ -6883,7 +6940,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        log('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
 
                     if (val === true) {
@@ -6953,7 +7010,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        log('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
 
                     if (val === true) {
@@ -7022,7 +7079,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        log('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
 
                     if (val === true) {
@@ -7096,7 +7153,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
                     } else {
-                        console.warn('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read');
+                        log('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
 
                     if (val === true) {
@@ -7118,7 +7175,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             }
                         }
                     } else {
-                        console.warn('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read');
+                        log('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read', 'warn');
                     }
 
                     let effect_supported = 'disable';
@@ -7176,8 +7233,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     tilt_position = Math.trunc(scale(getState(id + '.TILT_ACTUAL').val, pageItem.minValueTilt, pageItem.maxValueTilt, 100, 0));
                 }
 
-                if (Debug) console.log ('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val);
-                if (Debug) console.log ('minTilt '+ min_Tilt + ' maxTilt ' + max_Tilt + ' TiltPosition ' + tilt_position);
+                if (Debug) log('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
+                if (Debug) log('minTilt '+ min_Tilt + ' maxTilt ' + max_Tilt + ' TiltPosition ' + tilt_position, 'info');
 
                 let textSecondRow = '';
                 let icon_id = icon;
@@ -7465,7 +7522,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
             
                             let tPlayList: any = []
                             for (let i = 0; i < pageItem.playList.length; i++) {
-                                if (Debug) console.log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList[i]);
+                                if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList[i], 'info');
                                 let tempItem = pageItem.playList[i].split('.');
                                 tPlayList[i] = tempItem[1];
                             }
@@ -7476,7 +7533,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                         } else if (vAdapter == 'sonos') {
-                            if (Debug) console.log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set');
+                            if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
                             if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
                                 actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
                             }
@@ -7525,8 +7582,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         actualState = (actualState.replace('?','')).split(' -');
                         actualState = actualState[0].split(" (");
                         actualState = formatInSelText(actualState[0]);
-                        if (Debug) console.log(actualState);
-                        if (Debug) console.log(globalTracklist);
+                        if (Debug) log(actualState, 'info');
+                        if (Debug) log(globalTracklist, 'info');
                         //Limit 900 characters, then memory overflow --> Shorten as much as possible
                         let temp_array = [];
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
@@ -7535,8 +7592,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                             /* Volumio: @local/NAS no title -> name */
                             if (temp_cut_array == undefined) {
                                 temp_cut_array = getAttr(globalTracklist, track_index + '.name');
-                            }
-                            if (Debug) console.log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array);
+                            } 
+                            if (Debug) log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array, 'info');
                             if (temp_cut_array != undefined) {
                                 temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
                                 temp_cut_array = temp_cut_array[0].split(" (");
@@ -7584,7 +7641,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         optionalString = pageItem.repeatList.join('?');
                         mode = 'repeat';
                     } else if (optional == 'favorites') {
-                        if (Debug) console.log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val)
+                        if (Debug) log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val, 'info')
                         actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
                         
                         let tempFavList = [];
@@ -7637,7 +7694,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                            o.common.role == 'rgbSingle' ||
                            o.common.role == 'ct') {
                                
-                    //console.log(pageItem.id);
+                    //log(pageItem.id, 'info');
                     if (pageItem.modeList != undefined) {
 
                         let actualValue: string = '';
@@ -7655,7 +7712,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         }
                         let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
-                        //console.log(valueList);
+                        //log(valueList);
 
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
@@ -7672,7 +7729,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
         return out_msgs;
 
     } catch (err) {
-        console.warn('error at function GenerateDetailPage: ' + err.message);
+        log('error at function GenerateDetailPage: ' + err.message, 'warn');
     }
 }
 
@@ -7680,7 +7737,7 @@ function scale(number: number, inMin: number, inMax: number, outMin: number, out
     try {
         return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
     } catch (err) {
-        console.warn('error at function scale: ' + err.message);
+        log('error at function scale: ' + err.message, 'warn');
     }
 }
 
@@ -7691,7 +7748,7 @@ function UnsubscribeWatcher(): void {
             delete subscriptions[key];
         }
     } catch (err) {
-        console.warn('error at function UnsubscribeWatcher: ' + err.message);
+        log('error at function UnsubscribeWatcher: ' + err.message, 'warn');
     }
 }
 
@@ -7798,7 +7855,7 @@ function HandleScreensaverUpdate(): void {
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
                         let pformat = parseFormat(val);
-                        if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
+                        if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
                         if (moment(val, pformat, true).isValid()) { 
                             let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
                             if (config.leftScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
@@ -7943,7 +8000,7 @@ function HandleScreensaverUpdate(): void {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
 
                         let pformat = parseFormat(val);
-                        if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
+                        if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
                         if (moment(val, pformat, true).isValid()) { 
                             let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
                             if (config.bottomScreensaverEntity[4].ScreensaverEntityDateFormat !== undefined) {
@@ -8008,7 +8065,7 @@ function HandleScreensaverUpdate(): void {
                     else if (typeof(val) == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
                         let pformat = parseFormat(val);
-                        if (Debug) console.log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid());
+                        if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
                         if (moment(val, pformat, true).isValid()) { 
                             let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
                             if (config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
@@ -8084,7 +8141,7 @@ function HandleScreensaverUpdate(): void {
                                     val + '~';
                 }
             }
-            if (Debug) console.log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString);
+            if (Debug) log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString, 'info');
 
             SendToPanel(<Payload>{ payload: 'weatherUpdate~' + payloadString });
 
@@ -8093,7 +8150,7 @@ function HandleScreensaverUpdate(): void {
         }
 
     } catch (err) {
-        console.warn('error at function HandleScreensaverUpdate: ' + err.message);
+        log('error at function HandleScreensaverUpdate: ' + err.message, 'warn');
     }
 }
 
@@ -8107,7 +8164,7 @@ function RegisterScreensaverEntityWatcher(id: string): void {
             HandleScreensaverUpdate();
         }));
     } catch (err) {
-        console.warn('function RegisterEntityWatcher: ' + err.message);
+        log('function RegisterEntityWatcher: ' + err.message, 'warn');
     }
 }
 
@@ -8118,34 +8175,34 @@ function HandleScreensaverStatusIcons() : void {
         if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
             // Prüfung ob ScreensaverEntity vom Typ String ist
             if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
-                if (Debug) console.log('Entity ist String')
+                if (Debug) log('Entity ist String', 'info')
                 let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
                 if (hwBtn1 == 'ON') {
                     hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
                 }
-                if (Debug) console.log(hwBtn1 + ' ' + hwBtn1Col)
+                if (Debug) log(hwBtn1 + ' ' + hwBtn1Col, 'info')
 
                 // Icon ermitteln
                 if (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) {
                     payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                    if (Debug) console.log ('Icon if true '+payloadString)    
+                    if (Debug) log('Icon if true '+payloadString, 'info')    
                 } else {
                     if (config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null) {
                         payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff);
-                        if (Debug) console.log ('Icon else true '+payloadString)  
+                        if (Debug) log('Icon else true '+payloadString, 'info')  
                     } else {
                         payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                        if (Debug) console.log ('Icon else false '+payloadString)  
+                        if (Debug) log('Icon else false '+payloadString, 'info')  
                     }
                 } 
                 if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
                     if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
                         payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
                         payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
-                        if (Debug) console.log('Value ist eine Zahl ' + payloadString)
+                        if (Debug) log('Value ist eine Zahl ' + payloadString, 'info')
                     } else {
                         payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
-                        if (Debug) console.log('Value ist keine Zahl ' + payloadString)
+                        if (Debug) log('Value ist keine Zahl ' + payloadString, 'info')
                     }                        
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
@@ -8287,7 +8344,7 @@ function HandleScreensaverStatusIcons() : void {
         SendToPanel(<Payload>{ payload: 'statusUpdate~' + payloadString });
 
     } catch (err) {
-        console.warn('error at function HandleScreensaverStatusIcons: ' + err.message);
+        log('error at function HandleScreensaverStatusIcons: ' + err.message, 'warn');
     }
 }
 
@@ -8375,7 +8432,7 @@ function HandleScreensaverColors(): void {
 
         SendToPanel(<Payload>{ payload: payloadString });
     } catch (err) {
-        console.warn('error at function HandleScreensaverColors: '+ err.message);
+        log('error at function HandleScreensaverColors: '+ err.message, 'warn');
     }
 }
 
@@ -8441,7 +8498,7 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
         }
         return colorReturn;
     } catch (err) {
-        console.warn('error at function GetScreenSaverEntityColor: '+ err.message);
+        log('error at function GetScreenSaverEntityColor: '+ err.message, 'warn');
     }
 }
 
@@ -8522,7 +8579,7 @@ function GetAccuWeatherIcon(icon: number): string {
                 return 'alert-circle-outline';
         }
     } catch (err) {
-        console.warn('error at function GetAccuWeatherIcon: '+ err.message);
+        log('error at function GetAccuWeatherIcon: '+ err.message, 'warn');
     }
 }
 
@@ -8601,7 +8658,7 @@ function GetAccuWeatherIconColor(icon: number): number {
                 return rgb_dec565(White);
         }
     } catch (err) {
-        console.warn('error at function GetAccuWeatherIconColor: '+ err.message);
+        log('error at function GetAccuWeatherIconColor: '+ err.message, 'warn');
     }
 }
 
@@ -8660,7 +8717,7 @@ function GetDasWetterIcon(icon: number): string {
                 return 'alert-circle-outline';
         }
     } catch (err) {
-        console.warn('error at function GetDasWetterIcon: '+ err.message);
+        log('error at function GetDasWetterIcon: '+ err.message, 'warn');
     }
 }
  
@@ -8719,7 +8776,7 @@ function GetDasWetterIconColor(icon: number): number {
                 return rgb_dec565(White);
         }
     } catch (err) {
-        console.warn('error at function GetDasWetterIconColor: '+ err.message);
+        log('error at function GetDasWetterIconColor: '+ err.message, 'warn');
     }
 }
 
@@ -8755,7 +8812,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
             await createAliasAsync(AliasPath + 'Sensor.TempUnit.ACTUAL', NSPanel_Path + 'Sensor.TempUnit', true, <iobJS.StateCommon>{ type: 'string' });
         }
     } catch (err) {
-        console.warn('error Trigger reading senor-data: '+ err.message);
+        log('error Trigger reading senor-data: '+ err.message, 'warn');
     }
 });
 //------------------End Read Internal Sensor Data
