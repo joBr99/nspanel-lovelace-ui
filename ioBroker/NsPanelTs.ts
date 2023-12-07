@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.18 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.19 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -74,6 +74,7 @@ ReleaseNotes:
         - 04.12.2023 - v4.3.3.17 Add SEEK and CROSSFADE to Sonos cardMedia
         - 05.12.2023 - v4.3.3.18 Add (ELAPSED/DURATION) to v2Adapter alexa2
         - 06.12.2023 - v4.3.3.18 Replace missing Type console.log --> log(message, 'serverity')
+        - 07.12.2023 - v4.3.3.19 Fix Trigger activeDimmodeBrightness if Dimmode = -1
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -947,7 +948,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.18';
+const scriptVersion: string = 'v4.3.3.19';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1394,6 +1395,8 @@ on({id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change
 //go to Page X after bExit
 async function Init_bExit_Page_Change() {
     try {
+        alwaysOn = false;
+        pageCounter = 0;
         if (existsState(NSPanel_Path + 'ScreensaverInfo.bExitPage') == false ) { 
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', -1, true, { type: 'number' });
         }
@@ -1437,17 +1440,27 @@ InitActiveBrightness();
 on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightness'), change: "ne"}, async function (obj) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
-
         if (obj.state.val != null && obj.state.val != -1) {
             if (obj.state.val < -1 || obj.state.val > 100) {
                 log('activeDimmodeBrightness value only between -1 and 100', 'info');
                 setStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', -1, true);
+                alwaysOn = false;
+                pageCounter = 0;
+                useMediaEvents = false;
+                screensaverEnabled = true;
+                InitDimmode();
+                HandleMessage('event', 'startup',undefined, undefined);
             } else {
                 log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
                 SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
             }
         } else {
+            alwaysOn = false;
+            pageCounter = 0;
+            useMediaEvents = false;
+            screensaverEnabled = true;
             InitDimmode();
+            HandleMessage('event', 'startup',undefined, undefined);
         }
     } catch (err) {
         log('error at trigger activeDimmodeBrightness: ' + err.message, 'warn');
@@ -1761,7 +1774,7 @@ async function InitPageNavi() {
     try {
         if (!existsState(NSPanel_Path + 'PageNavi')) {
             await createStateAsync(NSPanel_Path + 'PageNavi', <iobJS.StateCommon>{ type: 'string' });
-            await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: {"pagetype": "page","pageId": 0}, ack: true });
+            await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: {"pagetype": "page","pageId": 0}, ack: true });        
         }
     } catch (err) {
         log('error at function InitPageNavi: ' + err.message, 'warn');
@@ -1899,6 +1912,11 @@ async function InitDimmode() {
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
                 SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
             } else {
+                if (isDimTimeInRange(timeDimMode.timeDay,timeDimMode.timeNight)) {
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                } else {
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                }
                 ScreensaverDimmode(timeDimMode);
             }
         }
@@ -1907,6 +1925,35 @@ async function InitDimmode() {
     }
 }
 InitDimmode();
+
+function currentDimDate() {
+    let d = new Date();
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function addDimTime(strTime) {
+    let time = strTime.split(':');
+    let d = currentDimDate();
+    d.setHours(time[0]);
+    d.setMinutes(time[1]);
+    d.setSeconds(time[2]);
+    return d;
+}
+
+function isDimTimeInRange(strLower, strUpper) {
+    let now = new Date();
+    let lower = addDimTime(strLower);
+    let upper = addDimTime(strUpper);
+    let inRange = false;
+    if (upper > lower) {
+        // opens and closes in same day
+        inRange = (now >= lower && now <= upper) ? true : false;
+    } else {
+        // closes in the following day
+        inRange = (now >= upper && now <= lower) ? false : true;
+    }
+    return inRange;
+}
 
 //--------------------End Dimmode
 
@@ -3727,7 +3774,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
- 
+                case 'value.time':
                 case 'level.timer':
                     type = 'timer';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
@@ -7359,6 +7406,18 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 let min_remaining = 0;
                 let sec_remaining = 0;
                 if (existsState(id + '.STATE')) {
+
+                if (o.common.role == 'value.time') {
+                    if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
+                        min_remaining = Math.floor(timer_actual / 60);
+                        sec_remaining = timer_actual % 60;
+                        editable = 1;
+                    } else {
+                        min_remaining = Math.floor(timer_actual / 60);
+                        sec_remaining = timer_actual % 60;
+                        editable = 1;
+                    } 
+                } else if (o.common.role == 'level.timer') {
                     if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
                         min_remaining = Math.floor(timer_actual / 60);
                         sec_remaining = timer_actual % 60;
@@ -7375,7 +7434,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         label1  = findLocale('timer', 'pause');
                         label2  = findLocale('timer', 'cancel');
                         label3  = findLocale('timer', 'finish');
-                    }
+                    }                    
+                }
 
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
