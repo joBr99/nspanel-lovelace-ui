@@ -1288,7 +1288,7 @@ InitConfigParameters();
 
 on({id: [].concat(NSPanel_Path + 'Config.ScripgtDebugStatus'), change: "ne"}, async function (obj) {
     try {
-        obj.state.val ? log('Debugmodus aktiviert', 'info') : log('Debugmodus deaktiviert', 'info');
+        obj.state.val ? log('Debug mode activated', 'info') : log('Debug mode disabled', 'info');
         Debug = obj.state.val
     } catch (err) { 
         log('error at Trigger ScripgtDebugStatus: ' + err.message, 'warn'); 
