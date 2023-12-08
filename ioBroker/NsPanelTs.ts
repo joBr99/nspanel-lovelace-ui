@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.19 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.20 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -75,6 +75,7 @@ ReleaseNotes:
         - 05.12.2023 - v4.3.3.18 Add (ELAPSED/DURATION) to v2Adapter alexa2
         - 06.12.2023 - v4.3.3.18 Replace missing Type console.log --> log(message, 'serverity')
         - 07.12.2023 - v4.3.3.19 Fix Trigger activeDimmodeBrightness if Dimmode = -1
+        - 08.12.2023 - v4.3.3.20 add Role AlarmTime for Alarm Clock
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -347,6 +348,18 @@ let Debug: boolean = false;
 //-- Start for your own pages -- some self-defined aliases required ----------------
   
 	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+let Timerpage = <PageGrid>
+    {
+        'type':'cardGrid',
+        'heading':'Timer',
+        'useColor': true,
+        'items': [
+            <PageItem>{id: 'alias.0.NSPanel.Countown', name: 'Timer'},
+            <PageItem>{id: 'alias.0.NSPanel.AlarmTime', name: 'Wecker', onColor: Red, offColor: Green, useColor: true},
+                ]
+
+    };
+
 
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 //-- END for your own pages -- some self-defined aliases required ------------------------
@@ -758,7 +771,7 @@ export const config = <Config> {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
-
+        Timerpage,
         NSPanel_Service,         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
@@ -948,7 +961,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.19';
+const scriptVersion: string = 'v4.3.3.20';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -3786,9 +3799,27 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         RegisterEntityWatcher(pageItem.id + '.STATE');
                     }
  
-                    if (Debug) log('CreateEntity  Icon role level.timeer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
+                    if (Debug) log('CreateEntity  Icon role level.timer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
+
+                case 'value.alarmtime':
+                    type = 'timer'; 
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('timer-outline');
+                    let alarmtimerText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
+                    if (existsState(pageItem.id + '.STATE')) {
+                        val = getState(pageItem.id + '.STATE').val;
+                        iconColor = (val == 'paused') ? rgb_dec565(colorScale10) : rgb_dec565(colorScale0);
+                    }
+
+                    if (existsState(pageItem.id + '.ACTUAL')) {
+                        let timer_actual = getState(pageItem.id + '.ACTUAL').val
+                        name = String(Math.floor(timer_actual / 60)) + ':' + String(timer_actual % 60);
+                    }
+
+                    if (Debug) log('CreateEntity  Icon role value.alarmtime ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText + ' ' + val, 'info');
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText;
+
                 case 'level.mode.fan':
  
                     type = 'fan';
@@ -7435,6 +7466,20 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         label2  = findLocale('timer', 'cancel');
                         label3  = findLocale('timer', 'finish');
                     }                    
+                } else if (o.common.role == 'value.alarmtime') {
+                    if (getState(id + '.STATE').val == 'paused') {
+                        min_remaining = Math.floor(timer_actual / 60);
+                        sec_remaining = timer_actual % 60;
+                        editable = 1;
+                        action2 = 'start';
+                        label2  = 'ein';
+                    } else {
+                        min_remaining = Math.floor(timer_actual / 60);
+                        sec_remaining = timer_actual % 60;
+                        editable = 0;
+                        action2 = 'pause';
+                        label2  = 'aus';
+                    }
                 }
 
                     out_msgs.push({
