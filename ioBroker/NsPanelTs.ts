@@ -348,18 +348,6 @@ let Debug: boolean = false;
 //-- Start for your own pages -- some self-defined aliases required ----------------
   
 	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-let Timerpage = <PageGrid>
-    {
-        'type':'cardGrid',
-        'heading':'Timer',
-        'useColor': true,
-        'items': [
-            <PageItem>{id: 'alias.0.NSPanel.Countown', name: 'Timer'},
-            <PageItem>{id: 'alias.0.NSPanel.AlarmTime', name: 'Wecker', onColor: Red, offColor: Green, useColor: true},
-                ]
-
-    };
-
 
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 //-- END for your own pages -- some self-defined aliases required ------------------------
@@ -771,7 +759,6 @@ export const config = <Config> {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
-        Timerpage,
         NSPanel_Service,         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
