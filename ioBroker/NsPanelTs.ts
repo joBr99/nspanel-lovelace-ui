@@ -7465,7 +7465,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         sec_remaining = timer_actual % 60;
                         editable = 0;
                         action2 = 'pause';
-                        label2  = findLocale('timer', 'off');;
+                        label2  = findLocale('timer', 'off');
                     }
                 }
 
