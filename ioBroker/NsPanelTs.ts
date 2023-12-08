@@ -3814,7 +3814,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     if (existsState(pageItem.id + '.ACTUAL')) {
                         let timer_actual = getState(pageItem.id + '.ACTUAL').val
-                        name = String(Math.floor(timer_actual / 60)) + ':' + String(timer_actual % 60);
+                        name = ('0' + String(Math.floor(timer_actual / 60))).slice(-2) + ':' + ('0' + String(timer_actual % 60)).slice(-2);
                     }
 
                     if (Debug) log('CreateEntity  Icon role value.alarmtime ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText + ' ' + val, 'info');
@@ -7472,30 +7472,30 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         sec_remaining = timer_actual % 60;
                         editable = 1;
                         action2 = 'start';
-                        label2  = 'ein';
+                        label2  = findLocale('timer', 'on');
                     } else {
                         min_remaining = Math.floor(timer_actual / 60);
                         sec_remaining = timer_actual % 60;
                         editable = 0;
                         action2 = 'pause';
-                        label2  = 'aus';
+                        label2  = findLocale('timer', 'off');;
                     }
                 }
 
-                    out_msgs.push({
-                        payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
-                            + id + '~~'                      //{entity_id}
-                            + rgb_dec565(White) + '~'        //{icon_color}~
-                            + id + '~' 
-                            + min_remaining + '~'
-                            + sec_remaining + '~'
-                            + editable + '~'
-                            + action1 + '~'
-                            + action2 + '~'
-                            + action3 + '~'
-                            + label1 + '~'
-                            + label2 + '~'
-                            + label3
+                out_msgs.push({
+                    payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
+                        + id + '~~'                      //{entity_id}
+                        + rgb_dec565(White) + '~'        //{icon_color}~
+                        + id + '~' 
+                        + min_remaining + '~'
+                        + sec_remaining + '~'
+                        + editable + '~'
+                        + action1 + '~'
+                        + action2 + '~'
+                        + action3 + '~'
+                        + label1 + '~'
+                        + label2 + '~'
+                        + label3
                     });
                 }
             }    
