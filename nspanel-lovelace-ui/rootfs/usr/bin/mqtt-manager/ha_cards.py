@@ -188,7 +188,7 @@ class HAEntity(panel_cards.Entity):
                     icon_char = value
             case 'binary_sensor':
                 device_class = self.attributes.get("device_class", "")
-                value = get_translation(self.locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
+                value = get_translation(self.locale, f"backend.component.binary_sensor.state.{device_class}.{self.state}")
             case 'weather':
                 attr = self.config.get("attribute", "temperature")
                 value = str(self.attributes.get(attr, self.state))
