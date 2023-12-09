@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.20 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.21 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -76,6 +76,7 @@ ReleaseNotes:
         - 06.12.2023 - v4.3.3.18 Replace missing Type console.log --> log(message, 'serverity')
         - 07.12.2023 - v4.3.3.19 Fix Trigger activeDimmodeBrightness if Dimmode = -1
         - 08.12.2023 - v4.3.3.20 add Role AlarmTime for Alarm Clock
+        - 09.12.2023 - v4.3.3.21 Add createAutoAlias to popupTimer only for Time
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -948,7 +949,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.20';
+const scriptVersion: string = 'v4.3.3.21';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -968,6 +969,9 @@ const moment  = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
 
+const globalTextColor: any = White; 
+const Sliders2: number = 0;
+
 async function Init_dayjs() {
     try {
         //Loading dayjs
@@ -977,10 +981,10 @@ async function Init_dayjs() {
                                      'fi','he','hr','hu','hy-am','id','is','lb','lt','ro',
                                      'sk','sl','sv','th','tr','uk','vi','zh-cn','zh-tw']
         for (let i=0; i<dayjsLanguages.length;i++) {
-        require('dayjs/locale/'+ dayjsLanguages[i]);     
+            require('dayjs/locale/'+ dayjsLanguages[i]);     
         } 
         dayjs.locale(getDayjsLocale());
-    } catch (err) { 
+    } catch (err) {
         log('error at function init_dayjs: ' + err.message,'warn'); 
     }        
 }
@@ -1452,7 +1456,7 @@ on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightnes
                 HandleMessage('event', 'startup',undefined, undefined);
             } else {
                 log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
-                SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
             }
         } else {
             alwaysOn = false;
@@ -1471,7 +1475,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"},
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
         if (obj.state.val) {
-            SendToPanel({ payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+            SendToPanel({ payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
         } else {
             InitDimmode();
         }
@@ -1811,18 +1815,18 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
-                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 if (Debug) {
                     log('function ScreensaverDimmode -> Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
                 }
             } else {
-                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 if (Debug) {
                     log('function ScreensaverDimmode -> Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
                 }
             }
         } else {
-            SendToPanel({ payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) });
+            SendToPanel({ payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
         }
     } catch (err) {
         log('error at function ScreensaverDimmode: ' + err.message, 'warn');
@@ -1908,14 +1912,13 @@ async function InitDimmode() {
             scheduleInitDimModeNight = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
                 ScreensaverDimmode(timeDimMode);
             });
-
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
-                SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
             } else {
                 if (isDimTimeInRange(timeDimMode.timeDay,timeDimMode.timeNight)) {
-                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 } else {
-                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) });
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 }
                 ScreensaverDimmode(timeDimMode);
             }
@@ -3229,7 +3232,18 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         let name: string;
         let buttonText: string = 'PRESS';
         let type: string;
- 
+
+        if (existsState(pageItem.id + '.ACTUAL') == false) {
+            if (pageItem.popupTimerType == 'TimeCard' && pageItem.autoCreateALias == true) {
+                log(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time')
+                createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', '0', { type: 'number' });
+                createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.State', 'idle', { type: 'string' });
+                setObject(pageItem.id, { type: 'channel', common: { role: 'value.time', name: 'Time' }, native: {} });
+                createAliasAsync(pageItem.id + '.ACTUAL', NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
+                createAliasAsync(pageItem.id + '.STATE', NSPanel_Path + 'Userdata.' + pageItem.id + '.State', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'STATE' });
+            }
+        }
+
         // ioBroker
         if (existsObject(pageItem.id) || pageItem.navigate === true) {
  
@@ -9216,6 +9230,7 @@ type PageItem = {
     iconArray: (string[] | undefined),
     fontSize: (number | undefined),
     actionStringArray: (string[] | undefined),
+    popupTimerType: (string | undefined),
     alwaysOnDisplay: (boolean | undefined),
     crossfade: (boolean | undefined),
 }
