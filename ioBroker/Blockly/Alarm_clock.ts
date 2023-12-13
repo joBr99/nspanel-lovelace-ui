@@ -15,7 +15,6 @@ on({ id: dp_userdata + '.AlarmTime.State', change: 'ne' }, async (obj) => {
     time = getState(dp_userdata + '.AlarmTime.Time').val;
     if (Debug) log('Uhrzeit: ' + time, 'info');
     if ('paused' == obj.state.val) {
-        await setStateAsync(dpAction, <iobJS.State>{ val: false, ack: true });
         (function () { if (scheduleAlarmTime) { 
             clearSchedule(scheduleAlarmTime); 
             scheduleAlarmTime = null; 
@@ -26,7 +25,7 @@ on({ id: dp_userdata + '.AlarmTime.State', change: 'ne' }, async (obj) => {
         let minute: number = time % 60;
         if (Debug) log('Weckzeit: ' + ('0' + stunde).slice(-2) + ':' + ('0' + minute).slice(-2), 'info');
         scheduleAlarmTime = schedule(minute + ' ' + stunde + ' * * *', async () => {
-            await setStateAsync(dpAction, <iobJS.State>{ val: false, ack: true });
+            await setStateAsync(dpAction, <iobJS.State>{ val: true, ack: true });
             await setStateAsync(dp_userdata + '.AlarmTime.State', <iobJS.State>{ val: 'paused', ack: true });
         });
     }
