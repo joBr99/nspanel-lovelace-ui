@@ -7,7 +7,7 @@ from scheduler import Scheduler
 import scheduler.trigger as trigger
 import time
 import babel.dates
-from ha_cards import Screensaver, EntitiesCard, card_factory, detail_open
+from ha_cards import Screensaver, card_factory, detail_open
 import ha_control
 
 class LovelaceUIPanel:
@@ -76,6 +76,8 @@ class LovelaceUIPanel:
         ha_control.wait_for_ha_cache()
 
         #request templates on cards
+        libs.home_assistant.cache_template(self.settings.get("sleepBrightness"))
+        libs.home_assistant.cache_template(self.settings.get("screenBrightness"))
         for c in self.cards.values():
             if hasattr(c, "qrcode"):
                 if c.qrcode.startswith("ha:"):
@@ -241,12 +243,6 @@ class LovelaceUIPanel:
                     self.current_card = self.privious_cards.pop()
                     self.render_current_page(switchPages=True)
                     return
-
-                # replace iid with real entity id
-                #if entity_id.startswith("iid."):
-                #    iid = entity_id.split(".")[1]
-                #    if iid in self.entity_iids:
-                #        entity_id = self.entity_iids[iid]
 
                 # replace iid with real entity id
                 if entity_id.startswith("iid."):

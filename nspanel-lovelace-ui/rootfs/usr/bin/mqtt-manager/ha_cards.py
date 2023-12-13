@@ -52,6 +52,8 @@ class HAEntity(panel_cards.Entity):
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
         else:
+            self.state = "not found"
+            self.attributes = []
             return "~text~iid.404~X~6666~not found~"
 
         # HA Entities
@@ -304,8 +306,6 @@ class QRCard(HACard):
         super().__init__(locale, config, panel)
         self.qrcode = config.get("qrCode", "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     def render(self):
-        # TODO: Render QRCode as HomeAssistant Template
-        #qrcode = apis.ha_api.render_template(qrcode)
         if self.qrcode.startswith("ha:"):
             self.qrcode = libs.home_assistant.get_template(self.qrcode)[3:]
         result = f"{self.title}~{self.gen_nav()}~{self.qrcode}"
@@ -474,6 +474,8 @@ class AlarmCard(HACard):
     def render(self):
         main_entity = self.entities[0]
         main_entity.render()
+
+        print(main_entity.state)
 
         icon = get_icon_char("shield-off")
         color = rgb_dec565([255,255,255])

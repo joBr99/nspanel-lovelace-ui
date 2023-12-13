@@ -41,3 +41,7 @@ def entityUpdateDetail2(msg_out_queue, topic, data):
 
 def statusUpdate(msg_out_queue, topic, data):
     custom_send(msg_out_queue, topic, f"statusUpdate~{data}")
+
+def send_message_page(msg_out_queue, topic, ident, heading, msg, b1, b2):
+    page_type(msg_out_queue, topic, "popupNotify")
+    custom_send(msg_out_queue, topic, f"entityUpdateDetail~{ident}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")

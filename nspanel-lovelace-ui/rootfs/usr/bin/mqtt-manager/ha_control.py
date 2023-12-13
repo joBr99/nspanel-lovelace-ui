@@ -17,6 +17,10 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
     if sleepBrightness:
         if isinstance(sleepBrightness, int):
             dimmode = sleepBrightness
+        elif isinstance(sleepBrightness, list):
+            logging.error("list style config for sleepBrightness no longer supported")
+        elif sleepBrightness.startswith("ha:"):
+            dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
         elif libs.home_assistant.is_existent(sleepBrightness):
             involved_entities.append(sleepBrightness)
             dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
@@ -24,6 +28,10 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
     if screenBrightness:
         if isinstance(screenBrightness, int):
             dimValueNormal = screenBrightness
+        elif isinstance(screenBrightness, list):
+            logging.error("list style config for screenBrightness no longer supported")
+        elif screenBrightness.startswith("ha:"):
+            dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
         elif libs.home_assistant.is_existent(screenBrightness):
             involved_entities.append(screenBrightness)
             dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
@@ -216,30 +224,6 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
             call_ha_service(entity_id, "set_hvac_mode", service_data=service_data)
         case _:
            logging.error("Not implemented: %s", btype)
-
-
-    #  # for cardUnlock
-    #  if button_type == "cardUnlock-unlock":
-    #      curCard = self._config.get_card_by_uuid(
-    #          entity_id.replace('navigate.', ''))
-    #      if curCard is not None:
-    #          if int(curCard.raw_config.get("pin")) == int(value):
-    #              dstCard = self._config.search_card(
-    #                  curCard.raw_config.get("destination"))
-    #              if dstCard is not None:
-    #                  if dstCard.hidden:
-    #                      self._previous_cards.append(self._current_card)
-    #                  self._current_card = dstCard
-    #                  self._pages_gen.render_card(self._current_card)
-
-    #  if button_type == "opnSensorNotify":
-    #      msg = ""
-    #      entity = apis.ha_api.get_entity(entity_id)
-    #      if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
-    #          for e in entity.attributes.open_sensors:
-    #              msg += f"- {apis.ha_api.get_entity(e).attributes.friendly_name}\r\n"
-    #      self._pages_gen.send_message_page(
-    #          "opnSensorNotifyRes", "", msg, "", "")
 
 def call_ha_service(entity_id, service, service_data = {}):
     etype = entity_id.split(".")[0]
