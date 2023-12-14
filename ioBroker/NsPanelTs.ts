@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.21 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.22 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -77,6 +77,8 @@ ReleaseNotes:
         - 07.12.2023 - v4.3.3.19 Fix Trigger activeDimmodeBrightness if Dimmode = -1
         - 08.12.2023 - v4.3.3.20 add Role AlarmTime for Alarm Clock
         - 09.12.2023 - v4.3.3.21 Add createAutoAlias to popupTimer only for Time
+        - 14.12.2023 - v4.3.3.22 Add UpdateMessage => disable the update messages
+        - 14.12.2023 - v4.3.3.22 Fix name by static Navi Icon 
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -433,7 +435,8 @@ let NSPanel_Service_SubPage = <PageEntities>
             'items': [
                 <PageItem>{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
                 <PageItem>{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
-                <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')}
+                <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
+                <PageItem>{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('Update Meldung') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
             ]
         };
                 //Level_2
@@ -839,7 +842,7 @@ export const config = <Config> {
             },
             // bottomScreensaverEntity 4
             {
-                ScreensaverEntity: 'accuweather.0.Current.WindDirection',
+                ScreensaverEntity: 'accuweather.0.Current.WindDirectionText',
                 ScreensaverEntityFactor: 1,
                 ScreensaverEntityDecimalPlaces: 0,
                 ScreensaverEntityIconOn: 'windsock',
@@ -949,7 +952,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.21';
+const scriptVersion: string = 'v4.3.3.22';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2348,7 +2351,8 @@ async function check_updates() {
                 if (Debug) log('Already the latest display firmware on NSPanel', 'info');
             }
         }
-        if (Update) {
+        let update_message: boolean = getState(NSPanel_Path + 'Config.Update.UpdateMessage').val;
+        if (Update && update_message) {
             await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
             await setStateAsync(popupNotifyHeadingColor, <iobJS.State>{ val: HeadlineColor, ack: false });
             await setStateAsync(popupNotifyButton1Text, <iobJS.State>{ val: Button1, ack: false });
@@ -2359,6 +2363,8 @@ async function check_updates() {
             await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
             await setStateAsync(popupNotifyLayout, <iobJS.State>{ val: Layout, ack: false });
             await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
+        } else {
+            log('Updates for NSPanel available', 'info');
         }
 
     } catch (err) {
@@ -2397,6 +2403,12 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
 async function get_panel_update_data() {
     try {
         if (isSetOptionActive) {
+            await createStateAsync(NSPanel_Path + 'Config.Update.UpdateMessage', true, <iobJS.StateCommon>{ read: true, write: true, name: 'Update-Message', type: 'boolean', def: true });
+            if (autoCreateAlias) {
+                setObject(AliasPath + 'Config.Update.UpdateMessage', {type: 'channel', common: {role: 'socket', name:'UpdateMesssage'}, native: {}});
+                await createAliasAsync(AliasPath + 'Config.Update.UpdateMessage.ACTUAL', NSPanel_Path + 'Config.Update.UpdateMessage', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
+                await createAliasAsync(AliasPath + 'Config.Update.UpdateMessage.SET', NSPanel_Path + 'Config.Update.UpdateMessage', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
+            }
             await createStateAsync(NSPanel_Path + 'NSPanel_autoUpdate', false, <iobJS.StateCommon>{ read: true, write: true, name: 'Auto-Update', type: 'boolean', def: false });
             if (autoCreateAlias) {
                 setObject(AliasPath + 'autoUpdate', {type: 'channel', common: {role: 'socket', name:'AutoUpdate'}, native: {}});
@@ -3310,7 +3322,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
  
                     if (Debug) log('CreateEntity statisch Icon Navi  ~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText, 'info')
-                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + pageItem.name + '~' + buttonText;
+                    return '~' + type + '~' + 'navigate.' + pageItem.targetPage + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
  
                 } else if (pageItem.id != null && pageItem.targetPage != undefined) {
  
@@ -3373,6 +3385,32 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                     iconColor = GetIconColor(pageItem, true, useColors);
                                 }
                             }
+
+                            if (pageItem.colorScale != undefined) {
+                                let iconvalmin = (pageItem.colorScale.val_min != undefined) ? pageItem.colorScale.val_min : 0 ;
+                                let iconvalmax = (pageItem.colorScale.val_max != undefined) ? pageItem.colorScale.val_max : 100 ;
+                                let iconvalbest = (pageItem.colorScale.val_best != undefined) ? pageItem.colorScale.val_best : iconvalmin ;
+                                let valueScale = val;
+ 
+                                if (iconvalmin == 0 && iconvalmax == 1) {
+                                    iconColor = (getState(pageItem.id).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                                } else {
+                                    if (iconvalbest == iconvalmin) {
+                                        valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0);
+                                    } else {
+                                        if (valueScale < iconvalbest) {
+                                            valueScale = scale(valueScale,iconvalmin, iconvalbest, 0, 10);
+                                        } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                            valueScale = scale(valueScale,iconvalbest, iconvalmax, 10, 0);
+                                        } else {
+                                            valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0);
+                                        }
+                                    }
+                                    let valueScaletemp = (Math.round(valueScale)).toFixed();
+                                    iconColor = HandleColorScale(valueScaletemp);
+                                }
+                            }
+                            
                             if (val === true || val === 'true') { iconId = iconId2 };
                             break;
  
