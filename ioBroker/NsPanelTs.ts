@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript v4.3.3.22 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.2.0
+- abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -436,7 +436,7 @@ let NSPanel_Service_SubPage = <PageEntities>
                 <PageItem>{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
                 <PageItem>{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
                 <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
-                <PageItem>{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('Update Meldung') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
+                <PageItem>{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
             ]
         };
                 //Level_2
