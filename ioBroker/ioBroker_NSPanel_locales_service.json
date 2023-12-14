@@ -2693,5 +2693,9 @@
    "update_nextion_tft":{
       "en-US":"Update Nextion TFT",
       "de-DE":"Nextion TFT Update"
+   },
+   "update_message":{
+      "en-US":"Update Notifications",
+      "de-DE":"Update Mitteilungen"
    }
 }
