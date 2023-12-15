@@ -246,6 +246,8 @@ def execute_script(entity_name: str, domain: str, service: str, service_data: di
         return {}
 
 def cache_template(template):
+    if not template:
+        raise Exception("Invalid template")
     global next_id, response_buffer
     try:
         call_id = next_id

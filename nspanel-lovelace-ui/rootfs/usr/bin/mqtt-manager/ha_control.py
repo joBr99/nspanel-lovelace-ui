@@ -21,6 +21,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
         elif isinstance(sleepBrightness, list):
             logging.error("list style config for sleepBrightness no longer supported")
         elif sleepBrightness.startswith("ha:"):
+            time.sleep(1)
             dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
             involved_entities.extend(libs.home_assistant.get_template_listener_entities(sleepBrightness))
         elif libs.home_assistant.is_existent(sleepBrightness):
@@ -33,6 +34,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
         elif isinstance(screenBrightness, list):
             logging.error("list style config for screenBrightness no longer supported")
         elif screenBrightness.startswith("ha:"):
+            time.sleep(1)
             dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
             involved_entities.extend(libs.home_assistant.get_template_listener_entities(screenBrightness))
         elif libs.home_assistant.is_existent(screenBrightness):

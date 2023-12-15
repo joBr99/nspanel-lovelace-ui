@@ -76,8 +76,10 @@ class LovelaceUIPanel:
         ha_control.wait_for_ha_cache()
 
         #request templates on cards
-        libs.home_assistant.cache_template(self.settings.get("sleepBrightness"))
-        libs.home_assistant.cache_template(self.settings.get("screenBrightness"))
+        if self.settings.get("sleepBrightness").startswith("ha:"):
+            libs.home_assistant.cache_template(self.settings.get("sleepBrightness"))
+        if self.settings.get("screenBrightness").startswith("ha:"):
+            libs.home_assistant.cache_template(self.settings.get("screenBrightness"))
         for c in self.cards.values():
             if hasattr(c, "qrcode"):
                 if c.qrcode.startswith("ha:"):
