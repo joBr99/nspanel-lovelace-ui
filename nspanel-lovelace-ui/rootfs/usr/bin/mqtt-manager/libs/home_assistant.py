@@ -232,7 +232,7 @@ def execute_script(entity_name: str, domain: str, service: str, service_data: di
             ]
         }
         send_message(json.dumps(msg))
-        # busy waiting for response with a timeout of 0.2 seconds - maybe there's a better way of doing this
+        # busy waiting for response with a timeout of 0.4 seconds- maybe there's a better way of doing this
         mustend = time.time() + 0.4
         while time.time() < mustend:
             if response_buffer[call_id] == True:
