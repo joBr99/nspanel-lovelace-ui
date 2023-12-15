@@ -273,6 +273,18 @@ def get_template(template):
             else:
                 return template_cache.get(template, []).get("result", "404")
 
+def get_template_listener_entities(template):
+    global template_cache
+    if template in template_cache:
+        return template_cache[template].get("listener-entities")
+    else:
+        mustend = time.time() + 0.5
+        while time.time() < mustend:
+            if template not in template_cache:
+                time.sleep(0.0001)
+            else:
+                return template_cache.get(template, []).get("listener-entities", "404")
+
 def get_entity_data(entity_id: str):
     if entity_id in home_assistant_entity_state_cache:
         return home_assistant_entity_state_cache[entity_id]

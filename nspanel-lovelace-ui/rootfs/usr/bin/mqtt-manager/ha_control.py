@@ -8,6 +8,7 @@ def wait_for_ha_cache():
     while time.time() < mustend:
         if len(libs.home_assistant.home_assistant_entity_state_cache) == 0:
             time.sleep(0.1)
+    time.sleep(1)
 
 def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, screenBrightness, sleepOverride, return_involved_entities=False):
     dimmode = 10
@@ -21,6 +22,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             logging.error("list style config for sleepBrightness no longer supported")
         elif sleepBrightness.startswith("ha:"):
             dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
+            involved_entities.extend(libs.home_assistant.get_template_listener_entities(sleepBrightness))
         elif libs.home_assistant.is_existent(sleepBrightness):
             involved_entities.append(sleepBrightness)
             dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
@@ -32,6 +34,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             logging.error("list style config for screenBrightness no longer supported")
         elif screenBrightness.startswith("ha:"):
             dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
+            involved_entities.extend(libs.home_assistant.get_template_listener_entities(screenBrightness))
         elif libs.home_assistant.is_existent(screenBrightness):
             involved_entities.append(screenBrightness)
             dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
@@ -68,7 +71,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
         case 'number-set':
             if entity_id.startswith('fan'):
                 attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
-                value = float(value) * float(attr.get(percentage_step, 0))
+                value = float(value) * float(attr.get('percentage_step', 0))
             service_data = {
                 "value": int(value)
             }
