@@ -37,7 +37,7 @@ async function Init_Datenpunkte() {
   if (existsState(dp_alias + '.Countdown.ACTUAL') == false) {
     await createStateAsync(dp_userdata + '.Countdown.Time', '0', { type: 'number'});
     await createStateAsync(dp_userdata + '.Countdown.State', 'paused', { type: 'string' });
-    setObject(dp_alias + '.Countown', { type: 'channel', common: { role: 'level.timer', name: 'Countdown' }, native: {} });
+    setObject(dp_alias + '.Countdown', { type: 'channel', common: { role: 'level.timer', name: 'Countdown' }, native: {} });
     await createAliasAsync(dp_alias + '.Countdown.ACTUAL', dp_userdata + '.Countdown.Time', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
     await createAliasAsync(dp_alias + '.Countdown.STATE', dp_userdata + '.Countdown.State', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'STATE' });
     log("<PageItem>{id: '"+ dp_alias + ".Countdown', name: 'Timer'}", 'info');
