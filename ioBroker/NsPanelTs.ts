@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.22 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.23 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -79,6 +79,7 @@ ReleaseNotes:
         - 09.12.2023 - v4.3.3.21 Add createAutoAlias to popupTimer only for Time
         - 14.12.2023 - v4.3.3.22 Add UpdateMessage => disable the update messages
         - 14.12.2023 - v4.3.3.22 Fix name by static Navi Icon 
+        - 17.12.2023 - v4.3.3.23 Optimization of the blind control (enable or disable Up/Stop/Down)
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -952,7 +953,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.22';
+const scriptVersion: string = 'v4.3.3.23';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -974,6 +975,7 @@ moment.locale(getState(NSPanel_Path + 'Config.locale').val);
 
 const globalTextColor: any = White; 
 const Sliders2: number = 0;
+let checkBlindActive: boolean = false;
 
 async function Init_dayjs() {
     try {
@@ -3672,9 +3674,37 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'shutter';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
- 
+
                     if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~', 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~';
+
+                    let min_Level: number = 0;
+                    let max_Level: number = 100;
+                    if (pageItem.minValueLevel !== undefined && pageItem.maxValueLevel !== undefined) {
+                        min_Level = pageItem.minValueLevel;
+                        max_Level = pageItem.maxValueLevel;
+                        val = Math.trunc(scale(getState(pageItem.id + '.ACTUAL').val, pageItem.minValueLevel, pageItem.maxValueLevel, 100, 0));
+                    }
+
+                    let icon_up = Icons.GetIcon('arrow-up');
+                    let icon_stop = Icons.GetIcon('stop');
+                    let icon_down = Icons.GetIcon('arrow-down');
+
+                    if (Debug) log('pageItem.id: ' + getState(pageItem.id + '.ACTUAL').val, 'info');
+                    if (Debug) log('min_Level: ' + min_Level, 'info');
+                    if (Debug) log('max_Level: ' + max_Level, 'info');
+
+                    let tempVal: number = getState(pageItem.id + '.ACTUAL').val 
+                    let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+                    let icon_stop_status = 'enable';
+                    if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
+                        icon_stop_status = 'disable';
+                    }
+                    let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+                    let value = icon_up + '|' + icon_stop + '|' + icon_down + '|' + icon_up_status + '|' + icon_stop_status + '|' + icon_down_status
+                    
+                    if (Debug) log('~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
+
+                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value;
  
                 case 'gate':
                     type = 'text';
@@ -6181,12 +6211,15 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'up':
                 setIfExists(id + '.OPEN', true);
+                checkBlindActive = true;
                 break;
             case 'stop':
                 setIfExists(id + '.STOP', true);
+                checkBlindActive = false;
                 break;
             case 'down':
                 setIfExists(id + '.CLOSE', true);
+                checkBlindActive = true;
                 break;
             case 'positionSlider':
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
@@ -6195,8 +6228,10 @@ function HandleButtonEvent(words: any): void {
                     if (pageItem.minValueLevel != undefined && pageItem.maxValueLevel != undefined) {
                         let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueLevel, pageItem.minValueLevel));
                         setIfExists(id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
+                        checkBlindActive = true;
                     } else {
                         setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                        checkBlindActive = true;
                     }
                 }, 250);
                 break;
@@ -7318,13 +7353,14 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
             }
 
             if (type == 'popupShutter') {
+
                 icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                 if (existsState(id + '.ACTUAL')) {
                     val = getState(id + '.ACTUAL').val;
                     RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
                 } else if (existsState(id + '.SET')) {
                     val = getState(id + '.SET').val;
-                    RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
+                    //RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
                 }
                 let tilt_position: any = 'disabled'
                 if (existsState(id + '.TILT_ACTUAL')) {
@@ -7332,7 +7368,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     RegisterDetailEntityWatcher(id + '.TILT_ACTUAL', pageItem, type);
                 } else if (existsState(id + '.TILT_SET')) {
                     tilt_position = getState(id + '.TILT_SET').val;
-                    RegisterDetailEntityWatcher(id + '.TILT_SET', pageItem, type);
+                    //RegisterDetailEntityWatcher(id + '.TILT_SET', pageItem, type);
                 }
                 
                 let min_Level: number = 0;
@@ -7358,9 +7394,13 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 let icon_up = Icons.GetIcon('arrow-up');
                 let icon_stop = Icons.GetIcon('stop');
                 let icon_down = Icons.GetIcon('arrow-down');
-                let icon_up_status = getState(id + '.ACTUAL').val != max_Level ? 'enable' : 'disable';
+                let tempVal: number = getState(pageItem.id + '.ACTUAL').val 
+                let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
                 let icon_stop_status = 'enable';
-                let icon_down_status = getState(id + '.ACTUAL').val != min_Level ? 'enable' : 'disable';
+                if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
+                    icon_stop_status = 'disable';
+                }
+                let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
                 let textTilt = '';
                 let iconTiltLeft = '';
                 let iconTiltStop = '';
