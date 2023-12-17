@@ -7386,8 +7386,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     tilt_position = Math.trunc(scale(getState(id + '.TILT_ACTUAL').val, pageItem.minValueTilt, pageItem.maxValueTilt, 100, 0));
                 }
 
-                //if (Debug) 
-                log('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
+                if (Debug) log('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
                 if (Debug) log('minTilt '+ min_Tilt + ' maxTilt ' + max_Tilt + ' TiltPosition ' + tilt_position, 'info');
 
                 let textSecondRow = '';
