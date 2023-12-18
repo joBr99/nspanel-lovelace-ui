@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.23 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.24 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -80,6 +80,7 @@ ReleaseNotes:
         - 14.12.2023 - v4.3.3.22 Add UpdateMessage => disable the update messages
         - 14.12.2023 - v4.3.3.22 Fix name by static Navi Icon 
         - 17.12.2023 - v4.3.3.23 Optimization of the blind control (enable or disable Up/Stop/Down)
+        - 18.12.2023 - v4.3.3.24 Hotfix Update Message / Add Icon Colors to Entity Button
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -253,6 +254,8 @@ let Debug: boolean = false;
     const DarkBlue:         RGB = { red:   0, green:   0, blue: 136 };
     const Gray:             RGB = { red: 136, green: 136, blue: 136 };
     const Black:            RGB = { red:   0, green:   0, blue:   0 };
+    const Cyan:             RGB = { red:   0, green: 255, blue: 255 };
+    const Magenta:          RGB = { red: 255, green:   0, blue: 255 };
     const colorSpotify:     RGB = { red:  30, green: 215, blue:  96 };
     const colorAlexa:       RGB = { red:  49, green: 196, blue: 243 };
     const colorSonos:       RGB = { red: 216, green: 161, blue:  88 };
@@ -953,7 +956,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.23';
+const scriptVersion: string = 'v4.3.3.24';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2365,8 +2368,10 @@ async function check_updates() {
             await setStateAsync(popupNotifyInternalName, <iobJS.State>{ val: InternalName, ack: false });
             await setStateAsync(popupNotifyLayout, <iobJS.State>{ val: Layout, ack: false });
             await setStateAsync(popupNotifyText, <iobJS.State>{ val: [formatDate(getDateObject((new Date().getTime())), 'TT.MM.JJJJ SS:mm:ss'), '\r\n', '\r\n', Text].join(''), ack: false });
-        } else {
+        } else if (Update && !update_message) {
             log('Updates for NSPanel available', 'info');
+        } else {
+            log('No Updates for NSPanel available', 'info');
         }
 
     } catch (err) {
@@ -3675,8 +3680,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
 
-                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~', 'info');
-
                     let min_Level: number = 0;
                     let max_Level: number = 100;
                     if (pageItem.minValueLevel !== undefined && pageItem.maxValueLevel !== undefined) {
@@ -3702,10 +3705,10 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
                     let value = icon_up + '|' + icon_stop + '|' + icon_down + '|' + icon_up_status + '|' + icon_stop_status + '|' + icon_down_status
                     
-                    if (Debug) log('~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
+                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
 
                     return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value;
- 
+                    
                 case 'gate':
                     type = 'text';
                     let gateState: string;
@@ -3850,8 +3853,13 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                 case 'button':
                     type = 'button';
+
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
                     iconColor = GetIconColor(pageItem, true, useColors);
+                    if (val === false) {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                    }
+
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
                     if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
@@ -7386,7 +7394,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     tilt_position = Math.trunc(scale(getState(id + '.TILT_ACTUAL').val, pageItem.minValueTilt, pageItem.maxValueTilt, 100, 0));
                 }
 
-                if (Debug) log('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
+                //if (Debug) 
+                log('minLevel '+ min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
                 if (Debug) log('minTilt '+ min_Tilt + ' maxTilt ' + max_Tilt + ' TiltPosition ' + tilt_position, 'info');
 
                 let textSecondRow = '';
