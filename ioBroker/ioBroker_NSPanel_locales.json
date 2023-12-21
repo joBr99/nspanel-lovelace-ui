@@ -2497,6 +2497,10 @@
          "vi-VN":"Mật khẩu",
          "zh-CN":"密码",
          "zh-TW":"密碼"
+      },
+      "Wlan enabled":{
+         "en-US":"Wlan enabled",
+         "de-DE":"Wlan aktiviert"
       }
    },
    "media":{

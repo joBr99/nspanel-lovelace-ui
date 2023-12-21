@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.24 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.25 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -81,6 +81,7 @@ ReleaseNotes:
         - 14.12.2023 - v4.3.3.22 Fix name by static Navi Icon 
         - 17.12.2023 - v4.3.3.23 Optimization of the blind control (enable or disable Up/Stop/Down)
         - 18.12.2023 - v4.3.3.24 Hotfix Update Message / Add Icon Colors to Entity Button
+        - 21.12.2023 - v4.3.3.25 Add switch of cardQR by hidePassword: true 
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -355,6 +356,14 @@ let Debug: boolean = false;
 //-- Start for your own pages -- some self-defined aliases required ----------------
   
 	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+
+let WlanDaten = <PageQR>
+    {
+        'type': 'cardQR',
+        'heading': 'Gäste WLAN',
+        'useColor': true,
+        'items': [<PageItem>{ id: 'alias.0.NSPanel.GuestWifi', hidePassword: true, autoCreateALias: true }]
+    };
 
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 //-- END for your own pages -- some self-defined aliases required ------------------------
@@ -767,6 +776,7 @@ export const config = <Config> {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
+        WlanDaten,
         NSPanel_Service,         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
@@ -956,7 +966,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.24';
+const scriptVersion: string = 'v4.3.3.25';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -5572,9 +5582,11 @@ async function createAutoQRAlias(id:string, dpPath:string) {
         if (autoCreateAlias) {
             if (isSetOptionActive) {
                 if (existsState(dpPath + 'Daten') == false) {
-                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', { type: 'string' });
+                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', <iobJS.StateCommon>{ type: 'string' });
+                    await createStateAsync(dpPath + 'Switch', false, <iobJS.StateCommon>{ type: 'boolean' });
                     setObject(id, { _id: id, type: 'channel', common: { role: 'info', name: 'QR Page' }, native: {} });
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+                    await createAliasAsync(id + '.SWITCH', dpPath + 'Switch', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SWITCH' });
                     log('Adjust data for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.', 'warn');
                 }
             }
@@ -5630,6 +5642,7 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let type1 = 'text';
         let internalName1 = findLocale('qr', 'ssid');
         let iconId1 = Icons.GetIcon('wifi');
+        let iconColor1 = getState(page.items[0].id + '.SWITCH').val ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
         let displayName1 = findLocale('qr', 'ssid');
         let type2 = 'text';
         let internalName2 = findLocale('qr', 'password');
@@ -5637,9 +5650,11 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let displayName2 = findLocale('qr', 'password');
 
         if (hiddenPWD) {
-            type2 = 'disable';
+            type2 = 'switch';
+            internalName2 = id
             iconId2 = '';
-            displayName2 = '';
+            displayName2 = findLocale('qr', 'Wlan enabled');
+            optionalValue2 = getState(page.items[0].id + '.SWITCH').val ? 1 : 0;
         }
 
         out_msgs.push({
@@ -5650,7 +5665,7 @@ function GenerateQRPage(page: PageQR): Payload[] {
                 type1 + '~' +                           //type
                 internalName1 + '~' +                   //internalName
                 iconId1 + '~' +                         //iconId
-                65535 + '~' +                           //iconColor
+                iconColor1 + '~' +                      //iconColor
                 displayName1 + '~' +                    //displayName
                 optionalValue1 + '~' +                  //optionalValue
                 type2 + '~' +                           //type
@@ -6072,6 +6087,9 @@ function HandleButtonEvent(words: any): void {
                     if (words[4] == '1')
                         action = true;
                     let o = getObject(id);
+                    if (Debug) {
+                        log('HandleButtonEvent -> OnOff: ' + words[4] + ' - ' + id + ' - Role - ' + o.common.role, 'info')
+                    }
                     switch (o.common.role) {
                         case 'level.mode.fan':
                         case 'socket':
@@ -6094,6 +6112,10 @@ function HandleButtonEvent(words: any): void {
                         case 'rgbSingle':
                         case 'hue':
                             setIfExists(id + '.ON_ACTUAL', action);
+                            break;
+                        case 'switch.mode.wlan':
+                            setIfExists(id + '.SWITCH', action);
+                            break;
                     }
                 }
                 break;
