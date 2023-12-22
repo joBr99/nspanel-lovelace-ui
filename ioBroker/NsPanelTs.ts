@@ -357,14 +357,6 @@ let Debug: boolean = false;
   
 	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
 
-let WlanDaten = <PageQR>
-    {
-        'type': 'cardQR',
-        'heading': 'Gäste WLAN',
-        'useColor': true,
-        'items': [<PageItem>{ id: 'alias.0.NSPanel.GuestWifi', hidePassword: true, autoCreateALias: true }]
-    };
-
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 //-- END for your own pages -- some self-defined aliases required ------------------------
 
@@ -776,7 +768,7 @@ export const config = <Config> {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
-        WlanDaten,
+
         NSPanel_Service,         	//Auto-Alias Service Page
 	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
