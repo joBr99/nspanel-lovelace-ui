@@ -2501,6 +2501,10 @@
       "Wlan enabled":{
          "en-US":"Wlan enabled",
          "de-DE":"Wlan aktiviert"
+      },
+      "Wlan disabled":{
+         "en-US":"Wlan disabled",
+         "de-DE":"Wlan deaktiviert"
       }
    },
    "media":{
