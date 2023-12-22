@@ -5584,7 +5584,7 @@ async function createAutoQRAlias(id:string, dpPath:string) {
                 if (existsState(dpPath + 'Daten') == false) {
                     await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', <iobJS.StateCommon>{ type: 'string' });
                     await createStateAsync(dpPath + 'Switch', false, <iobJS.StateCommon>{ type: 'boolean' });
-                    setObject(id, { _id: id, type: 'channel', common: { role: 'info', name: 'QR Page' }, native: {} });
+                    setObject(id, { _id: id, type: 'channel', common: { role: 'switch.mode.wlan', name: 'QR Page' }, native: {} });
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                     await createAliasAsync(id + '.SWITCH', dpPath + 'Switch', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SWITCH' });
                     log('Adjust data for the QR page under ' + dpPath + 'data. Follow the instructions in the wiki.', 'warn');
@@ -5642,18 +5642,20 @@ function GenerateQRPage(page: PageQR): Payload[] {
         let type1 = 'text';
         let internalName1 = findLocale('qr', 'ssid');
         let iconId1 = Icons.GetIcon('wifi');
-        let iconColor1 = getState(page.items[0].id + '.SWITCH').val ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+        let iconColor1 = 65535;
         let displayName1 = findLocale('qr', 'ssid');
         let type2 = 'text';
         let internalName2 = findLocale('qr', 'password');
+        let iconColor2 = 65535;
         let iconId2 = Icons.GetIcon('key');
         let displayName2 = findLocale('qr', 'password');
 
         if (hiddenPWD) {
+            iconColor1 = getState(page.items[0].id + '.SWITCH').val ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
             type2 = 'switch';
             internalName2 = id
             iconId2 = '';
-            displayName2 = findLocale('qr', 'Wlan enabled');
+            displayName2 = getState(page.items[0].id + '.SWITCH').val ? findLocale('qr', 'Wlan enabled') : findLocale('qr', 'Wlan disabled');
             optionalValue2 = getState(page.items[0].id + '.SWITCH').val ? 1 : 0;
         }
 
@@ -5671,7 +5673,7 @@ function GenerateQRPage(page: PageQR): Payload[] {
                 type2 + '~' +                           //type
                 internalName2 + '~' +                   //internalName
                 iconId2 + '~' +                         //iconId
-                65535 + '~' +                           //iconColor
+                iconColor2 + '~' +                      //iconColor
                 displayName2 + '~' +                    //displayName
                 optionalValue2
         });
@@ -6115,6 +6117,7 @@ function HandleButtonEvent(words: any): void {
                             break;
                         case 'switch.mode.wlan':
                             setIfExists(id + '.SWITCH', action);
+                            GeneratePage(activePage);
                             break;
                     }
                 }
