@@ -3018,7 +3018,7 @@ function findPageItem(searching: String): PageItem {
             return pageItem === undefined;
         });
 
-        if (Debug) log('findPageItem -> pageItem SubPage ' + JSON.stringifyy(pageItem), 'info');
+        if (Debug) log('findPageItem -> pageItem SubPage ' + JSON.stringify(pageItem), 'info');
 
         return pageItem;
     } catch (err) {
@@ -5671,7 +5671,7 @@ function GenerateQRPage(page: PageQR): Payload[] {
         });
 
         if (Debug) {
-            log('GenerateQRPage payload: ' + JSON.stingify(out_msgs), 'info');
+            log('GenerateQRPage payload: ' + JSON.stringify(out_msgs), 'info');
         }
         return out_msgs;
 
