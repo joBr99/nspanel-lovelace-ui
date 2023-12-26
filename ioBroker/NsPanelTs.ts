@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.25 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.26 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -82,6 +82,7 @@ ReleaseNotes:
         - 17.12.2023 - v4.3.3.23 Optimization of the blind control (enable or disable Up/Stop/Down)
         - 18.12.2023 - v4.3.3.24 Hotfix Update Message / Add Icon Colors to Entity Button
         - 21.12.2023 - v4.3.3.25 Add switch of cardQR by hidePassword: true 
+        - 26.12.2023 - v4.3.3.26 Fix Log output payload -> Json.stringify
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -958,7 +959,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.25';
+const scriptVersion: string = 'v4.3.3.26';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -3008,7 +3009,7 @@ function findPageItem(searching: String): PageItem {
         let pageItem = activePage.items.find(e => e.id === searching);
 
         if (pageItem !== undefined) {
-            if (Debug) log('findPageItem -> pageItem ' + pageItem, 'info');
+            if (Debug) log('findPageItem -> pageItem ' + JSON.stringify(pageItem), 'info');
             return pageItem;
         }
 
@@ -3018,7 +3019,7 @@ function findPageItem(searching: String): PageItem {
             return pageItem === undefined;
         });
 
-        if (Debug) log('findPageItem -> pageItem SubPage ' + pageItem, 'info');
+        if (Debug) log('findPageItem -> pageItem SubPage ' + JSON.stringify(pageItem), 'info');
 
         return pageItem;
     } catch (err) {
@@ -5320,7 +5321,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             });
         }
         if (Debug) {
-            log('GenerateMediaPage payload: ' + out_msgs, 'info');
+            log('GenerateMediaPage payload: ' + JSON.stringify(out_msgs), 'info');
         }
         return out_msgs
     } catch (err) {
@@ -5476,7 +5477,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             });
 
             if (Debug) {
-                log('GenerateAlarmPage payload: ' + out_msgs, 'info');
+                log('GenerateAlarmPage payload: ' + JSON.stringify(out_msgs), 'info');
             }
             return out_msgs;
         }
@@ -5556,7 +5557,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
             });
 
         if (Debug) {
-            log('GenerateUnlockPage payload: ' + out_msgs, 'info');
+            log('GenerateUnlockPage payload: ' + JSON.stringify(out_msgs), 'info');
         }
         return out_msgs;
         
@@ -5671,7 +5672,7 @@ function GenerateQRPage(page: PageQR): Payload[] {
         });
 
         if (Debug) {
-            log('GenerateQRPage payload: ' + out_msgs, 'info');
+            log('GenerateQRPage payload: ' + JSON.stringify(out_msgs), 'info');
         }
         return out_msgs;
 
@@ -5816,7 +5817,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             // 1st to 6th Item
                 power_string
         });
-        if (Debug) log('GeneratePowerPage payload: ' + out_msgs, 'info');
+        if (Debug) log('GeneratePowerPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
 
     } catch (err) {
@@ -5848,7 +5849,7 @@ function GenerateChartPage(page: PageChart): Payload[] {
                         txt
         });     
 
-        if (Debug) log('GenerateChartPage payload: ' + out_msgs, 'info');
+        if (Debug) log('GenerateChartPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
 
     } catch (err) {
@@ -7935,6 +7936,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 }
             }
         }
+	if (Debug) log('GenerateDetailPage -> payload: ' + JSON.stringify(out_msgs), 'info');     
         return out_msgs;
 
     } catch (err) {
