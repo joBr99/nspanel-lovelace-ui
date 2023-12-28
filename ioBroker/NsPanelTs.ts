@@ -3233,7 +3233,7 @@ function GeneratePageElements(page: Page): string {
 
         for (let index = 0; index < maxItems; index++) {
             if (page.items[index] !== undefined) {
-                pageData += CreateEntity(page.items[index], index + 1, page.useColor);
+                pageData += CreateEntity(page.items[index], index, page.useColor);
             }
         }
         if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
@@ -3543,8 +3543,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
                     
-                    if (Debug) log('CreateEntity Icon role socket/light ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role socket/light ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'hue':
                     type = 'light';
@@ -3573,8 +3573,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role hue ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role hue ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'ct':
                     type = 'light';
@@ -3593,8 +3593,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role ct ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role ct ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'rgb':
                     type = 'light';
@@ -3623,8 +3623,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
  
-                    if (Debug) log('CreateEntity Icon role rgb ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role rgb ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'cie':
                 case 'rgbSingle':
@@ -3655,8 +3655,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
  
-                    if (Debug) log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'dimmer':
                     type = 'light';
@@ -3675,8 +3675,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role dimmer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role dimmer ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'blind':
                     type = 'shutter';
@@ -3708,9 +3708,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
                     let value = icon_up + '|' + icon_stop + '|' + icon_down + '|' + icon_up_status + '|' + icon_stop_status + '|' + icon_down_status
                     
-                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
+                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
 
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value;
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + value;
                     
                 case 'gate':
                     type = 'text';
@@ -3730,8 +3730,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     }
  
-                    if (Debug) log('CreateEntity Icon role gate ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
+                    if (Debug) log('CreateEntity Icon role gate ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
  
                 case 'door':
                 case 'window':
@@ -3751,8 +3751,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role door/window ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
+                    if (Debug) log('CreateEntity Icon role door/window ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
  
                 case 'motion': 
                     type = 'text';
@@ -3766,8 +3766,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('motion-sensor');
                     }
  
-                    if (Debug) log('CreateEntity Icon role motion ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role motion ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'info':
  
@@ -3841,8 +3841,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     }
  
                     if (Debug) log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat', 'info');
-                    if (Debug) log('CreateEntity  ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
+                    if (Debug) log('CreateEntity  ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
  
                 case 'buttonSensor':
  
@@ -3851,8 +3851,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let inSelText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) log('CreateEntity  Icon role buttonSensor ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
+                    if (Debug) log('CreateEntity  Icon role buttonSensor ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
  
                 case 'button':
                     type = 'button';
@@ -3865,8 +3865,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
+                    if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
                 case 'value.time':
                 case 'level.timer':
                     type = 'timer';
@@ -3879,8 +3879,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         RegisterEntityWatcher(pageItem.id + '.STATE');
                     }
  
-                    if (Debug) log('CreateEntity  Icon role level.timer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
+                    if (Debug) log('CreateEntity  Icon role level.timer ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
 
                 case 'value.alarmtime':
                     type = 'timer'; 
@@ -3897,8 +3897,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         name = ('0' + String(Math.floor(timer_actual / 60))).slice(-2) + ':' + ('0' + String(timer_actual % 60)).slice(-2);
                     }
 
-                    if (Debug) log('CreateEntity  Icon role value.alarmtime ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText + ' ' + val, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText;
+                    if (Debug) log('CreateEntity  Icon role value.alarmtime ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText + ' ' + val, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText;
 
                 case 'level.mode.fan':
  
@@ -3918,8 +3918,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
+                    if (Debug) log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
                     
                 case 'lock':
                     type = 'button';
@@ -3940,8 +3940,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                     }
  
-                    if (Debug) log('CreateEntity  Icon role lock ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
+                    if (Debug) log('CreateEntity  Icon role lock ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
  
                 case 'slider':
                     type = 'number';
@@ -3949,8 +3949,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     iconColor = GetIconColor(pageItem, false, useColors);
  
-                    if (Debug) log('CreateEntity  Icon role slider ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    if (Debug) log('CreateEntity  Icon role slider ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
  
                 case 'volumeGroup':
                 case 'volume':
@@ -3971,8 +3971,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = Icons.GetIcon('volume-mute');
                     }
  
-                    if (Debug) log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    if (Debug) log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
  
                 case 'warning':
                     type = 'text';
@@ -3988,7 +3988,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = itemInfo; 
                     }
  
-                    if (Debug) log('CreateEntity  Icon role warning ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo, 'info');
+                    if (Debug) log('CreateEntity  Icon role warning ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo, 'info');
                     return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
  
                 case 'timeTable':
@@ -5919,6 +5919,11 @@ function HandleButtonEvent(words: any): void {
         let tempid = words[2].split('?');
         let id = tempid[0];
         let buttonAction = words[3];
+        let pageItemID: string = '';
+
+        if (!isNaN(id)) {pageItemID = activePage.items[id].id};
+
+        log('HandleButtonEvent activePage: '+ activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
 
         if (Debug) {
             log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId, 'info');
