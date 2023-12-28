@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.26 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.27 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -83,6 +83,8 @@ ReleaseNotes:
         - 18.12.2023 - v4.3.3.24 Hotfix Update Message / Add Icon Colors to Entity Button
         - 21.12.2023 - v4.3.3.25 Add switch of cardQR by hidePassword: true 
         - 26.12.2023 - v4.3.3.26 Fix Log output payload -> Json.stringify
+        - 28.12.2023 - v4.3.3.27 Fix Payload (pageItem.id -> placeId) by Function CreateEntity
+        - 28.12.2023 - v4.3.3.27 Fix Fallback PageItem.name by Function CreateEntity
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -959,7 +961,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.26';
+const scriptVersion: string = 'v4.3.3.27';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -3279,16 +3281,26 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             } 
  
             // Fallback if no name is given
-            name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
+//            name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
+            name = pageItem.name !== undefined ? pageItem.name : o.common.name.de == undefined ? o.common.name : o.common.name.de;
             let prefix = pageItem.prefixName !== undefined ? pageItem.prefixName : '';
             let suffix = pageItem.suffixName !== undefined ? pageItem.suffixName : '';
  
+             // If name is used with changing values
+            if ((name || '').indexOf('getState(') != -1) {
+                let dpName: string = name.slice(10, name.length -6);
+                name = getState(dpName).val;
+                RegisterEntityWatcher(dpName);
+            }
+
+/*
             // If name is used with changing values
             if (name.indexOf('getState(') != -1) {
                 let dpName: string = name.slice(10, name.length -6);
                 name = getState(dpName).val;
                 RegisterEntityWatcher(dpName);
             }
+*/
             name = prefix + name + suffix;
  
             if (existsState(pageItem.id + '.GET')) {
@@ -5923,11 +5935,11 @@ function HandleButtonEvent(words: any): void {
 
         if (!isNaN(id)) {
             pageItemID = activePage.items[id].id;
-            log('HandleButtonEvent activePage: ' + activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
+            if (Debug) {
+                    log('HandleButtonEvent activePage: ' + activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
+            }
             id = pageItemID
         };
-
-        
 
         if (Debug) {
             log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId, 'info');
