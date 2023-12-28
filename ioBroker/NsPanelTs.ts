@@ -5921,9 +5921,13 @@ function HandleButtonEvent(words: any): void {
         let buttonAction = words[3];
         let pageItemID: string = '';
 
-        if (!isNaN(id)) {pageItemID = activePage.items[id].id};
+        if (!isNaN(id)) {
+            pageItemID = activePage.items[id].id;
+            log('HandleButtonEvent activePage: ' + activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
+            id = pageItemID
+        };
 
-        log('HandleButtonEvent activePage: '+ activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
+        
 
         if (Debug) {
             log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId, 'info');
