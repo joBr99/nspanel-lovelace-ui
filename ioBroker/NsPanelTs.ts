@@ -7018,7 +7018,7 @@ function GetNavigationString(pageId: number): string {
 }
 
 function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, placeId: number): Payload[] {
-    log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
+    if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id;
