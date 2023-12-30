@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.26 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.28 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -83,6 +83,9 @@ ReleaseNotes:
         - 18.12.2023 - v4.3.3.24 Hotfix Update Message / Add Icon Colors to Entity Button
         - 21.12.2023 - v4.3.3.25 Add switch of cardQR by hidePassword: true 
         - 26.12.2023 - v4.3.3.26 Fix Log output payload -> Json.stringify
+        - 28.12.2023 - v4.3.3.27 Fix Payload (pageItem.id -> placeId) by Function CreateEntity
+        - 28.12.2023 - v4.3.3.27 Fix Fallback PageItem.name by Function CreateEntity
+        - 30.12.2023 - v4.3.3.28 Fix short ID's
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -959,7 +962,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.26';
+const scriptVersion: string = 'v4.3.3.28';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1169,12 +1172,18 @@ async function CheckMQTTPorts() {
                             portArray[i] = adapterInstancePort.trim();
                         }
                         let mqttInstance = adapterArray.indexOf(instanceName);
-                        for (let j: number = 1; j < portArray.length; j++) {
-                            if (portArray[j] == portArray[mqttInstance] && adapterArray[j] == adapterArray[mqttInstance]) {
-                                log('- MQTT-Port-Check OK: Instance of Adapter: ' + adapterArray[j] + ' is running on Port:' + portArray[j], 'info');
-                            } else if (portArray[j] == portArray[mqttInstance] && adapterArray[j] != adapterArray[mqttInstance]) {     
-                                log('Instance of Adapter: ' + adapterArray[j] + ' is running on same Port:' + portArray[j] + ' as ' + adapterArray[mqttInstance], 'warn');
-                                log('Please Change Port of Instance: ' + adapterArray[j], 'warn');
+                        
+                        const mqttConfig = getObject(`system.adapter.${adapterArray[mqttInstance]}`)
+                        if (mqttConfig && mqttConfig.native && mqttConfig.native.type == 'client') {
+                            log('- MQTT-Port-Check OK: Instance of Adapter: ' +adapterArray[mqttInstance] + ' is running as client!','info');
+                        } else {
+                            for (let j: number = 1; j < portArray.length; j++) {
+                                if (portArray[j] == portArray[mqttInstance] && adapterArray[j] == adapterArray[mqttInstance]) {
+                                    log('- MQTT-Port-Check OK: Instance of Adapter: ' + adapterArray[j] + ' is running on Port:' + portArray[j], 'info');
+                                } else if (portArray[j] == portArray[mqttInstance] && adapterArray[j] != adapterArray[mqttInstance]) {     
+                                    log('Instance of Adapter: ' + adapterArray[j] + ' is running on same Port:' + portArray[j] + ' as ' + adapterArray[mqttInstance], 'warn');
+                                    log('Please Change Port of Instance: ' + adapterArray[j], 'warn');
+                                }
                             }
                         }
                         log('End MQTT-Port-Check ---------------------------------------','info');
@@ -2968,13 +2977,21 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                 case 'pageOpenDetail':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
+                    if (Debug) {
+                        log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
+                    }
+                    let tempId: PageItem['id'];
                     let tempPageItem = words[3].split('?');
-                    let pageItem = findPageItem(tempPageItem[0]);
+                    let placeId = undefined;
+                    if (!isNaN(parseInt(tempPageItem[0]))){
+                        tempId = activePage.items[tempPageItem[0]].id;
+                        placeId = tempPageItem[0]
+                    } else {
+                        tempId = tempPageItem[0];
+                    }
+                    let pageItem: PageItem = findPageItem(tempId);
                     if (pageItem !== undefined) {
-                        if (Debug) {
-                            log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
-                        }
-                        SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem));
+                        SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, placeId));
                     }
                     break;
                 case 'buttonPress2':
@@ -3233,7 +3250,7 @@ function GeneratePageElements(page: Page): string {
 
         for (let index = 0; index < maxItems; index++) {
             if (page.items[index] !== undefined) {
-                pageData += CreateEntity(page.items[index], index + 1, page.useColor);
+                pageData += CreateEntity(page.items[index], index, page.useColor);
             }
         }
         if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
@@ -3279,12 +3296,12 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
             } 
  
             // Fallback if no name is given
-            name = pageItem.name !== undefined ? pageItem.name : o.common.name.de;
+            name = pageItem.name !== undefined ? pageItem.name : o.common.name.de == undefined ? o.common.name : o.common.name.de;
             let prefix = pageItem.prefixName !== undefined ? pageItem.prefixName : '';
             let suffix = pageItem.suffixName !== undefined ? pageItem.suffixName : '';
  
             // If name is used with changing values
-            if (name.indexOf('getState(') != -1) {
+            if ((name || '').indexOf('getState(') != -1) {
                 let dpName: string = name.slice(10, name.length -6);
                 name = getState(dpName).val;
                 RegisterEntityWatcher(dpName);
@@ -3365,17 +3382,17 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                         case 'door':
                         case 'window':
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
-                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
  
                             buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
                             if (existsState(pageItem.id + '.COLORDEC')) {
                                 iconColor = getState(pageItem.id + '.COLORDEC').val;
                             } else {
                                 if (val === true || val === 'true') {
-                                    iconColor = GetIconColor(pageItem, false, useColors);
-                                } else {
                                     iconColor = GetIconColor(pageItem, true, useColors);
+                                } else {
+                                    iconColor = GetIconColor(pageItem, false, useColors);
                                 }
                             }
                             if (val === true || val === 'true') { iconId = iconId2 };                       
@@ -3543,8 +3560,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
                     
-                    if (Debug) log('CreateEntity Icon role socket/light ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role socket/light ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'hue':
                     type = 'light';
@@ -3573,8 +3590,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role hue ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role hue ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'ct':
                     type = 'light';
@@ -3593,8 +3610,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role ct ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role ct ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'rgb':
                     type = 'light';
@@ -3623,8 +3640,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
  
-                    if (Debug) log('CreateEntity Icon role rgb ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role rgb ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'cie':
                 case 'rgbSingle':
@@ -3655,8 +3672,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     } 
  
-                    if (Debug) log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'dimmer':
                     type = 'light';
@@ -3675,8 +3692,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role dimmer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role dimmer ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'blind':
                     type = 'shutter';
@@ -3708,9 +3725,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
                     let value = icon_up + '|' + icon_stop + '|' + icon_down + '|' + icon_up_status + '|' + icon_stop_status + '|' + icon_down_status
                     
-                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
+                    if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
 
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + value;
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + value;
                     
                 case 'gate':
                     type = 'text';
@@ -3730,8 +3747,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     }
  
-                    if (Debug) log('CreateEntity Icon role gate ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
+                    if (Debug) log('CreateEntity Icon role gate ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState;
  
                 case 'door':
                 case 'window':
@@ -3741,18 +3758,18 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (existsState(pageItem.id + '.ACTUAL')) {
                         if (getState(pageItem.id + '.ACTUAL').val) {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
-                            iconColor = GetIconColor(pageItem, false, useColors);
+                            iconColor = GetIconColor(pageItem, true, useColors);
                             windowState = findLocale('window', 'opened');
                         } else {
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
                             iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
-                            iconColor = GetIconColor(pageItem, true, useColors);
+                            iconColor = GetIconColor(pageItem, false, useColors);
                             windowState = findLocale('window', 'closed');
                         }
                     }
  
-                    if (Debug) log('CreateEntity Icon role door/window ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
+                    if (Debug) log('CreateEntity Icon role door/window ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + windowState;
  
                 case 'motion': 
                     type = 'text';
@@ -3766,8 +3783,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('motion-sensor');
                     }
  
-                    if (Debug) log('CreateEntity Icon role motion ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+                    if (Debug) log('CreateEntity Icon role motion ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
  
                 case 'info':
  
@@ -3841,8 +3858,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     }
  
                     if (Debug) log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat', 'info');
-                    if (Debug) log('CreateEntity  ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
+                    if (Debug) log('CreateEntity  ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal+ ' ' + unit, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal + ' ' + unit;
  
                 case 'buttonSensor':
  
@@ -3851,8 +3868,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     iconColor = GetIconColor(pageItem, true, useColors);
                     let inSelText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) log('CreateEntity  Icon role buttonSensor ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
+                    if (Debug) log('CreateEntity  Icon role buttonSensor ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + inSelText;
  
                 case 'button':
                     type = 'button';
@@ -3865,8 +3882,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                     let buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : 'PRESS';
  
-                    if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
+                    if (Debug) log('CreateEntity  Icon role button ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
                 case 'value.time':
                 case 'level.timer':
                     type = 'timer';
@@ -3879,8 +3896,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         RegisterEntityWatcher(pageItem.id + '.STATE');
                     }
  
-                    if (Debug) log('CreateEntity  Icon role level.timer ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
+                    if (Debug) log('CreateEntity  Icon role level.timer ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + timerText;
 
                 case 'value.alarmtime':
                     type = 'timer'; 
@@ -3897,8 +3914,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         name = ('0' + String(Math.floor(timer_actual / 60))).slice(-2) + ':' + ('0' + String(timer_actual % 60)).slice(-2);
                     }
 
-                    if (Debug) log('CreateEntity  Icon role value.alarmtime ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText + ' ' + val, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText;
+                    if (Debug) log('CreateEntity  Icon role value.alarmtime ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText + ' ' + val, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + alarmtimerText;
 
                 case 'level.mode.fan':
  
@@ -3918,8 +3935,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         }
                     }
  
-                    if (Debug) log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
+                    if (Debug) log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;                
                     
                 case 'lock':
                     type = 'button';
@@ -3940,8 +3957,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         lockState = pageItem.buttonText !== undefined ? pageItem.buttonText : lockState;
                     }
  
-                    if (Debug) log('CreateEntity  Icon role lock ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
+                    if (Debug) log('CreateEntity  Icon role lock ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + lockState;
  
                 case 'slider':
                     type = 'number';
@@ -3949,8 +3966,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     iconColor = GetIconColor(pageItem, false, useColors);
  
-                    if (Debug) log('CreateEntity  Icon role slider ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    if (Debug) log('CreateEntity  Icon role slider ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
  
                 case 'volumeGroup':
                 case 'volume':
@@ -3971,8 +3988,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = Icons.GetIcon('volume-mute');
                     }
  
-                    if (Debug) log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
-                    return '~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    if (Debug) log('CreateEntity  Icon role volumeGroup/volume ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
  
                 case 'warning':
                     type = 'text';
@@ -3988,7 +4005,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         iconId = itemInfo; 
                     }
  
-                    if (Debug) log('CreateEntity  Icon role warning ~' + type + '~' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo, 'info');
+                    if (Debug) log('CreateEntity  Icon role warning ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo, 'info');
                     return '~' + type + '~' + itemName + '~' + iconId + '~' + iconColor + '~' + itemName + '~' + itemInfo;
  
                 case 'timeTable':
@@ -4141,14 +4158,16 @@ function RegisterEntityWatcher(id: string): void {
     }
 }
 
-function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string): void {
+function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string, placeId: number): void {
     try {
         if (subscriptions.hasOwnProperty(id)) {
             return;
         }
+  
+        if (Debug) log('id: ' + id + ' - pageItem: ' + JSON.stringify(pageItem) + ' - type: ' + type + ' - placeId: ' + placeId, 'info');
 
         subscriptions[id] = (on({ id: id, change: 'any' }, () => {
-            SendToPanel(GenerateDetailPage(type, undefined, pageItem));
+            SendToPanel(GenerateDetailPage(type, undefined, pageItem, placeId));
         }))
     } catch (err) {
         log('error at function RegisterDetailEntityWatcher: ' + err.message, 'warn');
@@ -5919,6 +5938,15 @@ function HandleButtonEvent(words: any): void {
         let tempid = words[2].split('?');
         let id = tempid[0];
         let buttonAction = words[3];
+        let pageItemID: string = '';
+
+        if (!isNaN(id)) {
+            pageItemID = activePage.items[id].id;
+            if (Debug) {
+                    log('HandleButtonEvent activePage: ' + activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
+            }
+            id = pageItemID
+        };
 
         if (Debug) {
             log('HandleButtonEvent übergebene Werte ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4] + ' - PageId: ' + pageId, 'info');
@@ -6987,33 +7015,35 @@ function GetNavigationString(pageId: number): string {
     }
 }
 
-function GenerateDetailPage(type: string, optional: string, pageItem: PageItem): Payload[] {
-    if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
+function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, placeId: number): Payload[] {
+    log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id;
 
         if (existsObject(id)) {
+
             let o = getObject(id);
             let val: (boolean | number) = 0;
             let icon = Icons.GetIcon('lightbulb');
             let iconColor = rgb_dec565(config.defaultColor);
 
             if (type == 'popupLight') {
+
                 let switchVal = '0';
                 let brightness = 0;
                 if (o.common.role == 'light' || o.common.role == 'socket') {
                     if (existsState(id + '.GET')) {
                         val = getState(id + '.GET').val;
-                        RegisterDetailEntityWatcher(id + '.GET', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.GET', pageItem, type, placeId);
                     } else if (existsState(id + '.SET')) {
 	                    if(pageItem.monobutton != undefined && pageItem.monobutton == true){	
                             val = getState(id + ".STATE").val;	
-						    RegisterDetailEntityWatcher(id + ".STATE", pageItem, type);	
+						    RegisterDetailEntityWatcher(id + ".STATE", pageItem, type, placeId);	
                         }	
                         else {	
                             val = getState(id + '.SET').val;	
-                            RegisterDetailEntityWatcher(id + '.SET', pageItem, type);	
+                            RegisterDetailEntityWatcher(id + '.SET', pageItem, type, placeId);	
                         }
                     }
 
@@ -7031,9 +7061,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         effect_supported = 'enable';
                     }
                     
+                    let tempId = placeId != undefined ? placeId : id;
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'              // entityUpdateDetail
-                            + id + '~'
+                            + tempId  + '~'
                             + icon + '~'                                 // iconId
                             + iconColor + '~'                            // iconColor
                             + switchVal + '~'                            // buttonState
@@ -7051,10 +7083,10 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 if (o.common.role == 'dimmer') {
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
-                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type, placeId);
                     } else if (existsState(id + '.ON_SET')) {
                         val = getState(id + '.ON_SET').val;
-                        RegisterDetailEntityWatcher(id + '.ON_SET', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.ON_SET', pageItem, type, placeId);
                     }
 
                     if (val === true) {
@@ -7079,16 +7111,18 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         iconColor = GetIconColor(pageItem, false, true);
                     }
 
-                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
 
                     let effect_supported = 'disable';
                     if (pageItem.modeList != undefined) {
                         effect_supported = 'enable';
                     }
 
+                    let tempId = placeId != undefined ? placeId : id;
+                    
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                            + id + '~'
+                            + tempId + '~'
                             + icon + '~'                                //iconId
                             + iconColor + '~'                           //iconColor
                             + switchVal + '~'                           //buttonState
@@ -7107,7 +7141,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
-                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type, placeId);
                     }
 
                     if (existsState(id + '.DIMMER')) {
@@ -7116,7 +7150,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         } else {
                             brightness = getState(id + '.DIMMER').val;
                         }
-                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type, placeId);
                     } else {
                         log('function GenerateDetailPage role:hue -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
@@ -7156,9 +7190,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         effect_supported = 'enable';
                     }
 
+                    let tempId = placeId != undefined ? placeId : id;
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                            + id + '~'
+                            + tempId + '~'
                             + icon + '~'                                //iconId
                             + iconColor + '~'                           //iconColor
                             + switchVal + '~'                           //buttonState
@@ -7177,7 +7213,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
-                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type, placeId);
                     }
 
                     if (existsState(id + '.DIMMER')) {
@@ -7186,7 +7222,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         } else {
                             brightness = getState(id + '.DIMMER').val;
                         }
-                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type, placeId);
                     } else {
                         log('function GenerateDetailPage role:rgb -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
@@ -7224,10 +7260,12 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (pageItem.modeList != undefined) {
                         effect_supported = 'enable';
                     }
+
+                    let tempId = placeId != undefined ? placeId : id;
                     
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                            + id + '~'
+                            + tempId + '~'
                             + icon + '~'                                //iconId
                             + iconColor + '~'                           //iconColor
                             + switchVal + '~'                           //buttonState
@@ -7246,7 +7284,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
-                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type, placeId);
                     }
 
                     if (existsState(id + '.DIMMER')) {
@@ -7255,7 +7293,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         } else {
                             brightness = getState(id + '.DIMMER').val;
                         }
-                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type, placeId);
                     } else {
                         log('function GenerateDetailPage role:rgbSingle -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
@@ -7299,9 +7337,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         effect_supported = 'enable';
                     }
 
+                    let tempId = placeId != undefined ? placeId : id;
+                    
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                            + id + '~'
+                            + tempId + '~'
                             + icon + '~'                                //iconId
                             + iconColor + '~'                           //iconColor
                             + switchVal + '~'                           //buttonState
@@ -7320,7 +7360,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                     if (existsState(id + '.ON')) {
                         val = getState(id + '.ON').val;
-                        RegisterDetailEntityWatcher(id + '.ON', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.ON', pageItem, type, placeId);
                     }
 
                     if (existsState(id + '.DIMMER')) {
@@ -7329,7 +7369,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         } else {
                             brightness = getState(id + '.DIMMER').val;
                         }
-                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type, placeId);
                     } else {
                         log('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
                     }
@@ -7361,9 +7401,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         effect_supported = 'enable';
                     }
 
+                    let tempId = placeId != undefined ? placeId : id;
+                    
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'             //entityUpdateDetail
-                            + id + '~'
+                            + tempId + '~'
                             + icon + '~'                                //iconId
                             + iconColor + '~'                           //iconColor
                             + switchVal + '~'                           //buttonState
@@ -7383,7 +7425,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                 if (existsState(id + '.ACTUAL')) {
                     val = getState(id + '.ACTUAL').val;
-                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
                 } else if (existsState(id + '.SET')) {
                     val = getState(id + '.SET').val;
                     //RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
@@ -7391,7 +7433,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 let tilt_position: any = 'disabled'
                 if (existsState(id + '.TILT_ACTUAL')) {
                     tilt_position = getState(id + '.TILT_ACTUAL').val;
-                    RegisterDetailEntityWatcher(id + '.TILT_ACTUAL', pageItem, type);
+                    RegisterDetailEntityWatcher(id + '.TILT_ACTUAL', pageItem, type, placeId);
                 } else if (existsState(id + '.TILT_SET')) {
                     tilt_position = getState(id + '.TILT_SET').val;
                     //RegisterDetailEntityWatcher(id + '.TILT_SET', pageItem, type);
@@ -7451,9 +7493,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     textSecondRow = pageItem.secondRow;
                 }
 
+                let tempId = placeId != undefined ? placeId : id;
+                
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
-                        + id + '~'                                //entity_id
+                        + tempId + '~'                                //entity_id
                         + val + '~'                               //Shutterposition
                         + textSecondRow + '~'                     //pos_status 2.line
                         + findLocale('blinds', 'Position') + '~'  //pos_translation
@@ -7483,7 +7527,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                 let payloadParameters1 = '~~~~'
                 if (pageItem.popupThermoMode1 != undefined) {
-                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[0], pageItem, type);
+                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[0], pageItem, type, placeId);
                     payloadParameters1 =    pageItem.popUpThermoName[0] + '~'                                          //{heading}~            Mode 1
                                             + 'modus1' + '~'                                                           //{id}~                 Mode 1
                                             + getState(pageItem.id + "." + pageItem.setThermoAlias[0]).val + '~'       //{ACTUAL}~             Mode 1
@@ -7492,7 +7536,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                 let payloadParameters2 = '~~~~'
                 if (pageItem.popupThermoMode2 != undefined) {
-                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[1], pageItem, type);
+                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[1], pageItem, type, placeId);
                     payloadParameters2 =    pageItem.popUpThermoName[1] + '~'                                           //{heading}~            Mode 2
                                             + 'modus2' + '~'                                                            //{id}~                 Mode 2
                                             + getState(pageItem.id + "." + pageItem.setThermoAlias[1]).val + '~'        //{ACTUAL}~             Mode 2
@@ -7501,7 +7545,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
 
                 let payloadParameters3 = '~~~~'
                 if (pageItem.popupThermoMode3 != undefined) {
-                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[2], pageItem, type);
+                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[2], pageItem, type, placeId);
                     payloadParameters3 =    pageItem.popUpThermoName[2] + '~'                                           //{heading}~            Mode 3
                                             + 'modus3' + '~'                                                            //{id}~                 Mode 3
                                             + getState(pageItem.id + "." + pageItem.setThermoAlias[2]).val + '~'        //{ACTUAL}~             Mode 3
@@ -7524,12 +7568,12 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 let timer_actual: number = 0;
 
                 if (existsState(id + '.ACTUAL')) {
-                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type);
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
                     timer_actual = getState(id + '.ACTUAL').val;
                 } 
 
                 if (existsState(id + '.STATE')) {
-                    RegisterDetailEntityWatcher(id + '.STATE', pageItem, type);
+                    RegisterDetailEntityWatcher(id + '.STATE', pageItem, type, placeId);
                 } 
 
                 let editable = 1;
@@ -7587,9 +7631,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
                 }
 
+                let tempId = placeId != undefined ? placeId : id;
+                
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
-                        + id + '~~'                      //{entity_id}
+                        + tempId + '~~'                      //{entity_id}
                         + rgb_dec565(White) + '~'        //{icon_color}~
                         + id + '~' 
                         + min_remaining + '~'
@@ -7611,10 +7657,10 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                 if (o.common.role == 'level.mode.fan') {
                     if (existsState(id + '.SET')) {
                         val = getState(id + '.SET').val;
-                        RegisterDetailEntityWatcher(id + '.SET', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.SET', pageItem, type, placeId);
                     }
                     if (existsState(id + '.MODE')) {
-                        RegisterDetailEntityWatcher(id + '.MODE', pageItem, type);
+                        RegisterDetailEntityWatcher(id + '.MODE', pageItem, type, placeId);
                     }
 
                     icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : 'fan';
@@ -7631,10 +7677,12 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     
                     let modeList = pageItem.modeList.join('?');
                     let actualMode = pageItem.modeList[getState(id + '.MODE').val];
-                    
+
+                    let tempId = placeId != undefined ? placeId : id;
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'     // entityUpdateDetail
-                            + id + '~'
+                            + tempId + '~'
                             + icon + '~'                        // iconId
                             + iconColor + '~'                   // iconColor
                             + switchVal + '~'                   // buttonState
@@ -7863,9 +7911,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         mode = 'favorites';
                     }
 
+                    let tempId = placeId != undefined ? placeId : id;
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
-                            + id + '?' + optional + '~~'         //{entity_id}
+                            + tempId + '?' + optional + '~~'         //{entity_id}
                             + rgb_dec565(HMIOn) + '~'            //{icon_color}~
                             + mode + '~'
                             + actualState + '~'
@@ -7879,7 +7929,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     if (pageItem.inSel_ChoiceState || pageItem.inSel_ChoiceState == undefined) {
                         if (existsObject(pageItem.id + '.VALUE')) {
                             actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
-                            RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+                            RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type, placeId);
                         }
                     }
                     
@@ -7889,9 +7939,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                     }
                     let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
+                    let tempId = placeId != undefined ? placeId : id;
+
                     out_msgs.push({
                         payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
-                            + id + '~~'                          //{entity_id}
+                            + tempId + '~~'                          //{entity_id}
                             + rgb_dec565(White) + '~'            //{icon_color}~
                             + 'insel' + '~'
                             + actualValue + '~'
@@ -7912,7 +7964,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         if (pageItem.inSel_ChoiceState || pageItem.inSel_ChoiceState == undefined) {
                             if (existsObject(pageItem.id + '.VALUE')) {
                                 actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
-                                RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type);
+                                RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type, placeId);
                             }
                         }
 
@@ -7923,10 +7975,11 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem):
                         let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
                         //log(valueList);
+                        let tempId = placeId != undefined ? placeId : id;
 
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
-                                + id + '~~'                          //{entity_id}
+                                + tempId + '~~'                          //{entity_id}
                                 + rgb_dec565(White) + '~'            //{icon_color}~
                                 + 'insel' + '~'
                                 + actualValue + '~'
