@@ -84,8 +84,10 @@ ReleaseNotes:
         - 21.12.2023 - v4.3.3.25 Add switch of cardQR by hidePassword: true 
         - 26.12.2023 - v4.3.3.26 Fix Log output payload -> Json.stringify
         - 28.12.2023 - v4.3.3.27 Fix Payload (pageItem.id -> placeId) by Function CreateEntity
-        - 28.12.2023 - v4.3.3.27 Fix Fallback PageItem.name by Function CreateEntity
-        - 30.12.2023 - v4.3.3.28 Fix short ID's
+        - 28.12.2023 - v4.3.3.27 Fix Fallback PageItem.name by Function CreateEntity --> Many Bugs
+        - 30.12.2023 - v4.3.3.28 Fix short ID's in v4.3.3.27
+        - 30.12.2023 - v4.3.3.28 Fix window Icons in CreateEntity 
+        - 30.12.2023 - v4.3.3.28 Add MQTT-Client Check
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
