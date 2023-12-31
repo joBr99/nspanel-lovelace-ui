@@ -7637,9 +7637,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                 
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
-                        + tempId + '~~'                      //{entity_id}
+                        + tempId + '~~'                  //{entity_id}
                         + rgb_dec565(White) + '~'        //{icon_color}~
-                        + id + '~' 
+                        + tempId + '~' 
                         + min_remaining + '~'
                         + sec_remaining + '~'
                         + editable + '~'
