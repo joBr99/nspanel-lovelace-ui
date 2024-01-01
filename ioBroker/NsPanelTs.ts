@@ -769,7 +769,7 @@ let NSPanel_Service_SubPage = <PageEntities>
  **                                                                   **
  ***********************************************************************/
 
-export const config = <Config> {
+export const config: Config = {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
