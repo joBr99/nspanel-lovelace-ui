@@ -1347,14 +1347,14 @@ function CheckEnableSetObject() {
 //switch BackgroundColors for Screensaver Indicators
 async function Init_ActivePageData() {
     try {
-        if (existsState(NSPanel_Path + 'activePage!.heading') == false ) { 
-            await createStateAsync(NSPanel_Path + 'activePage!.heading', '', true, { type: 'string' });
+        if (existsState(NSPanel_Path + 'ActivePage.heading') == false ) { 
+            await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string' });
         }
-        if (existsState(NSPanel_Path + 'activePage!.type') == false ) { 
-            await createStateAsync(NSPanel_Path + 'activePage!.type', '', true, { type: 'string' });
+        if (existsState(NSPanel_Path + 'ActivePage.type') == false ) { 
+            await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
         }
-        if (existsState(NSPanel_Path + 'activePage!.id0') == false ) { 
-            await createStateAsync(NSPanel_Path + 'activePage!.id0', '', true, { type: 'string' });
+        if (existsState(NSPanel_Path + 'ActivePage.id0') == false ) { 
+            await createStateAsync(NSPanel_Path + 'ActivePage.id0', '', true, { type: 'string' });
         }
     } catch (err: any) { 
         log('error at function Init_ActivePageData: ' + err.message, 'warn'); 
@@ -3039,9 +3039,9 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: Page): void {
     try {
         activePage = page;
-        setIfExists(NSPanel_Path + 'activePage!.type', activePage!.type);
-        setIfExists(NSPanel_Path + 'activePage!.heading', activePage!.heading);
-        setIfExists(NSPanel_Path + 'activePage!.id0', activePage!.items[0].id);
+        setIfExists(NSPanel_Path + 'ActivePage.type', activePage!.type);
+        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage!.heading);
+        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage!.items[0].id);
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -8014,7 +8014,7 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                 }
             }
         }
-	if (Debug) log('GenerateDetailPage -> payload: ' + JSON.stringify(out_msgs), 'info');     
+	    if (Debug) log('GenerateDetailPage -> payload: ' + JSON.stringify(out_msgs), 'info');     
         return out_msgs;
 
     } catch (err: any) {
@@ -8044,9 +8044,9 @@ function UnsubscribeWatcher(): void {
 }
 
 function HandleScreensaver(): void {
-    setIfExists(NSPanel_Path + 'activePage!.type', 'screensaver');
-    setIfExists(NSPanel_Path + 'activePage!.id0', 'screensaver');
-    setIfExists(NSPanel_Path + 'activePage!.heading', 'Screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.id0', 'screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
     if (existsObject(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced')) {
         if (getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val) {
             SendToPanel({ payload: 'pageType~screensaver2' });
