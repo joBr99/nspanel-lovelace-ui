@@ -6621,7 +6621,7 @@ function HandleButtonEvent(words: any): void {
                             });
                         break;
                     case 'squeezeboxrpc':
-                        //@@ts-ignore Fehler kommt von findPageItem in vscode
+                        //@ts-ignore Fehler kommt von findPageItem in vscode
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
                 }
