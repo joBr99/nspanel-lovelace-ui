@@ -770,157 +770,145 @@ let NSPanel_Service_SubPage = <PageEntities>
  ***********************************************************************/
 
 export const config = <Config> {
-
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
-
-        NSPanel_Service,         	//Auto-Alias Service Page
-	    //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
+        NSPanel_Service, //Auto-Alias Service Page
+        //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
-
     // Unterseiten / Subpages
     subPages: [
-	    
-                NSPanel_Service_SubPage,                //Auto-Alias Service Page (only used with cardUnlock)
-                NSPanel_Infos,                          //Auto-Alias Service Page
-                    NSPanel_Wifi_Info_1,                //Auto-Alias Service Page
-                    NSPanel_Wifi_Info_2,                //Auto-Alias Service Page
-                    NSPanel_Sensoren,                   //Auto-Alias Service Page
-                    NSPanel_Hardware,                   //Auto-Alias Service Page
-                    NSPanel_IoBroker,                   //Auot-Alias Service Page
-                NSPanel_Einstellungen,                  //Auto-Alias Service Page
-                    NSPanel_Screensaver,                //Auto-Alias Service Page
-                        NSPanel_ScreensaverDimmode,     //Auto-Alias Service Page
-                        NSPanel_ScreensaverBrightness,  //Auto-Alias Service Page
-                        NSPanel_ScreensaverLayout,      //Auto-Alias Service Page
-                        NSPanel_ScreensaverWeather,     //Auto-Alias Service Page
-                        NSPanel_ScreensaverDateformat,  //Auto-Alias Service Page
-                        NSPanel_ScreensaverIndicators,  //Auto-Alias Service Page
-                    NSPanel_Relays,                     //Auto-Alias Service Page
-                    NSPanel_Script,                     //Auto-Alias Service Page
-                NSPanel_Firmware,                       //Auto-Alias Service Page
-                    NSPanel_FirmwareTasmota,            //Auto-Alias Service Page
-                    NSPanel_FirmwareBerry,              //Auto-Alias Service Page
-                    NSPanel_FirmwareNextion,            //Auto-Alias Service Page
+        NSPanel_Service_SubPage, //Auto-Alias Service Page (only used with cardUnlock)
+        NSPanel_Infos, //Auto-Alias Service Page
+        NSPanel_Wifi_Info_1, //Auto-Alias Service Page
+        NSPanel_Wifi_Info_2, //Auto-Alias Service Page
+        NSPanel_Sensoren, //Auto-Alias Service Page
+        NSPanel_Hardware, //Auto-Alias Service Page
+        NSPanel_IoBroker, //Auot-Alias Service Page
+        NSPanel_Einstellungen, //Auto-Alias Service Page
+        NSPanel_Screensaver, //Auto-Alias Service Page
+        NSPanel_ScreensaverDimmode, //Auto-Alias Service Page
+        NSPanel_ScreensaverBrightness, //Auto-Alias Service Page
+        NSPanel_ScreensaverLayout, //Auto-Alias Service Page
+        NSPanel_ScreensaverWeather, //Auto-Alias Service Page
+        NSPanel_ScreensaverDateformat, //Auto-Alias Service Page
+        NSPanel_ScreensaverIndicators, //Auto-Alias Service Page
+        NSPanel_Relays, //Auto-Alias Service Page
+        NSPanel_Script, //Auto-Alias Service Page
+        NSPanel_Firmware, //Auto-Alias Service Page
+        NSPanel_FirmwareTasmota, //Auto-Alias Service Page
+        NSPanel_FirmwareBerry, //Auto-Alias Service Page
+        NSPanel_FirmwareNextion, //Auto-Alias Service Page
     ],
 
-/***********************************************************************
- **                                                                   **
- **                    Screensaver Configuration                      **
- **                                                                   **
- ***********************************************************************/
-    leftScreensaverEntity:
-        [
-             // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+    /***********************************************************************
+     **                                                                   **
+     **                    Screensaver Configuration                      **
+     **                                                                   **
+     ***********************************************************************/
+    leftScreensaverEntity: [
+        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+    ],
 
-        ],
-
-    bottomScreensaverEntity :  
-        [
-            // bottomScreensaverEntity 1
-            {
-                ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityDateFormat: { hour: '2-digit', minute: '2-digit' }, // Description at Wiki-Pages
-                ScreensaverEntityIconOn: 'weather-sunset-up',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Sonne',
-                ScreensaverEntityUnitText: '%',
-                ScreensaverEntityIconColor: MSYellow //{'val_min': 0, 'val_max': 100}
-            },
-            // bottomScreensaverEntity 2
-            {
-                ScreensaverEntity: 'accuweather.0.Current.WindSpeed',
-                ScreensaverEntityFactor: (1000/3600),
-                ScreensaverEntityDecimalPlaces: 1,
-                ScreensaverEntityIconOn: 'weather-windy',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: "Wind",
-                ScreensaverEntityUnitText: 'm/s',
-                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 120 }
-            },
-            // bottomScreensaverEntity 3
-            {
-                ScreensaverEntity: 'accuweather.0.Current.WindGust',
-                ScreensaverEntityFactor: (1000/3600),
-                ScreensaverEntityDecimalPlaces: 1,
-                ScreensaverEntityIconOn: 'weather-tornado',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Böen',
-                ScreensaverEntityUnitText: 'm/s',
-                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 120 }
-            },
-            // bottomScreensaverEntity 4
-            {
-                ScreensaverEntity: 'accuweather.0.Current.WindDirectionText',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'windsock',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Windr.',
-                ScreensaverEntityUnitText: '°',
-                ScreensaverEntityIconColor: White
-            },
-            // bottomScreensaverEntity 5 (for Alternative and Advanced Screensaver)
-            {
-                ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 1,
-                ScreensaverEntityIconOn: 'water-percent',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Feuchte',
-                ScreensaverEntityUnitText: '%',
-                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65}
-            },
-            // bottomScreensaverEntity 6 (for Advanced Screensaver)
-            {
-             ScreensaverEntity: NSPanel_Path + 'Relay.1',
-             ScreensaverEntityIconOn: 'coach-lamp-variant',
-             ScreensaverEntityText: 'Street',
-             ScreensaverEntityOnColor: Yellow,
-             ScreensaverEntityOffColor: White,
-             ScreensaverEntityOnText: 'Is ON',
-             ScreensaverEntityOffText: 'Not ON'
-         },
- 	        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
-        ],
-
-    indicatorScreensaverEntity:
-        [
-		// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
-        ],
-
-        // Status Icon 
-    mrIcon1ScreensaverEntity: 
-        { 
-            ScreensaverEntity: NSPanel_Path + 'Relay.1', 
-            ScreensaverEntityIconOn: 'lightbulb',
-            ScreensaverEntityIconOff: null, 
-            ScreensaverEntityValue: null,
-            ScreensaverEntityValueDecimalPlace : 0,
-            ScreensaverEntityValueUnit: null,
-            ScreensaverEntityOnColor: On, 
-            ScreensaverEntityOffColor: HMIOff 
+    bottomScreensaverEntity: [
+        // bottomScreensaverEntity 1
+        {
+            ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
+            ScreensaverEntityFactor: 1,
+            ScreensaverEntityDecimalPlaces: 0,
+            ScreensaverEntityDateFormat: {hour: '2-digit', minute: '2-digit'}, // Description at Wiki-Pages
+            ScreensaverEntityIconOn: 'weather-sunset-up',
+            ScreensaverEntityIconOff: null,
+            ScreensaverEntityText: 'Sonne',
+            ScreensaverEntityUnitText: '%',
+            ScreensaverEntityIconColor: MSYellow //{'val_min': 0, 'val_max': 100}
         },
-    mrIcon2ScreensaverEntity: 
-        { 
-            ScreensaverEntity: NSPanel_Path + 'Relay.2', 
-            ScreensaverEntityIconOn: 'lightbulb',
-            ScreensaverEntityIconOff: null, 
-            ScreensaverEntityValue: null,
-            ScreensaverEntityValueDecimalPlace : 0,
-            ScreensaverEntityValueUnit: null, 
-            ScreensaverEntityOnColor: On, 
-            ScreensaverEntityOffColor: HMIOff 
+        // bottomScreensaverEntity 2
+        {
+            ScreensaverEntity: 'accuweather.0.Current.WindSpeed',
+            ScreensaverEntityFactor: (1000 / 3600),
+            ScreensaverEntityDecimalPlaces: 1,
+            ScreensaverEntityIconOn: 'weather-windy',
+            ScreensaverEntityIconOff: null,
+            ScreensaverEntityText: "Wind",
+            ScreensaverEntityUnitText: 'm/s',
+            ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120}
         },
-// ------ DE: Ende der Screensaver Einstellungen --------------------
-// ------ EN: End of screensaver settings ---------------------------
+        // bottomScreensaverEntity 3
+        {
+            ScreensaverEntity: 'accuweather.0.Current.WindGust',
+            ScreensaverEntityFactor: (1000 / 3600),
+            ScreensaverEntityDecimalPlaces: 1,
+            ScreensaverEntityIconOn: 'weather-tornado',
+            ScreensaverEntityIconOff: null,
+            ScreensaverEntityText: 'Böen',
+            ScreensaverEntityUnitText: 'm/s',
+            ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120}
+        },
+        // bottomScreensaverEntity 4
+        {
+            ScreensaverEntity: 'accuweather.0.Current.WindDirectionText',
+            ScreensaverEntityFactor: 1,
+            ScreensaverEntityDecimalPlaces: 0,
+            ScreensaverEntityIconOn: 'windsock',
+            ScreensaverEntityIconOff: null,
+            ScreensaverEntityText: 'Windr.',
+            ScreensaverEntityUnitText: '°',
+            ScreensaverEntityIconColor: White
+        },
+        // bottomScreensaverEntity 5 (for Alternative and Advanced Screensaver)
+        {
+            ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity',
+            ScreensaverEntityFactor: 1,
+            ScreensaverEntityDecimalPlaces: 1,
+            ScreensaverEntityIconOn: 'water-percent',
+            ScreensaverEntityIconOff: null,
+            ScreensaverEntityText: 'Feuchte',
+            ScreensaverEntityUnitText: '%',
+            ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100, 'val_best': 65}
+        },
+        // bottomScreensaverEntity 6 (for Advanced Screensaver)
+        {
+            ScreensaverEntity: NSPanel_Path + 'Relay.1',
+            ScreensaverEntityIconOn: 'coach-lamp-variant',
+            ScreensaverEntityText: 'Street',
+            ScreensaverEntityOnColor: Yellow,
+            ScreensaverEntityOffColor: White,
+            ScreensaverEntityOnText: 'Is ON',
+            ScreensaverEntityOffText: 'Not ON'
+        },
+        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+    ],
 
+    indicatorScreensaverEntity: [
+        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+    ],
 
-//-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
-//-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
+    // Status Icon 
+    mrIcon1ScreensaverEntity: {
+        ScreensaverEntity: NSPanel_Path + 'Relay.1',
+        ScreensaverEntityIconOn: 'lightbulb',
+        ScreensaverEntityIconOff: null,
+        ScreensaverEntityValue: null,
+        ScreensaverEntityValueDecimalPlace: 0,
+        ScreensaverEntityValueUnit: null,
+        ScreensaverEntityOnColor: On,
+        ScreensaverEntityOffColor: HMIOff
+    },
+    mrIcon2ScreensaverEntity: {
+        ScreensaverEntity: NSPanel_Path + 'Relay.2',
+        ScreensaverEntityIconOn: 'lightbulb',
+        ScreensaverEntityIconOff: null,
+        ScreensaverEntityValue: null,
+        ScreensaverEntityValueDecimalPlace: 0,
+        ScreensaverEntityValueUnit: null,
+        ScreensaverEntityOnColor: On,
+        ScreensaverEntityOffColor: HMIOff
+    },
+    // ------ DE: Ende der Screensaver Einstellungen --------------------
+    // ------ EN: End of screensaver settings ---------------------------
+    //-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+    //-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
     // DE: Konfiguration des linken Schalters des NSPanels
     // EN: Configuration of the left switch of the NSPanel
     button1: {
@@ -946,10 +934,8 @@ export const config = <Config> {
         entity: null,
         setValue: null
     },
-//--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
-//--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
-
-
+    //--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+    //--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
     // DE: WICHTIG !! Parameter nicht ändern  WICHTIG!!
     // EN: IMPORTANT !! Do not change parameters IMPORTANT!!
     panelRecvTopic: NSPanelReceiveTopic,
@@ -973,7 +959,7 @@ const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 
 const Icons = new IconsSelector();
 let timeoutSlider: any;
-let vwIconColor = [];
+let vwIconColor: number[] = [];
 let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
@@ -1000,7 +986,7 @@ async function Init_dayjs() {
             require('dayjs/locale/'+ dayjsLanguages[i]);     
         } 
         dayjs.locale(getDayjsLocale());
-    } catch (err) {
+    } catch (err: any) {
         log('error at function init_dayjs: ' + err.message,'warn'); 
     }        
 }
@@ -1082,19 +1068,19 @@ async function CheckConfigParameters() {
                 log('nodeJS does not have an even version number. An odd version number is a developer version. Please correct nodeJS version','info');
             }
         });
-        if (existsObject(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == false && config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
+        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null && existsObject(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == false ) {
             log('mrIcon1ScreensaverEntity data point in the config not available - please adjust','warn');
         } 
-        if (existsObject(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == false && config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
+        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null && existsObject(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == false) {
             log('mrIcon2ScreensaverEntity data point in the config not available - please adjust','warn');
         } 
-        if (CheckEnableSetObject) {
+        if (CheckEnableSetObject()) {
             log('setObjects enabled - create Alias Channels possible','info');
             isSetOptionActive = true;
         } else {    
             log('setObjects disabled - Please enable setObjects in JS-Adapter Instance - create Alias Channels not possible', 'warn');
         } 
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function CheckConfigParameters: ' + err.message, 'warn'); 
     }
 }
@@ -1117,7 +1103,7 @@ async function InitIoBrokerInfo() {
             await createAliasAsync(AliasPath + 'IoBroker.JavaScriptVersion.ACTUAL', NSPanel_Path + 'IoBroker.JavaScriptVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
         }
         setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
-    } catch (err) {
+    } catch (err: any) {
         log('error at funktion InitIoBrokerInfo ' + err.message, 'warn');
     }
 }
@@ -1140,7 +1126,7 @@ async function CheckDebugMode() {
             log('Debug mode disabled','info');
         }
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function CheckDebugModus: ' + err.message,'warn'); 
     } 
 }
@@ -1197,7 +1183,7 @@ async function CheckMQTTPorts() {
                 }   
             });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function CheckMQTTPorts: ' + err.message, 'warn'); 
     }
 }
@@ -1244,7 +1230,7 @@ async function Init_Release() {
             await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex]);
             await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version);
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_Release: ' + err.message, 'warn'); 
     }
 }
@@ -1306,23 +1292,23 @@ async function InitConfigParameters() {
                 await createAliasAsync(AliasPath + 'Config.temperatureUnitNumber.VALUE', NSPanel_Path + 'Config.temperatureUnitNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
             }
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function InitConfigParameters: ' + err.message, 'warn'); 
     }
 }
 InitConfigParameters();
 
-on({id: [].concat(NSPanel_Path + 'Config.ScripgtDebugStatus'), change: "ne"}, async function (obj) {
+on({id: [NSPanel_Path + 'Config.ScripgtDebugStatus'], change: "ne"}, async function (obj) {
     try {
         obj.state.val ? log('Debug mode activated', 'info') : log('Debug mode disabled', 'info');
         Debug = obj.state.val
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at Trigger ScripgtDebugStatus: ' + err.message, 'warn'); 
     }
 });
 
-on({id: [].concat(NSPanel_Path + 'Config.localeNumber')
-          .concat(NSPanel_Path + 'Config.temperatureUnitNumber'), change: "ne"}, async function (obj) {
+on({id: [NSPanel_Path + 'Config.localeNumber',
+          NSPanel_Path + 'Config.temperatureUnitNumber'], change: "ne"}, async function (obj) {
     try {
         if (obj.id == NSPanel_Path + 'Config.localeNumber') {
             let localesList = [ 'en-US', 'de-DE', 'nl-NL', 'da-DK', 'es-ES', 'fr-FR', 'it-IT', 'ru-RU', 'nb-NO', 'nn-NO', 'pl-PL', 'pt-PT', 'af-ZA', 'ar-SY', 
@@ -1335,7 +1321,7 @@ on({id: [].concat(NSPanel_Path + 'Config.localeNumber')
             let tempunitList = ['°C', '°F', 'K'];
             setStateAsync(NSPanel_Path + 'Config.temperatureUnit', tempunitList[obj.state.val]);
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at Trigger temperatureUnitNumber + localeNumber: ' + err.message, 'warn'); 
     }
 });
@@ -1346,7 +1332,7 @@ async function Init_ScreensaverAdvanced() {
         if (existsState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced') == false ) { 
             await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_ScreensaverAdvanced: ' + err.message, 'warn'); 
     }
 }
@@ -1361,16 +1347,16 @@ function CheckEnableSetObject() {
 //switch BackgroundColors for Screensaver Indicators
 async function Init_ActivePageData() {
     try {
-        if (existsState(NSPanel_Path + 'ActivePage.heading') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string' });
+        if (existsState(NSPanel_Path + 'activePage!.heading') == false ) { 
+            await createStateAsync(NSPanel_Path + 'activePage!.heading', '', true, { type: 'string' });
         }
-        if (existsState(NSPanel_Path + 'ActivePage.type') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
+        if (existsState(NSPanel_Path + 'activePage!.type') == false ) { 
+            await createStateAsync(NSPanel_Path + 'activePage!.type', '', true, { type: 'string' });
         }
-        if (existsState(NSPanel_Path + 'ActivePage.id0') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ActivePage.id0', '', true, { type: 'string' });
+        if (existsState(NSPanel_Path + 'activePage!.id0') == false ) { 
+            await createStateAsync(NSPanel_Path + 'activePage!.id0', '', true, { type: 'string' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_ActivePageData: ' + err.message, 'warn'); 
     }
 }
@@ -1382,7 +1368,7 @@ async function Init_Screensaver_Backckground_Color_Switch() {
         if (existsState(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator') == false ) { 
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', 0, true, { type: 'number' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_Screensaver_Backckground_Color_Switch: ' + err.message, 'warn'); 
     }
 }
@@ -1394,7 +1380,7 @@ on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async 
         if (bgColorScrSaver < 4) {
             HandleScreensaverUpdate();
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at trigger bgColorIndicator: ' + err.message, 'warn'); 
     }
 });
@@ -1404,7 +1390,7 @@ on({id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: "ne"}, 
     try {
         if (obj.state.val) setState( NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', false );
         //setState(config.panelSendTopic, 'pageType~pageStartup');
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at trigger Screensaver Advanced: ' + err.message, 'warn'); 
     }
 });
@@ -1413,7 +1399,7 @@ on({id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change
     try {
         if (obj.state.val) setState( NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false );
         //setState(config.panelSendTopic, 'pageType~pageStartup');
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at trigger Screensaver Alternativ: ' + err.message, 'warn'); 
     }
 });
@@ -1426,7 +1412,7 @@ async function Init_bExit_Page_Change() {
         if (existsState(NSPanel_Path + 'ScreensaverInfo.bExitPage') == false ) { 
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', -1, true, { type: 'number' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_bExit_Page_Change: ' + err.message, 'warn'); 
     }
 }
@@ -1438,7 +1424,7 @@ async function Init_Dimmode_Trigger() {
         if (existsState(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode') == false ) { 
             await createStateAsync(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode', false, true, { type: 'boolean' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_Dimmode_Trigger: ' + err.message, 'warn'); 
     }
 }
@@ -1457,13 +1443,13 @@ async function InitActiveBrightness() {
             await createAliasAsync(AliasPath + 'ScreensaverInfo.activeBrightness.ACTUAL', NSPanel_Path + 'ScreensaverInfo.activeBrightness', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'ScreensaverInfo.activeBrightness.SET', NSPanel_Path + 'ScreensaverInfo.activeBrightness', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitActiveBrightness: ' + err.message, 'warn');
     }
 }
 InitActiveBrightness();
 
-on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightness'), change: "ne"}, async function (obj) {
+on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"}, async function (obj) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
         if (obj.state.val != null && obj.state.val != -1) {
@@ -1488,7 +1474,7 @@ on({id: [].concat(String(NSPanel_Path) + 'ScreensaverInfo.activeDimmodeBrightnes
             InitDimmode();
             HandleMessage('event', 'startup',undefined, undefined);
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at trigger activeDimmodeBrightness: ' + err.message, 'warn');
     }
 });
@@ -1501,7 +1487,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"},
         } else {
             InitDimmode();
         }
-     } catch (err) { 
+     } catch (err: any) { 
         log('error at trigger Trigger_Dimmode: ' + err.message, 'warn'); 
     }
 });
@@ -1513,7 +1499,7 @@ async function InitRebootPanel() {
             setObject(AliasPath + 'Config.rebootNSPanel', {type: 'channel', common: {role: 'button', name:'Reboot NSPanel'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.rebootNSPanel.SET', NSPanel_Path + 'Config.rebootNSPanel', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SET' });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitRebootPanel: ' + err.message, 'warn');
     }
 }
@@ -1546,7 +1532,7 @@ on({id: AliasPath + 'Config.rebootNSPanel.SET', change: "any"}, async function (
                         log('Reboot NSPanel... done', 'info');
                     }
                 });
-        } catch (err) {
+        } catch (err: any) {
             log('error at Trigger Restart NSPanel: ' + err.message, 'warn');
         }
     }
@@ -1567,15 +1553,15 @@ async function InitUpdateDatapoints() {
                 await createAliasAsync(AliasPath + 'Config.Update.UpdateNextion.SET', NSPanel_Path + 'Config.Update.UpdateNextion', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SET' });
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('function InitUpdateDatapoints: ' + err.message, 'warn');
     }
 }
 InitUpdateDatapoints();
 
-on({id: [].concat(NSPanel_Path + 'Config.Update.UpdateTasmota')
-          .concat(NSPanel_Path + 'Config.Update.UpdateBerry')
-          .concat(NSPanel_Path + 'Config.Update.UpdateNextion'), change: "any"}, async function (obj) {
+on({id: [NSPanel_Path + 'Config.Update.UpdateTasmota',
+          NSPanel_Path + 'Config.Update.UpdateBerry',
+          NSPanel_Path + 'Config.Update.UpdateNextion'], change: "any"}, async function (obj) {
     try {
         switch (obj.id) {
             case NSPanel_Path + 'Config.Update.UpdateTasmota':
@@ -1591,7 +1577,7 @@ on({id: [].concat(NSPanel_Path + 'Config.Update.UpdateTasmota')
                 update_tft_firmware();
                 break;
         } 
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at Trigger Update Firmware: ' + err.message, 'warn'); 
     }
 });
@@ -1613,7 +1599,7 @@ async function Init_Relays() {
             await createAliasAsync(AliasPath + 'Relay.2.ACTUAL', NSPanel_Path + 'Relay.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Relay.2.SET', NSPanel_Path + 'Relay.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function Init_Relays: ' + err.message, 'warn'); 
     }
 }
@@ -1637,7 +1623,7 @@ async function InitAlternateMRIconsSize() {
             await createAliasAsync(AliasPath + 'Config.MRIcons.alternateMRIconSize.2.ACTUAL', NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.MRIcons.alternateMRIconSize.2.SET', NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function InitAlternateMRIconsSize: ' + err.message, 'warn'); 
     }
 }
@@ -1666,14 +1652,14 @@ async function InitDateformat() {
                 await createAliasAsync(AliasPath + 'Config.Dateformat.Switch.month.SET', NSPanel_Path + 'Config.Dateformat.Switch.month', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
             }
         }    
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function InitDateformat: ' + err.message, 'warn'); 
     }
 }
 InitDateformat();
 //Control Dateformat short/long from DP's
-on({id: [].concat(String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday')
-          .concat(String(NSPanel_Path) + 'Config.Dateformat.Switch.month'), change: "ne"}, async function (obj) {
+on({id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday',
+          String(NSPanel_Path) + 'Config.Dateformat.Switch.month'], change: "ne"}, async function (obj) {
     try {
         if (obj.id == NSPanel_Path + 'Config.Dateformat.Switch.weekday') {
             if (getState(NSPanel_Path + 'Config.Dateformat.Switch.weekday').val) {
@@ -1689,15 +1675,15 @@ on({id: [].concat(String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday')
             }
         }
         SendDate();
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at Trigger Config.Dateformat: ' + err.message, 'warn'); 
     }
 });
 
 //Control Relays from DP's
-on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) + 'Relay.2'), change: "ne"}, async function (obj) {
+on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne"}, async function (obj) {
     try {
-        let Button = obj.id.split('.');        
+        let Button = obj.id!.split('.');        
         let urlString: string = ['http://',get_current_tasmota_ip_address(),'/cm?cmnd=Power',Button[Button.length - 1],' ',(obj.state ? obj.state.val : "")].join('');
 
         axios.get(urlString)
@@ -1712,7 +1698,7 @@ on({id: [].concat(String(NSPanel_Path) + 'Relay.1').concat(String(NSPanel_Path) 
                 log(error, 'warn');
             })
             
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at Trigger Relay1/2: ' + err.message, 'warn'); 
     }
 });
@@ -1721,8 +1707,8 @@ async function SubscribeMRIcons () {
     try {
         if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
             on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
-                if (obj.id.substring(0,4) == 'mqtt') {
-                    let Button = obj.id.split('.'); 
+                if (obj.id!.substring(0,4) == 'mqtt') {
+                    let Button = obj.id!.split('.'); 
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
                     }
@@ -1733,8 +1719,8 @@ async function SubscribeMRIcons () {
         }
         if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
             on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
-                if (obj.id.substring(0,4) == 'mqtt') {
-                    let Button = obj.id.split('.'); 
+                if (obj.id!.substring(0,4) == 'mqtt') {
+                    let Button = obj.id!.split('.'); 
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
                     }
@@ -1743,7 +1729,7 @@ async function SubscribeMRIcons () {
                 }
             });
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function SubscribeMRIcons: ' + err.message, 'warn'); 
     }
 }
@@ -1767,7 +1753,7 @@ async function CreateWeatherAlias () {
                             log('weather alias for daswetter.' + weatherAdapterInstanceNumber + '. already exists', 'info');
                         }
                     }    
-                } catch (err) {
+                } catch (err: any) {
                     log('error at function CreateWeatherAlias daswetter.' + weatherAdapterInstanceNumber + '. : ' + err.message, 'warn');
                 }
             } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
@@ -1784,12 +1770,12 @@ async function CreateWeatherAlias () {
                             log('weather alias for accuweather.' + weatherAdapterInstanceNumber + '. already exists', 'info');
                         }
                     }
-                } catch (err) {
+                } catch (err: any) {
                     log('error at function CreateWeatherAlias accuweather.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         } 
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at function CreateWeatherAlias: ' + err.message, 'warn'); 
     }  
 }
@@ -1802,14 +1788,14 @@ async function InitPageNavi() {
             await createStateAsync(NSPanel_Path + 'PageNavi', <iobJS.StateCommon>{ type: 'string' });
             await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: {"pagetype": "page","pageId": 0}, ack: true });        
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitPageNavi: ' + err.message, 'warn');
     }
 }
 InitPageNavi();
 
 //PageNavi
-on({id: [].concat([NSPanel_Path + 'PageNavi']), change: "any"}, async function (obj) {
+on({id: [NSPanel_Path + 'PageNavi'], change: "any"}, async function (obj) {
     try {
         if (existsState(NSPanel_Path + 'PageNavi')) {
             let vObj = JSON.parse(obj.state.val);
@@ -1819,7 +1805,7 @@ on({id: [].concat([NSPanel_Path + 'PageNavi']), change: "any"}, async function (
                 GeneratePage(config.subPages[vObj.pageId]);
             }
         }
-    } catch (err) { 
+    } catch (err: any) { 
         log('error at Trigger PageNavi: ' + err.message, 'warn'); 
     }
 });
@@ -1850,7 +1836,7 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
         } else {
             SendToPanel({ payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function ScreensaverDimmode: ' + err.message, 'warn');
     }
 }
@@ -1879,7 +1865,7 @@ async function InitWeatherForecast() {
             await createAliasAsync(AliasPath + 'ScreensaverInfo.entityChangeTime.ACTUAL', NSPanel_Path + 'ScreensaverInfo.entityChangeTime', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'ScreensaverInfo.entityChangeTime.SET', NSPanel_Path + 'ScreensaverInfo.entityChangeTime', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitWeatherForecast: ' + err.message, 'warn');
     }
 }
@@ -1945,7 +1931,7 @@ async function InitDimmode() {
                 ScreensaverDimmode(timeDimMode);
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitDimmode: ' + err.message, 'warn');
     }
 }
@@ -2047,7 +2033,7 @@ async function InitPopupNotify() {
 
         // popupNotify - Notification to a separate page
         //on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
-        on({ id: [].concat([popupNotifyText]), change: 'any' }, async() => {
+        on({ id: [popupNotifyText], change: 'any' }, async() => {
 
             let notification: string;
 
@@ -2082,7 +2068,7 @@ async function InitPopupNotify() {
             setIfExists(config.panelSendTopic, notification);
 
         });
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitPopupNotify: ' + err.message, 'warn');
     }
 }
@@ -2091,14 +2077,14 @@ InitPopupNotify();
 let subscriptions: any = {};
 let screensaverEnabled: boolean = false;
 let pageId = 0;
-let activePage = undefined;
+let activePage: Page | undefined = undefined;
 
 //Send time to NSPanel
 let scheduleSendTime = schedule('* * * * *', () => {
     try {
         SendTime();
         HandleScreensaverUpdate();
-    } catch (err) {
+    } catch (err: any) {
         log('error at schedule SendTime: ' + err.message, 'warn');
     }
 });
@@ -2112,7 +2098,7 @@ let scheduleSwichScreensaver = schedule('*/' + getState(NSPanel_Path + 'Screensa
         } else if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == false && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
             setStateDelayed(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2 * 1000), false);
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at schedule entityChangeTime: ' + err.message, 'warn');
     }
 });
@@ -2124,7 +2110,7 @@ function InitHWButton1Color() {
                 HandleScreensaverUpdate();
             });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitHWButton1Color: ' + err.message, 'warn');
     }
 }
@@ -2137,28 +2123,28 @@ function InitHWButton2Color() {
                 HandleScreensaverUpdate();
             });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function InitHWButton2Color: ' + err.message, 'warn');
     }
 }
 InitHWButton2Color();
 
 //Switch between data points and weather forecast in the screensaver
-on({id: [].concat([NSPanel_Path + "ScreensaverInfo.weatherForecast"]), change: "ne"}, async function (obj) {
+on({id: [NSPanel_Path + "ScreensaverInfo.weatherForecast"], change: "ne"}, async function (obj) {
     try {    
         weatherForecast = obj.state.val;
         HandleScreensaverUpdate();
-    } catch (err) {
+    } catch (err: any) {
         log('error at trigger weatherForecast: ' + err.message, 'warn');
     }
 });
 
 //Update if Changing Values on Wheather Alias
-on({id: [].concat(config.weatherEntity + '.TEMP')
-          .concat(config.weatherEntity + '.ICON'), change: "ne"}, async function (obj) {
+on({id: [config.weatherEntity + '.TEMP',
+          config.weatherEntity + '.ICON'], change: "ne"}, async function (obj) {
     try {    
         HandleScreensaverUpdate();
-    } catch (err) {
+    } catch (err: any) {
         log('error at trigger weatherForecast .TEMP + .ICON: ' + err.message, 'warn');
     }
 });
@@ -2202,8 +2188,10 @@ function getDayjsLocale(): String {
         } else {
             return locale.substring(0, 2);
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error in function getDayjsLocale: ' + err.message, 'warn');
+        // hier muß eine Return oder ein neuer throw err hin
+        return '';
     }
 }
 
@@ -2230,7 +2218,7 @@ async function get_locales() {
                 log(error, 'warn');
             });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting locales in function get_locales: ' + err.message, 'warn');
     }
 }
@@ -2258,7 +2246,7 @@ async function get_locales_servicemenu() {
                 log(error, 'warn');
             });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting locales in function get_locales_servicemenu: ' + err.message, 'warn');
     }
 }
@@ -2388,7 +2376,7 @@ async function check_updates() {
             log('No Updates for NSPanel available', 'info');
         }
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function check_updates: ' + err.message, 'warn');
     }
 }
@@ -2416,7 +2404,7 @@ on({ id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any' }, async 
                 log('Button2 was pressed', 'info');
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at Trigger popupNotifyAction: ' + err.message, 'warn');
     }
 });
@@ -2448,7 +2436,7 @@ async function get_panel_update_data() {
             check_version_tft_firmware();
             check_online_display_firmware();
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function get_panel_update_data: ' + err.message, 'warn');
     }
 }
@@ -2463,7 +2451,7 @@ function get_current_tasmota_ip_address() {
         }
 
         return infoObj.Info2.IPAddress;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function get_current_tasmota_ip_address: ' + err.message, 'warn');
     }
 }
@@ -2500,7 +2488,7 @@ function get_online_tasmota_firmware_version() {
                 log(error, 'warn');
             });
             
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting firmware in function get_online_tasmota_firmware_version: ' + err.message, 'warn');
     }
 }
@@ -2540,7 +2528,7 @@ function get_current_berry_driver_version() {
                 log(error, 'warn');
             });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting firmware in function get_current_berry_driver_version: ' + err.message, 'warn');
     }
 }
@@ -2594,7 +2582,7 @@ function get_tasmota_status0() {
                             await setStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.State>{ val: Tasmota_JSON.StatusSTS.Wifi.Signal, ack: true });
                             await setStateAsync(NSPanel_Path + 'Tasmota.Product', <iobJS.State>{ val: 'SONOFF NSPanel', ack: true });
                             if (Debug) log('current tasmota firmware version => ' + tasmoVersion, 'info');
-                        } catch (err) {
+                        } catch (err: any) {
                             log('error setState in function get_tasmota_status0' + err.message, 'warn');
                         }
                         if (autoCreateAlias) {
@@ -2630,7 +2618,7 @@ function get_tasmota_status0() {
                 log(error, 'warn');
             });
             
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting firmware in function get_tasmota_status0: ' + err.message, 'warn');
     }
 }
@@ -2667,7 +2655,7 @@ function get_online_berry_driver_version() {
                 });
 
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting firmware in function get_online_berry_driver_version: ' + err.message, 'warn');
     }
 }
@@ -2701,7 +2689,7 @@ function check_version_tft_firmware() {
                 log(error, 'warn');
             });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting firmware in function check_version_tft_firmware: ' + err.message, 'warn');
     }
 }
@@ -2733,7 +2721,7 @@ function check_online_display_firmware() {
                 log(error, 'warn');
             });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error requesting firmware in function check_online_display_firmware: ' + err.message, 'warn');
     }
 }
@@ -2759,7 +2747,7 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                     }
                 }
             }    
-        } catch (err) {
+        } catch (err: any) {
             log('error at trigger rceiving CustomRecv: ' + err.message, 'warn');
         }
     }
@@ -2787,7 +2775,7 @@ function update_berry_driver_version() {
                 log(error, 'warn');
             });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function update_berry_driver_version: ' + err.message,  'warn');
     }
 }
@@ -2832,7 +2820,7 @@ function update_tft_firmware() {
                     log(error, 'warn');
                 });
             
-        } catch (err) {
+        } catch (err: any) {
             log('error request in function update_tft_firmware: ' + err.message, 'warn');
         }
     }
@@ -2880,7 +2868,7 @@ function update_tasmota_firmware() {
                 });
 
         }    
-    } catch (err) {
+    } catch (err: any) {
         log('error request in function update_tasmota_firmware: ' + err.message, 'warn');
     }
 }
@@ -2898,7 +2886,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
                 //check_updates();
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at trigger with reading senor-data: '+ err.message, 'warn');
     }
 });
@@ -2913,11 +2901,11 @@ on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
 
                 let split = json.CustomRecv.split(',');
                 HandleMessage(split[0], split[1], parseInt(split[2]), split);
-            } catch (err) {
+            } catch (err: any) {
                 log('error json.split in  Trigger panelRecTopic: ' + err.message, 'warn');
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at Trigger panelRecTopic: ' + err.message, 'warn');
     }
 });
@@ -2935,7 +2923,7 @@ async function SendToPanel(val: Payload | Payload[]) {
             setState(config.panelSendTopic, val.payload);
         }
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function SendToPanel: ' + err.message, 'warn');
     }
 }
@@ -2947,15 +2935,15 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
                 log('Trigger AlarmState aktivePage: ' + activePage, 'info');
             }
             if (NSPanel_Path == getState(NSPanel_Alarm_Path + 'Alarm.PANEL').val) {
-                GeneratePage(activePage);
+                if (activePage != undefined) GeneratePage(activePage!);
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at Trigger AlarmState: ' + err.message, 'warn');
     }
 });
 
-function HandleMessage(typ: string, method: string, page: number, words: Array<string>): void {
+function HandleMessage(typ: string, method: string, page: number | undefined, words: Array<string> | undefined): void {
     try {
         if (typ == 'event') {
             switch (method) {
@@ -2977,30 +2965,32 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     if (Debug) log('HandleMessage -> sleepReached', 'info');
                     break;
                 case 'pageOpenDetail':
-                    screensaverEnabled = false;
-                    UnsubscribeWatcher();
-                    if (Debug) {
-                        log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
-                    }
-                    let tempId: PageItem['id'];
-                    let tempPageItem = words[3].split('?');
-                    let placeId = undefined;
-                    if (!isNaN(parseInt(tempPageItem[0]))){
-                        tempId = activePage.items[tempPageItem[0]].id;
-                        placeId = tempPageItem[0]
-                    } else {
-                        tempId = tempPageItem[0];
-                    }
-                    let pageItem: PageItem = findPageItem(tempId);
-                    if (pageItem !== undefined) {
-                        SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, placeId));
+                    if (words != undefined) {
+                        screensaverEnabled = false;
+                        UnsubscribeWatcher();
+                        if (Debug) {
+                            log('HandleMessage -> pageOpenDetail ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
+                        }
+                        let tempId: PageItem['id'];
+                        let tempPageItem = words[3].split('?');
+                        let placeId: string | undefined = undefined;
+                        if (!isNaN(parseInt(tempPageItem[0]))){
+                            tempId = activePage!.items[tempPageItem[0]].id;
+                            placeId = tempPageItem[0]
+                        } else {
+                            tempId = tempPageItem[0];
+                        }
+                        let pageItem: PageItem = findPageItem(tempId);
+                        if (pageItem !== undefined) {
+                            SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, Number(placeId)));
+                        }
                     }
                     break;
                 case 'buttonPress2':
                     screensaverEnabled = false;
                     HandleButtonEvent(words);
                     if (Debug) {
-                        log('HandleMessage -> buttonPress2 ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
+                        if (words != undefined) log('HandleMessage -> buttonPress2 ' + words[0] + ' - ' + words[1] + ' - ' + words[2] + ' - ' + words[3] + ' - ' + words[4], 'info');
                     }
                     break;
                 case 'renderCurrentPage':
@@ -3017,15 +3007,15 @@ function HandleMessage(typ: string, method: string, page: number, words: Array<s
                     break;
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function HandleMessage: ' + err.message, 'warn');
     }
 }
-
+//@ts-ignore ticaki bitte lösen, rückgabe kann undefined sein und ist es wenn ins catch gesprungen wird.
 function findPageItem(searching: String): PageItem {
     try {
 
-        let pageItem = activePage.items.find(e => e.id === searching);
+        let pageItem = activePage!.items.find(e => e.id === searching);
 
         if (pageItem !== undefined) {
             if (Debug) log('findPageItem -> pageItem ' + JSON.stringify(pageItem), 'info');
@@ -3039,9 +3029,9 @@ function findPageItem(searching: String): PageItem {
         });
 
         if (Debug) log('findPageItem -> pageItem SubPage ' + JSON.stringify(pageItem), 'info');
-
+        //@ts-ignore ticaki bitte lösen, pageItem kann undefined sein.
         return pageItem;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function findPageItem: ' + err.message, 'warn');
     }
 }
@@ -3049,9 +3039,9 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: Page): void {
     try {
         activePage = page;
-        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
-        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
-        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0].id);
+        setIfExists(NSPanel_Path + 'activePage!.type', activePage!.type);
+        setIfExists(NSPanel_Path + 'activePage!.heading', activePage!.heading);
+        setIfExists(NSPanel_Path + 'activePage!.id0', activePage!.items[0].id);
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(<PageEntities>page));
@@ -3088,7 +3078,7 @@ function GeneratePage(page: Page): void {
                 SendToPanel(GenerateUnlockPage(<PageUnlock>page));
                 break;
         }
-    } catch (err) {
+    } catch (err: any) {
         if (err.message == "Cannot read properties of undefined (reading 'type')") {
             log('Please wait a few seconds longer when launching the NSPanel. Not all parameters are loaded yet.', 'warn');
         } else {
@@ -3131,7 +3121,7 @@ function HandleHardwareButton(method: string): void {
                 screensaverEnabled = true;
                 break;
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function HandleHardwareButton: ' + err.message, 'warn');
     }
 }
@@ -3155,7 +3145,7 @@ function SendDate(): void {
 
             SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
         }
-    } catch (err) {
+    } catch (err: any) {
         if (err.message = 'Cannot convert undefined or null to object') {
             log('Datumsformat noch nicht initialisiert', 'info');
         } else {
@@ -3171,7 +3161,7 @@ function SendTime(): void {
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
         SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
-    } catch (err) {
+    } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
 }
@@ -3182,8 +3172,9 @@ function GenerateEntitiesPage(page: PageEntities): Payload[] {
         out_msgs = [{ payload: 'pageType~cardEntities' }]
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateEntitiesPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -3192,8 +3183,9 @@ function GenerateGridPage(page: PageGrid): Payload[] {
         let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateGridPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -3202,8 +3194,9 @@ function GenerateGridPage2(page: PageGrid2): Payload[] {
         let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid2' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateGridPage2: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -3257,8 +3250,9 @@ function GeneratePageElements(page: Page): string {
         }
         if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
         return pageData;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GeneratePageElements: ' + err.message, 'warn');
+        return '';
     }
 }
 
@@ -3290,7 +3284,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
             let iconColor = rgb_dec565(config.defaultColor);
             let optVal = '0';
-            let val = null;
+            let val: any = null;
  
             let o:any
             if (pageItem.id != null && existsObject(pageItem.id)) {
@@ -3733,7 +3727,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     
                 case 'gate':
                     type = 'text';
-                    let gateState: string;
+                    let gateState: string | undefined = undefined;
                     if (existsState(pageItem.id + '.ACTUAL')) {
  
                         if (getState(pageItem.id + '.ACTUAL').val == 0 || getState(pageItem.id + '.ACTUAL').val === false) {
@@ -3747,6 +3741,9 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             gateState = findLocale('window', 'opened');
                         }
  
+                    }
+                    if (gateState == undefined) {
+                        throw new Error(`Missing ${pageItem.id}.ACTUAL for type ${type}`)
                     }
  
                     if (Debug) log('CreateEntity Icon role gate ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + gateState, 'info');
@@ -4035,11 +4032,13 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         }
         if (Debug) log('CreateEntity  return ~delete~~~~~', 'info');
         return '~delete~~~~~';
-    } catch (err) {
+    } catch (err: any) {
         if (err.message == "Cannot read properties of undefined (reading 'common')") {
             log('Found Alias without channel: ' + pageItem.id + '! Please correct the Alias', 'warn');
+            return '';
         } else {
             log('error at function CreateEntity: ' + err.message, 'warn');
+            return '';
         }
     }
 }
@@ -4062,7 +4061,7 @@ function findLocale(controlsObject: string, controlsState: string): string {
             return controlsState;
         }
 
-    } catch (err) {
+    } catch (err: any) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
             if (Debug) {
                 log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState, 'info');
@@ -4096,7 +4095,7 @@ function findLocaleServMenu(controlsState: string): string {
             }
         }
 
-    } catch (err) {
+    } catch (err: any) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
             if (Debug) {
                 log('function findLocale: missing translation: ' + controlsState, 'info');
@@ -4133,8 +4132,9 @@ function GetIconColor(pageItem: PageItem, value: (boolean | number), useColors: 
         }
 
         return rgb_dec565(pageItem.offColor !== undefined ? pageItem.offColor : config.defaultOffColor);
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetIconColor: ' + err.message, 'warn');
+        return -1;
     }
 }
 
@@ -4152,10 +4152,10 @@ function RegisterEntityWatcher(id: string): void {
                 SendToPanel({ payload: GeneratePageElements(config.button2.page) });
             }
             if (activePage !== undefined) {
-                SendToPanel({ payload: GeneratePageElements(activePage) });
+                SendToPanel({ payload: GeneratePageElements(activePage!) });
             }
         }));
-    } catch (err) {
+    } catch (err: any) {
         log('error at function RegisterEntityWatcher: ' + err.message, 'warn');
     }
 }
@@ -4171,7 +4171,7 @@ function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: strin
         subscriptions[id] = (on({ id: id, change: 'any' }, () => {
             SendToPanel(GenerateDetailPage(type, undefined, pageItem, placeId));
         }))
-    } catch (err) {
+    } catch (err: any) {
         log('error at function RegisterDetailEntityWatcher: ' + err.message, 'warn');
     }
 }
@@ -4191,8 +4191,9 @@ function GetUnitOfMeasurement(id: string): string {
         }
 
         return '';
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetUnitOfMeasurement: ' + err.message, 'warn');
+        return ''
     }
 }
 
@@ -4570,8 +4571,9 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             log('GenerateThermoPage payload: ' + out_msgs, 'info');
         }
         return out_msgs;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateThermoPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -4610,19 +4612,19 @@ function unsubscribeMediaSubscriptions(): void {
 } 
 
 function subscribeMediaSubscriptions(id: string): void {
-    on({id: [].concat([id + '.STATE'])
-              .concat([id + '.VOLUME'])
-              .concat([id + '.ARTIST'])
-              .concat([id + '.ALBUM'])
-              .concat([id + '.TITLE'])
-              .concat([id + '.REPEAT'])
-              .concat([id + '.SHUFFLE']), change: "any"}, async function () {
+    on({id:   [id + '.STATE',
+              id + '.VOLUME',
+              id + '.ARTIST',
+              id + '.ALBUM',
+              id + '.TITLE',
+              id + '.REPEAT',
+              id + '.SHUFFLE'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
             }
         },50)
@@ -4630,15 +4632,15 @@ function subscribeMediaSubscriptions(id: string): void {
 } 
 
 function subscribeMediaSubscriptionsSonosAdd(id: string): void {
-    on({id: [].concat([id + '.QUEUE'])
-              .concat([id + '.DURATION'])
-              .concat([id + '.ELAPSED']), change: "any"}, async function () {
+    on({id:   [id + '.QUEUE',
+              id + '.DURATION',
+              id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 50);
             }
         },50)
@@ -4646,14 +4648,14 @@ function subscribeMediaSubscriptionsSonosAdd(id: string): void {
 } 
 
 function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
-    on({id: [].concat([id + '.DURATION'])
-              .concat([id + '.ELAPSED']), change: "any"}, async function () {
+    on({id: [id + '.DURATION',
+              id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 50);
             }
         },50)
@@ -4683,7 +4685,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
                         await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT' });
                         await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });        
-                    } catch (err) {
+                    } catch (err: any) {
                         log('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message, 'warn');
                     }
                 }
@@ -4717,7 +4719,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'REPEAT' });
                         await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
                     
-                    } catch (err) {
+                    } catch (err: any) {
                         log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
                     }
                 }
@@ -4744,7 +4746,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
                         await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
                         await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
-                    } catch (err) {
+                    } catch (err: any) {
                         log('error at function createAutoMediaAlias Adapter sonos: ' + err.message, 'warn');
                     }
                 }
@@ -4778,7 +4780,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.REPEAT', dpPath + 'playbackInfo.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
                         await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
                         await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'string', role: 'media.state', name: 'status' });
-                    } catch (err) {
+                    } catch (err: any) {
                         log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
                     }
                 }
@@ -4804,7 +4806,7 @@ async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlay
                         await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
                         await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
                         await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
-                    } catch (err) {
+                    } catch (err: any) {
                         log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
                     }
                 }
@@ -4820,7 +4822,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         let id = page.items[0].id;
         let out_msgs: Array<Payload> = [];
 
-        let vInstance = page.items[0].adapterPlayerInstance;
+        if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
+        let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
         let v2Adapter = v1Adapter[0];
         
@@ -4843,7 +4846,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
 
         if (page.items[0].autoCreateALias) {
             let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
-            createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance);
+            createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
         }
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
@@ -5345,8 +5348,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             log('GenerateMediaPage payload: ' + JSON.stringify(out_msgs), 'info');
         }
         return out_msgs
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateMediaPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -5373,7 +5377,7 @@ async function createAutoAlarmAlias (id: string, nsPath: string){
                 }
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function createAutoAlarmAlias: ' + err.message, 'warn');
     }
 }
@@ -5391,10 +5395,16 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
         if (page.items[0].autoCreateALias) {
             createAutoAlarmAlias(id, nsPath);
         }
-
+        
+        type AlarmEntityType = 'triggered' | 'armed' | 'disarmed' | 'pending' | 'arming';
+        const AlarmEntityElements: AlarmEntityType[] = ['triggered', 'armed', 'disarmed', 'pending', 'arming']
+        
         if (existsState(nsPath + '.AlarmPin') && existsState(nsPath + '.AlarmState') && existsState(nsPath + '.AlarmType')) {
             //let entityPin = getState(nsPath + 'AlarmPin').val;
-            let entityState = getState(nsPath + '.AlarmState').val;
+            let entityState: AlarmEntityType = getState(nsPath + '.AlarmState').val as AlarmEntityType;
+            if ( AlarmEntityElements.indexOf(entityState) == -1 ) {
+                throw new Error(`Invalid value in state ${nsPath}.AlarmPin!`)
+            }
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
             let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
@@ -5420,9 +5430,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
                 arm3ActionName = '';                                        //arm3ActionName*~*
                 arm4 = '';                                                  //arm4*~*
                 arm4ActionName = '';                                        //arm4ActionName*~*
-            }
-
-            if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending') {
+            } else/* if (entityState == 'disarmed' || entityState == 'arming' || entityState == 'pending')*/ {
                 if (page.items[0].actionStringArray !== undefined && page.items[0].actionStringArray[0] !== '') {
                     arm1 = page.items[0].actionStringArray[0];
                 } else {
@@ -5447,11 +5455,10 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
                     arm4 = formatInSelText(findLocale('alarm_control_panel', 'arm_vacation'));                                       //'Besuch';    //arm4*~*
                 }
                 arm4ActionName = 'A4';                                                                              //arm4ActionName*~*
-            }
-
-            if (Debug) {
-                log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4, 'info');
-            }
+                if (Debug) {
+                    log('GenerateAlarmPage String for arm1: ' + arm1 + ', arm2: ' + arm2 + ', arm3: ' + arm3 + ', arm4: ' + arm4, 'info');
+                }
+            } 
 
             if (entityState == 'armed') {
                 icon = Icons.GetIcon('shield-home');                        //icon*~*
@@ -5477,7 +5484,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
                 numpadStatus = 'enable';                                    //numpadStatus*~*
                 flashing = 'enable'                                         //flashing*
             }
-
+            
             out_msgs.push({
                 payload: 'entityUpd~' +                     //entityUpd~*
                     name + '~' +                            //heading                    
@@ -5502,8 +5509,10 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
             return out_msgs;
         }
-    } catch (err) {
+        return [];
+    } catch (err: any) {
         log('error at function GenerateAlarmPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -5524,7 +5533,7 @@ async function createAutoUnlockAlias(id: string, dpPath: string) {
                 }
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function createAutoUnlockAlias: ' + err.message, 'warn');
     }
     
@@ -5582,8 +5591,9 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
         }
         return out_msgs;
         
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateUnlockPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -5605,7 +5615,7 @@ async function createAutoQRAlias(id:string, dpPath:string) {
                 }
             }
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function createAutoQRkAlias: ' + err.message, 'warn');
     } 
 }
@@ -5697,8 +5707,9 @@ function GenerateQRPage(page: PageQR): Payload[] {
         }
         return out_msgs;
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateQRPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -5722,7 +5733,7 @@ function subscribePowerSubscriptions(id: string): void {
     on({id: id + '.ACTUAL', change: "ne"}, async function () {
         (function () { if (timeoutPower) { clearTimeout(timeoutPower); timeoutPower = null; } })();
         timeoutPower = setTimeout(async function () {
-            GeneratePage(activePage);
+            GeneratePage(activePage!);
         },25)
     });
 } 
@@ -5730,7 +5741,7 @@ function subscribePowerSubscriptions(id: string): void {
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
 
-        let obj:object;
+        let obj:object = {};
         let demoMode = false;        
         if (page.items[0].id == undefined){
             log('No PageItem defined - cardPower demo mode active', 'info');
@@ -5841,8 +5852,9 @@ function GeneratePowerPage(page: PagePower): Payload[] {
         if (Debug) log('GeneratePowerPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GeneratePowerPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -5857,6 +5869,12 @@ function GenerateChartPage(page: PageChart): Payload[] {
         let heading = page.heading !== undefined ? page.heading : "Chart...";
 
         let txt = getState(id + '.ACTUAL').val;
+        if (!page.items[0].yAxisTicks) {
+            throw new Error (`Page item ${id} yAxisTicks is undefined!`)
+        }
+        if (!page.items[0].onColor) {
+            throw new Error (`Page item ${id} onColor is undefined!`)
+        }
 
         let yAxisTicks = (typeof page.items[0].yAxisTicks == 'object') ? page.items[0].yAxisTicks : JSON.parse(getState(page.items[0].yAxisTicks).val);
 
@@ -5873,8 +5891,9 @@ function GenerateChartPage(page: PageChart): Payload[] {
         if (Debug) log('GenerateChartPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateChartPage: ' + err.message, 'warn');
+        return [];
     }
 }
 
@@ -5892,11 +5911,10 @@ function setIfExists(id: string, value: any, type: string | null = null): boolea
                 return true;
             }
         }
-
-        return false;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function setIfExists: ' + err.message, 'warn');
     }
+    return false;
 }
 
 function toggleState(id: string): boolean {
@@ -5906,10 +5924,10 @@ function toggleState(id: string): boolean {
             setIfExists(id, !getState(id).val);
             return true;
         }
-        return false;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function toggleState: ' + err.message, 'warn');
     }
+    return false;
 }
 
 // Begin Monobutton	
@@ -5921,10 +5939,11 @@ function triggerButton(id: string): boolean{
 			setTimeout(function() { setState(id, false) }, 250);
 			return true;	
 		}	
-		return false;	
-	}  catch (err) {	
+		
+	}  catch (err: any) {	
         log('error at function triggerButton: ' + err.message, 'warn');	
-    }		
+    }	
+    return false;		
 }	
 // End Monobutton
 
@@ -5943,9 +5962,9 @@ function HandleButtonEvent(words: any): void {
         let pageItemID: string = '';
 
         if (!isNaN(id)) {
-            pageItemID = activePage.items[id].id;
+            pageItemID = activePage!.items[id].id;
             if (Debug) {
-                    log('HandleButtonEvent activePage: ' + activePage.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
+                    log('HandleButtonEvent activePage: ' + activePage!.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
             }
             id = pageItemID
         };
@@ -5989,15 +6008,15 @@ function HandleButtonEvent(words: any): void {
                     pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
                     pageId = pageNum;
                     UnsubscribeWatcher();
-                    if (activePage != undefined && activePage.parent != undefined) {
+                    if (activePage != undefined && activePage!.parent != undefined) {
                         //update pageID
                         for (let i = 0; i < config.pages.length; i++) {
-                            if (config.pages[i] == activePage.parent) {
+                            if (config.pages[i] == activePage!.parent) {
                                 pageId = i;
                                 break;
                             }
                         }
-                        GeneratePage(activePage.parent);
+                        GeneratePage(activePage!.parent);
                     }
                     else {
                         GeneratePage(config.pages[pageId]);
@@ -6013,21 +6032,22 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'bSubNext':
                 UnsubscribeWatcher();
-                GeneratePage(eval(activePage.next));
+                // check this please
+                GeneratePage(eval(activePage!.next!));
                 break;
             case 'bPrev':
                 pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
                 pageId = pageNum;
                 UnsubscribeWatcher();
-                if (activePage != undefined && activePage.parent != undefined) {
+                if (activePage != undefined && activePage!.parent != undefined) {
                     //update pageID
                     for (let i = 0; i < config.pages.length; i++) {
-                        if (config.pages[i] == activePage.parent) {
+                        if (config.pages[i] == activePage!.parent) {
                             pageId = i;
                             break;
                         }
                     }
-                    GeneratePage(activePage.parent);
+                    GeneratePage(activePage!.parent);
                 }
                 else {
                     GeneratePage(config.pages[pageId]);
@@ -6035,7 +6055,8 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'bSubPrev':          
                 UnsubscribeWatcher();
-                GeneratePage(eval(activePage.prev));
+                // check this please
+                GeneratePage(eval(activePage!.prev!));
                 break;
             case 'bExit':
                 if (Debug) {
@@ -6070,17 +6091,17 @@ function HandleButtonEvent(words: any): void {
                     }
 		            activePage = config.pages[pageId];
 	        	}
-                if (words[2] == 'popupInSel' && activePage.type == 'cardMedia') {
+                if (words[2] == 'popupInSel' && activePage!.type == 'cardMedia') {
                     if (Debug) log('Leave popupInsel without any action', 'info')
                     pageCounter = 0;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                     setTimeout(async function () {
                         pageCounter = 1;
-                        GeneratePage(activePage);
+                        GeneratePage(activePage!);
                     }, 3000);
                 } else {
                     pageCounter = 0; 
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }
                 break;
             case 'bHome':
@@ -6088,8 +6109,8 @@ function HandleButtonEvent(words: any): void {
                     log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId, 'info');
                 }
                 UnsubscribeWatcher();
-                if (activePage.home != undefined) {
-                    GeneratePage(eval(activePage.home));
+                if (activePage!.home != undefined) {
+                    GeneratePage(eval(activePage!.home));
                 } else {
                     GeneratePage(config.pages[0]);
                 }
@@ -6140,7 +6161,7 @@ function HandleButtonEvent(words: any): void {
                             break;
                         case 'switch.mode.wlan':
                             setIfExists(id + '.SWITCH', action);
-                            GeneratePage(activePage);
+                            GeneratePage(activePage!);
                             break;
                     }
                 }
@@ -6185,10 +6206,10 @@ function HandleButtonEvent(words: any): void {
                         case 'media':
                             if (tempid[1] == undefined) {
                                 if (Debug) log('Logo click', 'info');
-                                GeneratePage(activePage);
+                                GeneratePage(activePage!);
                             } else if (tempid[1] == 'repeat') {
                                 let pageItemRepeat = findPageItem(id);
-                                let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
+                                let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance!;
                                 let adapterRepeat = adapterInstanceRepeat.split('.');
                                 let deviceAdapterRP = adapterRepeat[0];
 
@@ -6202,7 +6223,7 @@ function HandleButtonEvent(words: any): void {
                                         } else if (stateSpotifyRepeat == 'one') {
                                             setIfExists(id + '.REPEAT', 'none');
                                         }
-                                        GeneratePage(activePage);
+                                        GeneratePage(activePage!);
                                         break;
                                     case 'sonos':
                                         let stateSonosRepeat = getState(id + '.REPEAT').val
@@ -6213,15 +6234,15 @@ function HandleButtonEvent(words: any): void {
                                         } else if (stateSonosRepeat == 2) {
                                             setIfExists(id + '.REPEAT', 0);
                                         }
-                                        GeneratePage(activePage);
+                                        GeneratePage(activePage!);
                                         break;
                                     case 'alexa2':
                                         try {
                                             setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
-                                        } catch (err) {
+                                        } catch (err: any) {
                                             log('ALEXA2: Repeat kann nicht verändert werden', 'warn');
                                         }
-                                        GeneratePage(activePage);
+                                        GeneratePage(activePage!);
                                         break;
                                     case 'volumio':
                                         let urlString: string = `${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`;
@@ -6231,7 +6252,7 @@ function HandleButtonEvent(words: any): void {
                                                     if (Debug) {
                                                         log(response.data, 'info');
                                                     }
-                                                    GeneratePage(activePage);
+                                                    GeneratePage(activePage!);
                                                 } else {
                                                     log('Axios Status - adapterInstanceRepeat: ' + response.state, 'warn');
                                                 }
@@ -6245,18 +6266,18 @@ function HandleButtonEvent(words: any): void {
                                             switch(getState(id + '.REPEAT').val) {
                                                 case 0:
                                                     setIfExists(id + '.REPEAT', 1);
-                                                    GeneratePage(activePage);
+                                                    GeneratePage(activePage!);
                                                     break;
                                                 case 1:
                                                     setIfExists(id + '.REPEAT', 2)
-                                                    GeneratePage(activePage);
+                                                    GeneratePage(activePage!);
                                                     break;
                                                 case 2:
                                                     setIfExists(id + '.REPEAT', 0);
-                                                    GeneratePage(activePage);
+                                                    GeneratePage(activePage!);
                                                     break;
                                             }
-                                        } catch (err) {
+                                        } catch (err: any) {
                                             log('Squeezebox: Repeat kann nicht verändert werden', 'warn');
                                         }
                                         break;
@@ -6404,11 +6425,11 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-back':
                 setIfExists(id + '.PREV', true);
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
-                let adaInstanceSplit = pageItemTemp.adapterPlayerInstance.split('.');
+                let adaInstanceSplit = pageItemTemp.adapterPlayerInstance!.split('.');
                 if (adaInstanceSplit[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
                     if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
@@ -6428,38 +6449,38 @@ function HandleButtonEvent(words: any): void {
                         setIfExists(id + '.PLAY', true);
                     }
                 }
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 break;
             case 'media-shuffle':
-                if ((findPageItem(id).adapterPlayerInstance).startsWith("volumio")) { 
+                if ((findPageItem(id).adapterPlayerInstance!).startsWith("volumio")) { 
                     findPageItem(id).playList = []; break; 
                 } //Volumio: empty playlist $uha-20230103
-                if ((findPageItem(id).adapterPlayerInstance).startsWith("spotify")) {
+                if ((findPageItem(id).adapterPlayerInstance!).startsWith("spotify")) {
                     if (getState(id + '.SHUFFLE').val == 'off') {
                         setIfExists(id + '.SHUFFLE', 'on');
                     } else {
                         setIfExists(id + '.SHUFFLE', 'off');
                     }
                 }
-                if ((findPageItem(id).adapterPlayerInstance).startsWith("alexa")) {
+                if ((findPageItem(id).adapterPlayerInstance!).startsWith("alexa")) {
                     if (getState(id + '.SHUFFLE').val == false) {
                         setIfExists(id + '.SHUFFLE', true);
                     } else {
                         setIfExists(id + '.SHUFFLE', false);
                     }
                 }
-                if ((findPageItem(id).adapterPlayerInstance).startsWith("sonos")) {
+                if ((findPageItem(id).adapterPlayerInstance!).startsWith("sonos")) {
                     if (getState(id + '.SHUFFLE').val == false) {
                         setIfExists(id + '.SHUFFLE', true);
                     } else {
                         setIfExists(id + '.SHUFFLE', false);
                     }
                 }
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 break;
             case 'volumeSlider':
                 pageCounter = -1;
@@ -6468,19 +6489,19 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.VOLUME', parseInt(words[4]));
                     setTimeout(async function () {
                         pageCounter = 1;
-                        GeneratePage(activePage);
+                        GeneratePage(activePage!);
                     }, 3000);
                 }, 20);
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
-                let adapterInstance = pageItem.adapterPlayerInstance;
-                let adapter = adapterInstance.split('.');
+                let adapterInstance = pageItem.adapterPlayerInstance!;
+                let adapter = adapterInstance!.split('.');
                 let deviceAdapter = adapter[0];
 
                 switch (deviceAdapter) {
                     case 'spotify-premium':
-                        let strDevicePI = pageItem.speakerList[words[4]];
+                        let strDevicePI = pageItem.speakerList![words[4]];
                         let strDeviceID = spotifyGetDeviceID(strDevicePI);
                         setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
                         break;
@@ -6488,11 +6509,11 @@ function HandleButtonEvent(words: any): void {
                         let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
                         for (let i_index in i_list) {
                             let i = i_list[i_index];
-                            if ((getState(i).val) === pageItem.speakerList[words[4]]) {
-                                if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList[words[4]], 'info');
+                            if ((getState(i).val) === pageItem.speakerList![words[4]]) {
+                                if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList![words[4]], 'info');
                                 let deviceId = i;
                                 deviceId = deviceId.split('.');
-                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList[words[4]]);
+                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList![words[4]]);
                                 pageItem.mediaDevice = deviceId[3];
                             } 
                         }
@@ -6502,25 +6523,25 @@ function HandleButtonEvent(words: any): void {
                     case 'chromecast':
                         break;
                     case 'squeezeboxrpc':
-                        pageItem.mediaDevice = pageItem.speakerList[words[4]];
+                        pageItem.mediaDevice = pageItem.speakerList![words[4]];
                         break;
                 }
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-playlist':
                 let pageItemPL = findPageItem(id);
-                let adapterInstancePL = pageItemPL.adapterPlayerInstance;
+                let adapterInstancePL = pageItemPL.adapterPlayerInstance!;
                 let adapterPL = adapterInstancePL.split('.');
                 let deviceAdapterPL = adapterPL[0];
 
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
-                        let strDevicePI = pageItemPL.playList[words[4]];
+                        let strDevicePI = pageItemPL.playList![words[4]];
                         if (Debug) log('HandleButtonEvent mode-playlist Spotify -> strDevicePI:  ' + strDevicePI, 'info');
                         let playlistListString = (getState(adapterInstancePL + 'playlists.playlistListString').val).split(';');
                         let playlistListIds = (getState(adapterInstancePL + 'playlists.playlistListIds').val).split(';');
@@ -6531,16 +6552,16 @@ function HandleButtonEvent(words: any): void {
                         }, 2000);
                         break;
                     case 'alexa2':
-                        let tempListItem = pageItemPL.playList[words[4]].split('.');
+                        let tempListItem = pageItemPL.playList![words[4]].split('.');
                         setState(adapterInstancePL + 'Echo-Devices.' + pageItemPL.mediaDevice + '.Music-Provider.' + tempListItem[0], tempListItem[1]);
                         break;
                     case 'sonos':
-                        let strDevicePLSonos = pageItemPL.playList[words[4]].split('.');
+                        let strDevicePLSonos = pageItemPL.playList![words[4]].split('.');
                         if (Debug) log(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set', 'info')
                         setState(adapterInstancePL + 'root.' + pageItemPL.mediaDevice + '.playlist_set', strDevicePLSonos[0]);
                         break;                    
                     case 'volumio':
-                        let strDevicePL = pageItemPL.playList[words[4]];
+                        let strDevicePL = pageItemPL.playList![words[4]];
                         let urlString: string = `${getState(adapterInstancePL+'info.host').val}/api/commands/?cmd=playplaylist&name=${strDevicePL}`;
                         axios.get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
                             .then(async function (response) {
@@ -6561,15 +6582,15 @@ function HandleButtonEvent(words: any): void {
                         break;
                 }
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-tracklist':
                 let pageItemTL = findPageItem(id);
-                let adapterInstanceTL = pageItemTL.adapterPlayerInstance;
+                let adapterInstanceTL = pageItemTL.adapterPlayerInstance!;
                 let adapterTL = adapterInstanceTL.split('.');
                 let deviceAdapterTL = adapterTL[0];
 
@@ -6600,30 +6621,31 @@ function HandleButtonEvent(words: any): void {
                             });
                         break;
                     case 'squeezeboxrpc':
+                        //@@ts-ignore Fehler kommt von findPageItem in vscode
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
                 }
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-repeat':
                 let pageItemRP = findPageItem(id);
-                let adapterInstanceRP = pageItemRP.adapterPlayerInstance;
+                let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
                 let deviceAdapterRP = adapterRP[0];
 
-                if (Debug) log(pageItemRP.repeatList[words[4]], 'warn');
+                if (Debug) log(pageItemRP.repeatList![words[4]], 'warn');
                 switch (deviceAdapterRP) {
                     case 'spotify-premium':
-                        setIfExists(id + '.REPEAT', pageItemRP.repeatList[words[4]]);
-                        GeneratePage(activePage);
+                        setIfExists(id + '.REPEAT', pageItemRP.repeatList![words[4]]);
+                        GeneratePage(activePage!);
                         break;
                     case 'alexa2':
-                        GeneratePage(activePage);
+                        GeneratePage(activePage!);
                         break;
                 }
                 break;
@@ -6631,17 +6653,17 @@ function HandleButtonEvent(words: any): void {
                 let pageItemEQ = findPageItem(id);
                 if (Debug) log('HandleButtonEvent mode-equalizer -> id: ' + id, 'info');
                 let lastIndex = (id.split('.')).pop();
-                setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList[words[4]]);
+                setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList![words[4]]);
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-seek':
                 let pageItemSeek = findPageItem(id);
-                let adapterInstanceSK = pageItemSeek.adapterPlayerInstance;
+                let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
                 let deviceAdapterSK = adapterSK[0];
                 switch (deviceAdapterSK) {
@@ -6653,15 +6675,15 @@ function HandleButtonEvent(words: any): void {
                         break;
                 }
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-crossfade':
                 let pageItemCrossfade = findPageItem(id);
-                let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance;
+                let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
                 let deviceAdapterCF = adapterCF[0];
                 switch (deviceAdapterCF) {
@@ -6677,10 +6699,10 @@ function HandleButtonEvent(words: any): void {
                         break;
                 }
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-favorites':
@@ -6689,10 +6711,10 @@ function HandleButtonEvent(words: any): void {
                 let favListArray = getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_list_array').val;
                 setState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set', favListArray[words[4]]);
                 pageCounter = 0;
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 setTimeout(async function () {
                     pageCounter = 1;
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }, 3000);
                 break;
             case 'mode-insel':
@@ -6700,7 +6722,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
-                let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
+                let adaInstanceSpli = pageItemTem.adapterPlayerInstance!.split('.');
                 if (adaInstanceSpli[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
                     let stateVal = getState(adapterPlayerInstancePowerSelector).val;
@@ -6716,7 +6738,7 @@ function HandleButtonEvent(words: any): void {
                 } else {
                     setIfExists(id + '.STOP', true);
                 }
-                GeneratePage(activePage);
+                GeneratePage(activePage!);
                 break;
             case 'timer-start':
                 if (words[4] != undefined) {
@@ -6763,7 +6785,7 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(words[2] + '.' + modesDP[mode], false);
                         }
                     }
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 } else {
                     let HVACMode = getState(words[2] + '.MODE').val;
 
@@ -6793,20 +6815,20 @@ function HandleButtonEvent(words: any): void {
                     }
                     
                     setIfExists(words[2] + '.' + 'MODE', HVACMode);
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 }
                 break;
             case 'mode-modus1':
                 let pageItemT1 = findPageItem(id);
-                setIfExists(id + '.' + pageItemT1.setThermoAlias[0], pageItemT1.popupThermoMode1[parseInt(words[4])]);
+                setIfExists(id + '.' + pageItemT1.setThermoAlias![0], pageItemT1.popupThermoMode1![parseInt(words[4])]);
                 break;
             case 'mode-modus2':
                 let pageItemT2 = findPageItem(id);
-                setIfExists(id + '.' + pageItemT2.setThermoAlias[1], pageItemT2.popupThermoMode2[parseInt(words[4])]);
+                setIfExists(id + '.' + pageItemT2.setThermoAlias![1], pageItemT2.popupThermoMode2![parseInt(words[4])]);
                 break;
             case 'mode-modus3':
                 let pageItemT3 = findPageItem(id);
-                setIfExists(id + '.' + pageItemT3.setThermoAlias[2], pageItemT3.popupThermoMode3[parseInt(words[4])]);
+                setIfExists(id + '.' + pageItemT3.setThermoAlias![2], pageItemT3.popupThermoMode3![parseInt(words[4])]);
                 break;
             case 'number-set':
                 let nobj = getObject(id);
@@ -6836,7 +6858,7 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 },250);
                 break;
             case 'A2': // Alarm page - activate alarm 2
@@ -6847,7 +6869,7 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 },250);
                 break;
             case 'A3': // Alarm page - activate alarm 3
@@ -6858,7 +6880,7 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 },250);
                 break;
             case 'A4': // Alarm page - activate alarm 4
@@ -6869,7 +6891,7 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.PANEL', NSPanel_Path);
                 }
                 setTimeout(function(){
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 },250);
                 break;
             case 'D1': // Alarm page - deactivate alarm 4
@@ -6891,7 +6913,7 @@ function HandleButtonEvent(words: any): void {
                     }
                     setIfExists(id + '.PANEL', NSPanel_Path);
                     setTimeout(function(){
-                        GeneratePage(activePage);
+                        GeneratePage(activePage!);
                     },500);
                 }
                 break;
@@ -6899,7 +6921,7 @@ function HandleButtonEvent(words: any): void {
                 let pageItemUnlock = findPageItem(id);
                 if (words[4] == getState(id + '.PIN').val) {
                     UnsubscribeWatcher();
-                    GeneratePage(eval(pageItemUnlock.targetPage));
+                    GeneratePage(eval(pageItemUnlock.targetPage!));
                     setIfExists(id + '.ACTUAL', true)
                 } else {
                     setIfExists(id + '.ACTUAL', false)
@@ -6908,7 +6930,7 @@ function HandleButtonEvent(words: any): void {
             default:
                 break;
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function HandleButtonEvent: ' + err.message, 'warn');
     }
 }
@@ -6923,13 +6945,13 @@ function GetNavigationString(pageId: number): string {
 
         var navigationString:string = "";
 
-        if (activePage.subPage){
+        if (activePage!.subPage){
             //Left icon
-            if (activePage.prev == undefined){
-                if (activePage.parentIcon != undefined){                    
-                    navigationString = 'button~bUp~' + Icons.GetIcon(activePage.parentIcon);     
-                    if (activePage.parentIconColor != undefined){                    
-                        navigationString += '~' + rgb_dec565(activePage.parentIconColor);        
+            if (activePage!.prev == undefined){
+                if (activePage!.parentIcon != undefined){                    
+                    navigationString = 'button~bUp~' + Icons.GetIcon(activePage!.parentIcon);     
+                    if (activePage!.parentIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage!.parentIconColor);        
                     } else {
                         navigationString += '~' + rgb_dec565(White);
                     }                
@@ -6937,10 +6959,10 @@ function GetNavigationString(pageId: number): string {
                     navigationString = 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White);
                 }
             } else {
-                if (activePage.prevIcon != undefined){       
-                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage.prevIcon);        
-                    if (activePage.prevIconColor != undefined){                    
-                        navigationString += '~' + rgb_dec565(activePage.prevIconColor);        
+                if (activePage!.prevIcon != undefined){       
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage!.prevIcon);        
+                    if (activePage!.prevIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage!.prevIconColor);        
                     } else {
                         navigationString += '~' + rgb_dec565(White);
                     }                     
@@ -6950,11 +6972,11 @@ function GetNavigationString(pageId: number): string {
             }
 
             //Right icon
-            if (activePage.next == undefined){
-                if (activePage.homeIcon != undefined){                    
-                    navigationString += '~~~button~bHome~' + Icons.GetIcon(activePage.homeIcon);      
-                    if (activePage.homeIconColor != undefined){                    
-                        navigationString += '~' + rgb_dec565(activePage.homeIconColor) + '~~';;        
+            if (activePage!.next == undefined){
+                if (activePage!.homeIcon != undefined){                    
+                    navigationString += '~~~button~bHome~' + Icons.GetIcon(activePage!.homeIcon);      
+                    if (activePage!.homeIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage!.homeIconColor) + '~~';;        
                     } else {
                         navigationString += '~' + rgb_dec565(White) + '~~';
                     }              
@@ -6962,10 +6984,10 @@ function GetNavigationString(pageId: number): string {
                     navigationString += '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';   
                 }
             } else {
-                if (activePage.nextIcon != undefined){                    
-                    navigationString += '~~~button~bSubNext~' + Icons.GetIcon(activePage.nextIcon);    
-                    if (activePage.nextIconColor != undefined){                    
-                        navigationString += '~' + rgb_dec565(activePage.nextIconColor) + '~~';        
+                if (activePage!.nextIcon != undefined){                    
+                    navigationString += '~~~button~bSubNext~' + Icons.GetIcon(activePage!.nextIcon);    
+                    if (activePage!.nextIconColor != undefined){                    
+                        navigationString += '~' + rgb_dec565(activePage!.nextIconColor) + '~~';        
                     } else {
                         navigationString += '~' + rgb_dec565(White) + '~~';
                     }                   
@@ -6975,7 +6997,7 @@ function GetNavigationString(pageId: number): string {
             }
         }       
 
-        if (activePage.subPage && (navigationString != "")){
+        if (activePage!.subPage && (navigationString != "")){
             return navigationString
         }
 
@@ -6986,25 +7008,25 @@ function GetNavigationString(pageId: number): string {
                 return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~delete~~~~~';
             default:
             {
-                if (activePage.prevIcon != undefined){                    
-                    navigationString = 'button~bPrev~' + Icons.GetIcon(activePage.prevIcon);        
+                if (activePage!.prevIcon != undefined){                    
+                    navigationString = 'button~bPrev~' + Icons.GetIcon(activePage!.prevIcon);        
                 } else {
                     navigationString = 'button~bPrev~' + Icons.GetIcon('arrow-left-bold');
                 }  
 
-                if (activePage.prevIconColor != undefined){                    
-                    navigationString += '~' + rgb_dec565(activePage.prevIconColor);        
+                if (activePage!.prevIconColor != undefined){                    
+                    navigationString += '~' + rgb_dec565(activePage!.prevIconColor);        
                 } else {
                     navigationString += '~' + rgb_dec565(White);
                 }                    
 
-                if (activePage.nextIcon != undefined){                    
-                    navigationString += '~~~button~bNext~' + Icons.GetIcon(activePage.nextIcon);                
+                if (activePage!.nextIcon != undefined){                    
+                    navigationString += '~~~button~bNext~' + Icons.GetIcon(activePage!.nextIcon);                
                 } else {
                     navigationString += '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold');
                 }  
-                if (activePage.nextIconColor != undefined){                    
-                    navigationString += '~' + rgb_dec565(activePage.nextIconColor) + '~~';        
+                if (activePage!.nextIconColor != undefined){                    
+                    navigationString += '~' + rgb_dec565(activePage!.nextIconColor) + '~~';        
                 } else {
                     navigationString += '~' + rgb_dec565(White) + '~~';
                 }
@@ -7012,12 +7034,13 @@ function GetNavigationString(pageId: number): string {
             }
         }
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetNavigationString: ' + err.message, 'warn');
     }
+    return '';
 }
 
-function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, placeId: number): Payload[] {
+function GenerateDetailPage(type: string, optional: string | undefined, pageItem: PageItem, placeId: number): Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
@@ -7249,7 +7272,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                         colorTemp = 0;
                         if (getState(id + '.TEMPERATURE').val != null) {
                             if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
-                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
+                                colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp!, 100, 0));
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
                             }
@@ -7529,28 +7552,28 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
 
                 let payloadParameters1 = '~~~~'
                 if (pageItem.popupThermoMode1 != undefined) {
-                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[0], pageItem, type, placeId);
-                    payloadParameters1 =    pageItem.popUpThermoName[0] + '~'                                          //{heading}~            Mode 1
+                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias![0], pageItem, type, placeId);
+                    payloadParameters1 =    pageItem.popUpThermoName![0] + '~'                                          //{heading}~            Mode 1
                                             + 'modus1' + '~'                                                           //{id}~                 Mode 1
-                                            + getState(pageItem.id + "." + pageItem.setThermoAlias[0]).val + '~'       //{ACTUAL}~             Mode 1
+                                            + getState(pageItem.id + "." + pageItem.setThermoAlias![0]).val + '~'       //{ACTUAL}~             Mode 1
                                             + mode1 + '~';                                                             //{possible values}     Mode 1 (1-n)
                 }
 
                 let payloadParameters2 = '~~~~'
                 if (pageItem.popupThermoMode2 != undefined) {
-                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[1], pageItem, type, placeId);
-                    payloadParameters2 =    pageItem.popUpThermoName[1] + '~'                                           //{heading}~            Mode 2
+                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias![1], pageItem, type, placeId);
+                    payloadParameters2 =    pageItem.popUpThermoName![1] + '~'                                           //{heading}~            Mode 2
                                             + 'modus2' + '~'                                                            //{id}~                 Mode 2
-                                            + getState(pageItem.id + "." + pageItem.setThermoAlias[1]).val + '~'        //{ACTUAL}~             Mode 2
+                                            + getState(pageItem.id + "." + pageItem.setThermoAlias![1]).val + '~'        //{ACTUAL}~             Mode 2
                                             + mode2 + '~';                                                              //{possible values}
                 }
 
                 let payloadParameters3 = '~~~~'
                 if (pageItem.popupThermoMode3 != undefined) {
-                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias[2], pageItem, type, placeId);
-                    payloadParameters3 =    pageItem.popUpThermoName[2] + '~'                                           //{heading}~            Mode 3
+                    RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias![2], pageItem, type, placeId);
+                    payloadParameters3 =    pageItem.popUpThermoName![2] + '~'                                           //{heading}~            Mode 3
                                             + 'modus3' + '~'                                                            //{id}~                 Mode 3
-                                            + getState(pageItem.id + "." + pageItem.setThermoAlias[2]).val + '~'        //{ACTUAL}~             Mode 3
+                                            + getState(pageItem.id + "." + pageItem.setThermoAlias![2]).val + '~'        //{ACTUAL}~             Mode 3
                                             + mode3;                                                                    //{possible values}     Mode 3 (1-n)
                 }
 
@@ -7677,8 +7700,8 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                     let actualSpeed = getState(id + '.SPEED').val;
                     let maxSpeed = (pageItem.maxValue != undefined) ? pageItem.maxValue : 100; 
                     
-                    let modeList = pageItem.modeList.join('?');
-                    let actualMode = pageItem.modeList[getState(id + '.MODE').val];
+                    let modeList = pageItem.modeList!.join('?');
+                    let actualMode = pageItem.modeList![getState(id + '.MODE').val];
 
                     let tempId = placeId != undefined ? placeId : id;
 
@@ -7703,7 +7726,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                     let optionalString: string = 'Kein Eintrag';
                     let mode: string = '';
 
-                    let vTempAdapter = (pageItem.adapterPlayerInstance).split('.');
+                    let vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
                     let vAdapter = vTempAdapter[0];
                     if (optional == 'seek') {
                         let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
@@ -7760,9 +7783,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                         } else if (vAdapter == 'squeezeboxrpc') {
                             actualState = pageItem.mediaDevice;
                         }
-                        let tempSpeakerList = [];
-                        for (let i = 0; i < pageItem.speakerList.length; i++) {
-                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList[i]).trim();
+                        let tempSpeakerList: string[] = [];
+                        for (let i = 0; i < pageItem.speakerList!.length; i++) {
+                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList![i]).trim();
                         }
                         optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
                         mode = 'speakerlist';
@@ -7771,9 +7794,9 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                             if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
                                 actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.playlist.name').val);
                             }
-                            let tempPlayList = [];
-                            for (let i = 0; i < pageItem.playList.length; i++) {
-                                tempPlayList[i] = formatInSelText(pageItem.playList[i]);
+                            let tempPlayList: string[] = [];
+                            for (let i = 0; i < pageItem.playList!.length; i++) {
+                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                         } else if (vAdapter == 'alexa2') {
@@ -7781,13 +7804,13 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                             actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Player.currentAlbum').val);
             
                             let tPlayList: any = []
-                            for (let i = 0; i < pageItem.playList.length; i++) {
-                                if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList[i], 'info');
-                                let tempItem = pageItem.playList[i].split('.');
+                            for (let i = 0; i < pageItem.playList!.length; i++) {
+                                if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList![i], 'info');
+                                let tempItem = pageItem.playList![i].split('.');
                                 tPlayList[i] = tempItem[1];
                             }
                             
-                            let tempPlayList = [];
+                            let tempPlayList: string[] = [];
                             for (let i = 0; i < tPlayList.length; i++) {
                                 tempPlayList[i] = formatInSelText(tPlayList[i]);
                             }
@@ -7797,30 +7820,30 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                             if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
                                 actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
                             }
-                            let tempPlayList = [];
-                            for (let i = 0; i < pageItem.playList.length; i++) {
-                                tempPlayList[i] = formatInSelText(pageItem.playList[i]);
+                            let tempPlayList: string[] = [];
+                            for (let i = 0; i < pageItem.playList!.length; i++) {
+                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                         } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
                             actualState = ''; //todo: no actual playlistname saving
-                            let tempPlayList = []; let tempPll = 0;
-                            for (let i = 0; i < pageItem.playList.length; i++) {
-                                tempPll += pageItem.playList[i].length; if (tempPll > 900) break;
-                                tempPlayList[i] = formatInSelText(pageItem.playList[i]);
+                            let tempPlayList: string[] = []; let tempPll = 0;
+                            for (let i = 0; i < pageItem.playList!.length; i++) {
+                                tempPll += pageItem.playList![i].length; if (tempPll > 900) break;
+                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
                             }
                             optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                         } else if(vAdapter == 'squeezeboxrpc') {
                             // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
                             actualState = ''; // Not supported by squeezeboxrpc adapter
-                            let tempPlayList = [];
-                            let pathParts: Array<string> = pageItem.adapterPlayerInstance.split('.');
+                            let tempPlayList: string[] = [];
+                            let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
                             for (let favorite_index=0; favorite_index < 45; favorite_index++) {
                                 let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
                                 if(!existsObject(favorite_name_selector)) {
                                     break;
                                 }
-                                let favoritename = getState(favorite_name_selector).val;
+                                let favoritename: string = getState(favorite_name_selector).val;
                                 tempPlayList.push(formatInSelText(favoritename));
                             }
                             optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
@@ -7845,7 +7868,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                         if (Debug) log(actualState, 'info');
                         if (Debug) log(globalTracklist, 'info');
                         //Limit 900 characters, then memory overflow --> Shorten as much as possible
-                        let temp_array = [];
+                        let temp_array: any[] = [];
                         //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
                         for (let track_index=0; track_index < 45; track_index++) {
                             let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
@@ -7868,7 +7891,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                                 break;
                             }
                         }
-                        let tempTrackList = [];
+                        let tempTrackList: string[] = [];
                         for (let i = 0; i < temp_array.length; i++) {
                             tempTrackList[i] = formatInSelText(temp_array[i]);
                         }
@@ -7889,22 +7912,22 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                             actualState = formatInSelText(getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val);
                         }
                         
-                        let tempEQList = [];
-                        for (let i = 0; i < pageItem.equalizerList.length; i++) {
-                            tempEQList[i] = formatInSelText(pageItem.equalizerList[i]);
+                        let tempEQList: string[] = [];
+                        for (let i = 0; i < pageItem.equalizerList!.length; i++) {
+                            tempEQList[i] = formatInSelText(pageItem!.equalizerList![i]);
                         }
 
                         optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
                         mode = 'equalizer';
                     } else if (optional == 'repeat') {
                         actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
-                        optionalString = pageItem.repeatList.join('?');
+                        optionalString = pageItem.repeatList!.join('?');
                         mode = 'repeat';
                     } else if (optional == 'favorites') {
                         if (Debug) log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val, 'info')
                         actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
                         
-                        let tempFavList = [];
+                        let tempFavList:string [] = [];
                         let favList = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_list_array').val;
                         for (let i = 0; i < favList.length; i++) {
                             tempFavList[i] = formatInSelText(favList[i]);
@@ -7923,21 +7946,21 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                             + actualState + '~'
                             + optionalString
                     });
-                    GeneratePage(activePage);
+                    GeneratePage(activePage!);
                 } else if (o.common.role == 'buttonSensor') {
 
                     let actualValue: string = '';
 
                     if (pageItem.inSel_ChoiceState || pageItem.inSel_ChoiceState == undefined) {
                         if (existsObject(pageItem.id + '.VALUE')) {
-                            actualValue = formatInSelText(pageItem.modeList[getState(pageItem.id + '.VALUE').val]);
+                            actualValue = formatInSelText(pageItem.modeList![getState(pageItem.id + '.VALUE').val]);
                             RegisterDetailEntityWatcher(id + '.VALUE', pageItem, type, placeId);
                         }
                     }
                     
-                    let tempModeList = [];
-                    for (let i = 0; i < pageItem.modeList.length; i++) {
-                        tempModeList[i] = formatInSelText(pageItem.modeList[i]);
+                    let tempModeList: string[] = [];
+                    for (let i = 0; i < pageItem.modeList!.length; i++) {
+                        tempModeList[i] = formatInSelText(pageItem.modeList![i]);
                     }
                     let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
@@ -7970,7 +7993,7 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
                             }
                         }
 
-                        let tempModeList = [];
+                        let tempModeList: string[] = [];
                         for (let i = 0; i < pageItem.modeList.length; i++) {
                             tempModeList[i] = formatInSelText(pageItem.modeList[i]);
                         }
@@ -7994,17 +8017,19 @@ function GenerateDetailPage(type: string, optional: string, pageItem: PageItem, 
 	if (Debug) log('GenerateDetailPage -> payload: ' + JSON.stringify(out_msgs), 'info');     
         return out_msgs;
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GenerateDetailPage: ' + err.message, 'warn');
     }
+    return [];
 }
 
 function scale(number: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
     try {
         return (outMax + outMin) - ((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin);
-    } catch (err) {
+    } catch (err: any) {
         log('error at function scale: ' + err.message, 'warn');
     }
+    return 0
 }
 
 function UnsubscribeWatcher(): void {
@@ -8013,15 +8038,15 @@ function UnsubscribeWatcher(): void {
             unsubscribe(value);
             delete subscriptions[key];
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function UnsubscribeWatcher: ' + err.message, 'warn');
     }
 }
 
 function HandleScreensaver(): void {
-    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
-    setIfExists(NSPanel_Path + 'ActivePage.id0', 'screensaver');
-    setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
+    setIfExists(NSPanel_Path + 'activePage!.type', 'screensaver');
+    setIfExists(NSPanel_Path + 'activePage!.id0', 'screensaver');
+    setIfExists(NSPanel_Path + 'activePage!.heading', 'Screensaver');
     if (existsObject(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced')) {
         if (getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val) {
             SendToPanel({ payload: 'pageType~screensaver2' });
@@ -8088,7 +8113,7 @@ function HandleScreensaverUpdate(): void {
                 let i = 0;
                 for (i = 0; i < 3; i++) {
                     
-                    if (config.leftScreensaverEntity[i] == null) {
+                    if (config.leftScreensaverEntity[i] == null || config.leftScreensaverEntity[i] == undefined) {
                         checkpoint = false;
                         break;
                     }
@@ -8097,8 +8122,8 @@ function HandleScreensaverUpdate(): void {
                     let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
                     let iconColor = rgb_dec565(White);
                     let icon;
-                    if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconOn)) {
-                        let iconName = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                    if (typeof config.leftScreensaverEntity[i].ScreensaverEntityIconOn == 'string' && existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconOn as string)) {
+                        let iconName = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
                     } else {
                         icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
@@ -8109,7 +8134,7 @@ function HandleScreensaverUpdate(): void {
                     }
                     
                     if (typeof(val) == 'number') {
-                        val = (val * config.leftScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
+                        val = (val * (config.leftScreensaverEntity[i].ScreensaverEntityFactor ? config.leftScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
                     }
                     else if (typeof(val) == 'boolean') {
@@ -8211,8 +8236,8 @@ function HandleScreensaverUpdate(): void {
                     if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6)  {
 
                         let nextSunEvent = 0
-                        let valDateNow = new Date;
-                        let arraySunEvent = [];
+                        let valDateNow = new Date().getTime();
+                        let arraySunEvent: number[] = [];
 
                         arraySunEvent[0] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Sunrise').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Sunset').val).getTime();
@@ -8256,7 +8281,7 @@ function HandleScreensaverUpdate(): void {
                     }
                     let iconColor = rgb_dec565(White);
                     if (typeof(val) == 'number') {
-                        val = (val * config.bottomScreensaverEntity[4].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
+                        val = (val * (config.bottomScreensaverEntity[4].ScreensaverEntityFactor ? config.bottomScreensaverEntity[4].ScreensaverEntityFactor : 0)).toFixed(config.bottomScreensaverEntity[4].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[4].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
                     }
                     else if (typeof(val) == 'boolean') {
@@ -8304,15 +8329,15 @@ function HandleScreensaverUpdate(): void {
                     }
                     let iconColor = rgb_dec565(White);
 		    let icon;
-                    if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn)) {
-                        let iconName = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                    if (config.bottomScreensaverEntity[i].ScreensaverEntityIconOn && existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn!)) {
+                        let iconName = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
                     } else {
                         icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
                     }    
 
                     if (typeof(val) == 'number') {
-                        val = (val * config.bottomScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
+                        val = (val * (config.bottomScreensaverEntity[i].ScreensaverEntityFactor ? config.bottomScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
                     }
                     else if (typeof(val) == 'boolean') {
@@ -8379,15 +8404,15 @@ function HandleScreensaverUpdate(): void {
                     let iconColor = rgb_dec565(White);
             
                     let icon;
-                    if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn)) {
-                        let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn).val;
+                    if (config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn && existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn!)) {
+                        let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
                     } else {
                         icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
                     }    
 
                     if (typeof(val) == 'number') {
-                        val = (val * config.indicatorScreensaverEntity[i].ScreensaverEntityFactor).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
+                        val = (val * (config.indicatorScreensaverEntity[i].ScreensaverEntityFactor ? config.indicatorScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
                     }
                     else if (typeof(val) == 'boolean') {
@@ -8415,7 +8440,7 @@ function HandleScreensaverUpdate(): void {
 
         }
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function HandleScreensaverUpdate: ' + err.message, 'warn');
     }
 }
@@ -8429,7 +8454,7 @@ function RegisterScreensaverEntityWatcher(id: string): void {
         subscriptions[id] = (on({ id: id, change: 'any' }, () => {
             HandleScreensaverUpdate();
         }));
-    } catch (err) {
+    } catch (err: any) {
         log('function RegisterEntityWatcher: ' + err.message, 'warn');
     }
 }
@@ -8609,7 +8634,7 @@ function HandleScreensaverStatusIcons() : void {
 
         SendToPanel(<Payload>{ payload: 'statusUpdate~' + payloadString });
 
-    } catch (err) {
+    } catch (err: any) {
         log('error at function HandleScreensaverStatusIcons: ' + err.message, 'warn');
     }
 }
@@ -8638,12 +8663,14 @@ function HandleColorScale(valueScaletemp: string): number {
             return rgb_dec565(colorScale9);
         case '10':
             return rgb_dec565(colorScale10);
+        default:
+            return rgb_dec565(colorScale10);
     }
 }
 
 function HandleScreensaverColors(): void {
     try {
-        let vwIcon = [];
+        let vwIcon: number[] = [];
         if (getState(NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout').val) {
             vwIcon[0] = vwIconColor[0];
             vwIcon[1] = vwIconColor[1];
@@ -8697,15 +8724,15 @@ function HandleScreensaverColors(): void {
                             rgb_dec565(sctTimeAdd);                  //tTimeAdd
 
         SendToPanel(<Payload>{ payload: payloadString });
-    } catch (err) {
+    } catch (err: any) {
         log('error at function HandleScreensaverColors: '+ err.message, 'warn');
     }
 }
 
 function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): number {
     try {
-        let colorReturn: any;
-        if (configElement.ScreensaverEntityIconColor != undefined) {
+        let colorReturn: number;
+        if (configElement && configElement.ScreensaverEntityIconColor != undefined) {
             if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
                 let iconvalbest = (configElement.ScreensaverEntityIconColor.val_best != undefined) ? configElement.ScreensaverEntityIconColor.val_best : false ;
                 colorReturn = (getState(configElement.ScreensaverEntity).val == iconvalbest) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
@@ -8713,7 +8740,7 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
                 let iconvalmin = (configElement.ScreensaverEntityIconColor.val_min != undefined) ? configElement.ScreensaverEntityIconColor.val_min : 0 ;
                 let iconvalmax = (configElement.ScreensaverEntityIconColor.val_max != undefined) ? configElement.ScreensaverEntityIconColor.val_max : 100 ;
                 let iconvalbest = (configElement.ScreensaverEntityIconColor.val_best != undefined) ? configElement.ScreensaverEntityIconColor.val_best : iconvalmin ;
-                let valueScale = getState(configElement.ScreensaverEntity).val * configElement.ScreensaverEntityFactor;
+                let valueScale = getState(configElement.ScreensaverEntity).val * configElement.ScreensaverEntityFactor!;
 
                 if (iconvalmin == 0 && iconvalmax == 1) {
                     colorReturn = (getState(configElement.ScreensaverEntity).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
@@ -8744,8 +8771,9 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
                 colorReturn = rgb_dec565(White);
             }
         } else {
-            if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
-                if (getState(configElement.ScreensaverEntity).val) {
+            const value: number | boolean = configElement ? getState(configElement.ScreensaverEntity).val : 0;
+            if (configElement && typeof value == 'boolean') {
+                if (value) {
                     if (configElement.ScreensaverEntityOnColor != undefined) {
                         colorReturn = rgb_dec565(configElement.ScreensaverEntityOnColor);
                     } else {
@@ -8763,9 +8791,10 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
             }
         }
         return colorReturn;
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetScreenSaverEntityColor: '+ err.message, 'warn');
     }
+    return rgb_dec565(White);
 }
 
 function GetAccuWeatherIcon(icon: number): string {
@@ -8844,9 +8873,10 @@ function GetAccuWeatherIcon(icon: number): string {
             default:
                 return 'alert-circle-outline';
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetAccuWeatherIcon: '+ err.message, 'warn');
     }
+    return '';
 }
 
 function GetAccuWeatherIconColor(icon: number): number {
@@ -8923,9 +8953,10 @@ function GetAccuWeatherIconColor(icon: number): number {
             default:
                 return rgb_dec565(White);
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetAccuWeatherIconColor: '+ err.message, 'warn');
     }
+    return 0;
 }
 
 function GetDasWetterIcon(icon: number): string {
@@ -8982,9 +9013,10 @@ function GetDasWetterIcon(icon: number): string {
             default:
                 return 'alert-circle-outline';
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetDasWetterIcon: '+ err.message, 'warn');
     }
+    return '';
 }
  
 function GetDasWetterIconColor(icon: number): number {
@@ -9041,9 +9073,10 @@ function GetDasWetterIconColor(icon: number): number {
             default:
                 return rgb_dec565(White);
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error at function GetDasWetterIconColor: '+ err.message, 'warn');
     }
+    return 0;
 }
 
 //------------------Begin Read Internal Sensor Data
@@ -9077,7 +9110,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
             await createAliasAsync(AliasPath + 'Sensor.Time.ACTUAL', NSPanel_Path + 'Sensor.Time', true, <iobJS.StateCommon>{ type: 'string' });
             await createAliasAsync(AliasPath + 'Sensor.TempUnit.ACTUAL', NSPanel_Path + 'Sensor.TempUnit', true, <iobJS.StateCommon>{ type: 'string' });
         }
-    } catch (err) {
+    } catch (err: any) {
         log('error Trigger reading senor-data: '+ err.message, 'warn');
     }
 });
@@ -9086,7 +9119,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 function formatInSelText(Text: string ) : string { 
     let splitText = Text.split(' ');
     let lengthLineOne = 0;
-    let arrayLineOne = [];
+    let arrayLineOne: string[] = [];
     for (let i = 0; i < splitText.length; i++) {
         lengthLineOne = lengthLineOne + splitText[i].length + 1;
         if (lengthLineOne > 12) {
@@ -9096,7 +9129,7 @@ function formatInSelText(Text: string ) : string {
         }
     }
     let textLineOne = arrayLineOne.join(' ');
-    let arrayLineTwo = [];
+    let arrayLineTwo: string[] = [];
     for (let i = arrayLineOne.length; i < splitText.length; i++) {
             arrayLineTwo[i] = splitText[i];
     }
@@ -9404,21 +9437,21 @@ type DimMode = {
 }
 
 type ConfigButtonFunction = {
-    mode: string | null,
+    mode: 'page' | 'toggle' | 'set' | null,
     page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
     entity: string | null,
-    setValue: string | number | null
+    setValue: string | number | boolean | null
 }
 
 type Config = {
     panelRecvTopic: string,
     panelSendTopic: string,
-    weatherEntity: string | null,
-    leftScreensaverEntity: ScreenSaverElement[] | null,
-    bottomScreensaverEntity: ScreenSaverElement[] | null,
-    indicatorScreensaverEntity: ScreenSaverElement[] | null,
-    mrIcon1ScreensaverEntity: ScreenSaverMRElement | null,
-    mrIcon2ScreensaverEntity: ScreenSaverMRElement | null,
+    weatherEntity: string,
+    leftScreensaverEntity: ScreenSaverElement[],
+    bottomScreensaverEntity: ScreenSaverElement[],
+    indicatorScreensaverEntity: ScreenSaverElement[],
+    mrIcon1ScreensaverEntity: ScreenSaverMRElement,
+    mrIcon2ScreensaverEntity: ScreenSaverMRElement,
     defaultColor: RGB,
     defaultOnColor: RGB,
     defaultOffColor: RGB,
@@ -9430,19 +9463,19 @@ type Config = {
 }
 
 type ScreenSaverElement = {
-    ScreensaverEntity: string | null,
-    ScreensaverEntityFactor: number | 1,
-    ScreensaverEntityDecimalPlaces: number | 0,
-    ScreensaverEntityDateFormat: any | null,
-    ScreensaverEntityIconOn: string | null,
-    ScreensaverEntityIconOff: string | null,
+    ScreensaverEntity: string,
+    ScreensaverEntityFactor?: number | 1,
+    ScreensaverEntityDecimalPlaces?: number | 0,
+    ScreensaverEntityDateFormat?: any | null,
+    ScreensaverEntityIconOn?: string | null,
+    ScreensaverEntityIconOff?: string | null,
     ScreensaverEntityText: string | null,
-    ScreensaverEntityUnitText: string | null,
-    ScreensaverEntityIconColor: any | null
-    ScreensaverEntityOnColor: any | null
-    ScreensaverEntityOffColor: any | null
-    ScreensaverEntityOnText: string | null,
-    ScreensaverEntityOffText: string | null,
+    ScreensaverEntityUnitText?: string | null,
+    ScreensaverEntityIconColor?: any | null
+    ScreensaverEntityOnColor?: any | null
+    ScreensaverEntityOffColor?: any | null
+    ScreensaverEntityOnText?: string | null,
+    ScreensaverEntityOffText?: string | null,
 }
 
 type ScreenSaverMRElement = {
