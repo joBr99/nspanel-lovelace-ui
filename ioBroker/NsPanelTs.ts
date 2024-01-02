@@ -451,7 +451,7 @@ let NSPanel_Service_SubPage: PageEntities =
             ]
         };
                 //Level_2
-                let NSPanel_Wifi_Info_1: PageEntities = 
+                let NSPanel_Wifi_Info_1: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('nspanel_wifi1'),
@@ -467,7 +467,7 @@ let NSPanel_Service_SubPage: PageEntities =
                     ]
                 };
 
-                let NSPanel_Wifi_Info_2: PageEntities = 
+                let NSPanel_Wifi_Info_2: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('nspanel_wifi2'),
@@ -2077,7 +2077,7 @@ InitPopupNotify();
 let subscriptions: any = {};
 let screensaverEnabled: boolean = false;
 let pageId = 0;
-let activePage: Page | undefined = undefined;
+let activePage: PageType | undefined = undefined;
 
 //Send time to NSPanel
 let scheduleSendTime = schedule('* * * * *', () => {
@@ -2977,6 +2977,9 @@ function HandleMessage(typ: string, method: string, page: number | undefined, wo
                         if (!isNaN(parseInt(tempPageItem[0]))){
                             tempId = activePage!.items[tempPageItem[0]].id;
                             placeId = parseInt(tempPageItem[0])
+                            if (tempId == undefined) {
+                                throw new Error(`Missing id in HandleMessage!`)
+                            }
                         } else {
                             tempId = tempPageItem[0];
                         }
@@ -3036,7 +3039,7 @@ function findPageItem(searching: String): PageItem {
     }
 }
 
-function GeneratePage(page: Page): void {
+function GeneratePage(page: PageType): void {
     try {
         activePage = page;
         setIfExists(NSPanel_Path + 'ActivePage.type', activePage!.type);
@@ -3044,38 +3047,38 @@ function GeneratePage(page: Page): void {
         setIfExists(NSPanel_Path + 'ActivePage.id0', activePage!.items[0].id);
         switch (page.type) {
             case 'cardEntities':
-                SendToPanel(GenerateEntitiesPage(<PageEntities>page));
+                SendToPanel(GenerateEntitiesPage(page));
                 break;
             case 'cardThermo':
-                SendToPanel(GenerateThermoPage(<PageThermo>page));
+                SendToPanel(GenerateThermoPage(page));
                 break;
             case 'cardGrid':
-                SendToPanel(GenerateGridPage(<PageGrid>page));
+                SendToPanel(GenerateGridPage(page));
                 break;
             case 'cardGrid2':
-                SendToPanel(GenerateGridPage2(<PageGrid2>page));
+                SendToPanel(GenerateGridPage2(page));
                 break;
             case 'cardMedia':
                 useMediaEvents = true;
-                SendToPanel(GenerateMediaPage(<PageMedia>page));
+                SendToPanel(GenerateMediaPage(page));
                 break;
             case 'cardAlarm':
-                SendToPanel(GenerateAlarmPage(<PageAlarm>page));
+                SendToPanel(GenerateAlarmPage(page));
                 break;
             case 'cardQR':
-                SendToPanel(GenerateQRPage(<PageQR>page));
+                SendToPanel(GenerateQRPage(page));
                 break;
             case 'cardPower':
-                SendToPanel(GeneratePowerPage(<PagePower>page));
+                SendToPanel(GeneratePowerPage(page));
                 break;
             case 'cardChart':
-                SendToPanel(GenerateChartPage(<PageChart>page));
+                SendToPanel(GenerateChartPage(page));
                 break;
             case 'cardLChart':
-                SendToPanel(GenerateChartPage(<PageChart>page));
+                SendToPanel(GenerateChartPage(page));
                 break;
             case 'cardUnlock':
-                SendToPanel(GenerateUnlockPage(<PageUnlock>page));
+                SendToPanel(GenerateUnlockPage(page));
                 break;
         }
     } catch (err: any) {
@@ -3200,7 +3203,7 @@ function GenerateGridPage2(page: PageGrid2): Payload[] {
     }
 }
 
-function GeneratePageElements(page: Page): string {
+function GeneratePageElements(page: PageType): string {
     try {
         activePage = page;
         let maxItems = 0;
@@ -3245,7 +3248,7 @@ function GeneratePageElements(page: Page): string {
 
         for (let index = 0; index < maxItems; index++) {
             if (page.items[index] !== undefined) {
-                pageData += CreateEntity(page.items[index], index, page.useColor);
+                pageData += CreateEntity(page.items[index], index, 'useColor' in page ? page.useColor : false );
             }
         }
         if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
@@ -3268,7 +3271,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         let buttonText: string = 'PRESS';
         let type: string;
 
-        if (existsState(pageItem.id + '.ACTUAL') == false) {
+        if (pageItem.id && existsState(pageItem.id + '.ACTUAL') == false) {
             if (pageItem.popupTimerType == 'TimeCard' && pageItem.autoCreateALias == true) {
                 log(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time')
                 createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', '0', { type: 'number' });
@@ -3280,7 +3283,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         }
 
         // ioBroker
-        if (existsObject(pageItem.id) || pageItem.navigate === true) {
+        if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
  
             let iconColor = rgb_dec565(config.defaultColor);
             let optVal = '0';
@@ -3824,7 +3827,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         let valueScale = val;
  
                         if (iconvalmin == 0 && iconvalmax == 1) {
-                            iconColor = (getState(pageItem.id).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                            iconColor = (!pageItem.id || getState(pageItem.id).val == 1) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
                         } else {
                             if (iconvalbest == iconvalmin) {
                                 valueScale = scale(valueScale,iconvalmin, iconvalmax, 10, 0);
@@ -4204,7 +4207,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
         out_msgs.push({ payload: 'pageType~cardThermo' });
         
         // ioBroker
-        if (existsObject(id)) {
+        if (id && existsObject(id)) {
             let o = getObject(id);
             let name = page.heading !== undefined ? page.heading : o.common.name.de;
             let currentTemp = 0;
@@ -4819,9 +4822,11 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
     try {
         unsubscribeMediaSubscriptions();
 
+        if (!page.items[0].id) throw new Error ('Missing page id for cardMedia!');
+
         let id = page.items[0].id;
         let out_msgs: Array<Payload> = [];
-
+        
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
@@ -4829,7 +4834,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         
         // Some magic to change the ID of the alias, since speakers are not a property but separate objects
         if(v2Adapter == 'squeezeboxrpc') {
-            if(getObject(id).type != 'channel') {
+            if(id && getObject(id).type != 'channel') {
                 id = id + '.' + page.items[0].mediaDevice;
                 page.items[0].id = id;
                 page.heading = page.items[0].mediaDevice ?? '';
@@ -5385,6 +5390,7 @@ async function createAutoAlarmAlias (id: string, nsPath: string){
 function GenerateAlarmPage(page: PageAlarm): Payload[] {
     try {
         activePage = page;
+        
         let id = page.items[0].id
         let name = page.heading;
 
@@ -5393,6 +5399,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
         let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
         if (page.items[0].autoCreateALias) {
+            if (!id) throw new Error ('Missing pageItem.id for cardAlarm! Property autoCreateAlias is true!');
             createAutoAlarmAlias(id, nsPath);
         }
         
@@ -5556,6 +5563,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
         dpPath = (dpPath + 'Unlock.');
 
         if (page.items[0].autoCreateALias) {
+            if (!id) throw new Error ('Missing pageItem.id for cardUnlock! Property autoCreateAlias is true!');
             createAutoUnlockAlias(id, dpPath)            
         }
 
@@ -5623,7 +5631,7 @@ async function createAutoQRAlias(id:string, dpPath:string) {
 function GenerateQRPage(page: PageQR): Payload[] {
     try {
         activePage = page;
-
+        if (!page.items[0].id) throw new Error ('Missing pageItem.id for cardQRPage!');
         let id = page.items[0].id;
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
@@ -5740,6 +5748,8 @@ function subscribePowerSubscriptions(id: string): void {
 
 function GeneratePowerPage(page: PagePower): Payload[] {
     try {
+
+        if (!page.items[0].id) throw new Error ('Missing pageItem.id for PowerPage!');
 
         let obj:object = {};
         let demoMode = false;        
@@ -5962,7 +5972,8 @@ function HandleButtonEvent(words: any): void {
         let pageItemID: string = '';
 
         if (!isNaN(id)) {
-            pageItemID = activePage!.items[id].id;
+            if (activePage!.items[id].id == undefined) throw new Error ('Missing pageItem.id in HandleButtonEvent!');
+            pageItemID = activePage!.items[id].id!;
             if (Debug) {
                     log('HandleButtonEvent activePage: ' + activePage!.items.length + ' id: ' + id + ' tempid: ' + tempid + ' pageItemId: ' + pageItemID);
             }
@@ -7046,7 +7057,7 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
         let out_msgs: Array<Payload> = [];
         let id = pageItem.id;
 
-        if (existsObject(id)) {
+        if (id && existsObject(id)) {
 
             let o = getObject(id);
             let val: (boolean | number) = 0;
@@ -7898,7 +7909,7 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                         optionalString = pageItem.playList != undefined ? tempTrackList.join('?') : ''
                         mode = 'tracklist';
                     } else if (optional == 'equalizer') {
-                    
+                        if (pageItem.id == undefined) throw new Error ('Missing pageItem.id in equalizer!');
                         let lastIndex = (pageItem.id.split('.')).pop();
 
                         if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false || 
@@ -9306,13 +9317,13 @@ type Payload = {
     payload: string;
 };
 
-type Page = {
-    type: string,
+type PageBaseType = {
+    type: PagetypeType,
     heading: string,
     items: PageItem[],
     useColor: boolean,
     subPage?: boolean,
-    parent?: Page,
+    parent?: PageType,
     parentIcon?: string,
     parentIconColor?: RGB,
     prev?: string,
@@ -9326,58 +9337,67 @@ type Page = {
     homeIconColor?: RGB
 };
 
+type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower'
+
+type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower
+
+// If u get a error here u forgot something in PagetypeType or PageType
+function checkPageType(F: PagetypeType, A: PageType) {
+    A.type = F;
+}
+
 type PageEntities = {
     type: 'cardEntities',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageGrid = {
     type: 'cardGrid',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageGrid2 = {
     type: 'cardGrid2',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageThermo = {
     type: 'cardThermo',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageMedia = {
     type: 'cardMedia',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageAlarm = {
     type: 'cardAlarm',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageUnlock = {
     type: 'cardUnlock',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageQR = {
     type: 'cardQR',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PagePower = {
     type: 'cardPower',
     items: PageItem[],
-} & Page
+} & PageBaseType
 
 type PageChart = {
     type: 'cardChart' | 'cardLChart',
     items: PageItem[],
-} & Page
+} & Omit<PageBaseType, 'useColor'>
 
 type PageItem = {
-    id: string,
+    id?: string | null,
     icon?: string,
     icon2?: string,
     onColor?: RGB,
@@ -9472,8 +9492,8 @@ type Config = {
     defaultOnColor: RGB,
     defaultOffColor: RGB,
     defaultBackgroundColor: RGB,
-    pages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock )[],
-    subPages: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock)[],
+    pages: PageType[],
+    subPages: PageType[],
     button1: ConfigButtonFunction,
     button2: ConfigButtonFunction
 }
