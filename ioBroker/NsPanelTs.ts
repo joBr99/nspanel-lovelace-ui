@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.28 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.29 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -88,6 +88,8 @@ ReleaseNotes:
         - 30.12.2023 - v4.3.3.28 Fix short ID's in v4.3.3.27
         - 30.12.2023 - v4.3.3.28 Fix window Icons in CreateEntity 
         - 30.12.2023 - v4.3.3.28 Add MQTT-Client Check
+        - 02.01.2024 - v4.3.3.29 Add Tasmota Buzzer for NotifyPage
+        - 02.02.2024 - v4.3.3.29 Fix ThermoPage -> UnSubScribsWatcher
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -964,7 +966,7 @@ export const config = <Config> {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.28';
+const scriptVersion: string = 'v4.3.3.29';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2002,9 +2004,11 @@ const popupNotifyLayout = NSPanel_Path + 'popupNotify.popupNotifyLayout';
 const popupNotifyFontIdText = NSPanel_Path + 'popupNotify.popupNotifyFontIdText';  // 1 - 5
 const popupNotifyIcon = NSPanel_Path + 'popupNotify.popupNotifyIcon';  // 1 - 5
 const popupNotifyIconColor = NSPanel_Path + 'popupNotify.popupNotifyIconColor';  // 1 - 5
+const popupNotifyBuzzer = NSPanel_Path + 'popupNotify.popupNotifyBuzzer';  // 1,1,1 -> off 0
 
 async function InitPopupNotify() {
     try {
+
         if (!existsState(screensaverNotifyHeading)) {
             await createStateAsync(screensaverNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
             await setStateAsync(screensaverNotifyHeading, <iobJS.State>{ val: '', ack: true });
@@ -2030,6 +2034,7 @@ async function InitPopupNotify() {
         await createStateAsync(popupNotifyFontIdText, <iobJS.StateCommon>{ type: 'number' });
         await createStateAsync(popupNotifyIcon, <iobJS.StateCommon>{ type: 'string' });
         await createStateAsync(popupNotifyIconColor, <iobJS.StateCommon>{ type: 'string' });
+        await createStateAsync(popupNotifyBuzzer,<iobJS.StateCommon>{type: 'string', def: '0'});
 
         // Notification to screensaver
         on({ id: [screensaverNotifyHeading, screensaverNotifyText], change: 'ne', ack: false }, async (obj) => {
@@ -2049,6 +2054,7 @@ async function InitPopupNotify() {
         //on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
         on({ id: [].concat([popupNotifyText]), change: 'any' }, async() => {
 
+            
             let notification: string;
 
             let v_popupNotifyHeadingColor = (getState(popupNotifyHeadingColor).val != null) ? getState(popupNotifyHeadingColor).val  : '65504'// Farbe Headline - gelb 65504
@@ -2058,7 +2064,8 @@ async function InitPopupNotify() {
             let v_popupNotifyIconColor = (getState(popupNotifyIconColor).val != null) ? getState(popupNotifyIconColor).val  : '65535'// Farbe Icon - weiss 65535
             let v_popupNotifyFontIdText = (getState(popupNotifyFontIdText).val != null) ? getState(popupNotifyFontIdText).val  : '1'
             let v_popupNotifyIcon = (getState(popupNotifyIcon).val != null) ? getState(popupNotifyIcon).val : 'alert'
-
+            let v_popupNotifyBuzzer = (getState(popupNotifyBuzzer).val != null) ? getState(popupNotifyBuzzer).val : '0';
+            
             notification = 'entityUpdateDetail' + '~'
                 + getState(popupNotifyInternalName).val + '~'
                 + getState(popupNotifyHeading).val + '~'
@@ -2080,6 +2087,35 @@ async function InitPopupNotify() {
 
             setIfExists(config.panelSendTopic, 'pageType~popupNotify');
             setIfExists(config.panelSendTopic, notification);
+
+            //------ Tasmota Buzzer ------
+            
+            if (v_popupNotifyBuzzer != '0') {
+                if (Debug){
+                    log('Tasmota Buzzer enabled. Value: ' + v_popupNotifyBuzzer, 'info');
+                }
+                let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Buzzer ${v_popupNotifyBuzzer}`;
+                if (tasmota_web_admin_password != '') {
+                    urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Buzzer ${v_popupNotifyBuzzer}`;
+                }
+
+                axios.get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
+                    .then(async function (response) {
+                        if (response.status === 200) {
+                            log('Axios Data: ' + JSON.stringify(response.data), 'info');
+                        } else {
+                            log('Axios Status - Tasmota Buzzer: ' + response.state, 'warn');
+                        }
+                    })
+                    .catch(function (error) {
+                        log(error, 'warn');
+                    });
+            } else {
+                if (Debug){
+                    log('Tasmota Buzzer disabled', 'info');
+                }
+            }
+            //---- Tasmota Buzzer -----
 
         });
     } catch (err) {
@@ -4198,6 +4234,7 @@ function GetUnitOfMeasurement(id: string): string {
 
 function GenerateThermoPage(page: PageThermo): Payload[] {
     try {
+        UnsubscribeWatcher();
         let id = page.items[0].id
         let out_msgs: Array<Payload> = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
@@ -8446,7 +8483,7 @@ function HandleScreensaverStatusIcons() : void {
                 if (hwBtn1 == 'ON') {
                     hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
                 }
-                if (Debug) log(hwBtn1 + ' ' + hwBtn1Col, 'info')
+                if (Debug) log('Value: ' + hwBtn1 + ' Color: ' + JSON.stringify(hwBtn1Col), 'info')
 
                 // Icon ermitteln
                 if (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) {
