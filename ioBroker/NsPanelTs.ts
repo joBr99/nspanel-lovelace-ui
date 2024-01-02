@@ -392,33 +392,33 @@ let Debug: boolean = false;
 */
 
 //Level 0 (if service pages are used with cardUnlock)
-let Unlock_Service = <PageUnlock>
+let Unlock_Service: PageUnlock = 
 {
     'type': 'cardUnlock',
     'heading': findLocaleServMenu('service_pages'),
     'useColor': true,
-    'items': [<PageItem>{ id: 'alias.0.NSPanel.Unlock',
+    'items': [/*PageItem*/{ id: 'alias.0.NSPanel.Unlock',
                           targetPage: 'NSPanel_Service_SubPage',
                           autoCreateALias: true }
     ]
 };
 
 //Level_0 (if service pages are used without cardUnlock)
-let NSPanel_Service = <PageEntities>
+let NSPanel_Service: PageEntities = 
 {
     'type': 'cardEntities',
     'heading': findLocaleServMenu('service_menu'),
     'useColor': true,
     'items': [
-        <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
-        <PageItem>{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
-        <PageItem>{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
-        <PageItem>{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
     ]
 };
 
 //Level_0 (if service pages are used with cardUnlock)
-let NSPanel_Service_SubPage = <PageEntities>
+let NSPanel_Service_SubPage: PageEntities = 
 {
     'type': 'cardEntities',
     'heading': findLocaleServMenu('service_menu'),
@@ -427,15 +427,15 @@ let NSPanel_Service_SubPage = <PageEntities>
     'parent': Unlock_Service,
     'home': 'Unlock_Service', 
     'items': [
-        <PageItem>{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
-        <PageItem>{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
-        <PageItem>{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
-        <PageItem>{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
     ]
 };
 
         //Level_1
-        let NSPanel_Infos = <PageEntities>
+        let NSPanel_Infos: PageEntities = 
         {
             'type': 'cardEntities',
             'heading': findLocaleServMenu('nspanel_infos'),
@@ -444,14 +444,14 @@ let NSPanel_Service_SubPage = <PageEntities>
             'parent': NSPanel_Service,
             'home': 'NSPanel_Service',        
             'items': [
-                <PageItem>{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
-                <PageItem>{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
-                <PageItem>{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
-                <PageItem>{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
+                /*PageItem*/{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
+                /*PageItem*/{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
+                /*PageItem*/{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
+                /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
             ]
         };
                 //Level_2
-                let NSPanel_Wifi_Info_1 = <PageEntities>
+                let NSPanel_Wifi_Info_1: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('nspanel_wifi1'),
@@ -460,14 +460,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Infos,
                     'next': 'NSPanel_Wifi_Info_2',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'ipAddress', name: findLocaleServMenu('ip_address'), icon: 'ip-network-outline', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.BSSId', name: findLocaleServMenu('mac_address'), icon: 'check-network', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: findLocaleServMenu('rssi'), icon: 'signal', unit: '%', colorScale: {'val_min': 100, 'val_max': 0} },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.Signal', name: findLocaleServMenu('wifi_signal'), icon: 'signal-distance-variant', unit: 'dBm', colorScale: {'val_min': 0, 'val_max': -100} },
+                        /*PageItem*/{ id: AliasPath + 'ipAddress', name: findLocaleServMenu('ip_address'), icon: 'ip-network-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.BSSId', name: findLocaleServMenu('mac_address'), icon: 'check-network', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: findLocaleServMenu('rssi'), icon: 'signal', unit: '%', colorScale: {'val_min': 100, 'val_max': 0} },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Signal', name: findLocaleServMenu('wifi_signal'), icon: 'signal-distance-variant', unit: 'dBm', colorScale: {'val_min': 0, 'val_max': -100} },
                     ]
                 };
 
-                let NSPanel_Wifi_Info_2 = <PageEntities>
+                let NSPanel_Wifi_Info_2: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('nspanel_wifi2'),
@@ -476,14 +476,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'prev': 'NSPanel_Wifi_Info_1',
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.SSId', name: findLocaleServMenu('ssid'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.Mode', name: findLocaleServMenu('mode'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.Channel', name: findLocaleServMenu('channel'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Wifi.AP', name: findLocaleServMenu('accesspoint'), icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.SSId', name: findLocaleServMenu('ssid'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Mode', name: findLocaleServMenu('mode'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Channel', name: findLocaleServMenu('channel'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.AP', name: findLocaleServMenu('accesspoint'), icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
                     ]
                 };
 
-                let NSPanel_Sensoren = <PageEntities>
+                let NSPanel_Sensoren: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('sensors1'),
@@ -492,14 +492,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Infos,
                     'next': 'NSPanel_Hardware',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Sensor.ANALOG.Temperature', name: findLocaleServMenu('room_temperature'), icon: 'home-thermometer-outline', unit: '°C', colorScale: {'val_min': 0, 'val_max': 40, 'val_best': 22 } },
-                        <PageItem>{ id: AliasPath + 'Sensor.ESP32.Temperature', name: findLocaleServMenu('esp_temperature'), icon: 'thermometer', unit: '°C', colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 50 } },
-                        <PageItem>{ id: AliasPath + 'Sensor.TempUnit', name: findLocaleServMenu('temperature_unit'), icon: 'temperature-celsius', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Sensor.Time', name: findLocaleServMenu('refresh'), icon: 'clock-check-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.ANALOG.Temperature', name: findLocaleServMenu('room_temperature'), icon: 'home-thermometer-outline', unit: '°C', colorScale: {'val_min': 0, 'val_max': 40, 'val_best': 22 } },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.ESP32.Temperature', name: findLocaleServMenu('esp_temperature'), icon: 'thermometer', unit: '°C', colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 50 } },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.TempUnit', name: findLocaleServMenu('temperature_unit'), icon: 'temperature-celsius', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.Time', name: findLocaleServMenu('refresh'), icon: 'clock-check-outline', offColor: Menu, onColor: Menu },
                     ]
                 };
 
-                let NSPanel_Hardware = <PageEntities>
+                let NSPanel_Hardware: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('hardware2'),
@@ -508,14 +508,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'prev': 'NSPanel_Sensoren',
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Tasmota.Product', name: findLocaleServMenu('product'), icon: 'devices', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Hardware', name: findLocaleServMenu('esp32_hardware'), icon: 'memory', offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_version'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota.Uptime', name: findLocaleServMenu('operating_time'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Product', name: findLocaleServMenu('product'), icon: 'devices', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Hardware', name: findLocaleServMenu('esp32_hardware'), icon: 'memory', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_version'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Uptime', name: findLocaleServMenu('operating_time'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
                     ]
                 };
 
-                let NSPanel_IoBroker = <PageEntities>
+                let NSPanel_IoBroker: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('info_iobroker'),
@@ -524,14 +524,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Infos,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
                     ]
                 };
 
         //Level_1
-        let NSPanel_Einstellungen = <PageGrid>
+        let NSPanel_Einstellungen: PageGrid = 
             {
                 'type': 'cardGrid',
                 'heading': findLocaleServMenu('settings'),
@@ -540,20 +540,20 @@ let NSPanel_Service_SubPage = <PageEntities>
                 'parent': NSPanel_Service,
                 'home': 'NSPanel_Service',
                 'items': [
-                    <PageItem>{ navigate: true, id: 'NSPanel_Screensaver', icon: 'monitor-dashboard',offColor: Menu, onColor: Menu, name: findLocaleServMenu('screensaver'), buttonText: findLocaleServMenu('more')},
-                    <PageItem>{ navigate: true, id: 'NSPanel_Relays', icon: 'electric-switch', offColor: Menu, onColor: Menu, name: findLocaleServMenu('relays'), buttonText: findLocaleServMenu('more')},
-                    <PageItem>{ id:AliasPath + 'Config.temperatureUnitNumber', icon: 'gesture-double-tap', name: findLocaleServMenu('temp_unit'), offColor: Menu, onColor: Menu, 
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_Screensaver', icon: 'monitor-dashboard',offColor: Menu, onColor: Menu, name: findLocaleServMenu('screensaver'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_Relays', icon: 'electric-switch', offColor: Menu, onColor: Menu, name: findLocaleServMenu('relays'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ id:AliasPath + 'Config.temperatureUnitNumber', icon: 'gesture-double-tap', name: findLocaleServMenu('temp_unit'), offColor: Menu, onColor: Menu, 
                     modeList: ['°C', '°F', 'K']},
-                    <PageItem>{ id: AliasPath + 'Config.localeNumber', icon: 'select-place', name: findLocaleServMenu('language'), offColor: Menu, onColor: Menu, 
+                    /*PageItem*/{ id: AliasPath + 'Config.localeNumber', icon: 'select-place', name: findLocaleServMenu('language'), offColor: Menu, onColor: Menu, 
                     modeList: ['en-US', 'de-DE', 'nl-NL', 'da-DK', 'es-ES', 'fr-FR', 'it-IT', 'ru-RU', 'nb-NO', 'nn-NO', 'pl-PL', 'pt-PT', 'af-ZA', 'ar-SY', 
                                'bg-BG', 'ca-ES', 'cs-CZ', 'el-GR', 'et-EE', 'fa-IR', 'fi-FI', 'he-IL', 'hr-xx', 'hu-HU', 'hy-AM', 'id-ID', 'is-IS', 'lb-xx', 
                                'lt-LT', 'ro-RO', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR', 'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW']},
-                   <PageItem>{ navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: findLocaleServMenu('script'), buttonText: findLocaleServMenu('more')},            
+                   /*PageItem*/{ navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: findLocaleServMenu('script'), buttonText: findLocaleServMenu('more')},            
                 ]
             };
 
                 //Level_2
-                let NSPanel_Screensaver = <PageGrid>
+                let NSPanel_Screensaver: PageGrid = 
                 {
                     'type': 'cardGrid',
                     'heading': findLocaleServMenu('screensaver'),
@@ -562,17 +562,17 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: findLocaleServMenu('dimmode')},
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: findLocaleServMenu('brightness')},
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('layout')},
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: findLocaleServMenu('weather')},
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: findLocaleServMenu('date_format')},
-                        <PageItem>{ navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('indicators')}
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: findLocaleServMenu('dimmode')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: findLocaleServMenu('brightness')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('layout')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: findLocaleServMenu('weather')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: findLocaleServMenu('date_format')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('indicators')}
                     ]
                 };
                             
                         //Level_3
-                        let NSPanel_ScreensaverDimmode = <PageEntities>
+                        let NSPanel_ScreensaverDimmode: PageEntities = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('dimmode'),
@@ -581,15 +581,15 @@ let NSPanel_Service_SubPage = <PageEntities>
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                <PageItem>{ id: AliasPath + 'Dimmode.brightnessDay', name: findLocaleServMenu('brightness_day'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
-                                <PageItem>{ id: AliasPath + 'Dimmode.brightnessNight', name: findLocaleServMenu('brightness_night'), icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
-                                <PageItem>{ id: AliasPath + 'Dimmode.hourDay', name: findLocaleServMenu('hour_day'), icon: 'sun-clock', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23},
-                                <PageItem>{ id: AliasPath + 'Dimmode.hourNight', name: findLocaleServMenu('hour_night'), icon: 'sun-clock-outline', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23}
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.brightnessDay', name: findLocaleServMenu('brightness_day'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.brightnessNight', name: findLocaleServMenu('brightness_night'), icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.hourDay', name: findLocaleServMenu('hour_day'), icon: 'sun-clock', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23},
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.hourNight', name: findLocaleServMenu('hour_night'), icon: 'sun-clock-outline', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23}
                             ]
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverBrightness = <PageEntities>
+                        let NSPanel_ScreensaverBrightness: PageEntities = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('brightness'),
@@ -598,14 +598,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                <PageItem>{ id: AliasPath + 'ScreensaverInfo.activeBrightness', name: findLocaleServMenu('brightness_activ'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: findLocaleServMenu('screensaver_timeout'), icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: findLocaleServMenu('wakeup_doublecklick') ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.activeBrightness', name: findLocaleServMenu('brightness_activ'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: findLocaleServMenu('screensaver_timeout'), icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: findLocaleServMenu('wakeup_doublecklick') ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
                             ]
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverLayout = <PageEntities>
+                        let NSPanel_ScreensaverLayout: PageEntities = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('layout'),
@@ -614,13 +614,13 @@ let NSPanel_Service_SubPage = <PageEntities>
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverWeather = <PageEntities>
+                        let NSPanel_ScreensaverWeather: PageEntities = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('weather_parameters'),
@@ -629,15 +629,15 @@ let NSPanel_Service_SubPage = <PageEntities>
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                <PageItem>{ id: AliasPath + 'ScreensaverInfo.weatherForecast', name: findLocaleServMenu('weather_forecast_offon') ,icon: 'weather-sunny-off', offColor: HMIOff, onColor: HMIOn},
-                                <PageItem>{ id: AliasPath + 'ScreensaverInfo.weatherForecastTimer', name: findLocaleServMenu('weather_forecast_change_switch') ,icon: 'devices', offColor: HMIOff, onColor: HMIOn},
-                                <PageItem>{ id: AliasPath + 'ScreensaverInfo.entityChangeTime', name: findLocaleServMenu('weather_forecast_change_time'), icon: 'cog-sync', offColor: Menu, onColor: Menu, minValue: 15, maxValue: 60},
-                                <PageItem>{ id: AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', name: findLocaleServMenu('weather_forecast_icon_colors') ,icon: 'format-color-fill', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.weatherForecast', name: findLocaleServMenu('weather_forecast_offon') ,icon: 'weather-sunny-off', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.weatherForecastTimer', name: findLocaleServMenu('weather_forecast_change_switch') ,icon: 'devices', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.entityChangeTime', name: findLocaleServMenu('weather_forecast_change_time'), icon: 'cog-sync', offColor: Menu, onColor: Menu, minValue: 15, maxValue: 60},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', name: findLocaleServMenu('weather_forecast_icon_colors') ,icon: 'format-color-fill', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverDateformat = <PageEntities>
+                        let NSPanel_ScreensaverDateformat: PageEntities = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('date_format'),
@@ -646,13 +646,13 @@ let NSPanel_Service_SubPage = <PageEntities>
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                <PageItem>{ id: AliasPath + 'Config.Dateformat.Switch.weekday', name: findLocaleServMenu('weekday_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
-                                <PageItem>{ id: AliasPath + 'Config.Dateformat.Switch.month', name: findLocaleServMenu('month_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Dateformat.Switch.weekday', name: findLocaleServMenu('weekday_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Dateformat.Switch.month', name: findLocaleServMenu('month_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverIndicators = <PageEntities>
+                        let NSPanel_ScreensaverIndicators: PageEntities = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('indicators'),
@@ -661,13 +661,13 @@ let NSPanel_Service_SubPage = <PageEntities>
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                <PageItem>{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.1', name: findLocaleServMenu('mr_icon1_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
-                                <PageItem>{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.2', name: findLocaleServMenu('mr_icon2_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.1', name: findLocaleServMenu('mr_icon1_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.2', name: findLocaleServMenu('mr_icon2_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
                 //Level_2
-                let NSPanel_Relays = <PageEntities>
+                let NSPanel_Relays: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('relays'),
@@ -676,13 +676,13 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Relay.1', name: findLocaleServMenu('relay1_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
-                        <PageItem>{ id: AliasPath + 'Relay.2', name: findLocaleServMenu('relay2_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Relay.1', name: findLocaleServMenu('relay1_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Relay.2', name: findLocaleServMenu('relay2_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
                 //Level_2
-                let NSPanel_Script = <PageEntities>
+                let NSPanel_Script: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('script'),
@@ -691,13 +691,13 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Config.ScripgtDebugStatus', name: findLocaleServMenu('debugmode_offon') ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
-                        <PageItem>{ id: AliasPath + 'Config.MQTT.portCheck', name: findLocaleServMenu('port_check_offon') ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Config.ScripgtDebugStatus', name: findLocaleServMenu('debugmode_offon') ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Config.MQTT.portCheck', name: findLocaleServMenu('port_check_offon') ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
         //Level_1
-        let NSPanel_Firmware = <PageEntities>
+        let NSPanel_Firmware: PageEntities = 
             {
                 'type': 'cardEntities',
                 'heading': findLocaleServMenu('firmware'),
@@ -706,14 +706,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                 'parent': NSPanel_Service,
                 'home': 'NSPanel_Service',
                 'items': [
-                    <PageItem>{ id: AliasPath + 'autoUpdate', name: findLocaleServMenu('automatically_updates') ,icon: 'power', offColor: HMIOff, onColor: HMIOn},
-                    <PageItem>{ navigate: true, id: 'NSPanel_FirmwareTasmota', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('tasmota_firmware'), buttonText: findLocaleServMenu('more')},
-                    <PageItem>{ navigate: true, id: 'NSPanel_FirmwareBerry', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('berry_driver'), buttonText: findLocaleServMenu('more')},
-                    <PageItem>{ navigate: true, id: 'NSPanel_FirmwareNextion', icon: 'cellphone-cog', offColor: Menu, onColor: Menu, name: findLocaleServMenu('nextion_tft_firmware'), buttonText: findLocaleServMenu('more')}
+                    /*PageItem*/{ id: AliasPath + 'autoUpdate', name: findLocaleServMenu('automatically_updates') ,icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareTasmota', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('tasmota_firmware'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareBerry', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('berry_driver'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareNextion', icon: 'cellphone-cog', offColor: Menu, onColor: Menu, name: findLocaleServMenu('nextion_tft_firmware'), buttonText: findLocaleServMenu('more')}
                 ]
             };
 
-                let NSPanel_FirmwareTasmota = <PageEntities>
+                let NSPanel_FirmwareTasmota: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('tasmota'),
@@ -722,14 +722,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Tasmota.Version', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Tasmota_Firmware.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu },                        
-                        <PageItem>{ id: 'Divider' },
-                        <PageItem>{ id: AliasPath + 'Config.Update.UpdateTasmota', name: findLocaleServMenu('update_tasmota') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Version', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota_Firmware.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu },                        
+                        /*PageItem*/{ id: 'Divider' },
+                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateTasmota', name: findLocaleServMenu('update_tasmota') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
-                let NSPanel_FirmwareBerry = <PageEntities>
+                let NSPanel_FirmwareBerry: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('berry_driver'),
@@ -738,14 +738,14 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Display.BerryDriver', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Berry_Driver.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu},                        
-                        <PageItem>{ id: 'Divider' },
-                        <PageItem>{ id: AliasPath + 'Config.Update.UpdateBerry', name: findLocaleServMenu('update_berry_driver') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        /*PageItem*/{ id: AliasPath + 'Display.BerryDriver', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Berry_Driver.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu},                        
+                        /*PageItem*/{ id: 'Divider' },
+                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateBerry', name: findLocaleServMenu('update_berry_driver') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
-                let NSPanel_FirmwareNextion = <PageEntities>
+                let NSPanel_FirmwareNextion: PageEntities = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('nextion_tft'),
@@ -754,10 +754,10 @@ let NSPanel_Service_SubPage = <PageEntities>
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        <PageItem>{ id: AliasPath + 'Display_Firmware.TFT.currentVersion', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Display_Firmware.TFT.desiredVersion', name: findLocaleServMenu('desired_release'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_model'), offColor: Menu, onColor: Menu },
-                        <PageItem>{ id: AliasPath + 'Config.Update.UpdateNextion', name: 'Nextion TFT Update' ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        /*PageItem*/{ id: AliasPath + 'Display_Firmware.TFT.currentVersion', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Display_Firmware.TFT.desiredVersion', name: findLocaleServMenu('desired_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_model'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateNextion', name: 'Nextion TFT Update' ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -809,7 +809,7 @@ export const config: Config = {
     leftScreensaverEntity: [
         // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
     ],
-
+    
     bottomScreensaverEntity: [
         // bottomScreensaverEntity 1
         {
@@ -1905,7 +1905,7 @@ async function InitDimmode() {
             }
             const vTimeDay = getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val;
             const vTimeNight = getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val;
-            const timeDimMode = <DimMode>{
+            const timeDimMode: DimMode = {
                 dimmodeOn: true,
                 brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
                 brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
@@ -3580,7 +3580,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                         if (existsState(pageItem.id + '.HUE')) {
                             if (getState(pageItem.id + '.HUE').val != null) {
                                 let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
-                                let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) };
+                                let rgb: RGB = { red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) };
                                 iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                             }
                         }
@@ -3631,7 +3631,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             let rgbRed = getState(pageItem.id + '.RED').val;
                             let rgbGreen = getState(pageItem.id + '.GREEN').val;
                             let rgbBlue = getState(pageItem.id + '.BLUE').val;
-                            let rgb = <RGB>{ red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue) };
+                            let rgb: RGB = { red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue) };
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
                     } 
@@ -3663,7 +3663,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                             let hexRed = parseInt(hex[1] + hex[2], 16);
                             let hexGreen = parseInt(hex[3] + hex[4], 16);
                             let hexBlue = parseInt(hex[5] + hex[6], 16);
-                            let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) };
+                            let rgb: RGB = { red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) };
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
                     } 
@@ -7192,7 +7192,7 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                         if (getState(id + '.HUE').val != null) {
                             colorMode = 'enable';
                             let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
-                            let rgb = <RGB>{ red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) }
+                            let rgb: RGB = { red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2]) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
                     }
@@ -7263,7 +7263,7 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                     if (existsState(id + '.RED') && existsState(id + '.GREEN') && existsState(id + '.BLUE')) {
                         if (getState(id + '.RED').val != null && getState(id + '.GREEN').val != null && getState(id + '.BLUE').val != null) {
                             colorMode = 'enable';
-                            let rgb = <RGB>{ red: Math.round(getState(id + '.RED').val), green: Math.round(getState(id + '.GREEN').val), blue: Math.round(getState(id + '.BLUE').val) }
+                            let rgb: RGB = { red: Math.round(getState(id + '.RED').val), green: Math.round(getState(id + '.GREEN').val), blue: Math.round(getState(id + '.BLUE').val) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
                     }
@@ -7338,7 +7338,7 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             let hexRed = parseInt(hex[1] + hex[2], 16);
                             let hexGreen = parseInt(hex[3] + hex[4], 16);
                             let hexBlue = parseInt(hex[5] + hex[6], 16);
-                            let rgb = <RGB>{ red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) }
+                            let rgb: RGB = { red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue) }
                             iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                         }
                     }
@@ -9119,7 +9119,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 });
 //------------------End Read Internal Sensor Data
 
-function formatInSelText(Text: string ) : string { 
+function formatInSelText(Text: string ): string { 
     let splitText = Text.split(' ');
     let lengthLineOne = 0;
     let arrayLineOne: string[] = [];
@@ -9171,44 +9171,46 @@ function rgb_dec565(rgb: RGB): number {
     return ((rgb.red >> 3) << 11) | ((rgb.green >> 2)) << 5 | ((rgb.blue) >> 3);
 }
 
-/* Convert radians to degrees
-rad - radians to convert, expects rad in range +/- PI per Math.atan2
-returns {number} degrees equivalent of rad
-*/
-function rad2deg(rad) {
+/**
+ * Convert radians to degrees
+ * @param rad radians to convert, expects rad in range +/- PI per Math.atan2
+ * @returns {number} degrees equivalent of rad
+ */
+function rad2deg(rad): number {
     return (360 + 180 * rad / Math.PI) % 360;
 }
 
-function ColorToHex(color) {
-    let hexadecimal = color.toString(16);
+function ColorToHex(color): string {
+    let hexadecimal: string = color.toString(16);
     return hexadecimal.length == 1 ? '0' + hexadecimal : hexadecimal;
 }
 
-function ConvertRGBtoHex(red: number, green: number, blue: Number) {
+function ConvertRGBtoHex(red: number, green: number, blue: Number): string {
     return '#' + ColorToHex(red) + ColorToHex(green) + ColorToHex(blue);
 }
 
-/* Convert h,s,v values to r,g,b
-hue - in range [0, 360]
-saturation - in range 0 to 1
-value - in range 0 to 1
-returns {Array|number} [r, g,b] in range 0 to 255
+/**
+ * Convert h,s,v values to r,g,b
+ * @param hue in range [0, 360]
+ * @param saturation in range 0 to 1
+ * @param value in range 0 to 1
+ * @returns {[number, number, number]} [r, g,b] in range 0 to 255
  */
-function hsv2rgb(hue: number, saturation: number, value: number) {
+function hsv2rgb(hue: number, saturation: number, value: number): [number, number, number] {
     hue /= 60;
     let chroma = value * saturation;
     let x = chroma * (1 - Math.abs((hue % 2) - 1));
-    let rgb = hue <= 1 ? [chroma, x, 0] :
+    let rgb: [number, number, number] = hue <= 1 ? [chroma, x, 0] :
         hue <= 2 ? [x, chroma, 0] :
             hue <= 3 ? [0, chroma, x] :
                 hue <= 4 ? [0, x, chroma] :
                     hue <= 5 ? [x, 0, chroma] :
                         [chroma, 0, x];
 
-    return rgb.map(v => (v + value - chroma) * 255);
+    return rgb.map(v => (v + value - chroma) * 255) as [number, number, number];
 }
 
-function getHue(red: number, green: number, blue: number) {
+function getHue(red: number, green: number, blue: number): number {
 
     let min = Math.min(Math.min(red, green), blue);
     let max = Math.max(Math.max(red, green), blue);
@@ -9250,10 +9252,17 @@ function pos_to_color(x: number, y: number): RGB {
     let hsv = rad2deg(Math.atan2(y, x));
     let rgb = hsv2rgb(hsv, sat, 1);
 
-    return <RGB>{ red: Math.round(rgb[0]), green: Math.round(rgb[1]), blue: Math.round(rgb[2]) };
+    return { red: Math.round(rgb[0]), green: Math.round(rgb[1]), blue: Math.round(rgb[2]) };
 }
 
-function rgb_to_cie(red, green, blue)
+/**
+ * 
+ * @param red 
+ * @param green 
+ * @param blue 
+ * @returns 
+ */
+function rgb_to_cie(red: number, green: number, blue: number): string
 {
    //Apply a gamma correction to the RGB values, which makes the color more vivid and more the like the color displayed on the screen of your device
    let vred   = (red > 0.04045) ? Math.pow((red + 0.055) / (1.0 + 0.055), 2.4) : (red / 12.92);
@@ -9272,13 +9281,17 @@ function rgb_to_cie(red, green, blue)
 
    return cie;
 }
-
-function spotifyGetDeviceID(vDeviceString) {
-    const availableDeviceIDs = getState("spotify-premium.0.devices.availableDeviceListIds").val;
-    const availableDeviceNames = getState("spotify-premium.0.devices.availableDeviceListString").val;
-    let arrayDeviceListIds = availableDeviceIDs.split(";");
-    let arrayDeviceListSting = availableDeviceNames.split(";");
-    let indexPos = arrayDeviceListSting.indexOf(vDeviceString);
+/**
+ * 
+ * @param vDeviceString 
+ * @returns 
+ */
+function spotifyGetDeviceID(vDeviceString: string): string {
+    const availableDeviceIDs: string = getState("spotify-premium.0.devices.availableDeviceListIds").val;
+    const availableDeviceNames: string = getState("spotify-premium.0.devices.availableDeviceListString").val;
+    let arrayDeviceListIds: string[] = availableDeviceIDs.split(";");
+    let arrayDeviceListSting: string[] = availableDeviceNames.split(";");
+    let indexPos: number = arrayDeviceListSting.indexOf(vDeviceString);
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
@@ -9297,138 +9310,138 @@ type Page = {
     type: string,
     heading: string,
     items: PageItem[],
-    useColor: (boolean | false),
-    subPage: (boolean | false),
-    parent: (Page | undefined),
-    parentIcon: (string | undefined),
-    parentIconColor: (RGB | undefined),
-    prev: (string | undefined),
-    prevIcon: (string | undefined),
-    prevIconColor: (RGB | undefined),
-    next: (string | undefined),
-    nextIcon: (string | undefined),
-    nextIconColor: (RGB | undefined),
-    home: (string | undefined),
-    homeIcon: (string | undefined),
-    homeIconColor: (RGB | undefined)
+    useColor: boolean,
+    subPage?: boolean,
+    parent?: Page,
+    parentIcon?: string,
+    parentIconColor?: RGB,
+    prev?: string,
+    prevIcon?: string,
+    prevIconColor?: RGB,
+    next?: string,
+    nextIcon?: string,
+    nextIconColor?: RGB,
+    home?: string,
+    homeIcon?: string,
+    homeIconColor?: RGB
 };
 
-interface PageEntities extends Page {
+type PageEntities = {
     type: 'cardEntities',
     items: PageItem[],
-}
+} & Page
 
-interface PageGrid extends Page {
+type PageGrid = {
     type: 'cardGrid',
     items: PageItem[],
-}
+} & Page
 
-interface PageGrid2 extends Page {
+type PageGrid2 = {
     type: 'cardGrid2',
     items: PageItem[],
-}
+} & Page
 
-interface PageThermo extends Page {
+type PageThermo = {
     type: 'cardThermo',
     items: PageItem[],
-}
+} & Page
 
-interface PageMedia extends Page {
+type PageMedia = {
     type: 'cardMedia',
     items: PageItem[],
-}
+} & Page
 
-interface PageAlarm extends Page {
+type PageAlarm = {
     type: 'cardAlarm',
     items: PageItem[],
-}
+} & Page
 
-interface PageUnlock extends Page {
+type PageUnlock = {
     type: 'cardUnlock',
     items: PageItem[],
-}
+} & Page
 
-interface PageQR extends Page {
+type PageQR = {
     type: 'cardQR',
     items: PageItem[],
-}
+} & Page
 
-interface PagePower extends Page {
+type PagePower = {
     type: 'cardPower',
     items: PageItem[],
-}
+} & Page
 
-interface PageChart extends Page {
+type PageChart = {
     type: 'cardChart' | 'cardLChart',
     items: PageItem[],
-}
+} & Page
 
 type PageItem = {
     id: string,
-    icon: (string | undefined),
-    icon2: (string | undefined),
-    onColor: (RGB | undefined),
-    offColor: (RGB | undefined),
-    useColor: (boolean | undefined),
-    interpolateColor: (boolean | undefined),
-    minValueBrightness: (number | undefined),
-    maxValueBrightness: (number | undefined),
-    minValueColorTemp: (number | undefined),
-    maxValueColorTemp: (number | undefined),
-    minValueLevel: (number | undefined),
-    maxValueLevel: (number | undefined),
-    minValueTilt: (number | undefined),
-    maxValueTilt: (number | undefined),
-    minValue: (number | undefined),
-    maxValue: (number | undefined),
-    stepValue: (number | undefined),
-    prefixName: (string | undefined),
-    suffixName: (string | undefined),
-    name: (string | undefined),
-    secondRow: (string | undefined),
-    buttonText: (string | undefined),
-    unit: (string | undefined),
-    navigate: (boolean | undefined),
-    colormode: (string | undefined),
-    colorScale: (any | undefined), 
-    adapterPlayerInstance: (string | undefined),
-    mediaDevice: (string | undefined),
-    targetPage: (string | undefined),
-    speakerList: (string[] | undefined),
-    playList: (string[] | undefined),
-    equalizerList: (string[] | undefined),
-    repeatList: (string[] | undefined),
-    globalTracklist: (string[] | undefined), 
-    modeList: (string[] | undefined),
-    hidePassword: (boolean | undefined),
-    autoCreateALias: (boolean | undefined)
-    colorMediaIcon: (RGB | undefined),
-    colorMediaArtist: (RGB | undefined),
-    colorMediaTitle: (RGB | undefined),
-    popupThermoMode1: (string[] | undefined),
-    popupThermoMode2: (string[] | undefined),
-    popupThermoMode3: (string[] | undefined),
-    popUpThermoName: (string[] | undefined),
-    popupMediaMode1: (string[] | undefined),
-    popupMediaMode2: (string[] | undefined),
-    popupMediaMode3: (string[] | undefined),
-    popUpMediaName: (string[] | undefined),
-    setThermoAlias: (string[] | undefined),
-    setThermoDestTemp2: (string | undefined),
-    yAxis: (string | undefined),
-    yAxisTicks: (number[] | string | undefined),
-    xAxisDecorationId: (string | undefined),
-    popupType: (string | undefined),
-    popupOptions: (string[] | undefined),
-    useValue: (boolean | undefined),
-    monobutton: (boolean | undefined),
-    inSel_ChoiceState: (boolean | undefined),
-    iconArray: (string[] | undefined),
-    fontSize: (number | undefined),
-    actionStringArray: (string[] | undefined),
-    popupTimerType: (string | undefined),
-    alwaysOnDisplay: (boolean | undefined),
-    crossfade: (boolean | undefined),
+    icon?: string,
+    icon2?: string,
+    onColor?: RGB,
+    offColor?: RGB,
+    useColor?: boolean,
+    interpolateColor?: boolean,
+    minValueBrightness?: number,
+    maxValueBrightness?: number,
+    minValueColorTemp?: number,
+    maxValueColorTemp?: number,
+    minValueLevel?: number,
+    maxValueLevel?: number,
+    minValueTilt?: number,
+    maxValueTilt?: number,
+    minValue?: number,
+    maxValue?: number,
+    stepValue?: number,
+    prefixName?: string,
+    suffixName?: string,
+    name?: string,
+    secondRow?: string,
+    buttonText?: string,
+    unit?: string,
+    navigate?: boolean,
+    colormode?: string,
+    colorScale?: any, 
+    adapterPlayerInstance?: string,
+    mediaDevice?: string,
+    targetPage?: string,
+    speakerList?: string[],
+    playList?: string[],
+    equalizerList?: string[],
+    repeatList?: string[],
+    globalTracklist?: string[], 
+    modeList?: string[],
+    hidePassword?: boolean,
+    autoCreateALias?: boolean
+    colorMediaIcon?: RGB,
+    colorMediaArtist?: RGB,
+    colorMediaTitle?: RGB,
+    popupThermoMode1?: string[],
+    popupThermoMode2?: string[],
+    popupThermoMode3?: string[],
+    popUpThermoName?: string[],
+    popupMediaMode1?: string[],
+    popupMediaMode2?: string[],
+    popupMediaMode3?: string[],
+    popUpMediaName?: string[],
+    setThermoAlias?: string[],
+    setThermoDestTemp2?: string,
+    yAxis?: string,
+    yAxisTicks?: number[] | string,
+    xAxisDecorationId?: string,
+    popupType?: string,
+    popupOptions?: string[],
+    useValue?: boolean,
+    monobutton?: boolean,
+    inSel_ChoiceState?: boolean,
+    iconArray?: string[],
+    fontSize?: number,
+    actionStringArray?: string[],
+    popupTimerType?: string,
+    alwaysOnDisplay?: boolean,
+    crossfade?: boolean,
 }
 
 type DimMode = {
@@ -9467,16 +9480,16 @@ type Config = {
 
 type ScreenSaverElement = {
     ScreensaverEntity: string,
-    ScreensaverEntityFactor?: number | 1,
-    ScreensaverEntityDecimalPlaces?: number | 0,
+    ScreensaverEntityFactor?: number,
+    ScreensaverEntityDecimalPlaces?: number,
     ScreensaverEntityDateFormat?: any | null,
     ScreensaverEntityIconOn?: string | null,
     ScreensaverEntityIconOff?: string | null,
-    ScreensaverEntityText: string | null,
+    ScreensaverEntityText: string,
     ScreensaverEntityUnitText?: string | null,
     ScreensaverEntityIconColor?: RGB | IconScaleElement | string
-    ScreensaverEntityOnColor?: any | null
-    ScreensaverEntityOffColor?: any | null
+    ScreensaverEntityOnColor?: RGB
+    ScreensaverEntityOffColor?: RGB
     ScreensaverEntityOnText?: string | null,
     ScreensaverEntityOffText?: string | null,
 }
