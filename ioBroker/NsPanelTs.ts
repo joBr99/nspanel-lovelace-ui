@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.30 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.30 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @Sternmiere / @Britzelpuf / @ravenS0ne /@ticaki
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
