@@ -8156,9 +8156,9 @@ function HandleScreensaverUpdate(): void {
                             }
                         }                
                     }
-
-                    if (existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconColor)) {
-                        iconColor = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                    const temp = config.leftScreensaverEntity[i].ScreensaverEntityIconColor;
+                    if (temp && typeof temp == 'string' && existsObject(temp)) {
+                        iconColor = getState(temp).val;
                     }
 
                     payloadString += '~' +
@@ -8302,8 +8302,9 @@ function HandleScreensaverUpdate(): void {
                         }                
 
                     }
-                    if (existsObject(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor)) {
-                        iconColor = getState(config.bottomScreensaverEntity[4].ScreensaverEntityIconColor).val;
+                    const temp = config.bottomScreensaverEntity[4].ScreensaverEntityIconColor
+                    if (temp && typeof temp == 'string' && existsObject(temp)) {
+                        iconColor = getState(temp).val;
                     }                
                     payloadString += '~' +
                                     '~' +
@@ -8367,8 +8368,9 @@ function HandleScreensaverUpdate(): void {
                         }                
                     }
 
-                    if (existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor)) {
-                        iconColor = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                    const temp = config.bottomScreensaverEntity[4].ScreensaverEntityIconColor
+                    if (temp && typeof temp == 'string' && existsObject(temp)) {
+                        iconColor = getState(temp).val;
                     }
                     if (i < maxEntities - 1) {
                         val = val + '~';
@@ -8421,8 +8423,9 @@ function HandleScreensaverUpdate(): void {
                             icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
                         }
                     }
-                    if (existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor)) {
-                        iconColor = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconColor).val;
+                    const temp = config.indicatorScreensaverEntity[4].ScreensaverEntityIconColor
+                    if (temp && typeof temp == 'string' && existsObject(temp)) {
+                        iconColor = getState(temp).val;
                     }
                     payloadString += '~' +
                                     '~' +
@@ -8733,13 +8736,14 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
     try {
         let colorReturn: number;
         if (configElement && configElement.ScreensaverEntityIconColor != undefined) {
+            const ScreensaverEntityIconColor = configElement.ScreensaverEntityIconColor as IconScaleElement;
             if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
-                let iconvalbest = (configElement.ScreensaverEntityIconColor.val_best != undefined) ? configElement.ScreensaverEntityIconColor.val_best : false ;
+                let iconvalbest = (typeof ScreensaverEntityIconColor == 'object' && ScreensaverEntityIconColor.val_best !== undefined ) ? ScreensaverEntityIconColor.val_best : false ;
                 colorReturn = (getState(configElement.ScreensaverEntity).val == iconvalbest) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
-            } else if (typeof configElement.ScreensaverEntityIconColor == 'object') {
-                let iconvalmin = (configElement.ScreensaverEntityIconColor.val_min != undefined) ? configElement.ScreensaverEntityIconColor.val_min : 0 ;
-                let iconvalmax = (configElement.ScreensaverEntityIconColor.val_max != undefined) ? configElement.ScreensaverEntityIconColor.val_max : 100 ;
-                let iconvalbest = (configElement.ScreensaverEntityIconColor.val_best != undefined) ? configElement.ScreensaverEntityIconColor.val_best : iconvalmin ;
+            } else if (typeof ScreensaverEntityIconColor == 'object') {
+                const iconvalmin: number = ScreensaverEntityIconColor.val_min != undefined ? ScreensaverEntityIconColor.val_min : 0 ;
+                const iconvalmax: number = ScreensaverEntityIconColor.val_max != undefined ? ScreensaverEntityIconColor.val_max : 100 ;
+                const iconvalbest: number = ScreensaverEntityIconColor.val_best != undefined ? ScreensaverEntityIconColor.val_best : iconvalmin ;
                 let valueScale = getState(configElement.ScreensaverEntity).val * configElement.ScreensaverEntityFactor!;
 
                 if (iconvalmin == 0 && iconvalmax == 1) {
@@ -8763,11 +8767,10 @@ function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): nu
                     let valueScaletemp = (Math.round(valueScale)).toFixed();                   
                     colorReturn = HandleColorScale(valueScaletemp);
                 }
-                if (configElement.ScreensaverEntityIconColor.val_min == undefined) {
-                    colorReturn = rgb_dec565(configElement.ScreensaverEntityIconColor);
+                if (ScreensaverEntityIconColor.val_min == undefined) {
+                    colorReturn = rgb_dec565(configElement.ScreensaverEntityIconColor as RGB);
                 }
             } else {
-
                 colorReturn = rgb_dec565(White);
             }
         } else {
@@ -9471,7 +9474,7 @@ type ScreenSaverElement = {
     ScreensaverEntityIconOff?: string | null,
     ScreensaverEntityText: string | null,
     ScreensaverEntityUnitText?: string | null,
-    ScreensaverEntityIconColor?: any | null
+    ScreensaverEntityIconColor?: RGB | IconScaleElement | string
     ScreensaverEntityOnColor?: any | null
     ScreensaverEntityOffColor?: any | null
     ScreensaverEntityOnText?: string | null,
@@ -9487,4 +9490,10 @@ type ScreenSaverMRElement = {
     ScreensaverEntityValueUnit: string | null,
     ScreensaverEntityOnColor: RGB,
     ScreensaverEntityOffColor: RGB
+}
+
+type IconScaleElement = { 
+    val_min:number, 
+    val_max:number, 
+    val_best?: number
 }
