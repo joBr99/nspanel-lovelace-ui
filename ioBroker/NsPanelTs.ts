@@ -395,7 +395,7 @@ let Debug: boolean = false;
 */
 
 //Level 0 (if service pages are used with cardUnlock)
-let Unlock_Service: PageUnlock = 
+let Unlock_Service: PageType = 
 {
     'type': 'cardUnlock',
     'heading': findLocaleServMenu('service_pages'),
@@ -407,7 +407,7 @@ let Unlock_Service: PageUnlock =
 };
 
 //Level_0 (if service pages are used without cardUnlock)
-let NSPanel_Service: PageEntities = 
+let NSPanel_Service: PageType = 
 {
     'type': 'cardEntities',
     'heading': findLocaleServMenu('service_menu'),
@@ -421,7 +421,7 @@ let NSPanel_Service: PageEntities =
 };
 
 //Level_0 (if service pages are used with cardUnlock)
-let NSPanel_Service_SubPage: PageEntities = 
+let NSPanel_Service_SubPage: PageType = 
 {
     'type': 'cardEntities',
     'heading': findLocaleServMenu('service_menu'),
@@ -438,7 +438,7 @@ let NSPanel_Service_SubPage: PageEntities =
 };
 
         //Level_1
-        let NSPanel_Infos: PageEntities = 
+        let NSPanel_Infos: PageType = 
         {
             'type': 'cardEntities',
             'heading': findLocaleServMenu('nspanel_infos'),
@@ -486,7 +486,7 @@ let NSPanel_Service_SubPage: PageEntities =
                     ]
                 };
 
-                let NSPanel_Sensoren: PageEntities = 
+                let NSPanel_Sensoren: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('sensors1'),
@@ -518,7 +518,7 @@ let NSPanel_Service_SubPage: PageEntities =
                     ]
                 };
 
-                let NSPanel_IoBroker: PageEntities = 
+                let NSPanel_IoBroker: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('info_iobroker'),
@@ -534,7 +534,7 @@ let NSPanel_Service_SubPage: PageEntities =
                 };
 
         //Level_1
-        let NSPanel_Einstellungen: PageGrid = 
+        let NSPanel_Einstellungen: PageType = 
             {
                 'type': 'cardGrid',
                 'heading': findLocaleServMenu('settings'),
@@ -556,7 +556,7 @@ let NSPanel_Service_SubPage: PageEntities =
             };
 
                 //Level_2
-                let NSPanel_Screensaver: PageGrid = 
+                let NSPanel_Screensaver: PageType = 
                 {
                     'type': 'cardGrid',
                     'heading': findLocaleServMenu('screensaver'),
@@ -575,7 +575,7 @@ let NSPanel_Service_SubPage: PageEntities =
                 };
                             
                         //Level_3
-                        let NSPanel_ScreensaverDimmode: PageEntities = 
+                        let NSPanel_ScreensaverDimmode: PageType = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('dimmode'),
@@ -592,7 +592,7 @@ let NSPanel_Service_SubPage: PageEntities =
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverBrightness: PageEntities = 
+                        let NSPanel_ScreensaverBrightness: PageType = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('brightness'),
@@ -608,7 +608,7 @@ let NSPanel_Service_SubPage: PageEntities =
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverLayout: PageEntities = 
+                        let NSPanel_ScreensaverLayout: PageType = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('layout'),
@@ -623,7 +623,7 @@ let NSPanel_Service_SubPage: PageEntities =
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverWeather: PageEntities = 
+                        let NSPanel_ScreensaverWeather: PageType = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('weather_parameters'),
@@ -640,7 +640,7 @@ let NSPanel_Service_SubPage: PageEntities =
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverDateformat: PageEntities = 
+                        let NSPanel_ScreensaverDateformat: PageType = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('date_format'),
@@ -655,7 +655,7 @@ let NSPanel_Service_SubPage: PageEntities =
                         };
 
                         //Level_3
-                        let NSPanel_ScreensaverIndicators: PageEntities = 
+                        let NSPanel_ScreensaverIndicators: PageType = 
                         {
                             'type': 'cardEntities',
                             'heading': findLocaleServMenu('indicators'),
@@ -670,7 +670,7 @@ let NSPanel_Service_SubPage: PageEntities =
                         };
 
                 //Level_2
-                let NSPanel_Relays: PageEntities = 
+                let NSPanel_Relays: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('relays'),
@@ -685,7 +685,7 @@ let NSPanel_Service_SubPage: PageEntities =
                 };
 
                 //Level_2
-                let NSPanel_Script: PageEntities = 
+                let NSPanel_Script: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('script'),
@@ -700,7 +700,7 @@ let NSPanel_Service_SubPage: PageEntities =
                 };
 
         //Level_1
-        let NSPanel_Firmware: PageEntities = 
+        let NSPanel_Firmware: PageType = 
             {
                 'type': 'cardEntities',
                 'heading': findLocaleServMenu('firmware'),
@@ -716,7 +716,7 @@ let NSPanel_Service_SubPage: PageEntities =
                 ]
             };
 
-                let NSPanel_FirmwareTasmota: PageEntities = 
+                let NSPanel_FirmwareTasmota: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('tasmota'),
@@ -732,7 +732,7 @@ let NSPanel_Service_SubPage: PageEntities =
                     ]
                 };
 
-                let NSPanel_FirmwareBerry: PageEntities = 
+                let NSPanel_FirmwareBerry: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('berry_driver'),
@@ -748,7 +748,7 @@ let NSPanel_Service_SubPage: PageEntities =
                     ]
                 };
 
-                let NSPanel_FirmwareNextion: PageEntities = 
+                let NSPanel_FirmwareNextion: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('nextion_tft'),
