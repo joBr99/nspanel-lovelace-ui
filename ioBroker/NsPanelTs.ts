@@ -2973,16 +2973,16 @@ function HandleMessage(typ: string, method: string, page: number | undefined, wo
                         }
                         let tempId: PageItem['id'];
                         let tempPageItem = words[3].split('?');
-                        let placeId: string | undefined = undefined;
+                        let placeId: number | undefined = undefined;
                         if (!isNaN(parseInt(tempPageItem[0]))){
                             tempId = activePage!.items[tempPageItem[0]].id;
-                            placeId = tempPageItem[0]
+                            placeId = parseInt(tempPageItem[0])
                         } else {
                             tempId = tempPageItem[0];
                         }
                         let pageItem: PageItem = findPageItem(tempId);
                         if (pageItem !== undefined) {
-                            SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, Number(placeId)));
+                            SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, placeId));
                         }
                     }
                     break;
@@ -4160,7 +4160,7 @@ function RegisterEntityWatcher(id: string): void {
     }
 }
 
-function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string, placeId: number): void {
+function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string, placeId: number | undefined): void {
     try {
         if (subscriptions.hasOwnProperty(id)) {
             return;
@@ -7040,7 +7040,7 @@ function GetNavigationString(pageId: number): string {
     return '';
 }
 
-function GenerateDetailPage(type: string, optional: string | undefined, pageItem: PageItem, placeId: number): Payload[] {
+function GenerateDetailPage(type: string, optional: string | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
