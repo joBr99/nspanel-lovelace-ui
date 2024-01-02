@@ -9401,32 +9401,32 @@ type PageGrid2 = {
 type PageThermo = {
     type: 'cardThermo',
     items: PageItem[],
-} & PageBaseType
+} & Omit<PageBaseType, 'useColor'>
 
 type PageMedia = {
     type: 'cardMedia',
     items: PageItem[],
-} & PageBaseType
+} & Omit<PageBaseType, 'useColor'>
 
 type PageAlarm = {
     type: 'cardAlarm',
     items: PageItem[],
-} & PageBaseType
+} & Omit<PageBaseType, 'useColor'>
 
 type PageUnlock = {
     type: 'cardUnlock',
     items: PageItem[],
-} & PageBaseType
+} & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
 
 type PageQR = {
     type: 'cardQR',
     items: PageItem[],
-} & PageBaseType
+} & Omit<PageBaseType, 'useColor'>
 
 type PagePower = {
     type: 'cardPower',
     items: PageItem[],
-} & PageBaseType
+} & Omit<PageBaseType, 'useColor'>
 
 type PageChart = {
     type: 'cardChart' | 'cardLChart',
