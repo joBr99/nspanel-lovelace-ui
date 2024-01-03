@@ -9612,17 +9612,17 @@ type IconScaleElement = {
 }
 
 type adapterPlayerInstanceType =
-  'alexa2.1.' | 'sonos.1.' | 'spotify-premium.1.' | 'volumio.1.' | 'squeezebox-rpc.1.' 
-| 'alexa2.2.' | 'sonos.2.' | 'spotify-premium.2.' | 'volumio.2.' | 'squeezebox-rpc.2.' 
-| 'alexa2.0.' | 'sonos.0.' | 'spotify-premium.0.' | 'volumio.0.' | 'squeezebox-rpc.0.' 
-| 'alexa2.3.' | 'sonos.3.' | 'spotify-premium.3.' | 'volumio.3.' | 'squeezebox-rpc.3.' 
-| 'alexa2.4.' | 'sonos.4.' | 'spotify-premium.4.' | 'volumio.4.' | 'squeezebox-rpc.4.' 
-| 'alexa2.5.' | 'sonos.5.' | 'spotify-premium.5.' | 'volumio.5.' | 'squeezebox-rpc.5.' 
-| 'alexa2.6.' | 'sonos.6.' | 'spotify-premium.6.' | 'volumio.6.' | 'squeezebox-rpc.6.' 
-| 'alexa2.7.' | 'sonos.7.' | 'spotify-premium.7.' | 'volumio.7.' | 'squeezebox-rpc.7.' 
-| 'alexa2.8.' | 'sonos.8.' | 'spotify-premium.8.' | 'volumio.8.' | 'squeezebox-rpc.8.' 
-| 'alexa2.9.' | 'sonos.9.' | 'spotify-premium.9.' | 'volumio.9.' | 'squeezebox-rpc.9.' 
-| 'alexa2.10.' | 'sonos.10.' | 'spotify-premium.10.' | 'volumio.10.' | 'squeezebox-rpc.10'
+  'alexa2.1.' | 'sonos.1.' | 'spotify-premium.1.' | 'volumio.1.' | 'squeezeboxrpc.1.' 
+| 'alexa2.2.' | 'sonos.2.' | 'spotify-premium.2.' | 'volumio.2.' | 'squeezeboxrpc.2.' 
+| 'alexa2.0.' | 'sonos.0.' | 'spotify-premium.0.' | 'volumio.0.' | 'squeezeboxrpc.0.' 
+| 'alexa2.3.' | 'sonos.3.' | 'spotify-premium.3.' | 'volumio.3.' | 'squeezeboxrpc.3.' 
+| 'alexa2.4.' | 'sonos.4.' | 'spotify-premium.4.' | 'volumio.4.' | 'squeezeboxrpc.4.' 
+| 'alexa2.5.' | 'sonos.5.' | 'spotify-premium.5.' | 'volumio.5.' | 'squeezeboxrpc.5.' 
+| 'alexa2.6.' | 'sonos.6.' | 'spotify-premium.6.' | 'volumio.6.' | 'squeezeboxrpc.6.' 
+| 'alexa2.7.' | 'sonos.7.' | 'spotify-premium.7.' | 'volumio.7.' | 'squeezeboxrpc.7.' 
+| 'alexa2.8.' | 'sonos.8.' | 'spotify-premium.8.' | 'volumio.8.' | 'squeezeboxrpc.8.' 
+| 'alexa2.9.' | 'sonos.9.' | 'spotify-premium.9.' | 'volumio.9.' | 'squeezeboxrpc.9.' 
+| 'alexa2.10.' | 'sonos.10.' | 'spotify-premium.10.' | 'volumio.10.' | 'squeezeboxrpc.10'
 
 
  
