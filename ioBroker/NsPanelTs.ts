@@ -94,6 +94,8 @@ ReleaseNotes:
         - 03.02.2024 - v4.3.3.31 Remove: autoCreateAlias from cardMedia
         - 03.02.2024 - v4.3.3.31 Remove: adapterPlayerInstance from every card except cardMedia
         - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
+        - 03.02.2024 - v4.3.3.31 [dev]: add PlayerType some more work to do
+        - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -4710,153 +4712,209 @@ function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
     });
 } 
 
-async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlayerInstance: string) {
+async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: adapterPlayerInstanceType) {
     if (autoCreateAlias) {
         if (isSetOptionActive) {
-            if (adapterPlayerInstance == 'alexa2.0.') {
-                if (existsObject(id) == false){
-                    log('Alexa Alias ' + id + ' does not exist - will be created now', 'info');
+            switch (adapterPlayerInstance) {
+                case "alexa2.0.":
+                case "alexa2.1.":
+                case "alexa2.2.":
+                case "alexa2.3.":
+                case "alexa2.4.":
+                case "alexa2.5.":
+                case "alexa2.6.":
+                case "alexa2.7.":
+                case "alexa2.8.":
+                case "alexa2.9.": {
+                    if (existsObject(id) == false) {
+                        log('Alexa Alias ' + id + ' does not exist - will be created now', 'info');
 
-                    let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + '.Player.currentAlbum', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + '.Player.currentArtist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + '.Player.currentTitle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.NEXT', dpPath + '.Player.controlNext', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + '.Player.controlPrevious', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + '.Player.controlPlay', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + '.Player.controlPause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + '.Commands.deviceStop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + '.Player.currentState', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });        
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message, 'warn');
+                        const dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + '.Player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.Player.currentAlbum', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.Player.currentArtist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.Player.currentTitle', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.Player.controlNext', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.Player.controlPrevious', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.Player.controlPlay', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.Player.controlPause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + '.Commands.deviceStop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + '.Player.currentState', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message, 'warn');
+                        }
                     }
-                }
-                //Add Alexa Datapoints > v4.3.3.18
-                if (existsObject(id + '.DURATION') == false) {
-                    let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
-                    await createAliasAsync(id + '.DURATION', dpPath + '.Player.mediaLength', true, <iobJS.StateCommon>{ type: 'string', role: 'media.duration.text', name: 'DURATION' });
-                    await createAliasAsync(id + '.ELAPSED', dpPath + '.Player.mediaProgressStr', true, <iobJS.StateCommon>{ type: 'string', role: 'media.elapsed.text', name: 'ELAPSED' });
-                }
-            }
-
-            if (adapterPlayerInstance == 'spotify-premium.0.') {
-                if (existsObject(id) == false){
-                    log('Spotify Alias ' + id + ' does not exist - will be created now', 'info');
-
-                    let dpPath: string = adapterPlayerInstance;
-                    try {
-                        setObject(id, {_id: id + 'player', type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + 'player.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + 'player.artistName', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + 'player.trackName', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + 'player.contextDescription', true, <iobJS.StateCommon>{ type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION' });
-                        await createAliasAsync(id + '.NEXT', dpPath + 'player.skipPlus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + 'player.skipMinus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
-                    
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
+                    //Add Alexa Datapoints > v4.3.3.18
+                    if (existsObject(id + '.DURATION') == false) {
+                        let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
+                        await createAliasAsync(id + '.DURATION', dpPath + '.Player.mediaLength', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                        await createAliasAsync(id + '.ELAPSED', dpPath + '.Player.mediaProgressStr', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
                     }
+
                 }
-            }
+                    break;
+                case "sonos.0.":
+                case "sonos.1.":
+                case "sonos.2.":
+                case "sonos.3.":
+                case "sonos.4.":
+                case "sonos.5.":
+                case "sonos.6.":
+                case "sonos.7.":
+                case "sonos.8.":
+                case "sonos.9.": {
+                    if (existsObject(id) == false) {
+                        log('Sonos Alias ' + id + ' does not exist - will be created now', 'info');
 
-            if (adapterPlayerInstance == 'sonos.0.') {
-                if (existsObject(id) == false){
-                    log('Sonos Alias ' + id + ' does not exist - will be created now', 'info');
-
-                    let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + '.current_album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + '.current_artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + '.current_title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + '.current_station', true, <iobJS.StateCommon>{ type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION' });
-                        await createAliasAsync(id + '.NEXT', dpPath + '.next', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + '.prev', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + '.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + '.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + '.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + '.state_simple', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter sonos: ' + err.message, 'warn');
+                        const dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.current_album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.current_artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.current_title', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + '.current_station', true, <iobJS.StateCommon> {type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.next', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.prev', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + '.stop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + '.state_simple', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter sonos: ' + err.message, 'warn');
+                        }
                     }
-                }
-                //Add Sonos Datapoints > v4.3.3.15
-                if (existsObject(id + '.QUEUE') == false) {
-                    let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
-                    await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'QUEUE' });
-                    await createAliasAsync(id + '.DURATION', dpPath + '.current_duration_s', true, <iobJS.StateCommon>{ type: 'string', role: 'media.duration.text', name: 'DURATION' });
-                    await createAliasAsync(id + '.ELAPSED', dpPath + '.current_elapsed_s', true, <iobJS.StateCommon>{ type: 'string', role: 'media.elapsed.text', name: 'ELAPSED' });
-                }
-            }
-
-            if (adapterPlayerInstance.startsWith('volumio')) {
-                if (existsObject(id) == false){
-                    log('Volumio Alias ' + id + ' does not exist - will be created now', 'info');
-
-                    let dpPath: string = adapterPlayerInstance;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + 'playbackInfo.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + 'playbackInfo.artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + 'playbackInfo.title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.NEXT', dpPath + 'player.next', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + 'player.prev', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + 'player.toggle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + 'player.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + 'playbackInfo.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
-                        await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'string', role: 'media.state', name: 'status' });
-                    } catch (err: any) {
-                        log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
+                    //Add Sonos Datapoints > v4.3.3.15
+                    if (existsObject(id + '.QUEUE') == false) {
+                        let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
+                        await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon> {type: 'string', role: 'state', name: 'QUEUE'});
+                        await createAliasAsync(id + '.DURATION', dpPath + '.current_duration_s', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                        await createAliasAsync(id + '.ELAPSED', dpPath + '.current_elapsed_s', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
                     }
+
                 }
-            }
+                    break;
+                case "spotify-premium.0.":
+                case "spotify-premium.1.":
+                case "spotify-premium.2.":
+                case "spotify-premium.3.":
+                case "spotify-premium.4.":
+                case "spotify-premium.5.":
+                case "spotify-premium.6.":
+                case "spotify-premium.7.":
+                case "spotify-premium.8.":
+                case "spotify-premium.9.": {
+                    if (existsObject(id) == false) {
+                        log('Spotify Alias ' + id + ' does not exist - will be created now', 'info');
 
-            if (adapterPlayerInstance.startsWith('squeezeboxrpc')) {           
-                if (existsObject(id) == false){
-                    log('Squeezebox Alias ' + id + ' does not exist - will be created now', 'info');
+                        const dpPath: string = adapterPlayerInstance;
+                        try {
+                            setObject(id, {_id: id + 'player', type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + 'player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + 'player.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + 'player.artistName', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + 'player.trackName', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + 'player.contextDescription', true, <iobJS.StateCommon> {type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION'});
+                            await createAliasAsync(id + '.NEXT', dpPath + 'player.skipPlus', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + 'player.skipMinus', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + 'player.pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon> {type: 'string', role: 'value', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon> {type: 'string', role: 'value', name: 'SHUFFLE'});
 
-                    let dpPath: string = adapterPlayerInstance + '.Players.' + mediaDevice;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ALBUM',  dpPath + '.Album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM'});
-                        await createAliasAsync(id + '.ARTIST', dpPath + '.Artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST'});
-                        await createAliasAsync(id + '.TITLE', dpPath + '.Title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE'});
-                        await createAliasAsync(id + '.NEXT', dpPath + '.btnForward', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.forward', name: 'NEXT'});
-                        await createAliasAsync(id + '.PREV', dpPath + '.btnRewind', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.reverse', name: 'PREV'});
-                        await createAliasAsync(id + '.PLAY', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PLAY', alias: { id: dpPath + '.state', read: 'val === 1 ? true : false' }});
-                        await createAliasAsync(id + '.PAUSE', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PAUSE', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
-                        await createAliasAsync(id + '.STOP', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STOP', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
-                        await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon>{ type: 'number', role: 'switch', name: 'STATE'});
-                        await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME'});
-                        await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
-                        await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
+                        }
                     }
+
+                }
+                    break;
+                case "volumio.0.":
+                case "volumio.1.":
+                case "volumio.2.":
+                case "volumio.3.":
+                case "volumio.4.":
+                case "volumio.5.":
+                case "volumio.6.":
+                case "volumio.7.":
+                case "volumio.8.":
+                case "volumio.9.": {
+                    if (existsObject(id) == false) {
+                        log('Volumio Alias ' + id + ' does not exist - will be created now', 'info');
+
+                        const dpPath: string = adapterPlayerInstance;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + 'playbackInfo.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + 'playbackInfo.artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + 'playbackInfo.title', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + 'player.next', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + 'player.prev', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + 'player.toggle', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + 'player.stop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + 'playbackInfo.repeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                            await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon> {type: 'string', role: 'media.state', name: 'status'});
+                        } catch (err: any) {
+                            log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
+                        }
+                    }
+
+                }
+                    break;
+                case "squeezeboxrpc.0.":
+                case "squeezeboxrpc.1.":
+                case "squeezeboxrpc.2.":
+                case "squeezeboxrpc.3.":
+                case "squeezeboxrpc.4.":
+                case "squeezeboxrpc.5.":
+                case "squeezeboxrpc.6.":
+                case "squeezeboxrpc.7.":
+                case "squeezeboxrpc.8.":
+                case "squeezeboxrpc.9.": {
+                    if (existsObject(id) == false) {
+                        log('Squeezebox Alias ' + id + ' does not exist - will be created now', 'info');
+
+                        const dpPath: string = adapterPlayerInstance + 'Players.' + mediaDevice;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.Album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.Artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.Title', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.btnForward', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.forward', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.btnRewind', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.reverse', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.state', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'PLAY', alias: {id: dpPath + '.state', read: 'val === 1 ? true : false'}});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.state', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'PAUSE', alias: {id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                            await createAliasAsync(id + '.STOP', dpPath + '.state', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STOP', alias: {id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                            await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon> {type: 'number', role: 'switch', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon> {type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: {id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1'}});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
+                        }
+                    }
+
+                }
+                    break;
+                default: {
+                    log(`Dont find adapterPlayerInstance: ${adapterPlayerInstance}!`, 'warn')
                 }
             }
         }
@@ -4875,7 +4933,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
-        let v2Adapter = v1Adapter[0];
+        let v2Adapter:PlayerType = v1Adapter[0] as PlayerType;
         
         // Some magic to change the ID of the alias, since speakers are not a property but separate objects
         if(v2Adapter == 'squeezeboxrpc') {
@@ -6272,8 +6330,8 @@ function HandleButtonEvent(words: any): void {
                                 if (isPageMediaItem(pageItemRepeat)) {
                                     let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
                                     let adapterRepeat = adapterInstanceRepeat.split('.');
-                                    let deviceAdapterRP = adapterRepeat[0];
-
+                                    const deviceAdapterRP: PlayerType = adapterRepeat[0] as PlayerType;
+                                    
                                     switch (deviceAdapterRP) {
                                         case 'spotify-premium':
                                             let stateSpotifyRepeat = getState(id + '.REPEAT').val
@@ -6565,7 +6623,7 @@ function HandleButtonEvent(words: any): void {
                 if (isPageMediaItem(pageItem)) {
                     let adapterInstance = pageItem.adapterPlayerInstance!;
                     let adapter = adapterInstance!.split('.');
-                    let deviceAdapter = adapter[0];
+                    const deviceAdapter: PlayerType = adapter[0] as PlayerType;
 
                     switch (deviceAdapter) {
                         case 'spotify-premium':
@@ -6588,8 +6646,8 @@ function HandleButtonEvent(words: any): void {
                             break;
                         case 'sonos':
                             break;
-                        case 'chromecast':
-                            break;
+                        /*case 'chromecast':
+                            break;*/
                         case 'squeezeboxrpc':
                             pageItem.mediaDevice = pageItem.speakerList![words[4]];
                             break;
@@ -6608,7 +6666,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemPL)) break;
                 let adapterInstancePL = pageItemPL.adapterPlayerInstance!;
                 let adapterPL = adapterInstancePL.split('.');
-                let deviceAdapterPL = adapterPL[0];
+                const deviceAdapterPL: PlayerType = adapterPL[0] as PlayerType;
 
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
@@ -6664,7 +6722,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemTL)) break;
                 let adapterInstanceTL = pageItemTL.adapterPlayerInstance!;
                 let adapterTL = adapterInstanceTL.split('.');
-                let deviceAdapterTL = adapterTL[0];
+                const deviceAdapterTL: PlayerType = adapterTL[0] as PlayerType;
 
                 switch (deviceAdapterTL) {
                     case 'spotify-premium':
@@ -6799,7 +6857,7 @@ function HandleButtonEvent(words: any): void {
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
                 if (!isPageMediaItem(pageItemTem)) break;
-                let adaInstanceSpli = pageItemTem.adapterPlayerInstance!.split('.');
+                let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
                 if (adaInstanceSpli[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
                     let stateVal = getState(adapterPlayerInstancePowerSelector).val;
@@ -7807,8 +7865,8 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                     let optionalString: string = 'Kein Eintrag';
                     let mode: string = '';
                     if (isPageMediaItem(pageItem)) {
-                        let vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
-                        let vAdapter = vTempAdapter[0];
+                        const vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
+                        const vAdapter: PlayerType = vTempAdapter[0] as PlayerType;
                         if (optional == 'seek') {
                             let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
                             if (actualStateTemp >= 95) {
@@ -9612,19 +9670,13 @@ type IconScaleElement = {
 }
 
 type adapterPlayerInstanceType =
-  'alexa2.1.' | 'sonos.1.' | 'spotify-premium.1.' | 'volumio.1.' | 'squeezeboxrpc.1.' 
-| 'alexa2.2.' | 'sonos.2.' | 'spotify-premium.2.' | 'volumio.2.' | 'squeezeboxrpc.2.' 
-| 'alexa2.0.' | 'sonos.0.' | 'spotify-premium.0.' | 'volumio.0.' | 'squeezeboxrpc.0.' 
-| 'alexa2.3.' | 'sonos.3.' | 'spotify-premium.3.' | 'volumio.3.' | 'squeezeboxrpc.3.' 
-| 'alexa2.4.' | 'sonos.4.' | 'spotify-premium.4.' | 'volumio.4.' | 'squeezeboxrpc.4.' 
-| 'alexa2.5.' | 'sonos.5.' | 'spotify-premium.5.' | 'volumio.5.' | 'squeezeboxrpc.5.' 
-| 'alexa2.6.' | 'sonos.6.' | 'spotify-premium.6.' | 'volumio.6.' | 'squeezeboxrpc.6.' 
-| 'alexa2.7.' | 'sonos.7.' | 'spotify-premium.7.' | 'volumio.7.' | 'squeezeboxrpc.7.' 
-| 'alexa2.8.' | 'sonos.8.' | 'spotify-premium.8.' | 'volumio.8.' | 'squeezeboxrpc.8.' 
-| 'alexa2.9.' | 'sonos.9.' | 'spotify-premium.9.' | 'volumio.9.' | 'squeezeboxrpc.9.' 
-| 'alexa2.10.' | 'sonos.10.' | 'spotify-premium.10.' | 'volumio.10.' | 'squeezeboxrpc.10'
+  'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
+| 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
+| 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
+| 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
+| 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
 
-
+type PlayerType = 'alexa2' | 'sonos'| 'sonos' | 'spotify-premium' |  'volumio' |'squeezeboxrpc' 
  
 type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
 

@@ -1,0 +1,27 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "target": "es2020",
+    "typeRoots": [
+      ".iobroker/types",
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "**/*.js",
+    "**/*.ts",
+    "./.iobroker/types/javascript.d.ts"
+  ],
+  "exclude": [
+    "node_modules/**"
+  ]
+}
