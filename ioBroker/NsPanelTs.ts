@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.30 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.31 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -91,6 +91,11 @@ ReleaseNotes:
         - 02.01.2024 - v4.3.3.29 Add Tasmota Buzzer for NotifyPage
         - 02.02.2024 - v4.3.3.29 Fix ThermoPage -> UnSubScribsWatcher
         - 02.02.2024 - v4.3.3.30 Add stronger config type checks
+        - 03.02.2024 - v4.3.3.31 Remove: autoCreateAlias from cardMedia
+        - 03.02.2024 - v4.3.3.31 Remove: adapterPlayerInstance from every card except cardMedia
+        - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
+        - 03.02.2024 - v4.3.3.31 [dev]: add PlayerType some more work to do
+        - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -953,7 +958,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.30';
+const scriptVersion: string = 'v4.3.3.31';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -3022,7 +3027,9 @@ function HandleMessage(typ: string, method: string, page: number | undefined, wo
                         }
                         let pageItem: PageItem = findPageItem(tempId);
                         if (pageItem !== undefined) {
-                            SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, placeId));
+                            let temp: string | mediaOptional | undefined = tempPageItem[1]
+                            if (isMediaOptional(temp)) SendToPanel(GenerateDetailPage(words[2], temp, pageItem, placeId));
+                            else SendToPanel(GenerateDetailPage(words[2], undefined, pageItem, placeId));
                         }
                     }
                     break;
@@ -4286,288 +4293,290 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
+                switch (o.common.role) {
+                    case 'thermostat': {
 
-                if (o.common.role == 'thermostat') {
-
-                    if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
-                        if (getState(id + '.AUTOMATIC').val) {
-                            bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
-                            statusStr = 'AUTO';
-                        } else {
-                            bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
-                        }
-                    }
-                    if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
-                        if (getState(id + '.MANUAL').val) {
-                            bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
-                            statusStr = 'MANU';
-                        } else {
-                            bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
-                        }
-                    }
-                    if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
-                        if (getState(id + '.PARTY').val) {
-                            bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
-                            statusStr = 'PARTY';
-                        } else {
-                            bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
-                        }
-                    }
-                    if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
-                        if (getState(id + '.VACATION').val) {
-                            bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
-                            statusStr = 'VAC';
-                        } else {
-                            bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
-                        }
-                    }
-                    if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
-                        if (getState(id + '.BOOST').val) {
-                            bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
-                            statusStr = 'BOOST';
-                        } else {
-                            bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
-                        }
-                    }
-
-                    for (let i_index in i_list) {
-                        let thermostatState = i_list[i_index].split('.');
-                        if (
-                            thermostatState[thermostatState.length - 1] != 'SET' &&
-                            thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
-                            thermostatState[thermostatState.length - 1] != 'MODE'
-                        ) {
-                            i++;
-
-                            switch (thermostatState[thermostatState.length - 1]) {
-                                case 'HUMIDITY':
-                                    if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
-                                        if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'LOWBAT':
-                                    if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
-                                        if (getState(id + '.LOWBAT').val) {
-                                            bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'MAINTAIN':
-                                    if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
-                                        if (getState(id + '.MAINTAIN').val >> .1) {
-                                            bt[i - 1] = Icons.GetIcon('account-wrench') + '~60897~1~' + 'MAIN' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('account-wrench') + '~33840~1~' + 'MAIN' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'UNREACH':
-                                    if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
-                                        if (getState(id + '.UNREACH').val) {
-                                            bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'POWER':
-                                    if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                                        if (getState(id + '.POWER').val) {
-                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POWER' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'ERROR':
-                                    if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
-                                        if (getState(id + '.ERROR').val) {
-                                            bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'WORKING':
-                                    if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
-                                        if (getState(id + '.WORKING').val) {
-                                            bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'WINDOWOPEN':
-                                    if (existsState(id + '.WINDOWOPEN') && getState(id + '.WINDOWOPEN').val != null) {
-                                        if (getState(id + '.WINDOWOPEN').val) {
-                                            bt[i - 1] = Icons.GetIcon('window-open-variant') + '~63488~1~' + 'WIN' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('window-closed-variant') + '~2016~1~' + 'WIN' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                default:
-                                    i--;
-                                    break;
-                            }
-                        }
-                    }
-
-                    for (let j = i; j < 9; j++) {
-                        bt[j] = '~~~~';
-                    }
-                }
-
-                if (o.common.role == 'airCondition') {
-                    if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
-                        let Mode = getState(id + '.MODE').val
-                        let States = getObject(id + '.MODE').common.states;
-                        
-                        let iconIndex: number = 1;
-                        for(const statekey in States) {
-                            let stateName: string = States[statekey];
-                            let stateKeyNumber: number = parseInt(statekey);
-                            if(stateName == 'OFF' || stateKeyNumber > 6) {
-                                continue;
-                            }
-                            if(stateKeyNumber == Mode) {
-                                statusStr = stateName.replace('_', ' ');
-                            }
-
-                            switch(stateName) {
-                                case 'AUTO':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
-                                        tempIcon = page.items[0].iconArray[1];
-                                    } else {
-                                        tempIcon = 'air-conditioner';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
-                                    }
-                                    break;
-                                case 'COOL':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
-                                        tempIcon = page.items[0].iconArray[2];
-                                    } else {
-                                        tempIcon = 'snowflake';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
-                                    }
-                                    break;
-                                case 'HEAT':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
-                                        tempIcon = page.items[0].iconArray[3];
-                                    } else {
-                                        tempIcon = 'fire';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
-                                    }
-                                    break;
-                                case 'ECO':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
-                                        tempIcon = page.items[0].iconArray[4];
-                                    } else {
-                                        tempIcon = 'alpha-e-circle-outline';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
-                                    }
-                                    break;
-                                case 'FAN_ONLY':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
-                                        tempIcon = page.items[0].iconArray[5];
-                                    } else {
-                                        tempIcon = 'fan';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
-                                    }
-                                    break;
-                                case 'DRY':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
-                                        tempIcon = page.items[0].iconArray[6];
-                                    } else {
-                                        tempIcon = 'water-percent';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
-                                    }
-                                    break;
-                            }
-                            iconIndex++;
-                        }
-                        
-                        if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
-                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
-                                tempIcon = page.items[0].iconArray[4];
+                        if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
+                            if (getState(id + '.AUTOMATIC').val) {
+                                bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
+                                statusStr = 'AUTO';
                             } else {
-                                tempIcon = 'alpha-e-circle-outline';
+                                bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
                             }
-                            if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
-                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
-                                statusStr = 'ECO';
+                        }
+                        if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
+                            if (getState(id + '.MANUAL').val) {
+                                bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
+                                statusStr = 'MANU';
                             } else {
-                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
                             }
-                            iconIndex++;
+                        }
+                        if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
+                            if (getState(id + '.PARTY').val) {
+                                bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
+                                statusStr = 'PARTY';
+                            } else {
+                                bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
+                            }
+                        }
+                        if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
+                            if (getState(id + '.VACATION').val) {
+                                bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
+                                statusStr = 'VAC';
+                            } else {
+                                bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
+                            }
+                        }
+                        if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
+                            if (getState(id + '.BOOST').val) {
+                                bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
+                                statusStr = 'BOOST';
+                            } else {
+                                bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
+                            }
                         }
 
-                        if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
-                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
-                                tempIcon = page.items[0].iconArray[7];
-                            } else {
-                                tempIcon = 'swap-vertical-bold';
+                        for (let i_index in i_list) {
+                            let thermostatState = i_list[i_index].split('.');
+                            if (
+                                thermostatState[thermostatState.length - 1] != 'SET' &&
+                                thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
+                                thermostatState[thermostatState.length - 1] != 'MODE'
+                            ) {
+                                i++;
+
+                                switch (thermostatState[thermostatState.length - 1]) {
+                                    case 'HUMIDITY':
+                                        if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
+                                            if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'LOWBAT':
+                                        if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
+                                            if (getState(id + '.LOWBAT').val) {
+                                                bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'MAINTAIN':
+                                        if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
+                                            if (getState(id + '.MAINTAIN').val >> .1) {
+                                                bt[i - 1] = Icons.GetIcon('account-wrench') + '~60897~1~' + 'MAIN' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('account-wrench') + '~33840~1~' + 'MAIN' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'UNREACH':
+                                        if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
+                                            if (getState(id + '.UNREACH').val) {
+                                                bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'POWER':
+                                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                                            if (getState(id + '.POWER').val) {
+                                                bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POWER' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'ERROR':
+                                        if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
+                                            if (getState(id + '.ERROR').val) {
+                                                bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'WORKING':
+                                        if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
+                                            if (getState(id + '.WORKING').val) {
+                                                bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'WINDOWOPEN':
+                                        if (existsState(id + '.WINDOWOPEN') && getState(id + '.WINDOWOPEN').val != null) {
+                                            if (getState(id + '.WINDOWOPEN').val) {
+                                                bt[i - 1] = Icons.GetIcon('window-open-variant') + '~63488~1~' + 'WIN' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('window-closed-variant') + '~2016~1~' + 'WIN' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    default:
+                                        i--;
+                                        break;
+                                }
                             }
-                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
-                                bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
-                            } else {
-                                bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
-                            }
-                            iconIndex++;
                         }
 
-                        // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
-                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
-                                tempIcon = page.items[0].iconArray[0];
-                            } else {
-                                tempIcon = 'power-standby';
+                        for (let j = i; j < 9; j++) {
+                            bt[j] = '~~~~';
+                        }
+                    }
+                    break;
+                    case 'airCondition': {
+                        if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
+                            let Mode = getState(id + '.MODE').val
+                            let States = getObject(id + '.MODE').common.states;
+
+                            let iconIndex: number = 1;
+                            for (const statekey in States) {
+                                let stateName: string = States[statekey];
+                                let stateKeyNumber: number = parseInt(statekey);
+                                if (stateName == 'OFF' || stateKeyNumber > 6) {
+                                    continue;
+                                }
+                                if (stateKeyNumber == Mode) {
+                                    statusStr = stateName.replace('_', ' ');
+                                }
+
+                                switch (stateName) {
+                                    case 'AUTO':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
+                                            tempIcon = page.items[0].iconArray[1];
+                                        } else {
+                                            tempIcon = 'air-conditioner';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
+                                        }
+                                        break;
+                                    case 'COOL':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
+                                            tempIcon = page.items[0].iconArray[2];
+                                        } else {
+                                            tempIcon = 'snowflake';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
+                                        }
+                                        break;
+                                    case 'HEAT':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
+                                            tempIcon = page.items[0].iconArray[3];
+                                        } else {
+                                            tempIcon = 'fire';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
+                                        }
+                                        break;
+                                    case 'ECO':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                            tempIcon = page.items[0].iconArray[4];
+                                        } else {
+                                            tempIcon = 'alpha-e-circle-outline';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                        }
+                                        break;
+                                    case 'FAN_ONLY':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
+                                            tempIcon = page.items[0].iconArray[5];
+                                        } else {
+                                            tempIcon = 'fan';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
+                                        }
+                                        break;
+                                    case 'DRY':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
+                                            tempIcon = page.items[0].iconArray[6];
+                                        } else {
+                                            tempIcon = 'water-percent';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
+                                        }
+                                        break;
+                                }
+                                iconIndex++;
                             }
-                            if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
-                                bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
-                                statusStr = 'OFF';
+
+                            if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                                if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                    tempIcon = page.items[0].iconArray[4];
+                                } else {
+                                    tempIcon = 'alpha-e-circle-outline';
+                                }
+                                if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
+                                    bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                    statusStr = 'ECO';
+                                } else {
+                                    bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                }
+                                iconIndex++;
                             }
-                            else {
-                                bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
+
+                            if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
+                                if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
+                                    tempIcon = page.items[0].iconArray[7];
+                                } else {
+                                    tempIcon = 'swap-vertical-bold';
+                                }
+                                if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
+                                    bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
+                                } else {
+                                    bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
+                                }
+                                iconIndex++;
+                            }
+
+                            // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
+                            if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                                if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
+                                    tempIcon = page.items[0].iconArray[0];
+                                } else {
+                                    tempIcon = 'power-standby';
+                                }
+                                if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
+                                    bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
+                                    statusStr = 'OFF';
+                                }
+                                else {
+                                    bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
+                                }
                             }
                         }
                     }
+                    break;
                 }
             }
 
@@ -4703,153 +4712,250 @@ function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
     });
 } 
 
-async function createAutoMediaAlias(id: string, mediaDevice: string, adapterPlayerInstance: string) {
+async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: adapterPlayerInstanceType) {
     if (autoCreateAlias) {
         if (isSetOptionActive) {
-            if (adapterPlayerInstance == 'alexa2.0.') {
-                if (existsObject(id) == false){
-                    log('Alexa Alias ' + id + ' does not exist - will be created now', 'info');
+            switch (adapterPlayerInstance) {
+                case "alexa2.0.":
+                case "alexa2.1.":
+                case "alexa2.2.":
+                case "alexa2.3.":
+                case "alexa2.4.":
+                case "alexa2.5.":
+                case "alexa2.6.":
+                case "alexa2.7.":
+                case "alexa2.8.":
+                case "alexa2.9.": {
+                    if (existsObject(id) == false) {
+                        log('Alexa Alias ' + id + ' does not exist - will be created now', 'info');
 
-                    let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + '.Player.currentAlbum', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + '.Player.currentArtist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + '.Player.currentTitle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.NEXT', dpPath + '.Player.controlNext', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + '.Player.controlPrevious', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + '.Player.controlPlay', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + '.Player.controlPause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + '.Commands.deviceStop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + '.Player.currentState', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });        
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message, 'warn');
+                        const dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + '.Player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.Player.currentAlbum', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.Player.currentArtist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.Player.currentTitle', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.Player.controlNext', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.Player.controlPrevious', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.Player.controlPlay', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.Player.controlPause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + '.Commands.deviceStop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + '.Player.currentState', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.Player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.Player.controlRepeat', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.Player.controlShuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter Alexa2: ' + err.message, 'warn');
+                        }
                     }
-                }
-                //Add Alexa Datapoints > v4.3.3.18
-                if (existsObject(id + '.DURATION') == false) {
-                    let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
-                    await createAliasAsync(id + '.DURATION', dpPath + '.Player.mediaLength', true, <iobJS.StateCommon>{ type: 'string', role: 'media.duration.text', name: 'DURATION' });
-                    await createAliasAsync(id + '.ELAPSED', dpPath + '.Player.mediaProgressStr', true, <iobJS.StateCommon>{ type: 'string', role: 'media.elapsed.text', name: 'ELAPSED' });
-                }
-            }
-
-            if (adapterPlayerInstance == 'spotify-premium.0.') {
-                if (existsObject(id) == false){
-                    log('Spotify Alias ' + id + ' does not exist - will be created now', 'info');
-
-                    let dpPath: string = adapterPlayerInstance;
-                    try {
-                        setObject(id, {_id: id + 'player', type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + 'player.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + 'player.artistName', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + 'player.trackName', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + 'player.contextDescription', true, <iobJS.StateCommon>{ type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION' });
-                        await createAliasAsync(id + '.NEXT', dpPath + 'player.skipPlus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + 'player.skipMinus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'value', name: 'SHUFFLE' });
-                    
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
+                    //Add Alexa Datapoints > v4.3.3.18
+                    if (existsObject(id + '.DURATION') == false) {
+                        let dpPath: string = adapterPlayerInstance + 'Echo-Devices.' + mediaDevice;
+                        await createAliasAsync(id + '.DURATION', dpPath + '.Player.mediaLength', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                        await createAliasAsync(id + '.ELAPSED', dpPath + '.Player.mediaProgressStr', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
                     }
+
                 }
-            }
+                    break;
+                case "sonos.0.":
+                case "sonos.1.":
+                case "sonos.2.":
+                case "sonos.3.":
+                case "sonos.4.":
+                case "sonos.5.":
+                case "sonos.6.":
+                case "sonos.7.":
+                case "sonos.8.":
+                case "sonos.9.": {
+                    if (existsObject(id) == false) {
+                        log('Sonos Alias ' + id + ' does not exist - will be created now', 'info');
 
-            if (adapterPlayerInstance == 'sonos.0.') {
-                if (existsObject(id) == false){
-                    log('Sonos Alias ' + id + ' does not exist - will be created now', 'info');
-
-                    let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + '.current_album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + '.current_artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + '.current_title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + '.current_station', true, <iobJS.StateCommon>{ type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION' });
-                        await createAliasAsync(id + '.NEXT', dpPath + '.next', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + '.prev', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + '.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + '.pause', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + '.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + '.state_simple', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter sonos: ' + err.message, 'warn');
+                        const dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.current_album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.current_artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.current_title', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + '.current_station', true, <iobJS.StateCommon> {type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.next', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.prev', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + '.stop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + '.state_simple', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter sonos: ' + err.message, 'warn');
+                        }
                     }
-                }
-                //Add Sonos Datapoints > v4.3.3.15
-                if (existsObject(id + '.QUEUE') == false) {
-                    let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
-                    await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'QUEUE' });
-                    await createAliasAsync(id + '.DURATION', dpPath + '.current_duration_s', true, <iobJS.StateCommon>{ type: 'string', role: 'media.duration.text', name: 'DURATION' });
-                    await createAliasAsync(id + '.ELAPSED', dpPath + '.current_elapsed_s', true, <iobJS.StateCommon>{ type: 'string', role: 'media.elapsed.text', name: 'ELAPSED' });
-                }
-            }
-
-            if (adapterPlayerInstance.startsWith('volumio')) {
-                if (existsObject(id) == false){
-                    log('Volumio Alias ' + id + ' does not exist - will be created now', 'info');
-
-                    let dpPath: string = adapterPlayerInstance;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ACTUAL', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'ACTUAL' });
-                        await createAliasAsync(id + '.ALBUM', dpPath + 'playbackInfo.album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM' });
-                        await createAliasAsync(id + '.ARTIST', dpPath + 'playbackInfo.artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST' });
-                        await createAliasAsync(id + '.TITLE', dpPath + 'playbackInfo.title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE' });
-                        await createAliasAsync(id + '.NEXT', dpPath + 'player.next', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.next', name: 'NEXT' });
-                        await createAliasAsync(id + '.PREV', dpPath + 'player.prev', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.prev', name: 'PREV' });
-                        await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.play', name: 'PLAY' });
-                        await createAliasAsync(id + '.PAUSE', dpPath + 'player.toggle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.pause', name: 'PAUSE' });
-                        await createAliasAsync(id + '.STOP', dpPath + 'player.stop', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.stop', name: 'STOP' });
-                        await createAliasAsync(id + '.STATE', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STATE' });
-                        await createAliasAsync(id + '.VOLUME', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME' });
-                        await createAliasAsync(id + '.REPEAT', dpPath + 'playbackInfo.repeat', true, <iobJS.StateCommon>{ type: 'number', role: 'media.mode.repeat', name: 'REPEAT' });
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE' });                    
-                        await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon>{ type: 'string', role: 'media.state', name: 'status' });
-                    } catch (err: any) {
-                        log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
+                    //Add Sonos Datapoints > v4.3.3.15
+                    if (existsObject(id + '.QUEUE') == false) {
+                        let dpPath: string = adapterPlayerInstance + 'root.' + mediaDevice;
+                        await createAliasAsync(id + '.QUEUE', dpPath + '.queue', true, <iobJS.StateCommon> {type: 'string', role: 'state', name: 'QUEUE'});
+                        await createAliasAsync(id + '.DURATION', dpPath + '.current_duration_s', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                        await createAliasAsync(id + '.ELAPSED', dpPath + '.current_elapsed_s', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
                     }
+
                 }
-            }
+                    break;
+                case "spotify-premium.0.":
+                case "spotify-premium.1.":
+                case "spotify-premium.2.":
+                case "spotify-premium.3.":
+                case "spotify-premium.4.":
+                case "spotify-premium.5.":
+                case "spotify-premium.6.":
+                case "spotify-premium.7.":
+                case "spotify-premium.8.":
+                case "spotify-premium.9.": {
+                    if (existsObject(id) == false) {
+                        log('Spotify Alias ' + id + ' does not exist - will be created now', 'info');
 
-            if (adapterPlayerInstance.startsWith('squeezeboxrpc')) {           
-                if (existsObject(id) == false){
-                    log('Squeezebox Alias ' + id + ' does not exist - will be created now', 'info');
+                        const dpPath: string = adapterPlayerInstance;
+                        try {
+                            setObject(id, {_id: id + 'player', type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + 'player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + 'player.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + 'player.artistName', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + 'player.trackName', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.CONTEXT_DESCRIPTION', dpPath + 'player.contextDescription', true, <iobJS.StateCommon> {type: 'string', role: 'media.station', name: 'CONTEXT_DESCRIPTION'});
+                            await createAliasAsync(id + '.NEXT', dpPath + 'player.skipPlus', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + 'player.skipMinus', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + 'player.pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + 'player.pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + 'player.isPlaying', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + 'player.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + 'player.repeat', true, <iobJS.StateCommon> {type: 'string', role: 'value', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + 'player.shuffle', true, <iobJS.StateCommon> {type: 'string', role: 'value', name: 'SHUFFLE'});
 
-                    let dpPath: string = adapterPlayerInstance + '.Players.' + mediaDevice;
-                    try {
-                        setObject(id, {_id: id, type: 'channel', common: {role: 'media', name:'media'}, native: {}});
-                        await createAliasAsync(id + '.ALBUM',  dpPath + '.Album', true, <iobJS.StateCommon>{ type: 'string', role: 'media.album', name: 'ALBUM'});
-                        await createAliasAsync(id + '.ARTIST', dpPath + '.Artist', true, <iobJS.StateCommon>{ type: 'string', role: 'media.artist', name: 'ARTIST'});
-                        await createAliasAsync(id + '.TITLE', dpPath + '.Title', true, <iobJS.StateCommon>{ type: 'string', role: 'media.title', name: 'TITLE'});
-                        await createAliasAsync(id + '.NEXT', dpPath + '.btnForward', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.forward', name: 'NEXT'});
-                        await createAliasAsync(id + '.PREV', dpPath + '.btnRewind', true, <iobJS.StateCommon>{ type: 'boolean', role: 'button.reverse', name: 'PREV'});
-                        await createAliasAsync(id + '.PLAY', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PLAY', alias: { id: dpPath + '.state', read: 'val === 1 ? true : false' }});
-                        await createAliasAsync(id + '.PAUSE', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'PAUSE', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
-                        await createAliasAsync(id + '.STOP', dpPath + '.state', true, <iobJS.StateCommon>{ type: 'boolean', role: 'media.state', name: 'STOP', alias: { id: dpPath + '.state', read: 'val === 0 ? true : false'}});
-                        await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon>{ type: 'number', role: 'switch', name: 'STATE'});
-                        await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'level.volume', name: 'VOLUME'});
-                        await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon>{ type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
-                        await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon>{ type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: { id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1' }});
-                        await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon>{type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
-                    } catch (err: any) {
-                        log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
+                        }
                     }
+
+                }
+                    break;
+                case "volumio.0.":
+                case "volumio.1.":
+                case "volumio.2.":
+                case "volumio.3.":
+                case "volumio.4.":
+                case "volumio.5.":
+                case "volumio.6.":
+                case "volumio.7.":
+                case "volumio.8.":
+                case "volumio.9.": {
+                    if (existsObject(id) == false) {
+                        log('Volumio Alias ' + id + ' does not exist - will be created now', 'info');
+
+                        const dpPath: string = adapterPlayerInstance;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.ALBUM', dpPath + 'playbackInfo.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + 'playbackInfo.artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + 'playbackInfo.title', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + 'player.next', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + 'player.prev', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + 'player.play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + 'player.toggle', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + 'player.stop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            await createAliasAsync(id + '.STATE', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + 'playbackInfo.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + 'playbackInfo.repeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + 'queue.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                            await createAliasAsync(id + '.status', dpPath + 'playbackInfo.status', true, <iobJS.StateCommon> {type: 'string', role: 'media.state', name: 'status'});
+                        } catch (err: any) {
+                            log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
+                        }
+                    }
+
+                }
+                    break;
+                case "squeezeboxrpc.0.":
+                case "squeezeboxrpc.1.":
+                case "squeezeboxrpc.2.":
+                case "squeezeboxrpc.3.":
+                case "squeezeboxrpc.4.":
+                case "squeezeboxrpc.5.":
+                case "squeezeboxrpc.6.":
+                case "squeezeboxrpc.7.":
+                case "squeezeboxrpc.8.":
+                case "squeezeboxrpc.9.": {
+                    if (existsObject(id) == false) {
+                        log('Squeezebox Alias ' + id + ' does not exist - will be created now', 'info');
+
+                        const dpPath: string = adapterPlayerInstance + 'Players.' + mediaDevice;
+                        try {
+                            setObject(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.Album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.Artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.Title', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.btnForward', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.forward', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.btnRewind', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.reverse', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.state', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'PLAY', alias: {id: dpPath + '.state', read: 'val === 1 ? true : false'}});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.state', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'PAUSE', alias: {id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                            await createAliasAsync(id + '.STOP', dpPath + '.state', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STOP', alias: {id: dpPath + '.state', read: 'val === 0 ? true : false'}});
+                            await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon> {type: 'number', role: 'switch', name: 'STATE'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon> {type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: {id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1'}});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
+                        }
+                    }
+
+                }
+                    break;
+                case "bosesoundtouch.0.":
+                case "bosesoundtouch.1.":
+                case "bosesoundtouch.2.":
+                case "bosesoundtouch.3.":
+                case "bosesoundtouch.4.":
+                case "bosesoundtouch.5.":
+                case "bosesoundtouch.6.":
+                case "bosesoundtouch.7.":
+                case "bosesoundtouch.8.":
+                case "bosesoundtouch.9.": {
+                    if (existsObject(id) == false) {
+                        log('bosesoundtouch Alias ' + id + ' does not exist - will be created now', 'info');
+
+                        try {
+                            let dpPath: string = adapterPlayerInstance + 'keys';
+                            await extendObjectAsync(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+
+                            dpPath = adapterPlayerInstance + 'nowPlaying';
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.track', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.DURATION', dpPath + '.total', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                            await createAliasAsync(id + '.ELAPSED', dpPath + '.time', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                            
+                            dpPath = adapterPlayerInstance + 'keys';
+                            await createAliasAsync(id + '.STATE', dpPath + '.POWER', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.NEXT_TRACK', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.PREV_TRACK', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.PLAY', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.PAUSE', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + '.STOP', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter bosesoundtouch: ' + err.message, 'warn');
+                        }
+                    }
+                    break;
+                }
+                default: {
+                    log(`Dont find adapterPlayerInstance: ${adapterPlayerInstance}!`, 'warn')
                 }
             }
         }
@@ -4868,7 +4974,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
-        let v2Adapter = v1Adapter[0];
+        let v2Adapter:PlayerType = v1Adapter[0] as PlayerType;
         
         // Some magic to change the ID of the alias, since speakers are not a property but separate objects
         if(v2Adapter == 'squeezeboxrpc') {
@@ -4887,11 +4993,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             }
         }
 
-        if (page.items[0].autoCreateALias) {
-            let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
-            createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
-        }
-
+        let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
+        if (!vMediaDevice) throw new Error(`Error in cardMedia! mediaDevice is empty! Page: ${JSON.stringify(page)}`);
+        createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
+    
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardMedia' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
             out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -6253,83 +6358,90 @@ function HandleButtonEvent(words: any): void {
                         case 'hue':
                             toggleState(id + '.ON_ACTUAL');
                         case 'media':
+                            if (!activePage || activePage.type != 'cardMedia') {
+                                if (activePage) throw new Error(`Found channel role media for card: ${activePage.type} not allowed`)
+                                else throw new Error(`Something went wrong! Active Page is empty!`);
+                            }
                             if (tempid[1] == undefined) {
                                 if (Debug) log('Logo click', 'info');
                                 GeneratePage(activePage!);
                             } else if (tempid[1] == 'repeat') {
+                                
                                 let pageItemRepeat = findPageItem(id);
-                                let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance!;
-                                let adapterRepeat = adapterInstanceRepeat.split('.');
-                                let deviceAdapterRP = adapterRepeat[0];
-
-                                switch (deviceAdapterRP) {
-                                    case 'spotify-premium':
-                                        let stateSpotifyRepeat = getState(id + '.REPEAT').val
-                                        if (stateSpotifyRepeat == 'none') {
-                                            setIfExists(id + '.REPEAT', 'all');
-                                        } else if (stateSpotifyRepeat == 'all') {
-                                            setIfExists(id + '.REPEAT', 'one');
-                                        } else if (stateSpotifyRepeat == 'one') {
-                                            setIfExists(id + '.REPEAT', 'none');
-                                        }
-                                        GeneratePage(activePage!);
-                                        break;
-                                    case 'sonos':
-                                        let stateSonosRepeat = getState(id + '.REPEAT').val
-                                        if (stateSonosRepeat == 0) {
-                                            setIfExists(id + '.REPEAT', 1);
-                                        } else if (stateSonosRepeat == 1) {
-                                            setIfExists(id + '.REPEAT', 2);
-                                        } else if (stateSonosRepeat == 2) {
-                                            setIfExists(id + '.REPEAT', 0);
-                                        }
-                                        GeneratePage(activePage!);
-                                        break;
-                                    case 'alexa2':
-                                        try {
-                                            setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
-                                        } catch (err: any) {
-                                            log('ALEXA2: Repeat kann nicht verändert werden', 'warn');
-                                        }
-                                        GeneratePage(activePage!);
-                                        break;
-                                    case 'volumio':
-                                        let urlString: string = `${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`;
-                                        axios.get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
-                                            .then(async function (response) {
-                                                if (response.status === 200) {
-                                                    if (Debug) {
-                                                        log(response.data, 'info');
-                                                    }
-                                                    GeneratePage(activePage!);
-                                                } else {
-                                                    log('Axios Status - adapterInstanceRepeat: ' + response.state, 'warn');
-                                                }
-                                            })
-                                            .catch(function (error) {
-                                                log(error, 'warn');
-                                            });
-                                        break;
-                                    case 'squeezeboxrpc':
-                                        try {
-                                            switch(getState(id + '.REPEAT').val) {
-                                                case 0:
-                                                    setIfExists(id + '.REPEAT', 1);
-                                                    GeneratePage(activePage!);
-                                                    break;
-                                                case 1:
-                                                    setIfExists(id + '.REPEAT', 2)
-                                                    GeneratePage(activePage!);
-                                                    break;
-                                                case 2:
-                                                    setIfExists(id + '.REPEAT', 0);
-                                                    GeneratePage(activePage!);
-                                                    break;
+                                if (isPageMediaItem(pageItemRepeat)) {
+                                    let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
+                                    let adapterRepeat = adapterInstanceRepeat.split('.');
+                                    const deviceAdapterRP: PlayerType = adapterRepeat[0] as PlayerType;
+                                    
+                                    switch (deviceAdapterRP) {
+                                        case 'spotify-premium':
+                                            let stateSpotifyRepeat = getState(id + '.REPEAT').val
+                                            if (stateSpotifyRepeat == 'none') {
+                                                setIfExists(id + '.REPEAT', 'all');
+                                            } else if (stateSpotifyRepeat == 'all') {
+                                                setIfExists(id + '.REPEAT', 'one');
+                                            } else if (stateSpotifyRepeat == 'one') {
+                                                setIfExists(id + '.REPEAT', 'none');
                                             }
-                                        } catch (err: any) {
-                                            log('Squeezebox: Repeat kann nicht verändert werden', 'warn');
-                                        }
-                                        break;
+                                            GeneratePage(activePage!);
+                                            break;
+                                        case 'sonos':
+                                            let stateSonosRepeat = getState(id + '.REPEAT').val
+                                            if (stateSonosRepeat == 0) {
+                                                setIfExists(id + '.REPEAT', 1);
+                                            } else if (stateSonosRepeat == 1) {
+                                                setIfExists(id + '.REPEAT', 2);
+                                            } else if (stateSonosRepeat == 2) {
+                                                setIfExists(id + '.REPEAT', 0);
+                                            }
+                                            GeneratePage(activePage!);
+                                            break;
+                                        case 'alexa2':
+                                            try {
+                                                setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
+                                            } catch (err: any) {
+                                                log('ALEXA2: Repeat kann nicht verändert werden', 'warn');
+                                            }
+                                            GeneratePage(activePage!);
+                                            break;
+                                        case 'volumio':
+                                            let urlString: string = `${getState(adapterInstanceRepeat + 'info.host').val}/api/commands/?cmd=repeat`;
+                                            axios.get(urlString, {headers: {'User-Agent': 'ioBroker'}})
+                                                .then(async function (response) {
+                                                    if (response.status === 200) {
+                                                        if (Debug) {
+                                                            log(response.data, 'info');
+                                                        }
+                                                        GeneratePage(activePage!);
+                                                    } else {
+                                                        log('Axios Status - adapterInstanceRepeat: ' + response.state, 'warn');
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    log(error, 'warn');
+                                                });
+                                            break;
+                                        case 'squeezeboxrpc':
+                                            try {
+                                                switch (getState(id + '.REPEAT').val) {
+                                                    case 0:
+                                                        setIfExists(id + '.REPEAT', 1);
+                                                        GeneratePage(activePage!);
+                                                        break;
+                                                    case 1:
+                                                        setIfExists(id + '.REPEAT', 2)
+                                                        GeneratePage(activePage!);
+                                                        break;
+                                                    case 2:
+                                                        setIfExists(id + '.REPEAT', 0);
+                                                        GeneratePage(activePage!);
+                                                        break;
+                                                }
+                                            } catch (err: any) {
+                                                log('Squeezebox: Repeat kann nicht verändert werden', 'warn');
+                                            }
+                                            break;
+                                    }
                                 }
                             }
                     }
@@ -6478,58 +6590,63 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
-                let adaInstanceSplit = pageItemTemp.adapterPlayerInstance!.split('.');
-                if (adaInstanceSplit[0] == 'squeezeboxrpc') {
-                    let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
-                    if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
-                    let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
-                    if (stateVal == 0) {
-                        setState(adapterPlayerInstanceStateSeceltor, 1);
-                    } else if (stateVal == 1) {
-                        setState(adapterPlayerInstanceStateSeceltor, 0);
-                    } else if (stateVal == null) {
-                        setState(adapterPlayerInstanceStateSeceltor, 1);
-                    }
-                } else {
-                    if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
-                    if (getState(id + '.STATE').val === true) {
-                        setIfExists(id + '.PAUSE', true);
+                if (isPageMediaItem(pageItemTemp)) {
+                    let adaInstanceSplit = pageItemTemp.adapterPlayerInstance!.split('.');
+                    if (adaInstanceSplit[0] == 'squeezeboxrpc') {
+                        let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
+                        if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
+                        let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
+                        if (stateVal == 0) {
+                            setState(adapterPlayerInstanceStateSeceltor, 1);
+                        } else if (stateVal == 1) {
+                            setState(adapterPlayerInstanceStateSeceltor, 0);
+                        } else if (stateVal == null) {
+                            setState(adapterPlayerInstanceStateSeceltor, 1);
+                        }
                     } else {
-                        setIfExists(id + '.PLAY', true);
+                        if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
+                        if (getState(id + '.STATE').val === true) {
+                            setIfExists(id + '.PAUSE', true);
+                        } else {
+                            setIfExists(id + '.PLAY', true);
+                        }
                     }
+                    GeneratePage(activePage!);
                 }
-                GeneratePage(activePage!);
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
                 GeneratePage(activePage!);
                 break;
             case 'media-shuffle':
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("volumio")) { 
-                    findPageItem(id).playList = []; break; 
-                } //Volumio: empty playlist $uha-20230103
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("spotify")) {
-                    if (getState(id + '.SHUFFLE').val == 'off') {
-                        setIfExists(id + '.SHUFFLE', 'on');
-                    } else {
-                        setIfExists(id + '.SHUFFLE', 'off');
+                const tempPage = findPageItem(id);
+                if (isPageMediaItem(tempPage)) {
+                    if (tempPage.adapterPlayerInstance.startsWith("volumio")) {
+                        findPageItem(id).playList = []; break;
+                    } //Volumio: empty playlist $uha-20230103
+                    if ((tempPage.adapterPlayerInstance).startsWith("spotify")) {
+                        if (getState(id + '.SHUFFLE').val == 'off') {
+                            setIfExists(id + '.SHUFFLE', 'on');
+                        } else {
+                            setIfExists(id + '.SHUFFLE', 'off');
+                        }
                     }
-                }
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("alexa")) {
-                    if (getState(id + '.SHUFFLE').val == false) {
-                        setIfExists(id + '.SHUFFLE', true);
-                    } else {
-                        setIfExists(id + '.SHUFFLE', false);
+                    if ((tempPage.adapterPlayerInstance).startsWith("alexa")) {
+                        if (getState(id + '.SHUFFLE').val == false) {
+                            setIfExists(id + '.SHUFFLE', true);
+                        } else {
+                            setIfExists(id + '.SHUFFLE', false);
+                        }
                     }
-                }
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("sonos")) {
-                    if (getState(id + '.SHUFFLE').val == false) {
-                        setIfExists(id + '.SHUFFLE', true);
-                    } else {
-                        setIfExists(id + '.SHUFFLE', false);
+                    if ((tempPage.adapterPlayerInstance).startsWith("sonos")) {
+                        if (getState(id + '.SHUFFLE').val == false) {
+                            setIfExists(id + '.SHUFFLE', true);
+                        } else {
+                            setIfExists(id + '.SHUFFLE', false);
+                        }
                     }
+                    GeneratePage(activePage!);
                 }
-                GeneratePage(activePage!);
                 break;
             case 'volumeSlider':
                 pageCounter = -1;
@@ -6544,49 +6661,56 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
-                let adapterInstance = pageItem.adapterPlayerInstance!;
-                let adapter = adapterInstance!.split('.');
-                let deviceAdapter = adapter[0];
+                if (isPageMediaItem(pageItem)) {
+                    let adapterInstance = pageItem.adapterPlayerInstance!;
+                    let adapter = adapterInstance!.split('.');
+                    const deviceAdapter: PlayerType = adapter[0] as PlayerType;
 
-                switch (deviceAdapter) {
-                    case 'spotify-premium':
-                        let strDevicePI = pageItem.speakerList![words[4]];
-                        let strDeviceID = spotifyGetDeviceID(strDevicePI);
-                        setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
-                        break;
-                    case 'alexa2':
-                        let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
-                        for (let i_index in i_list) {
-                            let i = i_list[i_index];
-                            if ((getState(i).val) === pageItem.speakerList![words[4]]) {
-                                if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList![words[4]], 'info');
-                                let deviceId = i;
-                                deviceId = deviceId.split('.');
-                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList![words[4]]);
-                                pageItem.mediaDevice = deviceId[3];
-                            } 
-                        }
-                        break;
-                    case 'sonos':
-                        break;
-                    case 'chromecast':
-                        break;
-                    case 'squeezeboxrpc':
-                        pageItem.mediaDevice = pageItem.speakerList![words[4]];
-                        break;
-                }
-                pageCounter = 0;
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    pageCounter = 1;
+                    switch (deviceAdapter) {
+                        case 'spotify-premium':
+                            let strDevicePI = pageItem.speakerList![words[4]];
+                            let strDeviceID = spotifyGetDeviceID(strDevicePI);
+                            setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
+                            break;
+                        case 'alexa2':
+                            let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
+                            for (let i_index in i_list) {
+                                let i = i_list[i_index];
+                                if ((getState(i).val) === pageItem.speakerList![words[4]]) {
+                                    if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList![words[4]], 'info');
+                                    let deviceId = i;
+                                    deviceId = deviceId.split('.');
+                                    setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList![words[4]]);
+                                    pageItem.mediaDevice = deviceId[3];
+                                }
+                            }
+                            break;
+                        case 'sonos':
+                            break;
+                        /*case 'chromecast':
+                            break;*/
+                        case 'squeezeboxrpc':
+                            pageItem.mediaDevice = pageItem.speakerList![words[4]];
+                            break;
+                        case "volumio":
+                            break;
+                        case "bosesoundtouch":
+                            break;
+                    }
+                    pageCounter = 0;
                     GeneratePage(activePage!);
-                }, 3000);
+                    setTimeout(async function () {
+                        pageCounter = 1;
+                        GeneratePage(activePage!);
+                    }, 3000);
+                }
                 break;
             case 'mode-playlist':
                 let pageItemPL = findPageItem(id);
+                if (!isPageMediaItem(pageItemPL)) break;
                 let adapterInstancePL = pageItemPL.adapterPlayerInstance!;
                 let adapterPL = adapterInstancePL.split('.');
-                let deviceAdapterPL = adapterPL[0];
+                const deviceAdapterPL: PlayerType = adapterPL[0] as PlayerType;
 
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
@@ -6629,6 +6753,10 @@ function HandleButtonEvent(words: any): void {
                     case 'squeezeboxrpc':
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
+                    case "bosesoundtouch":
+                        break;
+                    default:
+                        log('Hello Mr. Developer u miss in mode-playlist something!', 'warn')
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -6639,9 +6767,10 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-tracklist':
                 let pageItemTL = findPageItem(id);
+                if (!isPageMediaItem(pageItemTL)) break;
                 let adapterInstanceTL = pageItemTL.adapterPlayerInstance!;
                 let adapterTL = adapterInstanceTL.split('.');
-                let deviceAdapterTL = adapterTL[0];
+                const deviceAdapterTL: PlayerType = adapterTL[0] as PlayerType;
 
                 switch (deviceAdapterTL) {
                     case 'spotify-premium':
@@ -6673,6 +6802,10 @@ function HandleButtonEvent(words: any): void {
                         //@ts-ignore Fehler kommt von findPageItem in vscode
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
+                    case "bosesoundtouch":
+                        break;
+                    default:
+                        log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn')
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -6683,6 +6816,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-repeat':
                 let pageItemRP = findPageItem(id);
+                if (!isPageMediaItem(pageItemRP)) break;
                 let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
                 let deviceAdapterRP = adapterRP[0];
@@ -6712,6 +6846,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-seek':
                 let pageItemSeek = findPageItem(id);
+                if (!isPageMediaItem(pageItemSeek)) break;
                 let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
                 let deviceAdapterSK = adapterSK[0];
@@ -6732,6 +6867,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-crossfade':
                 let pageItemCrossfade = findPageItem(id);
+                if (!isPageMediaItem(pageItemCrossfade)) break;
                 let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
                 let deviceAdapterCF = adapterCF[0];
@@ -6756,6 +6892,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-favorites':
                 let pageItemFav = findPageItem(id);
+                if (!isPageMediaItem(pageItemFav)) break;
                 if (Debug) log(getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set').val, 'info');
                 let favListArray = getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_list_array').val;
                 setState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set', favListArray[words[4]]);
@@ -6771,7 +6908,8 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
-                let adaInstanceSpli = pageItemTem.adapterPlayerInstance!.split('.');
+                if (!isPageMediaItem(pageItemTem)) break;
+                let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
                 if (adaInstanceSpli[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
                     let stateVal = getState(adapterPlayerInstancePowerSelector).val;
@@ -7089,7 +7227,7 @@ function GetNavigationString(pageId: number): string {
     return '';
 }
 
-function GenerateDetailPage(type: string, optional: string | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
+function GenerateDetailPage(type: string, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
@@ -7106,7 +7244,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
 
                 let switchVal = '0';
                 let brightness = 0;
-                if (o.common.role == 'light' || o.common.role == 'socket') {
+                switch (o.common.role) {
+                case 'light': 
+                case 'socket': {
                     if (existsState(id + '.GET')) {
                         val = getState(id + '.GET').val;
                         RegisterDetailEntityWatcher(id + '.GET', pageItem, type, placeId);
@@ -7152,9 +7292,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // Dimmer
-                if (o.common.role == 'dimmer') {
+                case 'dimmer': {
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
                         RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type, placeId);
@@ -7209,9 +7349,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // HUE-Licht
-                if (o.common.role == 'hue') {
+                case 'hue': {
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
@@ -7281,9 +7421,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // RGB-Licht
-                if (o.common.role == 'rgb') {
+                case 'rgb': {
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
@@ -7352,9 +7492,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // RGB-Licht-einzeln (HEX)
-                if (o.common.role == 'rgbSingle') {
+                case 'rgbSingle': {
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
@@ -7428,9 +7568,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // Farbtemperatur (CT)
-                if (o.common.role == 'ct') {
+                case 'ct': {
 
                     if (existsState(id + '.ON')) {
                         val = getState(id + '.ON').val;
@@ -7492,6 +7632,8 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
+                break;
+            }
             }
 
             if (type == 'popupShutter') {
@@ -7774,228 +7916,229 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
                     let mode: string = '';
-
-                    let vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
-                    let vAdapter = vTempAdapter[0];
-                    if (optional == 'seek') {
-                        let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
-                        if (actualStateTemp >= 95) {
-                            actualState = '100%';
-                        } else if (actualStateTemp >= 85) {
-                            actualState = '90%';
-                        } else if (actualStateTemp >= 75) {
-                            actualState = '80%';
-                        } else if (actualStateTemp >= 65) {
-                            actualState = '70%';
-                        } else if (actualStateTemp >= 55) {
-                            actualState = '60%';
-                        } else if (actualStateTemp >= 45) {
-                            actualState = '50%';
-                        } else if (actualStateTemp >= 35) {
-                            actualState = '40%';
-                        } else if (actualStateTemp >= 25) {
-                            actualState = '30%';
-                        } else if (actualStateTemp >= 15) {
-                            actualState = '20%';
-                        } else if (actualStateTemp >= 5) {
-                            actualState = '10%';
-                        } else if (actualStateTemp >= 0) {
-                            actualState = '0%';
-                        }
-                        if (vAdapter == 'sonos') {
-                            optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
-                        }
-                        mode = 'seek';
-                    } else if (optional == 'crossfade') {
-                        if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade')) {
-                            let actualStateTemp: boolean = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade').val;
-                            if (actualStateTemp) {
-                                actualState = findLocale('media', 'on');
-                            } else {
-                                actualState = findLocale('media', 'off');
+                    if (isPageMediaItem(pageItem)) {
+                        const vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
+                        const vAdapter: PlayerType = vTempAdapter[0] as PlayerType;
+                        if (optional == 'seek') {
+                            let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
+                            if (actualStateTemp >= 95) {
+                                actualState = '100%';
+                            } else if (actualStateTemp >= 85) {
+                                actualState = '90%';
+                            } else if (actualStateTemp >= 75) {
+                                actualState = '80%';
+                            } else if (actualStateTemp >= 65) {
+                                actualState = '70%';
+                            } else if (actualStateTemp >= 55) {
+                                actualState = '60%';
+                            } else if (actualStateTemp >= 45) {
+                                actualState = '50%';
+                            } else if (actualStateTemp >= 35) {
+                                actualState = '40%';
+                            } else if (actualStateTemp >= 25) {
+                                actualState = '30%';
+                            } else if (actualStateTemp >= 15) {
+                                actualState = '20%';
+                            } else if (actualStateTemp >= 5) {
+                                actualState = '10%';
+                            } else if (actualStateTemp >= 0) {
+                                actualState = '0%';
                             }
-                        }
-                        if (vAdapter == 'sonos') {
-                            optionalString = findLocale('media', 'on') + '?' + findLocale('media', 'off');
-                        }
-                        mode = 'crossfade';
-                    } else if (optional == 'speakerlist') {
-                        if (vAdapter == 'spotify-premium') {
-                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
+                            if (vAdapter == 'sonos') {
+                                optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
-                        } else if (vAdapter == 'alexa2') {
-                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                            mode = 'seek';
+                        } else if (optional == 'crossfade') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade')) {
+                                let actualStateTemp: boolean = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade').val;
+                                if (actualStateTemp) {
+                                    actualState = findLocale('media', 'on');
+                                } else {
+                                    actualState = findLocale('media', 'off');
+                                }
+                            }
+                            if (vAdapter == 'sonos') {
+                                optionalString = findLocale('media', 'on') + '?' + findLocale('media', 'off');
+                            }
+                            mode = 'crossfade';
+                        } else if (optional == 'speakerlist') {
+                            if (vAdapter == 'spotify-premium') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
+                                }
+                            } else if (vAdapter == 'alexa2') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                    //Todo Richtiges Device finden
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
+                                }
+                            } else if (vAdapter == 'squeezeboxrpc') {
+                                actualState = pageItem.mediaDevice;
+                            }
+                            let tempSpeakerList: string[] = [];
+                            for (let i = 0; i < pageItem.speakerList!.length; i++) {
+                                tempSpeakerList[i] = formatInSelText(pageItem.speakerList![i]).trim();
+                            }
+                            optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
+                            mode = 'speakerlist';
+                        } else if (optional == 'playlist') {
+                            if (vAdapter == 'spotify-premium') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.playlist.name').val);
+                                }
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'alexa2') {
                                 //Todo Richtiges Device finden
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Player.currentAlbum').val);
+
+                                let tPlayList: any = []
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList![i], 'info');
+                                    let tempItem = pageItem.playList![i].split('.');
+                                    tPlayList[i] = tempItem[1];
+                                }
+
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < tPlayList.length; i++) {
+                                    tempPlayList[i] = formatInSelText(tPlayList[i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'sonos') {
+                                if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
+                                if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
+                                }
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
+                                actualState = ''; //todo: no actual playlistname saving
+                                let tempPlayList: string[] = []; let tempPll = 0;
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPll += pageItem.playList![i].length; if (tempPll > 900) break;
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'squeezeboxrpc') {
+                                // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
+                                actualState = ''; // Not supported by squeezeboxrpc adapter
+                                let tempPlayList: string[] = [];
+                                let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
+                                for (let favorite_index = 0; favorite_index < 45; favorite_index++) {
+                                    let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
+                                    if (!existsObject(favorite_name_selector)) {
+                                        break;
+                                    }
+                                    let favoritename: string = getState(favorite_name_selector).val;
+                                    tempPlayList.push(formatInSelText(favoritename));
+                                }
+                                optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
                             }
-                        } else if (vAdapter == 'squeezeboxrpc') {
-                            actualState = pageItem.mediaDevice;
-                        }
-                        let tempSpeakerList: string[] = [];
-                        for (let i = 0; i < pageItem.speakerList!.length; i++) {
-                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList![i]).trim();
-                        }
-                        optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
-                        mode = 'speakerlist';
-                    } else if (optional == 'playlist') {
-                        if (vAdapter == 'spotify-premium') {
-                            if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.playlist.name').val);
+                            mode = 'playlist';
+                        } else if (optional == 'tracklist') {
+                            actualState = '';
+                            /* Volumio: works for files */
+                            if (vAdapter == 'volumio') {
+                                actualState = getState(pageItem.id + '.TITLE').val;
+                                globalTracklist = pageItem.globalTracklist;
+                            } else if (vAdapter == 'squeezeboxrpc') {
+                                actualState = getState(pageItem.id + '.TITLE').val;
+                            } else if (vAdapter == 'sonos') {
+                                actualState = getState(pageItem.id + '.TITLE').val;
+                            } else {
+                                actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                             }
-                            let tempPlayList: string[] = [];
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if (vAdapter == 'alexa2') {
-                            //Todo Richtiges Device finden
-                            actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Player.currentAlbum').val);
-            
-                            let tPlayList: any = []
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList![i], 'info');
-                                let tempItem = pageItem.playList![i].split('.');
-                                tPlayList[i] = tempItem[1];
-                            }
-                            
-                            let tempPlayList: string[] = [];
-                            for (let i = 0; i < tPlayList.length; i++) {
-                                tempPlayList[i] = formatInSelText(tPlayList[i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if (vAdapter == 'sonos') {
-                            if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
-                            if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
-                            }
-                            let tempPlayList: string[] = [];
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
-                            actualState = ''; //todo: no actual playlistname saving
-                            let tempPlayList: string[] = []; let tempPll = 0;
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                tempPll += pageItem.playList![i].length; if (tempPll > 900) break;
-                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if(vAdapter == 'squeezeboxrpc') {
-                            // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
-                            actualState = ''; // Not supported by squeezeboxrpc adapter
-                            let tempPlayList: string[] = [];
-                            let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
-                            for (let favorite_index=0; favorite_index < 45; favorite_index++) {
-                                let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
-                                if(!existsObject(favorite_name_selector)) {
+                            actualState = (actualState.replace('?', '')).split(' -');
+                            actualState = actualState[0].split(" (");
+                            actualState = formatInSelText(actualState[0]);
+                            if (Debug) log(actualState, 'info');
+                            if (Debug) log(globalTracklist, 'info');
+                            //Limit 900 characters, then memory overflow --> Shorten as much as possible
+                            let temp_array: any[] = [];
+                            //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
+                            for (let track_index = 0; track_index < 45; track_index++) {
+                                let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
+                                /* Volumio: @local/NAS no title -> name */
+                                if (temp_cut_array == undefined) {
+                                    temp_cut_array = getAttr(globalTracklist, track_index + '.name');
+                                }
+                                if (Debug) log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array, 'info');
+                                if (temp_cut_array != undefined) {
+                                    temp_cut_array = (temp_cut_array.replace('?', '')).split(' -');
+                                    temp_cut_array = temp_cut_array[0].split(" (");
+                                    temp_cut_array = temp_cut_array[0];
+                                    if (String(temp_cut_array[0]).length >= 22) {
+                                        temp_array[track_index] = temp_cut_array.substring(0, 20) + '..';
+                                    } else {
+                                        temp_array[track_index] = temp_cut_array.substring(0, 23);
+                                    }
+                                }
+                                else {
                                     break;
                                 }
-                                let favoritename: string = getState(favorite_name_selector).val;
-                                tempPlayList.push(formatInSelText(favoritename));
                             }
-                            optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
-                        }
-                        mode = 'playlist';
-                    } else if (optional == 'tracklist') {
-                        actualState = '';
-                        /* Volumio: works for files */
-                        if (vAdapter == 'volumio') {
-                            actualState = getState(pageItem.id + '.TITLE').val;
-                            globalTracklist = pageItem.globalTracklist;
-                        }else if(vAdapter == 'squeezeboxrpc') {
-                            actualState = getState(pageItem.id + '.TITLE').val;
-                        }else if(vAdapter == 'sonos') {
-                            actualState = getState(pageItem.id + '.TITLE').val;
-                        } else {
-                            actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
-                        }
-                        actualState = (actualState.replace('?','')).split(' -');
-                        actualState = actualState[0].split(" (");
-                        actualState = formatInSelText(actualState[0]);
-                        if (Debug) log(actualState, 'info');
-                        if (Debug) log(globalTracklist, 'info');
-                        //Limit 900 characters, then memory overflow --> Shorten as much as possible
-                        let temp_array: any[] = [];
-                        //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
-                        for (let track_index=0; track_index < 45; track_index++) {
-                            let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
-                            /* Volumio: @local/NAS no title -> name */
-                            if (temp_cut_array == undefined) {
-                                temp_cut_array = getAttr(globalTracklist, track_index + '.name');
-                            } 
-                            if (Debug) log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array, 'info');
-                            if (temp_cut_array != undefined) {
-                                temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
-                                temp_cut_array = temp_cut_array[0].split(" (");
-                                temp_cut_array = temp_cut_array[0];
-                                if (String(temp_cut_array[0]).length >= 22) {
-                                    temp_array[track_index] = temp_cut_array.substring(0,20) + '..';
-                                } else {
-                                    temp_array[track_index] = temp_cut_array.substring(0,23);
-                                }
+                            let tempTrackList: string[] = [];
+                            for (let i = 0; i < temp_array.length; i++) {
+                                tempTrackList[i] = formatInSelText(temp_array[i]);
                             }
-                            else {
-                                break;
-                            }
-                        }
-                        let tempTrackList: string[] = [];
-                        for (let i = 0; i < temp_array.length; i++) {
-                            tempTrackList[i] = formatInSelText(temp_array[i]);
-                        }
-                        optionalString = pageItem.playList != undefined ? tempTrackList.join('?') : ''
-                        mode = 'tracklist';
-                    } else if (optional == 'equalizer') {
-                        if (pageItem.id == undefined) throw new Error ('Missing pageItem.id in equalizer!');
-                        let lastIndex = (pageItem.id.split('.')).pop();
+                            optionalString = pageItem.playList != undefined ? tempTrackList.join('?') : ''
+                            mode = 'tracklist';
+                        } else if (optional == 'equalizer') {
+                            if (pageItem.id == undefined) throw new Error('Missing pageItem.id in equalizer!');
+                            let lastIndex = (pageItem.id.split('.')).pop();
 
-                        if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false || 
-                            existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker') == false) {
-                            createState(NSPanel_Path  + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon>{ type: 'string' });
-                            createState(NSPanel_Path  + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon>{ type: 'string' });
-                        }
-                        
-                        actualState = ''
-                        if (getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val != null) {
-                            actualState = formatInSelText(getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val);
-                        }
-                        
-                        let tempEQList: string[] = [];
-                        for (let i = 0; i < pageItem.equalizerList!.length; i++) {
-                            tempEQList[i] = formatInSelText(pageItem!.equalizerList![i]);
+                            if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false ||
+                                existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker') == false) {
+                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon> {type: 'string'});
+                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon> {type: 'string'});
+                            }
+
+                            actualState = ''
+                            if (getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val != null) {
+                                actualState = formatInSelText(getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val);
+                            }
+
+                            let tempEQList: string[] = [];
+                            for (let i = 0; i < pageItem.equalizerList!.length; i++) {
+                                tempEQList[i] = formatInSelText(pageItem!.equalizerList![i]);
+                            }
+
+                            optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
+                            mode = 'equalizer';
+                        } else if (optional == 'repeat') {
+                            actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
+                            optionalString = pageItem.repeatList!.join('?');
+                            mode = 'repeat';
+                        } else if (optional == 'favorites') {
+                            if (Debug) log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val, 'info')
+                            actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
+
+                            let tempFavList: string[] = [];
+                            let favList = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_list_array').val;
+                            for (let i = 0; i < favList.length; i++) {
+                                tempFavList[i] = formatInSelText(favList[i]);
+                            }
+                            optionalString = tempFavList != undefined ? tempFavList.join('?') : '';
+                            mode = 'favorites';
                         }
 
-                        optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
-                        mode = 'equalizer';
-                    } else if (optional == 'repeat') {
-                        actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
-                        optionalString = pageItem.repeatList!.join('?');
-                        mode = 'repeat';
-                    } else if (optional == 'favorites') {
-                        if (Debug) log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val, 'info')
-                        actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
-                        
-                        let tempFavList:string [] = [];
-                        let favList = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_list_array').val;
-                        for (let i = 0; i < favList.length; i++) {
-                            tempFavList[i] = formatInSelText(favList[i]);
-                        }
-                        optionalString = tempFavList != undefined ? tempFavList.join('?') : '';
-                        mode = 'favorites';
+                        let tempId = placeId != undefined ? placeId : id;
+
+                        out_msgs.push({
+                            payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
+                                + tempId + '?' + optional + '~~'         //{entity_id}
+                                + rgb_dec565(HMIOn) + '~'            //{icon_color}~
+                                + mode + '~'
+                                + actualState + '~'
+                                + optionalString
+                        });
+                        GeneratePage(activePage!);
                     }
-
-                    let tempId = placeId != undefined ? placeId : id;
-
-                    out_msgs.push({
-                        payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
-                            + tempId + '?' + optional + '~~'         //{entity_id}
-                            + rgb_dec565(HMIOn) + '~'            //{icon_color}~
-                            + mode + '~'
-                            + actualState + '~'
-                            + optionalString
-                    });
-                    GeneratePage(activePage!);
                 } else if (o.common.role == 'buttonSensor') {
 
                     let actualValue: string = '';
@@ -9406,8 +9549,8 @@ type PageThermo = {
 
 type PageMedia = {
     type: 'cardMedia',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
+    items: PageMediaItem[],
+} & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
 
 type PageAlarm = {
     type: 'cardAlarm',
@@ -9434,7 +9577,16 @@ type PageChart = {
     items: PageItem[],
 } & Omit<PageBaseType, 'useColor'>
 
-type PageItem = {
+type PageItem = PageBaseItem | PageMediaItem
+
+function isPageMediaItem(F: PageItem | PageMediaItem):F is PageMediaItem {
+    return  (F as PageMediaItem).adapterPlayerInstance !== undefined
+}
+type PageMediaItem = {
+    adapterPlayerInstance: adapterPlayerInstanceType,
+} & PageBaseItem
+
+type PageBaseItem = {
     id?: string | null,
     icon?: string,
     icon2?: string,
@@ -9462,7 +9614,7 @@ type PageItem = {
     navigate?: boolean,
     colormode?: string,
     colorScale?: any, 
-    adapterPlayerInstance?: string,
+    //adapterPlayerInstance?: adapterPlayerInstanceType,
     mediaDevice?: string,
     targetPage?: string,
     speakerList?: string[],
@@ -9567,4 +9719,39 @@ type IconScaleElement = {
     val_min:number, 
     val_max:number, 
     val_best?: number
+}
+/** we need this to have a nice order when using switch() */
+type adapterPlayerInstanceType =
+  'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
+| 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
+| 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
+| 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
+| 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
+| 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
+
+type PlayerType = 'alexa2' | 'sonos' | 'spotify-premium' | 'volumio' | 'squeezeboxrpc' | 'bosesoundtouch' 
+ 
+type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
+
+/** check if adapterPlayerInstanceType has all Playertypes */
+function checkSortedPlayerType(F: notSortedPlayerType) {
+    const test: adapterPlayerInstanceType = F;
+}
+
+type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
+
+function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
+    switch(F as mediaOptional) {
+        case "seek":
+        case "crossfade":
+        case "speakerlist":
+        case "playlist":
+        case "tracklist":
+        case "equalizer":
+        case "repeat":
+        case "favorites":
+            return true;
+        default:
+            return false
+    }
 }

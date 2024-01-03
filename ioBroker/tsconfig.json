@@ -1,0 +1,28 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": false,
+    "target": "ES2022",
+    "typeRoots": [
+      ".iobroker/types",
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "**/*.js",
+    "**/*.ts",
+    "./.iobroker/types/javascript.d.ts"
+  ],
+  "exclude": [
+    "node_modules/**"
+  ]
+}
