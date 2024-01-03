@@ -67,7 +67,7 @@ class LovelaceUIPanel:
         self.schedule = Scheduler()
         self.schedule.minutely(datetime.time(second=0), self.update_time)
         self.schedule.hourly(datetime.time(
-            minute=0, second=0), self.update_time)
+            minute=0, second=0), self.update_date)
         schedule_thread = threading.Thread(target=self.schedule_thread_target)
         schedule_thread.daemon = True
         schedule_thread.start()
