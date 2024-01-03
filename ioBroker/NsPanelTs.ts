@@ -9668,7 +9668,7 @@ type IconScaleElement = {
     val_max:number, 
     val_best?: number
 }
-
+/** we need this to have a nice order when using switch() */
 type adapterPlayerInstanceType =
   'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
 | 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
@@ -9678,6 +9678,13 @@ type adapterPlayerInstanceType =
 
 type PlayerType = 'alexa2' | 'sonos' | 'spotify-premium' | 'volumio' | 'squeezeboxrpc' 
  
+type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
+
+/** check if adapterPlayerInstanceType has all Playertypes */
+function checkSortedPlayerType(F: adapterPlayerInstanceType) {
+    const test: notSortedPlayerType = F;
+}
+
 type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
 
 function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
