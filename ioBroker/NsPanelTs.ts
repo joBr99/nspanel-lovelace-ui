@@ -9676,7 +9676,7 @@ type adapterPlayerInstanceType =
 | 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
 | 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
 
-type PlayerType = 'alexa2' | 'sonos'| 'sonos' | 'spotify-premium' |  'volumio' |'squeezeboxrpc' 
+type PlayerType = 'alexa2' | 'sonos' | 'spotify-premium' | 'volumio' | 'squeezeboxrpc' 
  
 type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
 
