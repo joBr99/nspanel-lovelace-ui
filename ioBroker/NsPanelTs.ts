@@ -4913,6 +4913,47 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
 
                 }
                     break;
+                case "bosesoundtouch.0.":
+                case "bosesoundtouch.1.":
+                case "bosesoundtouch.2.":
+                case "bosesoundtouch.3.":
+                case "bosesoundtouch.4.":
+                case "bosesoundtouch.5.":
+                case "bosesoundtouch.6.":
+                case "bosesoundtouch.7.":
+                case "bosesoundtouch.8.":
+                case "bosesoundtouch.9.": {
+                    if (existsObject(id) == false) {
+                        log('bosesoundtouch Alias ' + id + ' does not exist - will be created now', 'info');
+
+                        try {
+                            let dpPath: string = adapterPlayerInstance + 'keys';
+                            await extendObjectAsync(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+
+                            dpPath = adapterPlayerInstance + 'nowPlaying';
+                            await createAliasAsync(id + '.ALBUM', dpPath + '.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                            await createAliasAsync(id + '.ARTIST', dpPath + '.artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                            await createAliasAsync(id + '.TITLE', dpPath + '.track', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                            await createAliasAsync(id + '.DURATION', dpPath + '.total', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                            await createAliasAsync(id + '.ELAPSED', dpPath + '.time', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
+                            await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                            
+                            dpPath = adapterPlayerInstance + 'keys';
+                            await createAliasAsync(id + '.STATE', dpPath + '.POWER', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+                            await createAliasAsync(id + '.NEXT', dpPath + '.NEXT_TRACK', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                            await createAliasAsync(id + '.PREV', dpPath + '.PREV_TRACK', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                            await createAliasAsync(id + '.PLAY', dpPath + '.PLAY', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                            await createAliasAsync(id + '.PAUSE', dpPath + '.PAUSE', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                            await createAliasAsync(id + '.STOP', dpPath + '.STOP', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                        } catch (err: any) {
+                            log('error at function createAutoMediaAlias Adapter bosesoundtouch: ' + err.message, 'warn');
+                        }
+                    }
+                    break;
+                }
                 default: {
                     log(`Dont find adapterPlayerInstance: ${adapterPlayerInstance}!`, 'warn')
                 }
@@ -6651,8 +6692,14 @@ function HandleButtonEvent(words: any): void {
                         case 'squeezeboxrpc':
                             pageItem.mediaDevice = pageItem.speakerList![words[4]];
                             break;
+                        case "volumio":
+                            break;
+                        default:
+                            log('Hello Mr. Developer u miss in speakerlist somthing!', 'warn')
+                            
 
                     }
+                    function exhaustiveCheck(_v: never) {}
                     pageCounter = 0;
                     GeneratePage(activePage!);
                     setTimeout(async function () {
@@ -6709,6 +6756,8 @@ function HandleButtonEvent(words: any): void {
                     case 'squeezeboxrpc':
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
+                    default:
+                        log('Hello Mr. Developer u miss in mode-playlist somthing!', 'warn')
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -6754,6 +6803,8 @@ function HandleButtonEvent(words: any): void {
                         //@ts-ignore Fehler kommt von findPageItem in vscode
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
+                    default:
+                        log('Hello Mr. Developer u miss in mode-tracklist somthing!', 'warn')
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -9675,14 +9726,15 @@ type adapterPlayerInstanceType =
 | 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
 | 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
 | 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
+| 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
 
-type PlayerType = 'alexa2' | 'sonos' | 'spotify-premium' | 'volumio' | 'squeezeboxrpc' 
+type PlayerType = 'alexa2' | 'sonos' | 'spotify-premium' | 'volumio' | 'squeezeboxrpc' | 'bosesoundtouch' 
  
 type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
 
 /** check if adapterPlayerInstanceType has all Playertypes */
-function checkSortedPlayerType(F: adapterPlayerInstanceType) {
-    const test: notSortedPlayerType = F;
+function checkSortedPlayerType(F: notSortedPlayerType) {
+    const test: adapterPlayerInstanceType = F;
 }
 
 type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
