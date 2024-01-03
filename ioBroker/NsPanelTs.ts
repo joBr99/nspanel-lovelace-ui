@@ -6695,7 +6695,7 @@ function HandleButtonEvent(words: any): void {
                         case "volumio":
                             break;
                         default:
-                            log('Hello Mr. Developer u miss in speakerlist somthing!', 'warn')
+                            log('Hello Mr. Developer u miss in speakerlist something!', 'warn')
                             
 
                     }
@@ -6757,7 +6757,7 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
                     default:
-                        log('Hello Mr. Developer u miss in mode-playlist somthing!', 'warn')
+                        log('Hello Mr. Developer u miss in mode-playlist something!', 'warn')
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -6804,7 +6804,7 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
                         break;
                     default:
-                        log('Hello Mr. Developer u miss in mode-tracklist somthing!', 'warn')
+                        log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn')
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
