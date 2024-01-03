@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.30 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Sternmiere / @Britzelpuf / @ravenS0ne
+TypeScript v4.3.3.31 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Sternmiere / @Britzelpuf / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -91,6 +91,9 @@ ReleaseNotes:
         - 02.01.2024 - v4.3.3.29 Add Tasmota Buzzer for NotifyPage
         - 02.02.2024 - v4.3.3.29 Fix ThermoPage -> UnSubScribsWatcher
         - 02.02.2024 - v4.3.3.30 Add stronger config type checks
+        - 03.02.2024 - v4.3.3.31 Remove: autoCreateAlias from cardMedia
+        - 03.02.2024 - v4.3.3.31 Remove: adapterPlayerInstance from every card except cardMedia
+        - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -953,7 +956,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.30';
+const scriptVersion: string = 'v4.3.3.31';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -3022,7 +3025,9 @@ function HandleMessage(typ: string, method: string, page: number | undefined, wo
                         }
                         let pageItem: PageItem = findPageItem(tempId);
                         if (pageItem !== undefined) {
-                            SendToPanel(GenerateDetailPage(words[2], tempPageItem[1], pageItem, placeId));
+                            let temp: string | mediaOptional | undefined = tempPageItem[1]
+                            if (isMediaOptional(temp)) SendToPanel(GenerateDetailPage(words[2], temp, pageItem, placeId));
+                            else SendToPanel(GenerateDetailPage(words[2], undefined, pageItem, placeId));
                         }
                     }
                     break;
@@ -4286,288 +4291,290 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
+                switch (o.common.role) {
+                    case 'thermostat': {
 
-                if (o.common.role == 'thermostat') {
-
-                    if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
-                        if (getState(id + '.AUTOMATIC').val) {
-                            bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
-                            statusStr = 'AUTO';
-                        } else {
-                            bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
-                        }
-                    }
-                    if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
-                        if (getState(id + '.MANUAL').val) {
-                            bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
-                            statusStr = 'MANU';
-                        } else {
-                            bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
-                        }
-                    }
-                    if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
-                        if (getState(id + '.PARTY').val) {
-                            bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
-                            statusStr = 'PARTY';
-                        } else {
-                            bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
-                        }
-                    }
-                    if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
-                        if (getState(id + '.VACATION').val) {
-                            bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
-                            statusStr = 'VAC';
-                        } else {
-                            bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
-                        }
-                    }
-                    if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
-                        if (getState(id + '.BOOST').val) {
-                            bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
-                            statusStr = 'BOOST';
-                        } else {
-                            bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
-                        }
-                    }
-
-                    for (let i_index in i_list) {
-                        let thermostatState = i_list[i_index].split('.');
-                        if (
-                            thermostatState[thermostatState.length - 1] != 'SET' &&
-                            thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
-                            thermostatState[thermostatState.length - 1] != 'MODE'
-                        ) {
-                            i++;
-
-                            switch (thermostatState[thermostatState.length - 1]) {
-                                case 'HUMIDITY':
-                                    if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
-                                        if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
-                                        } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
-                                            bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'LOWBAT':
-                                    if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
-                                        if (getState(id + '.LOWBAT').val) {
-                                            bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'MAINTAIN':
-                                    if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
-                                        if (getState(id + '.MAINTAIN').val >> .1) {
-                                            bt[i - 1] = Icons.GetIcon('account-wrench') + '~60897~1~' + 'MAIN' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('account-wrench') + '~33840~1~' + 'MAIN' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'UNREACH':
-                                    if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
-                                        if (getState(id + '.UNREACH').val) {
-                                            bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'POWER':
-                                    if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                                        if (getState(id + '.POWER').val) {
-                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POWER' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'ERROR':
-                                    if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
-                                        if (getState(id + '.ERROR').val) {
-                                            bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'WORKING':
-                                    if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
-                                        if (getState(id + '.WORKING').val) {
-                                            bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                case 'WINDOWOPEN':
-                                    if (existsState(id + '.WINDOWOPEN') && getState(id + '.WINDOWOPEN').val != null) {
-                                        if (getState(id + '.WINDOWOPEN').val) {
-                                            bt[i - 1] = Icons.GetIcon('window-open-variant') + '~63488~1~' + 'WIN' + '~';
-                                        } else {
-                                            bt[i - 1] = Icons.GetIcon('window-closed-variant') + '~2016~1~' + 'WIN' + '~';
-                                        }
-                                    } else i--;
-                                    break;
-                                default:
-                                    i--;
-                                    break;
-                            }
-                        }
-                    }
-
-                    for (let j = i; j < 9; j++) {
-                        bt[j] = '~~~~';
-                    }
-                }
-
-                if (o.common.role == 'airCondition') {
-                    if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
-                        let Mode = getState(id + '.MODE').val
-                        let States = getObject(id + '.MODE').common.states;
-                        
-                        let iconIndex: number = 1;
-                        for(const statekey in States) {
-                            let stateName: string = States[statekey];
-                            let stateKeyNumber: number = parseInt(statekey);
-                            if(stateName == 'OFF' || stateKeyNumber > 6) {
-                                continue;
-                            }
-                            if(stateKeyNumber == Mode) {
-                                statusStr = stateName.replace('_', ' ');
-                            }
-
-                            switch(stateName) {
-                                case 'AUTO':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
-                                        tempIcon = page.items[0].iconArray[1];
-                                    } else {
-                                        tempIcon = 'air-conditioner';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
-                                    }
-                                    break;
-                                case 'COOL':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
-                                        tempIcon = page.items[0].iconArray[2];
-                                    } else {
-                                        tempIcon = 'snowflake';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
-                                    }
-                                    break;
-                                case 'HEAT':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
-                                        tempIcon = page.items[0].iconArray[3];
-                                    } else {
-                                        tempIcon = 'fire';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
-                                    }
-                                    break;
-                                case 'ECO':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
-                                        tempIcon = page.items[0].iconArray[4];
-                                    } else {
-                                        tempIcon = 'alpha-e-circle-outline';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
-                                    }
-                                    break;
-                                case 'FAN_ONLY':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
-                                        tempIcon = page.items[0].iconArray[5];
-                                    } else {
-                                        tempIcon = 'fan';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
-                                    }
-                                    break;
-                                case 'DRY':
-                                    if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
-                                        tempIcon = page.items[0].iconArray[6];
-                                    } else {
-                                        tempIcon = 'water-percent';
-                                    }
-                                    if(stateKeyNumber == Mode) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
-                                    } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
-                                    }
-                                    break;
-                            }
-                            iconIndex++;
-                        }
-                        
-                        if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
-                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
-                                tempIcon = page.items[0].iconArray[4];
+                        if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
+                            if (getState(id + '.AUTOMATIC').val) {
+                                bt[i++] = Icons.GetIcon('alpha-a-circle') + '~' + rgb_dec565(On) + '~1~' + 'AUTT' + '~';
+                                statusStr = 'AUTO';
                             } else {
-                                tempIcon = 'alpha-e-circle-outline';
+                                bt[i++] = Icons.GetIcon('alpha-a-circle') + '~33840~1~' + 'AUTT' + '~';
                             }
-                            if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
-                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
-                                statusStr = 'ECO';
+                        }
+                        if (existsState(id + '.MANUAL') && getState(id + '.MANUAL').val != null) {
+                            if (getState(id + '.MANUAL').val) {
+                                bt[i++] = Icons.GetIcon('alpha-m-circle') + '~' + rgb_dec565(On) + '~1~' + 'MANT' + '~';
+                                statusStr = 'MANU';
                             } else {
-                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                bt[i++] = Icons.GetIcon('alpha-m-circle') + '~33840~1~' + 'MANT' + '~';
                             }
-                            iconIndex++;
+                        }
+                        if (existsState(id + '.PARTY') && getState(id + '.PARTY').val != null) {
+                            if (getState(id + '.PARTY').val) {
+                                bt[i++] = Icons.GetIcon('party-popper') + '~' + rgb_dec565(On) + '~1~' + 'PART' + '~';
+                                statusStr = 'PARTY';
+                            } else {
+                                bt[i++] = Icons.GetIcon('party-popper') + '~33840~1~' + 'PART' + '~';
+                            }
+                        }
+                        if (existsState(id + '.VACATION') && getState(id + '.VACATION').val != null) {
+                            if (getState(id + '.VACATION').val) {
+                                bt[i++] = Icons.GetIcon('palm-tree') + '~' + rgb_dec565(On) + '~1~' + 'VACT' + '~';
+                                statusStr = 'VAC';
+                            } else {
+                                bt[i++] = Icons.GetIcon('palm-tree') + '~33840~1~' + 'VACT' + '~';
+                            }
+                        }
+                        if (existsState(id + '.BOOST') && getState(id + '.BOOST').val != null) {
+                            if (getState(id + '.BOOST').val) {
+                                bt[i++] = Icons.GetIcon('fast-forward-60') + '~' + rgb_dec565(On) + '~1~' + 'BOOT' + '~';
+                                statusStr = 'BOOST';
+                            } else {
+                                bt[i++] = Icons.GetIcon('fast-forward-60') + '~33840~1~' + 'BOOT' + '~';
+                            }
                         }
 
-                        if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
-                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
-                                tempIcon = page.items[0].iconArray[7];
-                            } else {
-                                tempIcon = 'swap-vertical-bold';
+                        for (let i_index in i_list) {
+                            let thermostatState = i_list[i_index].split('.');
+                            if (
+                                thermostatState[thermostatState.length - 1] != 'SET' &&
+                                thermostatState[thermostatState.length - 1] != 'ACTUAL' &&
+                                thermostatState[thermostatState.length - 1] != 'MODE'
+                            ) {
+                                i++;
+
+                                switch (thermostatState[thermostatState.length - 1]) {
+                                    case 'HUMIDITY':
+                                        if (existsState(id + '.HUMIDITY') && getState(id + '.HUMIDITY').val != null) {
+                                            if (parseInt(getState(id + '.HUMIDITY').val) < 40) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) < 30) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) >= 40) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~2016~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) > 65) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~65504~1~' + 'HUM' + '~';
+                                            } else if (parseInt(getState(id + '.HUMIDITY').val) > 75) {
+                                                bt[i - 1] = Icons.GetIcon('water-percent') + '~63488~1~' + 'HUM' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'LOWBAT':
+                                        if (existsState(id + '.LOWBAT') && getState(id + '.LOWBAT').val != null) {
+                                            if (getState(id + '.LOWBAT').val) {
+                                                bt[i - 1] = Icons.GetIcon('battery-low') + '~63488~1~' + 'LBAT' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('battery-high') + '~2016~1~' + 'LBAT' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'MAINTAIN':
+                                        if (existsState(id + '.MAINTAIN') && getState(id + '.MAINTAIN').val != null) {
+                                            if (getState(id + '.MAINTAIN').val >> .1) {
+                                                bt[i - 1] = Icons.GetIcon('account-wrench') + '~60897~1~' + 'MAIN' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('account-wrench') + '~33840~1~' + 'MAIN' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'UNREACH':
+                                        if (existsState(id + '.UNREACH') && getState(id + '.UNREACH').val != null) {
+                                            if (getState(id + '.UNREACH').val) {
+                                                bt[i - 1] = Icons.GetIcon('wifi-off') + '~63488~1~' + 'WLAN' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('wifi') + '~2016~1~' + 'WLAN' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'POWER':
+                                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                                            if (getState(id + '.POWER').val) {
+                                                bt[i - 1] = Icons.GetIcon('power-standby') + '~2016~1~' + 'POWER' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('power-standby') + '~33840~1~' + 'POWER' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'ERROR':
+                                        if (existsState(id + '.ERROR') && getState(id + '.ERROR').val != null) {
+                                            if (getState(id + '.ERROR').val) {
+                                                bt[i - 1] = Icons.GetIcon('alert-circle') + '~63488~1~' + 'ERR' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('alert-circle') + '~33840~1~' + 'ERR' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'WORKING':
+                                        if (existsState(id + '.WORKING') && getState(id + '.WORKING').val != null) {
+                                            if (getState(id + '.WORKING').val) {
+                                                bt[i - 1] = Icons.GetIcon('briefcase-check') + '~2016~1~' + 'WORK' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('briefcase-check') + '~33840~1~' + 'WORK' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    case 'WINDOWOPEN':
+                                        if (existsState(id + '.WINDOWOPEN') && getState(id + '.WINDOWOPEN').val != null) {
+                                            if (getState(id + '.WINDOWOPEN').val) {
+                                                bt[i - 1] = Icons.GetIcon('window-open-variant') + '~63488~1~' + 'WIN' + '~';
+                                            } else {
+                                                bt[i - 1] = Icons.GetIcon('window-closed-variant') + '~2016~1~' + 'WIN' + '~';
+                                            }
+                                        } else i--;
+                                        break;
+                                    default:
+                                        i--;
+                                        break;
+                                }
                             }
-                            if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
-                                bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
-                            } else {
-                                bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
-                            }
-                            iconIndex++;
                         }
 
-                        // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
-                        if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
-                            if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
-                                tempIcon = page.items[0].iconArray[0];
-                            } else {
-                                tempIcon = 'power-standby';
+                        for (let j = i; j < 9; j++) {
+                            bt[j] = '~~~~';
+                        }
+                    }
+                    break;
+                    case 'airCondition': {
+                        if (existsState(id + '.MODE') && getState(id + '.MODE').val != null) {
+                            let Mode = getState(id + '.MODE').val
+                            let States = getObject(id + '.MODE').common.states;
+
+                            let iconIndex: number = 1;
+                            for (const statekey in States) {
+                                let stateName: string = States[statekey];
+                                let stateKeyNumber: number = parseInt(statekey);
+                                if (stateName == 'OFF' || stateKeyNumber > 6) {
+                                    continue;
+                                }
+                                if (stateKeyNumber == Mode) {
+                                    statusStr = stateName.replace('_', ' ');
+                                }
+
+                                switch (stateName) {
+                                    case 'AUTO':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
+                                            tempIcon = page.items[0].iconArray[1];
+                                        } else {
+                                            tempIcon = 'air-conditioner';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
+                                        }
+                                        break;
+                                    case 'COOL':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
+                                            tempIcon = page.items[0].iconArray[2];
+                                        } else {
+                                            tempIcon = 'snowflake';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
+                                        }
+                                        break;
+                                    case 'HEAT':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
+                                            tempIcon = page.items[0].iconArray[3];
+                                        } else {
+                                            tempIcon = 'fire';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
+                                        }
+                                        break;
+                                    case 'ECO':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                            tempIcon = page.items[0].iconArray[4];
+                                        } else {
+                                            tempIcon = 'alpha-e-circle-outline';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                        }
+                                        break;
+                                    case 'FAN_ONLY':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
+                                            tempIcon = page.items[0].iconArray[5];
+                                        } else {
+                                            tempIcon = 'fan';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
+                                        }
+                                        break;
+                                    case 'DRY':
+                                        if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
+                                            tempIcon = page.items[0].iconArray[6];
+                                        } else {
+                                            tempIcon = 'water-percent';
+                                        }
+                                        if (stateKeyNumber == Mode) {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
+                                        } else {
+                                            bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
+                                        }
+                                        break;
+                                }
+                                iconIndex++;
                             }
-                            if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
-                                bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
-                                statusStr = 'OFF';
+
+                            if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
+                                if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
+                                    tempIcon = page.items[0].iconArray[4];
+                                } else {
+                                    tempIcon = 'alpha-e-circle-outline';
+                                }
+                                if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
+                                    bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                    statusStr = 'ECO';
+                                } else {
+                                    bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                }
+                                iconIndex++;
                             }
-                            else {
-                                bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
+
+                            if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
+                                if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
+                                    tempIcon = page.items[0].iconArray[7];
+                                } else {
+                                    tempIcon = 'swap-vertical-bold';
+                                }
+                                if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {          //0=ON oder .SWING = true
+                                    bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
+                                } else {
+                                    bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
+                                }
+                                iconIndex++;
+                            }
+
+                            // Power Icon zuletzt pruefen, damit der Mode ggf. mit OFF ueberschrieben werden kann
+                            if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
+                                if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
+                                    tempIcon = page.items[0].iconArray[0];
+                                } else {
+                                    tempIcon = 'power-standby';
+                                }
+                                if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
+                                    bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
+                                    statusStr = 'OFF';
+                                }
+                                else {
+                                    bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
+                                }
                             }
                         }
                     }
+                    break;
                 }
             }
 
@@ -4887,11 +4894,10 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             }
         }
 
-        if (page.items[0].autoCreateALias) {
-            let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
-            createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
-        }
-
+        let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
+        if (!vMediaDevice) throw new Error(`Error in cardMedia! mediaDevice is empty! Page: ${JSON.stringify(page)}`);
+        createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
+    
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardMedia' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
             out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -6253,83 +6259,90 @@ function HandleButtonEvent(words: any): void {
                         case 'hue':
                             toggleState(id + '.ON_ACTUAL');
                         case 'media':
+                            if (!activePage || activePage.type != 'cardMedia') {
+                                if (activePage) throw new Error(`Found channel role media for card: ${activePage.type} not allowed`)
+                                else throw new Error(`Something went wrong! Active Page is empty!`);
+                            }
                             if (tempid[1] == undefined) {
                                 if (Debug) log('Logo click', 'info');
                                 GeneratePage(activePage!);
                             } else if (tempid[1] == 'repeat') {
+                                
                                 let pageItemRepeat = findPageItem(id);
-                                let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance!;
-                                let adapterRepeat = adapterInstanceRepeat.split('.');
-                                let deviceAdapterRP = adapterRepeat[0];
+                                if (isPageMediaItem(pageItemRepeat)) {
+                                    let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
+                                    let adapterRepeat = adapterInstanceRepeat.split('.');
+                                    let deviceAdapterRP = adapterRepeat[0];
 
-                                switch (deviceAdapterRP) {
-                                    case 'spotify-premium':
-                                        let stateSpotifyRepeat = getState(id + '.REPEAT').val
-                                        if (stateSpotifyRepeat == 'none') {
-                                            setIfExists(id + '.REPEAT', 'all');
-                                        } else if (stateSpotifyRepeat == 'all') {
-                                            setIfExists(id + '.REPEAT', 'one');
-                                        } else if (stateSpotifyRepeat == 'one') {
-                                            setIfExists(id + '.REPEAT', 'none');
-                                        }
-                                        GeneratePage(activePage!);
-                                        break;
-                                    case 'sonos':
-                                        let stateSonosRepeat = getState(id + '.REPEAT').val
-                                        if (stateSonosRepeat == 0) {
-                                            setIfExists(id + '.REPEAT', 1);
-                                        } else if (stateSonosRepeat == 1) {
-                                            setIfExists(id + '.REPEAT', 2);
-                                        } else if (stateSonosRepeat == 2) {
-                                            setIfExists(id + '.REPEAT', 0);
-                                        }
-                                        GeneratePage(activePage!);
-                                        break;
-                                    case 'alexa2':
-                                        try {
-                                            setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
-                                        } catch (err: any) {
-                                            log('ALEXA2: Repeat kann nicht verändert werden', 'warn');
-                                        }
-                                        GeneratePage(activePage!);
-                                        break;
-                                    case 'volumio':
-                                        let urlString: string = `${getState(adapterInstanceRepeat+'info.host').val}/api/commands/?cmd=repeat`;
-                                        axios.get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
-                                            .then(async function (response) {
-                                                if (response.status === 200) {
-                                                    if (Debug) {
-                                                        log(response.data, 'info');
-                                                    }
-                                                    GeneratePage(activePage!);
-                                                } else {
-                                                    log('Axios Status - adapterInstanceRepeat: ' + response.state, 'warn');
-                                                }
-                                            })
-                                            .catch(function (error) {
-                                                log(error, 'warn');
-                                            });
-                                        break;
-                                    case 'squeezeboxrpc':
-                                        try {
-                                            switch(getState(id + '.REPEAT').val) {
-                                                case 0:
-                                                    setIfExists(id + '.REPEAT', 1);
-                                                    GeneratePage(activePage!);
-                                                    break;
-                                                case 1:
-                                                    setIfExists(id + '.REPEAT', 2)
-                                                    GeneratePage(activePage!);
-                                                    break;
-                                                case 2:
-                                                    setIfExists(id + '.REPEAT', 0);
-                                                    GeneratePage(activePage!);
-                                                    break;
+                                    switch (deviceAdapterRP) {
+                                        case 'spotify-premium':
+                                            let stateSpotifyRepeat = getState(id + '.REPEAT').val
+                                            if (stateSpotifyRepeat == 'none') {
+                                                setIfExists(id + '.REPEAT', 'all');
+                                            } else if (stateSpotifyRepeat == 'all') {
+                                                setIfExists(id + '.REPEAT', 'one');
+                                            } else if (stateSpotifyRepeat == 'one') {
+                                                setIfExists(id + '.REPEAT', 'none');
                                             }
-                                        } catch (err: any) {
-                                            log('Squeezebox: Repeat kann nicht verändert werden', 'warn');
-                                        }
-                                        break;
+                                            GeneratePage(activePage!);
+                                            break;
+                                        case 'sonos':
+                                            let stateSonosRepeat = getState(id + '.REPEAT').val
+                                            if (stateSonosRepeat == 0) {
+                                                setIfExists(id + '.REPEAT', 1);
+                                            } else if (stateSonosRepeat == 1) {
+                                                setIfExists(id + '.REPEAT', 2);
+                                            } else if (stateSonosRepeat == 2) {
+                                                setIfExists(id + '.REPEAT', 0);
+                                            }
+                                            GeneratePage(activePage!);
+                                            break;
+                                        case 'alexa2':
+                                            try {
+                                                setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
+                                            } catch (err: any) {
+                                                log('ALEXA2: Repeat kann nicht verändert werden', 'warn');
+                                            }
+                                            GeneratePage(activePage!);
+                                            break;
+                                        case 'volumio':
+                                            let urlString: string = `${getState(adapterInstanceRepeat + 'info.host').val}/api/commands/?cmd=repeat`;
+                                            axios.get(urlString, {headers: {'User-Agent': 'ioBroker'}})
+                                                .then(async function (response) {
+                                                    if (response.status === 200) {
+                                                        if (Debug) {
+                                                            log(response.data, 'info');
+                                                        }
+                                                        GeneratePage(activePage!);
+                                                    } else {
+                                                        log('Axios Status - adapterInstanceRepeat: ' + response.state, 'warn');
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    log(error, 'warn');
+                                                });
+                                            break;
+                                        case 'squeezeboxrpc':
+                                            try {
+                                                switch (getState(id + '.REPEAT').val) {
+                                                    case 0:
+                                                        setIfExists(id + '.REPEAT', 1);
+                                                        GeneratePage(activePage!);
+                                                        break;
+                                                    case 1:
+                                                        setIfExists(id + '.REPEAT', 2)
+                                                        GeneratePage(activePage!);
+                                                        break;
+                                                    case 2:
+                                                        setIfExists(id + '.REPEAT', 0);
+                                                        GeneratePage(activePage!);
+                                                        break;
+                                                }
+                                            } catch (err: any) {
+                                                log('Squeezebox: Repeat kann nicht verändert werden', 'warn');
+                                            }
+                                            break;
+                                    }
                                 }
                             }
                     }
@@ -6478,58 +6491,63 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
-                let adaInstanceSplit = pageItemTemp.adapterPlayerInstance!.split('.');
-                if (adaInstanceSplit[0] == 'squeezeboxrpc') {
-                    let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
-                    if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
-                    let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
-                    if (stateVal == 0) {
-                        setState(adapterPlayerInstanceStateSeceltor, 1);
-                    } else if (stateVal == 1) {
-                        setState(adapterPlayerInstanceStateSeceltor, 0);
-                    } else if (stateVal == null) {
-                        setState(adapterPlayerInstanceStateSeceltor, 1);
-                    }
-                } else {
-                    if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
-                    if (getState(id + '.STATE').val === true) {
-                        setIfExists(id + '.PAUSE', true);
+                if (isPageMediaItem(pageItemTemp)) {
+                    let adaInstanceSplit = pageItemTemp.adapterPlayerInstance!.split('.');
+                    if (adaInstanceSplit[0] == 'squeezeboxrpc') {
+                        let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
+                        if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
+                        let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
+                        if (stateVal == 0) {
+                            setState(adapterPlayerInstanceStateSeceltor, 1);
+                        } else if (stateVal == 1) {
+                            setState(adapterPlayerInstanceStateSeceltor, 0);
+                        } else if (stateVal == null) {
+                            setState(adapterPlayerInstanceStateSeceltor, 1);
+                        }
                     } else {
-                        setIfExists(id + '.PLAY', true);
+                        if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
+                        if (getState(id + '.STATE').val === true) {
+                            setIfExists(id + '.PAUSE', true);
+                        } else {
+                            setIfExists(id + '.PLAY', true);
+                        }
                     }
+                    GeneratePage(activePage!);
                 }
-                GeneratePage(activePage!);
                 break;
             case 'media-next':
                 setIfExists(id + '.NEXT', true);
                 GeneratePage(activePage!);
                 break;
             case 'media-shuffle':
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("volumio")) { 
-                    findPageItem(id).playList = []; break; 
-                } //Volumio: empty playlist $uha-20230103
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("spotify")) {
-                    if (getState(id + '.SHUFFLE').val == 'off') {
-                        setIfExists(id + '.SHUFFLE', 'on');
-                    } else {
-                        setIfExists(id + '.SHUFFLE', 'off');
+                const tempPage = findPageItem(id);
+                if (isPageMediaItem(tempPage)) {
+                    if (tempPage.adapterPlayerInstance.startsWith("volumio")) {
+                        findPageItem(id).playList = []; break;
+                    } //Volumio: empty playlist $uha-20230103
+                    if ((tempPage.adapterPlayerInstance).startsWith("spotify")) {
+                        if (getState(id + '.SHUFFLE').val == 'off') {
+                            setIfExists(id + '.SHUFFLE', 'on');
+                        } else {
+                            setIfExists(id + '.SHUFFLE', 'off');
+                        }
                     }
-                }
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("alexa")) {
-                    if (getState(id + '.SHUFFLE').val == false) {
-                        setIfExists(id + '.SHUFFLE', true);
-                    } else {
-                        setIfExists(id + '.SHUFFLE', false);
+                    if ((tempPage.adapterPlayerInstance).startsWith("alexa")) {
+                        if (getState(id + '.SHUFFLE').val == false) {
+                            setIfExists(id + '.SHUFFLE', true);
+                        } else {
+                            setIfExists(id + '.SHUFFLE', false);
+                        }
                     }
-                }
-                if ((findPageItem(id).adapterPlayerInstance!).startsWith("sonos")) {
-                    if (getState(id + '.SHUFFLE').val == false) {
-                        setIfExists(id + '.SHUFFLE', true);
-                    } else {
-                        setIfExists(id + '.SHUFFLE', false);
+                    if ((tempPage.adapterPlayerInstance).startsWith("sonos")) {
+                        if (getState(id + '.SHUFFLE').val == false) {
+                            setIfExists(id + '.SHUFFLE', true);
+                        } else {
+                            setIfExists(id + '.SHUFFLE', false);
+                        }
                     }
+                    GeneratePage(activePage!);
                 }
-                GeneratePage(activePage!);
                 break;
             case 'volumeSlider':
                 pageCounter = -1;
@@ -6544,46 +6562,50 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
-                let adapterInstance = pageItem.adapterPlayerInstance!;
-                let adapter = adapterInstance!.split('.');
-                let deviceAdapter = adapter[0];
+                if (isPageMediaItem(pageItem)) {
+                    let adapterInstance = pageItem.adapterPlayerInstance!;
+                    let adapter = adapterInstance!.split('.');
+                    let deviceAdapter = adapter[0];
 
-                switch (deviceAdapter) {
-                    case 'spotify-premium':
-                        let strDevicePI = pageItem.speakerList![words[4]];
-                        let strDeviceID = spotifyGetDeviceID(strDevicePI);
-                        setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
-                        break;
-                    case 'alexa2':
-                        let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
-                        for (let i_index in i_list) {
-                            let i = i_list[i_index];
-                            if ((getState(i).val) === pageItem.speakerList![words[4]]) {
-                                if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList![words[4]], 'info');
-                                let deviceId = i;
-                                deviceId = deviceId.split('.');
-                                setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList![words[4]]);
-                                pageItem.mediaDevice = deviceId[3];
-                            } 
-                        }
-                        break;
-                    case 'sonos':
-                        break;
-                    case 'chromecast':
-                        break;
-                    case 'squeezeboxrpc':
-                        pageItem.mediaDevice = pageItem.speakerList![words[4]];
-                        break;
-                }
-                pageCounter = 0;
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    pageCounter = 1;
+                    switch (deviceAdapter) {
+                        case 'spotify-premium':
+                            let strDevicePI = pageItem.speakerList![words[4]];
+                            let strDeviceID = spotifyGetDeviceID(strDevicePI);
+                            setState(adapterInstance + 'devices.' + strDeviceID + ".useForPlayback", true);
+                            break;
+                        case 'alexa2':
+                            let i_list = Array.prototype.slice.apply($('[state.id="' + adapterInstance + 'Echo-Devices.*.Info.name"]'));
+                            for (let i_index in i_list) {
+                                let i = i_list[i_index];
+                                if ((getState(i).val) === pageItem.speakerList![words[4]]) {
+                                    if (Debug) log('HandleButtonEvent mode-Speakerlist Alexa2: ' + getState(i).val + ' - ' + pageItem.speakerList![words[4]], 'info');
+                                    let deviceId = i;
+                                    deviceId = deviceId.split('.');
+                                    setIfExists(adapterInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Commands.textCommand', 'Schiebe meine Musik auf ' + pageItem.speakerList![words[4]]);
+                                    pageItem.mediaDevice = deviceId[3];
+                                }
+                            }
+                            break;
+                        case 'sonos':
+                            break;
+                        case 'chromecast':
+                            break;
+                        case 'squeezeboxrpc':
+                            pageItem.mediaDevice = pageItem.speakerList![words[4]];
+                            break;
+
+                    }
+                    pageCounter = 0;
                     GeneratePage(activePage!);
-                }, 3000);
+                    setTimeout(async function () {
+                        pageCounter = 1;
+                        GeneratePage(activePage!);
+                    }, 3000);
+                }
                 break;
             case 'mode-playlist':
                 let pageItemPL = findPageItem(id);
+                if (!isPageMediaItem(pageItemPL)) break;
                 let adapterInstancePL = pageItemPL.adapterPlayerInstance!;
                 let adapterPL = adapterInstancePL.split('.');
                 let deviceAdapterPL = adapterPL[0];
@@ -6639,6 +6661,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-tracklist':
                 let pageItemTL = findPageItem(id);
+                if (!isPageMediaItem(pageItemTL)) break;
                 let adapterInstanceTL = pageItemTL.adapterPlayerInstance!;
                 let adapterTL = adapterInstanceTL.split('.');
                 let deviceAdapterTL = adapterTL[0];
@@ -6683,6 +6706,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-repeat':
                 let pageItemRP = findPageItem(id);
+                if (!isPageMediaItem(pageItemRP)) break;
                 let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
                 let deviceAdapterRP = adapterRP[0];
@@ -6712,6 +6736,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-seek':
                 let pageItemSeek = findPageItem(id);
+                if (!isPageMediaItem(pageItemSeek)) break;
                 let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
                 let deviceAdapterSK = adapterSK[0];
@@ -6732,6 +6757,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-crossfade':
                 let pageItemCrossfade = findPageItem(id);
+                if (!isPageMediaItem(pageItemCrossfade)) break;
                 let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
                 let deviceAdapterCF = adapterCF[0];
@@ -6756,6 +6782,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-favorites':
                 let pageItemFav = findPageItem(id);
+                if (!isPageMediaItem(pageItemFav)) break;
                 if (Debug) log(getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set').val, 'info');
                 let favListArray = getState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_list_array').val;
                 setState(pageItemFav.adapterPlayerInstance + 'root.' + pageItemFav.mediaDevice + '.favorites_set', favListArray[words[4]]);
@@ -6771,6 +6798,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'media-OnOff':
                 let pageItemTem = findPageItem(id);
+                if (!isPageMediaItem(pageItemTem)) break;
                 let adaInstanceSpli = pageItemTem.adapterPlayerInstance!.split('.');
                 if (adaInstanceSpli[0] == 'squeezeboxrpc') {
                     let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
@@ -7089,7 +7117,7 @@ function GetNavigationString(pageId: number): string {
     return '';
 }
 
-function GenerateDetailPage(type: string, optional: string | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
+function GenerateDetailPage(type: string, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
@@ -7106,7 +7134,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
 
                 let switchVal = '0';
                 let brightness = 0;
-                if (o.common.role == 'light' || o.common.role == 'socket') {
+                switch (o.common.role) {
+                case 'light': 
+                case 'socket': {
                     if (existsState(id + '.GET')) {
                         val = getState(id + '.GET').val;
                         RegisterDetailEntityWatcher(id + '.GET', pageItem, type, placeId);
@@ -7152,9 +7182,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // Dimmer
-                if (o.common.role == 'dimmer') {
+                case 'dimmer': {
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
                         RegisterDetailEntityWatcher(id + '.ON_ACTUAL', pageItem, type, placeId);
@@ -7209,9 +7239,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // HUE-Licht
-                if (o.common.role == 'hue') {
+                case 'hue': {
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
@@ -7281,9 +7311,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // RGB-Licht
-                if (o.common.role == 'rgb') {
+                case 'rgb': {
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
@@ -7352,9 +7382,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // RGB-Licht-einzeln (HEX)
-                if (o.common.role == 'rgbSingle') {
+                case 'rgbSingle': {
 
                     if (existsState(id + '.ON_ACTUAL')) {
                         val = getState(id + '.ON_ACTUAL').val;
@@ -7428,9 +7458,9 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
-
+                break;
                 // Farbtemperatur (CT)
-                if (o.common.role == 'ct') {
+                case 'ct': {
 
                     if (existsState(id + '.ON')) {
                         val = getState(id + '.ON').val;
@@ -7492,6 +7522,8 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                             + effect_supported
                     });
                 }
+                break;
+            }
             }
 
             if (type == 'popupShutter') {
@@ -7774,228 +7806,229 @@ function GenerateDetailPage(type: string, optional: string | undefined, pageItem
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
                     let mode: string = '';
-
-                    let vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
-                    let vAdapter = vTempAdapter[0];
-                    if (optional == 'seek') {
-                        let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
-                        if (actualStateTemp >= 95) {
-                            actualState = '100%';
-                        } else if (actualStateTemp >= 85) {
-                            actualState = '90%';
-                        } else if (actualStateTemp >= 75) {
-                            actualState = '80%';
-                        } else if (actualStateTemp >= 65) {
-                            actualState = '70%';
-                        } else if (actualStateTemp >= 55) {
-                            actualState = '60%';
-                        } else if (actualStateTemp >= 45) {
-                            actualState = '50%';
-                        } else if (actualStateTemp >= 35) {
-                            actualState = '40%';
-                        } else if (actualStateTemp >= 25) {
-                            actualState = '30%';
-                        } else if (actualStateTemp >= 15) {
-                            actualState = '20%';
-                        } else if (actualStateTemp >= 5) {
-                            actualState = '10%';
-                        } else if (actualStateTemp >= 0) {
-                            actualState = '0%';
-                        }
-                        if (vAdapter == 'sonos') {
-                            optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
-                        }
-                        mode = 'seek';
-                    } else if (optional == 'crossfade') {
-                        if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade')) {
-                            let actualStateTemp: boolean = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade').val;
-                            if (actualStateTemp) {
-                                actualState = findLocale('media', 'on');
-                            } else {
-                                actualState = findLocale('media', 'off');
+                    if (isPageMediaItem(pageItem)) {
+                        let vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
+                        let vAdapter = vTempAdapter[0];
+                        if (optional == 'seek') {
+                            let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
+                            if (actualStateTemp >= 95) {
+                                actualState = '100%';
+                            } else if (actualStateTemp >= 85) {
+                                actualState = '90%';
+                            } else if (actualStateTemp >= 75) {
+                                actualState = '80%';
+                            } else if (actualStateTemp >= 65) {
+                                actualState = '70%';
+                            } else if (actualStateTemp >= 55) {
+                                actualState = '60%';
+                            } else if (actualStateTemp >= 45) {
+                                actualState = '50%';
+                            } else if (actualStateTemp >= 35) {
+                                actualState = '40%';
+                            } else if (actualStateTemp >= 25) {
+                                actualState = '30%';
+                            } else if (actualStateTemp >= 15) {
+                                actualState = '20%';
+                            } else if (actualStateTemp >= 5) {
+                                actualState = '10%';
+                            } else if (actualStateTemp >= 0) {
+                                actualState = '0%';
                             }
-                        }
-                        if (vAdapter == 'sonos') {
-                            optionalString = findLocale('media', 'on') + '?' + findLocale('media', 'off');
-                        }
-                        mode = 'crossfade';
-                    } else if (optional == 'speakerlist') {
-                        if (vAdapter == 'spotify-premium') {
-                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
+                            if (vAdapter == 'sonos') {
+                                optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
-                        } else if (vAdapter == 'alexa2') {
-                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                            mode = 'seek';
+                        } else if (optional == 'crossfade') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade')) {
+                                let actualStateTemp: boolean = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.crossfade').val;
+                                if (actualStateTemp) {
+                                    actualState = findLocale('media', 'on');
+                                } else {
+                                    actualState = findLocale('media', 'off');
+                                }
+                            }
+                            if (vAdapter == 'sonos') {
+                                optionalString = findLocale('media', 'on') + '?' + findLocale('media', 'off');
+                            }
+                            mode = 'crossfade';
+                        } else if (optional == 'speakerlist') {
+                            if (vAdapter == 'spotify-premium') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
+                                }
+                            } else if (vAdapter == 'alexa2') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                    //Todo Richtiges Device finden
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
+                                }
+                            } else if (vAdapter == 'squeezeboxrpc') {
+                                actualState = pageItem.mediaDevice;
+                            }
+                            let tempSpeakerList: string[] = [];
+                            for (let i = 0; i < pageItem.speakerList!.length; i++) {
+                                tempSpeakerList[i] = formatInSelText(pageItem.speakerList![i]).trim();
+                            }
+                            optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
+                            mode = 'speakerlist';
+                        } else if (optional == 'playlist') {
+                            if (vAdapter == 'spotify-premium') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.playlist.name').val);
+                                }
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'alexa2') {
                                 //Todo Richtiges Device finden
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Player.currentAlbum').val);
+
+                                let tPlayList: any = []
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList![i], 'info');
+                                    let tempItem = pageItem.playList![i].split('.');
+                                    tPlayList[i] = tempItem[1];
+                                }
+
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < tPlayList.length; i++) {
+                                    tempPlayList[i] = formatInSelText(tPlayList[i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'sonos') {
+                                if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
+                                if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
+                                }
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
+                                actualState = ''; //todo: no actual playlistname saving
+                                let tempPlayList: string[] = []; let tempPll = 0;
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPll += pageItem.playList![i].length; if (tempPll > 900) break;
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'squeezeboxrpc') {
+                                // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
+                                actualState = ''; // Not supported by squeezeboxrpc adapter
+                                let tempPlayList: string[] = [];
+                                let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
+                                for (let favorite_index = 0; favorite_index < 45; favorite_index++) {
+                                    let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
+                                    if (!existsObject(favorite_name_selector)) {
+                                        break;
+                                    }
+                                    let favoritename: string = getState(favorite_name_selector).val;
+                                    tempPlayList.push(formatInSelText(favoritename));
+                                }
+                                optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
                             }
-                        } else if (vAdapter == 'squeezeboxrpc') {
-                            actualState = pageItem.mediaDevice;
-                        }
-                        let tempSpeakerList: string[] = [];
-                        for (let i = 0; i < pageItem.speakerList!.length; i++) {
-                            tempSpeakerList[i] = formatInSelText(pageItem.speakerList![i]).trim();
-                        }
-                        optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
-                        mode = 'speakerlist';
-                    } else if (optional == 'playlist') {
-                        if (vAdapter == 'spotify-premium') {
-                            if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.playlist.name').val);
+                            mode = 'playlist';
+                        } else if (optional == 'tracklist') {
+                            actualState = '';
+                            /* Volumio: works for files */
+                            if (vAdapter == 'volumio') {
+                                actualState = getState(pageItem.id + '.TITLE').val;
+                                globalTracklist = pageItem.globalTracklist;
+                            } else if (vAdapter == 'squeezeboxrpc') {
+                                actualState = getState(pageItem.id + '.TITLE').val;
+                            } else if (vAdapter == 'sonos') {
+                                actualState = getState(pageItem.id + '.TITLE').val;
+                            } else {
+                                actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
                             }
-                            let tempPlayList: string[] = [];
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if (vAdapter == 'alexa2') {
-                            //Todo Richtiges Device finden
-                            actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Player.currentAlbum').val);
-            
-                            let tPlayList: any = []
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                if (Debug) log('function GenerateDetailPage role:media -> Playlist ' + pageItem.playList![i], 'info');
-                                let tempItem = pageItem.playList![i].split('.');
-                                tPlayList[i] = tempItem[1];
-                            }
-                            
-                            let tempPlayList: string[] = [];
-                            for (let i = 0; i < tPlayList.length; i++) {
-                                tempPlayList[i] = formatInSelText(tPlayList[i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if (vAdapter == 'sonos') {
-                            if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
-                            if (existsObject(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set')) {
-                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set').val);
-                            }
-                            let tempPlayList: string[] = [];
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if (vAdapter == 'volumio') { /* Volumio: limit 900 chars */
-                            actualState = ''; //todo: no actual playlistname saving
-                            let tempPlayList: string[] = []; let tempPll = 0;
-                            for (let i = 0; i < pageItem.playList!.length; i++) {
-                                tempPll += pageItem.playList![i].length; if (tempPll > 900) break;
-                                tempPlayList[i] = formatInSelText(pageItem.playList![i]);
-                            }
-                            optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
-                        } else if(vAdapter == 'squeezeboxrpc') {
-                            // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
-                            actualState = ''; // Not supported by squeezeboxrpc adapter
-                            let tempPlayList: string[] = [];
-                            let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
-                            for (let favorite_index=0; favorite_index < 45; favorite_index++) {
-                                let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
-                                if(!existsObject(favorite_name_selector)) {
+                            actualState = (actualState.replace('?', '')).split(' -');
+                            actualState = actualState[0].split(" (");
+                            actualState = formatInSelText(actualState[0]);
+                            if (Debug) log(actualState, 'info');
+                            if (Debug) log(globalTracklist, 'info');
+                            //Limit 900 characters, then memory overflow --> Shorten as much as possible
+                            let temp_array: any[] = [];
+                            //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
+                            for (let track_index = 0; track_index < 45; track_index++) {
+                                let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
+                                /* Volumio: @local/NAS no title -> name */
+                                if (temp_cut_array == undefined) {
+                                    temp_cut_array = getAttr(globalTracklist, track_index + '.name');
+                                }
+                                if (Debug) log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array, 'info');
+                                if (temp_cut_array != undefined) {
+                                    temp_cut_array = (temp_cut_array.replace('?', '')).split(' -');
+                                    temp_cut_array = temp_cut_array[0].split(" (");
+                                    temp_cut_array = temp_cut_array[0];
+                                    if (String(temp_cut_array[0]).length >= 22) {
+                                        temp_array[track_index] = temp_cut_array.substring(0, 20) + '..';
+                                    } else {
+                                        temp_array[track_index] = temp_cut_array.substring(0, 23);
+                                    }
+                                }
+                                else {
                                     break;
                                 }
-                                let favoritename: string = getState(favorite_name_selector).val;
-                                tempPlayList.push(formatInSelText(favoritename));
                             }
-                            optionalString = tempPlayList.length > 0 ? tempPlayList.join('?') : '';
-                        }
-                        mode = 'playlist';
-                    } else if (optional == 'tracklist') {
-                        actualState = '';
-                        /* Volumio: works for files */
-                        if (vAdapter == 'volumio') {
-                            actualState = getState(pageItem.id + '.TITLE').val;
-                            globalTracklist = pageItem.globalTracklist;
-                        }else if(vAdapter == 'squeezeboxrpc') {
-                            actualState = getState(pageItem.id + '.TITLE').val;
-                        }else if(vAdapter == 'sonos') {
-                            actualState = getState(pageItem.id + '.TITLE').val;
-                        } else {
-                            actualState = getState(pageItem.adapterPlayerInstance + 'player.trackName').val;
-                        }
-                        actualState = (actualState.replace('?','')).split(' -');
-                        actualState = actualState[0].split(" (");
-                        actualState = formatInSelText(actualState[0]);
-                        if (Debug) log(actualState, 'info');
-                        if (Debug) log(globalTracklist, 'info');
-                        //Limit 900 characters, then memory overflow --> Shorten as much as possible
-                        let temp_array: any[] = [];
-                        //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
-                        for (let track_index=0; track_index < 45; track_index++) {
-                            let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
-                            /* Volumio: @local/NAS no title -> name */
-                            if (temp_cut_array == undefined) {
-                                temp_cut_array = getAttr(globalTracklist, track_index + '.name');
-                            } 
-                            if (Debug) log('function GenerateDetailPage role:media tracklist -> ' + temp_cut_array, 'info');
-                            if (temp_cut_array != undefined) {
-                                temp_cut_array = (temp_cut_array.replace('?','')).split(' -');
-                                temp_cut_array = temp_cut_array[0].split(" (");
-                                temp_cut_array = temp_cut_array[0];
-                                if (String(temp_cut_array[0]).length >= 22) {
-                                    temp_array[track_index] = temp_cut_array.substring(0,20) + '..';
-                                } else {
-                                    temp_array[track_index] = temp_cut_array.substring(0,23);
-                                }
+                            let tempTrackList: string[] = [];
+                            for (let i = 0; i < temp_array.length; i++) {
+                                tempTrackList[i] = formatInSelText(temp_array[i]);
                             }
-                            else {
-                                break;
-                            }
-                        }
-                        let tempTrackList: string[] = [];
-                        for (let i = 0; i < temp_array.length; i++) {
-                            tempTrackList[i] = formatInSelText(temp_array[i]);
-                        }
-                        optionalString = pageItem.playList != undefined ? tempTrackList.join('?') : ''
-                        mode = 'tracklist';
-                    } else if (optional == 'equalizer') {
-                        if (pageItem.id == undefined) throw new Error ('Missing pageItem.id in equalizer!');
-                        let lastIndex = (pageItem.id.split('.')).pop();
+                            optionalString = pageItem.playList != undefined ? tempTrackList.join('?') : ''
+                            mode = 'tracklist';
+                        } else if (optional == 'equalizer') {
+                            if (pageItem.id == undefined) throw new Error('Missing pageItem.id in equalizer!');
+                            let lastIndex = (pageItem.id.split('.')).pop();
 
-                        if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false || 
-                            existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker') == false) {
-                            createState(NSPanel_Path  + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon>{ type: 'string' });
-                            createState(NSPanel_Path  + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon>{ type: 'string' });
-                        }
-                        
-                        actualState = ''
-                        if (getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val != null) {
-                            actualState = formatInSelText(getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val);
-                        }
-                        
-                        let tempEQList: string[] = [];
-                        for (let i = 0; i < pageItem.equalizerList!.length; i++) {
-                            tempEQList[i] = formatInSelText(pageItem!.equalizerList![i]);
+                            if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false ||
+                                existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker') == false) {
+                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon> {type: 'string'});
+                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon> {type: 'string'});
+                            }
+
+                            actualState = ''
+                            if (getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val != null) {
+                                actualState = formatInSelText(getState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode').val);
+                            }
+
+                            let tempEQList: string[] = [];
+                            for (let i = 0; i < pageItem.equalizerList!.length; i++) {
+                                tempEQList[i] = formatInSelText(pageItem!.equalizerList![i]);
+                            }
+
+                            optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
+                            mode = 'equalizer';
+                        } else if (optional == 'repeat') {
+                            actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
+                            optionalString = pageItem.repeatList!.join('?');
+                            mode = 'repeat';
+                        } else if (optional == 'favorites') {
+                            if (Debug) log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val, 'info')
+                            actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
+
+                            let tempFavList: string[] = [];
+                            let favList = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_list_array').val;
+                            for (let i = 0; i < favList.length; i++) {
+                                tempFavList[i] = formatInSelText(favList[i]);
+                            }
+                            optionalString = tempFavList != undefined ? tempFavList.join('?') : '';
+                            mode = 'favorites';
                         }
 
-                        optionalString = pageItem.equalizerList != undefined ? tempEQList.join('?') : '';
-                        mode = 'equalizer';
-                    } else if (optional == 'repeat') {
-                        actualState = getState(pageItem.adapterPlayerInstance + 'player.repeat').val;
-                        optionalString = pageItem.repeatList!.join('?');
-                        mode = 'repeat';
-                    } else if (optional == 'favorites') {
-                        if (Debug) log(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val, 'info')
-                        actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_set').val);
-                        
-                        let tempFavList:string [] = [];
-                        let favList = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.favorites_list_array').val;
-                        for (let i = 0; i < favList.length; i++) {
-                            tempFavList[i] = formatInSelText(favList[i]);
-                        }
-                        optionalString = tempFavList != undefined ? tempFavList.join('?') : '';
-                        mode = 'favorites';
+                        let tempId = placeId != undefined ? placeId : id;
+
+                        out_msgs.push({
+                            payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
+                                + tempId + '?' + optional + '~~'         //{entity_id}
+                                + rgb_dec565(HMIOn) + '~'            //{icon_color}~
+                                + mode + '~'
+                                + actualState + '~'
+                                + optionalString
+                        });
+                        GeneratePage(activePage!);
                     }
-
-                    let tempId = placeId != undefined ? placeId : id;
-
-                    out_msgs.push({
-                        payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
-                            + tempId + '?' + optional + '~~'         //{entity_id}
-                            + rgb_dec565(HMIOn) + '~'            //{icon_color}~
-                            + mode + '~'
-                            + actualState + '~'
-                            + optionalString
-                    });
-                    GeneratePage(activePage!);
                 } else if (o.common.role == 'buttonSensor') {
 
                     let actualValue: string = '';
@@ -9406,8 +9439,8 @@ type PageThermo = {
 
 type PageMedia = {
     type: 'cardMedia',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
+    items: PageMediaItem[],
+} & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
 
 type PageAlarm = {
     type: 'cardAlarm',
@@ -9434,7 +9467,16 @@ type PageChart = {
     items: PageItem[],
 } & Omit<PageBaseType, 'useColor'>
 
-type PageItem = {
+type PageItem = PageBaseItem | PageMediaItem
+
+function isPageMediaItem(F: PageItem | PageMediaItem):F is PageMediaItem {
+    return  (F as PageMediaItem).adapterPlayerInstance !== undefined
+}
+type PageMediaItem = {
+    adapterPlayerInstance: adapterPlayerInstanceType,
+} & PageBaseItem
+
+type PageBaseItem = {
     id?: string | null,
     icon?: string,
     icon2?: string,
@@ -9462,7 +9504,7 @@ type PageItem = {
     navigate?: boolean,
     colormode?: string,
     colorScale?: any, 
-    adapterPlayerInstance?: string,
+    //adapterPlayerInstance?: adapterPlayerInstanceType,
     mediaDevice?: string,
     targetPage?: string,
     speakerList?: string[],
@@ -9567,4 +9609,37 @@ type IconScaleElement = {
     val_min:number, 
     val_max:number, 
     val_best?: number
+}
+
+type adapterPlayerInstanceType =
+  'alexa2.1.' | 'sonos.1.' | 'spotify-premium.1.' | 'volumio.1.' | 'squeezebox-rpc.1.' 
+| 'alexa2.2.' | 'sonos.2.' | 'spotify-premium.2.' | 'volumio.2.' | 'squeezebox-rpc.2.' 
+| 'alexa2.0.' | 'sonos.0.' | 'spotify-premium.0.' | 'volumio.0.' | 'squeezebox-rpc.0.' 
+| 'alexa2.3.' | 'sonos.3.' | 'spotify-premium.3.' | 'volumio.3.' | 'squeezebox-rpc.3.' 
+| 'alexa2.4.' | 'sonos.4.' | 'spotify-premium.4.' | 'volumio.4.' | 'squeezebox-rpc.4.' 
+| 'alexa2.5.' | 'sonos.5.' | 'spotify-premium.5.' | 'volumio.5.' | 'squeezebox-rpc.5.' 
+| 'alexa2.6.' | 'sonos.6.' | 'spotify-premium.6.' | 'volumio.6.' | 'squeezebox-rpc.6.' 
+| 'alexa2.7.' | 'sonos.7.' | 'spotify-premium.7.' | 'volumio.7.' | 'squeezebox-rpc.7.' 
+| 'alexa2.8.' | 'sonos.8.' | 'spotify-premium.8.' | 'volumio.8.' | 'squeezebox-rpc.8.' 
+| 'alexa2.9.' | 'sonos.9.' | 'spotify-premium.9.' | 'volumio.9.' | 'squeezebox-rpc.9.' 
+| 'alexa2.10.' | 'sonos.10.' | 'spotify-premium.10.' | 'volumio.10.' | 'squeezebox-rpc.10'
+
+
+ 
+type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
+
+function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
+    switch(F as mediaOptional) {
+        case "seek":
+        case "crossfade":
+        case "speakerlist":
+        case "playlist":
+        case "tracklist":
+        case "equalizer":
+        case "repeat":
+        case "favorites":
+            return true;
+        default:
+            return false
+    }
 }
