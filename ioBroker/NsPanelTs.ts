@@ -6694,12 +6694,9 @@ function HandleButtonEvent(words: any): void {
                             break;
                         case "volumio":
                             break;
-                        default:
-                            log('Hello Mr. Developer u miss in speakerlist something!', 'warn')
-                            
-
+                        case "bosesoundtouch":
+                            break;
                     }
-                    function exhaustiveCheck(_v: never) {}
                     pageCounter = 0;
                     GeneratePage(activePage!);
                     setTimeout(async function () {
@@ -6756,6 +6753,8 @@ function HandleButtonEvent(words: any): void {
                     case 'squeezeboxrpc':
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
+                    case "bosesoundtouch":
+                        break;
                     default:
                         log('Hello Mr. Developer u miss in mode-playlist something!', 'warn')
                 }
@@ -6802,6 +6801,8 @@ function HandleButtonEvent(words: any): void {
                     case 'squeezeboxrpc':
                         //@ts-ignore Fehler kommt von findPageItem in vscode
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
+                        break;
+                    case "bosesoundtouch":
                         break;
                     default:
                         log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn')
