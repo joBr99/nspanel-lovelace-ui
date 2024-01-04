@@ -2768,12 +2768,14 @@ function check_online_display_firmware() {
     }
 }
 
+//mqttCallback (topic: string, message: string): Promise<void> {
 on({ id: config.panelRecvTopic }, async (obj) => {
     if (obj.state.val.startsWith('\{"CustomRecv":')) {
         try {
+            const json = JSON.parse(obj.state.val);
+            const split = json.CustomRecv.split(',');
             if (isSetOptionActive) {
-                let json = JSON.parse(obj.state.val);
-                let split = json.CustomRecv.split(',');
+                
                 if (split[0] == 'event' && split[1] == 'startup') {
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
                     await createStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.StateCommon>{ type: 'string' });
@@ -2789,9 +2791,11 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                     }
                 }
             }    
+            HandleMessage(split[0], split[1], parseInt(split[2]), split);
         } catch (err: any) {
             log('error at trigger rceiving CustomRecv: ' + err.message, 'warn');
         }
+        
     }
 });
 
@@ -2914,7 +2918,7 @@ function update_tasmota_firmware() {
         log('error request in function update_tasmota_firmware: ' + err.message, 'warn');
     }
 }
-
+//mqttCallback (topic: string, message: string): Promise<void> {
 on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'INFO1', change: 'ne'}, async (obj) => {
     try {
         if (getState(NSPanel_Path + 'Config.Update.activ').val == 0) {
@@ -2934,23 +2938,6 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 });
 
 //------------------End Update Functions
-
-on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
-    try {
-        if (obj.state.val.startsWith('\{"CustomRecv":')) {
-            try {
-                let json = JSON.parse(obj.state.val);
-
-                let split = json.CustomRecv.split(',');
-                HandleMessage(split[0], split[1], parseInt(split[2]), split);
-            } catch (err: any) {
-                log('error json.split in  Trigger panelRecTopic: ' + err.message, 'warn');
-            }
-        }
-    } catch (err: any) {
-        log('error at Trigger panelRecTopic: ' + err.message, 'warn');
-    }
-});
 
 async function SendToPanel(val: Payload | Payload[]) {
     try {
@@ -3314,17 +3301,6 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         let name: string;
         let buttonText: string = 'PRESS';
         let type: string;
-
-        if (pageItem.id && existsState(pageItem.id + '.ACTUAL') == false) {
-            if (pageItem.popupTimerType == 'TimeCard' && pageItem.autoCreateALias == true) {
-                log(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time')
-                createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', '0', { type: 'number' });
-                createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.State', 'idle', { type: 'string' });
-                setObject(pageItem.id, { type: 'channel', common: { role: 'value.time', name: 'Time' }, native: {} });
-                createAliasAsync(pageItem.id + '.ACTUAL', NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
-                createAliasAsync(pageItem.id + '.STATE', NSPanel_Path + 'Userdata.' + pageItem.id + '.State', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'STATE' });
-            }
-        }
 
         // ioBroker
         if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
@@ -8300,65 +8276,67 @@ function HandleScreensaverUpdate(): void {
             }
 
             // 3 leftScreensaverEntities  
-            if (screensaverAdvanced) {       
+            if (screensaverAdvanced) {
                 let checkpoint = true;
                 let i = 0;
-                for (i = 0; i < 3; i++) {
-                    
-                    if (config.leftScreensaverEntity[i] == null || config.leftScreensaverEntity[i] == undefined) {
-                        checkpoint = false;
-                        break;
-                    }
-                    RegisterScreensaverEntityWatcher(config.leftScreensaverEntity[i].ScreensaverEntity)
-
-                    let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
-                    let iconColor = rgb_dec565(White);
-                    let icon;
-                    if (typeof config.leftScreensaverEntity[i].ScreensaverEntityIconOn == 'string' && existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconOn as string)) {
-                        let iconName = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconOn!).val;
-                        icon = Icons.GetIcon(iconName);
-                    } else {
-                        icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
-                    } 
-
-                    if (parseFloat(val+"") == val) {     
-                        val = parseFloat(val);
-                    }
-                    
-                    if (typeof(val) == 'number') {
-                        val = (val * (config.leftScreensaverEntity[i].ScreensaverEntityFactor ? config.leftScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
-                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                    }
-                    else if (typeof(val) == 'boolean') {
-                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        if (!val && config.leftScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOff)
+                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity)) {
+                    for (i = 0; i < 3; i++) {
+                        const leftScreensaverEntity = config.leftScreensaverEntity[i]
+                        if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
+                            checkpoint = false;
+                            break;;
                         }
-                    }
-                    else if (typeof(val) == 'string') {
-                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        let pformat = parseFormat(val);
-                        if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
-                        if (moment(val, pformat, true).isValid()) { 
-                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
-                            if (config.leftScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
-                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
-                            } else {
-                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
-                            }
-                        }                
-                    }
-                    const temp = config.leftScreensaverEntity[i].ScreensaverEntityIconColor;
-                    if (temp && typeof temp == 'string' && existsObject(temp)) {
-                        iconColor = getState(temp).val;
-                    }
+                        RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity)
 
-                    payloadString += '~' +
-                                    '~' +
-                                    icon + '~' +
-                                    iconColor + '~' +
-                                    config.leftScreensaverEntity[i].ScreensaverEntityText + '~' +
-                                    val + '~';
+                        let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
+                        let iconColor = rgb_dec565(White);
+                        let icon;
+                        if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
+                            let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
+                            icon = Icons.GetIcon(iconName);
+                        } else {
+                            icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
+                        }
+
+                        if (parseFloat(val + "") == val) {
+                            val = parseFloat(val);
+                        }
+
+                        if (typeof (val) == 'number') {
+                            val = (val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)).toFixed(leftScreensaverEntity.ScreensaverEntityDecimalPlaces) + leftScreensaverEntity.ScreensaverEntityUnitText;
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                        }
+                        else if (typeof (val) == 'boolean') {
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                            if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
+                                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff)
+                            }
+                        }
+                        else if (typeof (val) == 'string') {
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                            let pformat = parseFormat(val);
+                            if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
+                            if (moment(val, pformat, true).isValid()) {
+                                let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                                if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
+                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
+                                } else {
+                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+                                }
+                            }
+                        }
+                        const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
+                        if (temp && typeof temp == 'string' && existsObject(temp)) {
+                            iconColor = getState(temp).val;
+                        }
+
+                        payloadString += '~' +
+                            '~' +
+                            icon + '~' +
+                            iconColor + '~' +
+                            leftScreensaverEntity.ScreensaverEntityText + '~' +
+                            val + '~';
+                    }
                 }
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
@@ -8466,7 +8444,7 @@ function HandleScreensaverUpdate(): void {
                 }
 
                 //Alternativ Layout bekommt zusätzlichen Status
-                if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
+                if (config.bottomScreensaverEntity[4] && getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
                     if (parseFloat(val+"") == val) {     
                         val = parseFloat(val);
@@ -8585,37 +8563,38 @@ function HandleScreensaverUpdate(): void {
                 // 5 indicatorScreensaverEntities     
                 for (let i = 0; i < 5; i++) {
                     let checkpoint = true;
-                    if (config.indicatorScreensaverEntity[i] == null) {
+                    const indicatorScreensaverEntity:ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
+                    if (indicatorScreensaverEntity == null) {
                         checkpoint = false;
                         break;
                     }
-                    RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
+                    RegisterScreensaverEntityWatcher(indicatorScreensaverEntity.ScreensaverEntity)
 
-                    let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
+                    let val = getState(indicatorScreensaverEntity.ScreensaverEntity).val;
                     if (parseFloat(val+"") == val) {     
                         val = parseFloat(val);
                     }
                     let iconColor = rgb_dec565(White);
             
                     let icon;
-                    if (config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn && existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn!)) {
-                        let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn!).val;
+                    if (indicatorScreensaverEntity.ScreensaverEntityIconOn && existsObject(indicatorScreensaverEntity.ScreensaverEntityIconOn!)) {
+                        let iconName = getState(indicatorScreensaverEntity.ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
                     } else {
-                        icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
+                        icon = Icons.GetIcon(indicatorScreensaverEntity.ScreensaverEntityIconOn);
                     }    
 
                     if (typeof(val) == 'number') {
-                        val = (val * (config.indicatorScreensaverEntity[i].ScreensaverEntityFactor ? config.indicatorScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
-                        iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
+                        val = (val * (indicatorScreensaverEntity.ScreensaverEntityFactor ? indicatorScreensaverEntity.ScreensaverEntityFactor! : 0)).toFixed(indicatorScreensaverEntity.ScreensaverEntityDecimalPlaces) + indicatorScreensaverEntity.ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(indicatorScreensaverEntity);
                     }
                     else if (typeof(val) == 'boolean') {
-                        iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
-                        if (!val && config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
+                        iconColor = GetScreenSaverEntityColor(indicatorScreensaverEntity);
+                        if (!val && indicatorScreensaverEntity.ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(indicatorScreensaverEntity.ScreensaverEntityIconOff)
                         }
                     }
-                    const temp = config.indicatorScreensaverEntity[4].ScreensaverEntityIconColor
+                    const temp = indicatorScreensaverEntity.ScreensaverEntityIconColor
                     if (temp && typeof temp == 'string' && existsObject(temp)) {
                         iconColor = getState(temp).val;
                     }
@@ -8623,7 +8602,7 @@ function HandleScreensaverUpdate(): void {
                                     '~' +
                                     icon + '~' +
                                     iconColor + '~' +
-                                    config.indicatorScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                    indicatorScreensaverEntity.ScreensaverEntityText + '~' +
                                     val + '~';
                 }
             }
@@ -9275,6 +9254,7 @@ function GetDasWetterIconColor(icon: number): number {
 }
 
 //------------------Begin Read Internal Sensor Data
+//mqttCallback (topic: string, message: string): Promise<void> {
 on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'SENSOR' }, async (obj) => {
     try {
         const Tasmota_Sensor = JSON.parse(obj.state.val);
@@ -9613,7 +9593,7 @@ type PageBaseItem = {
     unit?: string,
     navigate?: boolean,
     colormode?: string,
-    colorScale?: any, 
+    colorScale?: IconScaleElement, 
     //adapterPlayerInstance?: adapterPlayerInstanceType,
     mediaDevice?: string,
     targetPage?: string,
@@ -9641,15 +9621,12 @@ type PageBaseItem = {
     yAxis?: string,
     yAxisTicks?: number[] | string,
     xAxisDecorationId?: string,
-    popupType?: string,
-    popupOptions?: string[],
     useValue?: boolean,
     monobutton?: boolean,
     inSel_ChoiceState?: boolean,
     iconArray?: string[],
     fontSize?: number,
     actionStringArray?: string[],
-    popupTimerType?: string,
     alwaysOnDisplay?: boolean,
     crossfade?: boolean,
 }
@@ -9673,9 +9650,9 @@ type Config = {
     panelRecvTopic: string,
     panelSendTopic: string,
     weatherEntity: string,
-    leftScreensaverEntity: ScreenSaverElement[],
+    leftScreensaverEntity: leftScreensaverEntityType
     bottomScreensaverEntity: ScreenSaverElement[],
-    indicatorScreensaverEntity: ScreenSaverElement[],
+    indicatorScreensaverEntity: indicatorScreensaverEntityType
     mrIcon1ScreensaverEntity: ScreenSaverMRElement,
     mrIcon2ScreensaverEntity: ScreenSaverMRElement,
     defaultColor: RGB,
@@ -9687,16 +9664,18 @@ type Config = {
     button1: ConfigButtonFunction,
     button2: ConfigButtonFunction
 }
-
+type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
 type ScreenSaverElement = {
     ScreensaverEntity: string,
+    ScreensaverEntityText: string,
     ScreensaverEntityFactor?: number,
     ScreensaverEntityDecimalPlaces?: number,
-    ScreensaverEntityDateFormat?: any | null,
+    ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions,
     ScreensaverEntityIconOn?: string | null,
     ScreensaverEntityIconOff?: string | null,
-    ScreensaverEntityText: string,
-    ScreensaverEntityUnitText?: string | null,
+    ScreensaverEntityUnitText?: string,
     ScreensaverEntityIconColor?: RGB | IconScaleElement | string
     ScreensaverEntityOnColor?: RGB
     ScreensaverEntityOffColor?: RGB
