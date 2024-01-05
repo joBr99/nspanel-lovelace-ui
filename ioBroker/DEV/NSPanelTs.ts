@@ -8390,7 +8390,7 @@ function HandleScreensaverUpdate(): void {
                 let checkpoint = true;
                 let i = 0;
                 if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity)) {
-                    for (i = 0; i < 3; i++) {
+                    for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
                         const leftScreensaverEntity = config.leftScreensaverEntity[i]
                         if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
                             checkpoint = false;
@@ -8597,8 +8597,8 @@ function HandleScreensaverUpdate(): void {
             } else {
                 let checkpoint = true;
                 let i = 0;
-                for (i = 0; i < maxEntities - 1; i++) {
-                    if (config.bottomScreensaverEntity[i] == null) {
+                for (i = 0; i < maxEntities - 1 && i < config.bottomScreensaverEntity.length; i++) {
+                    if (config.bottomScreensaverEntity[i] == null || config.bottomScreensaverEntity[i] === undefined) {
                         checkpoint = false;
                         break;
                     } 
@@ -8671,10 +8671,10 @@ function HandleScreensaverUpdate(): void {
 
             if (screensaverAdvanced) {
                 // 5 indicatorScreensaverEntities     
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 5 && i < config.indicatorScreensaverEntity.length; i++) {
                     let checkpoint = true;
                     const indicatorScreensaverEntity:ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
-                    if (indicatorScreensaverEntity == null) {
+                    if (indicatorScreensaverEntity === null || indicatorScreensaverEntity === undefined) {
                         checkpoint = false;
                         break;
                     }
@@ -8721,7 +8721,6 @@ function HandleScreensaverUpdate(): void {
             SendToPanel(<Payload>{ payload: 'weatherUpdate~' + payloadString });
 
             HandleScreensaverStatusIcons();
-
         }
 
     } catch (err: any) {
