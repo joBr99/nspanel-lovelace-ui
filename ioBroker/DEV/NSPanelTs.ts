@@ -96,7 +96,10 @@ ReleaseNotes:
         - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
         - 03.02.2024 - v4.3.3.31 [dev]: add PlayerType some more work to do
         - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.
-	- 04.01.2024 - v4.3.3.32 Hiofix Spotify
+	    - 04.01.2024 - v4.3.3.32 Hotfix Spotify
+        - 04.01.2024 - v4.3.3.32 [DEV] Add Types see commits
+        - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
+        - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -2769,12 +2772,14 @@ function check_online_display_firmware() {
     }
 }
 
+//mqttCallback (topic: string, message: string): Promise<void> {
 on({ id: config.panelRecvTopic }, async (obj) => {
     if (obj.state.val.startsWith('\{"CustomRecv":')) {
         try {
+            const json = JSON.parse(obj.state.val);
+            const split = json.CustomRecv.split(',');
             if (isSetOptionActive) {
-                let json = JSON.parse(obj.state.val);
-                let split = json.CustomRecv.split(',');
+                
                 if (split[0] == 'event' && split[1] == 'startup') {
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
                     await createStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.StateCommon>{ type: 'string' });
@@ -2789,10 +2794,13 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                         await createAliasAsync(AliasPath + 'Display.Model.ACTUAL', NSPanel_Path + 'NSPanel_Version', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                     }
                 }
-            }    
+            }
+            
+            if (isEventMethod(split[1])) HandleMessage(split[0], split[1], parseInt(split[2]), split);
         } catch (err: any) {
             log('error at trigger rceiving CustomRecv: ' + err.message, 'warn');
         }
+        
     }
 });
 
@@ -2915,7 +2923,7 @@ function update_tasmota_firmware() {
         log('error request in function update_tasmota_firmware: ' + err.message, 'warn');
     }
 }
-
+//mqttCallback (topic: string, message: string): Promise<void> {
 on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'INFO1', change: 'ne'}, async (obj) => {
     try {
         if (getState(NSPanel_Path + 'Config.Update.activ').val == 0) {
@@ -2935,23 +2943,6 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 });
 
 //------------------End Update Functions
-
-on({ id: config.panelRecvTopic, change: 'any' }, async function (obj) {
-    try {
-        if (obj.state.val.startsWith('\{"CustomRecv":')) {
-            try {
-                let json = JSON.parse(obj.state.val);
-
-                let split = json.CustomRecv.split(',');
-                HandleMessage(split[0], split[1], parseInt(split[2]), split);
-            } catch (err: any) {
-                log('error json.split in  Trigger panelRecTopic: ' + err.message, 'warn');
-            }
-        }
-    } catch (err: any) {
-        log('error at Trigger panelRecTopic: ' + err.message, 'warn');
-    }
-});
 
 async function SendToPanel(val: Payload | Payload[]) {
     try {
@@ -2986,10 +2977,10 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     }
 });
 
-function HandleMessage(typ: string, method: string, page: number | undefined, words: Array<string> | undefined): void {
+function HandleMessage(typ: string, method: EventMethod, page: number | undefined, words: Array<string> | undefined): void {
     try {
         if (typ == 'event') {
-            switch (method) {
+            switch (method as EventMethod) {
                 case 'startup':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
@@ -3135,7 +3126,7 @@ function GeneratePage(page: PageType): void {
     }
 }
 
-function HandleHardwareButton(method: string): void {
+function HandleHardwareButton(method: EventMethod): void {
     try {
         let buttonConfig: ConfigButtonFunction = config[method];
         if(buttonConfig.mode === null) {
@@ -3314,18 +3305,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
         let name: string;
         let buttonText: string = 'PRESS';
-        let type: string;
-
-        if (pageItem.id && existsState(pageItem.id + '.ACTUAL') == false) {
-            if (pageItem.popupTimerType == 'TimeCard' && pageItem.autoCreateALias == true) {
-                log(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time')
-                createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', '0', { type: 'number' });
-                createStateAsync(NSPanel_Path + 'Userdata.' + pageItem.id + '.State', 'idle', { type: 'string' });
-                setObject(pageItem.id, { type: 'channel', common: { role: 'value.time', name: 'Time' }, native: {} });
-                createAliasAsync(pageItem.id + '.ACTUAL', NSPanel_Path + 'Userdata.' + pageItem.id + '.Time', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'ACTUAL' });
-                createAliasAsync(pageItem.id + '.STATE', NSPanel_Path + 'Userdata.' + pageItem.id + '.State', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'STATE' });
-            }
-        }
+        let type: SerialType;
 
         // ioBroker
         if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
@@ -3398,11 +3378,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 } else if (pageItem.id != null && pageItem.targetPage != undefined) {
  
                     type = 'button';
- 
-                    switch (o.common.role) {
+                    const role = o.common.role as roles;
+                    switch (role as roles) {
                         case 'socket':
                         case 'light':
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
                             iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
  
                             buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
@@ -3426,8 +3406,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                         case 'door':
                         case 'window':
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
-                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                            iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
  
                             buttonText = pageItem.buttonText !== undefined ? pageItem.buttonText : existsState(pageItem.id + '.BUTTONTEXT') ? getState(pageItem.id + '.BUTTONTEXT').val : 'PRESS';
                             if (existsState(pageItem.id + '.COLORDEC')) {
@@ -3499,7 +3479,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                         case 'thermostat':
  
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'temperature' || o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'temperature' || role == 'value.temperature' || role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
             
                             let unit = '';
                             optVal = '0';
@@ -3583,13 +3563,13 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
                 }
             }
- 
-            switch (o.common.role) {
+            const role = o.common.role as roles
+            switch (role as roles) {
                 case 'socket':
                 case 'light':
                     type = 'light';
-                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
                     optVal = '0';
  
                     if (val === true || val === 'true') {
@@ -3804,11 +3784,11 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
                     if (existsState(pageItem.id + '.ACTUAL')) {
                         if (getState(pageItem.id + '.ACTUAL').val) {
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'door' ? Icons.GetIcon('door-open') : Icons.GetIcon('window-open-variant');
                             iconColor = GetIconColor(pageItem, true, useColors);
                             windowState = findLocale('window', 'opened');
                         } else {
-                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
+                            iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'door' ? Icons.GetIcon('door-closed') : Icons.GetIcon('window-closed-variant');
                             iconId = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
                             iconColor = GetIconColor(pageItem, false, useColors);
                             windowState = findLocale('window', 'closed');
@@ -3850,7 +3830,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 case 'thermostat':
                     type = 'text';
  
-                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'temperature' || o.common.role == 'value.temperature' || o.common.role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'temperature' || role == 'value.temperature' || role == 'thermostat' ? Icons.GetIcon('thermometer') : Icons.GetIcon('information-outline');
      
                     let unit = '';
                     optVal = '0';
@@ -4294,7 +4274,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
-                switch (o.common.role) {
+                switch (o.common.role as roles) {
                     case 'thermostat': {
 
                         if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
@@ -4995,7 +4975,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         }
 
         let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
-        if (v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'squeezeboxrpc') {
+      
+        if (isPlayerWithMediaDevice(v2Adapter)) {
             if (!vMediaDevice) throw new Error(`Error in cardMedia! mediaDevice is empty! Page: ${JSON.stringify(page)}`);
         }
         createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
@@ -5560,7 +5541,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
-            let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
+            let arm1ActionName: ButtonActionType | '', arm2ActionName: ButtonActionType | '', arm3ActionName: ButtonActionType | '', arm4ActionName: ButtonActionType | '';
             let icon = '0';
             let iconcolor = 63488;
             let numpadStatus = 'disable';
@@ -5714,7 +5695,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
         }
 
         let unlock1 = findLocale('lock', 'UNLOCK');                     //unlock1*~*
-        let unlock1ActionName = 'U1';                                   //unlock1ActionName*~*
+        let unlock1ActionName: ButtonActionType | '' = 'U1';                                   //unlock1ActionName*~*
 
         let iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
         let icon = Icons.GetIcon('lock-remove');                        //iconcolor*~*
@@ -6114,7 +6095,7 @@ function HandleButtonEvent(words: any): void {
 
         let tempid = words[2].split('?');
         let id = tempid[0];
-        let buttonAction = words[3];
+        let buttonAction: ButtonActionType = words[3] as ButtonActionType;
         let pageItemID: string = '';
 
         if (!isNaN(id)) {
@@ -6293,7 +6274,8 @@ function HandleButtonEvent(words: any): void {
                     if (Debug) {
                         log('HandleButtonEvent -> OnOff: ' + words[4] + ' - ' + id + ' - Role - ' + o.common.role, 'info')
                     }
-                    switch (o.common.role) {
+                    const role = o.common.role as roles;
+                    switch (role as roles) {
                         case 'level.mode.fan':
                         case 'socket':
                         case 'light':
@@ -6329,7 +6311,7 @@ function HandleButtonEvent(words: any): void {
                     if (words[4] == '1')
                         action = true;
                     let o = getObject(id);
-                    switch (o.common.role) {
+                    switch (o.common.role as roles) {
                         case 'lock':
                         case 'button':
                             toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
@@ -6503,8 +6485,8 @@ function HandleButtonEvent(words: any): void {
                     if (existsObject(id)) {
                         let o = getObject(id);
                         let pageItem = findPageItem(id);
-
-                        switch (o.common.role) {
+                        const role = o.common.role as roles;
+                        switch (role as roles) {
                             case 'dimmer':
                                 if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
                                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness));
@@ -6550,7 +6532,7 @@ function HandleButtonEvent(words: any): void {
                     log('HandleButtonEvent colorWeel -> getHue-Werte: ' + getHue(rgb.red, rgb.green, rgb.blue), 'info');
                 }
                 let o = getObject(id);
-                switch (o.common.role) {
+                switch (o.common.role as roles) {
                     case 'hue':
                         setIfExists(id + '.HUE', getHue(rgb.red, rgb.green, rgb.blue));
                         break;
@@ -6625,7 +6607,9 @@ function HandleButtonEvent(words: any): void {
                 const tempPage = findPageItem(id);
                 if (isPageMediaItem(tempPage)) {
                     if (tempPage.adapterPlayerInstance.startsWith("volumio")) {
-                        findPageItem(id).playList = []; break;
+                        const item = findPageItem(id)
+                        if (isPageMediaItem(item)) item.playList = []; 
+                        break;
                     } //Volumio: empty playlist $uha-20230103
                     if ((tempPage.adapterPlayerInstance).startsWith("spotify")) {
                         if (getState(id + '.SHUFFLE').val == 'off') {
@@ -6822,7 +6806,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemRP)) break;
                 let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
-                let deviceAdapterRP = adapterRP[0];
+                let deviceAdapterRP: PlayerType = adapterRP[0] as PlayerType;
 
                 if (Debug) log(pageItemRP.repeatList![words[4]], 'warn');
                 switch (deviceAdapterRP) {
@@ -6837,6 +6821,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-equalizer':
                 let pageItemEQ = findPageItem(id);
+                if (!isPageMediaItem(pageItemEQ)) break;
                 if (Debug) log('HandleButtonEvent mode-equalizer -> id: ' + id, 'info');
                 let lastIndex = (id.split('.')).pop();
                 setState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', pageItemEQ.equalizerList![words[4]]);
@@ -6852,7 +6837,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemSeek)) break;
                 let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
-                let deviceAdapterSK = adapterSK[0];
+                let deviceAdapterSK: PlayerType = adapterSK[0] as PlayerType;
                 switch (deviceAdapterSK) {
                     case 'spotify-premium':
                         break;
@@ -6873,7 +6858,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemCrossfade)) break;
                 let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
-                let deviceAdapterCF = adapterCF[0];
+                let deviceAdapterCF: PlayerType = adapterCF[0] as PlayerType;
                 switch (deviceAdapterCF) {
                     case 'spotify-premium':
                         break;
@@ -7010,19 +6995,19 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'mode-modus1':
                 let pageItemT1 = findPageItem(id);
-                setIfExists(id + '.' + pageItemT1.setThermoAlias![0], pageItemT1.popupThermoMode1![parseInt(words[4])]);
+                if (isPageThermoItem(pageItemT1)) setIfExists(id + '.' + pageItemT1.setThermoAlias![0], pageItemT1.popupThermoMode1![parseInt(words[4])]);
                 break;
             case 'mode-modus2':
                 let pageItemT2 = findPageItem(id);
-                setIfExists(id + '.' + pageItemT2.setThermoAlias![1], pageItemT2.popupThermoMode2![parseInt(words[4])]);
+                if (isPageThermoItem(pageItemT2)) setIfExists(id + '.' + pageItemT2.setThermoAlias![1], pageItemT2.popupThermoMode2![parseInt(words[4])]);
                 break;
             case 'mode-modus3':
                 let pageItemT3 = findPageItem(id);
-                setIfExists(id + '.' + pageItemT3.setThermoAlias![2], pageItemT3.popupThermoMode3![parseInt(words[4])]);
+                if (isPageThermoItem(pageItemT3)) setIfExists(id + '.' + pageItemT3.setThermoAlias![2], pageItemT3.popupThermoMode3![parseInt(words[4])]);
                 break;
             case 'number-set':
                 let nobj = getObject(id);
-                switch (nobj.common.role) {
+                switch (nobj.common.role as roles) {
                     case 'level.mode.fan':
                         (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                         timeoutSlider = setTimeout(async function () {
@@ -7229,7 +7214,6 @@ function GetNavigationString(pageId: number): string {
     }
     return '';
 }
-
 function GenerateDetailPage(type: string, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
@@ -7238,16 +7222,17 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
 
         if (id && existsObject(id)) {
 
-            let o = getObject(id);
+            const o = getObject(id);
             let val: (boolean | number) = 0;
             let icon = Icons.GetIcon('lightbulb');
             let iconColor = rgb_dec565(config.defaultColor);
+            const role = o.common.role as roles;
 
             if (type == 'popupLight') {
 
                 let switchVal = '0';
                 let brightness = 0;
-                switch (o.common.role) {
+                switch (role) {
                 case 'light': 
                 case 'socket': {
                     if (existsState(id + '.GET')) {
@@ -7264,7 +7249,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                         }
                     }
 
-                    icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : o.common.role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
 
                     if (val) {
                         switchVal = '1';
@@ -7636,7 +7621,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                     });
                 }
                 break;
-            }
+                }
             }
 
             if (type == 'popupShutter') {
@@ -7740,12 +7725,12 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
 
             if (type == 'popupThermo') {
                 let vIcon = (pageItem.icon != undefined) ? pageItem.icon : 'fan';
-                let mode1 = (pageItem.popupThermoMode1 != undefined) ? pageItem.popupThermoMode1.join('?') : '';
-                let mode2 = (pageItem.popupThermoMode2 != undefined) ? pageItem.popupThermoMode2.join('?') : '';
-                let mode3 = (pageItem.popupThermoMode3 != undefined) ? pageItem.popupThermoMode3.join('?') : '';
+                let mode1 = (isPageThermoItem(pageItem) && pageItem.popupThermoMode1 != undefined) ? pageItem.popupThermoMode1.join('?') : '';
+                let mode2 = (isPageThermoItem(pageItem) && pageItem.popupThermoMode2 != undefined) ? pageItem.popupThermoMode2.join('?') : '';
+                let mode3 = (isPageThermoItem(pageItem) && pageItem.popupThermoMode3 != undefined) ? pageItem.popupThermoMode3.join('?') : '';
 
                 let payloadParameters1 = '~~~~'
-                if (pageItem.popupThermoMode1 != undefined) {
+                if (isPageThermoItem(pageItem) && pageItem.popupThermoMode1 != undefined) {
                     RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias![0], pageItem, type, placeId);
                     payloadParameters1 =    pageItem.popUpThermoName![0] + '~'                                          //{heading}~            Mode 1
                                             + 'modus1' + '~'                                                           //{id}~                 Mode 1
@@ -7754,7 +7739,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 }
 
                 let payloadParameters2 = '~~~~'
-                if (pageItem.popupThermoMode2 != undefined) {
+                if (isPageThermoItem(pageItem) && pageItem.popupThermoMode2 != undefined) {
                     RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias![1], pageItem, type, placeId);
                     payloadParameters2 =    pageItem.popUpThermoName![1] + '~'                                           //{heading}~            Mode 2
                                             + 'modus2' + '~'                                                            //{id}~                 Mode 2
@@ -7763,7 +7748,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 }
 
                 let payloadParameters3 = '~~~~'
-                if (pageItem.popupThermoMode3 != undefined) {
+                if (isPageThermoItem(pageItem) && pageItem.popupThermoMode3 != undefined) {
                     RegisterDetailEntityWatcher(pageItem.id + "." + pageItem.setThermoAlias![2], pageItem, type, placeId);
                     payloadParameters3 =    pageItem.popUpThermoName![2] + '~'                                           //{heading}~            Mode 3
                                             + 'modus3' + '~'                                                            //{id}~                 Mode 3
@@ -7789,83 +7774,82 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 if (existsState(id + '.ACTUAL')) {
                     RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
                     timer_actual = getState(id + '.ACTUAL').val;
-                } 
+                }
 
                 if (existsState(id + '.STATE')) {
                     RegisterDetailEntityWatcher(id + '.STATE', pageItem, type, placeId);
-                } 
+                }
 
                 let editable = 1;
                 let action1 = '';
                 let action2 = '';
                 let action3 = '';
-                let label1  = '';
-                let label2  = '';
-                let label3  = '';
+                let label1 = '';
+                let label2 = '';
+                let label3 = '';
                 let min_remaining = 0;
                 let sec_remaining = 0;
                 if (existsState(id + '.STATE')) {
-
-                if (o.common.role == 'value.time') {
-                    if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
-                        min_remaining = Math.floor(timer_actual / 60);
-                        sec_remaining = timer_actual % 60;
-                        editable = 1;
-                    } else {
-                        min_remaining = Math.floor(timer_actual / 60);
-                        sec_remaining = timer_actual % 60;
-                        editable = 1;
-                    } 
-                } else if (o.common.role == 'level.timer') {
-                    if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
-                        min_remaining = Math.floor(timer_actual / 60);
-                        sec_remaining = timer_actual % 60;
-                        editable = 1;
-                        action2 = 'start';
-                        label2 = findLocale('timer', 'start');
-                    } else {
-                        min_remaining = Math.floor(timer_actual / 60);
-                        sec_remaining = timer_actual % 60;
-                        editable = 0;
-                        action1 = 'pause';
-                        action2 = 'cancle';
-                        action3 = 'finish';
-                        label1  = findLocale('timer', 'pause');
-                        label2  = findLocale('timer', 'cancel');
-                        label3  = findLocale('timer', 'finish');
-                    }                    
-                } else if (o.common.role == 'value.alarmtime') {
-                    if (getState(id + '.STATE').val == 'paused') {
-                        min_remaining = Math.floor(timer_actual / 60);
-                        sec_remaining = timer_actual % 60;
-                        editable = 1;
-                        action2 = 'start';
-                        label2  = findLocale('timer', 'on');
-                    } else {
-                        min_remaining = Math.floor(timer_actual / 60);
-                        sec_remaining = timer_actual % 60;
-                        editable = 0;
-                        action2 = 'pause';
-                        label2  = findLocale('timer', 'off');
+                    if (role == 'value.time') {
+                        if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
+                            min_remaining = Math.floor(timer_actual / 60);
+                            sec_remaining = timer_actual % 60;
+                            editable = 1;
+                        } else {
+                            min_remaining = Math.floor(timer_actual / 60);
+                            sec_remaining = timer_actual % 60;
+                            editable = 1;
+                        }
+                    } else if (role == 'level.timer') {
+                        if (getState(id + '.STATE').val == 'idle' || getState(id + '.STATE').val == 'paused') {
+                            min_remaining = Math.floor(timer_actual / 60);
+                            sec_remaining = timer_actual % 60;
+                            editable = 1;
+                            action2 = 'start';
+                            label2 = findLocale('timer', 'start');
+                        } else {
+                            min_remaining = Math.floor(timer_actual / 60);
+                            sec_remaining = timer_actual % 60;
+                            editable = 0;
+                            action1 = 'pause';
+                            action2 = 'cancle';
+                            action3 = 'finish';
+                            label1 = findLocale('timer', 'pause');
+                            label2 = findLocale('timer', 'cancel');
+                            label3 = findLocale('timer', 'finish');
+                        }
+                    } else if (role == 'value.alarmtime') {
+                        if (getState(id + '.STATE').val == 'paused') {
+                            min_remaining = Math.floor(timer_actual / 60);
+                            sec_remaining = timer_actual % 60;
+                            editable = 1;
+                            action2 = 'start';
+                            label2 = findLocale('timer', 'on');
+                        } else {
+                            min_remaining = Math.floor(timer_actual / 60);
+                            sec_remaining = timer_actual % 60;
+                            editable = 0;
+                            action2 = 'pause';
+                            label2 = findLocale('timer', 'off');
+                        }
                     }
-                }
 
-                let tempId = placeId != undefined ? placeId : id;
-                
-                out_msgs.push({
-                    payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
-                        + tempId + '~~'                  //{entity_id}
-                        + rgb_dec565(White) + '~'        //{icon_color}~
-                        + tempId + '~' 
-                        + min_remaining + '~'
-                        + sec_remaining + '~'
-                        + editable + '~'
-                        + action1 + '~'
-                        + action2 + '~'
-                        + action3 + '~'
-                        + label1 + '~'
-                        + label2 + '~'
-                        + label3
+                    let tempId = placeId != undefined ? placeId : id;
+
+                    out_msgs.push({
+                        payload: 'entityUpdateDetail' + '~'  //entityUpdateDetail
+                            + tempId + '~~'                  //{entity_id}
+                            + rgb_dec565(White) + '~'        //{icon_color}~
+                            + tempId + '~'
+                            + min_remaining + '~'
+                            + sec_remaining + '~'
+                            + editable + '~'
+                            + action1 + '~'
+                            + action2 + '~'
+                            + action3 + '~'
+                            + label1 + '~'
+                            + label2 + '~'
+                            + label3
                     });
                 }
             }    
@@ -7873,7 +7857,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
             if (type == 'popupFan') {
 
                 let switchVal = '0';
-                if (o.common.role == 'level.mode.fan') {
+                if (role == 'level.mode.fan') {
                     if (existsState(id + '.SET')) {
                         val = getState(id + '.SET').val;
                         RegisterDetailEntityWatcher(id + '.SET', pageItem, type, placeId);
@@ -7915,7 +7899,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
             }
 
             if (type == 'popupInSel') {
-                if (o.common.role == 'media') {
+                if (role == 'media') {
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
                     let mode: string = '';
@@ -8142,7 +8126,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                         });
                         GeneratePage(activePage!);
                     }
-                } else if (o.common.role == 'buttonSensor') {
+                } else if (role == 'buttonSensor') {
 
                     let actualValue: string = '';
 
@@ -8169,12 +8153,12 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                             + actualValue + '~'
                             + valueList
                     });
-                } else if (o.common.role == 'light' ||
-                           o.common.role == 'dimmer' ||
-                           o.common.role == 'hue' ||
-                           o.common.role == 'rgb' ||
-                           o.common.role == 'rgbSingle' ||
-                           o.common.role == 'ct') {
+                } else if (role == 'light' ||
+                           role == 'dimmer' ||
+                           role == 'hue' ||
+                           role == 'rgb' ||
+                           role == 'rgbSingle' ||
+                           role == 'ct') {
                                
                     //log(pageItem.id, 'info');
                     if (pageItem.modeList != undefined) {
@@ -8303,65 +8287,67 @@ function HandleScreensaverUpdate(): void {
             }
 
             // 3 leftScreensaverEntities  
-            if (screensaverAdvanced) {       
+            if (screensaverAdvanced) {
                 let checkpoint = true;
                 let i = 0;
-                for (i = 0; i < 3; i++) {
-                    
-                    if (config.leftScreensaverEntity[i] == null || config.leftScreensaverEntity[i] == undefined) {
-                        checkpoint = false;
-                        break;
-                    }
-                    RegisterScreensaverEntityWatcher(config.leftScreensaverEntity[i].ScreensaverEntity)
-
-                    let val = getState(config.leftScreensaverEntity[i].ScreensaverEntity).val;
-                    let iconColor = rgb_dec565(White);
-                    let icon;
-                    if (typeof config.leftScreensaverEntity[i].ScreensaverEntityIconOn == 'string' && existsObject(config.leftScreensaverEntity[i].ScreensaverEntityIconOn as string)) {
-                        let iconName = getState(config.leftScreensaverEntity[i].ScreensaverEntityIconOn!).val;
-                        icon = Icons.GetIcon(iconName);
-                    } else {
-                        icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOn);
-                    } 
-
-                    if (parseFloat(val+"") == val) {     
-                        val = parseFloat(val);
-                    }
-                    
-                    if (typeof(val) == 'number') {
-                        val = (val * (config.leftScreensaverEntity[i].ScreensaverEntityFactor ? config.leftScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.leftScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.leftScreensaverEntity[i].ScreensaverEntityUnitText;
-                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                    }
-                    else if (typeof(val) == 'boolean') {
-                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        if (!val && config.leftScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.leftScreensaverEntity[i].ScreensaverEntityIconOff)
+                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity)) {
+                    for (i = 0; i < 3; i++) {
+                        const leftScreensaverEntity = config.leftScreensaverEntity[i]
+                        if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
+                            checkpoint = false;
+                            break;;
                         }
-                    }
-                    else if (typeof(val) == 'string') {
-                        iconColor = GetScreenSaverEntityColor(config.leftScreensaverEntity[i]);
-                        let pformat = parseFormat(val);
-                        if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
-                        if (moment(val, pformat, true).isValid()) { 
-                            let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
-                            if (config.leftScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
-                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.leftScreensaverEntity[i].ScreensaverEntityDateFormat);
-                            } else {
-                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
-                            }
-                        }                
-                    }
-                    const temp = config.leftScreensaverEntity[i].ScreensaverEntityIconColor;
-                    if (temp && typeof temp == 'string' && existsObject(temp)) {
-                        iconColor = getState(temp).val;
-                    }
+                        RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity)
 
-                    payloadString += '~' +
-                                    '~' +
-                                    icon + '~' +
-                                    iconColor + '~' +
-                                    config.leftScreensaverEntity[i].ScreensaverEntityText + '~' +
-                                    val + '~';
+                        let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
+                        let iconColor = rgb_dec565(White);
+                        let icon;
+                        if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
+                            let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
+                            icon = Icons.GetIcon(iconName);
+                        } else {
+                            icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
+                        }
+
+                        if (parseFloat(val + "") == val) {
+                            val = parseFloat(val);
+                        }
+
+                        if (typeof (val) == 'number') {
+                            val = (val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)).toFixed(leftScreensaverEntity.ScreensaverEntityDecimalPlaces) + leftScreensaverEntity.ScreensaverEntityUnitText;
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                        }
+                        else if (typeof (val) == 'boolean') {
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                            if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
+                                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff)
+                            }
+                        }
+                        else if (typeof (val) == 'string') {
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                            let pformat = parseFormat(val);
+                            if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
+                            if (moment(val, pformat, true).isValid()) {
+                                let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                                if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
+                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
+                                } else {
+                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+                                }
+                            }
+                        }
+                        const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
+                        if (temp && typeof temp == 'string' && existsObject(temp)) {
+                            iconColor = getState(temp).val;
+                        }
+
+                        payloadString += '~' +
+                            '~' +
+                            icon + '~' +
+                            iconColor + '~' +
+                            leftScreensaverEntity.ScreensaverEntityText + '~' +
+                            val + '~';
+                    }
                 }
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
@@ -8469,7 +8455,7 @@ function HandleScreensaverUpdate(): void {
                 }
 
                 //Alternativ Layout bekommt zusätzlichen Status
-                if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
+                if (config.bottomScreensaverEntity[4] && getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
                     if (parseFloat(val+"") == val) {     
                         val = parseFloat(val);
@@ -8588,37 +8574,38 @@ function HandleScreensaverUpdate(): void {
                 // 5 indicatorScreensaverEntities     
                 for (let i = 0; i < 5; i++) {
                     let checkpoint = true;
-                    if (config.indicatorScreensaverEntity[i] == null) {
+                    const indicatorScreensaverEntity:ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
+                    if (indicatorScreensaverEntity == null) {
                         checkpoint = false;
                         break;
                     }
-                    RegisterScreensaverEntityWatcher(config.indicatorScreensaverEntity[i].ScreensaverEntity)
+                    RegisterScreensaverEntityWatcher(indicatorScreensaverEntity.ScreensaverEntity)
 
-                    let val = getState(config.indicatorScreensaverEntity[i].ScreensaverEntity).val;
+                    let val = getState(indicatorScreensaverEntity.ScreensaverEntity).val;
                     if (parseFloat(val+"") == val) {     
                         val = parseFloat(val);
                     }
                     let iconColor = rgb_dec565(White);
             
                     let icon;
-                    if (config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn && existsObject(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn!)) {
-                        let iconName = getState(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn!).val;
+                    if (indicatorScreensaverEntity.ScreensaverEntityIconOn && existsObject(indicatorScreensaverEntity.ScreensaverEntityIconOn!)) {
+                        let iconName = getState(indicatorScreensaverEntity.ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
                     } else {
-                        icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOn);
+                        icon = Icons.GetIcon(indicatorScreensaverEntity.ScreensaverEntityIconOn);
                     }    
 
                     if (typeof(val) == 'number') {
-                        val = (val * (config.indicatorScreensaverEntity[i].ScreensaverEntityFactor ? config.indicatorScreensaverEntity[i].ScreensaverEntityFactor! : 0)).toFixed(config.indicatorScreensaverEntity[i].ScreensaverEntityDecimalPlaces) + config.indicatorScreensaverEntity[i].ScreensaverEntityUnitText;
-                        iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
+                        val = (val * (indicatorScreensaverEntity.ScreensaverEntityFactor ? indicatorScreensaverEntity.ScreensaverEntityFactor! : 0)).toFixed(indicatorScreensaverEntity.ScreensaverEntityDecimalPlaces) + indicatorScreensaverEntity.ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(indicatorScreensaverEntity);
                     }
                     else if (typeof(val) == 'boolean') {
-                        iconColor = GetScreenSaverEntityColor(config.indicatorScreensaverEntity[i]);
-                        if (!val && config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.indicatorScreensaverEntity[i].ScreensaverEntityIconOff)
+                        iconColor = GetScreenSaverEntityColor(indicatorScreensaverEntity);
+                        if (!val && indicatorScreensaverEntity.ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(indicatorScreensaverEntity.ScreensaverEntityIconOff)
                         }
                     }
-                    const temp = config.indicatorScreensaverEntity[4].ScreensaverEntityIconColor
+                    const temp = indicatorScreensaverEntity.ScreensaverEntityIconColor
                     if (temp && typeof temp == 'string' && existsObject(temp)) {
                         iconColor = getState(temp).val;
                     }
@@ -8626,7 +8613,7 @@ function HandleScreensaverUpdate(): void {
                                     '~' +
                                     icon + '~' +
                                     iconColor + '~' +
-                                    config.indicatorScreensaverEntity[i].ScreensaverEntityText + '~' +
+                                    indicatorScreensaverEntity.ScreensaverEntityText + '~' +
                                     val + '~';
                 }
             }
@@ -9278,6 +9265,7 @@ function GetDasWetterIconColor(icon: number): number {
 }
 
 //------------------Begin Read Internal Sensor Data
+//mqttCallback (topic: string, message: string): Promise<void> {
 on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESULT'.length) + 'SENSOR' }, async (obj) => {
     try {
         const Tasmota_Sensor = JSON.parse(obj.state.val);
@@ -9491,6 +9479,23 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     return strDevID;
 }
 
+type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
+
+type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
+
+type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
+    | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
+    | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
+    | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
+
+type ButtonActionType = 'bExit' | 'bUp' | 'bNext' | 'bSubNext' | 'bPrev' | 'bSubPrev' | 'bHome' | 'notifyAction' | 'OnOff' | 'button' | 'up' | 'stop' | 'down'
+    | 'positionSlider' | 'tiltOpen' | 'tiltStop' | 'tiltSlider' | 'tiltClose' | 'brightnessSlider' | 'colorTempSlider' | 'colorWheel' | 'tempUpd' | 'tempUpdHighLow' | 'media-back'
+    | 'media-pause' | 'media-next' | 'media-shuffle' | 'volumeSlider' | 'mode-speakerlist' | 'mode-playlist' | 'mode-tracklist' | 'mode-repeat' | 'mode-equalizer' | 'mode-seek' | 'mode-crossfade'
+    | 'mode-favorites' | 'mode-insel' | 'media-OnOff' | 'timer-start' | 'timer-pause' | 'timer-cancle' | 'timer-finish' | 'hvac_action' | 'mode-modus1' | 'mode-modus2' | 'mode-modus3' | 'number-set'
+    | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' 
+    
+
+
 type RGB = {
     red: number,
     green: number,
@@ -9547,7 +9552,8 @@ type PageGrid2 = {
 
 type PageThermo = {
     type: 'cardThermo',
-    items: PageItem[],
+    items: PageThermoItem[],
+    
 } & Omit<PageBaseType, 'useColor'>
 
 type PageMedia = {
@@ -9580,13 +9586,36 @@ type PageChart = {
     items: PageItem[],
 } & Omit<PageBaseType, 'useColor'>
 
-type PageItem = PageBaseItem | PageMediaItem
+type PageItem = PageBaseItem | PageMediaItem | PageThermoItem
 
 function isPageMediaItem(F: PageItem | PageMediaItem):F is PageMediaItem {
-    return  (F as PageMediaItem).adapterPlayerInstance !== undefined
+    return  'adapterPlayerInstance' in F
+}
+
+function isPageThermoItem(F: PageItem | PageThermoItem):F is PageThermoItem {
+    return  'popupThermoMode1' in F;
 }
 type PageMediaItem = {
     adapterPlayerInstance: adapterPlayerInstanceType,
+    mediaDevice?: string,
+    colorMediaIcon?: RGB,
+    colorMediaArtist?: RGB,
+    colorMediaTitle?: RGB,
+    speakerList?: string[],
+    playList?: string[],
+    equalizerList?: string[],
+    repeatList?: string[],
+    globalTracklist?: string[],
+    crossfade?: boolean, 
+} & PageBaseItem
+
+type PageThermoItem = {
+    popupThermoMode1?: string[],
+    popupThermoMode2?: string[],
+    popupThermoMode3?: string[],
+    popUpThermoName?: string[],
+    setThermoAlias?: string[],
+    setThermoDestTemp2?: string,
 } & PageBaseItem
 
 type PageBaseItem = {
@@ -9616,45 +9645,22 @@ type PageBaseItem = {
     unit?: string,
     navigate?: boolean,
     colormode?: string,
-    colorScale?: any, 
+    colorScale?: IconScaleElement, 
     //adapterPlayerInstance?: adapterPlayerInstanceType,
-    mediaDevice?: string,
     targetPage?: string,
-    speakerList?: string[],
-    playList?: string[],
-    equalizerList?: string[],
-    repeatList?: string[],
-    globalTracklist?: string[], 
     modeList?: string[],
     hidePassword?: boolean,
     autoCreateALias?: boolean
-    colorMediaIcon?: RGB,
-    colorMediaArtist?: RGB,
-    colorMediaTitle?: RGB,
-    popupThermoMode1?: string[],
-    popupThermoMode2?: string[],
-    popupThermoMode3?: string[],
-    popUpThermoName?: string[],
-    popupMediaMode1?: string[],
-    popupMediaMode2?: string[],
-    popupMediaMode3?: string[],
-    popUpMediaName?: string[],
-    setThermoAlias?: string[],
-    setThermoDestTemp2?: string,
     yAxis?: string,
     yAxisTicks?: number[] | string,
     xAxisDecorationId?: string,
-    popupType?: string,
-    popupOptions?: string[],
     useValue?: boolean,
     monobutton?: boolean,
     inSel_ChoiceState?: boolean,
     iconArray?: string[],
     fontSize?: number,
     actionStringArray?: string[],
-    popupTimerType?: string,
     alwaysOnDisplay?: boolean,
-    crossfade?: boolean,
 }
 
 type DimMode = {
@@ -9676,9 +9682,9 @@ type Config = {
     panelRecvTopic: string,
     panelSendTopic: string,
     weatherEntity: string,
-    leftScreensaverEntity: ScreenSaverElement[],
+    leftScreensaverEntity: leftScreensaverEntityType
     bottomScreensaverEntity: ScreenSaverElement[],
-    indicatorScreensaverEntity: ScreenSaverElement[],
+    indicatorScreensaverEntity: indicatorScreensaverEntityType
     mrIcon1ScreensaverEntity: ScreenSaverMRElement,
     mrIcon2ScreensaverEntity: ScreenSaverMRElement,
     defaultColor: RGB,
@@ -9690,16 +9696,18 @@ type Config = {
     button1: ConfigButtonFunction,
     button2: ConfigButtonFunction
 }
-
+type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
 type ScreenSaverElement = {
     ScreensaverEntity: string,
+    ScreensaverEntityText: string,
     ScreensaverEntityFactor?: number,
     ScreensaverEntityDecimalPlaces?: number,
-    ScreensaverEntityDateFormat?: any | null,
+    ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions,
     ScreensaverEntityIconOn?: string | null,
     ScreensaverEntityIconOff?: string | null,
-    ScreensaverEntityText: string,
-    ScreensaverEntityUnitText?: string | null,
+    ScreensaverEntityUnitText?: string,
     ScreensaverEntityIconColor?: RGB | IconScaleElement | string
     ScreensaverEntityOnColor?: RGB
     ScreensaverEntityOffColor?: RGB
@@ -9732,8 +9740,17 @@ type adapterPlayerInstanceType =
 | 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
 | 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
 
-type PlayerType = 'alexa2' | 'sonos' | 'spotify-premium' | 'volumio' | 'squeezeboxrpc' | 'bosesoundtouch' 
- 
+type PlayerType = _PlayerTypeWithMediaDevice | _PlayerTypeWithOutMediaDevice;
+
+const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const
+const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const
+type _PlayerTypeWithOutMediaDevice = typeof ArrayPlayerTypeWithOutMediaDevice[number] 
+type _PlayerTypeWithMediaDevice = typeof ArrayPlayerTypeWithMediaDevice[number]
+
+function isPlayerWithMediaDevice (F: string | _PlayerTypeWithMediaDevice): F is _PlayerTypeWithMediaDevice {
+    return ArrayPlayerTypeWithMediaDevice.indexOf(F as _PlayerTypeWithMediaDevice) != -1;
+}
+
 type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
 
 /** check if adapterPlayerInstanceType has all Playertypes */
@@ -9742,6 +9759,7 @@ function checkSortedPlayerType(F: notSortedPlayerType) {
 }
 
 type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
+
 
 function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
     switch(F as mediaOptional) {
@@ -9756,5 +9774,22 @@ function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
             return true;
         default:
             return false
+    }
+}
+
+function isEventMethod(F: string | EventMethod): F is EventMethod {
+    switch(F as EventMethod) {
+        case "startup":
+        case "sleepReached":
+        case "pageOpenDetail":
+        case "buttonPress2":
+        case "renderCurrentPage":
+        case "button1":
+        case "button2":
+            return true;
+        default:
+            // Have to talk about this.
+            log(`Please report to developer: Unknown EventMethod: ${F} `, 'warn');
+            return false;
     }
 }
