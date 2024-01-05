@@ -101,6 +101,7 @@ ReleaseNotes:
         - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
+	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -963,7 +964,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.32';
+const scriptVersion: string = 'v4.3.3.33';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -6431,6 +6432,18 @@ function HandleButtonEvent(words: any): void {
                                             }
                                             GeneratePage(activePage!);
                                             break;
+                                        case 'bosesoundtouch':
+                                            log(adapterInstanceRepeat);
+                                            let stateBoseRepeat = getState(id + '.REPEAT').val
+                                            if (stateBoseRepeat == 'REPEAT_OFF') {
+                                                setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ALL');
+                                            } else if (stateBoseRepeat == 'REPEAT_ALL') {
+                                                setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ONE');
+                                            } else if (stateBoseRepeat == 'REPEAT_ONE') {
+                                                setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_OFF');
+                                            }
+                                            GeneratePage(activePage!);
+                                            break;
                                         case 'sonos':
                                             let stateSonosRepeat = getState(id + '.REPEAT').val
                                             if (stateSonosRepeat == 0) {
@@ -6693,6 +6706,14 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(id + '.SHUFFLE', false);
                         }
                     }
+                    if ((tempPage.adapterPlayerInstance).startsWith("bosesoundtouch")) {
+                        log(tempPage.adapterPlayerInstance);
+                        if (getState(tempPage.adapterPlayerInstance + '.SHUFFLE').val == false) {
+                            setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_ON');
+                        } else {
+                            setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_OFF');
+                        }
+                    }
                     GeneratePage(activePage!);
                 }
                 break;
@@ -6802,9 +6823,12 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
                     case "bosesoundtouch":
+                        log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
+                        log(adapterInstancePL +  'key');
+                        setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
                         break;
                     default:
-                        log('Hello Mr. Developer u miss in mode-playlist something!', 'warn')
+                        log('Hello Mr. Developer u miss in mode-playlist something!', 'warn');
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -6853,7 +6877,7 @@ function HandleButtonEvent(words: any): void {
                     case "bosesoundtouch":
                         break;
                     default:
-                        log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn')
+                        log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn');
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
