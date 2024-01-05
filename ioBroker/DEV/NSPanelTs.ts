@@ -96,7 +96,10 @@ ReleaseNotes:
         - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
         - 03.02.2024 - v4.3.3.31 [dev]: add PlayerType some more work to do
         - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.
-	- 04.01.2024 - v4.3.3.32 Hiofix Spotify
+	    - 04.01.2024 - v4.3.3.32 Hotfix Spotify
+        - 04.01.2024 - v4.3.3.32 [DEV] Add Types see commits
+        - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
+        - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -2791,8 +2794,9 @@ on({ id: config.panelRecvTopic }, async (obj) => {
                         await createAliasAsync(AliasPath + 'Display.Model.ACTUAL', NSPanel_Path + 'NSPanel_Version', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                     }
                 }
-            }    
-            HandleMessage(split[0], split[1], parseInt(split[2]), split);
+            }
+            
+            if (isEventMethod(split[1])) HandleMessage(split[0], split[1], parseInt(split[2]), split);
         } catch (err: any) {
             log('error at trigger rceiving CustomRecv: ' + err.message, 'warn');
         }
@@ -2973,10 +2977,10 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     }
 });
 
-function HandleMessage(typ: string, method: string, page: number | undefined, words: Array<string> | undefined): void {
+function HandleMessage(typ: string, method: EventMethod, page: number | undefined, words: Array<string> | undefined): void {
     try {
         if (typ == 'event') {
-            switch (method) {
+            switch (method as EventMethod) {
                 case 'startup':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
@@ -3122,7 +3126,7 @@ function GeneratePage(page: PageType): void {
     }
 }
 
-function HandleHardwareButton(method: string): void {
+function HandleHardwareButton(method: EventMethod): void {
     try {
         let buttonConfig: ConfigButtonFunction = config[method];
         if(buttonConfig.mode === null) {
@@ -3301,7 +3305,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
         let name: string;
         let buttonText: string = 'PRESS';
-        let type: string;
+        let type: SerialType;
 
         // ioBroker
         if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
@@ -5537,7 +5541,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
-            let arm1ActionName: string, arm2ActionName: string, arm3ActionName: string, arm4ActionName: string;
+            let arm1ActionName: ButtonActionType | '', arm2ActionName: ButtonActionType | '', arm3ActionName: ButtonActionType | '', arm4ActionName: ButtonActionType | '';
             let icon = '0';
             let iconcolor = 63488;
             let numpadStatus = 'disable';
@@ -5691,7 +5695,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
         }
 
         let unlock1 = findLocale('lock', 'UNLOCK');                     //unlock1*~*
-        let unlock1ActionName = 'U1';                                   //unlock1ActionName*~*
+        let unlock1ActionName: ButtonActionType | '' = 'U1';                                   //unlock1ActionName*~*
 
         let iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
         let icon = Icons.GetIcon('lock-remove');                        //iconcolor*~*
@@ -6802,7 +6806,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemRP)) break;
                 let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
-                let deviceAdapterRP = adapterRP[0];
+                let deviceAdapterRP: PlayerType = adapterRP[0] as PlayerType;
 
                 if (Debug) log(pageItemRP.repeatList![words[4]], 'warn');
                 switch (deviceAdapterRP) {
@@ -6833,7 +6837,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemSeek)) break;
                 let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
-                let deviceAdapterSK = adapterSK[0];
+                let deviceAdapterSK: PlayerType = adapterSK[0] as PlayerType;
                 switch (deviceAdapterSK) {
                     case 'spotify-premium':
                         break;
@@ -6854,7 +6858,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemCrossfade)) break;
                 let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
-                let deviceAdapterCF = adapterCF[0];
+                let deviceAdapterCF: PlayerType = adapterCF[0] as PlayerType;
                 switch (deviceAdapterCF) {
                     case 'spotify-premium':
                         break;
@@ -9475,8 +9479,9 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     return strDevID;
 }
 
+type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
 
-
+type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
 
 type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
     | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
@@ -9769,5 +9774,22 @@ function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
             return true;
         default:
             return false
+    }
+}
+
+function isEventMethod(F: string | EventMethod): F is EventMethod {
+    switch(F as EventMethod) {
+        case "startup":
+        case "sleepReached":
+        case "pageOpenDetail":
+        case "buttonPress2":
+        case "renderCurrentPage":
+        case "button1":
+        case "button2":
+            return true;
+        default:
+            // Have to talk about this.
+            log(`Please report to developer: Unknown EventMethod: ${F} `, 'warn');
+            return false;
     }
 }
