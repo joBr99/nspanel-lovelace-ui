@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.32 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.33 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -95,11 +95,13 @@ ReleaseNotes:
         - 03.02.2024 - v4.3.3.31 Remove: adapterPlayerInstance from every card except cardMedia
         - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
         - 03.02.2024 - v4.3.3.31 [dev]: add PlayerType some more work to do
-        - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.
-	    - 04.01.2024 - v4.3.3.32 Hotfix Spotify
+        - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.        
+        - 04.01.2024 - v4.3.3.32 Hotfix Spotify
         - 04.01.2024 - v4.3.3.32 [DEV] Add Types see commits
         - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
+        - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
+	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -962,7 +964,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.32';
+const scriptVersion: string = 'v4.3.3.33';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -4693,6 +4695,21 @@ function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
     });
 } 
 
+function subscribeMediaSubscriptionsBoseAdd(id: string): void {
+    on({id: [id + '.DURATION',
+              id + '.ELAPSED'], change: "any"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage!);
+                setTimeout(async function () {
+                    GeneratePage(activePage!);
+                }, 50);
+            }
+        },50)
+    });
+} 
+
 async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: adapterPlayerInstanceType) {
     if (autoCreateAlias) {
         if (isSetOptionActive) {
@@ -4908,10 +4925,11 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                         log('bosesoundtouch Alias ' + id + ' does not exist - will be created now', 'info');
 
                         try {
-                            let dpPath: string = adapterPlayerInstance + 'keys';
+                            let dpPath: string = adapterPlayerInstance;
                             await extendObjectAsync(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
-                            await createAliasAsync(id + '.ACTUAL', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
-                            await createAliasAsync(id + '.VOLUME', dpPath + '.volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.ACTUAL', dpPath + 'volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                            await createAliasAsync(id + '.VOLUME', dpPath + 'volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                            await createAliasAsync(id + '.STATE', dpPath + 'on', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
 
                             dpPath = adapterPlayerInstance + 'nowPlaying';
                             await createAliasAsync(id + '.ALBUM', dpPath + '.album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
@@ -4923,7 +4941,6 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                             await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
                             
                             dpPath = adapterPlayerInstance + 'keys';
-                            await createAliasAsync(id + '.STATE', dpPath + '.POWER', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
                             await createAliasAsync(id + '.NEXT', dpPath + '.NEXT_TRACK', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
                             await createAliasAsync(id + '.PREV', dpPath + '.PREV_TRACK', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
                             await createAliasAsync(id + '.PLAY', dpPath + '.PLAY', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
@@ -4975,7 +4992,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
         }
 
         let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
-      
+
         if (isPlayerWithMediaDevice(v2Adapter)) {
             if (!vMediaDevice) throw new Error(`Error in cardMedia! mediaDevice is empty! Page: ${JSON.stringify(page)}`);
         }
@@ -4995,6 +5012,8 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                             subscribeMediaSubscriptionsSonosAdd(page.items[0].id);
                         } else if (v2Adapter == 'alexa2') {
                             subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);
+                        } else if (v2Adapter == 'bosesoundtouch') {
+                            subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
                         }
                     }
                 }
@@ -5005,7 +5024,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             if (v2Adapter == 'sonos') {
                 subscribeMediaSubscriptionsSonosAdd(page.items[0].id);
             } else if (v2Adapter == 'alexa2') {
-                subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);
+                subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);    
+            } else if (v2Adapter == 'bosesoundtouch') {
+                subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
             }
         } else if (page.type == 'cardMedia' && pageCounter == -1) {
             //Do Nothing
@@ -5055,7 +5076,15 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         vDuration = vDuration.slice(4);
                     }
                     title = title + ' (' + vElapsed + '|' + vDuration + ')';
-                } 
+                } else if (v2Adapter == 'bosesoundtouch') {
+                    if (Debug) log(getState(id + '.ELAPSED').val, 'info');
+                    let elapsedSeconds = parseInt(getState(id + '.ELAPSED').val)%60 < 10 ? '0' : '' 
+                    let vElapsed = Math.floor(getState(id + '.ELAPSED').val/60) + ":" + elapsedSeconds +  getState(id + '.ELAPSED').val%60 
+                    if (Debug) log(getState(id + '.DURATION').val, 'info');
+                    let durationSeconds = parseInt(getState(id + '.DURATION').val)%60 < 10 ? '0' : '' 
+                    let vDuration = Math.floor(getState(id + '.DURATION').val/60) + ":" + durationSeconds +  getState(id + '.DURATION').val%60 
+                    title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                }
             } 
             let author = getState(id + '.ARTIST').val;
             let shuffle = getState(id + '.SHUFFLE').val;
@@ -5097,6 +5126,24 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 } else if (nameLenght > 16) {
                     name = name.slice(0,16) + '...'
                 }
+                if ((getState(id + '.ALBUM').val).length > 0) {
+                    author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                    if (author.length > 37) {
+                        author = author.slice(0,37) + '...';
+                    }
+                } else {
+                    author = getState(id + '.ARTIST').val;
+                }
+                if ((getState(id + '.ARTIST').val).length == 0) {
+                    author = findLocale('media','no_music_to_control');
+                }
+            }
+
+            //Bose Soundtouch
+            if (v2Adapter == 'bosesoundtouch') {
+                media_icon = Icons.GetIcon('alpha-b-circle');
+                name = page.heading;
+                
                 if ((getState(id + '.ALBUM').val).length > 0) {
                     author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                     if (author.length > 37) {
@@ -5198,7 +5245,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             } else if (v2Adapter == 'sonos') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.members'].join(''))).val;
             } else if (v2Adapter == 'squeezeboxrpc') {
-                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
+            } else if (v2Adapter == 'bosesoundtouch') {
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'deviceInfo.name'].join(''))).val;
             }
             //-------------------------------------------------------------------------------------------------------------
             // All Alexa devices (the online / player and commands directory is available) are listed and linked below
@@ -5400,6 +5449,14 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                     repeatIcon = Icons.GetIcon('repeat-once');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
+            } else if (v2Adapter == 'bosesoundtouch') {
+                if (getState(id + '.REPEAT').val == 'REPEAT_ALL') {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == 'REPEAT_ONE') {
+                    repeatIcon = Icons.GetIcon('repeat-once');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
             } else if (v2Adapter == 'squeezeboxrpc') {
                 if (getState(id + '.REPEAT').val == 1) {
                     repeatIcon = Icons.GetIcon('repeat-once');
@@ -5418,7 +5475,12 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                 }
             }
 
-            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'volumio' || v2Adapter == 'squeezeboxrpc') {
+            if (v2Adapter == 'spotify-premium' || 
+                v2Adapter == 'alexa2'          || 
+                v2Adapter == 'sonos'           || 
+                v2Adapter == 'bosesoundtouch'  || 
+                v2Adapter == 'volumio'         || 
+                v2Adapter == 'squeezeboxrpc') {
                 repeatButtonString =    'button' + '~' + 
                                         id + '?repeat' + '~' + 
                                         repeatIcon + '~' + 
@@ -6370,6 +6432,18 @@ function HandleButtonEvent(words: any): void {
                                             }
                                             GeneratePage(activePage!);
                                             break;
+                                        case 'bosesoundtouch':
+                                            log(adapterInstanceRepeat);
+                                            let stateBoseRepeat = getState(id + '.REPEAT').val
+                                            if (stateBoseRepeat == 'REPEAT_OFF') {
+                                                setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ALL');
+                                            } else if (stateBoseRepeat == 'REPEAT_ALL') {
+                                                setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ONE');
+                                            } else if (stateBoseRepeat == 'REPEAT_ONE') {
+                                                setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_OFF');
+                                            }
+                                            GeneratePage(activePage!);
+                                            break;
                                         case 'sonos':
                                             let stateSonosRepeat = getState(id + '.REPEAT').val
                                             if (stateSonosRepeat == 0) {
@@ -6632,6 +6706,14 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(id + '.SHUFFLE', false);
                         }
                     }
+                    if ((tempPage.adapterPlayerInstance).startsWith("bosesoundtouch")) {
+                        log(tempPage.adapterPlayerInstance);
+                        if (getState(tempPage.adapterPlayerInstance + '.SHUFFLE').val == false) {
+                            setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_ON');
+                        } else {
+                            setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_OFF');
+                        }
+                    }
                     GeneratePage(activePage!);
                 }
                 break;
@@ -6741,9 +6823,12 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
                     case "bosesoundtouch":
+                        log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
+                        log(adapterInstancePL +  'key');
+                        setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
                         break;
                     default:
-                        log('Hello Mr. Developer u miss in mode-playlist something!', 'warn')
+                        log('Hello Mr. Developer u miss in mode-playlist something!', 'warn');
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -6792,7 +6877,7 @@ function HandleButtonEvent(words: any): void {
                     case "bosesoundtouch":
                         break;
                     default:
-                        log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn')
+                        log('Hello Mr. Developer u miss in mode-tracklist something!', 'warn');
                 }
                 pageCounter = 0;
                 GeneratePage(activePage!);
@@ -7958,6 +8043,10 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                                     //Todo Richtiges Device finden
                                     actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
                                 }
+                            } else if (vAdapter == 'bosesoundtouch') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'deviceInfo.name')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'deviceInfo.name').val);
+                                }
                             } else if (vAdapter == 'squeezeboxrpc') {
                                 actualState = pageItem.mediaDevice;
                             }
@@ -7991,6 +8080,16 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                                 let tempPlayList: string[] = [];
                                 for (let i = 0; i < tPlayList.length; i++) {
                                     tempPlayList[i] = formatInSelText(tPlayList[i]);
+                                }
+                                optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
+                            } else if (vAdapter == 'bosesoundtouch') {
+                                if (existsObject(pageItem.adapterPlayerInstance + 'deviceInfo.name')) {
+                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'deviceInfo.name').val);
+                                    log(actualState);
+                                }
+                                let tempPlayList: string[] = [];
+                                for (let i = 0; i < pageItem.playList!.length; i++) {
+                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
                                 }
                                 optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                             } else if (vAdapter == 'sonos') {
