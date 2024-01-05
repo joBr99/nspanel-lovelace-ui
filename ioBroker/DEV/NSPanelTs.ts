@@ -102,6 +102,7 @@ ReleaseNotes:
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
 	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
+ 	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
