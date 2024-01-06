@@ -5220,7 +5220,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
 
-            if (shuffle == 'off' || shuffle == false || shuffle == 0) {
+            if (shuffle == 'off' || shuffle == false || shuffle == 0 || shuffle == 'false') {
                 shuffle_icon = Icons.GetIcon('shuffle-disabled'); //shuffle
             }
             if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('refresh'); } //Volumio: refresh playlist
@@ -6451,7 +6451,7 @@ function HandleButtonEvent(words: any): void {
                                             GeneratePage(activePage!);
                                             break;
                                         case 'bosesoundtouch':
-                                            log(adapterInstanceRepeat);
+                                            if (Debug) log(adapterInstanceRepeat);
                                             let stateBoseRepeat = getState(id + '.REPEAT').val
                                             if (stateBoseRepeat == 'REPEAT_OFF') {
                                                 setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ALL');
@@ -6661,10 +6661,18 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.SET', parseInt(temps[0]) / 10);
                 }
                 break;
-            case 'media-back':
-                setIfExists(id + '.PREV', true);
-                GeneratePage(activePage!);
+            case 'media-back': {
+                const tempPage = findPageItem(id);
+                if (isPageMediaItem(tempPage)) {
+                    if (tempPage.adapterPlayerInstance.startsWith('bosesoundtouch')) {
+                        setIfExists(tempPage.adapterPlayerInstance + 'key', 'PREV_TRACK');
+                    } else {
+                        setIfExists(id + '.PREV', true);    
+                    }
+                    GeneratePage(activePage!);
+                }
                 break;
+            }
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
                 if (isPageMediaItem(pageItemTemp)) {
@@ -6680,6 +6688,8 @@ function HandleButtonEvent(words: any): void {
                         } else if (stateVal == null) {
                             setState(adapterPlayerInstanceStateSeceltor, 1);
                         }
+                    } else if (pageItemTemp.adapterPlayerInstance.startsWith('bosesoundtouch')) {
+                        setIfExists(pageItemTemp.adapterPlayerInstance + 'key', 'PLAY_PAUSE');
                     } else {
                         if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
                         if (getState(id + '.STATE').val === true) {
@@ -6691,11 +6701,19 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage!);
                 }
                 break;
-            case 'media-next':
-                setIfExists(id + '.NEXT', true);
-                GeneratePage(activePage!);
+            case 'media-next': {
+                const tempPage = findPageItem(id);
+                if (isPageMediaItem(tempPage)) {
+                    if (tempPage.adapterPlayerInstance.startsWith('bosesoundtouch')) {
+                        setIfExists(tempPage.adapterPlayerInstance + 'key', 'NEXT_TRACK');
+                    } else {
+                        setIfExists(id + '.NEXT', true);    
+                    }
+                    GeneratePage(activePage!);
+                }
                 break;
-            case 'media-shuffle':
+            }
+            case 'media-shuffle': {
                 const tempPage = findPageItem(id);
                 if (isPageMediaItem(tempPage)) {
                     if (tempPage.adapterPlayerInstance.startsWith("volumio")) {
@@ -6725,8 +6743,8 @@ function HandleButtonEvent(words: any): void {
                         }
                     }
                     if ((tempPage.adapterPlayerInstance).startsWith("bosesoundtouch")) {
-                        log(tempPage.adapterPlayerInstance);
-                        if (getState(tempPage.adapterPlayerInstance + '.SHUFFLE').val == false) {
+                        if (Debug) log(tempPage.adapterPlayerInstance + 'nowPlaying.shuffle');
+                        if (getState(tempPage.adapterPlayerInstance + 'nowPlaying.shuffle').val == 'false') {
                             setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_ON');
                         } else {
                             setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_OFF');
@@ -6735,6 +6753,7 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage!);
                 }
                 break;
+            }
             case 'volumeSlider':
                 pageCounter = -1;
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
@@ -6841,8 +6860,8 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
                     case "bosesoundtouch":
-                        log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
-                        log(adapterInstancePL +  'key');
+                        if (Debug) log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
+                        if (Debug) log(adapterInstancePL +  'key');
                         setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
                         break;
                     default:
@@ -8012,29 +8031,6 @@ function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined
                         if (optional == 'seek') {
                             const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
                             actualState = Math.round(actualStateTemp / 10) * 10 + '%';
-                            /*if (actualStateTemp >= 95) {
-                                actualState = '100%';
-                            } else if (actualStateTemp >= 85) {
-                                actualState = '90%';
-                            } else if (actualStateTemp >= 75) {
-                                actualState = '80%';
-                            } else if (actualStateTemp >= 65) {
-                                actualState = '70%';
-                            } else if (actualStateTemp >= 55) {
-                                actualState = '60%';
-                            } else if (actualStateTemp >= 45) {
-                                actualState = '50%';
-                            } else if (actualStateTemp >= 35) {
-                                actualState = '40%';
-                            } else if (actualStateTemp >= 25) {
-                                actualState = '30%';
-                            } else if (actualStateTemp >= 15) {
-                                actualState = '20%';
-                            } else if (actualStateTemp >= 5) {
-                                actualState = '10%';
-                            } else if (actualStateTemp >= 0) {
-                                actualState = '0%';
-                            }*/
                             if (vAdapter == 'sonos') {
                                 optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
@@ -8104,11 +8100,17 @@ function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined
                             } else if (vAdapter == 'bosesoundtouch') {
                                 if (existsObject(pageItem.adapterPlayerInstance + 'deviceInfo.name')) {
                                     actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'deviceInfo.name').val);
-                                    log(actualState);
                                 }
                                 let tempPlayList: string[] = [];
-                                for (let i = 0; i < pageItem.playList!.length; i++) {
-                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                let vPreset: string = 'No Entry';
+                                for (let i = 1; i < 7; i++) {
+                                    if (getState(pageItem.adapterPlayerInstance + 'presets.'+ i +'.source').val !== null) {
+                                        vPreset = getState(pageItem.adapterPlayerInstance + 'presets.'+ i + '.source').val;
+                                    } else {
+                                        vPreset = 'Preset ' + i.toFixed;
+                                    }
+                                    tempPlayList[i - 1] = formatInSelText(vPreset.replace('_',' '));
+                                    if (Debug) log(formatInSelText(vPreset.replace('_',' ')))
                                 }
                                 optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                             } else if (vAdapter == 'sonos') {
