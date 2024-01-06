@@ -542,6 +542,7 @@ let NSPanel_Service_SubPage: PageType =
                         /*PageItem*/{ id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
                         /*PageItem*/{ id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
                         /*PageItem*/{ id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.ScriptName', name: findLocaleServMenu('scriptname'), offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -1039,7 +1040,18 @@ async function CheckConfigParameters() {
             log('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> is not reachable. Please Check Parameters!','error');
         }
         if (existsObject(config.panelSendTopic) == false) {
-            log('Config-Parameter: << config.panelSendTopic - ' + config.panelSendTopic + ' >> is not reachable. Please Check Parameters!','error');
+            const n = config.panelSendTopic.split('.');
+            const a = n.shift();
+            const i = n.shift();
+            
+            if (a === 'mqtt' && !isNaN(Number(i))) {
+                sendTo(`${a}.${i}`, 'sendMessage2Client', {topic: n.join('/'), message: 'time~12:00'});
+                await sleep(500);
+            }
+            if (await existsObjectAsync(config.panelSendTopic) == false) {
+                log('Config-Parameter: << config.panelSendTopic - ' + config.panelSendTopic + ' >> is not reachable. Please Check Parameters!','error');
+                stopScript(scriptName);
+            }
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'daswetter') {
             if (existsObject(weatherAdapterInstance + 'NextHours.Location_1.Day_1.current.symbol_value') == false)  {
@@ -1064,6 +1076,7 @@ async function CheckConfigParameters() {
                 if (common.name == 'javascript') {
                     javaScriptVersion = common.version;
                     setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion);
+                    setIfExists(NSPanel_Path + 'IoBroker.ScriptName', (name as unknown as string).split('.').slice(2).join('.'));
                     let jsVersion = common.version.split('.');
                     let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
                     if (jsV<61) log('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version, 'error');
@@ -1116,6 +1129,10 @@ async function InitIoBrokerInfo() {
             await createStateAsync(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion, { type: 'string' });
             setObject(AliasPath + 'IoBroker.JavaScriptVersion', {type: 'channel', common: {role: 'info', name:'Version JavaScript Instanz'}, native: {}});
             await createAliasAsync(AliasPath + 'IoBroker.JavaScriptVersion.ACTUAL', NSPanel_Path + 'IoBroker.JavaScriptVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+            // ScriptName
+            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptName', 'v' + javaScriptVersion, { type: 'string' });
+            setObject(AliasPath + 'IoBroker.ScriptName', {type: 'channel', common: {role: 'info', name:'Scriptname'}, native: {}});
+            await createAliasAsync(AliasPath + 'IoBroker.ScriptName.ACTUAL', NSPanel_Path + 'IoBroker.ScriptName', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
         }
         setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
     } catch (err: any) {
@@ -2204,7 +2221,7 @@ let scheduleSendDate = schedule('0 * * * *', () => {
 
 // 3:30 a.m. Perform startup and receive current TFT version
 let scheduleStartup = schedule({ hour: 3, minute: 30 }, async () => {
-    await setStateAsync(config.panelSendTopic, 'pageType~pageStartup');
+    setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 });
 
 // Updates currently compare every 12 hours
@@ -2217,7 +2234,7 @@ let scheduleCheckUpdates = schedule('{"time":{"start":"00:00","end":"23:59","mod
 // Check for updates with Start
 get_locales();
 get_locales_servicemenu();
-setState(config.panelSendTopic, 'pageType~pageStartup');
+setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 get_tasmota_status0();
 get_panel_update_data();
 check_updates();
@@ -2326,7 +2343,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt', 'info');
+                        log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt', 'info');
 
                         // Perform Tasmota upgrade
                         update_tasmota_firmware();
@@ -2354,7 +2371,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) log('Auto-updates switched on - Berry driver update is carried out', 'info');
+                        log('Auto-updates switched on - Berry driver update is carried out', 'info');
 
                         // Tasmota Berry-Driver Update durchführen
                         update_berry_driver_version();
@@ -2384,7 +2401,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) log('Auto-updates switched on - update TFT firmware is carried out', 'info');
+                        log('Auto-updates switched on - update TFT firmware is carried out', 'info');
 
                         // TFT-Firmware Update durchführen
                         update_tft_firmware();
@@ -2951,13 +2968,13 @@ async function SendToPanel(val: Payload | Payload[]) {
     try {
         if (Array.isArray(val)) {
             val.forEach(function (id) {
-                setStateAsync(config.panelSendTopic, id.payload);
+                setIfExists(config.panelSendTopic, id.payload);
                 if (Debug) {
                     log('function SendToPanel payload: ' + id.payload, 'info');
                 }
             });
         } else {
-            setState(config.panelSendTopic, val.payload);
+            setIfExists(config.panelSendTopic, val.payload);
         }
 
     } catch (err: any) {
@@ -3021,7 +3038,7 @@ function HandleMessage(typ: string, method: EventMethod, page: number | undefine
                             tempId = tempPageItem[0];
                         }
                         let pageItem: PageItem = findPageItem(tempId);
-                        if (pageItem !== undefined) {
+                        if (pageItem !== undefined && isPopupType(words[2])) {
                             let temp: string | mediaOptional | undefined = tempPageItem[1]
                             if (isMediaOptional(temp)) SendToPanel(GenerateDetailPage(words[2], temp, pageItem, placeId));
                             else SendToPanel(GenerateDetailPage(words[2], undefined, pageItem, placeId));
@@ -4191,7 +4208,7 @@ function RegisterEntityWatcher(id: string): void {
     }
 }
 
-function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string, placeId: number | undefined): void {
+function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: PopupType, placeId: number | undefined): void {
     try {
         if (subscriptions.hasOwnProperty(id)) {
             return;
@@ -4713,7 +4730,7 @@ function subscribeMediaSubscriptionsBoseAdd(id: string): void {
 
 async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: adapterPlayerInstanceType) {
     if (autoCreateAlias) {
-        if (isSetOptionActive) {
+        if (isSetOptionActive) {       
             switch (adapterPlayerInstance) {
                 case "alexa2.0.":
                 case "alexa2.1.":
@@ -7300,7 +7317,7 @@ function GetNavigationString(pageId: number): string {
     }
     return '';
 }
-function GenerateDetailPage(type: string, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
+function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
         let out_msgs: Array<Payload> = [];
@@ -7968,7 +7985,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                     let actualMode = pageItem.modeList![getState(id + '.MODE').val];
 
                     let tempId = placeId != undefined ? placeId : id;
-
+                    // {tempid | icon | iconColor | switchVal | actualSpeed | maxSpeed: | findLocale | actualMode | modeList}
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'     // entityUpdateDetail
                             + tempId + '~'
@@ -7988,13 +8005,14 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 if (role == 'media') {
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
-                    let mode: string = '';
+                    let mode: mediaOptional | '' = '';
                     if (isPageMediaItem(pageItem)) {
                         const vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
                         const vAdapter: PlayerType = vTempAdapter[0] as PlayerType;
                         if (optional == 'seek') {
-                            let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
-                            if (actualStateTemp >= 95) {
+                            const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
+                            actualState = Math.round(actualStateTemp / 10) * 10 + '%';
+                            /*if (actualStateTemp >= 95) {
                                 actualState = '100%';
                             } else if (actualStateTemp >= 85) {
                                 actualState = '90%';
@@ -8016,7 +8034,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                                 actualState = '10%';
                             } else if (actualStateTemp >= 0) {
                                 actualState = '0%';
-                            }
+                            }*/
                             if (vAdapter == 'sonos') {
                                 optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
@@ -8215,7 +8233,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                         }
 
                         let tempId = placeId != undefined ? placeId : id;
-
+                        // {tempid | color | mediaOptional | actualState | optionalString}
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
                                 + tempId + '?' + optional + '~~'         //{entity_id}
@@ -8244,7 +8262,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                     let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
                     let tempId = placeId != undefined ? placeId : id;
-
+                    // {tempid | color | mediaOptional | actualValue | valueList}
                     out_msgs.push({
                         payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
                             + tempId + '~~'                          //{entity_id}
@@ -8280,7 +8298,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
 
                         //log(valueList);
                         let tempId = placeId != undefined ? placeId : id;
-
+                        // {tempid | color | 'insel' | actualValue | valueList}
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
                                 + tempId + '~~'                          //{entity_id}
@@ -8673,10 +8691,8 @@ function HandleScreensaverUpdate(): void {
             if (screensaverAdvanced) {
                 // 5 indicatorScreensaverEntities     
                 for (let i = 0; i < 5 && i < config.indicatorScreensaverEntity.length; i++) {
-                    let checkpoint = true;
                     const indicatorScreensaverEntity:ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
                     if (indicatorScreensaverEntity === null || indicatorScreensaverEntity === undefined) {
-                        checkpoint = false;
                         break;
                     }
                     RegisterScreensaverEntityWatcher(indicatorScreensaverEntity.ScreensaverEntity)
@@ -9563,8 +9579,9 @@ function rgb_to_cie(red: number, green: number, blue: number): string
 
    return cie;
 }
+
 /**
- * 
+ *
  * @param vDeviceString 
  * @returns 
  */
@@ -9577,6 +9594,9 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
+type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer' 
+
+
 
 type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
 
@@ -9625,7 +9645,7 @@ type PageBaseType = {
     homeIconColor?: RGB
 };
 
-type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower'
+type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower' //| 'cardBurnRec'
 
 type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower
 
@@ -9715,6 +9735,14 @@ type PageThermoItem = {
     popUpThermoName?: string[],
     setThermoAlias?: string[],
     setThermoDestTemp2?: string,
+} & PageBaseItem |
+{
+    popupThermoMode1?: string[],
+    popupThermoMode2?: string[],
+    popupThermoMode3?: string[],
+    popUpThermoName?: string[],
+    setThermoAlias?: string[],
+    setThermoDestTemp2?: string,
 } & PageBaseItem
 
 type PageBaseItem = {
@@ -9796,7 +9824,7 @@ type Config = {
     button2: ConfigButtonFunction
 }
 type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
-type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
 type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
 type ScreenSaverElement = {
     ScreensaverEntity: string,
@@ -9889,6 +9917,23 @@ function isEventMethod(F: string | EventMethod): F is EventMethod {
         default:
             // Have to talk about this.
             log(`Please report to developer: Unknown EventMethod: ${F} `, 'warn');
+            return false;
+    }
+}
+
+function isPopupType(F: PopupType | string): F is PopupType {
+    switch(F as PopupType) {
+        case "popupFan":
+        case "popupInSel":
+        case "popupLight":
+        case "popupLightNew":
+        case "popupNotify":
+        case "popupShutter":
+        case "popupThermo":
+        case "popupTimer":
+            return true;
+        default:
+            log(`Please report to developer: Unknown PopupType: ${F} `, 'warn');
             return false;
     }
 }
