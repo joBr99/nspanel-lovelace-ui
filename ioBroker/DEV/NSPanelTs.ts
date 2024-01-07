@@ -9606,10 +9606,22 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
+
 type RGB = NSPanel.RGB;
 type PageItem = NSPanel.PageItem;
 type PageType = NSPanel.PageType;
 type Config = NSPanel.Config;
+type PageEntities = NSPanel.PageEntities;
+type PageChart = NSPanel.PageChart;
+type PagePower = NSPanel.PagePower;
+type PageGrid = NSPanel.PageGrid;
+type PageQR = NSPanel.PageQR;
+type PageGrid2 = NSPanel.PageGrid2;
+type PageMedia = NSPanel.PageMedia;
+type PageThermo = NSPanel.PageThermo;
+type PageUnlock = NSPanel.PageUnlock;
+type PageAlarm = NSPanel.PageAlarm;
+
 
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const
 const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const
