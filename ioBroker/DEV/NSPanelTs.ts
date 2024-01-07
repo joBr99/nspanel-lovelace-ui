@@ -1557,7 +1557,9 @@ on({id: AliasPath + 'Config.rebootNSPanel.SET', change: "any"}, async function (
                     }
                 })
                 .catch(function (error) {
-                    log(error, 'warn');
+                    if (error.code === 'EHOSTUNREACH') {
+                        log(`Can't connect to display!`, 'warn')
+                    } else log(error, 'warn');
                 })
                 .finally(function () {
                     if (Debug) {
@@ -1727,7 +1729,9 @@ on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], cha
                 }
             })
             .catch(function (error) {
-                log(error, 'warn');
+                if (error.code === 'EHOSTUNREACH') {
+                    log(`Can't connect to display!`, 'warn')
+                } else log(error, 'warn');
             })
             
     } catch (err: any) { 
@@ -2124,7 +2128,9 @@ async function InitPopupNotify() {
                         }
                     })
                     .catch(function (error) {
-                        log(error, 'warn');
+                        if (error.code === 'EHOSTUNREACH') {
+                            log(`Can't connect to display!`, 'warn')
+                        } else log(error, 'warn');
                     });
             } else {
                 if (Debug){
@@ -2591,7 +2597,9 @@ function get_current_berry_driver_version() {
                 }
             })
             .catch(function (error) {
-                log(error, 'warn');
+                if (error.code === 'EHOSTUNREACH') {
+                    log(`Can't connect to display!`, 'warn')
+                } else log(error, 'warn');
             });
 
     } catch (err: any) {
@@ -2681,7 +2689,9 @@ function get_tasmota_status0() {
                 }
             })
             .catch(function (error) {
-                log(error, 'warn');
+                if (error.code === 'EHOSTUNREACH') {
+                    log(`Can't connect to display!`, 'warn')
+                } else log(error, 'error');
             });
             
     } catch (err: any) {
