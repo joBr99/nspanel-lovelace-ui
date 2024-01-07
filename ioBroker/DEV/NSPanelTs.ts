@@ -514,7 +514,7 @@ let NSPanel_Service_SubPage: PageType =
                     ]
                 };
 
-                let NSPanel_Hardware: PageEntities = 
+                let NSPanel_Hardware: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('hardware2'),
@@ -1847,7 +1847,7 @@ on({id: [NSPanel_Path + 'PageNavi'], change: "any"}, async function (obj) {
 });
 
 //----------------------Begin Dimmode
-function ScreensaverDimmode(timeDimMode: DimMode) {
+function ScreensaverDimmode(timeDimMode:NSPanel.DimMode) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
         let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
@@ -1861,12 +1861,12 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 if (Debug) {
-                    log('function ScreensaverDimmode -> Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
+                    log('function ScreensaverDimmode -> Day NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
                 }
             } else {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 if (Debug) {
-                    log('function ScreensaverDimmode -> Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
+                    log('function ScreensaverDimmode -> Night NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
                 }
             }
         } else {
@@ -1941,7 +1941,7 @@ async function InitDimmode() {
             }
             const vTimeDay = getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val;
             const vTimeNight = getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val;
-            const timeDimMode: DimMode = {
+            const timeDimMode: NSPanel.DimMode = {
                 dimmodeOn: true,
                 brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
                 brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
@@ -2974,7 +2974,7 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
 //------------------End Update Functions
 
-async function SendToPanel(val: Payload | Payload[]) {
+async function SendToPanel(val: NSPanel.Payload | NSPanel.Payload[]) {
     try {
         if (Array.isArray(val)) {
             val.forEach(function (id) {
@@ -3007,10 +3007,10 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     }
 });
 
-function HandleMessage(typ: string, method: EventMethod, page: number | undefined, words: Array<string> | undefined): void {
+function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | undefined, words: Array<string> | undefined): void {
     try {
         if (typ == 'event') {
-            switch (method as EventMethod) {
+            switch (method as NSPanel.EventMethod) {
                 case 'startup':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
@@ -3049,7 +3049,7 @@ function HandleMessage(typ: string, method: EventMethod, page: number | undefine
                         }
                         let pageItem: PageItem = findPageItem(tempId);
                         if (pageItem !== undefined && isPopupType(words[2])) {
-                            let temp: string | mediaOptional | undefined = tempPageItem[1]
+                            let temp: string | NSPanel.mediaOptional | undefined = tempPageItem[1]
                             if (isMediaOptional(temp)) SendToPanel(GenerateDetailPage(words[2], temp, pageItem, placeId));
                             else SendToPanel(GenerateDetailPage(words[2], undefined, pageItem, placeId));
                         }
@@ -3156,9 +3156,9 @@ function GeneratePage(page: PageType): void {
     }
 }
 
-function HandleHardwareButton(method: EventMethod): void {
+function HandleHardwareButton(method: NSPanel.EventMethod): void {
     try {
-        let buttonConfig: ConfigButtonFunction = config[method];
+        let buttonConfig: NSPanel.ConfigButtonFunction = config[method];
         if(buttonConfig.mode === null) {
             return;
         }
@@ -3212,7 +3212,7 @@ function SendDate(): void {
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
             const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
-            SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
+            SendToPanel(<NSPanel.Payload>{ payload: 'date~' + _SendDate });
         }
     } catch (err: any) {
         if (err.message = 'Cannot convert undefined or null to object') {
@@ -3229,15 +3229,15 @@ function SendTime(): void {
         const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
-        SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
+        SendToPanel(<NSPanel.Payload>{ payload: 'time~' + hr + ':' + min });
     } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
 }
 
-function GenerateEntitiesPage(page: PageEntities): Payload[] {
+function GenerateEntitiesPage(page: NSPanel.PageEntities): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<Payload>;
+        let out_msgs: Array<NSPanel.Payload>;
         out_msgs = [{ payload: 'pageType~cardEntities' }]
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
@@ -3247,9 +3247,9 @@ function GenerateEntitiesPage(page: PageEntities): Payload[] {
     }
 }
 
-function GenerateGridPage(page: PageGrid): Payload[] {
+function GenerateGridPage(page: NSPanel.PageGrid): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid' }];
+        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -3258,9 +3258,9 @@ function GenerateGridPage(page: PageGrid): Payload[] {
     }
 }
 
-function GenerateGridPage2(page: PageGrid2): Payload[] {
+function GenerateGridPage2(page: NSPanel.PageGrid2): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid2' }];
+        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid2' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -3335,7 +3335,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
         let name: string;
         let buttonText: string = 'PRESS';
-        let type: SerialType;
+        let type: NSPanel.SerialType;
 
         // ioBroker
         if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
@@ -3408,8 +3408,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 } else if (pageItem.id != null && pageItem.targetPage != undefined) {
  
                     type = 'button';
-                    const role = o.common.role as roles;
-                    switch (role as roles) {
+                    const role = o.common.role as NSPanel.roles;
+                    switch (role) {
                         case 'socket':
                         case 'light':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
@@ -3593,8 +3593,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
                 }
             }
-            const role = o.common.role as roles
-            switch (role as roles) {
+            const role = o.common.role as NSPanel.roles
+            switch (role) {
                 case 'socket':
                 case 'light':
                     type = 'light';
@@ -4218,7 +4218,7 @@ function RegisterEntityWatcher(id: string): void {
     }
 }
 
-function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: PopupType, placeId: number | undefined): void {
+function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: NSPanel.PopupType, placeId: number | undefined): void {
     try {
         if (subscriptions.hasOwnProperty(id)) {
             return;
@@ -4255,11 +4255,11 @@ function GetUnitOfMeasurement(id: string): string {
     }
 }
 
-function GenerateThermoPage(page: PageThermo): Payload[] {
+function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
     try {
         UnsubscribeWatcher();
         let id = page.items[0].id
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
         
         // ioBroker
@@ -4304,7 +4304,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
-                switch (o.common.role as roles) {
+                switch (o.common.role as NSPanel.roles) {
                     case 'thermostat': {
 
                         if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
@@ -4738,7 +4738,7 @@ function subscribeMediaSubscriptionsBoseAdd(id: string): void {
     });
 } 
 
-async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: adapterPlayerInstanceType) {
+async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: NSPanel.adapterPlayerInstanceType) {
     if (autoCreateAlias) {
         if (isSetOptionActive) {       
             switch (adapterPlayerInstance) {
@@ -4988,19 +4988,19 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
     }
 }
 
-function GenerateMediaPage(page: PageMedia): Payload[] {
+function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
     try {
         unsubscribeMediaSubscriptions();
 
         if (!page.items[0].id) throw new Error ('Missing page id for cardMedia!');
 
         let id = page.items[0].id;
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
-        let v2Adapter:PlayerType = v1Adapter[0] as PlayerType;
+        let v2Adapter:NSPanel.PlayerType = v1Adapter[0] as NSPanel.PlayerType;
         
         // Some magic to change the ID of the alias, since speakers are not a property but separate objects
         if(v2Adapter == 'squeezeboxrpc') {
@@ -5604,14 +5604,14 @@ async function createAutoAlarmAlias (id: string, nsPath: string){
     }
 }
 
-function GenerateAlarmPage(page: PageAlarm): Payload[] {
+function GenerateAlarmPage(page: NSPanel.PageAlarm): NSPanel.Payload[] {
     try {
         activePage = page;
         
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
@@ -5631,7 +5631,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
-            let arm1ActionName: ButtonActionType | '', arm2ActionName: ButtonActionType | '', arm3ActionName: ButtonActionType | '', arm4ActionName: ButtonActionType | '';
+            let arm1ActionName: NSPanel.ButtonActionType | '', arm2ActionName: NSPanel.ButtonActionType | '', arm3ActionName: NSPanel.ButtonActionType | '', arm4ActionName: NSPanel.ButtonActionType | '';
             let icon = '0';
             let iconcolor = 63488;
             let numpadStatus = 'disable';
@@ -5763,13 +5763,13 @@ async function createAutoUnlockAlias(id: string, dpPath: string) {
     
 }
 
-function GenerateUnlockPage(page: PageUnlock): Payload[] {
+function GenerateUnlockPage(page: NSPanel.PageUnlock): NSPanel.Payload[] {
     try {
         activePage = page;
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
 
         let dpPath : string = ''
@@ -5785,7 +5785,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
         }
 
         let unlock1 = findLocale('lock', 'UNLOCK');                     //unlock1*~*
-        let unlock1ActionName: ButtonActionType | '' = 'U1';                                   //unlock1ActionName*~*
+        let unlock1ActionName: NSPanel.ButtonActionType | '' = 'U1';                                   //unlock1ActionName*~*
 
         let iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
         let icon = Icons.GetIcon('lock-remove');                        //iconcolor*~*
@@ -5845,12 +5845,12 @@ async function createAutoQRAlias(id:string, dpPath:string) {
     } 
 }
 
-function GenerateQRPage(page: PageQR): Payload[] {
+function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
     try {
         activePage = page;
         if (!page.items[0].id) throw new Error ('Missing pageItem.id for cardQRPage!');
         let id = page.items[0].id;
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
 
         let dpPath : string = ''
@@ -5963,7 +5963,7 @@ function subscribePowerSubscriptions(id: string): void {
     });
 } 
 
-function GeneratePowerPage(page: PagePower): Payload[] {
+function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     try {
 
         if (!page.items[0].id) throw new Error ('Missing pageItem.id for PowerPage!');
@@ -5991,7 +5991,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
         }
         
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardPower' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
@@ -6085,12 +6085,12 @@ function GeneratePowerPage(page: PagePower): Payload[] {
     }
 }
 
-function GenerateChartPage(page: PageChart): Payload[] {
+function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     try {
         activePage = page;
 
         let id = page.items[0].id;
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~' + page.type });
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
@@ -6185,7 +6185,7 @@ function HandleButtonEvent(words: any): void {
 
         let tempid = words[2].split('?');
         let id = tempid[0];
-        let buttonAction: ButtonActionType = words[3] as ButtonActionType;
+        let buttonAction: NSPanel.ButtonActionType = words[3] as NSPanel.ButtonActionType;
         let pageItemID: string = '';
 
         if (!isNaN(id)) {
@@ -6364,8 +6364,8 @@ function HandleButtonEvent(words: any): void {
                     if (Debug) {
                         log('HandleButtonEvent -> OnOff: ' + words[4] + ' - ' + id + ' - Role - ' + o.common.role, 'info')
                     }
-                    const role = o.common.role as roles;
-                    switch (role as roles) {
+                    const role = o.common.role as NSPanel.roles;
+                    switch (role) {
                         case 'level.mode.fan':
                         case 'socket':
                         case 'light':
@@ -6401,7 +6401,7 @@ function HandleButtonEvent(words: any): void {
                     if (words[4] == '1')
                         action = true;
                     let o = getObject(id);
-                    switch (o.common.role as roles) {
+                    switch (o.common.role as NSPanel.roles) {
                         case 'lock':
                         case 'button':
                             toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
@@ -6446,7 +6446,7 @@ function HandleButtonEvent(words: any): void {
                                 if (isPageMediaItem(pageItemRepeat)) {
                                     let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
                                     let adapterRepeat = adapterInstanceRepeat.split('.');
-                                    const deviceAdapterRP: PlayerType = adapterRepeat[0] as PlayerType;
+                                    const deviceAdapterRP: NSPanel.PlayerType = adapterRepeat[0] as NSPanel.PlayerType;
                                     
                                     switch (deviceAdapterRP) {
                                         case 'spotify-premium':
@@ -6587,8 +6587,8 @@ function HandleButtonEvent(words: any): void {
                     if (existsObject(id)) {
                         let o = getObject(id);
                         let pageItem = findPageItem(id);
-                        const role = o.common.role as roles;
-                        switch (role as roles) {
+                        const role = o.common.role as NSPanel.roles;
+                        switch (role) {
                             case 'dimmer':
                                 if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
                                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness));
@@ -6634,7 +6634,7 @@ function HandleButtonEvent(words: any): void {
                     log('HandleButtonEvent colorWeel -> getHue-Werte: ' + getHue(rgb.red, rgb.green, rgb.blue), 'info');
                 }
                 let o = getObject(id);
-                switch (o.common.role as roles) {
+                switch (o.common.role as NSPanel.roles) {
                     case 'hue':
                         setIfExists(id + '.HUE', getHue(rgb.red, rgb.green, rgb.blue));
                         break;
@@ -6780,7 +6780,7 @@ function HandleButtonEvent(words: any): void {
                 if (isPageMediaItem(pageItem)) {
                     let adapterInstance = pageItem.adapterPlayerInstance!;
                     let adapter = adapterInstance!.split('.');
-                    const deviceAdapter: PlayerType = adapter[0] as PlayerType;
+                    const deviceAdapter: NSPanel.PlayerType = adapter[0] as NSPanel.PlayerType;
 
                     switch (deviceAdapter) {
                         case 'spotify-premium':
@@ -6826,7 +6826,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemPL)) break;
                 let adapterInstancePL = pageItemPL.adapterPlayerInstance!;
                 let adapterPL = adapterInstancePL.split('.');
-                const deviceAdapterPL: PlayerType = adapterPL[0] as PlayerType;
+                const deviceAdapterPL: NSPanel.PlayerType = adapterPL[0] as NSPanel.PlayerType;
 
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
@@ -6889,7 +6889,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemTL)) break;
                 let adapterInstanceTL = pageItemTL.adapterPlayerInstance!;
                 let adapterTL = adapterInstanceTL.split('.');
-                const deviceAdapterTL: PlayerType = adapterTL[0] as PlayerType;
+                const deviceAdapterTL: NSPanel.PlayerType = adapterTL[0] as NSPanel.PlayerType;
 
                 switch (deviceAdapterTL) {
                     case 'spotify-premium':
@@ -6938,7 +6938,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemRP)) break;
                 let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
-                let deviceAdapterRP: PlayerType = adapterRP[0] as PlayerType;
+                let deviceAdapterRP: NSPanel.PlayerType = adapterRP[0] as NSPanel.PlayerType;
 
                 if (Debug) log(pageItemRP.repeatList![words[4]], 'warn');
                 switch (deviceAdapterRP) {
@@ -6969,7 +6969,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemSeek)) break;
                 let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
-                let deviceAdapterSK: PlayerType = adapterSK[0] as PlayerType;
+                let deviceAdapterSK: NSPanel.PlayerType = adapterSK[0] as NSPanel.PlayerType;
                 switch (deviceAdapterSK) {
                     case 'spotify-premium':
                         break;
@@ -6990,7 +6990,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemCrossfade)) break;
                 let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
-                let deviceAdapterCF: PlayerType = adapterCF[0] as PlayerType;
+                let deviceAdapterCF: NSPanel.PlayerType = adapterCF[0] as NSPanel.PlayerType;
                 switch (deviceAdapterCF) {
                     case 'spotify-premium':
                         break;
@@ -7139,7 +7139,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'number-set':
                 let nobj = getObject(id);
-                switch (nobj.common.role as roles) {
+                switch (nobj.common.role as NSPanel.roles) {
                     case 'level.mode.fan':
                         (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                         timeoutSlider = setTimeout(async function () {
@@ -7346,10 +7346,10 @@ function GetNavigationString(pageId: number): string {
     }
     return '';
 }
-function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
+function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): NSPanel.Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         let id = pageItem.id;
 
         if (id && existsObject(id)) {
@@ -7358,7 +7358,7 @@ function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined
             let val: (boolean | number) = 0;
             let icon = Icons.GetIcon('lightbulb');
             let iconColor = rgb_dec565(config.defaultColor);
-            const role = o.common.role as roles;
+            const role = o.common.role as NSPanel.roles;
 
             if (type == 'popupLight') {
 
@@ -8034,10 +8034,10 @@ function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined
                 if (role == 'media') {
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
-                    let mode: mediaOptional | '' = '';
+                    let mode: NSPanel.mediaOptional | '' = '';
                     if (isPageMediaItem(pageItem)) {
                         const vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
-                        const vAdapter: PlayerType = vTempAdapter[0] as PlayerType;
+                        const vAdapter: NSPanel.PlayerType = vTempAdapter[0] as NSPanel.PlayerType;
                         if (optional == 'seek') {
                             const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
                             actualState = Math.round(actualStateTemp / 10) * 10 + '%';
@@ -8245,7 +8245,7 @@ function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined
                         }
 
                         let tempId = placeId != undefined ? placeId : id;
-                        // {tempid | color | mediaOptional | actualState | optionalString}
+                        // {tempid | color | NSPanel.mediaOptional | actualState | optionalString}
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
                                 + tempId + '?' + optional + '~~'         //{entity_id}
@@ -8274,7 +8274,7 @@ function GenerateDetailPage(type: PopupType, optional: mediaOptional | undefined
                     let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
                     let tempId = placeId != undefined ? placeId : id;
-                    // {tempid | color | mediaOptional | actualValue | valueList}
+                    // {tempid | color | NSPanel.mediaOptional | actualValue | valueList}
                     out_msgs.push({
                         payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
                             + tempId + '~~'                          //{entity_id}
@@ -8703,7 +8703,7 @@ function HandleScreensaverUpdate(): void {
             if (screensaverAdvanced) {
                 // 5 indicatorScreensaverEntities     
                 for (let i = 0; i < 5 && i < config.indicatorScreensaverEntity.length; i++) {
-                    const indicatorScreensaverEntity:ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
+                    const indicatorScreensaverEntity:NSPanel.ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
                     if (indicatorScreensaverEntity === null || indicatorScreensaverEntity === undefined) {
                         break;
                     }
@@ -8747,7 +8747,7 @@ function HandleScreensaverUpdate(): void {
             }
             if (Debug) log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString, 'info');
 
-            SendToPanel(<Payload>{ payload: 'weatherUpdate~' + payloadString });
+            SendToPanel(<NSPanel.Payload>{ payload: 'weatherUpdate~' + payloadString });
 
             HandleScreensaverStatusIcons();
         }
@@ -8944,7 +8944,7 @@ function HandleScreensaverStatusIcons() : void {
             payloadString += '~';
         }
 
-        SendToPanel(<Payload>{ payload: 'statusUpdate~' + payloadString });
+        SendToPanel(<NSPanel.Payload>{ payload: 'statusUpdate~' + payloadString });
 
     } catch (err: any) {
         log('error at function HandleScreensaverStatusIcons: ' + err.message, 'warn');
@@ -9035,17 +9035,17 @@ function HandleScreensaverColors(): void {
                             rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
                             rgb_dec565(sctTimeAdd);                  //tTimeAdd
 
-        SendToPanel(<Payload>{ payload: payloadString });
+        SendToPanel(<NSPanel.Payload>{ payload: payloadString });
     } catch (err: any) {
         log('error at function HandleScreensaverColors: '+ err.message, 'warn');
     }
 }
 
-function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): number {
+function GetScreenSaverEntityColor(configElement: NSPanel.ScreenSaverElement | null): number {
     try {
         let colorReturn: number;
         if (configElement && configElement.ScreensaverEntityIconColor != undefined) {
-            const ScreensaverEntityIconColor = configElement.ScreensaverEntityIconColor as IconScaleElement;
+            const ScreensaverEntityIconColor = configElement.ScreensaverEntityIconColor as NSPanel.IconScaleElement;
             if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
                 let iconvalbest = (typeof ScreensaverEntityIconColor == 'object' && ScreensaverEntityIconColor.val_best !== undefined ) ? ScreensaverEntityIconColor.val_best : false ;
                 colorReturn = (getState(configElement.ScreensaverEntity).val == iconvalbest) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
@@ -9606,302 +9606,36 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
-type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer' 
 
+type RGB = NSPanel.RGB;
+type PageItem = NSPanel.PageItem;
+type PageType = NSPanel.PageType;
+type Config = NSPanel.Config;
+type PageEntities = NSPanel.PageEntities;
+type PageChart = NSPanel.PageChart;
+type PagePower = NSPanel.PagePower;
+type PageGrid = NSPanel.PageGrid;
+type PageQR = NSPanel.PageQR;
+type PageGrid2 = NSPanel.PageGrid2;
+type PageMedia = NSPanel.PageMedia;
+type PageThermo = NSPanel.PageThermo;
+type PageUnlock = NSPanel.PageUnlock;
+type PageAlarm = NSPanel.PageAlarm;
 
-
-type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
-
-type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
-
-type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
-    | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
-    | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
-    | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
-
-type ButtonActionType = 'bExit' | 'bUp' | 'bNext' | 'bSubNext' | 'bPrev' | 'bSubPrev' | 'bHome' | 'notifyAction' | 'OnOff' | 'button' | 'up' | 'stop' | 'down'
-    | 'positionSlider' | 'tiltOpen' | 'tiltStop' | 'tiltSlider' | 'tiltClose' | 'brightnessSlider' | 'colorTempSlider' | 'colorWheel' | 'tempUpd' | 'tempUpdHighLow' | 'media-back'
-    | 'media-pause' | 'media-next' | 'media-shuffle' | 'volumeSlider' | 'mode-speakerlist' | 'mode-playlist' | 'mode-tracklist' | 'mode-repeat' | 'mode-equalizer' | 'mode-seek' | 'mode-crossfade'
-    | 'mode-favorites' | 'mode-insel' | 'media-OnOff' | 'timer-start' | 'timer-pause' | 'timer-cancle' | 'timer-finish' | 'hvac_action' | 'mode-modus1' | 'mode-modus2' | 'mode-modus3' | 'number-set'
-    | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' 
-    
-
-
-type RGB = {
-    red: number,
-    green: number,
-    blue: number
-};
-
-type Payload = {
-    payload: string;
-};
-
-type PageBaseType = {
-    type: PagetypeType,
-    heading: string,
-    items: PageItem[],
-    useColor: boolean,
-    subPage?: boolean,
-    parent?: PageType,
-    parentIcon?: string,
-    parentIconColor?: RGB,
-    prev?: string,
-    prevIcon?: string,
-    prevIconColor?: RGB,
-    next?: string,
-    nextIcon?: string,
-    nextIconColor?: RGB,
-    home?: string,
-    homeIcon?: string,
-    homeIconColor?: RGB
-};
-
-type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower' //| 'cardBurnRec'
-
-type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower
-
-// If u get a error here u forgot something in PagetypeType or PageType
-function checkPageType(F: PagetypeType, A: PageType) {
-    A.type = F;
-}
-
-type PageEntities = {
-    type: 'cardEntities',
-    items: PageItem[],
-} & PageBaseType
-
-type PageGrid = {
-    type: 'cardGrid',
-    items: PageItem[],
-} & PageBaseType
-
-type PageGrid2 = {
-    type: 'cardGrid2',
-    items: PageItem[],
-} & PageBaseType
-
-type PageThermo = {
-    type: 'cardThermo',
-    items: PageThermoItem[],
-    
-} & Omit<PageBaseType, 'useColor'>
-
-type PageMedia = {
-    type: 'cardMedia',
-    items: PageMediaItem[],
-} & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
-
-type PageAlarm = {
-    type: 'cardAlarm',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PageUnlock = {
-    type: 'cardUnlock',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
-
-type PageQR = {
-    type: 'cardQR',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PagePower = {
-    type: 'cardPower',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PageChart = {
-    type: 'cardChart' | 'cardLChart',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PageItem = PageBaseItem | PageMediaItem | PageThermoItem
-
-function isPageMediaItem(F: PageItem | PageMediaItem):F is PageMediaItem {
-    return  'adapterPlayerInstance' in F
-}
-
-function isPageThermoItem(F: PageItem | PageThermoItem):F is PageThermoItem {
-    return  'popupThermoMode1' in F;
-}
-type PageMediaItem = {
-    adapterPlayerInstance: adapterPlayerInstanceType,
-    mediaDevice?: string,
-    colorMediaIcon?: RGB,
-    colorMediaArtist?: RGB,
-    colorMediaTitle?: RGB,
-    speakerList?: string[],
-    playList?: string[],
-    equalizerList?: string[],
-    repeatList?: string[],
-    globalTracklist?: string[],
-    crossfade?: boolean, 
-} & PageBaseItem
-
-type PageThermoItem = {
-    popupThermoMode1?: string[],
-    popupThermoMode2?: string[],
-    popupThermoMode3?: string[],
-    popUpThermoName?: string[],
-    setThermoAlias?: string[],
-    setThermoDestTemp2?: string,
-} & PageBaseItem |
-{
-    popupThermoMode1?: string[],
-    popupThermoMode2?: string[],
-    popupThermoMode3?: string[],
-    popUpThermoName?: string[],
-    setThermoAlias?: string[],
-    setThermoDestTemp2?: string,
-} & PageBaseItem
-
-type PageBaseItem = {
-    id?: string | null,
-    icon?: string,
-    icon2?: string,
-    onColor?: RGB,
-    offColor?: RGB,
-    useColor?: boolean,
-    interpolateColor?: boolean,
-    minValueBrightness?: number,
-    maxValueBrightness?: number,
-    minValueColorTemp?: number,
-    maxValueColorTemp?: number,
-    minValueLevel?: number,
-    maxValueLevel?: number,
-    minValueTilt?: number,
-    maxValueTilt?: number,
-    minValue?: number,
-    maxValue?: number,
-    stepValue?: number,
-    prefixName?: string,
-    suffixName?: string,
-    name?: string,
-    secondRow?: string,
-    buttonText?: string,
-    unit?: string,
-    navigate?: boolean,
-    colormode?: string,
-    colorScale?: IconScaleElement, 
-    //adapterPlayerInstance?: adapterPlayerInstanceType,
-    targetPage?: string,
-    modeList?: string[],
-    hidePassword?: boolean,
-    autoCreateALias?: boolean
-    yAxis?: string,
-    yAxisTicks?: number[] | string,
-    xAxisDecorationId?: string,
-    useValue?: boolean,
-    monobutton?: boolean,
-    inSel_ChoiceState?: boolean,
-    iconArray?: string[],
-    fontSize?: number,
-    actionStringArray?: string[],
-    alwaysOnDisplay?: boolean,
-}
-
-type DimMode = {
-    dimmodeOn: (boolean | undefined),
-    brightnessDay: (number | undefined),
-    brightnessNight: (number | undefined),
-    timeDay: (string | undefined),
-    timeNight: (string | undefined)
-}
-
-type ConfigButtonFunction = {
-    mode: 'page' | 'toggle' | 'set' | null,
-    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
-    entity: string | null,
-    setValue: string | number | boolean | null
-}
-
-type Config = {
-    panelRecvTopic: string,
-    panelSendTopic: string,
-    weatherEntity: string,
-    leftScreensaverEntity: leftScreensaverEntityType
-    bottomScreensaverEntity: ScreenSaverElement[],
-    indicatorScreensaverEntity: indicatorScreensaverEntityType
-    mrIcon1ScreensaverEntity: ScreenSaverMRElement,
-    mrIcon2ScreensaverEntity: ScreenSaverMRElement,
-    defaultColor: RGB,
-    defaultOnColor: RGB,
-    defaultOffColor: RGB,
-    defaultBackgroundColor: RGB,
-    pages: PageType[],
-    subPages: PageType[],
-    button1: ConfigButtonFunction,
-    button2: ConfigButtonFunction
-}
-type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
-type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
-type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
-type ScreenSaverElement = {
-    ScreensaverEntity: string,
-    ScreensaverEntityText: string,
-    ScreensaverEntityFactor?: number,
-    ScreensaverEntityDecimalPlaces?: number,
-    ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions,
-    ScreensaverEntityIconOn?: string | null,
-    ScreensaverEntityIconOff?: string | null,
-    ScreensaverEntityUnitText?: string,
-    ScreensaverEntityIconColor?: RGB | IconScaleElement | string
-    ScreensaverEntityOnColor?: RGB
-    ScreensaverEntityOffColor?: RGB
-    ScreensaverEntityOnText?: string | null,
-    ScreensaverEntityOffText?: string | null,
-}
-
-type ScreenSaverMRElement = {
-    ScreensaverEntity: string | null,
-    ScreensaverEntityIconOn: string | null,
-    ScreensaverEntityIconOff: string | null,
-    ScreensaverEntityValue: string | null,
-    ScreensaverEntityValueDecimalPlace: number | null,
-    ScreensaverEntityValueUnit: string | null,
-    ScreensaverEntityOnColor: RGB,
-    ScreensaverEntityOffColor: RGB
-}
-
-type IconScaleElement = { 
-    val_min:number, 
-    val_max:number, 
-    val_best?: number
-}
-/** we need this to have a nice order when using switch() */
-type adapterPlayerInstanceType =
-  'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
-| 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
-| 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
-| 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
-| 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
-| 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
-
-type PlayerType = _PlayerTypeWithMediaDevice | _PlayerTypeWithOutMediaDevice;
 
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const
 const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const
-type _PlayerTypeWithOutMediaDevice = typeof ArrayPlayerTypeWithOutMediaDevice[number] 
-type _PlayerTypeWithMediaDevice = typeof ArrayPlayerTypeWithMediaDevice[number]
 
-function isPlayerWithMediaDevice (F: string | _PlayerTypeWithMediaDevice): F is _PlayerTypeWithMediaDevice {
-    return ArrayPlayerTypeWithMediaDevice.indexOf(F as _PlayerTypeWithMediaDevice) != -1;
+function isPlayerWithMediaDevice (F: string | NSPanel._PlayerTypeWithMediaDevice): F is NSPanel._PlayerTypeWithMediaDevice {
+    return ArrayPlayerTypeWithMediaDevice.indexOf(F as NSPanel._PlayerTypeWithMediaDevice) != -1;
+}
+/** check if NSPanel.adapterPlayerInstanceType has all Playertypes */
+function checkSortedPlayerType(F: NSPanel.notSortedPlayerType) {
+    const test: NSPanel.adapterPlayerInstanceType = F;
 }
 
-type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
-
-/** check if adapterPlayerInstanceType has all Playertypes */
-function checkSortedPlayerType(F: notSortedPlayerType) {
-    const test: adapterPlayerInstanceType = F;
-}
-
-type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
-
-
-function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
-    switch(F as mediaOptional) {
+function isMediaOptional(F: string | NSPanel.mediaOptional): F is NSPanel.mediaOptional {
+    switch(F as NSPanel.mediaOptional) {
         case "seek":
         case "crossfade":
         case "speakerlist":
@@ -9916,8 +9650,8 @@ function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
     }
 }
 
-function isEventMethod(F: string | EventMethod): F is EventMethod {
-    switch(F as EventMethod) {
+function isEventMethod(F: string | NSPanel.EventMethod): F is NSPanel.EventMethod {
+    switch(F as NSPanel.EventMethod) {
         case "startup":
         case "sleepReached":
         case "pageOpenDetail":
@@ -9928,13 +9662,13 @@ function isEventMethod(F: string | EventMethod): F is EventMethod {
             return true;
         default:
             // Have to talk about this.
-            log(`Please report to developer: Unknown EventMethod: ${F} `, 'warn');
+            log(`Please report to developer: Unknown NSPanel.EventMethod: ${F} `, 'warn');
             return false;
     }
 }
 
-function isPopupType(F: PopupType | string): F is PopupType {
-    switch(F as PopupType) {
+function isPopupType(F: NSPanel.PopupType | string): F is NSPanel.PopupType {
+    switch(F as NSPanel.PopupType) {
         case "popupFan":
         case "popupInSel":
         case "popupLight":
@@ -9945,7 +9679,292 @@ function isPopupType(F: PopupType | string): F is PopupType {
         case "popupTimer":
             return true;
         default:
-            log(`Please report to developer: Unknown PopupType: ${F} `, 'warn');
+            log(`Please report to developer: Unknown NSPanel.PopupType: ${F} `, 'warn');
             return false;
     }
+}
+// If u get a error here u forgot something in PagetypeType or PageType
+function checkPageType(F: NSPanel.PagetypeType, A: NSPanel.PageType) {
+    A.type = F;
+}
+function isPageMediaItem(F: NSPanel.PageItem | NSPanel.PageMediaItem):F is NSPanel.PageMediaItem {
+    return  'adapterPlayerInstance' in F
+}
+
+function isPageThermoItem(F: PageItem | NSPanel.PageThermoItem):F is NSPanel.PageThermoItem {
+    return  'popupThermoMode1' in F;
+}
+
+namespace NSPanel {
+    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer' 
+
+
+
+    export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
+
+    export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
+
+    export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
+        | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
+        | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
+        | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
+
+    export type ButtonActionType = 'bExit' | 'bUp' | 'bNext' | 'bSubNext' | 'bPrev' | 'bSubPrev' | 'bHome' | 'notifyAction' | 'OnOff' | 'button' | 'up' | 'stop' | 'down'
+        | 'positionSlider' | 'tiltOpen' | 'tiltStop' | 'tiltSlider' | 'tiltClose' | 'brightnessSlider' | 'colorTempSlider' | 'colorWheel' | 'tempUpd' | 'tempUpdHighLow' | 'media-back'
+        | 'media-pause' | 'media-next' | 'media-shuffle' | 'volumeSlider' | 'mode-speakerlist' | 'mode-playlist' | 'mode-tracklist' | 'mode-repeat' | 'mode-equalizer' | 'mode-seek' | 'mode-crossfade'
+        | 'mode-favorites' | 'mode-insel' | 'media-OnOff' | 'timer-start' | 'timer-pause' | 'timer-cancle' | 'timer-finish' | 'hvac_action' | 'mode-modus1' | 'mode-modus2' | 'mode-modus3' | 'number-set'
+        | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' 
+        
+
+
+    export type RGB = {
+        red: number,
+        green: number,
+        blue: number
+    };
+
+    export type Payload = {
+        payload: string;
+    };
+
+    export type PageBaseType = {
+        type: PagetypeType,
+        heading: string,
+        items: PageItem[],
+        useColor: boolean,
+        subPage?: boolean,
+        parent?: PageType,
+        parentIcon?: string,
+        parentIconColor?: RGB,
+        prev?: string,
+        prevIcon?: string,
+        prevIconColor?: RGB,
+        next?: string,
+        nextIcon?: string,
+        nextIconColor?: RGB,
+        home?: string,
+        homeIcon?: string,
+        homeIconColor?: RGB
+    };
+
+
+    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower' //| 'cardBurnRec'
+
+    export type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower
+
+    export type PageEntities = {
+        type: 'cardEntities',
+        items: PageItem[],
+    } & PageBaseType
+
+    export type PageGrid = {
+        type: 'cardGrid',
+        items: PageItem[],
+    } & PageBaseType
+
+    export type PageGrid2 = {
+        type: 'cardGrid2',
+        items: PageItem[],
+    } & PageBaseType
+
+    export type PageThermo = {
+        type: 'cardThermo',
+        items: PageThermoItem[],
+        
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageMedia = {
+        type: 'cardMedia',
+        items: PageMediaItem[],
+    } & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
+
+    export type PageAlarm = {
+        type: 'cardAlarm',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageUnlock = {
+        type: 'cardUnlock',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
+
+    export type PageQR = {
+        type: 'cardQR',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PagePower = {
+        type: 'cardPower',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageChart = {
+        type: 'cardChart' | 'cardLChart',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageItem = PageBaseItem | PageMediaItem | PageThermoItem
+
+    export type PageMediaItem = {
+        adapterPlayerInstance: adapterPlayerInstanceType,
+        mediaDevice?: string,
+        colorMediaIcon?: RGB,
+        colorMediaArtist?: RGB,
+        colorMediaTitle?: RGB,
+        speakerList?: string[],
+        playList?: string[],
+        equalizerList?: string[],
+        repeatList?: string[],
+        globalTracklist?: string[],
+        crossfade?: boolean, 
+    } & PageBaseItem
+
+    export type PageThermoItem = {
+        popupThermoMode1?: string[],
+        popupThermoMode2?: string[],
+        popupThermoMode3?: string[],
+        popUpThermoName?: string[],
+        setThermoAlias?: string[],
+        setThermoDestTemp2?: string,
+    } & PageBaseItem |
+    {
+        popupThermoMode1?: string[],
+        popupThermoMode2?: string[],
+        popupThermoMode3?: string[],
+        popUpThermoName?: string[],
+        setThermoAlias?: string[],
+        setThermoDestTemp2?: string,
+    } & PageBaseItem
+
+    export type PageBaseItem = {
+        id?: string | null,
+        icon?: string,
+        icon2?: string,
+        onColor?: RGB,
+        offColor?: RGB,
+        useColor?: boolean,
+        interpolateColor?: boolean,
+        minValueBrightness?: number,
+        maxValueBrightness?: number,
+        minValueColorTemp?: number,
+        maxValueColorTemp?: number,
+        minValueLevel?: number,
+        maxValueLevel?: number,
+        minValueTilt?: number,
+        maxValueTilt?: number,
+        minValue?: number,
+        maxValue?: number,
+        stepValue?: number,
+        prefixName?: string,
+        suffixName?: string,
+        name?: string,
+        secondRow?: string,
+        buttonText?: string,
+        unit?: string,
+        navigate?: boolean,
+        colormode?: string,
+        colorScale?: IconScaleElement, 
+        //adapterPlayerInstance?: adapterPlayerInstanceType,
+        targetPage?: string,
+        modeList?: string[],
+        hidePassword?: boolean,
+        autoCreateALias?: boolean
+        yAxis?: string,
+        yAxisTicks?: number[] | string,
+        xAxisDecorationId?: string,
+        useValue?: boolean,
+        monobutton?: boolean,
+        inSel_ChoiceState?: boolean,
+        iconArray?: string[],
+        fontSize?: number,
+        actionStringArray?: string[],
+        alwaysOnDisplay?: boolean,
+    }
+
+    export type DimMode = {
+        dimmodeOn: (boolean | undefined),
+        brightnessDay: (number | undefined),
+        brightnessNight: (number | undefined),
+        timeDay: (string | undefined),
+        timeNight: (string | undefined)
+    }
+
+    export type ConfigButtonFunction = {
+        mode: 'page' | 'toggle' | 'set' | null,
+        page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
+        entity: string | null,
+        setValue: string | number | boolean | null
+    }
+
+    export type Config = {
+        panelRecvTopic: string,
+        panelSendTopic: string,
+        weatherEntity: string,
+        leftScreensaverEntity: leftScreensaverEntityType
+        bottomScreensaverEntity: ScreenSaverElement[],
+        indicatorScreensaverEntity: indicatorScreensaverEntityType
+        mrIcon1ScreensaverEntity: ScreenSaverMRElement,
+        mrIcon2ScreensaverEntity: ScreenSaverMRElement,
+        defaultColor: RGB,
+        defaultOnColor: RGB,
+        defaultOffColor: RGB,
+        defaultBackgroundColor: RGB,
+        pages: PageType[],
+        subPages: PageType[],
+        button1: ConfigButtonFunction,
+        button2: ConfigButtonFunction
+    }
+    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+    export type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
+    export type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
+    export type ScreenSaverElement = {
+        ScreensaverEntity: string,
+        ScreensaverEntityText: string,
+        ScreensaverEntityFactor?: number,
+        ScreensaverEntityDecimalPlaces?: number,
+        ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions,
+        ScreensaverEntityIconOn?: string | null,
+        ScreensaverEntityIconOff?: string | null,
+        ScreensaverEntityUnitText?: string,
+        ScreensaverEntityIconColor?: RGB | IconScaleElement | string
+        ScreensaverEntityOnColor?: RGB
+        ScreensaverEntityOffColor?: RGB
+        ScreensaverEntityOnText?: string | null,
+        ScreensaverEntityOffText?: string | null,
+    }
+
+    export type ScreenSaverMRElement = {
+        ScreensaverEntity: string | null,
+        ScreensaverEntityIconOn: string | null,
+        ScreensaverEntityIconOff: string | null,
+        ScreensaverEntityValue: string | null,
+        ScreensaverEntityValueDecimalPlace: number | null,
+        ScreensaverEntityValueUnit: string | null,
+        ScreensaverEntityOnColor: RGB,
+        ScreensaverEntityOffColor: RGB
+    }
+
+    export type IconScaleElement = { 
+        val_min:number, 
+        val_max:number, 
+        val_best?: number
+    }
+    /** we need this to have a nice order when using switch() */
+    export type adapterPlayerInstanceType =
+    'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
+    | 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
+    | 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
+    | 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
+    | 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
+    | 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
+
+    export type PlayerType = _PlayerTypeWithMediaDevice | _PlayerTypeWithOutMediaDevice;
+
+    export type _PlayerTypeWithOutMediaDevice = typeof ArrayPlayerTypeWithOutMediaDevice[number] 
+    export type _PlayerTypeWithMediaDevice = typeof ArrayPlayerTypeWithMediaDevice[number]
+
+    export type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
+
+    export type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
+
 }
