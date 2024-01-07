@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.33 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.34 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -103,6 +103,7 @@ ReleaseNotes:
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
 	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
  	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
+  	- 05.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -966,7 +967,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.33';
+const scriptVersion: string = 'v4.3.3.34';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -6872,7 +6873,11 @@ function HandleButtonEvent(words: any): void {
                     case "bosesoundtouch":
                         if (Debug) log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
                         if (Debug) log(adapterInstancePL +  'key');
-                        setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
+                        if (words[4] < 6) {
+                            setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
+                        } else if (words[4] == 6) {
+                            setState(adapterInstancePL +  'key', 'AUX_INPUT');
+                        }
                         break;
                     default:
                         log('Hello Mr. Developer u miss in mode-playlist something!', 'warn');
@@ -7026,12 +7031,12 @@ function HandleButtonEvent(words: any): void {
             case 'mode-insel':
                 setIfExists(id + '.VALUE', parseInt(words[4]));
                 break;
-            case 'media-OnOff':
-                let pageItemTem = findPageItem(id);
-                if (!isPageMediaItem(pageItemTem)) break;
-                let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
-                if (adaInstanceSpli[0] == 'squeezeboxrpc') {
-                    let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
+            case 'media-OnOff': {
+                let pageItemTemp = findPageItem(id);
+                if (!isPageMediaItem(pageItemTemp)) break;
+                let adapterInstance = pageItemTemp.adapterPlayerInstance.split('.');
+                if (adapterInstance[0] == 'squeezeboxrpc') {
+                    let adapterPlayerInstancePowerSelector: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'Power'].join('.');
                     let stateVal = getState(adapterPlayerInstancePowerSelector).val;
                     if (stateVal === 0) {
                         setState(adapterPlayerInstancePowerSelector, 1);
@@ -7042,11 +7047,14 @@ function HandleButtonEvent(words: any): void {
                         setIfExists(id + '.STOP', true);
                         setIfExists(id + '.STATE', 0);
                     }
+                } else if (adapterInstance[0] == 'bosesoundtouch') {
+                    setState(pageItemTemp.adapterPlayerInstance +  'key', 'POWER');
                 } else {
                     setIfExists(id + '.STOP', true);
                 }
                 GeneratePage(activePage!);
                 break;
+            }
             case 'timer-start':
                 if (words[4] != undefined) {
                     let timer_panel = words[4].split(':');
@@ -8122,6 +8130,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                                     tempPlayList[i - 1] = formatInSelText(vPreset.replace('_',' '));
                                     if (Debug) log(formatInSelText(vPreset.replace('_',' ')))
                                 }
+                                tempPlayList[6] = 'AUX INPUT';
                                 optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                             } else if (vAdapter == 'sonos') {
                                 if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
