@@ -1727,7 +1727,7 @@ on({id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday',
 });
 
 //Set Relays from Tasmota
-const NSPanelStatTopic = NSPanelSendTopic.replace('.tele.','.stat.').replace('.CustomSend','.');
+const NSPanelStatTopic = NSPanelSendTopic.replace('.cmnd.','.stat.').replace(/\.CustomSend$/g,'.');
 on({id: [String(NSPanelStatTopic) + 'POWER1',String(NSPanelStatTopic) + 'POWER2'], change: "ne"}, (obj) => {
     if (!obj || !obj.id) return
     const n = obj.id.substring(obj.id.length-1);
