@@ -1021,13 +1021,13 @@ let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any; 
 
 onStop (function scriptStop () {
-    if (scheduleSendTime!=null) clearSchedule(scheduleSendTime);
-    if (scheduleSendDate!=null) clearSchedule(scheduleSendDate);
-    if (scheduleSwichScreensaver!=null) clearSchedule(scheduleSwichScreensaver);
-    if (scheduleStartup!=null) clearSchedule(scheduleStartup);
-    if (scheduleCheckUpdates!=null) clearSchedule(scheduleCheckUpdates);
-    if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
-    if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
+    if (scheduleSendTime!=null) _clearSchedule(scheduleSendTime);
+    if (scheduleSendDate!=null) _clearSchedule(scheduleSendDate);
+    if (scheduleSwichScreensaver!=null) _clearSchedule(scheduleSwichScreensaver);
+    if (scheduleStartup!=null) _clearSchedule(scheduleStartup);
+    if (scheduleCheckUpdates!=null) _clearSchedule(scheduleCheckUpdates);
+    if (scheduleInitDimModeDay!=null) _clearSchedule(scheduleInitDimModeDay);
+    if (scheduleInitDimModeNight!=null) _clearSchedule(scheduleInitDimModeNight);
     UnsubscribeWatcher();
 }, 1000);
 
@@ -9680,13 +9680,13 @@ type PageAlarm = NSPanel.PageAlarm;
 function adapterSchedule(time: {hour?: number, minute?: number} | undefined | number, repeatTime: number, callback: () => void): number|null {
     if (typeof callback !== 'function') return null
     const ref = Math.random() + 1;
-    scheduleList[ref] = setTimeout(_schedule, 1, time, ref, repeatTime, callback);
+    scheduleList[ref] = setTimeout(_schedule, 1, time, ref, repeatTime, callback), true;
     return ref;
 }
 
-function _schedule(time: {hour?: number, minute?: number} | undefined | number, ref: number, repeatTime, callback) {
+function _schedule(time: {hour?: number, minute?: number} | undefined | number, ref: number, repeatTime, callback, init: boolean = false) {
     if (!scheduleList[ref]) return;
-    callback();
+    if (!init) callback();
     let targetTime: number;
     if ( time === undefined) {
         targetTime = new Date().setMilliseconds(0) + repeatTime * 1000;
@@ -9707,7 +9707,7 @@ function _clearSchedule(ref: number): null {
     if (scheduleList[ref]) clearTimeout(scheduleList[ref]);
     delete scheduleList[ref];
     return null;
-} 
+}  
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const
 const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const
 
