@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.34 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.35 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -93,6 +93,7 @@ ReleaseNotes:
  	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
   	- 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
    	- 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+    - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
    
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -203,6 +204,7 @@ let Debug: boolean = false;
     // EN: Adapt to the MQTT adapter instance directories
     const NSPanelReceiveTopic: string = 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT';
     const NSPanelSendTopic: string = 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend';
+    NSPanelStateTopic = 'mqtt.0.SmartHome.NSPanel_1.stat'
 
     // DE: nur ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
     // EN: only change if the user was renamed in Tasmota before compiling (default Tasmota: admin)
@@ -956,7 +958,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.34';
+const scriptVersion: string = 'v4.3.3.35';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -969,6 +971,9 @@ let vwIconColor: number[] = [];
 let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
+
+var NSPanelStateTopic = NSPanelStateTopic !== undefined ? NSPanelStateTopic : ''
+
 
 const axios = require('axios');
 const dayjs = require('dayjs');
@@ -1725,8 +1730,20 @@ on({id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday',
     }
 });
 
+//Set Relays from Tasmota 
+if (NSPanelStateTopic != '') {
+    on({id: [String(NSPanelStateTopic) + '.POWER1',String(NSPanelStateTopic) + '.POWER2'], change: "ne"}, (obj) => {
+        if (!obj || !obj.id) return
+        const n = obj.id.substring(obj.id.length-1);
+        if ( n === '1' || n === '2') {
+            if (getState(NSPanel_Path + 'Relay.' + n).val != obj.state.val) {
+                setState(NSPanel_Path + 'Relay.' + n, obj.state.val == 'ON' ? true : false, true);
+            }
+        }
+    })
+}
 //Control Relays from DP's
-on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne"}, async function (obj) {
+on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne", ack: false}, async function (obj) {
     try {
         let Button = obj.id!.split('.');        
         let urlString: string = ['http://',get_current_tasmota_ip_address(),'/cm?cmnd=Power',Button[Button.length - 1],' ',(obj.state ? obj.state.val : "")].join('');
