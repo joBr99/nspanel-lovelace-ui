@@ -31,20 +31,8 @@ https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
-
-        - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
-        - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
-        - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
-        - 23.09.2023 - v4.3.1.3  Fix - Change ServivceMenu from Fake-SSId to real Tasmota-SSIdParam
-        - 03.10.2023 - v4.3.1.4  Removing the examples from the NSPanelTs.ts --> https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-        - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
-        - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
-        - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation / Minor Fixes
-        - 22.10.2023 - v4.3.1.7  Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
-        - 30.10.2023 - v4.3.2    Upgrade TFT 53 / 4.3.2
-        - 30.10.2023 - v4.3.2.1  Fix formatDate/Date.parse with moment.js (Bugs in JS-Methodes)
-        - 07.11.2023 - v4.3.2.2  Fix Selection of screensaver layout (alternative / advanced)
-        - 08.11.2023 - v4.3.2.3  Fix Issues #1013 by laluz742 -> Parameter count mismatch: screensaver color
+	See ChangeLog all Release Notes: https://github.com/joBr99/nspanel-lovelace-ui/wiki/Release-Notes
+ 
         - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
         - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
         - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
@@ -103,8 +91,9 @@ ReleaseNotes:
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
 	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
  	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
-  	- 05.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
-
+  	- 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
+   	- 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+   
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
@@ -3771,13 +3760,18 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (Debug) log('min_Level: ' + min_Level, 'info');
                     if (Debug) log('max_Level: ' + max_Level, 'info');
 
+                    let icon_up_status = 'enable';
+                    let icon_down_status = 'enable';
+
                     let tempVal: number = getState(pageItem.id + '.ACTUAL').val 
-                    let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+
+                    //Disabled Status while bug in updating origin adapter data points of lift values
+                    //let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
                     let icon_stop_status = 'enable';
                     if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
-                        icon_stop_status = 'disable';
+                        //icon_stop_status = 'disable';
                     }
-                    let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+                    //let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
                     let value = icon_up + '|' + icon_stop + '|' + icon_down + '|' + icon_up_status + '|' + icon_stop_status + '|' + icon_down_status
                     
                     if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
@@ -7807,12 +7801,17 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                 let icon_stop = Icons.GetIcon('stop');
                 let icon_down = Icons.GetIcon('arrow-down');
                 let tempVal: number = getState(pageItem.id + '.ACTUAL').val 
-                let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+                
+                //Disabled Status while bug in updating origin adapter data points of lift values
+                let icon_up_status = 'enable';
+                //let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
                 let icon_stop_status = 'enable';
                 if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
-                    icon_stop_status = 'disable';
+                    //icon_stop_status = 'disable';
                 }
-                let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+                let icon_down_status = 'enable';
+                //let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+
                 let textTilt = '';
                 let iconTiltLeft = '';
                 let iconTiltStop = '';
@@ -7841,7 +7840,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                 
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
-                        + tempId + '~'                                //entity_id
+                        + tempId + '~'                            //entity_id
                         + val + '~'                               //Shutterposition
                         + textSecondRow + '~'                     //pos_status 2.line
                         + findLocale('blinds', 'Position') + '~'  //pos_translation
@@ -8595,6 +8594,7 @@ function HandleScreensaverUpdate(): void {
 
                 //Alternativ Layout bekommt zusätzlichen Status
                 if (config.bottomScreensaverEntity[4] && getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
+                    log('alternativ');
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
                     if (parseFloat(val+"") == val) {     
                         val = parseFloat(val);
