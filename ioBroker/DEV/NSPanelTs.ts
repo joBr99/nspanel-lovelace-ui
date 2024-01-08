@@ -204,7 +204,6 @@ let Debug: boolean = false;
     // EN: Adapt to the MQTT adapter instance directories
     const NSPanelReceiveTopic: string = 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT';
     const NSPanelSendTopic: string = 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend';
-    NSPanelStateTopic = 'mqtt.0.SmartHome.NSPanel_1.stat'
 
     // DE: nur ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
     // EN: only change if the user was renamed in Tasmota before compiling (default Tasmota: admin)
@@ -972,9 +971,6 @@ let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
 
-var NSPanelStateTopic = NSPanelStateTopic !== undefined ? NSPanelStateTopic : ''
-
-
 const axios = require('axios');
 const dayjs = require('dayjs');
 const moment  = require('moment');
@@ -1730,18 +1726,17 @@ on({id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday',
     }
 });
 
-//Set Relays from Tasmota 
-if (NSPanelStateTopic != '') {
-    on({id: [String(NSPanelStateTopic) + '.POWER1',String(NSPanelStateTopic) + '.POWER2'], change: "ne"}, (obj) => {
-        if (!obj || !obj.id) return
-        const n = obj.id.substring(obj.id.length-1);
-        if ( n === '1' || n === '2') {
-            if (getState(NSPanel_Path + 'Relay.' + n).val != obj.state.val) {
-                setState(NSPanel_Path + 'Relay.' + n, obj.state.val == 'ON' ? true : false, true);
-            }
+//Set Relays from Tasmota
+const NSPanelStatTopic = NSPanelSendTopic.replace('.tele.','.stat.').replace('.CustomSend','.');
+on({id: [String(NSPanelStatTopic) + 'POWER1',String(NSPanelStatTopic) + 'POWER2'], change: "ne"}, (obj) => {
+    if (!obj || !obj.id) return
+    const n = obj.id.substring(obj.id.length-1);
+    if ( n === '1' || n === '2') {
+        if (getState(NSPanel_Path + 'Relay.' + n).val != obj.state.val) {
+            setState(NSPanel_Path + 'Relay.' + n, obj.state.val == 'ON' ? true : false, true);
         }
-    })
-}
+    }
+})
 //Control Relays from DP's
 on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne", ack: false}, async function (obj) {
     try {
