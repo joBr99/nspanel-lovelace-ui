@@ -1397,7 +1397,7 @@ async function Init_Screensaver_Backckground_Color_Switch() {
                 type: "number",
                 name: "Color Indicator",
                 role: "level",
-                states: {0:'black', 1:'red', 2:'green', 3:'attention', 4: 'pink'},
+                states: {0:'black', 1:'red', 2:'green', 3:'attention', 4: 'pink', 5: 'dark red'},
                 read: true,
                 write: true
             },
@@ -2175,7 +2175,7 @@ let pageId = 0;
 let activePage: PageType | undefined = undefined;
 
 //Send time to NSPanel
-let scheduleSendTime = adapterSchedule(new Date().setMilliseconds(0), 1, () => {
+let scheduleSendTime = adapterSchedule(new Date().setSeconds(0,0), 60, () => {
     try {
         SendTime();
         HandleScreensaverUpdate();
@@ -9062,8 +9062,10 @@ function HandleScreensaverColors(): void {
             scrSvrBGCol = rgb_dec565(scbackgroundInd3);
         } else if (bgColorScrSaver == 4) {
             scrSvrBGCol = rgb_dec565({red:255, green:16, blue:240});
+        } else if (bgColorScrSaver == 5) {
+            scrSvrBGCol = rgb_dec565({ red: 100, green: 0, blue: 0 });
         }
-
+        
         let payloadString = 'color'                     + '~' +
                             scrSvrBGCol                 + '~' +      //background
                             rgb_dec565(sctime)          + '~' +      //time
@@ -9671,7 +9673,13 @@ type PageAlarm = NSPanel.PageAlarm;
 
 
 
-// dont work with summer/winter time has to be fixed
+/**
+ * 
+ * @param time  object: { hour: number, minutes: number } | starttime
+ * @param repeatTime in ms
+ * @param callback what todo
+ * @returns 
+ */
 function adapterSchedule(time: {hour?: number, minute?: number} | undefined | number, repeatTime: number, callback: () => void): number|null {
     if (typeof callback !== 'function') return null
     const ref = Math.random() + 1;
@@ -9685,18 +9693,21 @@ function _schedule(time: {hour?: number, minute?: number} | undefined | number, 
     let targetTime: number;
     if ( time === undefined) {
         targetTime = new Date().setMilliseconds(0) + repeatTime * 1000;
+        time = targetTime;
     } else if (typeof time === 'number') {
         targetTime = time + repeatTime * 1000;
+        time = targetTime;
     } else {
-        time.hour = time.hour !== undefined ? time.hour : 0;
+        time.hour = time.hour !== undefined ? time.hour : 1;
         time.minute = time.minute !== undefined ? time.minute : 0;
-        targetTime = time.hour !== undefined ? new Date().setHours(time.hour, time.minute, 0) : new Date().setMinutes(time.minute, 0);
+        targetTime = time.hour !== -1 ? new Date().setHours(time.hour, time.minute, 0) : new Date().setMinutes(time.minute, 0);
         if (new Date().getTime() > targetTime) {
             targetTime += repeatTime * 1000;
+            targetTime = time.hour !== -1 ? new Date(targetTime).setHours(time.hour, time.minute, 0) : new Date(targetTime).setMinutes(time.minute, 0);
         }
     }
     const timeout = targetTime - new Date().getTime();
-    scheduleList[ref] = setTimeout(_schedule, timeout, targetTime, ref, repeatTime, callback);
+    scheduleList[ref] = setTimeout(_schedule, timeout, time, ref, repeatTime, callback);
 }
 function _clearSchedule(ref: number): null {
     if (scheduleList[ref]) clearTimeout(scheduleList[ref]);
