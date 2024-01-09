@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.35 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.36 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -89,11 +89,14 @@ ReleaseNotes:
         - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
-	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
- 	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
-  	- 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
-   	- 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
-    - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
+	    - 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
+ 	    - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
+  	    - 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
+   	    - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+        - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
+        - 09.01.2024 - v4.3.3.36 Fix: change ScreensaverTimeout and activeBrightness
+        - 09.01.2024 - v4.3.3.36 Fix: schedule SendTime
+        - 09.01.2024 - v4.3.3.36 Fix: Function _schedule SummerTime/WinterTime
    
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -912,10 +915,11 @@ export const config: Config = {
         ScreensaverEntityOnColor: On,
         ScreensaverEntityOffColor: HMIOff
     },
-    // ------ DE: Ende der Screensaver Einstellungen --------------------
-    // ------ EN: End of screensaver settings ---------------------------
-    //-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
-    //-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
+// ------ DE: Ende der Screensaver Einstellungen --------------------
+// ------ EN: End of screensaver settings ---------------------------
+
+//-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
     // DE: Konfiguration des linken Schalters des NSPanels
     // EN: Configuration of the left switch of the NSPanel
     button1: {
@@ -941,8 +945,10 @@ export const config: Config = {
         entity: null,
         setValue: null
     },
-    //--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
-    //--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
+
+//--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
+
     // DE: WICHTIG !! Parameter nicht ändern  WICHTIG!!
     // EN: IMPORTANT !! Do not change parameters IMPORTANT!!
     panelRecvTopic: NSPanelReceiveTopic,
@@ -957,7 +963,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.35';
+const scriptVersion: string = 'v4.3.3.36';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1492,6 +1498,19 @@ async function InitActiveBrightness() {
     }
 }
 InitActiveBrightness();
+
+on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, async function (obj) {
+    try {
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+        if (obj.state.val >= 0 || obj.state.val <= 100) {
+        log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
+        SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+        InitDimmode();
+        }
+    } catch (err:any) {
+            log('error at trigger activeBrightness: ' + err.message, 'warn');
+    }
+});
 
 on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"}, async function (obj) {
     try {
@@ -6241,11 +6260,8 @@ function HandleButtonEvent(words: any): void {
         if (words[2] == 'bNext' || words[2] == 'bPrev' || words[2] == 'bUp' || words[2] == 'bHome' || words[2] == 'bSubNext' || words[2] == 'bSubPrev' ) {
             buttonAction = words[2];
             pageCounter = 0;
-            // Turn off the display if the alwaysOnDisplay parameter was specified
-            if (alwaysOn == true) {
-                alwaysOn = false;
-                SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
-            }
+            alwaysOn = false;
+            SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
         }
 
         if (Debug) {
