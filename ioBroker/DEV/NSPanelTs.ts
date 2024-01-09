@@ -9693,8 +9693,10 @@ function _schedule(time: {hour?: number, minute?: number} | undefined | number, 
     let targetTime: number;
     if ( time === undefined) {
         targetTime = new Date().setMilliseconds(0) + repeatTime * 1000;
+        time = targetTime;
     } else if (typeof time === 'number') {
         targetTime = time + repeatTime * 1000;
+        time = targetTime;
     } else {
         time.hour = time.hour !== undefined ? time.hour : 1;
         time.minute = time.minute !== undefined ? time.minute : 0;
@@ -9705,7 +9707,7 @@ function _schedule(time: {hour?: number, minute?: number} | undefined | number, 
         }
     }
     const timeout = targetTime - new Date().getTime();
-    scheduleList[ref] = setTimeout(_schedule, timeout, targetTime, ref, repeatTime, callback);
+    scheduleList[ref] = setTimeout(_schedule, timeout, time, ref, repeatTime, callback);
 }
 function _clearSchedule(ref: number): null {
     if (scheduleList[ref]) clearTimeout(scheduleList[ref]);
