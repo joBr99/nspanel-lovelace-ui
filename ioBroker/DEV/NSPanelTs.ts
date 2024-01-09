@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.34 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.35 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -93,6 +93,7 @@ ReleaseNotes:
  	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
   	- 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
    	- 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+    - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
    
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -956,7 +957,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.34';
+const scriptVersion: string = 'v4.3.3.35';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -975,6 +976,8 @@ const dayjs = require('dayjs');
 const moment  = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
+
+const scheduleList:{[key:string]: any} = {};
 
 const globalTextColor: any = White; 
 const Sliders2: number = 0;
@@ -1014,13 +1017,13 @@ let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any; 
 
 onStop (function scriptStop () {
-    if (scheduleSendTime!=null) clearSchedule(scheduleSendTime);
-    if (scheduleSendDate!=null) clearSchedule(scheduleSendDate);
-    if (scheduleSwichScreensaver!=null) clearSchedule(scheduleSwichScreensaver);
-    if (scheduleStartup!=null) clearSchedule(scheduleStartup);
-    if (scheduleCheckUpdates!=null) clearSchedule(scheduleCheckUpdates);
-    if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
-    if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
+    if (scheduleSendTime!=null) _clearSchedule(scheduleSendTime);
+    if (scheduleSendDate!=null) _clearSchedule(scheduleSendDate);
+    if (scheduleSwichScreensaver!=null) _clearSchedule(scheduleSwichScreensaver);
+    if (scheduleStartup!=null) _clearSchedule(scheduleStartup);
+    if (scheduleCheckUpdates!=null) _clearSchedule(scheduleCheckUpdates);
+    if (scheduleInitDimModeDay!=null) _clearSchedule(scheduleInitDimModeDay);
+    if (scheduleInitDimModeNight!=null) _clearSchedule(scheduleInitDimModeNight);
     UnsubscribeWatcher();
 }, 1000);
 
@@ -1387,8 +1390,27 @@ Init_ActivePageData();
 //switch BackgroundColors for Screensaver Indicators
 async function Init_Screensaver_Backckground_Color_Switch() {
     try {
-        if (existsState(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', 0, true, { type: 'number' });
+        const objDef: iobJS.StateObject = {
+            _id: '',
+            type: "state",
+            common: {
+                type: "number",
+                name: "Color Indicator",
+                role: "level",
+                states: {0:'black', 1:'red', 2:'green', 3:'attention', 4: 'pink'},
+                read: true,
+                write: true
+            },
+            "native": {},
+        };
+        await extendObjectAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', objDef)
+        if (await existsStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator')) {
+            const obj = await getStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator');
+            if (obj && obj.val !== null && obj.val !== undefined) {
+                bgColorScrSaver = obj.val;
+            } else {
+                setStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', bgColorScrSaver)
+            }
         }
     } catch (err: any) { 
         log('error at function Init_Screensaver_Backckground_Color_Switch: ' + err.message, 'warn'); 
@@ -1704,8 +1726,19 @@ on({id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday',
     }
 });
 
+//Set Relays from Tasmota
+const NSPanelStatTopic = NSPanelSendTopic.replace('.cmnd.','.stat.').replace(/\.CustomSend$/g,'.');
+on({id: [String(NSPanelStatTopic) + 'POWER1',String(NSPanelStatTopic) + 'POWER2'], change: "ne"}, (obj) => {
+    if (!obj || !obj.id) return
+    const n = obj.id.substring(obj.id.length-1);
+    if ( n === '1' || n === '2') {
+        if (getState(NSPanel_Path + 'Relay.' + n).val != obj.state.val) {
+            setState(NSPanel_Path + 'Relay.' + n, obj.state.val == 'ON' ? true : false, true);
+        }
+    }
+})
 //Control Relays from DP's
-on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne"}, async function (obj) {
+on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne", ack: false}, async function (obj) {
     try {
         let Button = obj.id!.split('.');        
         let urlString: string = ['http://',get_current_tasmota_ip_address(),'/cm?cmnd=Power',Button[Button.length - 1],' ',(obj.state ? obj.state.val : "")].join('');
@@ -1939,11 +1972,11 @@ async function InitDimmode() {
                 timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
             };
             // timeDimMode Day
-            scheduleInitDimModeDay = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, () => {
+            scheduleInitDimModeDay = adapterSchedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0}, 24 * 60 * 60, () => {
                 ScreensaverDimmode(timeDimMode);
             });
             // timeDimMode Night
-            scheduleInitDimModeNight = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
+            scheduleInitDimModeNight = adapterSchedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, 24 * 60 * 60, () => {
                 ScreensaverDimmode(timeDimMode);
             });
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
@@ -2142,7 +2175,7 @@ let pageId = 0;
 let activePage: PageType | undefined = undefined;
 
 //Send time to NSPanel
-let scheduleSendTime = schedule('* * * * *', () => {
+let scheduleSendTime = adapterSchedule(new Date().setMilliseconds(0), 1, () => {
     try {
         SendTime();
         HandleScreensaverUpdate();
@@ -2152,7 +2185,7 @@ let scheduleSendTime = schedule('* * * * *', () => {
 });
 
 //Switch between Screensaver Entities and WeatherForecast
-let scheduleSwichScreensaver = schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
+let scheduleSwichScreensaver = adapterSchedule(undefined, parseInt(getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val), () => {
     try {
         //WeatherForecast true/false Switchover delayed
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
@@ -2211,17 +2244,17 @@ on({id: [config.weatherEntity + '.TEMP',
     }
 });
 
-let scheduleSendDate = schedule('0 * * * *', () => {
+let scheduleSendDate = adapterSchedule((new Date().setMinutes(0,0)),60*60, () => {
     SendDate();
 });
 
 // 3:30 a.m. Perform startup and receive current TFT version
-let scheduleStartup = schedule({ hour: 3, minute: 30 }, async () => {
+let scheduleStartup = adapterSchedule({ hour: 3, minute: 30 }, 24*60*60, async () => {
     setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 });
 
 // Updates currently compare every 12 hours
-let scheduleCheckUpdates = schedule('{"time":{"start":"00:00","end":"23:59","mode":"hours","interval":12},"period":{"days":1}}', () => {
+let scheduleCheckUpdates = adapterSchedule(undefined,60*60*12, () => {
     get_tasmota_status0();
     get_panel_update_data();
     check_updates();
@@ -3330,25 +3363,29 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
         // ioBroker
         if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
  
-            let iconColor = rgb_dec565(config.defaultColor);
-            let optVal = '0';
+            let iconColor:number = rgb_dec565(config.defaultColor);
+            let optVal:string = '0';
             let val: any = null;
  
-            let o:any
+            let o:any = undefined;
             if (pageItem.id != null && existsObject(pageItem.id)) {
                 o = getObject(pageItem.id);
             } 
  
             // Fallback if no name is given
             name = pageItem.name !== undefined ? pageItem.name : o.common.name.de == undefined ? o.common.name : o.common.name.de;
-            let prefix = pageItem.prefixName !== undefined ? pageItem.prefixName : '';
-            let suffix = pageItem.suffixName !== undefined ? pageItem.suffixName : '';
+            const prefix = pageItem.prefixName !== undefined ? pageItem.prefixName : '';
+            const suffix = pageItem.suffixName !== undefined ? pageItem.suffixName : '';
  
             // If name is used with changing values
             if ((name || '').indexOf('getState(') != -1) {
                 let dpName: string = name.slice(10, name.length -6);
                 name = getState(dpName).val;
                 RegisterEntityWatcher(dpName);
+            }
+            else if ((name || '').split('.').length > 3 && existsState(name)) {
+                name = getState(name).val;
+                RegisterEntityWatcher(name);
             }
             name = prefix + name + suffix;
  
@@ -8594,7 +8631,6 @@ function HandleScreensaverUpdate(): void {
 
                 //Alternativ Layout bekommt zusätzlichen Status
                 if (config.bottomScreensaverEntity[4] && getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
-                    log('alternativ');
                     let val = getState(config.bottomScreensaverEntity[4].ScreensaverEntity).val;
                     if (parseFloat(val+"") == val) {     
                         val = parseFloat(val);
@@ -9024,6 +9060,8 @@ function HandleScreensaverColors(): void {
             scrSvrBGCol = rgb_dec565(scbackgroundInd2);
         } else if (bgColorScrSaver == 3) {
             scrSvrBGCol = rgb_dec565(scbackgroundInd3);
+        } else if (bgColorScrSaver == 4) {
+            scrSvrBGCol = rgb_dec565({red:255, green:16, blue:240});
         }
 
         let payloadString = 'color'                     + '~' +
@@ -9632,6 +9670,39 @@ type PageUnlock = NSPanel.PageUnlock;
 type PageAlarm = NSPanel.PageAlarm;
 
 
+
+// dont work with summer/winter time has to be fixed
+function adapterSchedule(time: {hour?: number, minute?: number} | undefined | number, repeatTime: number, callback: () => void): number|null {
+    if (typeof callback !== 'function') return null
+    const ref = Math.random() + 1;
+    scheduleList[ref] = setTimeout(_schedule, 1, time, ref, repeatTime, callback), true;
+    return ref;
+}
+
+function _schedule(time: {hour?: number, minute?: number} | undefined | number, ref: number, repeatTime, callback, init: boolean = false) {
+    if (!scheduleList[ref]) return;
+    if (!init) callback();
+    let targetTime: number;
+    if ( time === undefined) {
+        targetTime = new Date().setMilliseconds(0) + repeatTime * 1000;
+    } else if (typeof time === 'number') {
+        targetTime = time + repeatTime * 1000;
+    } else {
+        time.hour = time.hour !== undefined ? time.hour : 0;
+        time.minute = time.minute !== undefined ? time.minute : 0;
+        targetTime = time.hour !== undefined ? new Date().setHours(time.hour, time.minute, 0) : new Date().setMinutes(time.minute, 0);
+        if (new Date().getTime() > targetTime) {
+            targetTime += repeatTime * 1000;
+        }
+    }
+    const timeout = targetTime - new Date().getTime();
+    scheduleList[ref] = setTimeout(_schedule, timeout, targetTime, ref, repeatTime, callback);
+}
+function _clearSchedule(ref: number): null {
+    if (scheduleList[ref]) clearTimeout(scheduleList[ref]);
+    delete scheduleList[ref];
+    return null;
+}  
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const
 const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const
 
@@ -9844,7 +9915,8 @@ namespace NSPanel {
         setThermoAlias?: string[],
         setThermoDestTemp2?: string,
     } & PageBaseItem
-
+    // mean string start with getState(' and end with ').val
+    type getStateID = string;
     export type PageBaseItem = {
         id?: string | null,
         icon?: string,
@@ -9866,7 +9938,7 @@ namespace NSPanel {
         stepValue?: number,
         prefixName?: string,
         suffixName?: string,
-        name?: string,
+        name?: string | getStateID,
         secondRow?: string,
         buttonText?: string,
         unit?: string,
