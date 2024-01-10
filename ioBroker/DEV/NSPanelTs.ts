@@ -5130,8 +5130,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                             vElapsed = vElapsed.slice(1);    
                         }
                     } 
-		    if (vElapsed == 0) {
-                            vElapsed = '0:00';    
+                    if (vElapsed == 0) {
+                        vElapsed = '0:00';    
                     } 
                     let vDuration = Duration;
                     if (vDuration.length == 5) {
