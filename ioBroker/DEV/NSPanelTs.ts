@@ -9675,8 +9675,8 @@ type PageAlarm = NSPanel.PageAlarm;
 
 /**
  * 
- * @param time  object: { hour: number, minutes: number } | starttime
- * @param repeatTime in ms
+ * @param time  object { hour: number, minutes: number } | number: Time as number in ms
+ * @param repeatTime in seconds
  * @param callback what todo
  * @returns 
  */
@@ -9687,7 +9687,7 @@ function adapterSchedule(time: {hour?: number, minute?: number} | undefined | nu
     return ref;
 }
 
-function _schedule(time: {hour?: number, minute?: number} | undefined | number, ref: number, repeatTime, callback, init: boolean = false) {
+function _schedule(time: {hour?: number, minute?: number} | undefined | number, ref: number, repeatTime: number, callback, init: boolean = false) {
     if (!scheduleList[ref]) return;
     if (!init) callback();
     let targetTime: number;
@@ -9698,12 +9698,12 @@ function _schedule(time: {hour?: number, minute?: number} | undefined | number, 
         targetTime = time + repeatTime * 1000;
         time = targetTime;
     } else {
-        time.hour = time.hour !== undefined ? time.hour : 1;
+        time.hour = time.hour !== undefined ? time.hour : -1;
         time.minute = time.minute !== undefined ? time.minute : 0;
-        targetTime = time.hour !== -1 ? new Date().setHours(time.hour, time.minute, 0) : new Date().setMinutes(time.minute, 0);
-        if (new Date().getTime() > targetTime) {
+        targetTime = time.hour !== -1 ? new Date().setHours(time.hour, time.minute, 0, 0) : new Date().setMinutes(time.minute, 0, 0);
+        if (new Date().getTime() >= targetTime) {
             targetTime += repeatTime * 1000;
-            targetTime = time.hour !== -1 ? new Date(targetTime).setHours(time.hour, time.minute, 0) : new Date(targetTime).setMinutes(time.minute, 0);
+            targetTime = time.hour !== -1 ? new Date(targetTime).setHours(time.hour, time.minute, 0, 0) : new Date(targetTime).setMinutes(time.minute, 0, 0);
         }
     }
     const timeout = targetTime - new Date().getTime();
