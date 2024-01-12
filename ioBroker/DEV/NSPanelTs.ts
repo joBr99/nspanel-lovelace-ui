@@ -3267,11 +3267,12 @@ function SendDate(): void {
 
 function SendTime(): void {
     try {
-        const d = new Date();
+        /*const d = new Date();
         const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
-        SendToPanel(<NSPanel.Payload>{ payload: 'time~' + hr + ':' + min });
+        SendToPanel(<NSPanel.Payload>{ payload: 'time~' + hr + ':' + min });*/
+        SendToPanel(<NSPanel.Payload>{ payload: `time~${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`, });
     } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
