@@ -3049,7 +3049,7 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     }
 });
 
-function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | undefined, words: Array<string> | undefined): void {
+function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | undefined, words: string[] | undefined): void {
     try {
         if (typ == 'event') {
             switch (method as NSPanel.EventMethod) {
@@ -3254,7 +3254,7 @@ function SendDate(): void {
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
             const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
-            SendToPanel(<NSPanel.Payload>{ payload: 'date~' + _SendDate });
+            SendToPanel({ payload: 'date~' + _SendDate });
         }
     } catch (err: any) {
         if (err.message = 'Cannot convert undefined or null to object') {
@@ -3271,8 +3271,8 @@ function SendTime(): void {
         const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
-        SendToPanel(<NSPanel.Payload>{ payload: 'time~' + hr + ':' + min });*/
-        SendToPanel(<NSPanel.Payload>{ payload: `time~${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`, });
+        SendToPanel({ payload: 'time~' + hr + ':' + min });*/
+        SendToPanel({ payload: `time~${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`, });
     } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
@@ -3280,7 +3280,7 @@ function SendTime(): void {
 
 function GenerateEntitiesPage(page: NSPanel.PageEntities): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<NSPanel.Payload>;
+        let out_msgs: NSPanel.Payload[];
         out_msgs = [{ payload: 'pageType~cardEntities' }]
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
@@ -3292,7 +3292,7 @@ function GenerateEntitiesPage(page: NSPanel.PageEntities): NSPanel.Payload[] {
 
 function GenerateGridPage(page: NSPanel.PageGrid): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid' }];
+        let out_msgs: NSPanel.Payload[] = [{ payload: 'pageType~cardGrid' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -3303,7 +3303,7 @@ function GenerateGridPage(page: NSPanel.PageGrid): NSPanel.Payload[] {
 
 function GenerateGridPage2(page: NSPanel.PageGrid2): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid2' }];
+        let out_msgs: NSPanel.Payload[] = [{ payload: 'pageType~cardGrid2' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -4311,7 +4311,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
     try {
         UnsubscribeWatcher();
         let id = page.items[0].id
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
         
         // ioBroker
@@ -5047,7 +5047,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (!page.items[0].id) throw new Error ('Missing page id for cardMedia!');
 
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
@@ -5335,7 +5335,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             //-------------------------------------------------------------------------------------------------------------
             // All Alexa devices (the online / player and commands directory is available) are listed and linked below
             // If the constant alexaSpeakerList contains at least one entry, the constant is used - otherwise all devices from the Alexa adapter
-            let speakerListArray: Array<string> = [];
+            let speakerListArray: string[] = [];
             if (page.items[0].speakerList && page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
                     speakerListArray.push(page.items[0].speakerList[i_index]);
@@ -5666,7 +5666,7 @@ function GenerateAlarmPage(page: NSPanel.PageAlarm): NSPanel.Payload[] {
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
@@ -5824,7 +5824,7 @@ function GenerateUnlockPage(page: NSPanel.PageUnlock): NSPanel.Payload[] {
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
 
         let dpPath : string = ''
@@ -5905,7 +5905,7 @@ function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
         activePage = page;
         if (!page.items[0].id) throw new Error ('Missing pageItem.id for cardQRPage!');
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
 
         let dpPath : string = ''
@@ -6046,7 +6046,7 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
             obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
         }
         
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardPower' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
@@ -6145,7 +6145,7 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
         activePage = page;
 
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~' + page.type });
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
@@ -7408,7 +7408,7 @@ function GetNavigationString(pageId: number): string {
 function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): NSPanel.Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         let id = pageItem.id;
 
         if (id && existsObject(id)) {
@@ -8210,7 +8210,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                                 // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
                                 actualState = ''; // Not supported by squeezeboxrpc adapter
                                 let tempPlayList: string[] = [];
-                                let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
+                                let pathParts: string[] = pageItem.adapterPlayerInstance!.split('.');
                                 for (let favorite_index = 0; favorite_index < 45; favorite_index++) {
                                     let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
                                     if (!existsObject(favorite_name_selector)) {
@@ -8812,7 +8812,7 @@ function HandleScreensaverUpdate(): void {
             }
             if (Debug) log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString, 'info');
 
-            SendToPanel(<NSPanel.Payload>{ payload: 'weatherUpdate~' + payloadString });
+            SendToPanel({ payload: 'weatherUpdate~' + payloadString });
 
             HandleScreensaverStatusIcons();
         }
@@ -9009,7 +9009,7 @@ function HandleScreensaverStatusIcons() : void {
             payloadString += '~';
         }
 
-        SendToPanel(<NSPanel.Payload>{ payload: 'statusUpdate~' + payloadString });
+        SendToPanel({ payload: 'statusUpdate~' + payloadString });
 
     } catch (err: any) {
         log('error at function HandleScreensaverStatusIcons: ' + err.message, 'warn');
@@ -9104,7 +9104,7 @@ function HandleScreensaverColors(): void {
                             rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
                             rgb_dec565(sctTimeAdd);                  //tTimeAdd
 
-        SendToPanel(<NSPanel.Payload>{ payload: payloadString });
+        SendToPanel({ payload: payloadString });
     } catch (err: any) {
         log('error at function HandleScreensaverColors: '+ err.message, 'warn');
     }
@@ -9538,7 +9538,7 @@ function Interpolate(color1: RGB, color2: RGB, fraction: number): RGB {
     let r: number = InterpolateNum(color1.red, color2.red, fraction);
     let g: number = InterpolateNum(color1.green, color2.green, fraction);
     let b: number = InterpolateNum(color1.blue, color2.blue, fraction);
-    return <RGB>{ red: Math.round(r), green: Math.round(g), blue: Math.round(b) };
+    return { red: Math.round(r), green: Math.round(g), blue: Math.round(b) };
 }
 
 function InterpolateNum(d1: number, d2: number, fraction: number): number {
