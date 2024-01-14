@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.36 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne 
+TypeScript v4.3.3.36 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -92,7 +92,7 @@ ReleaseNotes:
         - 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
         - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity
         - 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
-        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status for Blinds while bug in updating data points in ioBroker (reason unknown)
         - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
         - 09.01.2024 - v4.3.3.36 Fix: change ScreensaverTimeout and activeBrightness
         - 09.01.2024 - v4.3.3.36 Fix: schedule SendTime
