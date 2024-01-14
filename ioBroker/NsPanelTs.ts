@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.33 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.36 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -31,20 +31,8 @@ https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
-
-        - 17.09.2023 - v4.3.1    Upgrade TFT 53 / 4.3.1
-        - 17.09.2023 - v4.3.1.1  Add Parameter fontSize (0-4) to cardGrid (with useValue)
-        - 23.09.2023 - v4.3.1.2  Upgrade BerryDriver v9
-        - 23.09.2023 - v4.3.1.3  Fix - Change ServivceMenu from Fake-SSId to real Tasmota-SSIdParam
-        - 03.10.2023 - v4.3.1.4  Removing the examples from the NSPanelTs.ts --> https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
-        - 03.10.2023 - v4.3.1.4  Delete NsPanelTs_without_Examples.ts
-        - 12.10.2023 - v4.3.1.5  Fix Datapoint for Role timetable -> Attention use new script from TT-Tom https://github.com/tt-tom17/MyScripts/blob/main/Sonoff_NSPanel/Fahrplan_to_NSPanel.ts
-        - 19.10.2023 - v4.3.1.6  Add more Alias Device-Types to Navigation / Minor Fixes
-        - 22.10.2023 - v4.3.1.7  Fix CreateEntity (navigate) role 'light' and 'socket' and 'temperature'
-        - 30.10.2023 - v4.3.2    Upgrade TFT 53 / 4.3.2
-        - 30.10.2023 - v4.3.2.1  Fix formatDate/Date.parse with moment.js (Bugs in JS-Methodes)
-        - 07.11.2023 - v4.3.2.2  Fix Selection of screensaver layout (alternative / advanced)
-        - 08.11.2023 - v4.3.2.3  Fix Issues #1013 by laluz742 -> Parameter count mismatch: screensaver color
+	See ChangeLog all Release Notes: https://github.com/joBr99/nspanel-lovelace-ui/wiki/Release-Notes
+ 
         - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
         - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
         - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
@@ -101,9 +89,15 @@ ReleaseNotes:
         - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
-	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
- 	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
-
+        - 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
+        - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity
+        - 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
+        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+        - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
+        - 09.01.2024 - v4.3.3.36 Fix: change ScreensaverTimeout and activeBrightness
+        - 09.01.2024 - v4.3.3.36 Fix: schedule SendTime
+        - 09.01.2024 - v4.3.3.36 Fix: Function _schedule SummerTime/WinterTime
+   
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
@@ -412,9 +406,9 @@ let Unlock_Service: PageType =
     'type': 'cardUnlock',
     'heading': findLocaleServMenu('service_pages'),
     'useColor': true,
-    'items': [/*PageItem*/{ id: 'alias.0.NSPanel.Unlock',
-                          targetPage: 'NSPanel_Service_SubPage',
-                          autoCreateALias: true }
+    'items': [{ id: 'alias.0.NSPanel.Unlock',
+                targetPage: 'NSPanel_Service_SubPage',
+                autoCreateALias: true }
     ]
 };
 
@@ -425,10 +419,10 @@ let NSPanel_Service: PageType =
     'heading': findLocaleServMenu('service_menu'),
     'useColor': true,
     'items': [
-        /*PageItem*/{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
-        /*PageItem*/{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
-        /*PageItem*/{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
-        /*PageItem*/{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+        { navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
+        { navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
+        { navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
+        { id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
     ]
 };
 
@@ -442,10 +436,10 @@ let NSPanel_Service_SubPage: PageType =
     'parent': Unlock_Service,
     'home': 'Unlock_Service', 
     'items': [
-        /*PageItem*/{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
-        /*PageItem*/{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
-        /*PageItem*/{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
-        /*PageItem*/{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+        { navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
+        { navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
+        { navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
+        { id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
     ]
 };
 
@@ -459,10 +453,10 @@ let NSPanel_Service_SubPage: PageType =
             'parent': NSPanel_Service,
             'home': 'NSPanel_Service',        
             'items': [
-                /*PageItem*/{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
-                /*PageItem*/{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
-                /*PageItem*/{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
-                /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
+                { navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
+                { navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
+                { navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
+                { id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
             ]
         };
                 //Level_2
@@ -475,10 +469,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Infos,
                     'next': 'NSPanel_Wifi_Info_2',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'ipAddress', name: findLocaleServMenu('ip_address'), icon: 'ip-network-outline', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.BSSId', name: findLocaleServMenu('mac_address'), icon: 'check-network', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: findLocaleServMenu('rssi'), icon: 'signal', unit: '%', colorScale: {'val_min': 100, 'val_max': 0} },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Signal', name: findLocaleServMenu('wifi_signal'), icon: 'signal-distance-variant', unit: 'dBm', colorScale: {'val_min': 0, 'val_max': -100} },
+                        { id: AliasPath + 'ipAddress', name: findLocaleServMenu('ip_address'), icon: 'ip-network-outline', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Wifi.BSSId', name: findLocaleServMenu('mac_address'), icon: 'check-network', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Wifi.RSSI', name: findLocaleServMenu('rssi'), icon: 'signal', unit: '%', colorScale: {'val_min': 100, 'val_max': 0} },
+                        { id: AliasPath + 'Tasmota.Wifi.Signal', name: findLocaleServMenu('wifi_signal'), icon: 'signal-distance-variant', unit: 'dBm', colorScale: {'val_min': 0, 'val_max': -100} },
                     ]
                 };
 
@@ -491,10 +485,10 @@ let NSPanel_Service_SubPage: PageType =
                     'prev': 'NSPanel_Wifi_Info_1',
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.SSId', name: findLocaleServMenu('ssid'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Mode', name: findLocaleServMenu('mode'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Channel', name: findLocaleServMenu('channel'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.AP', name: findLocaleServMenu('accesspoint'), icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Wifi.SSId', name: findLocaleServMenu('ssid'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Wifi.Mode', name: findLocaleServMenu('mode'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Wifi.Channel', name: findLocaleServMenu('channel'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Wifi.AP', name: findLocaleServMenu('accesspoint'), icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -507,14 +501,14 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Infos,
                     'next': 'NSPanel_Hardware',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Sensor.ANALOG.Temperature', name: findLocaleServMenu('room_temperature'), icon: 'home-thermometer-outline', unit: '°C', colorScale: {'val_min': 0, 'val_max': 40, 'val_best': 22 } },
-                        /*PageItem*/{ id: AliasPath + 'Sensor.ESP32.Temperature', name: findLocaleServMenu('esp_temperature'), icon: 'thermometer', unit: '°C', colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 50 } },
-                        /*PageItem*/{ id: AliasPath + 'Sensor.TempUnit', name: findLocaleServMenu('temperature_unit'), icon: 'temperature-celsius', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Sensor.Time', name: findLocaleServMenu('refresh'), icon: 'clock-check-outline', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Sensor.ANALOG.Temperature', name: findLocaleServMenu('room_temperature'), icon: 'home-thermometer-outline', unit: '°C', colorScale: {'val_min': 0, 'val_max': 40, 'val_best': 22 } },
+                        { id: AliasPath + 'Sensor.ESP32.Temperature', name: findLocaleServMenu('esp_temperature'), icon: 'thermometer', unit: '°C', colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 50 } },
+                        { id: AliasPath + 'Sensor.TempUnit', name: findLocaleServMenu('temperature_unit'), icon: 'temperature-celsius', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Sensor.Time', name: findLocaleServMenu('refresh'), icon: 'clock-check-outline', offColor: Menu, onColor: Menu },
                     ]
                 };
 
-                let NSPanel_Hardware: PageEntities = 
+                let NSPanel_Hardware: PageType = 
                 {
                     'type': 'cardEntities',
                     'heading': findLocaleServMenu('hardware2'),
@@ -523,10 +517,10 @@ let NSPanel_Service_SubPage: PageType =
                     'prev': 'NSPanel_Sensoren',
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Product', name: findLocaleServMenu('product'), icon: 'devices', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Hardware', name: findLocaleServMenu('esp32_hardware'), icon: 'memory', offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_version'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Uptime', name: findLocaleServMenu('operating_time'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Product', name: findLocaleServMenu('product'), icon: 'devices', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Hardware', name: findLocaleServMenu('esp32_hardware'), icon: 'memory', offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_version'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota.Uptime', name: findLocaleServMenu('operating_time'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -539,9 +533,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Infos,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'IoBroker.ScriptName', name: findLocaleServMenu('scriptname'), offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -555,15 +550,15 @@ let NSPanel_Service_SubPage: PageType =
                 'parent': NSPanel_Service,
                 'home': 'NSPanel_Service',
                 'items': [
-                    /*PageItem*/{ navigate: true, id: 'NSPanel_Screensaver', icon: 'monitor-dashboard',offColor: Menu, onColor: Menu, name: findLocaleServMenu('screensaver'), buttonText: findLocaleServMenu('more')},
-                    /*PageItem*/{ navigate: true, id: 'NSPanel_Relays', icon: 'electric-switch', offColor: Menu, onColor: Menu, name: findLocaleServMenu('relays'), buttonText: findLocaleServMenu('more')},
-                    /*PageItem*/{ id:AliasPath + 'Config.temperatureUnitNumber', icon: 'gesture-double-tap', name: findLocaleServMenu('temp_unit'), offColor: Menu, onColor: Menu, 
+                    { navigate: true, id: 'NSPanel_Screensaver', icon: 'monitor-dashboard',offColor: Menu, onColor: Menu, name: findLocaleServMenu('screensaver'), buttonText: findLocaleServMenu('more')},
+                    { navigate: true, id: 'NSPanel_Relays', icon: 'electric-switch', offColor: Menu, onColor: Menu, name: findLocaleServMenu('relays'), buttonText: findLocaleServMenu('more')},
+                    { id:AliasPath + 'Config.temperatureUnitNumber', icon: 'gesture-double-tap', name: findLocaleServMenu('temp_unit'), offColor: Menu, onColor: Menu, 
                     modeList: ['°C', '°F', 'K']},
-                    /*PageItem*/{ id: AliasPath + 'Config.localeNumber', icon: 'select-place', name: findLocaleServMenu('language'), offColor: Menu, onColor: Menu, 
+                    { id: AliasPath + 'Config.localeNumber', icon: 'select-place', name: findLocaleServMenu('language'), offColor: Menu, onColor: Menu, 
                     modeList: ['en-US', 'de-DE', 'nl-NL', 'da-DK', 'es-ES', 'fr-FR', 'it-IT', 'ru-RU', 'nb-NO', 'nn-NO', 'pl-PL', 'pt-PT', 'af-ZA', 'ar-SY', 
                                'bg-BG', 'ca-ES', 'cs-CZ', 'el-GR', 'et-EE', 'fa-IR', 'fi-FI', 'he-IL', 'hr-xx', 'hu-HU', 'hy-AM', 'id-ID', 'is-IS', 'lb-xx', 
                                'lt-LT', 'ro-RO', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR', 'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW']},
-                   /*PageItem*/{ navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: findLocaleServMenu('script'), buttonText: findLocaleServMenu('more')},            
+                   { navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: findLocaleServMenu('script'), buttonText: findLocaleServMenu('more')},            
                 ]
             };
 
@@ -577,12 +572,12 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: findLocaleServMenu('dimmode')},
-                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: findLocaleServMenu('brightness')},
-                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('layout')},
-                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: findLocaleServMenu('weather')},
-                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: findLocaleServMenu('date_format')},
-                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('indicators')}
+                        { navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: findLocaleServMenu('dimmode')},
+                        { navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: findLocaleServMenu('brightness')},
+                        { navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('layout')},
+                        { navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: findLocaleServMenu('weather')},
+                        { navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: findLocaleServMenu('date_format')},
+                        { navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('indicators')}
                     ]
                 };
                             
@@ -596,10 +591,10 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                /*PageItem*/{ id: AliasPath + 'Dimmode.brightnessDay', name: findLocaleServMenu('brightness_day'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
-                                /*PageItem*/{ id: AliasPath + 'Dimmode.brightnessNight', name: findLocaleServMenu('brightness_night'), icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
-                                /*PageItem*/{ id: AliasPath + 'Dimmode.hourDay', name: findLocaleServMenu('hour_day'), icon: 'sun-clock', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23},
-                                /*PageItem*/{ id: AliasPath + 'Dimmode.hourNight', name: findLocaleServMenu('hour_night'), icon: 'sun-clock-outline', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23}
+                                { id: AliasPath + 'Dimmode.brightnessDay', name: findLocaleServMenu('brightness_day'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
+                                { id: AliasPath + 'Dimmode.brightnessNight', name: findLocaleServMenu('brightness_night'), icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
+                                { id: AliasPath + 'Dimmode.hourDay', name: findLocaleServMenu('hour_day'), icon: 'sun-clock', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23},
+                                { id: AliasPath + 'Dimmode.hourNight', name: findLocaleServMenu('hour_night'), icon: 'sun-clock-outline', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23}
                             ]
                         };
 
@@ -613,9 +608,9 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.activeBrightness', name: findLocaleServMenu('brightness_activ'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
-                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: findLocaleServMenu('screensaver_timeout'), icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
-                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: findLocaleServMenu('wakeup_doublecklick') ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
+                                { id: AliasPath + 'ScreensaverInfo.activeBrightness', name: findLocaleServMenu('brightness_activ'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
+                                { id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: findLocaleServMenu('screensaver_timeout'), icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
+                                { id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: findLocaleServMenu('wakeup_doublecklick') ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
                             ]
                         };
 
@@ -629,8 +624,8 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
-                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -644,10 +639,10 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.weatherForecast', name: findLocaleServMenu('weather_forecast_offon') ,icon: 'weather-sunny-off', offColor: HMIOff, onColor: HMIOn},
-                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.weatherForecastTimer', name: findLocaleServMenu('weather_forecast_change_switch') ,icon: 'devices', offColor: HMIOff, onColor: HMIOn},
-                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.entityChangeTime', name: findLocaleServMenu('weather_forecast_change_time'), icon: 'cog-sync', offColor: Menu, onColor: Menu, minValue: 15, maxValue: 60},
-                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', name: findLocaleServMenu('weather_forecast_icon_colors') ,icon: 'format-color-fill', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'ScreensaverInfo.weatherForecast', name: findLocaleServMenu('weather_forecast_offon') ,icon: 'weather-sunny-off', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'ScreensaverInfo.weatherForecastTimer', name: findLocaleServMenu('weather_forecast_change_switch') ,icon: 'devices', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'ScreensaverInfo.entityChangeTime', name: findLocaleServMenu('weather_forecast_change_time'), icon: 'cog-sync', offColor: Menu, onColor: Menu, minValue: 15, maxValue: 60},
+                                { id: AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', name: findLocaleServMenu('weather_forecast_icon_colors') ,icon: 'format-color-fill', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -661,8 +656,8 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                /*PageItem*/{ id: AliasPath + 'Config.Dateformat.Switch.weekday', name: findLocaleServMenu('weekday_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
-                                /*PageItem*/{ id: AliasPath + 'Config.Dateformat.Switch.month', name: findLocaleServMenu('month_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'Config.Dateformat.Switch.weekday', name: findLocaleServMenu('weekday_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'Config.Dateformat.Switch.month', name: findLocaleServMenu('month_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -676,8 +671,8 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                /*PageItem*/{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.1', name: findLocaleServMenu('mr_icon1_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
-                                /*PageItem*/{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.2', name: findLocaleServMenu('mr_icon2_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'Config.MRIcons.alternateMRIconSize.1', name: findLocaleServMenu('mr_icon1_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
+                                { id: AliasPath + 'Config.MRIcons.alternateMRIconSize.2', name: findLocaleServMenu('mr_icon2_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -691,8 +686,8 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Relay.1', name: findLocaleServMenu('relay1_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
-                        /*PageItem*/{ id: AliasPath + 'Relay.2', name: findLocaleServMenu('relay2_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                        { id: AliasPath + 'Relay.1', name: findLocaleServMenu('relay1_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                        { id: AliasPath + 'Relay.2', name: findLocaleServMenu('relay2_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
@@ -706,8 +701,8 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Config.ScripgtDebugStatus', name: findLocaleServMenu('debugmode_offon') ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
-                        /*PageItem*/{ id: AliasPath + 'Config.MQTT.portCheck', name: findLocaleServMenu('port_check_offon') ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
+                        { id: AliasPath + 'Config.ScripgtDebugStatus', name: findLocaleServMenu('debugmode_offon') ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
+                        { id: AliasPath + 'Config.MQTT.portCheck', name: findLocaleServMenu('port_check_offon') ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
@@ -721,10 +716,10 @@ let NSPanel_Service_SubPage: PageType =
                 'parent': NSPanel_Service,
                 'home': 'NSPanel_Service',
                 'items': [
-                    /*PageItem*/{ id: AliasPath + 'autoUpdate', name: findLocaleServMenu('automatically_updates') ,icon: 'power', offColor: HMIOff, onColor: HMIOn},
-                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareTasmota', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('tasmota_firmware'), buttonText: findLocaleServMenu('more')},
-                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareBerry', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('berry_driver'), buttonText: findLocaleServMenu('more')},
-                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareNextion', icon: 'cellphone-cog', offColor: Menu, onColor: Menu, name: findLocaleServMenu('nextion_tft_firmware'), buttonText: findLocaleServMenu('more')}
+                    { id: AliasPath + 'autoUpdate', name: findLocaleServMenu('automatically_updates') ,icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                    { navigate: true, id: 'NSPanel_FirmwareTasmota', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('tasmota_firmware'), buttonText: findLocaleServMenu('more')},
+                    { navigate: true, id: 'NSPanel_FirmwareBerry', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('berry_driver'), buttonText: findLocaleServMenu('more')},
+                    { navigate: true, id: 'NSPanel_FirmwareNextion', icon: 'cellphone-cog', offColor: Menu, onColor: Menu, name: findLocaleServMenu('nextion_tft_firmware'), buttonText: findLocaleServMenu('more')}
                 ]
             };
 
@@ -737,10 +732,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Tasmota.Version', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Tasmota_Firmware.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu },                        
-                        /*PageItem*/{ id: 'Divider' },
-                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateTasmota', name: findLocaleServMenu('update_tasmota') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        { id: AliasPath + 'Tasmota.Version', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Tasmota_Firmware.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu },                        
+                        { id: 'Divider' },
+                        { id: AliasPath + 'Config.Update.UpdateTasmota', name: findLocaleServMenu('update_tasmota') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -753,10 +748,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Display.BerryDriver', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Berry_Driver.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu},                        
-                        /*PageItem*/{ id: 'Divider' },
-                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateBerry', name: findLocaleServMenu('update_berry_driver') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        { id: AliasPath + 'Display.BerryDriver', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Berry_Driver.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu},                        
+                        { id: 'Divider' },
+                        { id: AliasPath + 'Config.Update.UpdateBerry', name: findLocaleServMenu('update_berry_driver') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -769,10 +764,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        /*PageItem*/{ id: AliasPath + 'Display_Firmware.TFT.currentVersion', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Display_Firmware.TFT.desiredVersion', name: findLocaleServMenu('desired_release'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_model'), offColor: Menu, onColor: Menu },
-                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateNextion', name: 'Nextion TFT Update' ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        { id: AliasPath + 'Display_Firmware.TFT.currentVersion', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Display_Firmware.TFT.desiredVersion', name: findLocaleServMenu('desired_release'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_model'), offColor: Menu, onColor: Menu },
+                        { id: AliasPath + 'Config.Update.UpdateNextion', name: 'Nextion TFT Update' ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -920,10 +915,11 @@ export const config: Config = {
         ScreensaverEntityOnColor: On,
         ScreensaverEntityOffColor: HMIOff
     },
-    // ------ DE: Ende der Screensaver Einstellungen --------------------
-    // ------ EN: End of screensaver settings ---------------------------
-    //-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
-    //-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
+// ------ DE: Ende der Screensaver Einstellungen --------------------
+// ------ EN: End of screensaver settings ---------------------------
+
+//-------DE: Anfang Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//-------EN: Start Settings for Hardware Button, if used in software (Rule2) --------------------------------------
     // DE: Konfiguration des linken Schalters des NSPanels
     // EN: Configuration of the left switch of the NSPanel
     button1: {
@@ -949,8 +945,10 @@ export const config: Config = {
         entity: null,
         setValue: null
     },
-    //--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
-    //--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
+
+//--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
+//--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
+
     // DE: WICHTIG !! Parameter nicht ändern  WICHTIG!!
     // EN: IMPORTANT !! Do not change parameters IMPORTANT!!
     panelRecvTopic: NSPanelReceiveTopic,
@@ -965,7 +963,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.33';
+const scriptVersion: string = 'v4.3.3.36';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -984,6 +982,8 @@ const dayjs = require('dayjs');
 const moment  = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
+
+const scheduleList:{[key:string]: any} = {};
 
 const globalTextColor: any = White; 
 const Sliders2: number = 0;
@@ -1023,13 +1023,13 @@ let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any; 
 
 onStop (function scriptStop () {
-    if (scheduleSendTime!=null) clearSchedule(scheduleSendTime);
-    if (scheduleSendDate!=null) clearSchedule(scheduleSendDate);
-    if (scheduleSwichScreensaver!=null) clearSchedule(scheduleSwichScreensaver);
-    if (scheduleStartup!=null) clearSchedule(scheduleStartup);
-    if (scheduleCheckUpdates!=null) clearSchedule(scheduleCheckUpdates);
-    if (scheduleInitDimModeDay!=null) clearSchedule(scheduleInitDimModeDay);
-    if (scheduleInitDimModeNight!=null) clearSchedule(scheduleInitDimModeNight);
+    if (scheduleSendTime!=null) _clearSchedule(scheduleSendTime);
+    if (scheduleSendDate!=null) _clearSchedule(scheduleSendDate);
+    if (scheduleSwichScreensaver!=null) _clearSchedule(scheduleSwichScreensaver);
+    if (scheduleStartup!=null) _clearSchedule(scheduleStartup);
+    if (scheduleCheckUpdates!=null) _clearSchedule(scheduleCheckUpdates);
+    if (scheduleInitDimModeDay!=null) _clearSchedule(scheduleInitDimModeDay);
+    if (scheduleInitDimModeNight!=null) _clearSchedule(scheduleInitDimModeNight);
     UnsubscribeWatcher();
 }, 1000);
 
@@ -1039,7 +1039,18 @@ async function CheckConfigParameters() {
             log('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> is not reachable. Please Check Parameters!','error');
         }
         if (existsObject(config.panelSendTopic) == false) {
-            log('Config-Parameter: << config.panelSendTopic - ' + config.panelSendTopic + ' >> is not reachable. Please Check Parameters!','error');
+            const n = config.panelSendTopic.split('.');
+            const a = n.shift();
+            const i = n.shift();
+            
+            if (a === 'mqtt' && !isNaN(Number(i))) {
+                sendTo(`${a}.${i}`, 'sendMessage2Client', {topic: n.join('/'), message: 'time~12:00'});
+                await sleep(500);
+            }
+            if (await existsObjectAsync(config.panelSendTopic) == false) {
+                log('Config-Parameter: << config.panelSendTopic - ' + config.panelSendTopic + ' >> is not reachable. Please Check Parameters!','error');
+                stopScript(scriptName);
+            }
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'daswetter') {
             if (existsObject(weatherAdapterInstance + 'NextHours.Location_1.Day_1.current.symbol_value') == false)  {
@@ -1064,6 +1075,7 @@ async function CheckConfigParameters() {
                 if (common.name == 'javascript') {
                     javaScriptVersion = common.version;
                     setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion);
+                    setIfExists(NSPanel_Path + 'IoBroker.ScriptName', (name as unknown as string).split('.').slice(2).join('.'));
                     let jsVersion = common.version.split('.');
                     let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
                     if (jsV<61) log('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version, 'error');
@@ -1105,17 +1117,21 @@ async function InitIoBrokerInfo() {
     try {
         if (isSetOptionActive) {
             // Script Version
-            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion, { type: 'string' });
+            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion, { type: 'string', write: false });
             setObject(AliasPath + 'IoBroker.ScriptVersion', {type: 'channel', common: {role: 'info', name:'Version NSPanelTS'}, native: {}});
             await createAliasAsync(AliasPath + 'IoBroker.ScriptVersion.ACTUAL', NSPanel_Path + 'IoBroker.ScriptVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
             // NodeJS Verion
-            await createStateAsync(NSPanel_Path + 'IoBroker.NodeJSVersion', 'v' + nodeVersion, { type: 'string' });
+            await createStateAsync(NSPanel_Path + 'IoBroker.NodeJSVersion', 'v' + nodeVersion, { type: 'string', write: false });
             setObject(AliasPath + 'IoBroker.NodeJSVersion', {type: 'channel', common: {role: 'info', name:'Version NodeJS'}, native: {}});
             await createAliasAsync(AliasPath + 'IoBroker.NodeJSVersion.ACTUAL', NSPanel_Path + 'IoBroker.NodeJSVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
             // JavaScript Version
-            await createStateAsync(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion, { type: 'string' });
+            await createStateAsync(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion, { type: 'string', write: false });
             setObject(AliasPath + 'IoBroker.JavaScriptVersion', {type: 'channel', common: {role: 'info', name:'Version JavaScript Instanz'}, native: {}});
             await createAliasAsync(AliasPath + 'IoBroker.JavaScriptVersion.ACTUAL', NSPanel_Path + 'IoBroker.JavaScriptVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
+            // ScriptName
+            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptName', 'v' + javaScriptVersion, { type: 'string', write: false });
+            setObject(AliasPath + 'IoBroker.ScriptName', {type: 'channel', common: {role: 'info', name:'Scriptname'}, native: {}});
+            await createAliasAsync(AliasPath + 'IoBroker.ScriptName.ACTUAL', NSPanel_Path + 'IoBroker.ScriptName', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
         }
         setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
     } catch (err: any) {
@@ -1127,7 +1143,7 @@ InitIoBrokerInfo();
 async function CheckDebugMode() {
     try {
         if (isSetOptionActive) {
-            await createStateAsync(NSPanel_Path + 'Config.ScripgtDebugStatus', false, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.ScripgtDebugStatus', false, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.ScripgtDebugStatus', {type: 'channel', common: {role: 'socket', name:'ScripgtDebugStatus'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.ACTUAL', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.ScripgtDebugStatus.SET', NSPanel_Path + 'Config.ScripgtDebugStatus', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
@@ -1152,7 +1168,7 @@ async function CheckMQTTPorts() {
         let instanceName: string = config.panelRecvTopic.substring(0,6);
 
         if (isSetOptionActive) {
-            await createStateAsync(NSPanel_Path + 'Config.MQTT.portCheck', true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.MQTT.portCheck', true, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.MQTT.portCheck', {type: 'channel', common: {role: 'socket', name:'mqttPortCheck'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.MQTT.portCheck.ACTUAL', NSPanel_Path + 'Config.MQTT.portCheck', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.MQTT.portCheck.SET', NSPanel_Path + 'Config.MQTT.portCheck', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
@@ -1210,13 +1226,13 @@ async function Init_Release() {
     const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.3','4.4.0','4.5.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
-            await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number' });
+            await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
         } else {
             await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version);
         }
 
         if (existsObject(NSPanel_Path + 'Config.Update.activ') == false) {
-            await createStateAsync(NSPanel_Path + 'Config.Update.activ', 1, { type: 'number' });
+            await createStateAsync(NSPanel_Path + 'Config.Update.activ', 1, { type: 'number', write: false });
         } else {
             await setStateAsync(NSPanel_Path + 'Config.Update.activ', 0);
         }
@@ -1233,8 +1249,8 @@ async function Init_Release() {
         if (existsObject(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion') == false) {
             //Create TFT DP's
             if (isSetOptionActive) {
-                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], { type: 'string' });
-                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version, { type: 'string' });
+                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], { type: 'string', write: false });
+                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version, { type: 'string', write: false });
                 setObject(AliasPath + 'Display_Firmware.TFT.currentVersion', {type: 'channel', common: {role: 'info', name:'current TFT-Version'}, native: {}});
                 setObject(AliasPath + 'Display_Firmware.TFT.desiredVersion', {type: 'channel', common: {role: 'info', name:'desired TFT-Version'}, native: {}});
                 await createAliasAsync(AliasPath + 'Display_Firmware.TFT.currentVersion.ACTUAL', NSPanel_Path + 'Display_Firmware.TFT.currentVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
@@ -1255,54 +1271,54 @@ async function InitConfigParameters() {
     try {
         if (isSetOptionActive) {
             // alternativeScreensaverLayout (socket)
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', false, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', false, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', {type: 'channel', common: {role: 'socket', name:'alternativeScreensaverLayout'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.Screensaver.alternativeScreensaverLayout.ACTUAL', NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.Screensaver.alternativeScreensaverLayout.SET', NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
 
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.Screensaver.ScreensaverAdvanced', {type: 'channel', common: {role: 'socket', name:'ScreensaverAdvanced'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.Screensaver.ScreensaverAdvanced.ACTUAL', NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.Screensaver.ScreensaverAdvanced.SET', NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
 
             // autoWeatherColorScreensaverLayout (socket)
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout', true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout', true, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', {type: 'channel', common: {role: 'socket', name:'alternativeScreensaverLayout'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout.ACTUAL', NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout.SET', NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
 
             // timeoutScreensaver 0-60 (Slider)
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver', 10, { type: 'number' });
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver', 10, { type: 'number', write: true });
             setObject(AliasPath + 'Config.Screensaver.timeoutScreensaver', {type: 'channel', common: {role: 'slider', name:'timeoutScreensaver'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.Screensaver.timeoutScreensaver.ACTUAL', NSPanel_Path + 'Config.Screensaver.timeoutScreensaver', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.Screensaver.timeoutScreensaver.SET', NSPanel_Path + 'Config.Screensaver.timeoutScreensaver', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
 
             // screenSaverDoubleClick (socket)
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick', true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick', true, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.Screensaver.screenSaverDoubleClick', {type: 'channel', common: {role: 'socket', name:'screenSaverDoubleClick'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.Screensaver.screenSaverDoubleClick.ACTUAL', NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
             await createAliasAsync(AliasPath + 'Config.Screensaver.screenSaverDoubleClick.SET', NSPanel_Path + 'Config.Screensaver.screenSaverDoubleClick', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
 
             if (existsObject(NSPanel_Path + 'Config.locale') == false) {
                 // en-US, de-DE, nl-NL, da-DK, es-ES, fr-FR, it-IT, ru-RU, etc.    
-                await createStateAsync(NSPanel_Path + 'Config.locale', 'de-DE', { type: 'string' });
+                await createStateAsync(NSPanel_Path + 'Config.locale', 'de-DE', { type: 'string', write: true });
                 setStateAsync(NSPanel_Path + 'Config.locale', 'de-DE');
             }
 
             if (existsObject(NSPanel_Path + 'Config.temperatureUnit') == false) {
                 // '°C', '°F', 'K'
-                await createStateAsync(NSPanel_Path + 'Config.temperatureUnit', '°C', { type: 'string' });
+                await createStateAsync(NSPanel_Path + 'Config.temperatureUnit', '°C', { type: 'string', write: true });
             }
 
             // locale Tastensensor popupInSel buttonSensor
             if (existsObject(NSPanel_Path + 'Config.localeNumber') == false) {
-                await createStateAsync(NSPanel_Path + 'Config.localeNumber', 1, { type: 'number' });
+                await createStateAsync(NSPanel_Path + 'Config.localeNumber', 1, { type: 'number', write: true });
                 setObject(AliasPath + 'Config.localeNumber', {type: 'channel', common: {role: 'buttonSensor', name:'localeNumber'}, native: {}});
                 await createAliasAsync(AliasPath + 'Config.localeNumber.VALUE', NSPanel_Path + 'Config.localeNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
             }
             // temperatureUnit popupInSel buttonSensor
             if (existsObject(NSPanel_Path + 'Config.temperatureUnitNumber') == false) {
-                await createStateAsync(NSPanel_Path + 'Config.temperatureUnitNumber', 0, { type: 'number' });
+                await createStateAsync(NSPanel_Path + 'Config.temperatureUnitNumber', 0, { type: 'number', write: true });
                 setObject(AliasPath + 'Config.temperatureUnitNumber', {type: 'channel', common: {role: 'buttonSensor', name:'temperatureUnitNumber'}, native: {}});
                 await createAliasAsync(AliasPath + 'Config.temperatureUnitNumber.VALUE', NSPanel_Path + 'Config.temperatureUnitNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
             }
@@ -1345,7 +1361,7 @@ on({id: [NSPanel_Path + 'Config.localeNumber',
 async function Init_ScreensaverAdvanced() {
     try {
         if (existsState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced') == false ) { 
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean', write: true });
         }
     } catch (err: any) { 
         log('error at function Init_ScreensaverAdvanced: ' + err.message, 'warn'); 
@@ -1363,13 +1379,13 @@ function CheckEnableSetObject() {
 async function Init_ActivePageData() {
     try {
         if (existsState(NSPanel_Path + 'ActivePage.heading') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string' });
+            await createStateAsync(NSPanel_Path + 'ActivePage.heading', '', true, { type: 'string', write: false });
         }
         if (existsState(NSPanel_Path + 'ActivePage.type') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string' });
+            await createStateAsync(NSPanel_Path + 'ActivePage.type', '', true, { type: 'string', write: false });
         }
         if (existsState(NSPanel_Path + 'ActivePage.id0') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ActivePage.id0', '', true, { type: 'string' });
+            await createStateAsync(NSPanel_Path + 'ActivePage.id0', '', true, { type: 'string', write: false });
         }
     } catch (err: any) { 
         log('error at function Init_ActivePageData: ' + err.message, 'warn'); 
@@ -1380,8 +1396,27 @@ Init_ActivePageData();
 //switch BackgroundColors for Screensaver Indicators
 async function Init_Screensaver_Backckground_Color_Switch() {
     try {
-        if (existsState(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', 0, true, { type: 'number' });
+        const objDef: iobJS.StateObject = {
+            _id: '',
+            type: "state",
+            common: {
+                type: "number",
+                name: "Color Indicator",
+                role: "level",
+                states: {0:'black', 1:'red', 2:'green', 3:'attention', 4: 'pink', 5: 'dark red'},
+                read: true,
+                write: true
+            },
+            "native": {},
+        };
+        await extendObjectAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', objDef)
+        if (await existsStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator')) {
+            const obj = await getStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator');
+            if (obj && obj.val !== null && obj.val !== undefined) {
+                bgColorScrSaver = obj.val;
+            } else {
+                setStateAsync(NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', bgColorScrSaver)
+            }
         }
     } catch (err: any) { 
         log('error at function Init_Screensaver_Backckground_Color_Switch: ' + err.message, 'warn'); 
@@ -1425,7 +1460,7 @@ async function Init_bExit_Page_Change() {
         alwaysOn = false;
         pageCounter = 0;
         if (existsState(NSPanel_Path + 'ScreensaverInfo.bExitPage') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', -1, true, { type: 'number' });
+            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.bExitPage', -1, true, { type: 'number', write: true });
         }
     } catch (err: any) { 
         log('error at function Init_bExit_Page_Change: ' + err.message, 'warn'); 
@@ -1437,7 +1472,7 @@ Init_bExit_Page_Change();
 async function Init_Dimmode_Trigger() {
     try {
         if (existsState(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode') == false ) { 
-            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode', false, true, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'ScreensaverInfo.Trigger_Dimmode', false, true, { type: 'boolean', write: true });
         }
     } catch (err: any) { 
         log('error at function Init_Dimmode_Trigger: ' + err.message, 'warn'); 
@@ -1450,8 +1485,8 @@ async function InitActiveBrightness() {
         if (isSetOptionActive) {
             if (existsState(NSPanel_Path + 'ScreensaverInfo.activeBrightness') == false ||
                 existsState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness') == false) {
-                await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeBrightness', 100, { type: 'number' });         
-                await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', -1, { type: 'number' });
+                await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeBrightness', 100, { type: 'number', write: true });         
+                await createStateAsync(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness', -1, { type: 'number', write: true });
             }
             //Create Alias activeBrightness
             setObject(AliasPath + 'ScreensaverInfo.activeBrightness', {type: 'channel', common: {role: 'slider', name:'activeBrightness'}, native: {}});
@@ -1463,6 +1498,19 @@ async function InitActiveBrightness() {
     }
 }
 InitActiveBrightness();
+
+on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, async function (obj) {
+    try {
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+        if (obj.state.val >= 0 || obj.state.val <= 100) {
+        log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
+        SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+        InitDimmode();
+        }
+    } catch (err:any) {
+            log('error at trigger activeBrightness: ' + err.message, 'warn');
+    }
+});
 
 on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"}, async function (obj) {
     try {
@@ -1510,7 +1558,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"},
 async function InitRebootPanel() {
     try {
         if (existsState(NSPanel_Path + 'Config.rebootNSPanel') == false) {
-            await createStateAsync(NSPanel_Path + 'Config.rebootNSPanel', false, { type: 'boolean' });
+            await createStateAsync(NSPanel_Path + 'Config.rebootNSPanel', false, { type: 'boolean', write: true });
             setObject(AliasPath + 'Config.rebootNSPanel', {type: 'channel', common: {role: 'button', name:'Reboot NSPanel'}, native: {}});
             await createAliasAsync(AliasPath + 'Config.rebootNSPanel.SET', NSPanel_Path + 'Config.rebootNSPanel', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SET' });
         }
@@ -1540,7 +1588,9 @@ on({id: AliasPath + 'Config.rebootNSPanel.SET', change: "any"}, async function (
                     }
                 })
                 .catch(function (error) {
-                    log(error, 'warn');
+                    if (error.code === 'EHOSTUNREACH') {
+                        log(`Can't connect to display!`, 'warn')
+                    } else log(error, 'warn');
                 })
                 .finally(function () {
                     if (Debug) {
@@ -1557,9 +1607,9 @@ async function InitUpdateDatapoints() {
     try {
         if (existsState(NSPanel_Path + 'Config.Update.UpdateTasmota') == false) {
             if (isSetOptionActive) {
-                await createStateAsync(NSPanel_Path + 'Config.Update.UpdateTasmota', false, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + 'Config.Update.UpdateBerry', false, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + 'Config.Update.UpdateNextion', false, { type: 'boolean' });
+                await createStateAsync(NSPanel_Path + 'Config.Update.UpdateTasmota', false, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + 'Config.Update.UpdateBerry', false, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + 'Config.Update.UpdateNextion', false, { type: 'boolean', write: true });
                 setObject(AliasPath + 'Config.Update.UpdateTasmota', {type: 'channel', common: {role: 'button', name:'Tassmota update'}, native: {}});
                 setObject(AliasPath + 'Config.Update.UpdateBerry', {type: 'channel', common: {role: 'button', name:'Berry-Driver update'}, native: {}});
                 setObject(AliasPath + 'Config.Update.UpdateNextion', {type: 'channel', common: {role: 'button', name:'Nextion TFT update'}, native: {}});
@@ -1603,8 +1653,8 @@ async function Init_Relays() {
         if (isSetOptionActive) {
             if (existsState(NSPanel_Path + 'Relay.1') == false ||
                 existsState(NSPanel_Path + 'Relay.2') == false) {
-                await createStateAsync(NSPanel_Path + 'Relay.1', true, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + 'Relay.2', true, { type: 'boolean' });
+                await createStateAsync(NSPanel_Path + 'Relay.1', true, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + 'Relay.2', true, { type: 'boolean', write: true });
             }
             setObject(AliasPath + 'Relay.1', {type: 'channel', common: {role: 'socket', name:'Relay.1'}, native: {}});
             await createAliasAsync(AliasPath + 'Relay.1.ACTUAL', NSPanel_Path + 'Relay.1', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
@@ -1626,8 +1676,8 @@ async function InitAlternateMRIconsSize() {
         if (isSetOptionActive) {
             if (existsState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1') == false ||
                 existsState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2') == false) {
-                await createStateAsync(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1', false, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', false, { type: 'boolean' });
+                await createStateAsync(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1', false, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2', false, { type: 'boolean', write: true });
             }
             //Create Alias alternateMRIconSize 1
             setObject(AliasPath + 'Config.MRIcons.alternateMRIconSize.1', {type: 'channel', common: {role: 'socket', name:'alternateMRIconSize.1'}, native: {}});
@@ -1651,14 +1701,14 @@ async function InitDateformat() {
             if (existsState(NSPanel_Path + 'Config.Dateformat.weekday') == false ||
                 existsState(NSPanel_Path + 'Config.Dateformat.month') == false ||
                 existsState(NSPanel_Path + 'Config.Dateformat.customFormat') == false) {
-                await createStateAsync(NSPanel_Path + 'Config.Dateformat.weekday', 'long', { type: 'string' });
-                await createStateAsync(NSPanel_Path + 'Config.Dateformat.month', 'long', { type: 'string' });
-                await createStateAsync(NSPanel_Path + 'Config.Dateformat.customFormat', '', { type: 'string' });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.weekday', 'long', { type: 'string', write: true });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.month', 'long', { type: 'string', write: true });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.customFormat', '', { type: 'string', write: true });
             }
             if (existsState(NSPanel_Path + 'Config.Dateformat.Switch.weekday') == false ||
                 existsState(NSPanel_Path + 'Config.Dateformat.Switch.month') == false) {
-                await createStateAsync(NSPanel_Path + 'Config.Dateformat.Switch.weekday', true, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + 'Config.Dateformat.Switch.month', true, { type: 'boolean' });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.Switch.weekday', true, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + 'Config.Dateformat.Switch.month', true, { type: 'boolean', write: true });
                 setObject(AliasPath + 'Config.Dateformat.Switch.weekday', {type: 'channel', common: {role: 'socket', name:'Dateformat Switch weekday'}, native: {}});
                 await createAliasAsync(AliasPath + 'Config.Dateformat.Switch.weekday.ACTUAL', NSPanel_Path + 'Config.Dateformat.Switch.weekday', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
                 await createAliasAsync(AliasPath + 'Config.Dateformat.Switch.weekday.SET', NSPanel_Path + 'Config.Dateformat.Switch.weekday', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
@@ -1695,8 +1745,19 @@ on({id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday',
     }
 });
 
+//Set Relays from Tasmota
+const NSPanelStatTopic = NSPanelSendTopic.replace('.cmnd.','.stat.').replace(/\.CustomSend$/g,'.');
+on({id: [String(NSPanelStatTopic) + 'POWER1',String(NSPanelStatTopic) + 'POWER2'], change: "ne"}, (obj) => {
+    if (!obj || !obj.id) return
+    const n = obj.id.substring(obj.id.length-1);
+    if ( n === '1' || n === '2') {
+        if (getState(NSPanel_Path + 'Relay.' + n).val != obj.state.val) {
+            setState(NSPanel_Path + 'Relay.' + n, obj.state.val == 'ON' ? true : false, true);
+        }
+    }
+})
 //Control Relays from DP's
-on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne"}, async function (obj) {
+on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], change: "ne", ack: false}, async function (obj) {
     try {
         let Button = obj.id!.split('.');        
         let urlString: string = ['http://',get_current_tasmota_ip_address(),'/cm?cmnd=Power',Button[Button.length - 1],' ',(obj.state ? obj.state.val : "")].join('');
@@ -1710,7 +1771,9 @@ on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], cha
                 }
             })
             .catch(function (error) {
-                log(error, 'warn');
+                if (error.code === 'EHOSTUNREACH') {
+                    log(`Can't connect to display!`, 'warn')
+                } else log(error, 'warn');
             })
             
     } catch (err: any) { 
@@ -1800,7 +1863,7 @@ CreateWeatherAlias();
 async function InitPageNavi() {
     try {
         if (!existsState(NSPanel_Path + 'PageNavi')) {
-            await createStateAsync(NSPanel_Path + 'PageNavi', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'PageNavi', <iobJS.StateCommon>{ type: 'string', write: true });
             await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: {"pagetype": "page","pageId": 0}, ack: true });        
         }
     } catch (err: any) {
@@ -1826,7 +1889,7 @@ on({id: [NSPanel_Path + 'PageNavi'], change: "any"}, async function (obj) {
 });
 
 //----------------------Begin Dimmode
-function ScreensaverDimmode(timeDimMode: DimMode) {
+function ScreensaverDimmode(timeDimMode:NSPanel.DimMode) {
     try {
         let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
         let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
@@ -1840,12 +1903,12 @@ function ScreensaverDimmode(timeDimMode: DimMode) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 if (Debug) {
-                    log('function ScreensaverDimmode -> Day Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
+                    log('function ScreensaverDimmode -> Day NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
                 }
             } else {
                 SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 if (Debug) {
-                    log('function ScreensaverDimmode -> Night Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
+                    log('function ScreensaverDimmode -> Night NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
                 }
             }
         } else {
@@ -1863,9 +1926,9 @@ async function InitWeatherForecast() {
             if (existsState(NSPanel_Path + "ScreensaverInfo.weatherForecast") == false ||
                 existsState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer") == false ||
                 existsState(NSPanel_Path + "ScreensaverInfo.entityChangeTime") == false) {
-                await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean' });
-                await createStateAsync(NSPanel_Path + "ScreensaverInfo.entityChangeTime", 60, { type: 'number' });
+                await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecast", true, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer", true, { type: 'boolean', write: true });
+                await createStateAsync(NSPanel_Path + "ScreensaverInfo.entityChangeTime", 60, { type: 'number', write: true });
             }
             //Create Alias weatherForecast
             setObject(AliasPath + 'ScreensaverInfo.weatherForecast', {type: 'channel', common: {role: 'socket', name:'weatherForecast'}, native: {}});
@@ -1891,28 +1954,28 @@ async function InitDimmode() {
         if (isSetOptionActive) {
             // Screensaver on dark at night ("brightnessNight: e.g. 2") or off ("brightnessNight:0")
             if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')) {
-                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number' });
+                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.StateCommon>{ type: 'number', write: true });
                 await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', <iobJS.State>{ val: 8, ack: true });
                 setObject(AliasPath + 'Dimmode.brightnessDay', {type: 'channel', common: {role: 'slider', name:'brightnessDay'}, native: {}});
                 await createAliasAsync(AliasPath + 'Dimmode.brightnessDay.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
                 await createAliasAsync(AliasPath + 'Dimmode.brightnessDay.SET', NSPanel_Path + 'NSPanel_Dimmode_brightnessDay', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
             }
             if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourDay')) {
-                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.StateCommon>{ type: 'number' });
+                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.StateCommon>{ type: 'number', write: true });
                 await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourDay', <iobJS.State>{ val: 7, ack: true });
                 setObject(AliasPath + 'Dimmode.hourDay', {type: 'channel', common: {role: 'slider', name:'hourDay'}, native: {}});
                 await createAliasAsync(AliasPath + 'Dimmode.hourDay.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_hourDay', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
                 await createAliasAsync(AliasPath + 'Dimmode.hourDay.SET', NSPanel_Path + 'NSPanel_Dimmode_hourDay', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
             }
             if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight')) {
-                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.StateCommon>{ type: 'number' });
+                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.StateCommon>{ type: 'number', write: true });
                 await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', <iobJS.State>{ val: 1, ack: true });
                 setObject(AliasPath + 'Dimmode.brightnessNight', {type: 'channel', common: {role: 'slider', name:'brightnessNight'}, native: {}});
                 await createAliasAsync(AliasPath + 'Dimmode.brightnessNight.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
                 await createAliasAsync(AliasPath + 'Dimmode.brightnessNight.SET', NSPanel_Path + 'NSPanel_Dimmode_brightnessNight', true, <iobJS.StateCommon>{ type: 'number', role: 'level', name: 'SET' });
             }
             if (!existsState(NSPanel_Path + 'NSPanel_Dimmode_hourNight')) {
-                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.StateCommon>{ type: 'number' });
+                await createStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.StateCommon>{ type: 'number', write: true });
                 await setStateAsync(NSPanel_Path + 'NSPanel_Dimmode_hourNight', <iobJS.State>{ val: 22, ack: true });
                 setObject(AliasPath + 'Dimmode.hourNight', {type: 'channel', common: {role: 'slider', name:'hourNight'}, native: {}});
                 await createAliasAsync(AliasPath + 'Dimmode.hourNight.ACTUAL', NSPanel_Path + 'NSPanel_Dimmode_hourNight', true, <iobJS.StateCommon>{ type: 'number', role: 'value', name: 'ACTUAL' });
@@ -1920,7 +1983,7 @@ async function InitDimmode() {
             }
             const vTimeDay = getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val;
             const vTimeNight = getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val;
-            const timeDimMode: DimMode = {
+            const timeDimMode: NSPanel.DimMode = {
                 dimmodeOn: true,
                 brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
                 brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
@@ -1928,11 +1991,11 @@ async function InitDimmode() {
                 timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
             };
             // timeDimMode Day
-            scheduleInitDimModeDay = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, () => {
+            scheduleInitDimModeDay = adapterSchedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0}, 24 * 60 * 60, () => {
                 ScreensaverDimmode(timeDimMode);
             });
             // timeDimMode Night
-            scheduleInitDimModeNight = schedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, () => {
+            scheduleInitDimModeNight = adapterSchedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, 24 * 60 * 60, () => {
                 ScreensaverDimmode(timeDimMode);
             });
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
@@ -2009,31 +2072,31 @@ async function InitPopupNotify() {
     try {
 
         if (!existsState(screensaverNotifyHeading)) {
-            await createStateAsync(screensaverNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(screensaverNotifyHeading, <iobJS.StateCommon>{ type: 'string', write: true });
             await setStateAsync(screensaverNotifyHeading, <iobJS.State>{ val: '', ack: true });
         }
 
         if (!existsState(screensaverNotifyText)) {
-            await createStateAsync(screensaverNotifyText, <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(screensaverNotifyText, <iobJS.StateCommon>{ type: 'string', write: true });
             await setStateAsync(screensaverNotifyText, <iobJS.State>{ val: '', ack: true });
         }
 
-        await createStateAsync(popupNotifyHeading, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyHeadingColor, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyText, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyTextColor, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyInternalName, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton1Text, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton1TextColor, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton2Text, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyButton2TextColor, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifySleepTimeout, <iobJS.StateCommon>{ type: 'number' });
-        await createStateAsync(popupNotifyAction, <iobJS.StateCommon>{ type: 'boolean' });
-        await createStateAsync(popupNotifyLayout, <iobJS.StateCommon>{ type: 'number' });
-        await createStateAsync(popupNotifyFontIdText, <iobJS.StateCommon>{ type: 'number' });
-        await createStateAsync(popupNotifyIcon, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyIconColor, <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(popupNotifyBuzzer,<iobJS.StateCommon>{type: 'string', def: '0'});
+        await createStateAsync(popupNotifyHeading, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyHeadingColor, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyText, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyTextColor, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyInternalName, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyButton1Text, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyButton1TextColor, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyButton2Text, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyButton2TextColor, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifySleepTimeout, <iobJS.StateCommon>{ type: 'number', write: true });
+        await createStateAsync(popupNotifyAction, <iobJS.StateCommon>{ type: 'boolean', write: true });
+        await createStateAsync(popupNotifyLayout, <iobJS.StateCommon>{ type: 'number', write: true });
+        await createStateAsync(popupNotifyFontIdText, <iobJS.StateCommon>{ type: 'number', write: true });
+        await createStateAsync(popupNotifyIcon, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyIconColor, <iobJS.StateCommon>{ type: 'string', write: true });
+        await createStateAsync(popupNotifyBuzzer,<iobJS.StateCommon>{type: 'string', def: '0', write: true});
 
         // Notification to screensaver
         on({ id: [screensaverNotifyHeading, screensaverNotifyText], change: 'ne', ack: false }, async (obj) => {
@@ -2107,7 +2170,9 @@ async function InitPopupNotify() {
                         }
                     })
                     .catch(function (error) {
-                        log(error, 'warn');
+                        if (error.code === 'EHOSTUNREACH') {
+                            log(`Can't connect to display!`, 'warn')
+                        } else log(error, 'warn');
                     });
             } else {
                 if (Debug){
@@ -2129,7 +2194,7 @@ let pageId = 0;
 let activePage: PageType | undefined = undefined;
 
 //Send time to NSPanel
-let scheduleSendTime = schedule('* * * * *', () => {
+let scheduleSendTime = adapterSchedule(new Date().setSeconds(0,0), 60, () => {
     try {
         SendTime();
         HandleScreensaverUpdate();
@@ -2139,7 +2204,7 @@ let scheduleSendTime = schedule('* * * * *', () => {
 });
 
 //Switch between Screensaver Entities and WeatherForecast
-let scheduleSwichScreensaver = schedule('*/' + getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val +  ' * * * * *', () => {
+let scheduleSwichScreensaver = adapterSchedule(undefined, parseInt(getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val), () => {
     try {
         //WeatherForecast true/false Switchover delayed
         if (getState(NSPanel_Path + "ScreensaverInfo.popupNotifyHeading").val == '' && getState(NSPanel_Path + "ScreensaverInfo.popupNotifyText").val == '' && getState(NSPanel_Path + "ScreensaverInfo.weatherForecast").val == true && getState(NSPanel_Path + "ScreensaverInfo.weatherForecastTimer").val == true) {
@@ -2198,17 +2263,17 @@ on({id: [config.weatherEntity + '.TEMP',
     }
 });
 
-let scheduleSendDate = schedule('0 * * * *', () => {
+let scheduleSendDate = adapterSchedule((new Date().setMinutes(0,0)),60*60, () => {
     SendDate();
 });
 
 // 3:30 a.m. Perform startup and receive current TFT version
-let scheduleStartup = schedule({ hour: 3, minute: 30 }, async () => {
-    await setStateAsync(config.panelSendTopic, 'pageType~pageStartup');
+let scheduleStartup = adapterSchedule({ hour: 3, minute: 30 }, 24*60*60, async () => {
+    setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 });
 
 // Updates currently compare every 12 hours
-let scheduleCheckUpdates = schedule('{"time":{"start":"00:00","end":"23:59","mode":"hours","interval":12},"period":{"days":1}}', () => {
+let scheduleCheckUpdates = adapterSchedule(undefined,60*60*12, () => {
     get_tasmota_status0();
     get_panel_update_data();
     check_updates();
@@ -2217,7 +2282,7 @@ let scheduleCheckUpdates = schedule('{"time":{"start":"00:00","end":"23:59","mod
 // Check for updates with Start
 get_locales();
 get_locales_servicemenu();
-setState(config.panelSendTopic, 'pageType~pageStartup');
+setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 get_tasmota_status0();
 get_panel_update_data();
 check_updates();
@@ -2257,7 +2322,7 @@ async function get_locales() {
                     if (Debug) {
                         log(JSON.stringify(response.data), 'info');
                     }
-                    await createStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
+                    await createStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.StateCommon>{ type: 'string', role: 'json', write: false });
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_json', <iobJS.State>{ val: JSON.stringify(response.data), ack: true });
                 } else {
                     log('Axios Status - Requesting locales: ' + response.state, 'warn');
@@ -2285,7 +2350,7 @@ async function get_locales_servicemenu() {
                     if (Debug) {
                         log(JSON.stringify(response.data), 'info');
                     }
-                    await createStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.StateCommon>{ type: 'string', role: 'json' });
+                    await createStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.StateCommon>{ type: 'string', role: 'json', write: false });
                     await setStateAsync(NSPanel_Path + 'NSPanel_locales_service_json', <iobJS.State>{ val: JSON.stringify(response.data), ack: true });
                 } else {
                     log('Axios Status - Requesting locales Service Menu: ' + response.state, 'warn');
@@ -2326,7 +2391,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt', 'info');
+                        log('Auto-Updates eingeschaltet - Update Tasmota wird durchgeführt', 'info');
 
                         // Perform Tasmota upgrade
                         update_tasmota_firmware();
@@ -2354,7 +2419,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) log('Auto-updates switched on - Berry driver update is carried out', 'info');
+                        log('Auto-updates switched on - Berry driver update is carried out', 'info');
 
                         // Tasmota Berry-Driver Update durchführen
                         update_berry_driver_version();
@@ -2384,7 +2449,7 @@ async function check_updates() {
                 if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
                     if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
 
-                        if (Debug) log('Auto-updates switched on - update TFT firmware is carried out', 'info');
+                        log('Auto-updates switched on - update TFT firmware is carried out', 'info');
 
                         // TFT-Firmware Update durchführen
                         update_tft_firmware();
@@ -2473,7 +2538,7 @@ async function get_panel_update_data() {
                 await createAliasAsync(AliasPath + 'autoUpdate.ACTUAL', NSPanel_Path + 'NSPanel_autoUpdate', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'ACTUAL' });
                 await createAliasAsync(AliasPath + 'autoUpdate.SET', NSPanel_Path + 'NSPanel_autoUpdate', true, <iobJS.StateCommon>{ type: 'boolean', role: 'switch', name: 'SET' });
             }
-            await createStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.StateCommon>{ type: 'string' });
+            await createStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.StateCommon>{ type: 'string', write: false });
             await setStateAsync(NSPanel_Path + 'NSPanel_ipAddress', <iobJS.State>{ val: get_current_tasmota_ip_address(), ack: true });
             if (autoCreateAlias) {
                 setObject(AliasPath + 'ipAddress', {type: 'channel', common: {role: 'info', name:'ipAddress'}, native: {}});
@@ -2523,7 +2588,7 @@ function get_online_tasmota_firmware_version() {
                         const Tasmota_JSON = JSON.parse(JSON.stringify(response.data));// Write JSON result to variable
                         const TasmotaTagName = Tasmota_JSON.tag_name;                  // Filter JSON by "tag_name" and write to variable
                         const TasmotaVersionOnline = TasmotaTagName.replace(/v/i, ''); // Filter unnecessary "v" from variable and write to release variable
-                        await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                        await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
                         setObject(AliasPath + 'Tasmota_Firmware.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
                         await createAliasAsync(AliasPath + 'Tasmota_Firmware.onlineVersion.ACTUAL', NSPanel_Path + 'Tasmota_Firmware.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });                
                         await setStateAsync(NSPanel_Path + 'Tasmota_Firmware.onlineVersion', <iobJS.State>{ val: TasmotaVersionOnline, ack: true });
@@ -2561,7 +2626,7 @@ function get_current_berry_driver_version() {
                     }
                     if (isSetOptionActive) {
                         const BerryDriverVersionCurrent: string = JSON.parse(JSON.stringify(response.data)).nlui_driver_version;
-                        await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'string' });
+                        await createStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.StateCommon>{ type: 'string', write: false });
                         await setStateAsync(NSPanel_Path + 'Berry_Driver.currentVersion', <iobJS.State>{ val: JSON.parse(JSON.stringify(response.data)).nlui_driver_version, ack: true });
                         if (autoCreateAlias) {
                             setObject(AliasPath + 'Display.BerryDriver', {type: 'channel', common: {role: 'info', name: 'Berry Driver'}, native: {}});
@@ -2574,7 +2639,9 @@ function get_current_berry_driver_version() {
                 }
             })
             .catch(function (error) {
-                log(error, 'warn');
+                if (error.code === 'EHOSTUNREACH') {
+                    log(`Can't connect to display!`, 'warn')
+                } else log(error, 'warn');
             });
 
     } catch (err: any) {
@@ -2600,18 +2667,18 @@ function get_tasmota_status0() {
                         log(JSON.stringify(response.data), 'info');
                     }
                     if (isSetOptionActive) {
-                        await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Uptime', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Version', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Hardware', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.AP', <iobJS.StateCommon>{ type: 'number' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.SSId', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.BSSId', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Channel', <iobJS.StateCommon>{ type: 'number' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Mode', <iobJS.StateCommon>{ type: 'string' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.StateCommon>{ type: 'number' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.StateCommon>{ type: 'number' });
-                        await createStateAsync(NSPanel_Path + 'Tasmota.Product', <iobJS.StateCommon>{ type: 'string' });
+                        await createStateAsync(NSPanel_Path + 'Tasmota_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Uptime', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Version', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Hardware', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.AP', <iobJS.StateCommon>{ type: 'number', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.SSId', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.BSSId', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Channel', <iobJS.StateCommon>{ type: 'number', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Mode', <iobJS.StateCommon>{ type: 'string', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.RSSI', <iobJS.StateCommon>{ type: 'number', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Wifi.Signal', <iobJS.StateCommon>{ type: 'number', write: false });
+                        await createStateAsync(NSPanel_Path + 'Tasmota.Product', <iobJS.StateCommon>{ type: 'string', write: false });
 
                         try {
                             const Tasmota_JSON = JSON.parse(JSON.stringify(response.data));
@@ -2664,7 +2731,9 @@ function get_tasmota_status0() {
                 }
             })
             .catch(function (error) {
-                log(error, 'warn');
+                if (error.code === 'EHOSTUNREACH') {
+                    log(`Can't connect to display!`, 'warn')
+                } else log(error, 'error');
             });
             
     } catch (err: any) {
@@ -2689,7 +2758,7 @@ function get_online_berry_driver_version() {
                         }
                         if (isSetOptionActive) {
                             const BerryDriverVersionOnline = response.data.substring((response.data.indexOf('version_of_this_script = ') + 24), response.data.indexOf('version_of_this_script = ') + 27).replace(/\s+/g, '');
-                            await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                            await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
                             setObject(AliasPath + 'Berry_Driver.onlineVersion', {type: 'channel', common: {role: 'info', name:'onlineVersion'}, native: {}});
                             await createAliasAsync(AliasPath + 'Berry_Driver.onlineVersion.ACTUAL', NSPanel_Path + 'Berry_Driver.onlineVersion', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                             await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', <iobJS.State>{ val: BerryDriverVersionOnline, ack: true });
@@ -2727,7 +2796,7 @@ function check_version_tft_firmware() {
                     let NSPanelTagName = NSPanel_JSON.tag_name;                   // created_at; published_at; name ; draft ; prerelease
                     let NSPanelVersion = NSPanelTagName.replace(/v/i, '');        // Filter unnecessary "v" from variable and write to release variable
 
-                    await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                    await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
                     await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: NSPanelVersion, ack: true });
                     if (Debug) log('online TFT firmware version => ' + NSPanelVersion, 'info');
                 } else {
@@ -2759,7 +2828,7 @@ function check_online_display_firmware() {
                     }
                     let desired_display_firmware_version = response.data.substring((response.data.indexOf('desired_display_firmware_version =') + 34), response.data.indexOf('desired_display_firmware_version =') + 38).replace(/\s+/g, '');
 
-                    await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                    await createStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.onlineVersion', <iobJS.State>{ val: desired_display_firmware_version, ack: true });
                     if (Debug) log('online display firmware version => ' + desired_display_firmware_version, 'info');
                 } else {
@@ -2784,8 +2853,8 @@ on({ id: config.panelRecvTopic }, async (obj) => {
             if (isSetOptionActive) {
                 
                 if (split[0] == 'event' && split[1] == 'startup') {
-                    await createStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string' });
-                    await createStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.StateCommon>{ type: 'string' });
+                    await createStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.StateCommon>{ type: 'string', write: false });
+                    await createStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.StateCommon>{ type: 'string', write: false });
 
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: split[2], ack: true });
                     await setStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.State>{ val: split[3], ack: true });
@@ -2863,7 +2932,7 @@ function update_tft_firmware() {
                         if (Debug) {
                             log(response.data, 'info');
                         }
-                        await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string' });
+                        await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
                         await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
                         Init_Release();
                     } else {
@@ -2947,17 +3016,17 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
 //------------------End Update Functions
 
-async function SendToPanel(val: Payload | Payload[]) {
+async function SendToPanel(val: NSPanel.Payload | NSPanel.Payload[]) {
     try {
         if (Array.isArray(val)) {
             val.forEach(function (id) {
-                setStateAsync(config.panelSendTopic, id.payload);
+                setIfExists(config.panelSendTopic, id.payload);
                 if (Debug) {
                     log('function SendToPanel payload: ' + id.payload, 'info');
                 }
             });
         } else {
-            setState(config.panelSendTopic, val.payload);
+            setIfExists(config.panelSendTopic, val.payload);
         }
 
     } catch (err: any) {
@@ -2980,10 +3049,10 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     }
 });
 
-function HandleMessage(typ: string, method: EventMethod, page: number | undefined, words: Array<string> | undefined): void {
+function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | undefined, words: Array<string> | undefined): void {
     try {
         if (typ == 'event') {
-            switch (method as EventMethod) {
+            switch (method as NSPanel.EventMethod) {
                 case 'startup':
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
@@ -3021,8 +3090,8 @@ function HandleMessage(typ: string, method: EventMethod, page: number | undefine
                             tempId = tempPageItem[0];
                         }
                         let pageItem: PageItem = findPageItem(tempId);
-                        if (pageItem !== undefined) {
-                            let temp: string | mediaOptional | undefined = tempPageItem[1]
+                        if (pageItem !== undefined && isPopupType(words[2])) {
+                            let temp: string | NSPanel.mediaOptional | undefined = tempPageItem[1]
                             if (isMediaOptional(temp)) SendToPanel(GenerateDetailPage(words[2], temp, pageItem, placeId));
                             else SendToPanel(GenerateDetailPage(words[2], undefined, pageItem, placeId));
                         }
@@ -3129,9 +3198,9 @@ function GeneratePage(page: PageType): void {
     }
 }
 
-function HandleHardwareButton(method: EventMethod): void {
+function HandleHardwareButton(method: NSPanel.EventMethod): void {
     try {
-        let buttonConfig: ConfigButtonFunction = config[method];
+        let buttonConfig: NSPanel.ConfigButtonFunction = config[method];
         if(buttonConfig.mode === null) {
             return;
         }
@@ -3185,7 +3254,7 @@ function SendDate(): void {
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
             const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
-            SendToPanel(<Payload>{ payload: 'date~' + _SendDate });
+            SendToPanel(<NSPanel.Payload>{ payload: 'date~' + _SendDate });
         }
     } catch (err: any) {
         if (err.message = 'Cannot convert undefined or null to object') {
@@ -3202,15 +3271,15 @@ function SendTime(): void {
         const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
-        SendToPanel(<Payload>{ payload: 'time~' + hr + ':' + min });
+        SendToPanel(<NSPanel.Payload>{ payload: 'time~' + hr + ':' + min });
     } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
 }
 
-function GenerateEntitiesPage(page: PageEntities): Payload[] {
+function GenerateEntitiesPage(page: NSPanel.PageEntities): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<Payload>;
+        let out_msgs: Array<NSPanel.Payload>;
         out_msgs = [{ payload: 'pageType~cardEntities' }]
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
@@ -3220,9 +3289,9 @@ function GenerateEntitiesPage(page: PageEntities): Payload[] {
     }
 }
 
-function GenerateGridPage(page: PageGrid): Payload[] {
+function GenerateGridPage(page: NSPanel.PageGrid): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid' }];
+        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -3231,9 +3300,9 @@ function GenerateGridPage(page: PageGrid): Payload[] {
     }
 }
 
-function GenerateGridPage2(page: PageGrid2): Payload[] {
+function GenerateGridPage2(page: NSPanel.PageGrid2): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<Payload> = [{ payload: 'pageType~cardGrid2' }];
+        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid2' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -3308,30 +3377,34 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
  
         let name: string;
         let buttonText: string = 'PRESS';
-        let type: SerialType;
+        let type: NSPanel.SerialType;
 
         // ioBroker
         if (pageItem.id && existsObject(pageItem.id) || pageItem.navigate === true) {
  
-            let iconColor = rgb_dec565(config.defaultColor);
-            let optVal = '0';
+            let iconColor:number = rgb_dec565(config.defaultColor);
+            let optVal:string = '0';
             let val: any = null;
  
-            let o:any
+            let o:any = undefined;
             if (pageItem.id != null && existsObject(pageItem.id)) {
                 o = getObject(pageItem.id);
             } 
  
             // Fallback if no name is given
             name = pageItem.name !== undefined ? pageItem.name : o.common.name.de == undefined ? o.common.name : o.common.name.de;
-            let prefix = pageItem.prefixName !== undefined ? pageItem.prefixName : '';
-            let suffix = pageItem.suffixName !== undefined ? pageItem.suffixName : '';
+            const prefix = pageItem.prefixName !== undefined ? pageItem.prefixName : '';
+            const suffix = pageItem.suffixName !== undefined ? pageItem.suffixName : '';
  
             // If name is used with changing values
             if ((name || '').indexOf('getState(') != -1) {
                 let dpName: string = name.slice(10, name.length -6);
                 name = getState(dpName).val;
                 RegisterEntityWatcher(dpName);
+            }
+            else if ((name || '').split('.').length > 3 && existsState(name)) {
+                name = getState(name).val;
+                RegisterEntityWatcher(name);
             }
             name = prefix + name + suffix;
  
@@ -3381,8 +3454,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                 } else if (pageItem.id != null && pageItem.targetPage != undefined) {
  
                     type = 'button';
-                    const role = o.common.role as roles;
-                    switch (role as roles) {
+                    const role = o.common.role as NSPanel.roles;
+                    switch (role) {
                         case 'socket':
                         case 'light':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
@@ -3566,8 +3639,8 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     return '~' + type + '~' + 'navigate.' + pageItem.id + '~' + iconId + '~' + iconColor + '~' + name + '~' + buttonText;
                 }
             }
-            const role = o.common.role as roles
-            switch (role as roles) {
+            const role = o.common.role as NSPanel.roles
+            switch (role) {
                 case 'socket':
                 case 'light':
                     type = 'light';
@@ -3743,13 +3816,18 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     if (Debug) log('min_Level: ' + min_Level, 'info');
                     if (Debug) log('max_Level: ' + max_Level, 'info');
 
+                    let icon_up_status = 'enable';
+                    let icon_down_status = 'enable';
+
                     let tempVal: number = getState(pageItem.id + '.ACTUAL').val 
-                    let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+
+                    //Disabled Status while bug in updating origin adapter data points of lift values
+                    //let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
                     let icon_stop_status = 'enable';
                     if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
-                        icon_stop_status = 'disable';
+                        //icon_stop_status = 'disable';
                     }
-                    let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+                    //let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
                     let value = icon_up + '|' + icon_stop + '|' + icon_down + '|' + icon_up_status + '|' + icon_stop_status + '|' + icon_down_status
                     
                     if (Debug) log('CreateEntity Icon role blind ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + value, 'info');
@@ -4191,7 +4269,7 @@ function RegisterEntityWatcher(id: string): void {
     }
 }
 
-function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: string, placeId: number | undefined): void {
+function RegisterDetailEntityWatcher(id: string, pageItem: PageItem, type: NSPanel.PopupType, placeId: number | undefined): void {
     try {
         if (subscriptions.hasOwnProperty(id)) {
             return;
@@ -4228,11 +4306,11 @@ function GetUnitOfMeasurement(id: string): string {
     }
 }
 
-function GenerateThermoPage(page: PageThermo): Payload[] {
+function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
     try {
         UnsubscribeWatcher();
         let id = page.items[0].id
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
         
         // ioBroker
@@ -4277,7 +4355,7 @@ function GenerateThermoPage(page: PageThermo): Payload[] {
             if ((i_list.length - 3) != 0) {
 
                 let i = 0;
-                switch (o.common.role as roles) {
+                switch (o.common.role as NSPanel.roles) {
                     case 'thermostat': {
 
                         if (existsState(id + '.AUTOMATIC') && getState(id + '.AUTOMATIC').val != null) {
@@ -4711,9 +4789,9 @@ function subscribeMediaSubscriptionsBoseAdd(id: string): void {
     });
 } 
 
-async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: adapterPlayerInstanceType) {
+async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPlayerInstance: NSPanel.adapterPlayerInstanceType) {
     if (autoCreateAlias) {
-        if (isSetOptionActive) {
+        if (isSetOptionActive) {       
             switch (adapterPlayerInstance) {
                 case "alexa2.0.":
                 case "alexa2.1.":
@@ -4961,19 +5039,19 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
     }
 }
 
-function GenerateMediaPage(page: PageMedia): Payload[] {
+function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
     try {
         unsubscribeMediaSubscriptions();
 
         if (!page.items[0].id) throw new Error ('Missing page id for cardMedia!');
 
         let id = page.items[0].id;
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
-        let v2Adapter:PlayerType = v1Adapter[0] as PlayerType;
+        let v2Adapter:NSPanel.PlayerType = v1Adapter[0] as NSPanel.PlayerType;
         
         // Some magic to change the ID of the alias, since speakers are not a property but separate objects
         if(v2Adapter == 'squeezeboxrpc') {
@@ -5051,6 +5129,9 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
                         if(parseInt(vElapsed.slice(0,2)) < 9) {
                             vElapsed = vElapsed.slice(1);    
                         }
+                    } 
+                    if (vElapsed == 0) {
+                        vElapsed = '0:00';    
                     } 
                     let vDuration = Duration;
                     if (vDuration.length == 5) {
@@ -5203,7 +5284,7 @@ function GenerateMediaPage(page: PageMedia): Payload[] {
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
 
-            if (shuffle == 'off' || shuffle == false || shuffle == 0) {
+            if (shuffle == 'off' || shuffle == false || shuffle == 0 || shuffle == 'false') {
                 shuffle_icon = Icons.GetIcon('shuffle-disabled'); //shuffle
             }
             if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('refresh'); } //Volumio: refresh playlist
@@ -5558,11 +5639,11 @@ async function createAutoAlarmAlias (id: string, nsPath: string){
         if (autoCreateAlias) {
             if (isSetOptionActive) {
                 if (existsState(nsPath + '.AlarmPin') == false || existsState(nsPath + '.AlarmState') == false || existsState(nsPath + '.AlarmType') == false || existsState(nsPath + '.PIN_Failed') == false || existsState(nsPath + '.PANEL') == false) {
-                    await createStateAsync(nsPath + '.AlarmPin', '0000', { type: 'string' });
-                    await createStateAsync(nsPath + '.AlarmState', 'disarmed', { type: 'string' });
-                    await createStateAsync(nsPath + '.AlarmType', 'D1', { type: 'string' });
-                    await createStateAsync(nsPath + '.PIN_Failed', 0, { type: 'number' });
-                    await createStateAsync(nsPath + '.PANEL', NSPanel_Path, { type: 'string' });     
+                    await createStateAsync(nsPath + '.AlarmPin', '0000', { type: 'string', write: true });
+                    await createStateAsync(nsPath + '.AlarmState', 'disarmed', { type: 'string', write: false });
+                    await createStateAsync(nsPath + '.AlarmType', 'D1', { type: 'string', write: false });
+                    await createStateAsync(nsPath + '.PIN_Failed', 0, { type: 'number', write: false });
+                    await createStateAsync(nsPath + '.PANEL', NSPanel_Path, { type: 'string', write: false });     
                     setObject(id, {_id: id, type: 'channel', common: {role: 'sensor.fire.alarm', name:'alarm'}, native: {}});
                     await createAliasAsync(id + '.ACTUAL', nsPath + '.AlarmState', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                     await createAliasAsync(id + '.PIN', nsPath + '.AlarmPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
@@ -5577,14 +5658,14 @@ async function createAutoAlarmAlias (id: string, nsPath: string){
     }
 }
 
-function GenerateAlarmPage(page: PageAlarm): Payload[] {
+function GenerateAlarmPage(page: NSPanel.PageAlarm): NSPanel.Payload[] {
     try {
         activePage = page;
         
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
@@ -5604,7 +5685,7 @@ function GenerateAlarmPage(page: PageAlarm): Payload[] {
             }
             //let entityType = getState(nsPath + 'AlarmType').val;
             let arm1: string, arm2: string, arm3: string, arm4: string;
-            let arm1ActionName: ButtonActionType | '', arm2ActionName: ButtonActionType | '', arm3ActionName: ButtonActionType | '', arm4ActionName: ButtonActionType | '';
+            let arm1ActionName: NSPanel.ButtonActionType | '', arm2ActionName: NSPanel.ButtonActionType | '', arm3ActionName: NSPanel.ButtonActionType | '', arm4ActionName: NSPanel.ButtonActionType | '';
             let icon = '0';
             let iconcolor = 63488;
             let numpadStatus = 'disable';
@@ -5722,8 +5803,8 @@ async function createAutoUnlockAlias(id: string, dpPath: string) {
         if (autoCreateAlias) {
             if (isSetOptionActive) {
                 if (existsState(dpPath + 'UnlockPin') == false || existsState(dpPath + 'Access') == false) {
-                    await createStateAsync(dpPath + 'UnlockPin', '0000', { type: 'string' });
-                    await createStateAsync(dpPath + 'Access', 'false', { type: 'boolean' });
+                    await createStateAsync(dpPath + 'UnlockPin', '0000', { type: 'string', write: true });
+                    await createStateAsync(dpPath + 'Access', 'false', { type: 'boolean', write: false });
                     setObject(id, { _id: id, type: 'channel', common: { role: 'sensor.fire.alarm', name: 'sensor.fire.alarm' }, native: {} });
                     await createAliasAsync(id + '.PIN', dpPath + 'UnlockPin', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'PIN' });
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Access', true, <iobJS.StateCommon>{ type: 'boolean', role: 'sensor.fire.alarm', name: 'ACTUAL' });
@@ -5736,13 +5817,13 @@ async function createAutoUnlockAlias(id: string, dpPath: string) {
     
 }
 
-function GenerateUnlockPage(page: PageUnlock): Payload[] {
+function GenerateUnlockPage(page: NSPanel.PageUnlock): NSPanel.Payload[] {
     try {
         activePage = page;
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
 
         let dpPath : string = ''
@@ -5758,7 +5839,7 @@ function GenerateUnlockPage(page: PageUnlock): Payload[] {
         }
 
         let unlock1 = findLocale('lock', 'UNLOCK');                     //unlock1*~*
-        let unlock1ActionName: ButtonActionType | '' = 'U1';                                   //unlock1ActionName*~*
+        let unlock1ActionName: NSPanel.ButtonActionType | '' = 'U1';                                   //unlock1ActionName*~*
 
         let iconcolor = rgb_dec565({ red: 223, green: 76, blue: 30 });  //icon*~*
         let icon = Icons.GetIcon('lock-remove');                        //iconcolor*~*
@@ -5804,8 +5885,8 @@ async function createAutoQRAlias(id:string, dpPath:string) {
         if (autoCreateAlias) {
             if (isSetOptionActive) {
                 if (existsState(dpPath + 'Daten') == false) {
-                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', <iobJS.StateCommon>{ type: 'string' });
-                    await createStateAsync(dpPath + 'Switch', false, <iobJS.StateCommon>{ type: 'boolean' });
+                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', <iobJS.StateCommon>{ type: 'string', write: true });
+                    await createStateAsync(dpPath + 'Switch', false, <iobJS.StateCommon>{ type: 'boolean', write: true });
                     setObject(id, { _id: id, type: 'channel', common: { role: 'switch.mode.wlan', name: 'QR Page' }, native: {} });
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
                     await createAliasAsync(id + '.SWITCH', dpPath + 'Switch', true, <iobJS.StateCommon>{ type: 'boolean', role: 'state', name: 'SWITCH' });
@@ -5818,12 +5899,12 @@ async function createAutoQRAlias(id:string, dpPath:string) {
     } 
 }
 
-function GenerateQRPage(page: PageQR): Payload[] {
+function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
     try {
         activePage = page;
         if (!page.items[0].id) throw new Error ('Missing pageItem.id for cardQRPage!');
         let id = page.items[0].id;
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
 
         let dpPath : string = ''
@@ -5936,7 +6017,7 @@ function subscribePowerSubscriptions(id: string): void {
     });
 } 
 
-function GeneratePowerPage(page: PagePower): Payload[] {
+function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     try {
 
         if (!page.items[0].id) throw new Error ('Missing pageItem.id for PowerPage!');
@@ -5964,7 +6045,7 @@ function GeneratePowerPage(page: PagePower): Payload[] {
             obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
         }
         
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardPower' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
@@ -6058,12 +6139,12 @@ function GeneratePowerPage(page: PagePower): Payload[] {
     }
 }
 
-function GenerateChartPage(page: PageChart): Payload[] {
+function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     try {
         activePage = page;
 
         let id = page.items[0].id;
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         out_msgs.push({ payload: 'pageType~' + page.type });
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
@@ -6158,7 +6239,7 @@ function HandleButtonEvent(words: any): void {
 
         let tempid = words[2].split('?');
         let id = tempid[0];
-        let buttonAction: ButtonActionType = words[3] as ButtonActionType;
+        let buttonAction: NSPanel.ButtonActionType = words[3] as NSPanel.ButtonActionType;
         let pageItemID: string = '';
 
         if (!isNaN(id)) {
@@ -6182,11 +6263,8 @@ function HandleButtonEvent(words: any): void {
         if (words[2] == 'bNext' || words[2] == 'bPrev' || words[2] == 'bUp' || words[2] == 'bHome' || words[2] == 'bSubNext' || words[2] == 'bSubPrev' ) {
             buttonAction = words[2];
             pageCounter = 0;
-            // Turn off the display if the alwaysOnDisplay parameter was specified
-            if (alwaysOn == true) {
-                alwaysOn = false;
-                SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
-            }
+            alwaysOn = false;
+            SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
         }
 
         if (Debug) {
@@ -6337,8 +6415,8 @@ function HandleButtonEvent(words: any): void {
                     if (Debug) {
                         log('HandleButtonEvent -> OnOff: ' + words[4] + ' - ' + id + ' - Role - ' + o.common.role, 'info')
                     }
-                    const role = o.common.role as roles;
-                    switch (role as roles) {
+                    const role = o.common.role as NSPanel.roles;
+                    switch (role) {
                         case 'level.mode.fan':
                         case 'socket':
                         case 'light':
@@ -6374,7 +6452,7 @@ function HandleButtonEvent(words: any): void {
                     if (words[4] == '1')
                         action = true;
                     let o = getObject(id);
-                    switch (o.common.role as roles) {
+                    switch (o.common.role as NSPanel.roles) {
                         case 'lock':
                         case 'button':
                             toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
@@ -6419,7 +6497,7 @@ function HandleButtonEvent(words: any): void {
                                 if (isPageMediaItem(pageItemRepeat)) {
                                     let adapterInstanceRepeat = pageItemRepeat.adapterPlayerInstance;
                                     let adapterRepeat = adapterInstanceRepeat.split('.');
-                                    const deviceAdapterRP: PlayerType = adapterRepeat[0] as PlayerType;
+                                    const deviceAdapterRP: NSPanel.PlayerType = adapterRepeat[0] as NSPanel.PlayerType;
                                     
                                     switch (deviceAdapterRP) {
                                         case 'spotify-premium':
@@ -6434,7 +6512,7 @@ function HandleButtonEvent(words: any): void {
                                             GeneratePage(activePage!);
                                             break;
                                         case 'bosesoundtouch':
-                                            log(adapterInstanceRepeat);
+                                            if (Debug) log(adapterInstanceRepeat);
                                             let stateBoseRepeat = getState(id + '.REPEAT').val
                                             if (stateBoseRepeat == 'REPEAT_OFF') {
                                                 setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ALL');
@@ -6560,8 +6638,8 @@ function HandleButtonEvent(words: any): void {
                     if (existsObject(id)) {
                         let o = getObject(id);
                         let pageItem = findPageItem(id);
-                        const role = o.common.role as roles;
-                        switch (role as roles) {
+                        const role = o.common.role as NSPanel.roles;
+                        switch (role) {
                             case 'dimmer':
                                 if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
                                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness));
@@ -6607,7 +6685,7 @@ function HandleButtonEvent(words: any): void {
                     log('HandleButtonEvent colorWeel -> getHue-Werte: ' + getHue(rgb.red, rgb.green, rgb.blue), 'info');
                 }
                 let o = getObject(id);
-                switch (o.common.role as roles) {
+                switch (o.common.role as NSPanel.roles) {
                     case 'hue':
                         setIfExists(id + '.HUE', getHue(rgb.red, rgb.green, rgb.blue));
                         break;
@@ -6644,10 +6722,18 @@ function HandleButtonEvent(words: any): void {
                     setIfExists(id + '.SET', parseInt(temps[0]) / 10);
                 }
                 break;
-            case 'media-back':
-                setIfExists(id + '.PREV', true);
-                GeneratePage(activePage!);
+            case 'media-back': {
+                const tempPage = findPageItem(id);
+                if (isPageMediaItem(tempPage)) {
+                    if (tempPage.adapterPlayerInstance.startsWith('bosesoundtouch')) {
+                        setIfExists(tempPage.adapterPlayerInstance + 'key', 'PREV_TRACK');
+                    } else {
+                        setIfExists(id + '.PREV', true);    
+                    }
+                    GeneratePage(activePage!);
+                }
                 break;
+            }
             case 'media-pause':
                 let pageItemTemp = findPageItem(id);
                 if (isPageMediaItem(pageItemTemp)) {
@@ -6663,6 +6749,8 @@ function HandleButtonEvent(words: any): void {
                         } else if (stateVal == null) {
                             setState(adapterPlayerInstanceStateSeceltor, 1);
                         }
+                    } else if (pageItemTemp.adapterPlayerInstance.startsWith('bosesoundtouch')) {
+                        setIfExists(pageItemTemp.adapterPlayerInstance + 'key', 'PLAY_PAUSE');
                     } else {
                         if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
                         if (getState(id + '.STATE').val === true) {
@@ -6674,11 +6762,19 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage!);
                 }
                 break;
-            case 'media-next':
-                setIfExists(id + '.NEXT', true);
-                GeneratePage(activePage!);
+            case 'media-next': {
+                const tempPage = findPageItem(id);
+                if (isPageMediaItem(tempPage)) {
+                    if (tempPage.adapterPlayerInstance.startsWith('bosesoundtouch')) {
+                        setIfExists(tempPage.adapterPlayerInstance + 'key', 'NEXT_TRACK');
+                    } else {
+                        setIfExists(id + '.NEXT', true);    
+                    }
+                    GeneratePage(activePage!);
+                }
                 break;
-            case 'media-shuffle':
+            }
+            case 'media-shuffle': {
                 const tempPage = findPageItem(id);
                 if (isPageMediaItem(tempPage)) {
                     if (tempPage.adapterPlayerInstance.startsWith("volumio")) {
@@ -6708,8 +6804,8 @@ function HandleButtonEvent(words: any): void {
                         }
                     }
                     if ((tempPage.adapterPlayerInstance).startsWith("bosesoundtouch")) {
-                        log(tempPage.adapterPlayerInstance);
-                        if (getState(tempPage.adapterPlayerInstance + '.SHUFFLE').val == false) {
+                        if (Debug) log(tempPage.adapterPlayerInstance + 'nowPlaying.shuffle');
+                        if (getState(tempPage.adapterPlayerInstance + 'nowPlaying.shuffle').val == 'false') {
                             setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_ON');
                         } else {
                             setIfExists(tempPage.adapterPlayerInstance + 'key', 'SHUFFLE_OFF');
@@ -6718,6 +6814,7 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage!);
                 }
                 break;
+            }
             case 'volumeSlider':
                 pageCounter = -1;
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
@@ -6734,7 +6831,7 @@ function HandleButtonEvent(words: any): void {
                 if (isPageMediaItem(pageItem)) {
                     let adapterInstance = pageItem.adapterPlayerInstance!;
                     let adapter = adapterInstance!.split('.');
-                    const deviceAdapter: PlayerType = adapter[0] as PlayerType;
+                    const deviceAdapter: NSPanel.PlayerType = adapter[0] as NSPanel.PlayerType;
 
                     switch (deviceAdapter) {
                         case 'spotify-premium':
@@ -6780,7 +6877,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemPL)) break;
                 let adapterInstancePL = pageItemPL.adapterPlayerInstance!;
                 let adapterPL = adapterInstancePL.split('.');
-                const deviceAdapterPL: PlayerType = adapterPL[0] as PlayerType;
+                const deviceAdapterPL: NSPanel.PlayerType = adapterPL[0] as NSPanel.PlayerType;
 
                 switch (deviceAdapterPL) {
                     case 'spotify-premium':
@@ -6824,9 +6921,13 @@ function HandleButtonEvent(words: any): void {
                         setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
                         break;
                     case "bosesoundtouch":
-                        log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
-                        log(adapterInstancePL +  'key');
-                        setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
+                        if (Debug) log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
+                        if (Debug) log(adapterInstancePL +  'key');
+                        if (words[4] < 6) {
+                            setState(adapterInstancePL +  'key', 'PRESET_' + (parseInt(words[4]) + 1));
+                        } else if (words[4] == 6) {
+                            setState(adapterInstancePL +  'key', 'AUX_INPUT');
+                        }
                         break;
                     default:
                         log('Hello Mr. Developer u miss in mode-playlist something!', 'warn');
@@ -6843,7 +6944,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemTL)) break;
                 let adapterInstanceTL = pageItemTL.adapterPlayerInstance!;
                 let adapterTL = adapterInstanceTL.split('.');
-                const deviceAdapterTL: PlayerType = adapterTL[0] as PlayerType;
+                const deviceAdapterTL: NSPanel.PlayerType = adapterTL[0] as NSPanel.PlayerType;
 
                 switch (deviceAdapterTL) {
                     case 'spotify-premium':
@@ -6892,7 +6993,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemRP)) break;
                 let adapterInstanceRP = pageItemRP.adapterPlayerInstance!;
                 let adapterRP = adapterInstanceRP.split('.');
-                let deviceAdapterRP: PlayerType = adapterRP[0] as PlayerType;
+                let deviceAdapterRP: NSPanel.PlayerType = adapterRP[0] as NSPanel.PlayerType;
 
                 if (Debug) log(pageItemRP.repeatList![words[4]], 'warn');
                 switch (deviceAdapterRP) {
@@ -6923,7 +7024,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemSeek)) break;
                 let adapterInstanceSK = pageItemSeek.adapterPlayerInstance!;
                 let adapterSK = adapterInstanceSK.split('.');
-                let deviceAdapterSK: PlayerType = adapterSK[0] as PlayerType;
+                let deviceAdapterSK: NSPanel.PlayerType = adapterSK[0] as NSPanel.PlayerType;
                 switch (deviceAdapterSK) {
                     case 'spotify-premium':
                         break;
@@ -6944,7 +7045,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemCrossfade)) break;
                 let adapterInstanceCF = pageItemCrossfade.adapterPlayerInstance!;
                 let adapterCF = adapterInstanceCF.split('.');
-                let deviceAdapterCF: PlayerType = adapterCF[0] as PlayerType;
+                let deviceAdapterCF: NSPanel.PlayerType = adapterCF[0] as NSPanel.PlayerType;
                 switch (deviceAdapterCF) {
                     case 'spotify-premium':
                         break;
@@ -6980,12 +7081,12 @@ function HandleButtonEvent(words: any): void {
             case 'mode-insel':
                 setIfExists(id + '.VALUE', parseInt(words[4]));
                 break;
-            case 'media-OnOff':
-                let pageItemTem = findPageItem(id);
-                if (!isPageMediaItem(pageItemTem)) break;
-                let adaInstanceSpli = pageItemTem.adapterPlayerInstance.split('.');
-                if (adaInstanceSpli[0] == 'squeezeboxrpc') {
-                    let adapterPlayerInstancePowerSelector: string = [pageItemTem.adapterPlayerInstance, 'Players', pageItemTem.mediaDevice, 'Power'].join('.');
+            case 'media-OnOff': {
+                let pageItemTemp = findPageItem(id);
+                if (!isPageMediaItem(pageItemTemp)) break;
+                let adapterInstance = pageItemTemp.adapterPlayerInstance.split('.');
+                if (adapterInstance[0] == 'squeezeboxrpc') {
+                    let adapterPlayerInstancePowerSelector: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'Power'].join('.');
                     let stateVal = getState(adapterPlayerInstancePowerSelector).val;
                     if (stateVal === 0) {
                         setState(adapterPlayerInstancePowerSelector, 1);
@@ -6996,11 +7097,14 @@ function HandleButtonEvent(words: any): void {
                         setIfExists(id + '.STOP', true);
                         setIfExists(id + '.STATE', 0);
                     }
+                } else if (adapterInstance[0] == 'bosesoundtouch') {
+                    setState(pageItemTemp.adapterPlayerInstance +  'key', 'POWER');
                 } else {
                     setIfExists(id + '.STOP', true);
                 }
                 GeneratePage(activePage!);
                 break;
+            }
             case 'timer-start':
                 if (words[4] != undefined) {
                     let timer_panel = words[4].split(':');
@@ -7093,7 +7197,7 @@ function HandleButtonEvent(words: any): void {
                 break;
             case 'number-set':
                 let nobj = getObject(id);
-                switch (nobj.common.role as roles) {
+                switch (nobj.common.role as NSPanel.roles) {
                     case 'level.mode.fan':
                         (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                         timeoutSlider = setTimeout(async function () {
@@ -7300,10 +7404,10 @@ function GetNavigationString(pageId: number): string {
     }
     return '';
 }
-function GenerateDetailPage(type: string, optional: mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): Payload[] {
+function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): NSPanel.Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
-        let out_msgs: Array<Payload> = [];
+        let out_msgs: Array<NSPanel.Payload> = [];
         let id = pageItem.id;
 
         if (id && existsObject(id)) {
@@ -7312,7 +7416,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
             let val: (boolean | number) = 0;
             let icon = Icons.GetIcon('lightbulb');
             let iconColor = rgb_dec565(config.defaultColor);
-            const role = o.common.role as roles;
+            const role = o.common.role as NSPanel.roles;
 
             if (type == 'popupLight') {
 
@@ -7753,12 +7857,17 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 let icon_stop = Icons.GetIcon('stop');
                 let icon_down = Icons.GetIcon('arrow-down');
                 let tempVal: number = getState(pageItem.id + '.ACTUAL').val 
-                let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+                
+                //Disabled Status while bug in updating origin adapter data points of lift values
+                let icon_up_status = 'enable';
+                //let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
                 let icon_stop_status = 'enable';
                 if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
-                    icon_stop_status = 'disable';
+                    //icon_stop_status = 'disable';
                 }
-                let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+                let icon_down_status = 'enable';
+                //let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+
                 let textTilt = '';
                 let iconTiltLeft = '';
                 let iconTiltStop = '';
@@ -7787,7 +7896,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 
                 out_msgs.push({
                     payload: 'entityUpdateDetail' + '~'           //entityUpdateDetail
-                        + tempId + '~'                                //entity_id
+                        + tempId + '~'                            //entity_id
                         + val + '~'                               //Shutterposition
                         + textSecondRow + '~'                     //pos_status 2.line
                         + findLocale('blinds', 'Position') + '~'  //pos_translation
@@ -7968,7 +8077,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                     let actualMode = pageItem.modeList![getState(id + '.MODE').val];
 
                     let tempId = placeId != undefined ? placeId : id;
-
+                    // {tempid | icon | iconColor | switchVal | actualSpeed | maxSpeed: | findLocale | actualMode | modeList}
                     out_msgs.push({
                         payload: 'entityUpdateDetail' + '~'     // entityUpdateDetail
                             + tempId + '~'
@@ -7988,35 +8097,13 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                 if (role == 'media') {
                     let actualState: any = '';
                     let optionalString: string = 'Kein Eintrag';
-                    let mode: string = '';
+                    let mode: NSPanel.mediaOptional | '' = '';
                     if (isPageMediaItem(pageItem)) {
                         const vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
-                        const vAdapter: PlayerType = vTempAdapter[0] as PlayerType;
+                        const vAdapter: NSPanel.PlayerType = vTempAdapter[0] as NSPanel.PlayerType;
                         if (optional == 'seek') {
-                            let actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
-                            if (actualStateTemp >= 95) {
-                                actualState = '100%';
-                            } else if (actualStateTemp >= 85) {
-                                actualState = '90%';
-                            } else if (actualStateTemp >= 75) {
-                                actualState = '80%';
-                            } else if (actualStateTemp >= 65) {
-                                actualState = '70%';
-                            } else if (actualStateTemp >= 55) {
-                                actualState = '60%';
-                            } else if (actualStateTemp >= 45) {
-                                actualState = '50%';
-                            } else if (actualStateTemp >= 35) {
-                                actualState = '40%';
-                            } else if (actualStateTemp >= 25) {
-                                actualState = '30%';
-                            } else if (actualStateTemp >= 15) {
-                                actualState = '20%';
-                            } else if (actualStateTemp >= 5) {
-                                actualState = '10%';
-                            } else if (actualStateTemp >= 0) {
-                                actualState = '0%';
-                            }
+                            const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
+                            actualState = Math.round(actualStateTemp / 10) * 10 + '%';
                             if (vAdapter == 'sonos') {
                                 optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
@@ -8086,12 +8173,19 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                             } else if (vAdapter == 'bosesoundtouch') {
                                 if (existsObject(pageItem.adapterPlayerInstance + 'deviceInfo.name')) {
                                     actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'deviceInfo.name').val);
-                                    log(actualState);
                                 }
                                 let tempPlayList: string[] = [];
-                                for (let i = 0; i < pageItem.playList!.length; i++) {
-                                    tempPlayList[i] = formatInSelText(pageItem.playList![i]);
+                                let vPreset: string = 'No Entry';
+                                for (let i = 1; i < 7; i++) {
+                                    if (getState(pageItem.adapterPlayerInstance + 'presets.'+ i +'.source').val !== null) {
+                                        vPreset = getState(pageItem.adapterPlayerInstance + 'presets.'+ i + '.source').val;
+                                    } else {
+                                        vPreset = 'Preset ' + i.toFixed;
+                                    }
+                                    tempPlayList[i - 1] = formatInSelText(vPreset.replace('_',' '));
+                                    if (Debug) log(formatInSelText(vPreset.replace('_',' ')))
                                 }
+                                tempPlayList[6] = 'AUX INPUT';
                                 optionalString = pageItem.playList != undefined ? tempPlayList.join('?') : ''
                             } else if (vAdapter == 'sonos') {
                                 if (Debug) log(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.playlist_set', 'info');
@@ -8181,8 +8275,8 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
 
                             if (existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode') == false ||
                                 existsObject(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker') == false) {
-                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon> {type: 'string'});
-                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon> {type: 'string'});
+                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.EQ.activeMode', <iobJS.StateCommon> {type: 'string', write: false});
+                                createState(NSPanel_Path + 'Media.Player.' + lastIndex + '.Speaker', <iobJS.StateCommon> {type: 'string', write: false});
                             }
 
                             actualState = ''
@@ -8215,7 +8309,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                         }
 
                         let tempId = placeId != undefined ? placeId : id;
-
+                        // {tempid | color | NSPanel.mediaOptional | actualState | optionalString}
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail
                                 + tempId + '?' + optional + '~~'         //{entity_id}
@@ -8244,7 +8338,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
                     let valueList = pageItem.modeList != undefined ? tempModeList.join('?') : '';
 
                     let tempId = placeId != undefined ? placeId : id;
-
+                    // {tempid | color | NSPanel.mediaOptional | actualValue | valueList}
                     out_msgs.push({
                         payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
                             + tempId + '~~'                          //{entity_id}
@@ -8280,7 +8374,7 @@ function GenerateDetailPage(type: string, optional: mediaOptional | undefined, p
 
                         //log(valueList);
                         let tempId = placeId != undefined ? placeId : id;
-
+                        // {tempid | color | 'insel' | actualValue | valueList}
                         out_msgs.push({
                             payload: 'entityUpdateDetail2' + '~'     //entityUpdateDetail2
                                 + tempId + '~~'                          //{entity_id}
@@ -8673,10 +8767,8 @@ function HandleScreensaverUpdate(): void {
             if (screensaverAdvanced) {
                 // 5 indicatorScreensaverEntities     
                 for (let i = 0; i < 5 && i < config.indicatorScreensaverEntity.length; i++) {
-                    let checkpoint = true;
-                    const indicatorScreensaverEntity:ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
+                    const indicatorScreensaverEntity:NSPanel.ScreenSaverElementWithUndefined = config.indicatorScreensaverEntity[i];
                     if (indicatorScreensaverEntity === null || indicatorScreensaverEntity === undefined) {
-                        checkpoint = false;
                         break;
                     }
                     RegisterScreensaverEntityWatcher(indicatorScreensaverEntity.ScreensaverEntity)
@@ -8719,7 +8811,7 @@ function HandleScreensaverUpdate(): void {
             }
             if (Debug) log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString, 'info');
 
-            SendToPanel(<Payload>{ payload: 'weatherUpdate~' + payloadString });
+            SendToPanel(<NSPanel.Payload>{ payload: 'weatherUpdate~' + payloadString });
 
             HandleScreensaverStatusIcons();
         }
@@ -8916,7 +9008,7 @@ function HandleScreensaverStatusIcons() : void {
             payloadString += '~';
         }
 
-        SendToPanel(<Payload>{ payload: 'statusUpdate~' + payloadString });
+        SendToPanel(<NSPanel.Payload>{ payload: 'statusUpdate~' + payloadString });
 
     } catch (err: any) {
         log('error at function HandleScreensaverStatusIcons: ' + err.message, 'warn');
@@ -8987,8 +9079,12 @@ function HandleScreensaverColors(): void {
             scrSvrBGCol = rgb_dec565(scbackgroundInd2);
         } else if (bgColorScrSaver == 3) {
             scrSvrBGCol = rgb_dec565(scbackgroundInd3);
+        } else if (bgColorScrSaver == 4) {
+            scrSvrBGCol = rgb_dec565({red:255, green:16, blue:240});
+        } else if (bgColorScrSaver == 5) {
+            scrSvrBGCol = rgb_dec565({ red: 100, green: 0, blue: 0 });
         }
-
+        
         let payloadString = 'color'                     + '~' +
                             scrSvrBGCol                 + '~' +      //background
                             rgb_dec565(sctime)          + '~' +      //time
@@ -9007,17 +9103,17 @@ function HandleScreensaverColors(): void {
                             rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
                             rgb_dec565(sctTimeAdd);                  //tTimeAdd
 
-        SendToPanel(<Payload>{ payload: payloadString });
+        SendToPanel(<NSPanel.Payload>{ payload: payloadString });
     } catch (err: any) {
         log('error at function HandleScreensaverColors: '+ err.message, 'warn');
     }
 }
 
-function GetScreenSaverEntityColor(configElement: ScreenSaverElement | null): number {
+function GetScreenSaverEntityColor(configElement: NSPanel.ScreenSaverElement | null): number {
     try {
         let colorReturn: number;
         if (configElement && configElement.ScreensaverEntityIconColor != undefined) {
-            const ScreensaverEntityIconColor = configElement.ScreensaverEntityIconColor as IconScaleElement;
+            const ScreensaverEntityIconColor = configElement.ScreensaverEntityIconColor as NSPanel.IconScaleElement;
             if (typeof getState(configElement.ScreensaverEntity).val == 'boolean') {
                 let iconvalbest = (typeof ScreensaverEntityIconColor == 'object' && ScreensaverEntityIconColor.val_best !== undefined ) ? ScreensaverEntityIconColor.val_best : false ;
                 colorReturn = (getState(configElement.ScreensaverEntity).val == iconvalbest) ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
@@ -9369,10 +9465,10 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
     try {
         const Tasmota_Sensor = JSON.parse(obj.state.val);
 
-        await createStateAsync(NSPanel_Path + 'Sensor.Time', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.StateCommon>{ type: 'string' });
-        await createStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.StateCommon>{ type: 'number', 'unit': '°C' });
-        await createStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.StateCommon>{ type: 'number', 'unit': '°C' });
+        await createStateAsync(NSPanel_Path + 'Sensor.Time', <iobJS.StateCommon>{ type: 'string', write: false });
+        await createStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.StateCommon>{ type: 'string', write: false });
+        await createStateAsync(NSPanel_Path + 'Sensor.ANALOG.Temperature', <iobJS.StateCommon>{ type: 'number', 'unit': '°C', write: false });
+        await createStateAsync(NSPanel_Path + 'Sensor.ESP32.Temperature', <iobJS.StateCommon>{ type: 'number', 'unit': '°C', write: false });
         let dateTime: string = Tasmota_Sensor.Time.split('T');
         await setStateAsync(NSPanel_Path + 'Sensor.Time', <iobJS.State>{ val: dateTime[0] + '\r\n' + dateTime[1] , ack: true });
         await setStateAsync(NSPanel_Path + 'Sensor.TempUnit', <iobJS.State>{ val: '°' + Tasmota_Sensor.TempUnit, ack: true });
@@ -9563,8 +9659,9 @@ function rgb_to_cie(red: number, green: number, blue: number): string
 
    return cie;
 }
+
 /**
- * 
+ *
  * @param vDeviceString 
  * @returns 
  */
@@ -9578,290 +9675,77 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     return strDevID;
 }
 
-type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
+type RGB = NSPanel.RGB;
+type PageItem = NSPanel.PageItem;
+type PageType = NSPanel.PageType;
+type Config = NSPanel.Config;
+type PageEntities = NSPanel.PageEntities;
+type PageChart = NSPanel.PageChart;
+type PagePower = NSPanel.PagePower;
+type PageGrid = NSPanel.PageGrid;
+type PageQR = NSPanel.PageQR;
+type PageGrid2 = NSPanel.PageGrid2;
+type PageMedia = NSPanel.PageMedia;
+type PageThermo = NSPanel.PageThermo;
+type PageUnlock = NSPanel.PageUnlock;
+type PageAlarm = NSPanel.PageAlarm;
 
-type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
-
-type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
-    | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
-    | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
-    | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
-
-type ButtonActionType = 'bExit' | 'bUp' | 'bNext' | 'bSubNext' | 'bPrev' | 'bSubPrev' | 'bHome' | 'notifyAction' | 'OnOff' | 'button' | 'up' | 'stop' | 'down'
-    | 'positionSlider' | 'tiltOpen' | 'tiltStop' | 'tiltSlider' | 'tiltClose' | 'brightnessSlider' | 'colorTempSlider' | 'colorWheel' | 'tempUpd' | 'tempUpdHighLow' | 'media-back'
-    | 'media-pause' | 'media-next' | 'media-shuffle' | 'volumeSlider' | 'mode-speakerlist' | 'mode-playlist' | 'mode-tracklist' | 'mode-repeat' | 'mode-equalizer' | 'mode-seek' | 'mode-crossfade'
-    | 'mode-favorites' | 'mode-insel' | 'media-OnOff' | 'timer-start' | 'timer-pause' | 'timer-cancle' | 'timer-finish' | 'hvac_action' | 'mode-modus1' | 'mode-modus2' | 'mode-modus3' | 'number-set'
-    | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' 
-    
 
 
-type RGB = {
-    red: number,
-    green: number,
-    blue: number
-};
-
-type Payload = {
-    payload: string;
-};
-
-type PageBaseType = {
-    type: PagetypeType,
-    heading: string,
-    items: PageItem[],
-    useColor: boolean,
-    subPage?: boolean,
-    parent?: PageType,
-    parentIcon?: string,
-    parentIconColor?: RGB,
-    prev?: string,
-    prevIcon?: string,
-    prevIconColor?: RGB,
-    next?: string,
-    nextIcon?: string,
-    nextIconColor?: RGB,
-    home?: string,
-    homeIcon?: string,
-    homeIconColor?: RGB
-};
-
-type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower'
-
-type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower
-
-// If u get a error here u forgot something in PagetypeType or PageType
-function checkPageType(F: PagetypeType, A: PageType) {
-    A.type = F;
+/**
+ * 
+ * @param time  object { hour: number, minutes: number } | number: Time as number in ms
+ * @param repeatTime in seconds
+ * @param callback what todo
+ * @returns 
+ */
+function adapterSchedule(time: {hour?: number, minute?: number} | undefined | number, repeatTime: number, callback: () => void): number|null {
+    if (typeof callback !== 'function') return null
+    const ref = Math.random() + 1;
+    scheduleList[ref] = setTimeout(_schedule, 1, time, ref, repeatTime, callback), true;
+    return ref;
 }
 
-type PageEntities = {
-    type: 'cardEntities',
-    items: PageItem[],
-} & PageBaseType
-
-type PageGrid = {
-    type: 'cardGrid',
-    items: PageItem[],
-} & PageBaseType
-
-type PageGrid2 = {
-    type: 'cardGrid2',
-    items: PageItem[],
-} & PageBaseType
-
-type PageThermo = {
-    type: 'cardThermo',
-    items: PageThermoItem[],
-    
-} & Omit<PageBaseType, 'useColor'>
-
-type PageMedia = {
-    type: 'cardMedia',
-    items: PageMediaItem[],
-} & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
-
-type PageAlarm = {
-    type: 'cardAlarm',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PageUnlock = {
-    type: 'cardUnlock',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
-
-type PageQR = {
-    type: 'cardQR',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PagePower = {
-    type: 'cardPower',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PageChart = {
-    type: 'cardChart' | 'cardLChart',
-    items: PageItem[],
-} & Omit<PageBaseType, 'useColor'>
-
-type PageItem = PageBaseItem | PageMediaItem | PageThermoItem
-
-function isPageMediaItem(F: PageItem | PageMediaItem):F is PageMediaItem {
-    return  'adapterPlayerInstance' in F
+function _schedule(time: {hour?: number, minute?: number} | undefined | number, ref: number, repeatTime: number, callback, init: boolean = false) {
+    if (!scheduleList[ref]) return;
+    if (!init) callback();
+    let targetTime: number;
+    if ( time === undefined) {
+        targetTime = new Date().setMilliseconds(0) + repeatTime * 1000;
+        time = targetTime;
+    } else if (typeof time === 'number') {
+        targetTime = time + repeatTime * 1000;
+        time = targetTime;
+    } else {
+        time.hour = time.hour !== undefined ? time.hour : -1;
+        time.minute = time.minute !== undefined ? time.minute : 0;
+        targetTime = time.hour !== -1 ? new Date().setHours(time.hour, time.minute, 0, 0) : new Date().setMinutes(time.minute, 0, 0);
+        if (new Date().getTime() >= targetTime) {
+            targetTime += repeatTime * 1000;
+            targetTime = time.hour !== -1 ? new Date(targetTime).setHours(time.hour, time.minute, 0, 0) : new Date(targetTime).setMinutes(time.minute, 0, 0);
+        }
+    }
+    const timeout = targetTime - new Date().getTime();
+    scheduleList[ref] = setTimeout(_schedule, timeout, time, ref, repeatTime, callback);
 }
-
-function isPageThermoItem(F: PageItem | PageThermoItem):F is PageThermoItem {
-    return  'popupThermoMode1' in F;
-}
-type PageMediaItem = {
-    adapterPlayerInstance: adapterPlayerInstanceType,
-    mediaDevice?: string,
-    colorMediaIcon?: RGB,
-    colorMediaArtist?: RGB,
-    colorMediaTitle?: RGB,
-    speakerList?: string[],
-    playList?: string[],
-    equalizerList?: string[],
-    repeatList?: string[],
-    globalTracklist?: string[],
-    crossfade?: boolean, 
-} & PageBaseItem
-
-type PageThermoItem = {
-    popupThermoMode1?: string[],
-    popupThermoMode2?: string[],
-    popupThermoMode3?: string[],
-    popUpThermoName?: string[],
-    setThermoAlias?: string[],
-    setThermoDestTemp2?: string,
-} & PageBaseItem
-
-type PageBaseItem = {
-    id?: string | null,
-    icon?: string,
-    icon2?: string,
-    onColor?: RGB,
-    offColor?: RGB,
-    useColor?: boolean,
-    interpolateColor?: boolean,
-    minValueBrightness?: number,
-    maxValueBrightness?: number,
-    minValueColorTemp?: number,
-    maxValueColorTemp?: number,
-    minValueLevel?: number,
-    maxValueLevel?: number,
-    minValueTilt?: number,
-    maxValueTilt?: number,
-    minValue?: number,
-    maxValue?: number,
-    stepValue?: number,
-    prefixName?: string,
-    suffixName?: string,
-    name?: string,
-    secondRow?: string,
-    buttonText?: string,
-    unit?: string,
-    navigate?: boolean,
-    colormode?: string,
-    colorScale?: IconScaleElement, 
-    //adapterPlayerInstance?: adapterPlayerInstanceType,
-    targetPage?: string,
-    modeList?: string[],
-    hidePassword?: boolean,
-    autoCreateALias?: boolean
-    yAxis?: string,
-    yAxisTicks?: number[] | string,
-    xAxisDecorationId?: string,
-    useValue?: boolean,
-    monobutton?: boolean,
-    inSel_ChoiceState?: boolean,
-    iconArray?: string[],
-    fontSize?: number,
-    actionStringArray?: string[],
-    alwaysOnDisplay?: boolean,
-}
-
-type DimMode = {
-    dimmodeOn: (boolean | undefined),
-    brightnessDay: (number | undefined),
-    brightnessNight: (number | undefined),
-    timeDay: (string | undefined),
-    timeNight: (string | undefined)
-}
-
-type ConfigButtonFunction = {
-    mode: 'page' | 'toggle' | 'set' | null,
-    page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
-    entity: string | null,
-    setValue: string | number | boolean | null
-}
-
-type Config = {
-    panelRecvTopic: string,
-    panelSendTopic: string,
-    weatherEntity: string,
-    leftScreensaverEntity: leftScreensaverEntityType
-    bottomScreensaverEntity: ScreenSaverElement[],
-    indicatorScreensaverEntity: indicatorScreensaverEntityType
-    mrIcon1ScreensaverEntity: ScreenSaverMRElement,
-    mrIcon2ScreensaverEntity: ScreenSaverMRElement,
-    defaultColor: RGB,
-    defaultOnColor: RGB,
-    defaultOffColor: RGB,
-    defaultBackgroundColor: RGB,
-    pages: PageType[],
-    subPages: PageType[],
-    button1: ConfigButtonFunction,
-    button2: ConfigButtonFunction
-}
-type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
-type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
-type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
-type ScreenSaverElement = {
-    ScreensaverEntity: string,
-    ScreensaverEntityText: string,
-    ScreensaverEntityFactor?: number,
-    ScreensaverEntityDecimalPlaces?: number,
-    ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions,
-    ScreensaverEntityIconOn?: string | null,
-    ScreensaverEntityIconOff?: string | null,
-    ScreensaverEntityUnitText?: string,
-    ScreensaverEntityIconColor?: RGB | IconScaleElement | string
-    ScreensaverEntityOnColor?: RGB
-    ScreensaverEntityOffColor?: RGB
-    ScreensaverEntityOnText?: string | null,
-    ScreensaverEntityOffText?: string | null,
-}
-
-type ScreenSaverMRElement = {
-    ScreensaverEntity: string | null,
-    ScreensaverEntityIconOn: string | null,
-    ScreensaverEntityIconOff: string | null,
-    ScreensaverEntityValue: string | null,
-    ScreensaverEntityValueDecimalPlace: number | null,
-    ScreensaverEntityValueUnit: string | null,
-    ScreensaverEntityOnColor: RGB,
-    ScreensaverEntityOffColor: RGB
-}
-
-type IconScaleElement = { 
-    val_min:number, 
-    val_max:number, 
-    val_best?: number
-}
-/** we need this to have a nice order when using switch() */
-type adapterPlayerInstanceType =
-  'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
-| 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
-| 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
-| 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
-| 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
-| 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
-
-type PlayerType = _PlayerTypeWithMediaDevice | _PlayerTypeWithOutMediaDevice;
-
+function _clearSchedule(ref: number): null {
+    if (scheduleList[ref]) clearTimeout(scheduleList[ref]);
+    delete scheduleList[ref];
+    return null;
+}  
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const
 const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const
-type _PlayerTypeWithOutMediaDevice = typeof ArrayPlayerTypeWithOutMediaDevice[number] 
-type _PlayerTypeWithMediaDevice = typeof ArrayPlayerTypeWithMediaDevice[number]
 
-function isPlayerWithMediaDevice (F: string | _PlayerTypeWithMediaDevice): F is _PlayerTypeWithMediaDevice {
-    return ArrayPlayerTypeWithMediaDevice.indexOf(F as _PlayerTypeWithMediaDevice) != -1;
+function isPlayerWithMediaDevice (F: string | NSPanel._PlayerTypeWithMediaDevice): F is NSPanel._PlayerTypeWithMediaDevice {
+    return ArrayPlayerTypeWithMediaDevice.indexOf(F as NSPanel._PlayerTypeWithMediaDevice) != -1;
+}
+/** check if NSPanel.adapterPlayerInstanceType has all Playertypes */
+function checkSortedPlayerType(F: NSPanel.notSortedPlayerType) {
+    const test: NSPanel.adapterPlayerInstanceType = F;
 }
 
-type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
-
-/** check if adapterPlayerInstanceType has all Playertypes */
-function checkSortedPlayerType(F: notSortedPlayerType) {
-    const test: adapterPlayerInstanceType = F;
-}
-
-type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
-
-
-function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
-    switch(F as mediaOptional) {
+function isMediaOptional(F: string | NSPanel.mediaOptional): F is NSPanel.mediaOptional {
+    switch(F as NSPanel.mediaOptional) {
         case "seek":
         case "crossfade":
         case "speakerlist":
@@ -9876,8 +9760,8 @@ function isMediaOptional(F: string | mediaOptional): F is mediaOptional {
     }
 }
 
-function isEventMethod(F: string | EventMethod): F is EventMethod {
-    switch(F as EventMethod) {
+function isEventMethod(F: string | NSPanel.EventMethod): F is NSPanel.EventMethod {
+    switch(F as NSPanel.EventMethod) {
         case "startup":
         case "sleepReached":
         case "pageOpenDetail":
@@ -9888,7 +9772,310 @@ function isEventMethod(F: string | EventMethod): F is EventMethod {
             return true;
         default:
             // Have to talk about this.
-            log(`Please report to developer: Unknown EventMethod: ${F} `, 'warn');
+            log(`Please report to developer: Unknown NSPanel.EventMethod: ${F} `, 'warn');
             return false;
     }
+}
+
+function isPopupType(F: NSPanel.PopupType | string): F is NSPanel.PopupType {
+    switch(F as NSPanel.PopupType) {
+        case "popupFan":
+        case "popupInSel":
+        case "popupLight":
+        case "popupLightNew":
+        case "popupNotify":
+        case "popupShutter":
+        case "popupThermo":
+        case "popupTimer":
+            return true;
+        default:
+            log(`Please report to developer: Unknown NSPanel.PopupType: ${F} `, 'warn');
+            return false;
+    }
+}
+// If u get a error here u forgot something in PagetypeType or PageType
+function checkPageType(F: NSPanel.PagetypeType, A: NSPanel.PageType) {
+    A.type = F;
+}
+function isPageMediaItem(F: NSPanel.PageItem | NSPanel.PageMediaItem):F is NSPanel.PageMediaItem {
+    return  'adapterPlayerInstance' in F
+}
+
+function isPageThermoItem(F: PageItem | NSPanel.PageThermoItem):F is NSPanel.PageThermoItem {
+    return  'popupThermoMode1' in F;
+}
+
+namespace NSPanel {
+    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer' 
+
+
+
+    export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
+
+    export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
+
+    export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
+        | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
+        | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
+        | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
+
+    export type ButtonActionType = 'bExit' | 'bUp' | 'bNext' | 'bSubNext' | 'bPrev' | 'bSubPrev' | 'bHome' | 'notifyAction' | 'OnOff' | 'button' | 'up' | 'stop' | 'down'
+        | 'positionSlider' | 'tiltOpen' | 'tiltStop' | 'tiltSlider' | 'tiltClose' | 'brightnessSlider' | 'colorTempSlider' | 'colorWheel' | 'tempUpd' | 'tempUpdHighLow' | 'media-back'
+        | 'media-pause' | 'media-next' | 'media-shuffle' | 'volumeSlider' | 'mode-speakerlist' | 'mode-playlist' | 'mode-tracklist' | 'mode-repeat' | 'mode-equalizer' | 'mode-seek' | 'mode-crossfade'
+        | 'mode-favorites' | 'mode-insel' | 'media-OnOff' | 'timer-start' | 'timer-pause' | 'timer-cancle' | 'timer-finish' | 'hvac_action' | 'mode-modus1' | 'mode-modus2' | 'mode-modus3' | 'number-set'
+        | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' 
+        
+
+
+    export type RGB = {
+        red: number,
+        green: number,
+        blue: number
+    };
+
+    export type Payload = {
+        payload: string;
+    };
+
+    export type PageBaseType = {
+        type: PagetypeType,
+        heading: string,
+        items: PageItem[],
+        useColor: boolean,
+        subPage?: boolean,
+        parent?: PageType,
+        parentIcon?: string,
+        parentIconColor?: RGB,
+        prev?: string,
+        prevIcon?: string,
+        prevIconColor?: RGB,
+        next?: string,
+        nextIcon?: string,
+        nextIconColor?: RGB,
+        home?: string,
+        homeIcon?: string,
+        homeIconColor?: RGB
+    };
+
+
+    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' |'cardGrid'|'cardGrid2'|'cardThermo'|'cardMedia'|'cardUnlock'|'cardQR'|'cardAlarm'|'cardPower' //| 'cardBurnRec'
+
+    export type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower
+
+    export type PageEntities = {
+        type: 'cardEntities',
+        items: PageItem[],
+    } & PageBaseType
+
+    export type PageGrid = {
+        type: 'cardGrid',
+        items: PageItem[],
+    } & PageBaseType
+
+    export type PageGrid2 = {
+        type: 'cardGrid2',
+        items: PageItem[],
+    } & PageBaseType
+
+    export type PageThermo = {
+        type: 'cardThermo',
+        items: PageThermoItem[],
+        
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageMedia = {
+        type: 'cardMedia',
+        items: PageMediaItem[],
+    } & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
+
+    export type PageAlarm = {
+        type: 'cardAlarm',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageUnlock = {
+        type: 'cardUnlock',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
+
+    export type PageQR = {
+        type: 'cardQR',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PagePower = {
+        type: 'cardPower',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageChart = {
+        type: 'cardChart' | 'cardLChart',
+        items: PageItem[],
+    } & Omit<PageBaseType, 'useColor'>
+
+    export type PageItem = PageBaseItem | PageMediaItem | PageThermoItem
+
+    export type PageMediaItem = {
+        adapterPlayerInstance: adapterPlayerInstanceType,
+        mediaDevice?: string,
+        colorMediaIcon?: RGB,
+        colorMediaArtist?: RGB,
+        colorMediaTitle?: RGB,
+        speakerList?: string[],
+        playList?: string[],
+        equalizerList?: string[],
+        repeatList?: string[],
+        globalTracklist?: string[],
+        crossfade?: boolean, 
+    } & PageBaseItem
+
+    export type PageThermoItem = {
+        popupThermoMode1?: string[],
+        popupThermoMode2?: string[],
+        popupThermoMode3?: string[],
+        popUpThermoName?: string[],
+        setThermoAlias?: string[],
+        setThermoDestTemp2?: string,
+    } & PageBaseItem |
+    {
+        popupThermoMode1?: string[],
+        popupThermoMode2?: string[],
+        popupThermoMode3?: string[],
+        popUpThermoName?: string[],
+        setThermoAlias?: string[],
+        setThermoDestTemp2?: string,
+    } & PageBaseItem
+    // mean string start with getState(' and end with ').val
+    type getStateID = string;
+    export type PageBaseItem = {
+        id?: string | null,
+        icon?: string,
+        icon2?: string,
+        onColor?: RGB,
+        offColor?: RGB,
+        useColor?: boolean,
+        interpolateColor?: boolean,
+        minValueBrightness?: number,
+        maxValueBrightness?: number,
+        minValueColorTemp?: number,
+        maxValueColorTemp?: number,
+        minValueLevel?: number,
+        maxValueLevel?: number,
+        minValueTilt?: number,
+        maxValueTilt?: number,
+        minValue?: number,
+        maxValue?: number,
+        stepValue?: number,
+        prefixName?: string,
+        suffixName?: string,
+        name?: string | getStateID,
+        secondRow?: string,
+        buttonText?: string,
+        unit?: string,
+        navigate?: boolean,
+        colormode?: string,
+        colorScale?: IconScaleElement, 
+        //adapterPlayerInstance?: adapterPlayerInstanceType,
+        targetPage?: string,
+        modeList?: string[],
+        hidePassword?: boolean,
+        autoCreateALias?: boolean
+        yAxis?: string,
+        yAxisTicks?: number[] | string,
+        xAxisDecorationId?: string,
+        useValue?: boolean,
+        monobutton?: boolean,
+        inSel_ChoiceState?: boolean,
+        iconArray?: string[],
+        fontSize?: number,
+        actionStringArray?: string[],
+        alwaysOnDisplay?: boolean,
+    }
+
+    export type DimMode = {
+        dimmodeOn: (boolean | undefined),
+        brightnessDay: (number | undefined),
+        brightnessNight: (number | undefined),
+        timeDay: (string | undefined),
+        timeNight: (string | undefined)
+    }
+
+    export type ConfigButtonFunction = {
+        mode: 'page' | 'toggle' | 'set' | null,
+        page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
+        entity: string | null,
+        setValue: string | number | boolean | null
+    }
+
+    export type Config = {
+        panelRecvTopic: string,
+        panelSendTopic: string,
+        weatherEntity: string,
+        leftScreensaverEntity: leftScreensaverEntityType
+        bottomScreensaverEntity: ScreenSaverElement[],
+        indicatorScreensaverEntity: indicatorScreensaverEntityType
+        mrIcon1ScreensaverEntity: ScreenSaverMRElement,
+        mrIcon2ScreensaverEntity: ScreenSaverMRElement,
+        defaultColor: RGB,
+        defaultOnColor: RGB,
+        defaultOffColor: RGB,
+        defaultBackgroundColor: RGB,
+        pages: PageType[],
+        subPages: PageType[],
+        button1: ConfigButtonFunction,
+        button2: ConfigButtonFunction
+    }
+    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+    export type indicatorScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
+    export type ScreenSaverElementWithUndefined = null | undefined | ScreenSaverElement
+    export type ScreenSaverElement = {
+        ScreensaverEntity: string,
+        ScreensaverEntityText: string,
+        ScreensaverEntityFactor?: number,
+        ScreensaverEntityDecimalPlaces?: number,
+        ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions,
+        ScreensaverEntityIconOn?: string | null,
+        ScreensaverEntityIconOff?: string | null,
+        ScreensaverEntityUnitText?: string,
+        ScreensaverEntityIconColor?: RGB | IconScaleElement | string
+        ScreensaverEntityOnColor?: RGB
+        ScreensaverEntityOffColor?: RGB
+        ScreensaverEntityOnText?: string | null,
+        ScreensaverEntityOffText?: string | null,
+    }
+
+    export type ScreenSaverMRElement = {
+        ScreensaverEntity: string | null,
+        ScreensaverEntityIconOn: string | null,
+        ScreensaverEntityIconOff: string | null,
+        ScreensaverEntityValue: string | null,
+        ScreensaverEntityValueDecimalPlace: number | null,
+        ScreensaverEntityValueUnit: string | null,
+        ScreensaverEntityOnColor: RGB,
+        ScreensaverEntityOffColor: RGB
+    }
+
+    export type IconScaleElement = { 
+        val_min:number, 
+        val_max:number, 
+        val_best?: number
+    }
+    /** we need this to have a nice order when using switch() */
+    export type adapterPlayerInstanceType =
+    'alexa2.0.' | 'alexa2.1.'| 'alexa2.2.' | 'alexa2.3.' | 'alexa2.4.' | 'alexa2.5.' | 'alexa2.6.' | 'alexa2.7.' | 'alexa2.8.' | 'alexa2.9.' 
+    | 'sonos.0.' | 'sonos.1.' | 'sonos.2.' | 'sonos.3.' | 'sonos.4.' | 'sonos.5.' | 'sonos.6.' | 'sonos.7.' | 'sonos.8.' | 'sonos.9.' 
+    | 'spotify-premium.0.' | 'spotify-premium.1.' | 'spotify-premium.2.' | 'spotify-premium.3.' | 'spotify-premium.4.' | 'spotify-premium.5.' | 'spotify-premium.6.' | 'spotify-premium.7.' | 'spotify-premium.8.' | 'spotify-premium.9.' 
+    | 'volumio.0.' | 'volumio.1.' | 'volumio.2.' | 'volumio.3.' |'volumio.4.' | 'volumio.5.' | 'volumio.6.' | 'volumio.7.' | 'volumio.8.' | 'volumio.9.' 
+    | 'squeezeboxrpc.0.' | 'squeezeboxrpc.1.' | 'squeezeboxrpc.2.' | 'squeezeboxrpc.3.' | 'squeezeboxrpc.4.' | 'squeezeboxrpc.5.' | 'squeezeboxrpc.6.' | 'squeezeboxrpc.7.' | 'squeezeboxrpc.8.' | 'squeezeboxrpc.9.' 
+    | 'bosesoundtouch.0.' | 'bosesoundtouch.1.' | 'bosesoundtouch.2.' | 'bosesoundtouch.3.' |'bosesoundtouch.4.' | 'bosesoundtouch.5.' | 'bosesoundtouch.6.' | 'bosesoundtouch.7.' | 'bosesoundtouch.8.' | 'bosesoundtouch.9.' 
+
+    export type PlayerType = _PlayerTypeWithMediaDevice | _PlayerTypeWithOutMediaDevice;
+
+    export type _PlayerTypeWithOutMediaDevice = typeof ArrayPlayerTypeWithOutMediaDevice[number] 
+    export type _PlayerTypeWithMediaDevice = typeof ArrayPlayerTypeWithMediaDevice[number]
+
+    export type notSortedPlayerType = `${PlayerType}.0.` | `${PlayerType}.1.` | `${PlayerType}.2.` | `${PlayerType}.3.` | `${PlayerType}.4.` | `${PlayerType}.5.` | `${PlayerType}.6.` | `${PlayerType}.7.` | `${PlayerType}.8.` | `${PlayerType}.9.`  
+
+    export type mediaOptional = 'seek' | 'crossfade' | 'speakerlist' | 'playlist' | 'tracklist' | 'equalizer' | 'repeat' | 'favorites'
+
 }
