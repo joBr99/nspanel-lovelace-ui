@@ -3154,9 +3154,9 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: PageType): void {
     try {
         activePage = page;
-        setIfExists(NSPanel_Path + 'ActivePage.type', activePage!.type);
-        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage!.heading);
-        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage!.items[0].id);
+        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
+        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
+        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0] !== undefined ? activePage.items[0].id : '');
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(page));
@@ -4696,8 +4696,9 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
 
 function unsubscribeMediaSubscriptions(): void {
     for (let i = 0; i < config.pages.length; i++) {
-        if (config.pages[i].type == 'cardMedia') {
-            let mediaID = config.pages[i].items[0].id;
+        const page: NSPanel.PageType = config.pages[i];
+        if (isPageMedia(page)) {  
+            let mediaID = page.items[0].id;
             unsubscribe(mediaID + '.STATE');
             unsubscribe(mediaID + '.ARTIST');
             unsubscribe(mediaID + '.TITLE');
@@ -4711,8 +4712,9 @@ function unsubscribeMediaSubscriptions(): void {
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
-        if (config.subPages[i].type == 'cardMedia') {
-            let mediaID = config.subPages[i].items[0].id;
+        const page: NSPanel.PageType = config.subPages[i];
+        if (isPageMedia(page)) {  
+            let mediaID = page.items[0].id;
             unsubscribe(mediaID + '.STATE');
             unsubscribe(mediaID + '.ARTIST');
             unsubscribe(mediaID + '.TITLE');
@@ -5999,14 +6001,16 @@ function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
 
 function unsubscribePowerSubscriptions(): void {
     for (let i = 0; i < config.pages.length; i++) {
-        if (config.pages[i].type == 'cardPower') {
-            let powerID = config.pages[i].items[0].id;
+        const page: NSPanel.PageType = config.pages[i];
+        if (isPagePower(page)) {
+            let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
-        if (config.subPages[i].type == 'cardPower') {
-            let powerID = config.subPages[i].items[0].id;
+        const page: NSPanel.PageType = config.pages[i];
+        if (isPagePower(page)) {
+                let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
         }
     }
@@ -8844,97 +8848,155 @@ function RegisterScreensaverEntityWatcher(id: string): void {
 function HandleScreensaverStatusIcons() : void {
     try {
         let payloadString = '';
-        let hwBtn1Col: any = config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor;
-        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
-            // Prüfung ob ScreensaverEntity vom Typ String ist
-            if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
-                if (Debug) log('Entity ist String', 'info')
-                let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn1 == 'ON') {
-                    hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
-                }
-                if (Debug) log('Value: ' + hwBtn1 + ' Color: ' + JSON.stringify(hwBtn1Col), 'info')
+        const iconData: Record<'mrIcon1' | 'mrIcon2', NSPanel.ScreenSaverMRDataElement> = {
+            mrIcon1: {
+                ScreensaverEntity: config.mrIcon1ScreensaverEntity.ScreensaverEntity != null 
+                                        && existsState(config.mrIcon1ScreensaverEntity.ScreensaverEntity) 
+                                        ? getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val 
+                                        : null,
+                ScreensaverEntityIconOn: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn != null 
+                                            ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn) 
+                                            : null,
+                ScreensaverEntityIconOff: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null 
+                                            ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff) 
+                                            : null,
+                ScreensaverEntityOnColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor,
+                ScreensaverEntityOffColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor,
+                ScreensaverEntityValue: config.mrIcon1ScreensaverEntity.ScreensaverEntityValue === null 
+                                        ? null 
+                                        : getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val,
+                ScreensaverEntityValueDecimalPlace: config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace,
+                ScreensaverEntityValueUnit: config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit,
+                
 
-                // Icon ermitteln
-                if (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) {
-                    payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                    if (Debug) log('Icon if true '+payloadString, 'info')    
-                } else {
-                    if (config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null) {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff);
-                        if (Debug) log('Icon else true '+payloadString, 'info')  
-                    } else {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                        if (Debug) log('Icon else false '+payloadString, 'info')  
-                    }
-                } 
-                if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
-                        if (Debug) log('Value ist eine Zahl ' + payloadString, 'info')
-                    } else {
-                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
-                        if (Debug) log('Value ist keine Zahl ' + payloadString, 'info')
-                    }                        
+            },
+            mrIcon2: {
+                ScreensaverEntity: config.mrIcon2ScreensaverEntity.ScreensaverEntity != null 
+                                        && existsState(config.mrIcon2ScreensaverEntity.ScreensaverEntity) 
+                                        ? getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val 
+                                        : null,
+                ScreensaverEntityIconOn: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn != null 
+                                            ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn) 
+                                            : null,
+                ScreensaverEntityIconOff: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null 
+                                            ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff) 
+                                            : null,
+                ScreensaverEntityOnColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor,
+                ScreensaverEntityOffColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor,
+                ScreensaverEntityValue: config.mrIcon2ScreensaverEntity.ScreensaverEntityValue === null 
+                                        ? null 
+                                        : getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val,
+                ScreensaverEntityValueDecimalPlace: config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace,
+                ScreensaverEntityValueUnit: config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit,
+            }
+        }
+        for (const a in iconData) {
+            if (iconData[a].ScreensaverEntityValue === null) {
+                switch (typeof iconData[a].ScreensaverEntityValue) {
+                    case "string":
+                        if (iconData[a].ScreensaverEntityValue === '' || isNaN(iconData[a].ScreensaverEntityValue)) break;
+                    case "number":
+                    case "bigint":
+                        iconData[a].ScreensaverEntityValue = Number(iconData[a].ScreensaverEntityValue).toFixed(iconData[a].ScreensaverEntityValueDecimalPlace);
+                        break;
+                    case "boolean":
+                        break;
+                    case "symbol":
+                    case "undefined":
+                    case "object":
+                    case "function":
+                        iconData[a].ScreensaverEntityValue = null;
                 }
-                payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
-            } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
-                let hwBtn1: boolean = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn1) {
-                    hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
-                }
-                if (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) {
-                    payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                } else {
-                    if (config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null) {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff);
-                    } else {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
+            }
+            let hwBtn1Col: RGB = iconData[a].ScreensaverEntityOffColor;
+            if (iconData[a].ScreensaverEntity != null) {
+                // Prüfung ob ScreensaverEntity vom Typ String ist
+                if (typeof (iconData[a].ScreensaverEntity) == 'string') {
+                    if (Debug) log('Entity ist String', 'info')
+                    let hwBtn1: string = iconData[a].ScreensaverEntity;
+                    if (hwBtn1 == 'ON') {
+                        hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
                     }
-                } 
-                if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
+                    if (Debug) log('Value: ' + hwBtn1 + ' Color: ' + JSON.stringify(hwBtn1Col), 'info')
+
+                    // Icon ermitteln
+                    if (iconData[a].ScreensaverEntity) {
+                        payloadString += iconData[a].ScreensaverEntityIconOn;
+                        if (Debug) log('Icon if true '+payloadString, 'info')    
                     } else {
-                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
+                        if (iconData[a].ScreensaverEntityIconOff != null) {
+                            payloadString += iconData[a].ScreensaverEntityIconOff;
+                            if (Debug) log('Icon1 else true '+payloadString, 'info')  
+                        } else {
+                            payloadString += iconData[a].ScreensaverEntityIconOn;
+                            if (Debug) log('Icon1 else false '+payloadString, 'info')  
+                        }
+                    } 
+                    
+                    if (iconData[a].ScreensaverEntityValue != null) { 
+                        payloadString += iconData[a].ScreensaverEntityValue;
+                        if (typeof iconData[a].ScreensaverEntityValue == 'number') {
+                            //payloadString += iconData[a].ScreensaverEntityValue.toFixed(iconData[a].ScreensaverEntityValueDecimalPlace);
+                            payloadString += (iconData[a].ScreensaverEntityValueUnit == null) ? '' : iconData[a].ScreensaverEntityValueUnit;
+                            if (Debug) log('Value ist eine Zahl ' + payloadString, 'info')
+                        } else {
+                            if (Debug) log('Value ist keine Zahl ' + payloadString, 'info')
+                        }
+                    }                      
+                            
+                    payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
+                } else if (typeof (iconData[a].ScreensaverEntity) == 'boolean') {
+                    let hwBtn1: boolean = iconData[a].ScreensaverEntity;
+                    if (hwBtn1) {
+                        hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
+                    }
+                    if (iconData[a].ScreensaverEntity) {
+                        payloadString += iconData[a].ScreensaverEntityIconOn;
+                    } else {
+                        if (iconData[a].ScreensaverEntityIconOff != null) {
+                            payloadString += iconData[a].ScreensaverEntityIconOff;
+                        } else {
+                            payloadString += iconData[a].ScreensaverEntityIconOn;
+                        }
+                    }
+                    if (iconData[a].ScreensaverEntityValue != null) { 
+                        payloadString += iconData[a].ScreensaverEntityValue;
+                        if (typeof iconData[a].ScreensaverEntityValue == 'number') {
+                            //payloadString += iconData[a].ScreensaverEntityValue.toFixed(iconData[a].ScreensaverEntityValueDecimalPlace);
+                            payloadString += (iconData[a].ScreensaverEntityValueUnit == null) ? '' : iconData[a].ScreensaverEntityValueUnit;
+                        }                    
+                    }
+                    payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
+                }
+            } else if (iconData[a].ScreensaverEntity == null && iconData[a].ScreensaverEntityValue != null){ 
+                if(iconData[a].ScreensaverEntityOnColor != null){
+                    hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
+                }
+                if(iconData[a].ScreensaverEntityIconOn != null){
+                    payloadString += iconData[a].ScreensaverEntityIconOn;
+                }
+                if (iconData[a].ScreensaverEntityValue != null) { 
+                    payloadString += iconData[a].ScreensaverEntityValue;
+                    if (typeof iconData[a].ScreensaverEntityValue == 'number') {
+                        //payloadString += (iconData[a].ScreensaverEntityValue).toFixed(iconData[a].ScreensaverEntityValueDecimalPlace);
+                        payloadString += (iconData[a].ScreensaverEntityValueUnit == null) ? '' : iconData[a].ScreensaverEntityValueUnit;
                     }                      
                 }
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
             }
-        } else if (config.mrIcon1ScreensaverEntity.ScreensaverEntity == null && config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null){
-            
-            if(config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor != null){
-                hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
+            else {
+                hwBtn1Col = Black;
+                payloadString += '~~';
             }
-            if(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn != null){
-                payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-            }
-            
-            if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                    payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
-                } else {
-                    payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
-                }                        
-            }
-            payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
         }
-        else {
-            hwBtn1Col = Black;
-            payloadString += '~~';
-        }
-
-        let hwBtn2Col: any = config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor;
-        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
-            if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
-                let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
+        /*let hwBtn2Col: any = config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor;
+        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null && existsState(config.mrIcon2ScreensaverEntity.ScreensaverEntity)) {
+            if (typeof (iconData.mrIcon2.ScreensaverEntity) == 'string') {
+                let hwBtn2: string = iconData.mrIcon2.ScreensaverEntity;
                 if (hwBtn2 == 'ON') {
                     hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
                 }
-                if (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) {
+                if (iconData.mrIcon2.ScreensaverEntity) {
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
                 } else {
                     if (config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null) {
@@ -8943,21 +9005,22 @@ function HandleScreensaverStatusIcons() : void {
                         payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
                     }
                 } 
-                if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
+                const value = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue == null ? null : getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val;
+                if (value != null) { 
+                    if (value != '' && isNaN(value) == false) {
+                        payloadString += value.toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;     
                     } else {
-                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
-                    }                        
-                }
+                        payloadString += value;
+                    }                      
+                } 
                 payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
-            } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
-                let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
+            } else if (typeof (iconData.mrIcon2.ScreensaverEntity) == 'boolean') {
+                let hwBtn2: boolean = iconData.mrIcon2.ScreensaverEntity;
                 if (hwBtn2) {
                     hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
                 }
-                if (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) {
+                if (iconData.mrIcon2.ScreensaverEntity) {
                     payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
                 } else {
                     if (config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null) {
@@ -8966,14 +9029,15 @@ function HandleScreensaverStatusIcons() : void {
                         payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
                     }
                 } 
-                if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                const value = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue == null ? null : getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val;
+                if (value != null) { 
+                    if (value != '' && isNaN(value) == false) {
+                        payloadString += value.toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
                         payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
                     } else {
-                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
-                    }                        
-                }
+                        payloadString += value;
+                    }                      
+                } 
                 payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
             }
         } else if (config.mrIcon2ScreensaverEntity.ScreensaverEntity == null && config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null){
@@ -8986,20 +9050,21 @@ function HandleScreensaverStatusIcons() : void {
                 payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
             }
             
-            if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                    payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
-                } else {
-                    payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
-                }                                            
-            }
+            const value = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue == null ? null : getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val;
+                if (value != null) { 
+                    if (value != '' && isNaN(value) == false) {
+                        payloadString += value.toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
+                        payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
+                    } else {
+                        payloadString += value;
+                    }                      
+                } 
             payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
         } else {
             hwBtn2Col = Black;
             payloadString += '~~';
         }
-
+        */
         let alternateScreensaverMFRIcon1Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1').val
         let alternateScreensaverMFRIcon2Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2').val
         //Alternate MRIcon Size
@@ -9811,6 +9876,13 @@ function isPageThermoItem(F: PageItem | NSPanel.PageThermoItem):F is NSPanel.Pag
     return  'popupThermoMode1' in F;
 }
 
+function isPageMedia(F: NSPanel.PageType | NSPanel.PageMedia):F is NSPanel.PageMedia {
+    return F.type == 'cardMedia';
+}
+function isPagePower(F: NSPanel.PageType | NSPanel.PagePower):F is NSPanel.PagePower {
+    return F.type == 'cardPower';
+}
+
 namespace NSPanel {
     export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer' 
 
@@ -9870,48 +9942,49 @@ namespace NSPanel {
 
     export type PageEntities = {
         type: 'cardEntities',
-        items: PageItem[],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageGrid = {
         type: 'cardGrid',
-        items: PageItem[],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageGrid2 = {
         type: 'cardGrid2',
-        items: PageItem[],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageThermo = {
         type: 'cardThermo',
-        items: PageThermoItem[],
+        items: [PageThermoItem],
         
     } & Omit<PageBaseType, 'useColor'>
 
     export type PageMedia = {
         type: 'cardMedia',
-        items: PageMediaItem[],
+        items: [PageMediaItem],
     } & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
 
+    
     export type PageAlarm = {
         type: 'cardAlarm',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'>
 
     export type PageUnlock = {
         type: 'cardUnlock',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
 
     export type PageQR = {
         type: 'cardQR',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'>
 
     export type PagePower = {
         type: 'cardPower',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'>
 
     export type PageChart = {
@@ -10055,6 +10128,16 @@ namespace NSPanel {
         ScreensaverEntityIconOn: string | null,
         ScreensaverEntityIconOff: string | null,
         ScreensaverEntityValue: string | null,
+        ScreensaverEntityValueDecimalPlace: number | null,
+        ScreensaverEntityValueUnit: string | null,
+        ScreensaverEntityOnColor: RGB,
+        ScreensaverEntityOffColor: RGB
+    }
+    export type ScreenSaverMRDataElement = {
+        ScreensaverEntity: string | number | boolean | null,
+        ScreensaverEntityIconOn: string | null,
+        ScreensaverEntityIconOff: string | null,
+        ScreensaverEntityValue: string | number | boolean | null,
         ScreensaverEntityValueDecimalPlace: number | null,
         ScreensaverEntityValueUnit: string | null,
         ScreensaverEntityOnColor: RGB,
