@@ -8946,13 +8946,8 @@ function HandleScreensaverStatusIcons() : void {
                 
                 if (iconData[a].ScreensaverEntityValue != null) { 
                     payloadString += iconData[a].ScreensaverEntityValue;
-                    if (typeof iconData[a].ScreensaverEntityValue == 'number') {
-                        payloadString += (iconData[a].ScreensaverEntityValueUnit == null) ? '' : iconData[a].ScreensaverEntityValueUnit;
-                        if (Debug) log('Value ist eine Zahl ' + payloadString, 'info')
-                    } else {
-                        if (Debug) log('Value ist keine Zahl ' + payloadString, 'info')
-                    }
-                }                      
+                    payloadString += (iconData[a].ScreensaverEntityValueUnit == null) ? '' : iconData[a].ScreensaverEntityValueUnit; 
+                }                       
                             
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
             } else {
@@ -9785,6 +9780,11 @@ namespace NSPanel {
 
 
     export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
+    export type panelRecvType = {
+        event: 'event';
+        method: EventMethod
+    }
+
 
     export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
 
