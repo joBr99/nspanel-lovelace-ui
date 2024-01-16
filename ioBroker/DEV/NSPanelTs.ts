@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.36 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.37 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -89,14 +89,15 @@ ReleaseNotes:
         - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
-	- 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
- 	- 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
-  	- 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
-   	- 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
+        - 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
+        - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
+        - 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
+        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
         - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
         - 09.01.2024 - v4.3.3.36 Fix: change ScreensaverTimeout and activeBrightness
         - 09.01.2024 - v4.3.3.36 Fix: schedule SendTime
         - 09.01.2024 - v4.3.3.36 Fix: Function _schedule SummerTime/WinterTime
+        - 15.01.2024 - v4.3.3.37 Change: Allow data points to be flushed for popUpNotify. Activate screensaver with one click.
    
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -963,7 +964,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.36';
+const scriptVersion: string = 'v4.3.3.37';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2103,7 +2104,7 @@ async function InitPopupNotify() {
             const heading = getState(screensaverNotifyHeading).val;
             const text = getState(screensaverNotifyText).val;
             
-            if (screensaverEnabled) {
+            if (screensaverEnabled && heading != '' && text != '') {
                 setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
             }
 
@@ -2113,10 +2114,8 @@ async function InitPopupNotify() {
         });
 
         // popupNotify - Notification to a separate page
-        //on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
         on({ id: [popupNotifyText], change: 'any' }, async() => {
 
-            
             let notification: string;
 
             let v_popupNotifyHeadingColor = (getState(popupNotifyHeadingColor).val != null) ? getState(popupNotifyHeadingColor).val  : '65504'// Farbe Headline - gelb 65504
@@ -2127,16 +2126,19 @@ async function InitPopupNotify() {
             let v_popupNotifyFontIdText = (getState(popupNotifyFontIdText).val != null) ? getState(popupNotifyFontIdText).val  : '1'
             let v_popupNotifyIcon = (getState(popupNotifyIcon).val != null) ? getState(popupNotifyIcon).val : 'alert'
             let v_popupNotifyBuzzer = (getState(popupNotifyBuzzer).val != null) ? getState(popupNotifyBuzzer).val : '0';
-            
+
+            const heading = getState(popupNotifyHeading).val;
+            const text = getState(popupNotifyText).val;
+
             notification = 'entityUpdateDetail' + '~'
                 + getState(popupNotifyInternalName).val + '~'
-                + getState(popupNotifyHeading).val + '~'
+                + heading + '~'
                 + v_popupNotifyHeadingColor + '~'
                 + getState(popupNotifyButton1Text).val + '~'
                 + v_popupNotifyButton1TextColor + '~'
                 + getState(popupNotifyButton2Text).val + '~'
                 + v_popupNotifyButton2TextColor + '~'
-                + getState(popupNotifyText).val + '~'
+                + text + '~'
                 + v_popupNotifyTextColor + '~'
                 + getState(popupNotifySleepTimeout).val;
 
@@ -2147,8 +2149,10 @@ async function InitPopupNotify() {
                 + v_popupNotifyIconColor;
             }
 
-            setIfExists(config.panelSendTopic, 'pageType~popupNotify');
-            setIfExists(config.panelSendTopic, notification);
+            if (heading != '' && text != '') {
+                setIfExists(config.panelSendTopic, 'pageType~popupNotify');
+                setIfExists(config.panelSendTopic, notification);
+            }
 
             //------ Tasmota Buzzer ------
             
@@ -6368,6 +6372,7 @@ function HandleButtonEvent(words: any): void {
                         if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != -1) {
                             pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
                         }
+                        screensaverEnabled = true; // Activating screensaver also on One-Time click
                     }
 		            activePage = config.pages[pageId];
 	        	}
