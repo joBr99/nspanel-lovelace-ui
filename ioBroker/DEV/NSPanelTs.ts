@@ -8894,7 +8894,7 @@ function HandleScreensaverStatusIcons() : void {
             }
         }
         for (const a in iconData) {
-            if (iconData[a].ScreensaverEntityValue === null) {
+            if (iconData[a].ScreensaverEntityValue !== null) {
                 switch (typeof iconData[a].ScreensaverEntityValue) {
                     case "string":
                         if (iconData[a].ScreensaverEntityValue === '' || isNaN(iconData[a].ScreensaverEntityValue)) break;
