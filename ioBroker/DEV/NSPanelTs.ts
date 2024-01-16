@@ -8859,10 +8859,10 @@ function HandleScreensaverStatusIcons() : void {
                                         : null,
                 ScreensaverEntityIconOn: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn != null 
                                             ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn) 
-                                            : null,
+                                            : '',
                 ScreensaverEntityIconOff: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null 
                                             ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff) 
-                                            : null,
+                                            : '',
                 ScreensaverEntityOnColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor,
                 ScreensaverEntityOffColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor,
                 ScreensaverEntityValue: config.mrIcon1ScreensaverEntity.ScreensaverEntityValue === null 
@@ -8880,10 +8880,10 @@ function HandleScreensaverStatusIcons() : void {
                                         : null,
                 ScreensaverEntityIconOn: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn != null 
                                             ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn) 
-                                            : null,
+                                            : '',
                 ScreensaverEntityIconOff: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null 
                                             ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff) 
-                                            : null,
+                                            : '',
                 ScreensaverEntityOnColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor,
                 ScreensaverEntityOffColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor,
                 ScreensaverEntityValue: config.mrIcon2ScreensaverEntity.ScreensaverEntityValue === null 
