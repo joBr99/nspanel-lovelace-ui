@@ -6011,7 +6011,7 @@ function unsubscribePowerSubscriptions(): void {
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
-        const page: NSPanel.PageType = config.pages[i];
+        const page: NSPanel.PageType = config.subPages[i];
         if (isPagePower(page)) {
                 let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
