@@ -8857,10 +8857,10 @@ function HandleScreensaverStatusIcons() : void {
                                         && existsState(config.mrIcon1ScreensaverEntity.ScreensaverEntity) 
                                         ? getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val 
                                         : null,
-                ScreensaverEntityIconOn: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn != null 
+                ScreensaverEntityIconOn: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn 
                                             ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn) 
                                             : '',
-                ScreensaverEntityIconOff: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null 
+                ScreensaverEntityIconOff: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff 
                                             ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff) 
                                             : '',
                 ScreensaverEntityOnColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor,
@@ -8870,6 +8870,10 @@ function HandleScreensaverStatusIcons() : void {
                                         : getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val,
                 ScreensaverEntityValueDecimalPlace: config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace,
                 ScreensaverEntityValueUnit: config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit,
+                ScreensaverEntityIconSelect: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconSelect
+                                                && typeof config.mrIcon1ScreensaverEntity.ScreensaverEntityIconSelect === 'object' 
+                                                ? config.mrIcon1ScreensaverEntity.ScreensaverEntityIconSelect
+                                                : null,
                 
 
             },
@@ -8878,10 +8882,10 @@ function HandleScreensaverStatusIcons() : void {
                                         && existsState(config.mrIcon2ScreensaverEntity.ScreensaverEntity) 
                                         ? getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val 
                                         : null,
-                ScreensaverEntityIconOn: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn != null 
+                ScreensaverEntityIconOn: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn 
                                             ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn) 
                                             : '',
-                ScreensaverEntityIconOff: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null 
+                ScreensaverEntityIconOff: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff 
                                             ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff) 
                                             : '',
                 ScreensaverEntityOnColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor,
@@ -8891,6 +8895,10 @@ function HandleScreensaverStatusIcons() : void {
                                         : getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val,
                 ScreensaverEntityValueDecimalPlace: config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace,
                 ScreensaverEntityValueUnit: config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit,
+                ScreensaverEntityIconSelect: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconSelect 
+                                                && typeof config.mrIcon2ScreensaverEntity.ScreensaverEntityIconSelect === 'object' 
+                                                ? config.mrIcon2ScreensaverEntity.ScreensaverEntityIconSelect
+                                                : null,
             }
         }
         for (const a in iconData) {
@@ -8917,8 +8925,16 @@ function HandleScreensaverStatusIcons() : void {
                 if (iconData[a].ScreensaverEntity != null) {
                     if (typeof (iconData[a].ScreensaverEntity) == 'string') {
                         if (Debug) log('Entity ist String', 'info')
-                        if (iconData[a].ScreensaverEntity == 'ON') {
-                            hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
+                        switch (String(iconData[a].ScreensaverEntity).toUpperCase()) { 
+                            case 'ON': 
+                            case 'OK': 
+                            case 'AN': 
+                            case 'YES': 
+                            case 'TRUE': 
+                            case 'ONLINE': 
+                                hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
+                                break;
+                            default:
                         }
                         if (Debug) log('Value: ' + iconData[a].ScreensaverEntity + ' Color: ' + JSON.stringify(hwBtn1Col), 'info')
                         // Alles was kein String ist in Boolean umwandeln
@@ -8931,11 +8947,17 @@ function HandleScreensaverStatusIcons() : void {
                 }
 
                 // Icon ermitteln
-                if (iconData[a].ScreensaverEntity) {
+                if (iconData[a].ScreensaverEntityIconSelect && iconData[a].ScreensaverEntity != null) {
+                    const icon = iconData[a].ScreensaverEntityIconSelect[iconData[a].ScreensaverEntity];
+                    if (icon !== undefined) {
+                        payloadString += Icons.GetIcon(icon);
+                        if (Debug) log('SelectIcon: '+payloadString, 'info')
+                    }
+                } else if (iconData[a].ScreensaverEntity) {
                     payloadString += iconData[a].ScreensaverEntityIconOn;
                     if (Debug) log('Icon if true '+payloadString, 'info')    
                 } else {
-                    if (iconData[a].ScreensaverEntityIconOff != null) {
+                    if (iconData[a].ScreensaverEntityIconOff) {
                         payloadString += iconData[a].ScreensaverEntityIconOff;
                         if (Debug) log('Icon1 else true '+payloadString, 'info')  
                     } else {
@@ -10022,6 +10044,7 @@ namespace NSPanel {
     export type ScreenSaverMRElement = {
         ScreensaverEntity: string | null,
         ScreensaverEntityIconOn: string | null,
+        ScreensaverEntityIconSelect?: {[key: string]: string} | null | undefined,
         ScreensaverEntityIconOff: string | null,
         ScreensaverEntityValue: string | null,
         ScreensaverEntityValueDecimalPlace: number | null,
@@ -10038,6 +10061,7 @@ namespace NSPanel {
         ScreensaverEntityValueUnit: string | null,
         ScreensaverEntityOnColor: RGB,
         ScreensaverEntityOffColor: RGB
+        ScreensaverEntityIconSelect: {[key: string]: string} | null,
     }
 
     export type IconScaleElement = { 
