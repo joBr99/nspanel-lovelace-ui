@@ -101,6 +101,8 @@ ReleaseNotes:
         - 16.01.2024 - v4.3.3.38 Fix: joBr99#1098
         - 16.01.2024 - v4.3.3.38 Types: Number of PageItems defined & HandleScreensaverStatusIcons rewritten
         - 16.01.2024 - v4.3.3.38 Optimate: function SendTime()
+        - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
+        - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -1431,7 +1433,7 @@ Init_Screensaver_Backckground_Color_Switch();
 on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async function (obj) {
     try {
         bgColorScrSaver = obj.state.val;
-        if (bgColorScrSaver < 4) {
+        if (bgColorScrSaver < 6) {
             HandleScreensaverUpdate();
         }
     } catch (err: any) { 
@@ -1787,9 +1789,11 @@ on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], cha
 
 async function SubscribeMRIcons () { 
     try {
-        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
-            on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
-                if (obj.id!.substring(0,4) == 'mqtt') {
+        let arr = config.mrIcon1ScreensaverEntity.ScreensaverEntity != null ? [config.mrIcon1ScreensaverEntity.ScreensaverEntity] : [];
+        arr = config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon1ScreensaverEntity.ScreensaverEntityValue] : arr;
+        if (arr.length > 0) {
+            on({id: arr, change: "ne"}, async function (obj) {
+            if (obj.id!.substring(0,4) == 'mqtt') {
                     let Button = obj.id!.split('.'); 
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
@@ -1799,8 +1803,10 @@ async function SubscribeMRIcons () {
                 }
             });
         }
-        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
-            on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+        arr = config.mrIcon2ScreensaverEntity.ScreensaverEntity != null ? [config.mrIcon2ScreensaverEntity.ScreensaverEntity] : [];
+        arr = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon2ScreensaverEntity.ScreensaverEntityValue] : arr;
+        if (arr.length > 0) {
+            on({id: arr, change: "ne"}, async function (obj) {
                 if (obj.id!.substring(0,4) == 'mqtt') {
                     let Button = obj.id!.split('.'); 
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
