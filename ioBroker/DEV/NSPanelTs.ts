@@ -1050,7 +1050,7 @@ async function CheckConfigParameters() {
             const i = n.shift();
             
             if (a === 'mqtt' && !isNaN(Number(i))) {
-                sendTo(`${a}.${i}`, 'sendMessage2Client', {topic: n.join('/'), message: 'time~12:00'});
+                sendTo(`${a}.${i}`, 'sendMessage2Client', {topic: n.join('/'), message: buildNSPanelString('time', '12:00')});
                 await sleep(500);
             }
             if (await existsObjectAsync(config.panelSendTopic) == false) {
@@ -9075,23 +9075,25 @@ function HandleScreensaverColors(): void {
             scrSvrBGCol = rgb_dec565({ red: 100, green: 0, blue: 0 });
         }
         
-        let payloadString = 'color'                     + '~' +
-                            scrSvrBGCol                 + '~' +      //background
-                            rgb_dec565(sctime)          + '~' +      //time
-                            rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
-                            rgb_dec565(scdate)          + '~' +      //date~
-                            rgb_dec565(sctMainText)     + '~' +      //tMainText~
-                            rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
-                            rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
-                            rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
-                            rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
-                            rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
-                            rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
-                            rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
-                            rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
-                            rgb_dec565(scbar)           + '~' +      //bar~
-                            rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                            rgb_dec565(sctTimeAdd);                  //tTimeAdd
+        let payloadString = buildNSPanelString(
+                            'color'                     ,
+                            scrSvrBGCol                 ,      //background
+                            rgb_dec565(sctime)          ,      //time
+                            rgb_dec565(sctimeAMPM)      ,      //timeAMPM~
+                            rgb_dec565(scdate)          ,      //date~
+                            rgb_dec565(sctMainText)     ,      //tMainText~
+                            rgb_dec565(sctForecast1)    ,      //tForecast1~
+                            rgb_dec565(sctForecast2)    ,      //tForecast2~
+                            rgb_dec565(sctForecast3)    ,      //tForecast3~
+                            rgb_dec565(sctForecast4)    ,      //tForecast4~
+                            rgb_dec565(sctForecast1Val) ,      //tForecast1Val~
+                            rgb_dec565(sctForecast2Val) ,      //tForecast2Val~
+                            rgb_dec565(sctForecast3Val) ,      //tForecast3Val~
+                            rgb_dec565(sctForecast4Val) ,      //tForecast4Val~
+                            rgb_dec565(scbar)           ,      //bar~
+                            rgb_dec565(sctMainTextAlt)  ,      //tMainTextAlt
+                            rgb_dec565(sctTimeAdd)                  //tTimeAdd
+        );
 
         SendToPanel({ payload: payloadString });
     } catch (err: any) {
@@ -9663,6 +9665,14 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     let indexPos: number = arrayDeviceListSting.indexOf(vDeviceString);
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
+}
+/**
+ * Join arguments with ~ and return the string;
+ * @param tokens unlimited numbers of strings
+ * @returns 
+ */
+function buildNSPanelString(...tokens: (string|number)[]): string {
+    return tokens.join('~');
 }
 
 type RGB = NSPanel.RGB;
