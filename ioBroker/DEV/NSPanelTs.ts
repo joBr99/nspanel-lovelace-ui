@@ -3285,7 +3285,7 @@ function SendTime(): void {
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
         SendToPanel({ payload: 'time~' + hr + ':' + min });*/
-        SendToPanel({ payload: `time~${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`, });
+        SendToPanel({ payload: `time~${new Date().toLocaleTimeString('de-DE', { hour: "2-digit", minute: "2-digit" })}`, });
     } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
