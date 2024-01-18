@@ -6143,6 +6143,7 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     }
 }
 
+const timeValueRegEx = /\~\d+:(\d+)/g;
 function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     try {
         activePage = page;
@@ -6153,9 +6154,26 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
 
-        let txt = getState(id + '.ACTUAL').val;
+        const txt = getState(id + '.ACTUAL').val;
         if (!page.items[0].yAxisTicks) {
-            throw new Error (`Page item ${id} yAxisTicks is undefined!`)
+            const sorted = [...txt.matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
+            if (sorted.length === 0) {
+                throw new Error (`Page item ${id} yAxisTicks is undefined and unable to be calculated!`)
+            }
+            const minValue = sorted[0];
+            const maxValue = sorted[sorted.length - 1];
+            const tick = Math.max(Number(((maxValue - minValue) / 5).toFixed()), 10);
+
+            page.items[0].yAxisTicks = [];
+            let currentTick = minValue - tick;
+            while(currentTick < (maxValue + tick)) {
+                page.items[0].yAxisTicks.push(currentTick);
+                currentTick += tick;
+            }            
+
+            if (Debug) {
+                log(`Calculated yAxisTicks for ${id} (Min: ${minValue}, Max: ${maxValue}, Tick: ${tick}): ${page.items[0].yAxisTicks}`);
+            }
         }
         if (!page.items[0].onColor) {
             throw new Error (`Page item ${id} onColor is undefined!`)
