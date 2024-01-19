@@ -82,7 +82,7 @@ Variable (string) strCommand
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 1955
+        Max. Text Size: 1935
     
 Variable (string) strTmp
     Attributes
@@ -106,7 +106,7 @@ Variable (string) tSend
     Attributes
         Scope         : local
         Text          : 
-        Max. Text Size: 30
+        Max. Text Size: 50
     
 Variable (string) tTmp
     Attributes
