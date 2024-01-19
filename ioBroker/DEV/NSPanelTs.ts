@@ -6143,6 +6143,7 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     }
 }
 
+const timeValueRegEx = /\~\d+:(\d+)/g;
 function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     try {
         activePage = page;
@@ -6153,15 +6154,40 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
 
-        let txt = getState(id + '.ACTUAL').val;
-        if (!page.items[0].yAxisTicks) {
-            throw new Error (`Page item ${id} yAxisTicks is undefined!`)
+        const txt = getState(id + '.ACTUAL')?.val;
+        if (!txt) {
+            throw new Error(`Unable to get the state of ${id}.ACTUAL`)
         }
+
+        let yAxisTicks : number[] = [];
+
+        if (!page.items[0].yAxisTicks) {
+            const sorted = [...txt.matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
+            if (sorted.length === 0) {
+                throw new Error (`Page item ${id} yAxisTicks is undefined and unable to be calculated!`)
+            }
+            const minValue = sorted[0];
+            const maxValue = sorted[sorted.length - 1];
+            const tick = Math.max(Number(((maxValue - minValue) / 5).toFixed()), 10);
+
+            let currentTick = minValue - tick;
+            while(currentTick < (maxValue + tick)) {
+                yAxisTicks.push(currentTick);
+                currentTick += tick;
+            }            
+
+            if (Debug) {
+                log(`Calculated yAxisTicks for ${id} (Min: ${minValue}, Max: ${maxValue}, Tick: ${tick}): ${yAxisTicks}`);
+            }
+        } else {            
+            yAxisTicks = typeof page.items[0].yAxisTicks === 'string'
+                            ? JSON.parse(getState(page.items[0].yAxisTicks).val)
+                            : page.items[0].yAxisTicks;
+        }
+
         if (!page.items[0].onColor) {
             throw new Error (`Page item ${id} onColor is undefined!`)
         }
-
-        let yAxisTicks = (typeof page.items[0].yAxisTicks == 'object') ? page.items[0].yAxisTicks : JSON.parse(getState(page.items[0].yAxisTicks).val);
 
         out_msgs.push({
             payload:    'entityUpd~' +                              //entityUpd
@@ -6175,7 +6201,6 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
 
         if (Debug) log('GenerateChartPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
-
     } catch (err: any) {
         log('error at function GenerateChartPage: ' + err.message, 'warn');
         return [];
