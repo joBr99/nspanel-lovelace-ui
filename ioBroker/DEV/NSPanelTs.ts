@@ -6177,7 +6177,7 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
             }            
 
             if (Debug) {
-                log(`Calculated yAxisTicks for ${id} (Min: ${minValue}, Max: ${maxValue}, Tick: ${tick}): ${page.items[0].yAxisTicks}`);
+                log(`Calculated yAxisTicks for ${id} (Min: ${minValue}, Max: ${maxValue}, Tick: ${tick}): ${yAxisTicks}`);
             }
         } else {            
             yAxisTicks = typeof page.items[0].yAxisTicks === 'string'
