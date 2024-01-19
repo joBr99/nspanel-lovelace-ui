@@ -121,6 +121,8 @@ for i in range(1,6):
               //f{i}Icon Color
               spstr strCommand.txt,tTmp.txt,"~",{idxstart+3}
               covx tTmp.txt,f{i}Icon.pco,0,0
+              //f{i}Icon intNameEntity
+              spstr strCommand.txt,entn{i}.txt,"~",{idxstart+1}
     """
     head = head + item
 
