@@ -335,41 +335,6 @@ Button b13
         Touch Press Event
             showqq
         
-Button b14
-    Attributes
-        ID                        : 25
-        Scope                     : local
-        Dragging                  : 0
-        Send Component ID         : disabled
-        Opacity                   : 127
-        x coordinate              : 229
-        y coordinate              : 188
-        Width                     : 106
-        Height                    : 40
-        Effect                    : load
-        Effect Priority           : 0
-        Effect Time               : 300
-        Fill                      : solid color
-        Style                     : 3D auto
-        Font ID                   : 1
-        Back. Color               : 50712
-        Back. Picture ID (Pressed): 65535
-        Back. Color (Pressed)     : 1024
-        Font Color (Unpressed)    : 0
-        Font Color (Pressed)      : 65535
-        Horizontal Alignment      : center
-        Vertical Alignment        : center
-        State                     : unpressed
-        Text                      : burntest
-        Max. Text Size            : 10
-        Word wrap                 : disabled
-        Horizontal Spacing        : 0
-        Vertical Spacing          : 0
-    
-    Events
-        Touch Press Event
-            page cardBurnRec
-        
 Button b15
     Attributes
         ID                        : 21

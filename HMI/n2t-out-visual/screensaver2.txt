@@ -56,12 +56,47 @@ Page screensaver2
         Postinitialize Event
             click m0,1
         
+Variable (string) entn1
+    Attributes
+        ID            : 59
+        Scope         : local
+        Text          : 
+        Max. Text Size: 14
+    
+Variable (string) entn2
+    Attributes
+        ID            : 60
+        Scope         : local
+        Text          : 
+        Max. Text Size: 14
+    
+Variable (string) entn3
+    Attributes
+        ID            : 61
+        Scope         : local
+        Text          : 
+        Max. Text Size: 14
+    
+Variable (string) entn4
+    Attributes
+        ID            : 62
+        Scope         : local
+        Text          : 
+        Max. Text Size: 14
+    
+Variable (string) entn5
+    Attributes
+        ID            : 63
+        Scope         : local
+        Text          : 
+        Max. Text Size: 14
+    
 Variable (string) strCommand
     Attributes
         ID            : 4
         Scope         : local
         Text          : 
-        Max. Text Size: 1979
+        Max. Text Size: 1955
     
 Variable (string) strTmp
     Attributes
@@ -82,21 +117,21 @@ Variable (string) tInstruction
         ID            : 18
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 15
     
 Variable (string) tSend
     Attributes
         ID            : 20
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 30
     
 Variable (string) tTmp
     Attributes
         ID            : 19
         Scope         : local
         Text          : 
-        Max. Text Size: 50
+        Max. Text Size: 30
     
 Variable (int32) vaTap
     Attributes
@@ -865,6 +900,21 @@ Text f1Icon
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
     
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Text f2Icon
     Attributes
         ID                  : 54
@@ -894,6 +944,35 @@ Text f2Icon
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
     
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
+        Touch Release Event
+            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Text f3Icon
     Attributes
         ID                  : 55
@@ -923,6 +1002,21 @@ Text f3Icon
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
     
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn3.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Text f4Icon
     Attributes
         ID                  : 53
@@ -952,6 +1046,21 @@ Text f4Icon
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
     
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn4.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Text f5Icon
     Attributes
         ID                  : 52
@@ -981,6 +1090,21 @@ Text f5Icon
         Horizontal Spacing  : 0
         Vertical Spacing    : 0
     
+    Events
+        Touch Press Event
+            tSend.txt="event,buttonPress2,"+entn5.txt+",button"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
+        
 Text m0
     Attributes
         ID                  : 32
@@ -1551,26 +1675,36 @@ Timer tmSerial
                                         //f1Icon Color
                                         spstr strCommand.txt,tTmp.txt,"~",64
                                         covx tTmp.txt,f1Icon.pco,0,0
+                                        //f1Icon intNameEntity
+                                        spstr strCommand.txt,entn1.txt,"~",62
                                         //f2Icon
                                         spstr strCommand.txt,f2Icon.txt,"~",69
                                         //f2Icon Color
                                         spstr strCommand.txt,tTmp.txt,"~",70
                                         covx tTmp.txt,f2Icon.pco,0,0
+                                        //f2Icon intNameEntity
+                                        spstr strCommand.txt,entn2.txt,"~",68
                                         //f3Icon
                                         spstr strCommand.txt,f3Icon.txt,"~",75
                                         //f3Icon Color
                                         spstr strCommand.txt,tTmp.txt,"~",76
                                         covx tTmp.txt,f3Icon.pco,0,0
+                                        //f3Icon intNameEntity
+                                        spstr strCommand.txt,entn3.txt,"~",74
                                         //f4Icon
                                         spstr strCommand.txt,f4Icon.txt,"~",81
                                         //f4Icon Color
                                         spstr strCommand.txt,tTmp.txt,"~",82
                                         covx tTmp.txt,f4Icon.pco,0,0
+                                        //f4Icon intNameEntity
+                                        spstr strCommand.txt,entn4.txt,"~",80
                                         //f5Icon
                                         spstr strCommand.txt,f5Icon.txt,"~",87
                                         //f5Icon Color
                                         spstr strCommand.txt,tTmp.txt,"~",88
                                         covx tTmp.txt,f5Icon.pco,0,0
+                                        //f5Icon intNameEntity
+                                        spstr strCommand.txt,entn5.txt,"~",86
                                     }
                                     if(tInstruction.txt=="notify")
                                     {
@@ -1673,10 +1807,6 @@ Timer tmSerial
                                         if(tId.txt=="cardChart")
                                         {
                                             page cardChart
-                                        }
-                                        if(tId.txt=="cardLChart")
-                                        {
-                                            page cardLChart
                                         }
                                     }
                                     if(tInstruction.txt=="timeout")
