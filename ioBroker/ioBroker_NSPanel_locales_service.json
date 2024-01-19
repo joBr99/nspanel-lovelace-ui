@@ -2697,5 +2697,9 @@
    "update_message":{
       "en-US":"Update Notifications",
       "de-DE":"Update Mitteilungen"
+   },
+   "scriptname":{
+      "en-US":"Script name",
+      "de-DE":"Skriptname"
    }
 }
