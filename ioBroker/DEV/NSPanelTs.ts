@@ -6163,7 +6163,7 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
         activePage = page;
 
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+	let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~' + page.type });
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
