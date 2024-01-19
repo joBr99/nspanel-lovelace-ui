@@ -893,6 +893,76 @@ export const config: Config = {
     indicatorScreensaverEntity: [
         // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
     ],
+/*
+Example click on indicator (gargano)
+ScreensaverLinkConfigName = page name defined in pages
+
+  indicatorScreensaverEntity:
+        [
+            // indicatorScreensaverEntity 1 (only Advanced Screensaver)
+            { 
+                ScreensaverEntity: '0_userdata.0.Fenster.einFensterAuf',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityIconOn: 'window-open-variant',
+                ScreensaverEntityIconOff: 'window-closed-variant',
+                ScreensaverEntityText: 'Fenster',
+                ScreensaverEntityUnitText: '',
+                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 1 },
+                ScreensaverLinkConfigName: 'WindowInfo'  // gargano
+            },
+            // indicatorScreensaverEntity 2 (only Advanced Screensaver)
+            { 
+                ScreensaverEntity: '0_userdata.0.garage.offen',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityIconOn: 'garage-open-variant',
+                ScreensaverEntityIconOff: 'garage-variant-lock',
+                ScreensaverEntityText: 'Garage',
+                ScreensaverEntityUnitText: '',
+                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 1}
+            },
+            // indicatorScreensaverEntity 3 (only Advanced Screensaver)
+            { 
+                ScreensaverEntity: '0_userdata.0.MaehRoboter.StateAndError', //'worx.0.202230267204003017D5.mower.state',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityIconOn: 'robot-mower-outline',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'Mäher',
+                ScreensaverEntityUnitText: '%',
+                ScreensaverEntityIconColor: { 'val_min': 0, 'val_max': 2 },
+                ScreensaverLinkConfigName: 'MowerInfo'    // gargano
+            },
+            // indicatorScreensaverEntity 4 (only Advanced Screensaver)
+             { 
+                ScreensaverEntity: 'e3dc-rscp.0.EMS.POWER_PV',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 1,
+                ScreensaverEntityIconOn: 'solar-power',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'PV',
+                ScreensaverEntityUnitText: 'W',
+                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 10000, 'val_best': 3000},
+                ScreensaverLinkConfigName: 'PVInfo'
+            },
+            // indicatorScreensaverEntity 5 (only Advanced Screensaver)
+            { 
+                ScreensaverEntity: '0_userdata.0.NSPanels.General.Data.Weather.Level', 
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityIconOn: '0_userdata.0.NSPanels.General.Data.Weather.Icon', 
+                ScreensaverEntityIconOff: '0_userdata.0.NSPanels.General.Data.Weather.Icon',
+                ScreensaverEntityText: 'Wetter Alarm',
+                ScreensaverEntityUnitText: '',
+                ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 4},
+                ScreensaverLinkConfigName: 'WeatherAlarmInfo'  // gargano
+                
+            },
+        ],
+
+
+*/
 
     // Status Icon 
     mrIcon1ScreensaverEntity: {
@@ -6228,6 +6298,30 @@ function triggerButton(id: string): boolean{
 }	
 // End Monobutton
 
+// gargano
+function getScreensaverLinkConfigNumber (fNumber:number):number {
+    let found = -1;
+    if (config.indicatorScreensaverEntity[fNumber-1].ScreensaverLinkConfigName!==undefined) {
+        let linkName = config.indicatorScreensaverEntity[fNumber-1].ScreensaverLinkConfigName;
+        config.pages.forEach (function (item,index) {
+        	if (item.name !== undefined) { 
+                if (linkName === item.name) {
+                   	found = index;
+                }
+        	}
+        });
+        config.subPages.forEach (function (item,index) {
+            if (item.name !== undefined) {  
+                if (linkName === item.name) {
+                    found = index;
+                }
+            }
+        });
+    }
+    return found;  
+} 
+
+
 function HandleButtonEvent(words: any): void {
     try {
 
@@ -6265,6 +6359,10 @@ function HandleButtonEvent(words: any): void {
             pageCounter = 0;
             alwaysOn = false;
             SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
+     
+         // gargano
+        if (words[2] == 'f1Icon' ||words[2] == 'f2Icon' || words[2] == 'f3Icon' || words[2] == 'f4Icon' || words[2] == 'f5Icon') {
+            buttonAction = words[2];
         }
 
         if (Debug) {
@@ -6278,6 +6376,20 @@ function HandleButtonEvent(words: any): void {
         let pageNum:number = 0;
 
         switch (buttonAction) {
+            // gargano
+            case 'f1Icon' :
+            case 'f2Icon' :
+            case 'f3Icon' :
+            case 'f4Icon' :
+            case 'f5Icon' :
+                let thisfIdx = buttonAction.substring(1, 2);
+                let thisPageIdx = getScreensaverLinkConfigNumber(thisfIdx);
+                if (thisPageIdx!=-1) {
+                        UnsubscribeWatcher();
+                        GeneratePage(config.pages[thisPageIdx]);
+                }
+                break;
+
             case 'bUp':
                 if (pageId < 0) { // Check whether button1page or button2page
                     pageId = 0;
@@ -9854,7 +9966,8 @@ namespace NSPanel {
         nextIconColor?: RGB,
         home?: string,
         homeIcon?: string,
-        homeIconColor?: RGB
+        homeIconColor?: RGB,
+        name? : (string | null) // gargano
     };
 
 
@@ -10042,6 +10155,7 @@ namespace NSPanel {
         ScreensaverEntityOffColor?: RGB
         ScreensaverEntityOnText?: string | null,
         ScreensaverEntityOffText?: string | null,
+        ScreensaverLinkConfigName?: string | null // gargano
     }
 
     export type ScreenSaverMRElement = {
