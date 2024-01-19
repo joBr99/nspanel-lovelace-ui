@@ -971,12 +971,37 @@
                             </value>
                           </block>
                         </value>
-                        <value name="VALUE">
-                          <shadow type="logic_boolean" id="I4PsJQb;6k+70^g*Xt/}">
-                            <field name="BOOL">TRUE</field>
-                          </shadow>
-                          <block type="math_random_float" id="C5/h)jq=yPM?,9J=(w65"></block>
-                        </value>
+  <value name="VALUE">
+    <shadow type="logic_boolean" id="I4PsJQb;6k+70^g*Xt/}">
+      <field name="BOOL">TRUE</field>
+    </shadow>
+    <block type="text_join" id="XdhGC7#MxGw|KhC1x#MY">
+      <mutation items="2"></mutation>
+      <value name="ADD0">
+        <block type="text" id="[(_1;{xE-xfzeB4]$uk;">
+          <field name="TEXT">ID</field>
+        </block>
+      </value>
+      <value name="ADD1">
+        <block type="convert_tostring" id="g{jZOA*6Clhc5`9::h.S">
+          <value name="VALUE">
+            <block type="math_random_int" id="SXG?j1]Jza!2fg[(cl!i">
+              <value name="FROM">
+                <shadow type="math_number" id="#/-;$~`{=}8wYY$kbvA9">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+              <value name="TO">
+                <shadow type="math_number" id="0x8~a;asHsiJ2Its%!VJ">
+                  <field name="NUM">100</field>
+                </shadow>
+              </value>
+            </block>
+          </value>
+        </block>
+      </value>
+    </block>
+  </value>
                         <value name="DELAY_MS">
                           <shadow type="math_number" id="+6#n%fO}e4h%;FhKPV0c">
                             <field name="NUM">0</field>

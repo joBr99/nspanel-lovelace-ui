@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.36 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.38 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -90,14 +90,21 @@ ReleaseNotes:
         - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
         - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
         - 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
-        - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity
+        - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
         - 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
-        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status for Blinds while bug in updating data points in ioBroker (reason unknown)
+        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
         - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
         - 09.01.2024 - v4.3.3.36 Fix: change ScreensaverTimeout and activeBrightness
         - 09.01.2024 - v4.3.3.36 Fix: schedule SendTime
         - 09.01.2024 - v4.3.3.36 Fix: Function _schedule SummerTime/WinterTime
-   
+        - 15.01.2024 - v4.3.3.37 Change: Allow data points to be flushed for popUpNotify. Activate screensaver with one click.
+        - 16.01.2024 - v4.3.3.38 Fix: joBr99#1098
+        - 16.01.2024 - v4.3.3.38 Types: Number of PageItems defined & HandleScreensaverStatusIcons rewritten
+        - 16.01.2024 - v4.3.3.38 Optimate: function SendTime()
+        - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
+        - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
+	- 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
+
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
 	
@@ -406,9 +413,9 @@ let Unlock_Service: PageType =
     'type': 'cardUnlock',
     'heading': findLocaleServMenu('service_pages'),
     'useColor': true,
-    'items': [{ id: 'alias.0.NSPanel.Unlock',
-                targetPage: 'NSPanel_Service_SubPage',
-                autoCreateALias: true }
+    'items': [/*PageItem*/{ id: 'alias.0.NSPanel.Unlock',
+                          targetPage: 'NSPanel_Service_SubPage',
+                          autoCreateALias: true }
     ]
 };
 
@@ -419,10 +426,10 @@ let NSPanel_Service: PageType =
     'heading': findLocaleServMenu('service_menu'),
     'useColor': true,
     'items': [
-        { navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
-        { navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
-        { navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
-        { id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
     ]
 };
 
@@ -436,10 +443,10 @@ let NSPanel_Service_SubPage: PageType =
     'parent': Unlock_Service,
     'home': 'Unlock_Service', 
     'items': [
-        { navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
-        { navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
-        { navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
-        { id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Infos', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('infos'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Einstellungen', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('settings'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ navigate: true, id: 'NSPanel_Firmware', icon: 'update', offColor: Menu, onColor: Menu, name: findLocaleServMenu('firmware'), buttonText: findLocaleServMenu('more')},
+        /*PageItem*/{ id: AliasPath + 'Config.rebootNSPanel', name: findLocaleServMenu('reboot') ,icon: 'refresh', offColor: MSRed, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
     ]
 };
 
@@ -453,10 +460,10 @@ let NSPanel_Service_SubPage: PageType =
             'parent': NSPanel_Service,
             'home': 'NSPanel_Service',        
             'items': [
-                { navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
-                { navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
-                { navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
-                { id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
+                /*PageItem*/{ navigate: true, id: 'NSPanel_Wifi_Info_1', icon: 'wifi', offColor: Menu, onColor: Menu, name: findLocaleServMenu('wifi'), buttonText: findLocaleServMenu('more')},
+                /*PageItem*/{ navigate: true, id: 'NSPanel_Sensoren', icon: 'memory', offColor: Menu, onColor: Menu, name: findLocaleServMenu('sensors_hardware'), buttonText: findLocaleServMenu('more')},
+                /*PageItem*/{ navigate: true, id: 'NSPanel_IoBroker', icon: 'information-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('info_iobroker'), buttonText: findLocaleServMenu('more')},
+                /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateMessage', name: findLocaleServMenu('update_message') ,icon: 'message-alert-outline', offColor: HMIOff, onColor: MSGreen},
             ]
         };
                 //Level_2
@@ -469,10 +476,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Infos,
                     'next': 'NSPanel_Wifi_Info_2',
                     'items': [
-                        { id: AliasPath + 'ipAddress', name: findLocaleServMenu('ip_address'), icon: 'ip-network-outline', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Wifi.BSSId', name: findLocaleServMenu('mac_address'), icon: 'check-network', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Wifi.RSSI', name: findLocaleServMenu('rssi'), icon: 'signal', unit: '%', colorScale: {'val_min': 100, 'val_max': 0} },
-                        { id: AliasPath + 'Tasmota.Wifi.Signal', name: findLocaleServMenu('wifi_signal'), icon: 'signal-distance-variant', unit: 'dBm', colorScale: {'val_min': 0, 'val_max': -100} },
+                        /*PageItem*/{ id: AliasPath + 'ipAddress', name: findLocaleServMenu('ip_address'), icon: 'ip-network-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.BSSId', name: findLocaleServMenu('mac_address'), icon: 'check-network', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.RSSI', name: findLocaleServMenu('rssi'), icon: 'signal', unit: '%', colorScale: {'val_min': 100, 'val_max': 0} },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Signal', name: findLocaleServMenu('wifi_signal'), icon: 'signal-distance-variant', unit: 'dBm', colorScale: {'val_min': 0, 'val_max': -100} },
                     ]
                 };
 
@@ -485,10 +492,10 @@ let NSPanel_Service_SubPage: PageType =
                     'prev': 'NSPanel_Wifi_Info_1',
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Tasmota.Wifi.SSId', name: findLocaleServMenu('ssid'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Wifi.Mode', name: findLocaleServMenu('mode'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Wifi.Channel', name: findLocaleServMenu('channel'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Wifi.AP', name: findLocaleServMenu('accesspoint'), icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.SSId', name: findLocaleServMenu('ssid'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Mode', name: findLocaleServMenu('mode'), icon: 'signal-distance-variant', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.Channel', name: findLocaleServMenu('channel'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Wifi.AP', name: findLocaleServMenu('accesspoint'), icon: 'router-wireless-settings', offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -501,10 +508,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Infos,
                     'next': 'NSPanel_Hardware',
                     'items': [
-                        { id: AliasPath + 'Sensor.ANALOG.Temperature', name: findLocaleServMenu('room_temperature'), icon: 'home-thermometer-outline', unit: '°C', colorScale: {'val_min': 0, 'val_max': 40, 'val_best': 22 } },
-                        { id: AliasPath + 'Sensor.ESP32.Temperature', name: findLocaleServMenu('esp_temperature'), icon: 'thermometer', unit: '°C', colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 50 } },
-                        { id: AliasPath + 'Sensor.TempUnit', name: findLocaleServMenu('temperature_unit'), icon: 'temperature-celsius', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Sensor.Time', name: findLocaleServMenu('refresh'), icon: 'clock-check-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.ANALOG.Temperature', name: findLocaleServMenu('room_temperature'), icon: 'home-thermometer-outline', unit: '°C', colorScale: {'val_min': 0, 'val_max': 40, 'val_best': 22 } },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.ESP32.Temperature', name: findLocaleServMenu('esp_temperature'), icon: 'thermometer', unit: '°C', colorScale: {'val_min': 0, 'val_max': 100, 'val_best': 50 } },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.TempUnit', name: findLocaleServMenu('temperature_unit'), icon: 'temperature-celsius', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Sensor.Time', name: findLocaleServMenu('refresh'), icon: 'clock-check-outline', offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -517,10 +524,10 @@ let NSPanel_Service_SubPage: PageType =
                     'prev': 'NSPanel_Sensoren',
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Tasmota.Product', name: findLocaleServMenu('product'), icon: 'devices', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Hardware', name: findLocaleServMenu('esp32_hardware'), icon: 'memory', offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_version'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota.Uptime', name: findLocaleServMenu('operating_time'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Product', name: findLocaleServMenu('product'), icon: 'devices', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Hardware', name: findLocaleServMenu('esp32_hardware'), icon: 'memory', offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_version'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Uptime', name: findLocaleServMenu('operating_time'), icon: 'timeline-clock-outline', offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -533,10 +540,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Infos,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'IoBroker.ScriptName', name: findLocaleServMenu('scriptname'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.ScriptVersion', name: findLocaleServMenu('script_version_nspanelts'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.NodeJSVersion', name: findLocaleServMenu('nodejs_version'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.JavaScriptVersion', name: findLocaleServMenu('instance_javascript'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'IoBroker.ScriptName', name: findLocaleServMenu('scriptname'), offColor: Menu, onColor: Menu },
                     ]
                 };
 
@@ -550,15 +557,15 @@ let NSPanel_Service_SubPage: PageType =
                 'parent': NSPanel_Service,
                 'home': 'NSPanel_Service',
                 'items': [
-                    { navigate: true, id: 'NSPanel_Screensaver', icon: 'monitor-dashboard',offColor: Menu, onColor: Menu, name: findLocaleServMenu('screensaver'), buttonText: findLocaleServMenu('more')},
-                    { navigate: true, id: 'NSPanel_Relays', icon: 'electric-switch', offColor: Menu, onColor: Menu, name: findLocaleServMenu('relays'), buttonText: findLocaleServMenu('more')},
-                    { id:AliasPath + 'Config.temperatureUnitNumber', icon: 'gesture-double-tap', name: findLocaleServMenu('temp_unit'), offColor: Menu, onColor: Menu, 
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_Screensaver', icon: 'monitor-dashboard',offColor: Menu, onColor: Menu, name: findLocaleServMenu('screensaver'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_Relays', icon: 'electric-switch', offColor: Menu, onColor: Menu, name: findLocaleServMenu('relays'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ id:AliasPath + 'Config.temperatureUnitNumber', icon: 'gesture-double-tap', name: findLocaleServMenu('temp_unit'), offColor: Menu, onColor: Menu, 
                     modeList: ['°C', '°F', 'K']},
-                    { id: AliasPath + 'Config.localeNumber', icon: 'select-place', name: findLocaleServMenu('language'), offColor: Menu, onColor: Menu, 
+                    /*PageItem*/{ id: AliasPath + 'Config.localeNumber', icon: 'select-place', name: findLocaleServMenu('language'), offColor: Menu, onColor: Menu, 
                     modeList: ['en-US', 'de-DE', 'nl-NL', 'da-DK', 'es-ES', 'fr-FR', 'it-IT', 'ru-RU', 'nb-NO', 'nn-NO', 'pl-PL', 'pt-PT', 'af-ZA', 'ar-SY', 
                                'bg-BG', 'ca-ES', 'cs-CZ', 'el-GR', 'et-EE', 'fa-IR', 'fi-FI', 'he-IL', 'hr-xx', 'hu-HU', 'hy-AM', 'id-ID', 'is-IS', 'lb-xx', 
                                'lt-LT', 'ro-RO', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR', 'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW']},
-                   { navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: findLocaleServMenu('script'), buttonText: findLocaleServMenu('more')},            
+                   /*PageItem*/{ navigate: true, id: 'NSPanel_Script', icon: 'code-json',offColor: Menu, onColor: Menu, name: findLocaleServMenu('script'), buttonText: findLocaleServMenu('more')},            
                 ]
             };
 
@@ -572,12 +579,12 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: findLocaleServMenu('dimmode')},
-                        { navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: findLocaleServMenu('brightness')},
-                        { navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('layout')},
-                        { navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: findLocaleServMenu('weather')},
-                        { navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: findLocaleServMenu('date_format')},
-                        { navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('indicators')}
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverDimmode', icon: 'sun-clock', offColor: Menu, onColor: Menu, name: findLocaleServMenu('dimmode')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverBrightness', icon: 'brightness-5', offColor: Menu, onColor: Menu, name: findLocaleServMenu('brightness')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverLayout', icon: 'page-next-outline', offColor: Menu, onColor: Menu, name: findLocaleServMenu('layout')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverWeather', icon: 'weather-partly-rainy', offColor: Menu, onColor: Menu, name: findLocaleServMenu('weather')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverDateformat', icon: 'calendar-expand-horizontal', offColor: Menu, onColor: Menu, name: findLocaleServMenu('date_format')},
+                        /*PageItem*/{ navigate: true, id: 'NSPanel_ScreensaverIndicators', icon: 'monitor-edit', offColor: Menu, onColor: Menu, name: findLocaleServMenu('indicators')}
                     ]
                 };
                             
@@ -591,10 +598,10 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                { id: AliasPath + 'Dimmode.brightnessDay', name: findLocaleServMenu('brightness_day'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
-                                { id: AliasPath + 'Dimmode.brightnessNight', name: findLocaleServMenu('brightness_night'), icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
-                                { id: AliasPath + 'Dimmode.hourDay', name: findLocaleServMenu('hour_day'), icon: 'sun-clock', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23},
-                                { id: AliasPath + 'Dimmode.hourNight', name: findLocaleServMenu('hour_night'), icon: 'sun-clock-outline', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23}
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.brightnessDay', name: findLocaleServMenu('brightness_day'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 5, maxValue: 10},
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.brightnessNight', name: findLocaleServMenu('brightness_night'), icon: 'brightness-4', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 4},
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.hourDay', name: findLocaleServMenu('hour_day'), icon: 'sun-clock', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23},
+                                /*PageItem*/{ id: AliasPath + 'Dimmode.hourNight', name: findLocaleServMenu('hour_night'), icon: 'sun-clock-outline', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 23}
                             ]
                         };
 
@@ -608,9 +615,9 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                { id: AliasPath + 'ScreensaverInfo.activeBrightness', name: findLocaleServMenu('brightness_activ'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
-                                { id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: findLocaleServMenu('screensaver_timeout'), icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
-                                { id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: findLocaleServMenu('wakeup_doublecklick') ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.activeBrightness', name: findLocaleServMenu('brightness_activ'), icon: 'brightness-5', offColor: Menu, onColor: Menu, minValue: 20, maxValue: 100},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.timeoutScreensaver', name: findLocaleServMenu('screensaver_timeout'), icon: 'clock-end', offColor: Menu, onColor: Menu, minValue: 0, maxValue: 60},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.screenSaverDoubleClick', name: findLocaleServMenu('wakeup_doublecklick') ,icon: 'gesture-two-double-tap', offColor: HMIOff, onColor: HMIOn}
                             ]
                         };
 
@@ -624,8 +631,8 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                { id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
-                                { id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -639,10 +646,10 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                { id: AliasPath + 'ScreensaverInfo.weatherForecast', name: findLocaleServMenu('weather_forecast_offon') ,icon: 'weather-sunny-off', offColor: HMIOff, onColor: HMIOn},
-                                { id: AliasPath + 'ScreensaverInfo.weatherForecastTimer', name: findLocaleServMenu('weather_forecast_change_switch') ,icon: 'devices', offColor: HMIOff, onColor: HMIOn},
-                                { id: AliasPath + 'ScreensaverInfo.entityChangeTime', name: findLocaleServMenu('weather_forecast_change_time'), icon: 'cog-sync', offColor: Menu, onColor: Menu, minValue: 15, maxValue: 60},
-                                { id: AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', name: findLocaleServMenu('weather_forecast_icon_colors') ,icon: 'format-color-fill', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.weatherForecast', name: findLocaleServMenu('weather_forecast_offon') ,icon: 'weather-sunny-off', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.weatherForecastTimer', name: findLocaleServMenu('weather_forecast_change_switch') ,icon: 'devices', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'ScreensaverInfo.entityChangeTime', name: findLocaleServMenu('weather_forecast_change_time'), icon: 'cog-sync', offColor: Menu, onColor: Menu, minValue: 15, maxValue: 60},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.autoWeatherColorScreensaverLayout', name: findLocaleServMenu('weather_forecast_icon_colors') ,icon: 'format-color-fill', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -656,8 +663,8 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                { id: AliasPath + 'Config.Dateformat.Switch.weekday', name: findLocaleServMenu('weekday_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
-                                { id: AliasPath + 'Config.Dateformat.Switch.month', name: findLocaleServMenu('month_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Dateformat.Switch.weekday', name: findLocaleServMenu('weekday_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Dateformat.Switch.month', name: findLocaleServMenu('month_large') ,icon: 'calendar-expand-horizontal', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -671,8 +678,8 @@ let NSPanel_Service_SubPage: PageType =
                             'parent': NSPanel_Screensaver,
                             'home': 'NSPanel_Service',
                             'items': [
-                                { id: AliasPath + 'Config.MRIcons.alternateMRIconSize.1', name: findLocaleServMenu('mr_icon1_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
-                                { id: AliasPath + 'Config.MRIcons.alternateMRIconSize.2', name: findLocaleServMenu('mr_icon2_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.1', name: findLocaleServMenu('mr_icon1_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.MRIcons.alternateMRIconSize.2', name: findLocaleServMenu('mr_icon2_size') ,icon: 'format-size', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -686,8 +693,8 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Relay.1', name: findLocaleServMenu('relay1_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
-                        { id: AliasPath + 'Relay.2', name: findLocaleServMenu('relay2_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Relay.1', name: findLocaleServMenu('relay1_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Relay.2', name: findLocaleServMenu('relay2_onoff'), icon: 'power', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
@@ -701,8 +708,8 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Einstellungen,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Config.ScripgtDebugStatus', name: findLocaleServMenu('debugmode_offon') ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
-                        { id: AliasPath + 'Config.MQTT.portCheck', name: findLocaleServMenu('port_check_offon') ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Config.ScripgtDebugStatus', name: findLocaleServMenu('debugmode_offon') ,icon: 'code-tags-check', offColor: HMIOff, onColor: HMIOn},
+                        /*PageItem*/{ id: AliasPath + 'Config.MQTT.portCheck', name: findLocaleServMenu('port_check_offon') ,icon: 'check-network', offColor: HMIOff, onColor: HMIOn},
                     ]
                 };
 
@@ -716,10 +723,10 @@ let NSPanel_Service_SubPage: PageType =
                 'parent': NSPanel_Service,
                 'home': 'NSPanel_Service',
                 'items': [
-                    { id: AliasPath + 'autoUpdate', name: findLocaleServMenu('automatically_updates') ,icon: 'power', offColor: HMIOff, onColor: HMIOn},
-                    { navigate: true, id: 'NSPanel_FirmwareTasmota', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('tasmota_firmware'), buttonText: findLocaleServMenu('more')},
-                    { navigate: true, id: 'NSPanel_FirmwareBerry', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('berry_driver'), buttonText: findLocaleServMenu('more')},
-                    { navigate: true, id: 'NSPanel_FirmwareNextion', icon: 'cellphone-cog', offColor: Menu, onColor: Menu, name: findLocaleServMenu('nextion_tft_firmware'), buttonText: findLocaleServMenu('more')}
+                    /*PageItem*/{ id: AliasPath + 'autoUpdate', name: findLocaleServMenu('automatically_updates') ,icon: 'power', offColor: HMIOff, onColor: HMIOn},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareTasmota', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('tasmota_firmware'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareBerry', icon: 'usb-flash-drive', offColor: Menu, onColor: Menu, name: findLocaleServMenu('berry_driver'), buttonText: findLocaleServMenu('more')},
+                    /*PageItem*/{ navigate: true, id: 'NSPanel_FirmwareNextion', icon: 'cellphone-cog', offColor: Menu, onColor: Menu, name: findLocaleServMenu('nextion_tft_firmware'), buttonText: findLocaleServMenu('more')}
                 ]
             };
 
@@ -732,10 +739,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Tasmota.Version', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Tasmota_Firmware.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu },                        
-                        { id: 'Divider' },
-                        { id: AliasPath + 'Config.Update.UpdateTasmota', name: findLocaleServMenu('update_tasmota') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        /*PageItem*/{ id: AliasPath + 'Tasmota.Version', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Tasmota_Firmware.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu },                        
+                        /*PageItem*/{ id: 'Divider' },
+                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateTasmota', name: findLocaleServMenu('update_tasmota') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -748,10 +755,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Display.BerryDriver', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Berry_Driver.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu},                        
-                        { id: 'Divider' },
-                        { id: AliasPath + 'Config.Update.UpdateBerry', name: findLocaleServMenu('update_berry_driver') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        /*PageItem*/{ id: AliasPath + 'Display.BerryDriver', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Berry_Driver.onlineVersion', name: findLocaleServMenu('available_release'), offColor: Menu, onColor: Menu},                        
+                        /*PageItem*/{ id: 'Divider' },
+                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateBerry', name: findLocaleServMenu('update_berry_driver') ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -764,10 +771,10 @@ let NSPanel_Service_SubPage: PageType =
                     'parent': NSPanel_Firmware,
                     'home': 'NSPanel_Service',
                     'items': [
-                        { id: AliasPath + 'Display_Firmware.TFT.currentVersion', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Display_Firmware.TFT.desiredVersion', name: findLocaleServMenu('desired_release'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_model'), offColor: Menu, onColor: Menu },
-                        { id: AliasPath + 'Config.Update.UpdateNextion', name: 'Nextion TFT Update' ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
+                        /*PageItem*/{ id: AliasPath + 'Display_Firmware.TFT.currentVersion', name: findLocaleServMenu('installed_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Display_Firmware.TFT.desiredVersion', name: findLocaleServMenu('desired_release'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Display.Model', name: findLocaleServMenu('nspanel_model'), offColor: Menu, onColor: Menu },
+                        /*PageItem*/{ id: AliasPath + 'Config.Update.UpdateNextion', name: 'Nextion TFT Update' ,icon: 'refresh', offColor: HMIOff, onColor: MSGreen, buttonText: findLocaleServMenu('start')},
                     ]
                 };
 
@@ -963,7 +970,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.36';
+const scriptVersion: string = 'v4.3.3.38';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1044,7 +1051,7 @@ async function CheckConfigParameters() {
             const i = n.shift();
             
             if (a === 'mqtt' && !isNaN(Number(i))) {
-                sendTo(`${a}.${i}`, 'sendMessage2Client', {topic: n.join('/'), message: 'time~12:00'});
+                sendTo(`${a}.${i}`, 'sendMessage2Client', {topic: n.join('/'), message: buildNSPanelString('time', '12:00')});
                 await sleep(500);
             }
             if (await existsObjectAsync(config.panelSendTopic) == false) {
@@ -1427,7 +1434,7 @@ Init_Screensaver_Backckground_Color_Switch();
 on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: "ne"}, async function (obj) {
     try {
         bgColorScrSaver = obj.state.val;
-        if (bgColorScrSaver < 4) {
+        if (bgColorScrSaver < 6) {
             HandleScreensaverUpdate();
         }
     } catch (err: any) { 
@@ -1783,9 +1790,11 @@ on({id: [String(NSPanel_Path) + 'Relay.1',String(NSPanel_Path) + 'Relay.2'], cha
 
 async function SubscribeMRIcons () { 
     try {
-        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
-            on({id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
-                if (obj.id!.substring(0,4) == 'mqtt') {
+        let arr = config.mrIcon1ScreensaverEntity.ScreensaverEntity != null ? [config.mrIcon1ScreensaverEntity.ScreensaverEntity] : [];
+        arr = config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon1ScreensaverEntity.ScreensaverEntityValue] : arr;
+        if (arr.length > 0) {
+            on({id: arr, change: "ne"}, async function (obj) {
+            if (obj.id!.substring(0,4) == 'mqtt') {
                     let Button = obj.id!.split('.'); 
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6), obj.state.val == 'ON' ? true : false);
@@ -1795,8 +1804,10 @@ async function SubscribeMRIcons () {
                 }
             });
         }
-        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
-            on({id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: "ne"}, async function (obj) {
+        arr = config.mrIcon2ScreensaverEntity.ScreensaverEntity != null ? [config.mrIcon2ScreensaverEntity.ScreensaverEntity] : [];
+        arr = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon2ScreensaverEntity.ScreensaverEntityValue] : arr;
+        if (arr.length > 0) {
+            on({id: arr, change: "ne"}, async function (obj) {
                 if (obj.id!.substring(0,4) == 'mqtt') {
                     let Button = obj.id!.split('.'); 
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5,6)).val != obj.state.val) {
@@ -2103,7 +2114,7 @@ async function InitPopupNotify() {
             const heading = getState(screensaverNotifyHeading).val;
             const text = getState(screensaverNotifyText).val;
             
-            if (screensaverEnabled) {
+            if (screensaverEnabled && heading != '' && text != '') {
                 setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
             }
 
@@ -2113,10 +2124,8 @@ async function InitPopupNotify() {
         });
 
         // popupNotify - Notification to a separate page
-        //on({ id: [popupNotifyInternalName], change: 'ne' }, async () => {
         on({ id: [popupNotifyText], change: 'any' }, async() => {
 
-            
             let notification: string;
 
             let v_popupNotifyHeadingColor = (getState(popupNotifyHeadingColor).val != null) ? getState(popupNotifyHeadingColor).val  : '65504'// Farbe Headline - gelb 65504
@@ -2127,16 +2136,19 @@ async function InitPopupNotify() {
             let v_popupNotifyFontIdText = (getState(popupNotifyFontIdText).val != null) ? getState(popupNotifyFontIdText).val  : '1'
             let v_popupNotifyIcon = (getState(popupNotifyIcon).val != null) ? getState(popupNotifyIcon).val : 'alert'
             let v_popupNotifyBuzzer = (getState(popupNotifyBuzzer).val != null) ? getState(popupNotifyBuzzer).val : '0';
-            
+
+            const heading = getState(popupNotifyHeading).val;
+            const text = getState(popupNotifyText).val;
+
             notification = 'entityUpdateDetail' + '~'
                 + getState(popupNotifyInternalName).val + '~'
-                + getState(popupNotifyHeading).val + '~'
+                + heading + '~'
                 + v_popupNotifyHeadingColor + '~'
                 + getState(popupNotifyButton1Text).val + '~'
                 + v_popupNotifyButton1TextColor + '~'
                 + getState(popupNotifyButton2Text).val + '~'
                 + v_popupNotifyButton2TextColor + '~'
-                + getState(popupNotifyText).val + '~'
+                + text + '~'
                 + v_popupNotifyTextColor + '~'
                 + getState(popupNotifySleepTimeout).val;
 
@@ -2147,8 +2159,10 @@ async function InitPopupNotify() {
                 + v_popupNotifyIconColor;
             }
 
-            setIfExists(config.panelSendTopic, 'pageType~popupNotify');
-            setIfExists(config.panelSendTopic, notification);
+            if (heading != '' && text != '') {
+                setIfExists(config.panelSendTopic, 'pageType~popupNotify');
+                setIfExists(config.panelSendTopic, notification);
+            }
 
             //------ Tasmota Buzzer ------
             
@@ -3049,7 +3063,7 @@ on({ id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne' }, async (obj) =>
     }
 });
 
-function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | undefined, words: Array<string> | undefined): void {
+function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | undefined, words: string[] | undefined): void {
     try {
         if (typ == 'event') {
             switch (method as NSPanel.EventMethod) {
@@ -3150,9 +3164,9 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: PageType): void {
     try {
         activePage = page;
-        setIfExists(NSPanel_Path + 'ActivePage.type', activePage!.type);
-        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage!.heading);
-        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage!.items[0].id);
+        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
+        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
+        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0] !== undefined ? activePage.items[0].id : '');
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(page));
@@ -3254,7 +3268,7 @@ function SendDate(): void {
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
             const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
-            SendToPanel(<NSPanel.Payload>{ payload: 'date~' + _SendDate });
+            SendToPanel({ payload: 'date~' + _SendDate });
         }
     } catch (err: any) {
         if (err.message = 'Cannot convert undefined or null to object') {
@@ -3267,11 +3281,12 @@ function SendDate(): void {
 
 function SendTime(): void {
     try {
-        const d = new Date();
+        /*const d = new Date();
         const hr = (d.getHours() < 10 ? '0' : '') + d.getHours();
         const min = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
-        SendToPanel(<NSPanel.Payload>{ payload: 'time~' + hr + ':' + min });
+        SendToPanel({ payload: 'time~' + hr + ':' + min });*/
+        SendToPanel({ payload: `time~${new Date().toLocaleTimeString('de-DE', { hour: "2-digit", minute: "2-digit" })}`, });
     } catch (err: any) {
         log('error at function SendTime: ' + err.message, 'warn');
     }
@@ -3279,7 +3294,7 @@ function SendTime(): void {
 
 function GenerateEntitiesPage(page: NSPanel.PageEntities): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<NSPanel.Payload>;
+        let out_msgs: NSPanel.Payload[];
         out_msgs = [{ payload: 'pageType~cardEntities' }]
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs
@@ -3291,7 +3306,7 @@ function GenerateEntitiesPage(page: NSPanel.PageEntities): NSPanel.Payload[] {
 
 function GenerateGridPage(page: NSPanel.PageGrid): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid' }];
+        let out_msgs: NSPanel.Payload[] = [{ payload: 'pageType~cardGrid' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -3302,7 +3317,7 @@ function GenerateGridPage(page: NSPanel.PageGrid): NSPanel.Payload[] {
 
 function GenerateGridPage2(page: NSPanel.PageGrid2): NSPanel.Payload[] {
     try {
-        let out_msgs: Array<NSPanel.Payload> = [{ payload: 'pageType~cardGrid2' }];
+        let out_msgs: NSPanel.Payload[] = [{ payload: 'pageType~cardGrid2' }];
         out_msgs.push({ payload: GeneratePageElements(page) });
         return out_msgs;
     } catch (err: any) {
@@ -4310,7 +4325,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
     try {
         UnsubscribeWatcher();
         let id = page.items[0].id
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardThermo' });
         
         // ioBroker
@@ -4691,8 +4706,9 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
 
 function unsubscribeMediaSubscriptions(): void {
     for (let i = 0; i < config.pages.length; i++) {
-        if (config.pages[i].type == 'cardMedia') {
-            let mediaID = config.pages[i].items[0].id;
+        const page: NSPanel.PageType = config.pages[i];
+        if (isPageMedia(page)) {  
+            let mediaID = page.items[0].id;
             unsubscribe(mediaID + '.STATE');
             unsubscribe(mediaID + '.ARTIST');
             unsubscribe(mediaID + '.TITLE');
@@ -4706,8 +4722,9 @@ function unsubscribeMediaSubscriptions(): void {
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
-        if (config.subPages[i].type == 'cardMedia') {
-            let mediaID = config.subPages[i].items[0].id;
+        const page: NSPanel.PageType = config.subPages[i];
+        if (isPageMedia(page)) {  
+            let mediaID = page.items[0].id;
             unsubscribe(mediaID + '.STATE');
             unsubscribe(mediaID + '.ARTIST');
             unsubscribe(mediaID + '.TITLE');
@@ -5046,7 +5063,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (!page.items[0].id) throw new Error ('Missing page id for cardMedia!');
 
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
         let vInstance = page.items[0].adapterPlayerInstance!;
@@ -5334,7 +5351,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             //-------------------------------------------------------------------------------------------------------------
             // All Alexa devices (the online / player and commands directory is available) are listed and linked below
             // If the constant alexaSpeakerList contains at least one entry, the constant is used - otherwise all devices from the Alexa adapter
-            let speakerListArray: Array<string> = [];
+            let speakerListArray: string[] = [];
             if (page.items[0].speakerList && page.items[0].speakerList.length > 0) {
                 for (let i_index in page.items[0].speakerList) {
                     speakerListArray.push(page.items[0].speakerList[i_index]);
@@ -5665,7 +5682,7 @@ function GenerateAlarmPage(page: NSPanel.PageAlarm): NSPanel.Payload[] {
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
         let nsPath = NSPanel_Alarm_Path + 'Alarm';
 
@@ -5823,7 +5840,7 @@ function GenerateUnlockPage(page: NSPanel.PageUnlock): NSPanel.Payload[] {
         let id = page.items[0].id
         let name = page.heading;
 
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardAlarm' });
 
         let dpPath : string = ''
@@ -5904,7 +5921,7 @@ function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
         activePage = page;
         if (!page.items[0].id) throw new Error ('Missing pageItem.id for cardQRPage!');
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~cardQR' });
 
         let dpPath : string = ''
@@ -5994,14 +6011,16 @@ function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
 
 function unsubscribePowerSubscriptions(): void {
     for (let i = 0; i < config.pages.length; i++) {
-        if (config.pages[i].type == 'cardPower') {
-            let powerID = config.pages[i].items[0].id;
+        const page: NSPanel.PageType = config.pages[i];
+        if (isPagePower(page)) {
+            let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
-        if (config.subPages[i].type == 'cardPower') {
-            let powerID = config.subPages[i].items[0].id;
+        const page: NSPanel.PageType = config.subPages[i];
+        if (isPagePower(page)) {
+                let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
         }
     }
@@ -6045,7 +6064,7 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
             obj = JSON.parse((getState(page.items[0].id + '.ACTUAL').val));
         }
         
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardPower' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
@@ -6139,25 +6158,51 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     }
 }
 
+const timeValueRegEx = /\~\d+:(\d+)/g;
 function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     try {
         activePage = page;
 
         let id = page.items[0].id;
-        let out_msgs: Array<NSPanel.Payload> = [];
+	let out_msgs: NSPanel.Payload[] = [];
         out_msgs.push({ payload: 'pageType~' + page.type });
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
 
-        let txt = getState(id + '.ACTUAL').val;
-        if (!page.items[0].yAxisTicks) {
-            throw new Error (`Page item ${id} yAxisTicks is undefined!`)
+        const txt = getState(id + '.ACTUAL')?.val;
+        if (!txt) {
+            throw new Error(`Unable to get the state of ${id}.ACTUAL`)
         }
+
+        let yAxisTicks : number[] = [];
+
+        if (!page.items[0].yAxisTicks) {
+            const sorted = [...txt.matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
+            if (sorted.length === 0) {
+                throw new Error (`Page item ${id} yAxisTicks is undefined and unable to be calculated!`)
+            }
+            const minValue = sorted[0];
+            const maxValue = sorted[sorted.length - 1];
+            const tick = Math.max(Number(((maxValue - minValue) / 5).toFixed()), 10);
+
+            let currentTick = minValue - tick;
+            while(currentTick < (maxValue + tick)) {
+                yAxisTicks.push(currentTick);
+                currentTick += tick;
+            }            
+
+            if (Debug) {
+                log(`Calculated yAxisTicks for ${id} (Min: ${minValue}, Max: ${maxValue}, Tick: ${tick}): ${yAxisTicks}`);
+            }
+        } else {            
+            yAxisTicks = typeof page.items[0].yAxisTicks === 'string'
+                            ? JSON.parse(getState(page.items[0].yAxisTicks).val)
+                            : page.items[0].yAxisTicks;
+        }
+
         if (!page.items[0].onColor) {
             throw new Error (`Page item ${id} onColor is undefined!`)
         }
-
-        let yAxisTicks = (typeof page.items[0].yAxisTicks == 'object') ? page.items[0].yAxisTicks : JSON.parse(getState(page.items[0].yAxisTicks).val);
 
         out_msgs.push({
             payload:    'entityUpd~' +                              //entityUpd
@@ -6171,7 +6216,6 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
 
         if (Debug) log('GenerateChartPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
-
     } catch (err: any) {
         log('error at function GenerateChartPage: ' + err.message, 'warn');
         return [];
@@ -6367,6 +6411,7 @@ function HandleButtonEvent(words: any): void {
                         if (existsObject(NSPanel_Path + 'ScreensaverInfo.bExitPage') && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != null && getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val != -1) {
                             pageId = getState(NSPanel_Path + 'ScreensaverInfo.bExitPage').val
                         }
+                        screensaverEnabled = true; // Activating screensaver also on One-Time click
                     }
 		            activePage = config.pages[pageId];
 	        	}
@@ -7407,7 +7452,7 @@ function GetNavigationString(pageId: number): string {
 function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): NSPanel.Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
-        let out_msgs: Array<NSPanel.Payload> = [];
+        let out_msgs: NSPanel.Payload[] = [];
         let id = pageItem.id;
 
         if (id && existsObject(id)) {
@@ -8209,7 +8254,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                                 // Playlist browsing not supported by squeezeboxrpc adapter. But Favorites can be used
                                 actualState = ''; // Not supported by squeezeboxrpc adapter
                                 let tempPlayList: string[] = [];
-                                let pathParts: Array<string> = pageItem.adapterPlayerInstance!.split('.');
+                                let pathParts: string[] = pageItem.adapterPlayerInstance!.split('.');
                                 for (let favorite_index = 0; favorite_index < 45; favorite_index++) {
                                     let favorite_name_selector: string = [pathParts[0], pathParts[1], 'Favorites', favorite_index, 'Name'].join('.');
                                     if (!existsObject(favorite_name_selector)) {
@@ -8811,7 +8856,7 @@ function HandleScreensaverUpdate(): void {
             }
             if (Debug) log('HandleScreensaverUpdate payload: weatherUpdate~' + payloadString, 'info');
 
-            SendToPanel(<NSPanel.Payload>{ payload: 'weatherUpdate~' + payloadString });
+            SendToPanel({ payload: 'weatherUpdate~' + payloadString });
 
             HandleScreensaverStatusIcons();
         }
@@ -8838,162 +8883,133 @@ function RegisterScreensaverEntityWatcher(id: string): void {
 function HandleScreensaverStatusIcons() : void {
     try {
         let payloadString = '';
-        let hwBtn1Col: any = config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor;
-        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null) {
-            // Prüfung ob ScreensaverEntity vom Typ String ist
-            if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'string') {
-                if (Debug) log('Entity ist String', 'info')
-                let hwBtn1: string = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn1 == 'ON') {
-                    hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
+        const iconData: Record<'mrIcon1' | 'mrIcon2', NSPanel.ScreenSaverMRDataElement> = {
+            mrIcon1: {
+                ScreensaverEntity: config.mrIcon1ScreensaverEntity.ScreensaverEntity != null 
+                                        && existsState(config.mrIcon1ScreensaverEntity.ScreensaverEntity) 
+                                        ? getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val 
+                                        : null,
+                ScreensaverEntityIconOn: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn 
+                                            ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn) 
+                                            : '',
+                ScreensaverEntityIconOff: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff 
+                                            ? Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff) 
+                                            : '',
+                ScreensaverEntityOnColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor,
+                ScreensaverEntityOffColor: config.mrIcon1ScreensaverEntity.ScreensaverEntityOffColor,
+                ScreensaverEntityValue: config.mrIcon1ScreensaverEntity.ScreensaverEntityValue === null 
+                                        ? null 
+                                        : getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val,
+                ScreensaverEntityValueDecimalPlace: config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace,
+                ScreensaverEntityValueUnit: config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit,
+                ScreensaverEntityIconSelect: config.mrIcon1ScreensaverEntity.ScreensaverEntityIconSelect
+                                                && typeof config.mrIcon1ScreensaverEntity.ScreensaverEntityIconSelect === 'object' 
+                                                ? config.mrIcon1ScreensaverEntity.ScreensaverEntityIconSelect
+                                                : null,
+                
+
+            },
+            mrIcon2: {
+                ScreensaverEntity: config.mrIcon2ScreensaverEntity.ScreensaverEntity != null 
+                                        && existsState(config.mrIcon2ScreensaverEntity.ScreensaverEntity) 
+                                        ? getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val 
+                                        : null,
+                ScreensaverEntityIconOn: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn 
+                                            ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn) 
+                                            : '',
+                ScreensaverEntityIconOff: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff 
+                                            ? Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff) 
+                                            : '',
+                ScreensaverEntityOnColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor,
+                ScreensaverEntityOffColor: config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor,
+                ScreensaverEntityValue: config.mrIcon2ScreensaverEntity.ScreensaverEntityValue === null 
+                                        ? null 
+                                        : getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val,
+                ScreensaverEntityValueDecimalPlace: config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace,
+                ScreensaverEntityValueUnit: config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit,
+                ScreensaverEntityIconSelect: config.mrIcon2ScreensaverEntity.ScreensaverEntityIconSelect 
+                                                && typeof config.mrIcon2ScreensaverEntity.ScreensaverEntityIconSelect === 'object' 
+                                                ? config.mrIcon2ScreensaverEntity.ScreensaverEntityIconSelect
+                                                : null,
+            }
+        }
+        for (const a in iconData) {
+            if (iconData[a].ScreensaverEntityValue !== null) {
+                switch (typeof iconData[a].ScreensaverEntityValue) {
+                    case "string":
+                        if (iconData[a].ScreensaverEntityValue === '' || isNaN(iconData[a].ScreensaverEntityValue)) break;
+                    case "number":
+                    case "bigint":
+                        iconData[a].ScreensaverEntityValue = Number(iconData[a].ScreensaverEntityValue).toFixed(iconData[a].ScreensaverEntityValueDecimalPlace);
+                        break;
+                    case "boolean":
+                        break;
+                    case "symbol":
+                    case "undefined":
+                    case "object":
+                    case "function":
+                        iconData[a].ScreensaverEntityValue = null;
                 }
-                if (Debug) log('Value: ' + hwBtn1 + ' Color: ' + JSON.stringify(hwBtn1Col), 'info')
+            }
+            let hwBtn1Col: RGB = iconData[a].ScreensaverEntityOffColor;
+            if (iconData[a].ScreensaverEntity != null || iconData[a].ScreensaverEntityValue != null) {
+                // Prüfung ob ScreensaverEntity vom Typ String ist
+                if (iconData[a].ScreensaverEntity != null) {
+                    if (typeof (iconData[a].ScreensaverEntity) == 'string') {
+                        if (Debug) log('Entity ist String', 'info')
+                        switch (String(iconData[a].ScreensaverEntity).toUpperCase()) { 
+                            case 'ON': 
+                            case 'OK': 
+                            case 'AN': 
+                            case 'YES': 
+                            case 'TRUE': 
+                            case 'ONLINE': 
+                                hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
+                                break;
+                            default:
+                        }
+                        if (Debug) log('Value: ' + iconData[a].ScreensaverEntity + ' Color: ' + JSON.stringify(hwBtn1Col), 'info')
+                        // Alles was kein String ist in Boolean umwandeln
+                    } else {
+                        if (Debug) log('Entity ist kein String', 'info')
+                        if (!!iconData[a].ScreensaverEntity) {
+                            hwBtn1Col = iconData[a].ScreensaverEntityOnColor;
+                        }
+                    }
+                }
 
                 // Icon ermitteln
-                if (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) {
-                    payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
+                if (iconData[a].ScreensaverEntityIconSelect && iconData[a].ScreensaverEntity != null) {
+                    const icon = iconData[a].ScreensaverEntityIconSelect[iconData[a].ScreensaverEntity];
+                    if (icon !== undefined) {
+                        payloadString += Icons.GetIcon(icon);
+                        if (Debug) log('SelectIcon: '+payloadString, 'info')
+                    }
+                } else if (iconData[a].ScreensaverEntity) {
+                    payloadString += iconData[a].ScreensaverEntityIconOn;
                     if (Debug) log('Icon if true '+payloadString, 'info')    
                 } else {
-                    if (config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null) {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff);
-                        if (Debug) log('Icon else true '+payloadString, 'info')  
+                    if (iconData[a].ScreensaverEntityIconOff) {
+                        payloadString += iconData[a].ScreensaverEntityIconOff;
+                        if (Debug) log('Icon1 else true '+payloadString, 'info')  
                     } else {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                        if (Debug) log('Icon else false '+payloadString, 'info')  
+                        payloadString += iconData[a].ScreensaverEntityIconOn;
+                        if (Debug) log('Icon1 else false '+payloadString, 'info')  
                     }
                 } 
-                if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
-                        if (Debug) log('Value ist eine Zahl ' + payloadString, 'info')
-                    } else {
-                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
-                        if (Debug) log('Value ist keine Zahl ' + payloadString, 'info')
-                    }                        
-                }
+                
+                if (iconData[a].ScreensaverEntityValue != null) { 
+                    payloadString += iconData[a].ScreensaverEntityValue;
+                    payloadString += (iconData[a].ScreensaverEntityValueUnit == null) ? '' : iconData[a].ScreensaverEntityValueUnit; 
+                }                       
+                            
                 payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
-            } else if (typeof (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
-                let hwBtn1: boolean = getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn1) {
-                    hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
-                }
-                if (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntity).val) {
-                    payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                } else {
-                    if (config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff != null) {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOff);
-                    } else {
-                        payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-                    }
-                } 
-                if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
-                    } else {
-                        payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
-                    }                      
-                }
-                payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
+            } else {
+                hwBtn1Col = Black;
+                payloadString += '~~';
             }
-        } else if (config.mrIcon1ScreensaverEntity.ScreensaverEntity == null && config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null){
-            
-            if(config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor != null){
-                hwBtn1Col = config.mrIcon1ScreensaverEntity.ScreensaverEntityOnColor;
-            }
-            if(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn != null){
-                payloadString += Icons.GetIcon(config.mrIcon1ScreensaverEntity.ScreensaverEntityIconOn);
-            }
-            
-            if (config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null) {
-                if (isNaN(getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                    payloadString += (getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon1ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += (config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon1ScreensaverEntity.ScreensaverEntityValueUnit;
-                } else {
-                    payloadString += getState(config.mrIcon1ScreensaverEntity.ScreensaverEntityValue).val
-                }                        
-            }
-            payloadString += '~' + rgb_dec565(hwBtn1Col) + '~';
         }
-        else {
-            hwBtn1Col = Black;
-            payloadString += '~~';
-        }
-
-        let hwBtn2Col: any = config.mrIcon2ScreensaverEntity.ScreensaverEntityOffColor;
-        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null) {
-            if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'string') {
-                let hwBtn2: string = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn2 == 'ON') {
-                    hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
-                }
-                if (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) {
-                    payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
-                } else {
-                    if (config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null) {
-                        payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff);
-                    } else {
-                        payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
-                    }
-                } 
-                if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
-                    } else {
-                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
-                    }                        
-                }
-                payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
-            } else if (typeof (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) == 'boolean') {
-                let hwBtn2: boolean = getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val;
-                if (hwBtn2) {
-                    hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
-                }
-                if (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntity).val) {
-                    payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
-                } else {
-                    if (config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff != null) {
-                        payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOff);
-                    } else {
-                        payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
-                    }
-                } 
-                if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                    if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                        payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                        payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
-                    } else {
-                        payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
-                    }                        
-                }
-                payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
-            }
-        } else if (config.mrIcon2ScreensaverEntity.ScreensaverEntity == null && config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null){
-            
-            if(config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor != null){
-                hwBtn2Col = config.mrIcon2ScreensaverEntity.ScreensaverEntityOnColor;
-            }
-
-            if(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn != null){
-                payloadString += Icons.GetIcon(config.mrIcon2ScreensaverEntity.ScreensaverEntityIconOn);
-            }
-            
-            if (config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null) {
-                if (isNaN(getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val) == false) {
-                    payloadString += (getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val).toFixed(config.mrIcon2ScreensaverEntity.ScreensaverEntityValueDecimalPlace);
-                    payloadString += (config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit == null) ? '' : config.mrIcon2ScreensaverEntity.ScreensaverEntityValueUnit;
-                } else {
-                    payloadString += getState(config.mrIcon2ScreensaverEntity.ScreensaverEntityValue).val
-                }                                            
-            }
-            payloadString += '~' + rgb_dec565(hwBtn2Col) + '~';
-        } else {
-            hwBtn2Col = Black;
-            payloadString += '~~';
-        }
-
+        
         let alternateScreensaverMFRIcon1Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1').val
         let alternateScreensaverMFRIcon2Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2').val
         //Alternate MRIcon Size
@@ -9008,7 +9024,7 @@ function HandleScreensaverStatusIcons() : void {
             payloadString += '~';
         }
 
-        SendToPanel(<NSPanel.Payload>{ payload: 'statusUpdate~' + payloadString });
+        SendToPanel({ payload: 'statusUpdate~' + payloadString });
 
     } catch (err: any) {
         log('error at function HandleScreensaverStatusIcons: ' + err.message, 'warn');
@@ -9085,25 +9101,27 @@ function HandleScreensaverColors(): void {
             scrSvrBGCol = rgb_dec565({ red: 100, green: 0, blue: 0 });
         }
         
-        let payloadString = 'color'                     + '~' +
-                            scrSvrBGCol                 + '~' +      //background
-                            rgb_dec565(sctime)          + '~' +      //time
-                            rgb_dec565(sctimeAMPM)      + '~' +      //timeAMPM~
-                            rgb_dec565(scdate)          + '~' +      //date~
-                            rgb_dec565(sctMainText)     + '~' +      //tMainText~
-                            rgb_dec565(sctForecast1)    + '~' +      //tForecast1~
-                            rgb_dec565(sctForecast2)    + '~' +      //tForecast2~
-                            rgb_dec565(sctForecast3)    + '~' +      //tForecast3~
-                            rgb_dec565(sctForecast4)    + '~' +      //tForecast4~
-                            rgb_dec565(sctForecast1Val) + '~' +      //tForecast1Val~
-                            rgb_dec565(sctForecast2Val) + '~' +      //tForecast2Val~
-                            rgb_dec565(sctForecast3Val) + '~' +      //tForecast3Val~
-                            rgb_dec565(sctForecast4Val) + '~' +      //tForecast4Val~
-                            rgb_dec565(scbar)           + '~' +      //bar~
-                            rgb_dec565(sctMainTextAlt)  + '~' +      //tMainTextAlt
-                            rgb_dec565(sctTimeAdd);                  //tTimeAdd
+        let payloadString = buildNSPanelString(
+                            'color'                     ,
+                            scrSvrBGCol                 ,      //background
+                            rgb_dec565(sctime)          ,      //time
+                            rgb_dec565(sctimeAMPM)      ,      //timeAMPM~
+                            rgb_dec565(scdate)          ,      //date~
+                            rgb_dec565(sctMainText)     ,      //tMainText~
+                            rgb_dec565(sctForecast1)    ,      //tForecast1~
+                            rgb_dec565(sctForecast2)    ,      //tForecast2~
+                            rgb_dec565(sctForecast3)    ,      //tForecast3~
+                            rgb_dec565(sctForecast4)    ,      //tForecast4~
+                            rgb_dec565(sctForecast1Val) ,      //tForecast1Val~
+                            rgb_dec565(sctForecast2Val) ,      //tForecast2Val~
+                            rgb_dec565(sctForecast3Val) ,      //tForecast3Val~
+                            rgb_dec565(sctForecast4Val) ,      //tForecast4Val~
+                            rgb_dec565(scbar)           ,      //bar~
+                            rgb_dec565(sctMainTextAlt)  ,      //tMainTextAlt
+                            rgb_dec565(sctTimeAdd)                  //tTimeAdd
+        );
 
-        SendToPanel(<NSPanel.Payload>{ payload: payloadString });
+        SendToPanel({ payload: payloadString });
     } catch (err: any) {
         log('error at function HandleScreensaverColors: '+ err.message, 'warn');
     }
@@ -9537,7 +9555,7 @@ function Interpolate(color1: RGB, color2: RGB, fraction: number): RGB {
     let r: number = InterpolateNum(color1.red, color2.red, fraction);
     let g: number = InterpolateNum(color1.green, color2.green, fraction);
     let b: number = InterpolateNum(color1.blue, color2.blue, fraction);
-    return <RGB>{ red: Math.round(r), green: Math.round(g), blue: Math.round(b) };
+    return { red: Math.round(r), green: Math.round(g), blue: Math.round(b) };
 }
 
 function InterpolateNum(d1: number, d2: number, fraction: number): number {
@@ -9674,6 +9692,14 @@ function spotifyGetDeviceID(vDeviceString: string): string {
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
+/**
+ * Join arguments with ~ and return the string;
+ * @param tokens unlimited numbers of strings
+ * @returns 
+ */
+function buildNSPanelString(...tokens: (string|number)[]): string {
+    return tokens.join('~');
+}
 
 type RGB = NSPanel.RGB;
 type PageItem = NSPanel.PageItem;
@@ -9805,12 +9831,24 @@ function isPageThermoItem(F: PageItem | NSPanel.PageThermoItem):F is NSPanel.Pag
     return  'popupThermoMode1' in F;
 }
 
+function isPageMedia(F: NSPanel.PageType | NSPanel.PageMedia):F is NSPanel.PageMedia {
+    return F.type == 'cardMedia';
+}
+function isPagePower(F: NSPanel.PageType | NSPanel.PagePower):F is NSPanel.PagePower {
+    return F.type == 'cardPower';
+}
+
 namespace NSPanel {
     export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer' 
 
 
 
     export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2'
+    export type panelRecvType = {
+        event: 'event';
+        method: EventMethod
+    }
+
 
     export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
 
@@ -9864,48 +9902,49 @@ namespace NSPanel {
 
     export type PageEntities = {
         type: 'cardEntities',
-        items: PageItem[],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageGrid = {
         type: 'cardGrid',
-        items: PageItem[],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageGrid2 = {
         type: 'cardGrid2',
-        items: PageItem[],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageThermo = {
         type: 'cardThermo',
-        items: PageThermoItem[],
+        items: [PageThermoItem],
         
     } & Omit<PageBaseType, 'useColor'>
 
     export type PageMedia = {
         type: 'cardMedia',
-        items: PageMediaItem[],
+        items: [PageMediaItem],
     } & Omit<PageBaseType, 'useColor' | 'autoCreateAlias'>
 
+    
     export type PageAlarm = {
         type: 'cardAlarm',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'>
 
     export type PageUnlock = {
         type: 'cardUnlock',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'> & Partial<Pick<PageBaseType, 'useColor'>>
 
     export type PageQR = {
         type: 'cardQR',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'>
 
     export type PagePower = {
         type: 'cardPower',
-        items: PageItem[],
+        items: [PageItem],
     } & Omit<PageBaseType, 'useColor'>
 
     export type PageChart = {
@@ -10047,12 +10086,24 @@ namespace NSPanel {
     export type ScreenSaverMRElement = {
         ScreensaverEntity: string | null,
         ScreensaverEntityIconOn: string | null,
+        ScreensaverEntityIconSelect?: {[key: string]: string} | null | undefined,
         ScreensaverEntityIconOff: string | null,
         ScreensaverEntityValue: string | null,
         ScreensaverEntityValueDecimalPlace: number | null,
         ScreensaverEntityValueUnit: string | null,
         ScreensaverEntityOnColor: RGB,
         ScreensaverEntityOffColor: RGB
+    }
+    export type ScreenSaverMRDataElement = {
+        ScreensaverEntity: string | number | boolean | null,
+        ScreensaverEntityIconOn: string | null,
+        ScreensaverEntityIconOff: string | null,
+        ScreensaverEntityValue: string | number | boolean | null,
+        ScreensaverEntityValueDecimalPlace: number | null,
+        ScreensaverEntityValueUnit: string | null,
+        ScreensaverEntityOnColor: RGB,
+        ScreensaverEntityOffColor: RGB
+        ScreensaverEntityIconSelect: {[key: string]: string} | null,
     }
 
     export type IconScaleElement = { 
