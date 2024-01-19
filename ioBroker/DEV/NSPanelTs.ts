@@ -6154,7 +6154,13 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
 
         let heading = page.heading !== undefined ? page.heading : "Chart...";
 
-        const txt = getState(id + '.ACTUAL').val;
+        const txt = getState(id + '.ACTUAL')?.val;
+        if (!txt) {
+            throw new Error(`Unable to get the state of ${id}.ACTUAL`)
+        }
+
+        let yAxisTicks : number[] = [];
+
         if (!page.items[0].yAxisTicks) {
             const sorted = [...txt.matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
             if (sorted.length === 0) {
@@ -6164,22 +6170,24 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
             const maxValue = sorted[sorted.length - 1];
             const tick = Math.max(Number(((maxValue - minValue) / 5).toFixed()), 10);
 
-            page.items[0].yAxisTicks = [];
             let currentTick = minValue - tick;
             while(currentTick < (maxValue + tick)) {
-                page.items[0].yAxisTicks.push(currentTick);
+                yAxisTicks.push(currentTick);
                 currentTick += tick;
             }            
 
             if (Debug) {
                 log(`Calculated yAxisTicks for ${id} (Min: ${minValue}, Max: ${maxValue}, Tick: ${tick}): ${page.items[0].yAxisTicks}`);
             }
+        } else {            
+            yAxisTicks = typeof page.items[0].yAxisTicks === 'string'
+                            ? JSON.parse(getState(page.items[0].yAxisTicks).val)
+                            : page.items[0].yAxisTicks;
         }
+
         if (!page.items[0].onColor) {
             throw new Error (`Page item ${id} onColor is undefined!`)
         }
-
-        let yAxisTicks = (typeof page.items[0].yAxisTicks == 'object') ? page.items[0].yAxisTicks : JSON.parse(getState(page.items[0].yAxisTicks).val);
 
         out_msgs.push({
             payload:    'entityUpd~' +                              //entityUpd
@@ -6193,7 +6201,6 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
 
         if (Debug) log('GenerateChartPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs;
-
     } catch (err: any) {
         log('error at function GenerateChartPage: ' + err.message, 'warn');
         return [];
