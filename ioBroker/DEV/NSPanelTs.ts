@@ -104,6 +104,8 @@ ReleaseNotes:
         - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
         - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
 	- 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
+    - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
+    
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -6492,6 +6494,18 @@ function HandleButtonEvent(words: any): void {
                 }
                 break;
             case 'button':
+                if (['f1Icon', 'f2Icon', 'f3Icon', 'f4Icon', 'f5Icon'].indexOf(words[2]) != -1) {
+                    const fNumber = parseInt(words[2].substring(1, 2)) - 1;
+                    const indicatorScreensaverEntity = config.indicatorScreensaverEntity[fNumber];
+                    if (indicatorScreensaverEntity != null && indicatorScreensaverEntity !== undefined && indicatorScreensaverEntity.ScreensaverEntityNaviToPage !== undefined) {
+                        if (Debug) log('NaviToPage: ' + words[2]);
+                        GeneratePage(indicatorScreensaverEntity.ScreensaverEntityNaviToPage);
+                    } else {
+                        const value = ['event','buttonPress2','screensaver','bExit',2];
+                        HandleButtonEvent(value);
+                    }
+                }
+
                 if (existsObject(id)) {
                     let action = false;
                     if (words[4] == '1')
@@ -8847,7 +8861,7 @@ function HandleScreensaverUpdate(): void {
                         iconColor = getState(temp).val;
                     }
                     payloadString += '~' +
-                                    '~' +
+                                    'f'+ (i+1) + 'Icon~' +
                                     icon + '~' +
                                     iconColor + '~' +
                                     indicatorScreensaverEntity.ScreensaverEntityText + '~' +
@@ -9861,7 +9875,7 @@ namespace NSPanel {
         | 'positionSlider' | 'tiltOpen' | 'tiltStop' | 'tiltSlider' | 'tiltClose' | 'brightnessSlider' | 'colorTempSlider' | 'colorWheel' | 'tempUpd' | 'tempUpdHighLow' | 'media-back'
         | 'media-pause' | 'media-next' | 'media-shuffle' | 'volumeSlider' | 'mode-speakerlist' | 'mode-playlist' | 'mode-tracklist' | 'mode-repeat' | 'mode-equalizer' | 'mode-seek' | 'mode-crossfade'
         | 'mode-favorites' | 'mode-insel' | 'media-OnOff' | 'timer-start' | 'timer-pause' | 'timer-cancle' | 'timer-finish' | 'hvac_action' | 'mode-modus1' | 'mode-modus2' | 'mode-modus3' | 'number-set'
-        | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' 
+        | 'mode-preset_modes' | 'A1' | 'A2' | 'A3' | 'A4' | 'D1' | 'U1' | 'f1Icon' | 'f2Icon' | 'f3Icon' | 'f4Icon' | 'f5Icon' 
         
 
 
@@ -10081,6 +10095,7 @@ namespace NSPanel {
         ScreensaverEntityOffColor?: RGB
         ScreensaverEntityOnText?: string | null,
         ScreensaverEntityOffText?: string | null,
+        ScreensaverEntityNaviToPage?: PageType
     }
 
     export type ScreenSaverMRElement = {
