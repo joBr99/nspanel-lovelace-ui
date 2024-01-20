@@ -314,7 +314,7 @@
 │          Value: 0
 │      
 │  Variable (int32) xc1
-│ @@ -370,159 +336,50 @@
+│ @@ -370,145 +336,50 @@
 │          Scope              : local
 │          Dragging           : 0
 │          Send Component ID  : disabled
@@ -349,20 +349,6 @@
 │ -    Events
 │ -        Touch Press Event
 │ -            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│ -        
-│ -        Touch Release Event
-│ -            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
 │ -            //send calc crc
 │ -            btlen tSend.txt,sys0
 │ -            crcrest 1,0xffff // reset CRC
@@ -474,7 +460,7 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : PM
-│ @@ -704,15 +561,14 @@
+│ @@ -690,15 +561,14 @@
 │                                          if(tTmp.txt!="")
 │                                          {
 │                                              covx tTmp.txt,defaultFontColor,0,0
@@ -490,7 +476,7 @@
 │                                          if(tAMPM.txt=="")
 │                                          {
 │                                              vis tAMPM,0
-│ @@ -833,44 +689,34 @@
+│ @@ -819,44 +689,34 @@
 │                                          //e6Val
 │                                          spstr strCommand.txt,e6Val.txt,"~",60
 │                                          //f1Icon
@@ -535,7 +521,7 @@
 │                                          spstr strCommand.txt,tNotifyText.txt,"~",2
 │                                          if(tNotifyHead.txt!=""||tNotifyText.txt!="")
 │                                          {
-│ @@ -966,14 +812,18 @@
+│ @@ -952,14 +812,18 @@
 │                                          {
 │                                              page cardPower
 │                                          }

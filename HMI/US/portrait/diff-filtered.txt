@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2024-01-19 22:12:27.279807389 +0000
++++ /dev/fd/62	2024-01-20 19:56:08.135834636 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -1801,7 +1801,7 @@
 + Value: 0
 +
 +e (int32) xc1
-+159 +324,50 @@
++145 +324,50 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1836,20 +1836,6 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+ 
-+ Touch Release Event
-+     tSend.txt="event,buttonPress2,"+entn1.txt+",button"
 +     //send calc crc
 +     btlen tSend.txt,sys0
 +     crcrest 1,0xffff // reset CRC
