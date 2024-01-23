@@ -6312,6 +6312,10 @@ function HandleButtonEvent(words: any): void {
             alwaysOn = false;
             SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
         }
+	
+        setOrCreate(NSPanel_Path + "Event.Button.Action", buttonAction ?? words[2]);
+        setOrCreate(NSPanel_Path + "Event.Button.Value", words[4] != undefined ? words[4] : null);
+        setOrCreate(NSPanel_Path + "Event.Button.Id", id);
 
         if (Debug) {
             log('HandleButtonEvent buttonAction: ' + buttonAction, 'info');
@@ -7359,6 +7363,14 @@ function HandleButtonEvent(words: any): void {
     }
 }
 
+function setOrCreate(id : string, value : any, forceCreation: boolean = true, common: Partial<iobJS.StateCommon> = { }, callback?: iobJS.SetStateCallback) {
+    if (!existsState(id)) {
+         createState(id, value, forceCreation, common, callback);
+    } else {
+        setState(id, value);
+    }
+}
+				   
 //Determination of page navigation (CustomSend-Payload)
 function GetNavigationString(pageId: number): string {
     try {
