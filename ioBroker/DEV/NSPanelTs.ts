@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.38 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.39 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -103,8 +103,9 @@ ReleaseNotes:
         - 16.01.2024 - v4.3.3.38 Optimate: function SendTime()
         - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
         - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
-	- 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
-    - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
+	    - 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
+        - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
+        - 23.01.2024 - v4.3.3.39 Add: Optional setOn & setOff for HW button with mode 'set'
     
 
         Todo:
@@ -972,7 +973,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.38';
+const scriptVersion: string = 'v4.3.3.39';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -985,6 +986,8 @@ let vwIconColor: number[] = [];
 let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
+
+let buttonToggleState: {[key: string]: boolean} = {};
 
 const axios = require('axios');
 const dayjs = require('dayjs');
@@ -3242,7 +3245,13 @@ function HandleHardwareButton(method: NSPanel.EventMethod): void {
                 break;
             case 'set':
                 if (Debug) log('HandleHardwareButton -> Mode Set', 'info');
-                if (buttonConfig.entity) {
+                if (buttonConfig.setOn && existsState(buttonConfig.setOn.dp) && !buttonToggleState[method]) {
+                    setState(buttonConfig.setOn.dp, buttonConfig.setOn.val);
+                    buttonToggleState[method] = true;
+                } else if (buttonConfig.setOff && existsState(buttonConfig.setOff.dp) && buttonToggleState[method]) {
+                    setState(buttonConfig.setOff.dp, buttonConfig.setOff.val);
+                    buttonToggleState[method] = false;
+                } else if (buttonConfig.entity && existsState(buttonConfig.entity)) {
                     setState(buttonConfig.entity, buttonConfig.setValue);
                 }
                 screensaverEnabled = true;
@@ -6179,7 +6188,7 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
         let yAxisTicks : number[] = [];
 
         if (!page.items[0].yAxisTicks) {
-            const sorted = [...txt.matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
+            const sorted = [...String(txt).matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
             if (sorted.length === 0) {
                 throw new Error (`Page item ${id} yAxisTicks is undefined and unable to be calculated!`)
             }
@@ -6313,9 +6322,9 @@ function HandleButtonEvent(words: any): void {
             SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
         }
 	
-        setOrCreate(NSPanel_Path + "Event.Button.Action", buttonAction ?? words[2]);
-        setOrCreate(NSPanel_Path + "Event.Button.Value", words[4] != undefined ? words[4] : null);
-        setOrCreate(NSPanel_Path + "Event.Button.Id", id);
+        setOrCreate(NSPanel_Path + "Event.Button.Action", buttonAction ?? words[2], false, {name: 'Incoming button acion', type: 'string', role: 'text', write: false, read: true});
+        setOrCreate(NSPanel_Path + "Event.Button.Value", words[4] != undefined ? words[4] : '', false, {name: 'Incoming button value', type: 'string', role: 'text', write: false, read: true});
+        setOrCreate(NSPanel_Path + "Event.Button.Id", id, false, {name: 'Incoming button id', type: 'string', role: 'text', write: false, read: true});
 
         if (Debug) {
             log('HandleButtonEvent buttonAction: ' + buttonAction, 'info');
@@ -7365,9 +7374,11 @@ function HandleButtonEvent(words: any): void {
 
 function setOrCreate(id : string, value : any, forceCreation: boolean = true, common: Partial<iobJS.StateCommon> = { }, callback?: iobJS.SetStateCallback) {
     if (!existsState(id)) {
-         createState(id, value, forceCreation, common, callback);
+        extendObject(id.split('.').slice(0, -2).join('.'), {type: 'channel', common:{name: 'channel'}, native:{}});
+        extendObject(id.split('.').slice(0, -1).join('.'), {type: 'channel', common:{name: 'channel'}, native:{}});
+        createState(id, value, forceCreation, common, callback);
     } else {
-        setState(id, value);
+        setState(id, value, true);
     }
 }
 				   
@@ -9049,7 +9060,7 @@ function HandleScreensaverStatusIcons() : void {
         } else {
             payloadString += '~';
         }
-
+        // statusUpdate~icon1~icon1Color~icon1font~icon2~icon2color~icon2font~icon2font
         SendToPanel({ payload: 'statusUpdate~' + payloadString });
 
     } catch (err: any) {
@@ -9903,6 +9914,7 @@ namespace NSPanel {
 
     export type PageBaseType = {
         type: PagetypeType,
+        uniqueName?: string,
         heading: string,
         items: PageItem[],
         useColor: boolean,
@@ -10013,6 +10025,8 @@ namespace NSPanel {
     // mean string start with getState(' and end with ').val
     type getStateID = string;
     export type PageBaseItem = {
+        uniqueName?: string,
+        role?: string,
         id?: string | null,
         icon?: string,
         icon2?: string,
@@ -10070,6 +10084,8 @@ namespace NSPanel {
         page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
         entity: string | null,
         setValue: string | number | boolean | null
+        setOn?: {dp:string, val:iobJS.StateValue}
+        setOff?: {dp:string, val:iobJS.StateValue};
     }
 
     export type Config = {
