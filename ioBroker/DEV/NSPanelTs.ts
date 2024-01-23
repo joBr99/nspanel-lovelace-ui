@@ -6322,9 +6322,9 @@ function HandleButtonEvent(words: any): void {
             SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
         }
 	
-        setOrCreate(NSPanel_Path + "Event.Button.Action", buttonAction ?? words[2]);
-        setOrCreate(NSPanel_Path + "Event.Button.Value", words[4] != undefined ? words[4] : null);
-        setOrCreate(NSPanel_Path + "Event.Button.Id", id);
+        setOrCreate(NSPanel_Path + "Event.Button.Action", buttonAction ?? words[2], false, {name: 'Incoming button acion', type: 'string', role: 'text', write: false, read: true});
+        setOrCreate(NSPanel_Path + "Event.Button.Value", words[4] != undefined ? words[4] : '', false, {name: 'Incoming button value', type: 'string', role: 'text', write: false, read: true});
+        setOrCreate(NSPanel_Path + "Event.Button.Id", id, false, {name: 'Incoming button id', type: 'string', role: 'text', write: false, read: true});
 
         if (Debug) {
             log('HandleButtonEvent buttonAction: ' + buttonAction, 'info');
@@ -7374,9 +7374,11 @@ function HandleButtonEvent(words: any): void {
 
 function setOrCreate(id : string, value : any, forceCreation: boolean = true, common: Partial<iobJS.StateCommon> = { }, callback?: iobJS.SetStateCallback) {
     if (!existsState(id)) {
-         createState(id, value, forceCreation, common, callback);
+        extendObject(id.split('.').slice(0, -2).join('.'), {type: 'channel', common:{name: 'channel'}, native:{}});
+        extendObject(id.split('.').slice(0, -1).join('.'), {type: 'channel', common:{name: 'channel'}, native:{}});
+        createState(id, value, forceCreation, common, callback);
     } else {
-        setState(id, value);
+        setState(id, value, true);
     }
 }
 				   
