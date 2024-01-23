@@ -9037,7 +9037,7 @@ function HandleScreensaverStatusIcons() : void {
         } else {
             payloadString += '~';
         }
-
+        // statusUpdate~icon1~icon1Color~icon1font~icon2~icon2color~icon2font~icon2font
         SendToPanel({ payload: 'statusUpdate~' + payloadString });
 
     } catch (err: any) {
@@ -9891,6 +9891,7 @@ namespace NSPanel {
 
     export type PageBaseType = {
         type: PagetypeType,
+        uniqueName?: string,
         heading: string,
         items: PageItem[],
         useColor: boolean,
@@ -10001,6 +10002,8 @@ namespace NSPanel {
     // mean string start with getState(' and end with ').val
     type getStateID = string;
     export type PageBaseItem = {
+        uniqueName?: string,
+        role?: string,
         id?: string | null,
         icon?: string,
         icon2?: string,
