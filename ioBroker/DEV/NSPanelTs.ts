@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.38 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.39 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -103,8 +103,9 @@ ReleaseNotes:
         - 16.01.2024 - v4.3.3.38 Optimate: function SendTime()
         - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
         - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
-	- 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
-    - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
+	    - 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
+        - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
+        - 23.01.2024 - v4.3.3.39 Add: Optional setOn & setOff for HW button with mode 'set'
     
 
         Todo:
@@ -972,7 +973,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.38';
+const scriptVersion: string = 'v4.3.3.39';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -985,6 +986,8 @@ let vwIconColor: number[] = [];
 let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
+
+let buttonToggleState: {[key: string]: boolean} = {};
 
 const axios = require('axios');
 const dayjs = require('dayjs');
@@ -3242,7 +3245,13 @@ function HandleHardwareButton(method: NSPanel.EventMethod): void {
                 break;
             case 'set':
                 if (Debug) log('HandleHardwareButton -> Mode Set', 'info');
-                if (buttonConfig.entity) {
+                if (buttonConfig.setOn && existsState(buttonConfig.setOn.dp) && !buttonToggleState[method]) {
+                    setState(buttonConfig.setOn.dp, buttonConfig.setOn.val);
+                    buttonToggleState[method] = true;
+                } else if (buttonConfig.setOff && existsState(buttonConfig.setOff.dp) && buttonToggleState[method]) {
+                    setState(buttonConfig.setOff.dp, buttonConfig.setOff.val);
+                    buttonToggleState[method] = false;
+                } else if (buttonConfig.entity && existsState(buttonConfig.entity)) {
                     setState(buttonConfig.entity, buttonConfig.setValue);
                 }
                 screensaverEnabled = true;
@@ -10061,6 +10070,8 @@ namespace NSPanel {
         page: (PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null),
         entity: string | null,
         setValue: string | number | boolean | null
+        setOn?: {dp:string, val:iobJS.StateValue}
+        setOff?: {dp:string, val:iobJS.StateValue};
     }
 
     export type Config = {
