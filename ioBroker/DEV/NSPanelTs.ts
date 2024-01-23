@@ -6188,7 +6188,7 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
         let yAxisTicks : number[] = [];
 
         if (!page.items[0].yAxisTicks) {
-            const sorted = [...txt.matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
+            const sorted = [...String(txt).matchAll(timeValueRegEx)].map(x => Number(x[1])).sort((x, y) => x < y ? -1 : 1);
             if (sorted.length === 0) {
                 throw new Error (`Page item ${id} yAxisTicks is undefined and unable to be calculated!`)
             }
