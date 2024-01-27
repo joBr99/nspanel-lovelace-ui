@@ -3169,9 +3169,9 @@ function findPageItem(searching: String): PageItem {
 function GeneratePage(page: PageType): void {
     try {
         activePage = page;
-        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type);
-        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading);
-        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0] !== undefined ? activePage.items[0].id : '');
+        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type, null, true);
+        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading, null, true);
+        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0] !== undefined ? activePage.items[0].id : '', null, true);
         switch (page.type) {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(page));
@@ -6233,17 +6233,17 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     }
 }
 
-function setIfExists(id: string, value: any, type: string | null = null): boolean {
+function setIfExists(id: string, value: any, type: string | null = null, ack: boolean = false): boolean {
     try {
         if (type === null) {
             if (existsState(id)) {
-                setState(id, value);
+                setState(id, value, ack);
                 return true;
             }
         } else {
             const obj = getObject(id);
             if (existsState(id) && obj.common.type !== undefined && obj.common.type === type) {
-                setState(id, value);
+                setState(id, value, ack);
                 return true;
             }
         }
@@ -8499,9 +8499,9 @@ function UnsubscribeWatcher(): void {
 }
 
 function HandleScreensaver(): void {
-    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver');
-    setIfExists(NSPanel_Path + 'ActivePage.id0', 'screensaver');
-    setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver');
+    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver', null, true);
+    setIfExists(NSPanel_Path + 'ActivePage.id0', 'screensaver', null, true);
+    setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver', null, true);
     if (existsObject(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced')) {
         if (getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val) {
             SendToPanel({ payload: 'pageType~screensaver2' });
