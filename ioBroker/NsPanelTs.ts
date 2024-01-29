@@ -6515,7 +6515,7 @@ function HandleButtonEvent(words: any): void {
                         if (Debug) log('NaviToPage: ' + words[2]);
                         GeneratePage(indicatorScreensaverEntity.ScreensaverEntityNaviToPage);
                     } else {
-                        const value = ['event','buttonPress2','screensaver','bExit',2];
+                        const value = ['event','buttonPress2','screensaver','bExit','2'];
                         HandleButtonEvent(value);
                     }
                 }
