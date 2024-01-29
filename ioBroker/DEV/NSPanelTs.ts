@@ -103,9 +103,10 @@ ReleaseNotes:
         - 16.01.2024 - v4.3.3.38 Optimate: function SendTime()
         - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
         - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
-	    - 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
+        - 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
         - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
         - 23.01.2024 - v4.3.3.39 Add: Optional setOn & setOff for HW button with mode 'set'
+        - 28.01.2024 - v4.3.3.39 Fix: ack for read-only state
     
 
         Todo:
@@ -6321,7 +6322,7 @@ function HandleButtonEvent(words: any): void {
             alwaysOn = false;
             SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
         }
-	
+
         setOrCreate(NSPanel_Path + "Event.Button.Action", buttonAction ?? words[2], false, {name: 'Incoming button acion', type: 'string', role: 'text', write: false, read: true});
         setOrCreate(NSPanel_Path + "Event.Button.Value", words[4] != undefined ? words[4] : '', false, {name: 'Incoming button value', type: 'string', role: 'text', write: false, read: true});
         setOrCreate(NSPanel_Path + "Event.Button.Id", id, false, {name: 'Incoming button id', type: 'string', role: 'text', write: false, read: true});
