@@ -6556,6 +6556,7 @@ function HandleButtonEvent(words: any): void {
                         case 'rgbSingle':
                         case 'hue':
                             toggleState(id + '.ON_ACTUAL');
+                            break;
                         case 'media':
                             if (!activePage || activePage.type != 'cardMedia') {
                                 if (activePage) throw new Error(`Found channel role media for card: ${activePage.type} not allowed`)
