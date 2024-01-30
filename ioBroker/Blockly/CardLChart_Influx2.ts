@@ -12,8 +12,8 @@ const xAxisLabelEveryM = 240;
 // add all sensors which are to be displayed in this script, there is no need to use multiple scripts
 const sensors : Record<string, string> = {};
 /*         ↓ Id of the sensor                 ↓ Id of the data source for the charts */
-sensors['deconz.0.Sensors.65.temperature'] = Path + 'buero_temperature';
-sensors['deconz.0.Sensors.65.humidity'] = Path + 'buero_luftfeuchte';
+sensors['deconz.0.Sensors.65.temperature'] = Path + 'buero_temperature.ACTUAL';
+sensors['deconz.0.Sensors.65.humidity'] = Path + 'buero_luftfeuchte.ACTUAL';
 
 // create data source for NsPanel on script startup
 Object.keys(sensors).forEach(async x => {
