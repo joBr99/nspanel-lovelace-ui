@@ -1087,8 +1087,8 @@ async function CheckConfigParameters() {
                 let common = getObject(id).common;
                 if (common.name == 'javascript') {
                     javaScriptVersion = common.version;
-                    setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion);
-                    setIfExists(NSPanel_Path + 'IoBroker.ScriptName', (name as unknown as string).split('.').slice(2).join('.'));
+                    setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion, null, true);
+                    setIfExists(NSPanel_Path + 'IoBroker.ScriptName', (name as unknown as string).split('.').slice(2).join('.'), null, true);
                     let jsVersion = common.version.split('.');
                     let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
                     if (jsV<61) log('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version, 'error');
@@ -1099,7 +1099,7 @@ async function CheckConfigParameters() {
         const hostList = $('system.host.*.nodeCurrent');
         hostList.each(function(id, i) {
             nodeVersion = getState(id).val;
-            setIfExists(NSPanel_Path + 'IoBroker.NodeJSVersion',  'v' + nodeVersion);
+            setIfExists(NSPanel_Path + 'IoBroker.NodeJSVersion',  'v' + nodeVersion, null , true);
             let nodeJSVersion = (getState(id).val).split('.');
             if (parseInt(nodeJSVersion[0]) < 18) {
                 log('nodeJS must be at least v18.X.X. Currently: v' + getState(id).val + '! Please Update your System! --> iob nodejs-update 18', );
@@ -1146,7 +1146,7 @@ async function InitIoBrokerInfo() {
             setObject(AliasPath + 'IoBroker.ScriptName', {type: 'channel', common: {role: 'info', name:'Scriptname'}, native: {}});
             await createAliasAsync(AliasPath + 'IoBroker.ScriptName.ACTUAL', NSPanel_Path + 'IoBroker.ScriptName', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
         }
-        setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
+        setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion, null, true);
     } catch (err: any) {
         log('error at funktion InitIoBrokerInfo ' + err.message, 'warn');
     }
