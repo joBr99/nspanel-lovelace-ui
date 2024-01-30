@@ -1241,13 +1241,13 @@ async function Init_Release() {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
         } else {
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, true);
         }
 
         if (existsObject(NSPanel_Path + 'Config.Update.activ') == false) {
             await createStateAsync(NSPanel_Path + 'Config.Update.activ', 1, { type: 'number', write: false });
         } else {
-            await setStateAsync(NSPanel_Path + 'Config.Update.activ', 0);
+            await setStateAsync(NSPanel_Path + 'Config.Update.activ', 0, true);
         }
 
         let currentFW = 0;
@@ -1271,8 +1271,8 @@ async function Init_Release() {
             }
         } else {
             //Create TFT DP's
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex]);
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], true);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version, true);
         }
     } catch (err: any) { 
         log('error at function Init_Release: ' + err.message, 'warn'); 
