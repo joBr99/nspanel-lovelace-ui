@@ -7722,7 +7722,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                     if (existsState(id + '.TEMPERATURE')) {
                         colorTemp = 0;
                         if (getState(id + '.TEMPERATURE').val != null) {
-                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp!, 100, 0));
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
