@@ -1516,11 +1516,11 @@ InitActiveBrightness();
 
 on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val ?? -1;
         if (obj.state.val >= 0 || obj.state.val <= 100) {
-        log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
-        SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
-        InitDimmode();
+            log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
+            SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+            InitDimmode();
         }
     } catch (err:any) {
             log('error at trigger activeBrightness: ' + err.message, 'warn');
@@ -1529,7 +1529,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, asyn
 
 on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"}, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
         if (obj.state.val != null && obj.state.val != -1) {
             if (obj.state.val < -1 || obj.state.val > 100) {
                 log('activeDimmodeBrightness value only between -1 and 100', 'info');
@@ -1559,7 +1559,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"
 
 on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"}, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
         if (obj.state.val) {
             SendToPanel({ payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
         } else {
@@ -1910,8 +1910,8 @@ on({id: [NSPanel_Path + 'PageNavi'], change: "any"}, async function (obj) {
 //----------------------Begin Dimmode
 function ScreensaverDimmode(timeDimMode:NSPanel.DimMode) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
-        let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80
+        let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val ?? -1
         if (Debug) {
             log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark), 'info');
         }
@@ -2018,12 +2018,12 @@ async function InitDimmode() {
                 ScreensaverDimmode(timeDimMode);
             });
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
-                SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+                SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
             } else {
                 if (isDimTimeInRange(timeDimMode.timeDay,timeDimMode.timeNight)) {
-                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val?? 80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 } else {
-                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 }
                 ScreensaverDimmode(timeDimMode);
             }
@@ -9953,7 +9953,7 @@ namespace NSPanel {
 
     export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
 
-    export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
+    export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'ct' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
         | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
         | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
         | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
