@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.40 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.41 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -108,7 +108,9 @@ ReleaseNotes:
         - 23.01.2024 - v4.3.3.39 Add: Optional setOn & setOff for HW button with mode 'set'
         - 28.01.2024 - v4.3.3.39 Fix: ack for read-only state
         - 03.02.2024 - v4.3.3.40 Fix: RGB maxValueColorTemp
-        - 05.02.2024 - v4.3.3.40 Fix SqueezeboxRPC-Media-Player and add some Functions
+        - 05.02.2024 - v4.3.3.40 Fix: SqueezeboxRPC-Media-Player and add some Functions
+        - 06.02.2024 - v4.3.3.41 Fix: activeBrightness -> null
+        - 06.02.2024 - v4.3.3.41 Fix: bHome -> corrected PageId
 
 
         Todo:
@@ -976,7 +978,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.40';
+const scriptVersion: string = 'v4.3.3.41';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -6485,17 +6487,21 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage!);
                 }
                 break;
-            case 'bHome':
-                if (Debug) {
-                    log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId, 'info');
-                }
-                UnsubscribeWatcher();
-                if (activePage!.home != undefined) {
-                    GeneratePage(eval(activePage!.home));
-                } else {
-                    GeneratePage(config.pages[0]);
-                }
-                break;
+                case 'bHome':
+                    if (Debug) {
+                        log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId, 'info');
+                    }
+                    UnsubscribeWatcher();
+                    const home = activePage!.home;
+                    if (home !== undefined) {
+                        pageId = config.pages.findIndex(a => a == eval(home))
+                        pageId = pageId === -1 ? 0 : pageId;
+                        GeneratePage(eval(home));
+                    } else {
+                        pageId = 0;
+                        GeneratePage(config.pages[0]);
+                    }
+                    break;
             case 'notifyAction':
                 if (words[4] == 'yes') {
                     setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
