@@ -20,27 +20,32 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             dimmode = sleepBrightness
         elif isinstance(sleepBrightness, list):
             logging.error("list style config for sleepBrightness no longer supported")
-        elif sleepBrightness.startswith("ha:"):
-            time.sleep(1)
-            dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
-            involved_entities.extend(libs.home_assistant.get_template_listener_entities(sleepBrightness))
+        #elif sleepBrightness.startswith("ha:"):
+        #    time.sleep(1)
+        #    dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
+        #    involved_entities.extend(libs.home_assistant.get_template_listener_entities(sleepBrightness))
         elif libs.home_assistant.is_existent(sleepBrightness):
             involved_entities.append(sleepBrightness)
-            dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
+            try:
+                dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
+            except ValueError:
+                print("sleepBrightness entity invalid")
 
     if screenBrightness:
         if isinstance(screenBrightness, int):
             dimValueNormal = screenBrightness
         elif isinstance(screenBrightness, list):
             logging.error("list style config for screenBrightness no longer supported")
-        elif screenBrightness.startswith("ha:"):
-            time.sleep(1)
-            dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
-            involved_entities.extend(libs.home_assistant.get_template_listener_entities(screenBrightness))
+        #elif screenBrightness.startswith("ha:"):
+        #    time.sleep(1)
+        #    dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
+        #    involved_entities.extend(libs.home_assistant.get_template_listener_entities(screenBrightness))
         elif libs.home_assistant.is_existent(screenBrightness):
             involved_entities.append(screenBrightness)
-            dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
-
+            try:
+                dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
+            except ValueError:
+                print("screenBrightness entity invalid")
     # force sleep brightness to zero in case sleepTracking is active
     if sleepTracking:
         if libs.home_assistant.is_existent(sleepTracking):

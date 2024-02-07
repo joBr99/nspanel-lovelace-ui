@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.39 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.41 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -107,7 +107,11 @@ ReleaseNotes:
         - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
         - 23.01.2024 - v4.3.3.39 Add: Optional setOn & setOff for HW button with mode 'set'
         - 28.01.2024 - v4.3.3.39 Fix: ack for read-only state
-    
+        - 03.02.2024 - v4.3.3.40 Fix: RGB maxValueColorTemp
+        - 05.02.2024 - v4.3.3.40 Fix: SqueezeboxRPC-Media-Player and add some Functions
+        - 06.02.2024 - v4.3.3.41 Fix: activeBrightness -> null
+        - 06.02.2024 - v4.3.3.41 Fix: bHome -> corrected PageId
+
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -974,7 +978,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.39';
+const scriptVersion: string = 'v4.3.3.41';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1087,8 +1091,8 @@ async function CheckConfigParameters() {
                 let common = getObject(id).common;
                 if (common.name == 'javascript') {
                     javaScriptVersion = common.version;
-                    setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion);
-                    setIfExists(NSPanel_Path + 'IoBroker.ScriptName', (name as unknown as string).split('.').slice(2).join('.'));
+                    setIfExists(NSPanel_Path + 'IoBroker.JavaScriptVersion', 'v' + javaScriptVersion, null, true);
+                    setIfExists(NSPanel_Path + 'IoBroker.ScriptName', (name as unknown as string).split('.').slice(2).join('.'), null, true);
                     let jsVersion = common.version.split('.');
                     let jsV = 10*parseInt(jsVersion[0]) + parseInt(jsVersion[1]);
                     if (jsV<61) log('JS-Adapter: ' + common.name + ' must be at least v6.1.3. Currently: v' + common.version, 'error');
@@ -1099,7 +1103,7 @@ async function CheckConfigParameters() {
         const hostList = $('system.host.*.nodeCurrent');
         hostList.each(function(id, i) {
             nodeVersion = getState(id).val;
-            setIfExists(NSPanel_Path + 'IoBroker.NodeJSVersion',  'v' + nodeVersion);
+            setIfExists(NSPanel_Path + 'IoBroker.NodeJSVersion',  'v' + nodeVersion, null , true);
             let nodeJSVersion = (getState(id).val).split('.');
             if (parseInt(nodeJSVersion[0]) < 18) {
                 log('nodeJS must be at least v18.X.X. Currently: v' + getState(id).val + '! Please Update your System! --> iob nodejs-update 18', );
@@ -1146,7 +1150,7 @@ async function InitIoBrokerInfo() {
             setObject(AliasPath + 'IoBroker.ScriptName', {type: 'channel', common: {role: 'info', name:'Scriptname'}, native: {}});
             await createAliasAsync(AliasPath + 'IoBroker.ScriptName.ACTUAL', NSPanel_Path + 'IoBroker.ScriptName', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
         }
-        setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion);
+        setIfExists(NSPanel_Path + 'IoBroker.ScriptVersion', scriptVersion, null, true);
     } catch (err: any) {
         log('error at funktion InitIoBrokerInfo ' + err.message, 'warn');
     }
@@ -1241,13 +1245,13 @@ async function Init_Release() {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
         } else {
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, true);
         }
 
         if (existsObject(NSPanel_Path + 'Config.Update.activ') == false) {
             await createStateAsync(NSPanel_Path + 'Config.Update.activ', 1, { type: 'number', write: false });
         } else {
-            await setStateAsync(NSPanel_Path + 'Config.Update.activ', 0);
+            await setStateAsync(NSPanel_Path + 'Config.Update.activ', 0, true);
         }
 
         let currentFW = 0;
@@ -1271,8 +1275,8 @@ async function Init_Release() {
             }
         } else {
             //Create TFT DP's
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex]);
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], true);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version, true);
         }
     } catch (err: any) { 
         log('error at function Init_Release: ' + err.message, 'warn'); 
@@ -1514,11 +1518,11 @@ InitActiveBrightness();
 
 on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val ?? -1;
         if (obj.state.val >= 0 || obj.state.val <= 100) {
-        log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
-        SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
-        InitDimmode();
+            log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
+            SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+            InitDimmode();
         }
     } catch (err:any) {
             log('error at trigger activeBrightness: ' + err.message, 'warn');
@@ -1527,7 +1531,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, asyn
 
 on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"}, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
         if (obj.state.val != null && obj.state.val != -1) {
             if (obj.state.val < -1 || obj.state.val > 100) {
                 log('activeDimmodeBrightness value only between -1 and 100', 'info');
@@ -1557,7 +1561,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: "ne"
 
 on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: "ne"}, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
         if (obj.state.val) {
             SendToPanel({ payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
         } else {
@@ -1908,8 +1912,8 @@ on({id: [NSPanel_Path + 'PageNavi'], change: "any"}, async function (obj) {
 //----------------------Begin Dimmode
 function ScreensaverDimmode(timeDimMode:NSPanel.DimMode) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val
-        let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val
+        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80
+        let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val ?? -1
         if (Debug) {
             log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark), 'info');
         }
@@ -2016,12 +2020,12 @@ async function InitDimmode() {
                 ScreensaverDimmode(timeDimMode);
             });
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
-                SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+                SendToPanel({ payload: 'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
             } else {
                 if (isDimTimeInRange(timeDimMode.timeDay,timeDimMode.timeNight)) {
-                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val?? 80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 } else {
-                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
+                    SendToPanel({ payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
                 }
                 ScreensaverDimmode(timeDimMode);
             }
@@ -4754,12 +4758,12 @@ function unsubscribeMediaSubscriptions(): void {
 
 function subscribeMediaSubscriptions(id: string): void {
     on({id:   [id + '.STATE',
-              id + '.VOLUME',
-              id + '.ARTIST',
-              id + '.ALBUM',
-              id + '.TITLE',
-              id + '.REPEAT',
-              id + '.SHUFFLE'], change: "any"}, async function () {
+               id + '.VOLUME',
+               id + '.ARTIST',
+               id + '.ALBUM',
+               id + '.TITLE',
+               id + '.REPEAT',
+               id + '.SHUFFLE'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -4774,8 +4778,8 @@ function subscribeMediaSubscriptions(id: string): void {
 
 function subscribeMediaSubscriptionsSonosAdd(id: string): void {
     on({id:   [id + '.QUEUE',
-              id + '.DURATION',
-              id + '.ELAPSED'], change: "any"}, async function () {
+               id + '.DURATION',
+               id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -4790,7 +4794,7 @@ function subscribeMediaSubscriptionsSonosAdd(id: string): void {
 
 function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
     on({id: [id + '.DURATION',
-              id + '.ELAPSED'], change: "any"}, async function () {
+             id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -4805,7 +4809,21 @@ function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
 
 function subscribeMediaSubscriptionsBoseAdd(id: string): void {
     on({id: [id + '.DURATION',
-              id + '.ELAPSED'], change: "any"}, async function () {
+             id + '.ELAPSED'], change: "any"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage!);
+                setTimeout(async function () {
+                    GeneratePage(activePage!);
+                }, 50);
+            }
+        },50)
+    });
+} 
+
+function subscribeMediaSubscriptionsSqueezeboxAdd(id: string): void {
+    on({id: [id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -5010,13 +5028,14 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                             await createAliasAsync(id + '.STATE', dpPath + '.Power', true, <iobJS.StateCommon> {type: 'number', role: 'switch', name: 'STATE'});
                             await createAliasAsync(id + '.VOLUME', dpPath + '.Volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
                             await createAliasAsync(id + '.VOLUME_ACTUAL', dpPath + '.Volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'VOLUME_ACTUAL'});
-                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon> {type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE', alias: {id: dpPath + '.PlaylistShuffle', read: 'val !== 0 ? \'on\' : \'off\'', write: 'val === \'off\' ? 0 : 1'}});
+                            await createAliasAsync(id + '.SHUFFLE', dpPath + '.PlaylistShuffle', true, <iobJS.StateCommon> {type: 'string', role: 'media.mode.shuffle', name: 'SHUFFLE'});
                             await createAliasAsync(id + '.REPEAT', dpPath + '.PlaylistRepeat', true, <iobJS.StateCommon> {type: 'number', role: 'media.mode.repeat', name: 'REPEAT'});
+                            await createAliasAsync(id + '.DURATION', dpPath + '.Duration', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration', name: 'DURATION'});
+                            await createAliasAsync(id + '.ELAPSED', dpPath + '.Time', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed', name: 'ELAPSED'});
                         } catch (err: any) {
                             log('error at function createAutoMediaAlias Adapter Squeezebox: ' + err.message, 'warn');
                         }
                     }
-
                 }
                     break;
                 case "bosesoundtouch.0.":
@@ -5081,23 +5100,6 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         let vInstance = page.items[0].adapterPlayerInstance!;
         let v1Adapter = vInstance.split('.');
         let v2Adapter:NSPanel.PlayerType = v1Adapter[0] as NSPanel.PlayerType;
-        
-        // Some magic to change the ID of the alias, since speakers are not a property but separate objects
-        if(v2Adapter == 'squeezeboxrpc') {
-            if(id && getObject(id).type != 'channel') {
-                id = id + '.' + page.items[0].mediaDevice;
-                page.items[0].id = id;
-                page.heading = page.items[0].mediaDevice ?? '';
-            } else {
-                let idParts = id.split('.');
-                if(idParts[idParts.length-1] !== page.items[0].mediaDevice) {
-                    idParts[idParts.length-1] = page.items[0].mediaDevice ?? '';
-                    id = idParts.join('.');
-                    page.items[0].id = id;
-                    page.heading = page.items[0].mediaDevice ?? '';
-                }
-            }
-        }
 
         let vMediaDevice = (page.items[0].mediaDevice != undefined) ? page.items[0].mediaDevice : '';
 
@@ -5105,7 +5107,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             if (!vMediaDevice) throw new Error(`Error in cardMedia! mediaDevice is empty! Page: ${JSON.stringify(page)}`);
         }
         createAutoMediaAlias(id, vMediaDevice, page.items[0].adapterPlayerInstance!);
-    
+   
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardMedia' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
             out_msgs.push({ payload: 'pageType~cardMedia' });
@@ -5122,6 +5124,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                             subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);
                         } else if (v2Adapter == 'bosesoundtouch') {
                             subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
+                        } else if (v2Adapter == 'squeezeboxrpc') {
+                            subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
                         }
                     }
                 }
@@ -5135,6 +5139,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);    
             } else if (v2Adapter == 'bosesoundtouch') {
                 subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
+            } else if (v2Adapter == 'squeezeboxrpc') {
+                subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
             }
         } else if (page.type == 'cardMedia' && pageCounter == -1) {
             //Do Nothing
@@ -5197,7 +5203,33 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     title = title + ' (' + vElapsed + '|' + vDuration + ')';
                 }
             } 
+
             let author = getState(id + '.ARTIST').val;
+
+            if (v2Adapter == 'squeezeboxrpc' && author.length == 0) {
+                if(existsObject(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
+                    if(existsObject(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
+                        let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join(''))).val);
+                        let currentIndex: number = parseInt(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.PlaylistCurrentIndex'].join('')).val);
+                        author = lmstracklist[currentIndex].Artist + '|' + lmstracklist[currentIndex].Album;
+                        if (author.length > 37) {
+                            author = author.slice(0, 37) + '...';
+                        }
+                        let elapsedTime: number = parseInt(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Time'].join('')).val);
+                        let elapsedSeconds = elapsedTime%60 < 10 ? '0' : ''; 
+                        let vElapsed = Math.floor(elapsedTime/60) + ":" + elapsedSeconds +  elapsedTime%60; 
+
+                        let durationSeconds = parseInt(lmstracklist[currentIndex].Duration)%60 < 10 ? '0' : ''; 
+                        let vDuration = Math.floor(parseInt(lmstracklist[currentIndex].Duration)/60) + ":" + durationSeconds +  parseInt(lmstracklist[currentIndex].Duration)%60; 
+                        title = lmstracklist[currentIndex].title; 
+                        if (title.length > 25) {
+                            title = title.slice(0, 25) + '...';
+                        }
+                        title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                    }
+                }
+            }
+
             let shuffle = getState(id + '.SHUFFLE').val;
 
             //New Adapter/Player
@@ -5480,8 +5512,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
 
                 }, 2000);
                 globalTracklist = page.items[0].globalTracklist;
-            } else if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
-                let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, '.Players.', page.items[0].mediaDevice, '.Playlist'].join(''))).val);
+            } else if(v2Adapter == 'squeezeboxrpc' && existsObject(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join('')))) {
+                let lmstracklist = JSON.parse(getState(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join(''))).val);
                 globalTracklist = lmstracklist;
             } else if(v2Adapter == 'sonos' && existsObject(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.playlist_set'].join('')))) {
                 let lmstracklist = getState(([page.items[0].adapterPlayerInstance, 'root.', page.items[0].mediaDevice, '.queue'].join(''))).val;
@@ -5576,9 +5608,11 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     repeatIcon = Icons.GetIcon('repeat');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
+                /*
                 else {
                     repeatIcon = Icons.GetIcon('repeat-off');
                 }
+                */
             } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
                 if (getState(id + '.REPEAT').val == true) {
                     repeatIcon = Icons.GetIcon('repeat-variant');
@@ -5617,6 +5651,15 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                                     media_icon + '~' + 
                                     toolsIconCol + '~' + 
                                     findLocale('media','crossfade') + '~' +
+                                    'media5~'
+                }
+            } else if (v2Adapter == 'squeezeboxrpc') {
+                if (page.items[0].crossfade == undefined || page.items[0].crossfade == false) {
+                    toolsString =   'input_sel' + '~' + 
+                                    id + '?seek' + '~' + 
+                                    media_icon + '~' + 
+                                    toolsIconCol + '~' + 
+                                    findLocale('media','seek') + '~' +
                                     'media5~'
                 }
             } else {
@@ -6444,17 +6487,21 @@ function HandleButtonEvent(words: any): void {
                     GeneratePage(activePage!);
                 }
                 break;
-            case 'bHome':
-                if (Debug) {
-                    log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId, 'info');
-                }
-                UnsubscribeWatcher();
-                if (activePage!.home != undefined) {
-                    GeneratePage(eval(activePage!.home));
-                } else {
-                    GeneratePage(config.pages[0]);
-                }
-                break;
+                case 'bHome':
+                    if (Debug) {
+                        log('HandleButtonEvent -> bHome: ' + words[4] + ' - ' + pageId, 'info');
+                    }
+                    UnsubscribeWatcher();
+                    const home = activePage!.home;
+                    if (home !== undefined) {
+                        pageId = config.pages.findIndex(a => a == eval(home))
+                        pageId = pageId === -1 ? 0 : pageId;
+                        GeneratePage(eval(home));
+                    } else {
+                        pageId = 0;
+                        GeneratePage(config.pages[0]);
+                    }
+                    break;
             case 'notifyAction':
                 if (words[4] == 'yes') {
                     setState(popupNotifyInternalName, <iobJS.State>{ val: words[2], ack: true });
@@ -6813,8 +6860,8 @@ function HandleButtonEvent(words: any): void {
                 if (isPageMediaItem(pageItemTemp)) {
                     let adaInstanceSplit = pageItemTemp.adapterPlayerInstance!.split('.');
                     if (adaInstanceSplit[0] == 'squeezeboxrpc') {
-                        let adapterPlayerInstanceStateSeceltor: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'state'].join('.');
-                        if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');
+                        let adapterPlayerInstanceStateSeceltor: string = pageItemTemp.adapterPlayerInstance + 'Players.' + pageItemTemp.mediaDevice + '.state';
+                        if (Debug) log('HandleButtonEvent media-pause Squeezebox-> adapterPlayerInstanceStateSeceltor: ' + adapterPlayerInstanceStateSeceltor, 'info');                    
                         let stateVal = getState(adapterPlayerInstanceStateSeceltor).val;
                         if (stateVal == 0) {
                             setState(adapterPlayerInstanceStateSeceltor, 1);
@@ -6875,6 +6922,13 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(id + '.SHUFFLE', true);
                         } else {
                             setIfExists(id + '.SHUFFLE', false);
+                        }
+                    }
+                    if ((tempPage.adapterPlayerInstance).startsWith("squeezeboxrpc")) {
+                        if (getState(tempPage.adapterPlayerInstance + 'Players.' + tempPage.mediaDevice + '.PlaylistShuffle').val == 1) {
+                            setIfExists(tempPage.adapterPlayerInstance + 'Players.' + tempPage.mediaDevice + '.PlaylistShuffle', 0);
+                        } else {
+                            setIfExists(tempPage.adapterPlayerInstance + 'Players.' + tempPage.mediaDevice + '.PlaylistShuffle', 1);
                         }
                     }
                     if ((tempPage.adapterPlayerInstance).startsWith("bosesoundtouch")) {
@@ -6992,7 +7046,7 @@ function HandleButtonEvent(words: any): void {
                             });
                         break;
                     case 'squeezeboxrpc':
-                        setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'cmdPlayFavorite'].join('.'), words[4]);
+                        setState([adapterInstancePL, 'Players.', pageItemPL.mediaDevice, '.cmdPlayFavorite'].join(''), words[4]);
                         break;
                     case "bosesoundtouch":
                         if (Debug) log('bosesoundtouch - playlist ' + pageItemPL.adapterPlayerInstance + ' - ' + words[4]);
@@ -7048,7 +7102,7 @@ function HandleButtonEvent(words: any): void {
                         break;
                     case 'squeezeboxrpc':
                         //@ts-ignore Fehler kommt von findPageItem in vscode
-                        setState([pageItemPL.adapterPlayerInstance, 'Players', pageItemPL.mediaDevice, 'PlaylistCurrentIndex'].join('.'), words[4]);
+                        setState([adapterInstanceTL, 'Players.', pageItemTL.mediaDevice, '.PlaylistCurrentIndex'].join(''), words[4]);
                         break;
                     case "bosesoundtouch":
                         break;
@@ -7101,6 +7155,13 @@ function HandleButtonEvent(words: any): void {
                 let deviceAdapterSK: NSPanel.PlayerType = adapterSK[0] as NSPanel.PlayerType;
                 switch (deviceAdapterSK) {
                     case 'spotify-premium':
+                        break;
+                    case 'squeezeboxrpc':
+                        const vDuration: number = getState(adapterInstanceSK + 'Players.' + pageItemSeek.mediaDevice + '.Duration').val;
+                        const vSeekPercentage : number =  words[4] * 10;
+                        const setSeekSeconds: number = vSeekPercentage * vDuration / 100;
+                        if (Debug) log(adapterInstanceSK + 'Players.' + pageItemSeek.mediaDevice + '.cmdGoTime' + ': ' + setSeekSeconds + ' sec.');
+                        setState(adapterInstanceSK + 'Players.' + pageItemSeek.mediaDevice + '.cmdGoTime', String(setSeekSeconds.toFixed(0)));
                         break;
                     case 'sonos':
                         if (Debug) log('HandleButtonEvent mode-seek -> id: ' + id, 'info');
@@ -7160,7 +7221,7 @@ function HandleButtonEvent(words: any): void {
                 if (!isPageMediaItem(pageItemTemp)) break;
                 let adapterInstance = pageItemTemp.adapterPlayerInstance.split('.');
                 if (adapterInstance[0] == 'squeezeboxrpc') {
-                    let adapterPlayerInstancePowerSelector: string = [pageItemTemp.adapterPlayerInstance, 'Players', pageItemTemp.mediaDevice, 'Power'].join('.');
+                    let adapterPlayerInstancePowerSelector: string = [pageItemTemp.adapterPlayerInstance, 'Players.', pageItemTemp.mediaDevice, '.Power'].join('');
                     let stateVal = getState(adapterPlayerInstancePowerSelector).val;
                     if (stateVal === 0) {
                         setState(adapterPlayerInstancePowerSelector, 1);
@@ -7722,7 +7783,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                     if (existsState(id + '.TEMPERATURE')) {
                         colorTemp = 0;
                         if (getState(id + '.TEMPERATURE').val != null) {
-                            if (pageItem.minValueColorTemp !== undefined && pageItem.minValueColorTemp !== undefined) {
+                            if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                 colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp!, 100, 0));
                             } else {
                                 colorTemp = getState(id + '.TEMPERATURE').val;
@@ -8186,9 +8247,16 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                         const vTempAdapter = (pageItem.adapterPlayerInstance!).split('.');
                         const vAdapter: NSPanel.PlayerType = vTempAdapter[0] as NSPanel.PlayerType;
                         if (optional == 'seek') {
-                            const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
-                            actualState = Math.round(actualStateTemp / 10) * 10 + '%';
                             if (vAdapter == 'sonos') {
+                                const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.seek').val;
+                                actualState = Math.round(actualStateTemp / 10) * 10 + '%';
+                                optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
+                            }
+                            if (vAdapter == 'squeezeboxrpc') {
+                                const actualStateTime: number = parseInt(getState(pageItem.adapterPlayerInstance + 'Players.' + pageItem.mediaDevice + '.Time').val);
+                                const actualStateDuration: number = parseInt(getState(pageItem.adapterPlayerInstance + 'Players.' + pageItem.mediaDevice + '.Duration').val);
+                                const actualStateTemp: number = actualStateTime * 100 / actualStateDuration;
+                                actualState = Math.round(actualStateTemp / 10) * 10 + '%';
                                 optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
                             mode = 'seek';
@@ -9891,7 +9959,7 @@ namespace NSPanel {
 
     export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
 
-    export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'cd' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
+    export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'ct' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
         | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
         | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
         | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
