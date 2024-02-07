@@ -8839,9 +8839,10 @@ function HandleScreensaverUpdate(): void {
                                     iconColor + '~' +
                                     config.bottomScreensaverEntity[4].ScreensaverEntityText + '~' +
                                     val
-                }
+                } // Ende zusätzlichen Status Alternativ Layout
 
             } else {
+		    // USER definierte Bottom Entities
                 let checkpoint = true;
                 let i = 0;
                 for (i = 0; i < maxEntities - 1 && i < config.bottomScreensaverEntity.length; i++) {
@@ -8895,7 +8896,7 @@ function HandleScreensaverUpdate(): void {
                         }                
                     }
 
-                    const temp = config.bottomScreensaverEntity[4].ScreensaverEntityIconColor
+                    const temp = config.bottomScreensaverEntity[i].ScreensaverEntityIconColor
                     if (temp && typeof temp == 'string' && existsObject(temp)) {
                         iconColor = getState(temp).val;
                     }
