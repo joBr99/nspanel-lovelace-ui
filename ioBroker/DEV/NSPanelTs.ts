@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.41 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.42 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -111,6 +111,7 @@ ReleaseNotes:
         - 05.02.2024 - v4.3.3.40 Fix: SqueezeboxRPC-Media-Player and add some Functions
         - 06.02.2024 - v4.3.3.41 Fix: activeBrightness -> null
         - 06.02.2024 - v4.3.3.41 Fix: bHome -> corrected PageId
+	- 07.02.2024 - v4.3.3.42 Minor Fixes
 
 
         Todo:
@@ -978,7 +979,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.41';
+const scriptVersion: string = 'v4.3.3.42';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -5151,8 +5152,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (existsObject(id)) {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
-            if (title.length > 27) {
-                title = title.slice(0, 27) + '...';
+            if (title.length > 26) {
+                title = title.slice(0, 26) + '...';
             }
             if (existsObject(id + '.DURATION') && existsObject(id + '.ELAPSED')) {
                 if (v2Adapter == 'alexa2') {
@@ -5173,8 +5174,13 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                         if(parseInt(vDuration.slice(0,2)) < 9) {
                             vDuration = vDuration.slice(1);    
                         }
-                    } 
-                    title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                    }
+                    if (vDuration != '0:00') {
+                        title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                    } else {
+                        title = title + ' (' + vElapsed + ')';
+                    }
+
                 } else if (v2Adapter == 'sonos' && getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {
                     let vElapsed = getState(id + '.ELAPSED').val;
                     if (vElapsed.length == 5) {
@@ -5303,9 +5309,13 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Logitech Squeezebox RPC
             if (v2Adapter == 'squeezeboxrpc') {
                 media_icon = Icons.GetIcon('dlna');
-                let nameLength = name.length;
-                if (nameLength == 0) {
-                    name = page.items[0].mediaDevice;
+                //if (name.length == 0) {
+                //    name = page.items[0].mediaDevice;
+                //} 
+                if (name.length == 0) {
+                    name = page.heading;
+                } else if (name.length > 16) {
+                    name = name.slice(0,16) + '...'
                 }
             }
 
@@ -5323,6 +5333,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 }
                 if (nameLength == 0) {
                     name = 'Alexa Player';
+                } else {
+                    name = name.slice(0,16) + '...';
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                 if (author.length > 30) {
