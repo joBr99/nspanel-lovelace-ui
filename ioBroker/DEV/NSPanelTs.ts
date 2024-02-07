@@ -5304,8 +5304,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     name = 'Spotify-Premium';
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
-                if (author.length > 30) {
-                    author = getState(id + '.ARTIST').val;
+                if (author.length > 37) {
+                    author = author.slice(0,37) + '...';
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
                     author = findLocale('media','no_music_to_control');
@@ -5391,9 +5391,9 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
 
             //Volumio
             if (v2Adapter == 'volumio') {
-                if (name != undefined) { author = author + " [" + name + "]"; }
-                name = getState(vInstance + 'info.name').val;  /* page.heading; 
-                                                                  getState(id + '.TRACK').val; */
+                media_icon = Icons.GetIcon('clock-time-twelve-outline');
+                if (name != undefined) { author = author + " | " + name; }
+                name = page.heading;
             }
 
             let volume = getState(id + '.VOLUME').val;
@@ -5404,7 +5404,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             if (shuffle == 'off' || shuffle == false || shuffle == 0 || shuffle == 'false') {
                 shuffle_icon = Icons.GetIcon('shuffle-disabled'); //shuffle
             }
-            if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('refresh'); } //Volumio: refresh playlist
+            //if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('shuffle-disabled'); } //Volumio: refresh playlist
 
 
             //For all players
@@ -5447,6 +5447,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
             } else if (v2Adapter == 'bosesoundtouch') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'deviceInfo.name'].join(''))).val;
+            } else if (v2Adapter == 'volumio') {
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'info.name'].join(''))).val;
             }
             //-------------------------------------------------------------------------------------------------------------
             // All Alexa devices (the online / player and commands directory is available) are listed and linked below
@@ -5672,7 +5674,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
                 if (getState(id + '.REPEAT').val == true) {
                     repeatIcon = Icons.GetIcon('repeat-variant');
-                    repeatIconCol = rgb_dec565(colMediaIcon);
+                    repeatIconCol = rgb_dec565(HMIOn);
                 }
             }
 
@@ -5757,7 +5759,6 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         return [];
     }
 }
-
 
 async function createAutoAlarmAlias (id: string, nsPath: string){
     try {
