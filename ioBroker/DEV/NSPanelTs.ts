@@ -4824,7 +4824,23 @@ function subscribeMediaSubscriptionsBoseAdd(id: string): void {
 } 
 
 function subscribeMediaSubscriptionsSqueezeboxAdd(id: string): void {
-    on({id: [id + '.ELAPSED'], change: "any"}, async function () {
+    on({id: [id + '.DURATION',
+             id + '.ELAPSED'], change: "any"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage!);
+                setTimeout(async function () {
+                    GeneratePage(activePage!);
+                }, 50);
+            }
+        },50)
+    });
+} 
+
+function subscribeMediaSubscriptionsSpotifyAdd(id: string): void {
+    on({id: [id + '.DURATION',
+             id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -4961,6 +4977,13 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                         } catch (err: any) {
                             log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
                         }
+                    }
+                    //Add Spotify Datapoints > v4.3.3.42
+                    //Spotify-Premium has Role value and a known Bug in player.progress
+                    if (existsObject(id + '.DURATION') == false) {
+                        const dpPath: string = adapterPlayerInstance;
+                        await createAliasAsync(id + '.DURATION', dpPath + 'player.duration', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                        await createAliasAsync(id + '.ELAPSED', dpPath + 'player.progress', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
                     }
 
                 }
@@ -5127,6 +5150,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                             subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
                         } else if (v2Adapter == 'squeezeboxrpc') {
                             subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
+                        } else if (v2Adapter == 'spotify-premium') {
+                            subscribeMediaSubscriptionsSpotifyAdd(page.items[0].id);
                         }
                     }
                 }
@@ -5142,6 +5167,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
             } else if (v2Adapter == 'squeezeboxrpc') {
                 subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
+            } else if (v2Adapter == 'spotify-premium') {
+                subscribeMediaSubscriptionsSpotifyAdd(page.items[0].id);
             }
         } else if (page.type == 'cardMedia' && pageCounter == -1) {
             //Do Nothing
@@ -5180,7 +5207,9 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     } else {
                         title = title + ' (' + vElapsed + ')';
                     }
-
+                    if (title == ' (0:00)') {
+                        title = '';
+                    }
                 } else if (v2Adapter == 'sonos' && getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {
                     let vElapsed = getState(id + '.ELAPSED').val;
                     if (vElapsed.length == 5) {
@@ -5233,6 +5262,24 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                         }
                         title = title + ' (' + vElapsed + '|' + vDuration + ')';
                     }
+                }
+            }
+
+            // Settings >>Aktualisierungsintervall für Statusinformationen<< = 1 !
+            // If the refresh time is set to 1 second in the spotify-premium.X instance, 
+            // the elapsed refresh bug '00:00' is not visible 
+            if (v2Adapter == 'spotify-premium') {
+                let vElapsed: string = getState(id + '.ELAPSED').val;
+                if (vElapsed.substring(0,1) == '0') {
+                    vElapsed = vElapsed.slice(1)
+                }
+                let vDuration: string = getState(id + '.DURATION').val;
+                if (vDuration.substring(0,1) == '0') {
+                    vDuration = vDuration.slice(1)
+                }
+                title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                if (title == ' (0:00|0:00)') {
+                    title = '';
                 }
             }
 
@@ -5309,9 +5356,6 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Logitech Squeezebox RPC
             if (v2Adapter == 'squeezeboxrpc') {
                 media_icon = Icons.GetIcon('dlna');
-                //if (name.length == 0) {
-                //    name = page.items[0].mediaDevice;
-                //} 
                 if (name.length == 0) {
                     name = page.heading;
                 } else if (name.length > 16) {
@@ -5713,6 +5757,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         return [];
     }
 }
+
 
 async function createAutoAlarmAlias (id: string, nsPath: string){
     try {
