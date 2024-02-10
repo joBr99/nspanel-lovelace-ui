@@ -114,7 +114,7 @@ ReleaseNotes:
         - 07.02.2024 - v4.3.3.42 Minor Fixes
         - 09.02.2024 - v4.3.3.42 Change pageId with Alias in Communication with HMI
         - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
-        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes
+        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes / Add miValue/maxValue to Volume-Slider
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -4774,7 +4774,7 @@ function subscribeMediaSubscriptions(id: string): void {
                 GeneratePage(activePage!);
                 setTimeout(async function () {
                     GeneratePage(activePage!);
-                }, 3000);
+                }, 1500);
             }
         },50)
     });
@@ -5412,7 +5412,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 name = page.heading;
             }
 
-            let volume = getState(id + '.VOLUME').val;
+            let volume = scale(getState(id + '.VOLUME').val, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100, 100, 0);
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
@@ -5697,11 +5697,6 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     repeatIcon = Icons.GetIcon('repeat');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
-                /*
-                else {
-                    repeatIcon = Icons.GetIcon('repeat-off');
-                }
-                */
             } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
                 if (getState(id + '.REPEAT').val == true) {
                     repeatIcon = Icons.GetIcon('repeat-variant');
@@ -7048,12 +7043,13 @@ function HandleButtonEvent(words: any): void {
                 pageCounter = -1;
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
-                    setIfExists(id + '.VOLUME', parseInt(words[4]));
                     setTimeout(async function () {
+                        let vVolume = scale(parseInt(words[4]), 100, 0, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100);
+                        setIfExists(id + '.VOLUME', Math.floor(vVolume));
                         pageCounter = 1;
                         GeneratePage(activePage!);
-                    }, 3000);
-                }, 20);
+                    }, 10);
+                }, 50);
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
