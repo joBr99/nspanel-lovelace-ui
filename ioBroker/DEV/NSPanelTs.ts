@@ -112,9 +112,9 @@ ReleaseNotes:
         - 06.02.2024 - v4.3.3.41 Fix: activeBrightness -> null
         - 06.02.2024 - v4.3.3.41 Fix: bHome -> corrected PageId
         - 07.02.2024 - v4.3.3.42 Minor Fixes
-        - 09.02.2024 - v4.3.3.42 Change pageId with Alias in Communication with HMI (cardMedia)
-        - 09.02.2024 - v4.3.3.42 spotiffy Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
-
+        - 09.02.2024 - v4.3.3.42 Change pageId with Alias in Communication with HMI
+        - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
+        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -211,6 +211,7 @@ Upgrades in Konsole:
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.3.tft
 ---------------------------------------------------------------------------------------
 */
+
 
 /******************************* Begin CONFIG Parameter *******************************/
 
@@ -5304,12 +5305,16 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 media_icon = Icons.GetIcon('spotify');
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLength = name.length;
-                if (name.substring(0,9) == 'Playlist:') {
+                if (name.substring(0,17) == 'Playlist: This Is') {
+                    name = name.slice(18, 34) + '...';
+                } else if (name.substring(0,9) == 'Playlist:') {
                     name = name.slice(10, 26) + '...';
                 } else if (name.substring(0,6) == 'Album:') {
                     name = name.slice(7, 23) + '...';
-                } else if (name.substring(0,6) == 'Track') {
-                    name = 'Spotify-Premium';
+                } else if (name.substring(0,6) == 'Track:') {
+                    name = name.slice(7, 23) + '...';
+                } else if (name.substring(0,7) == 'Artist:') {
+                    name = name.slice(8, 24) + '...';
                 }
                 if (nameLength == 0) {
                     name = 'Spotify-Premium';
@@ -5614,7 +5619,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     let tempTrackList = JSON.parse(getState(page.items[0].adapterPlayerInstance + 'player.playlist.trackListArray').val);
                     globalTracklist = tempTrackList;
                 } catch {
-                   log('Hello Mr. Developer something went wrong in tracklist!', 'warn')
+                   log('Hello Mr. Developer something went wrong in tracklist!', 'debug')
                 }
             }
             
