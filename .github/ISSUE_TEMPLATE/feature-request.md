@@ -24,5 +24,5 @@ _A clear and concise description of what the feature should do._
 ### ADDITIONAL CONTEXT
 _Add any other context about the problem here._
 
-### PANEL / FIRMWARE VERION
+### PANEL / FIRMWARE VERSION
 _Please add the Panel/Firmware Version you are using (EU, US-L or US-P)_
