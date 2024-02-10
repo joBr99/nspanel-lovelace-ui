@@ -114,7 +114,7 @@ ReleaseNotes:
         - 07.02.2024 - v4.3.3.42 Minor Fixes
         - 09.02.2024 - v4.3.3.42 Change pageId with Alias in Communication with HMI
         - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
-        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes / Add miValue/maxValue to Volume-Slider
+        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes; Add miValue / maxValue to Volume-Slider
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
