@@ -116,6 +116,7 @@ ReleaseNotes:
         - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
         - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes; Add miValue / maxValue to Volume-Slider
         - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
+	- 11.02.2024 - v4.3.3.43 Fix VolumeSlider
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -4767,97 +4768,25 @@ function unsubscribeMediaSubscriptions(): void {
 
 function subscribeMediaSubscriptions(id: string): void {
     on({id:   [id + '.STATE',
-               id + '.VOLUME',
                id + '.ARTIST',
-               id + '.ALBUM',
                id + '.TITLE',
+               id + '.ALBUM',
+               id + '.VOLUME',
                id + '.REPEAT',
-               id + '.SHUFFLE'], change: "any"}, async function () {
-        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
-        timeoutMedia = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    GeneratePage(activePage!);
-                }, 1500);
-            }
-        },50)
+               id + '.SHUFFLE',
+               id + '.DURATION',
+               id + '.ELAPSED'], change: "any", ack: true}, async function () {
+        if (useMediaEvents && pageCounter == 1) {
+            GeneratePage(activePage!);
+        }
     });
 } 
 
 function subscribeMediaSubscriptionsSonosAdd(id: string): void {
-    on({id:   [id + '.QUEUE',
-               id + '.DURATION',
-               id + '.ELAPSED'], change: "any"}, async function () {
-        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
-        timeoutMedia = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    GeneratePage(activePage!);
-                }, 50);
-            }
-        },50)
-    });
-} 
-
-function subscribeMediaSubscriptionsAlexaAdd(id: string): void {
-    on({id: [id + '.DURATION',
-             id + '.ELAPSED'], change: "any"}, async function () {
-        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
-        timeoutMedia = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    GeneratePage(activePage!);
-                }, 50);
-            }
-        },50)
-    });
-} 
-
-function subscribeMediaSubscriptionsBoseAdd(id: string): void {
-    on({id: [id + '.DURATION',
-             id + '.ELAPSED'], change: "any"}, async function () {
-        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
-        timeoutMedia = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    GeneratePage(activePage!);
-                }, 50);
-            }
-        },50)
-    });
-} 
-
-function subscribeMediaSubscriptionsSqueezeboxAdd(id: string): void {
-    on({id: [id + '.DURATION',
-             id + '.ELAPSED'], change: "any"}, async function () {
-        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
-        timeoutMedia = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    GeneratePage(activePage!);
-                }, 50);
-            }
-        },50)
-    });
-} 
-
-function subscribeMediaSubscriptionsSpotifyAdd(id: string): void {
-    on({id: [id + '.DURATION',
-             id + '.ELAPSED'], change: "any"}, async function () {
-        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
-        timeoutMedia = setTimeout(async function () {
-            if (useMediaEvents) {
-                GeneratePage(activePage!);
-                setTimeout(async function () {
-                    GeneratePage(activePage!);
-                }, 50);
-            }
-        },50)
+    on({id:   [id + '.QUEUE'], change: "any", ack: true}, async function () {
+        if (useMediaEvents && pageCounter == 1) {
+            GeneratePage(activePage!);
+        }
     });
 } 
 
@@ -5158,14 +5087,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                         subscribeMediaSubscriptions(page.items[0].id);
                         if (v2Adapter == 'sonos') {
                             subscribeMediaSubscriptionsSonosAdd(page.items[0].id);
-                        } else if (v2Adapter == 'alexa2') {
-                            subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);
-                        } else if (v2Adapter == 'bosesoundtouch') {
-                            subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
-                        } else if (v2Adapter == 'squeezeboxrpc') {
-                            subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
                         } else if (v2Adapter == 'spotify-premium') {
-                            subscribeMediaSubscriptionsSpotifyAdd(page.items[0].id);
                             setState(vInstance + 'getDevices', true);
                             setState(vInstance + 'getPlaybackInfo', true);
                             setState(vInstance + 'getPlaylists', true);
@@ -5177,15 +5099,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             alwaysOn = true;
             subscribeMediaSubscriptions(page.items[0].id);
             if (v2Adapter == 'sonos') {
-                subscribeMediaSubscriptionsSonosAdd(page.items[0].id);
-            } else if (v2Adapter == 'alexa2') {
-                subscribeMediaSubscriptionsAlexaAdd(page.items[0].id);    
-            } else if (v2Adapter == 'bosesoundtouch') {
-                subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
-            } else if (v2Adapter == 'squeezeboxrpc') {
-                subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
-            } else if (v2Adapter == 'spotify-premium') {
-                subscribeMediaSubscriptionsSpotifyAdd(page.items[0].id);
+                subscribeMediaSubscriptionsSonosAdd(page.items[0].id); 
             }
         } else if (page.type == 'cardMedia' && pageCounter == -1) {
             //Do Nothing
@@ -5793,8 +5707,6 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (Debug) {
             log('GenerateMediaPage payload: ' + JSON.stringify(out_msgs), 'info');
         }
-        if (Debug) log(JSON.stringify(out_msgs).length);
-        if (Debug) log('GenerateMediaPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs
     } catch (err: any) {
         log('error at function GenerateMediaPage: ' + err.message, 'warn');
@@ -6722,8 +6634,8 @@ function HandleButtonEvent(words: any): void {
                                     
                                     switch (deviceAdapterRP) {
                                         case 'spotify-premium':
-                                            log(getState(id + '.REPEAT').val)
-                                            let stateSpotifyRepeat = getState(id + '.REPEAT').val
+                                            if (Debug) log(getState(id + '.REPEAT').val);
+                                            let stateSpotifyRepeat = getState(id + '.REPEAT').val;
                                             if (stateSpotifyRepeat == 'off') {
                                                 setIfExists(id + '.REPEAT', 'context');
                                             } else if (stateSpotifyRepeat == 'context') {
@@ -6735,7 +6647,7 @@ function HandleButtonEvent(words: any): void {
                                             break;
                                         case 'bosesoundtouch':
                                             if (Debug) log(adapterInstanceRepeat);
-                                            let stateBoseRepeat = getState(id + '.REPEAT').val
+                                            let stateBoseRepeat = getState(id + '.REPEAT').val;
                                             if (stateBoseRepeat == 'REPEAT_OFF') {
                                                 setIfExists(adapterInstanceRepeat + 'key', 'REPEAT_ALL');
                                             } else if (stateBoseRepeat == 'REPEAT_ALL') {
@@ -6746,7 +6658,7 @@ function HandleButtonEvent(words: any): void {
                                             GeneratePage(activePage!);
                                             break;
                                         case 'sonos':
-                                            let stateSonosRepeat = getState(id + '.REPEAT').val
+                                            let stateSonosRepeat = getState(id + '.REPEAT').val;
                                             if (stateSonosRepeat == 0) {
                                                 setIfExists(id + '.REPEAT', 1);
                                             } else if (stateSonosRepeat == 1) {
@@ -7045,16 +6957,11 @@ function HandleButtonEvent(words: any): void {
                 break;
             }
             case 'volumeSlider':
-                pageCounter = -1;
-                (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
-                timeoutSlider = setTimeout(async function () {
-                    setTimeout(async function () {
-                        let vVolume = scale(parseInt(words[4]), 100, 0, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100);
-                        setIfExists(id + '.VOLUME', Math.floor(vVolume));
-                        pageCounter = 1;
-                        GeneratePage(activePage!);
-                    }, 10);
-                }, 50);
+                subscribeMediaSubscriptions(id);
+                useMediaEvents = true;
+                pageCounter = 1; 
+                let vVolume = scale(parseInt(words[4]), 100, 0, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100);
+                setIfExists(id + '.VOLUME', Math.floor(vVolume));      
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
@@ -8966,7 +8873,7 @@ function HandleScreensaverUpdate(): void {
                         val = parseFloat(val);
                     }
                     let iconColor = rgb_dec565(White);
-        		    let icon;
+		    let icon;
                     if (config.bottomScreensaverEntity[i].ScreensaverEntityIconOn && existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn!)) {
                         let iconName = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
