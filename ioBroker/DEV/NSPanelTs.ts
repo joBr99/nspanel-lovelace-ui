@@ -10070,7 +10070,7 @@ namespace NSPanel {
     export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' 
 
     export type roles = 'light' |'socket'|'dimmer'| 'hue' | 'rgb' | 'rgbSingle' | 'ct' | 'blind' | 'door' | 'window' | 'volumeGroup' | 'volume' 
-        | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning' | 'ct' 
+        | 'info' | 'humidity' | 'temperature' | 'value.temperature' | 'value.humidity' | 'sensor.door' | 'sensor.window' | 'thermostat' | 'warning'
         | 'cie' | 'gate' | 'motion' | 'buttonSensor' | 'button' | 'value.time' | 'level.timer' | 'value.alarmtime' | 'level.mode.fan' | 'lock' | 'slider'  
         | 'switch.mode.wlan' | 'media' | 'timeTable' | 'airCondition'
 
