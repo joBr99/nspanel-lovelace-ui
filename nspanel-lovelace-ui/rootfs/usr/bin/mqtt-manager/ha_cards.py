@@ -209,11 +209,11 @@ class HAEntity(panel_cards.Entity):
                     forecast = libs.home_assistant.execute_script(
                         entity_name=self.entity_id,
                         domain='weather',
-                        service="get_forecast",
+                        service="get_forecasts",
                         service_data={
                             'type': forecast_type
                         }
-                    ).get("forecast", [])
+                    ).get(self.entity_id,{}).get("forecast", [])
                     if len(forecast) > pos:
                         forcast_pos = forecast[pos]
                         forcast_condition = forcast_pos.get("condition", "")
