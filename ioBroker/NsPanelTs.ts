@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.41 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.43 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -111,7 +111,11 @@ ReleaseNotes:
         - 05.02.2024 - v4.3.3.40 Fix: SqueezeboxRPC-Media-Player and add some Functions
         - 06.02.2024 - v4.3.3.41 Fix: activeBrightness -> null
         - 06.02.2024 - v4.3.3.41 Fix: bHome -> corrected PageId
-
+        - 07.02.2024 - v4.3.3.42 Minor Fixes
+        - 09.02.2024 - v4.3.3.42 Change pageId with Alias in Communication with HMI
+        - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
+        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes; Add miValue / maxValue to Volume-Slider
+        - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -133,7 +137,8 @@ Mögliche Seiten-Ansichten:
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
-    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente - auch als Subpage    
+    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente bzw. beim US-Modell im Portrait-Modus
+                          9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage    
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
@@ -208,6 +213,7 @@ Upgrades in Konsole:
     TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.3.tft
 ---------------------------------------------------------------------------------------
 */
+
 
 /******************************* Begin CONFIG Parameter *******************************/
 
@@ -978,7 +984,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.41';
+const scriptVersion: string = 'v4.3.3.43';
 const tft_version: string = 'v4.3.3';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -3379,7 +3385,11 @@ function GeneratePageElements(page: PageType): string {
                 maxItems = 6;
                 break;
             case 'cardGrid2':
-                maxItems = 8;
+                if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
+                    maxItems = 9;
+                } else {
+                    maxItems = 8;
+                };
                 break;
         }
 
@@ -4770,7 +4780,7 @@ function subscribeMediaSubscriptions(id: string): void {
                 GeneratePage(activePage!);
                 setTimeout(async function () {
                     GeneratePage(activePage!);
-                }, 3000);
+                }, 1500);
             }
         },50)
     });
@@ -4823,7 +4833,23 @@ function subscribeMediaSubscriptionsBoseAdd(id: string): void {
 } 
 
 function subscribeMediaSubscriptionsSqueezeboxAdd(id: string): void {
-    on({id: [id + '.ELAPSED'], change: "any"}, async function () {
+    on({id: [id + '.DURATION',
+             id + '.ELAPSED'], change: "any"}, async function () {
+        (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
+        timeoutMedia = setTimeout(async function () {
+            if (useMediaEvents) {
+                GeneratePage(activePage!);
+                setTimeout(async function () {
+                    GeneratePage(activePage!);
+                }, 50);
+            }
+        },50)
+    });
+} 
+
+function subscribeMediaSubscriptionsSpotifyAdd(id: string): void {
+    on({id: [id + '.DURATION',
+             id + '.ELAPSED'], change: "any"}, async function () {
         (function () { if (timeoutMedia) { clearTimeout(timeoutMedia); timeoutMedia = null; } })();
         timeoutMedia = setTimeout(async function () {
             if (useMediaEvents) {
@@ -4961,6 +4987,13 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                             log('error at function createAutoMediaAlias Adapter spotify-premium: ' + err.message, 'warn');
                         }
                     }
+                    //Add Spotify Datapoints > v4.3.3.42
+                    //Spotify-Premium has Role value and a known Bug in player.progress
+                    if (existsObject(id + '.DURATION') == false) {
+                        const dpPath: string = adapterPlayerInstance;
+                        await createAliasAsync(id + '.DURATION', dpPath + 'player.duration', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                        await createAliasAsync(id + '.ELAPSED', dpPath + 'player.progress', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
+                    }
 
                 }
                     break;
@@ -4998,7 +5031,12 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                             log('error function createAutoMediaAlias Adapter volumio: ' + err.message, 'warn');
                         }
                     }
-
+                    //Add Volumio Datapoints > v4.3.3.42
+                    if (existsObject(id + '.DURATION') == false) {
+                        const dpPath: string = adapterPlayerInstance;
+                        await createAliasAsync(id + '.DURATION', dpPath + 'playbackInfo.duration', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration', name: 'DURATION'});
+                        //await createAliasAsync(id + '.ELAPSED', dpPath + 'player.progress', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
+                    }
                 }
                     break;
                 case "squeezeboxrpc.0.":
@@ -5094,6 +5132,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (!page.items[0].id) throw new Error ('Missing page id for cardMedia!');
 
         let id = page.items[0].id;
+        let tid = 0;
         let out_msgs: NSPanel.Payload[] = [];
         
         if (!page.items[0].adapterPlayerInstance!) throw new Error('page.items[0].adapterPlayerInstance is undefined!')
@@ -5126,6 +5165,11 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                             subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
                         } else if (v2Adapter == 'squeezeboxrpc') {
                             subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
+                        } else if (v2Adapter == 'spotify-premium') {
+                            subscribeMediaSubscriptionsSpotifyAdd(page.items[0].id);
+                            setState(vInstance + 'getDevices', true);
+                            setState(vInstance + 'getPlaybackInfo', true);
+                            setState(vInstance + 'getPlaylists', true);
                         }
                     }
                 }
@@ -5141,6 +5185,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 subscribeMediaSubscriptionsBoseAdd(page.items[0].id);
             } else if (v2Adapter == 'squeezeboxrpc') {
                 subscribeMediaSubscriptionsSqueezeboxAdd(page.items[0].id);
+            } else if (v2Adapter == 'spotify-premium') {
+                subscribeMediaSubscriptionsSpotifyAdd(page.items[0].id);
             }
         } else if (page.type == 'cardMedia' && pageCounter == -1) {
             //Do Nothing
@@ -5151,8 +5197,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (existsObject(id)) {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
-            if (title.length > 27) {
-                title = title.slice(0, 27) + '...';
+            if (title.length > 26) {
+                title = title.slice(0, 26) + '...';
             }
             if (existsObject(id + '.DURATION') && existsObject(id + '.ELAPSED')) {
                 if (v2Adapter == 'alexa2') {
@@ -5173,8 +5219,15 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                         if(parseInt(vDuration.slice(0,2)) < 9) {
                             vDuration = vDuration.slice(1);    
                         }
-                    } 
-                    title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                    }
+                    if (vDuration != '0:00') {
+                        title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                    } else {
+                        title = title + ' (' + vElapsed + ')';
+                    }
+                    if (title == ' (0:00)') {
+                        title = '';
+                    }
                 } else if (v2Adapter == 'sonos' && getState(page.items[0].adapterPlayerInstance + 'root.' + page.items[0].mediaDevice + '.current_type').val == 0) {
                     let vElapsed = getState(id + '.ELAPSED').val;
                     if (vElapsed.length == 5) {
@@ -5230,6 +5283,24 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 }
             }
 
+            // Settings >>Aktualisierungsintervall für Statusinformationen<< = 1 !
+            // If the refresh time is set to 1 second in the spotify-premium.X instance, 
+            // the elapsed refresh bug '00:00' is not visible 
+            if (v2Adapter == 'spotify-premium') {
+                let vElapsed: string = getState(id + '.ELAPSED').val;
+                if (vElapsed.substring(0,1) == '0') {
+                    vElapsed = vElapsed.slice(1)
+                }
+                let vDuration: string = getState(id + '.DURATION').val;
+                if (vDuration.substring(0,1) == '0') {
+                    vDuration = vDuration.slice(1)
+                }
+                title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                if (title == ' (0:00|0:00)') {
+                    title = '';
+                }
+            }
+
             let shuffle = getState(id + '.SHUFFLE').val;
 
             //New Adapter/Player
@@ -5240,19 +5311,23 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 media_icon = Icons.GetIcon('spotify');
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLength = name.length;
-                if (name.substring(0,9) == 'Playlist:') {
+                if (name.substring(0,17) == 'Playlist: This Is') {
+                    name = name.slice(18, 34) + '...';
+                } else if (name.substring(0,9) == 'Playlist:') {
                     name = name.slice(10, 26) + '...';
                 } else if (name.substring(0,6) == 'Album:') {
                     name = name.slice(7, 23) + '...';
-                } else if (name.substring(0,6) == 'Track') {
-                    name = 'Spotify-Premium';
+                } else if (name.substring(0,6) == 'Track:') {
+                    name = name.slice(7, 23) + '...';
+                } else if (name.substring(0,7) == 'Artist:') {
+                    name = name.slice(8, 24) + '...';
                 }
                 if (nameLength == 0) {
                     name = 'Spotify-Premium';
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
-                if (author.length > 30) {
-                    author = getState(id + '.ARTIST').val;
+                if (author.length > 37) {
+                    author = author.slice(0,37) + '...';
                 }
                 if ((getState(id + '.ARTIST').val).length == 0) {
                     author = findLocale('media','no_music_to_control');
@@ -5303,9 +5378,10 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Logitech Squeezebox RPC
             if (v2Adapter == 'squeezeboxrpc') {
                 media_icon = Icons.GetIcon('dlna');
-                let nameLength = name.length;
-                if (nameLength == 0) {
-                    name = page.items[0].mediaDevice;
+                if (name.length == 0) {
+                    name = page.heading;
+                } else if (name.length > 16) {
+                    name = name.slice(0,16) + '...'
                 }
             }
 
@@ -5323,6 +5399,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 }
                 if (nameLength == 0) {
                     name = 'Alexa Player';
+                } else {
+                    name = name.slice(0,16) + '...';
                 }
                 author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                 if (author.length > 30) {
@@ -5335,12 +5413,12 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
 
             //Volumio
             if (v2Adapter == 'volumio') {
-                if (name != undefined) { author = author + " [" + name + "]"; }
-                name = getState(vInstance + 'info.name').val;  /* page.heading; 
-                                                                  getState(id + '.TRACK').val; */
+                media_icon = Icons.GetIcon('clock-time-twelve-outline');
+                if (name != undefined) { author = author + " | " + name; }
+                name = page.heading;
             }
 
-            let volume = getState(id + '.VOLUME').val;
+            let volume = scale(getState(id + '.VOLUME').val, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100, 100, 0);
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
@@ -5348,7 +5426,9 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             if (shuffle == 'off' || shuffle == false || shuffle == 0 || shuffle == 'false') {
                 shuffle_icon = Icons.GetIcon('shuffle-disabled'); //shuffle
             }
-            if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('refresh'); } //Volumio: refresh playlist
+
+            // Todo: Refresh automatisieren und dafür wieder Shuffle nutzen
+            //if (v2Adapter == 'volumio') { shuffle_icon = Icons.GetIcon('shuffle-disabled'); } //Volumio: refresh playlist
 
 
             //For all players
@@ -5379,7 +5459,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 }
             }
 
-            let currentSpeaker = findLocale('media','no_speaker_found');
+            let currentSpeaker: string = findLocale('media','no_speaker_found');
 
             if (v2Adapter == 'alexa2') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Echo-Devices.', page.items[0].mediaDevice, '.Info.name'].join(''))).val;
@@ -5391,6 +5471,8 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playername'].join(''))).val;
             } else if (v2Adapter == 'bosesoundtouch') {
                 currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'deviceInfo.name'].join(''))).val;
+            } else if (v2Adapter == 'volumio') {
+                currentSpeaker = getState(([page.items[0].adapterPlayerInstance, 'info.name'].join(''))).val;
             }
             //-------------------------------------------------------------------------------------------------------------
             // All Alexa devices (the online / player and commands directory is available) are listed and linked below
@@ -5407,6 +5489,11 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     speakerListArray.push(getState(playerId).val);
                     page.items[0].speakerList = speakerListArray;
                 });
+            } else if (v2Adapter == 'spotify-premium') {
+                // All possible Devices if page.items[0].speakerList empty
+                if (Debug) log(getState(page.items[0].adapterPlayerInstance + 'devices.availableDeviceListString').val);
+                speakerListArray = (getState(page.items[0].adapterPlayerInstance + 'devices.availableDeviceListString').val).split(';');
+                page.items[0].speakerList = speakerListArray;
             } else {
                 let i_list = Array.prototype.slice.apply($('[state.id="' + page.items[0].adapterPlayerInstance + 'Echo-Devices.*.Info.name"]'));
                 for (let i_index in i_list) {
@@ -5432,7 +5519,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             if (speakerListArray.length > 0) {
                 speakerListIconCol = rgb_dec565(HMIOn);
                 speakerListString = 'input_sel' + '~' + 
-                                    id + '?speakerlist' + '~' + 
+                                    tid + '?speakerlist' + '~' + 
                                     Icons.GetIcon('speaker') + '~' + 
                                     speakerListIconCol + '~' + 
                                     findLocale('media','speaker') + '~' + 
@@ -5466,10 +5553,13 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                         });
 
                     }
+                    /* Spotify: get all playlists if empty */
+                } else if (v2Adapter == 'spotify-premium') {
+                    page.items[0].playList = (getState(page.items[0].adapterPlayerInstance + 'playlists.playlistListString').val).split(';');
                 }
                 playListIconCol = rgb_dec565(HMIOn);
                 playListString =    'input_sel' + '~' + 
-                                    id + '?playlist' + '~' + 
+                                    tid + '?playlist' + '~' + 
                                     Icons.GetIcon('playlist-play') + '~' + 
                                     playListIconCol + '~' + 
                                     //'PlayL ' + page.heading + '~' + 
@@ -5479,9 +5569,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
 
             //InSel Tracklist
             globalTracklist = ''
-            if (v2Adapter == 'spotify-premium') {
-                globalTracklist = ' ' //Todo
-            }
+
             let trackListString: string = '~~~~~~'
             let trackListIconCol = rgb_dec565(HMIOff);
             if (v2Adapter == 'volumio') { /* Volumio: get queue */
@@ -5532,12 +5620,19 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 trackList = trackList + ']';
                 if (Debug) log(trackList, 'info');
                 globalTracklist = trackList;
+            } else if (v2Adapter == 'spotify-premium') {
+                try {
+                    let tempTrackList = JSON.parse(getState(page.items[0].adapterPlayerInstance + 'player.playlist.trackListArray').val);
+                    globalTracklist = tempTrackList;
+                } catch {
+                   log('Hello Mr. Developer something went wrong in tracklist!', 'debug')
+                }
             }
             
             if (globalTracklist != null && globalTracklist.length != 0) {
                 trackListIconCol = rgb_dec565(HMIOn);
                 trackListString =   'input_sel' + '~' + 
-                                    id + '?tracklist' + '~' + 
+                                    tid + '?tracklist' + '~' + 
                                     Icons.GetIcon('animation-play-outline') + '~' + 
                                     trackListIconCol + '~' + 
                                     findLocale('media','tracklist') + '~' +
@@ -5550,7 +5645,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             if (page.items[0].equalizerList != undefined) {
                 equalizerListIconCol = rgb_dec565(HMIOn);
                 equalizerListString =   'input_sel' + '~' + 
-                                        id + '?equalizer' + '~' + 
+                                        tid + '?equalizer' + '~' + 
                                         Icons.GetIcon('equalizer-outline') + '~' + 
                                         equalizerListIconCol + '~' + 
                                         findLocale('media','equalizer') + '~' +
@@ -5559,7 +5654,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 let equalizerListIconCol = rgb_dec565(HMIOn);
                 //equalizerListString is used for favariteList
                 equalizerListString =   'input_sel' + '~' + 
-                                        id + '?favorites' + '~' + 
+                                        tid + '?favorites' + '~' + 
                                         Icons.GetIcon('playlist-star') + '~' + 
                                         equalizerListIconCol + '~' + 
                                         findLocale('media','favorites') + '~' +
@@ -5608,15 +5703,10 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     repeatIcon = Icons.GetIcon('repeat');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
-                /*
-                else {
-                    repeatIcon = Icons.GetIcon('repeat-off');
-                }
-                */
             } else if (v2Adapter == 'volumio') { /* Volumio: only Repeat true/false with API */
                 if (getState(id + '.REPEAT').val == true) {
                     repeatIcon = Icons.GetIcon('repeat-variant');
-                    repeatIconCol = rgb_dec565(colMediaIcon);
+                    repeatIconCol = rgb_dec565(HMIOn);
                 }
             }
 
@@ -5627,7 +5717,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 v2Adapter == 'volumio'         || 
                 v2Adapter == 'squeezeboxrpc') {
                 repeatButtonString =    'button' + '~' + 
-                                        id + '?repeat' + '~' + 
+                                        tid + '?repeat' + '~' + 
                                         repeatIcon + '~' + 
                                         repeatIconCol + '~' + 
                                         'Repeat' + '~' + 
@@ -5640,14 +5730,14 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             if (v2Adapter == 'sonos') {
                 if (page.items[0].crossfade == undefined || page.items[0].crossfade == false) {
                     toolsString =   'input_sel' + '~' + 
-                                    id + '?seek' + '~' + 
+                                    tid + '?seek' + '~' + 
                                     media_icon + '~' + 
                                     toolsIconCol + '~' + 
                                     findLocale('media','seek') + '~' +
                                     'media5~'
                 } else {
                     toolsString =   'input_sel' + '~' + 
-                                    id + '?crossfade' + '~' + 
+                                    tid + '?crossfade' + '~' + 
                                     media_icon + '~' + 
                                     toolsIconCol + '~' + 
                                     findLocale('media','crossfade') + '~' +
@@ -5656,7 +5746,16 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
             } else if (v2Adapter == 'squeezeboxrpc') {
                 if (page.items[0].crossfade == undefined || page.items[0].crossfade == false) {
                     toolsString =   'input_sel' + '~' + 
-                                    id + '?seek' + '~' + 
+                                    tid + '?seek' + '~' + 
+                                    media_icon + '~' + 
+                                    toolsIconCol + '~' + 
+                                    findLocale('media','seek') + '~' +
+                                    'media5~'
+                }
+            } else if (v2Adapter == 'spotify-premium') {
+                if (page.items[0].crossfade == undefined || page.items[0].crossfade == false) {
+                    toolsString =   'input_sel' + '~' + 
+                                    tid + '?seek' + '~' + 
                                     media_icon + '~' + 
                                     toolsIconCol + '~' + 
                                     findLocale('media','seek') + '~' +
@@ -5664,7 +5763,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 }
             } else {
                 toolsString =   'button' + '~' + 
-                                id + '' + '~' + 
+                                tid + '' + '~' + 
                                 media_icon + '~' + 
                                 toolsIconCol + '~' + 
                                 findLocale('media','tools') + '~' +
@@ -5675,7 +5774,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 payload: 'entityUpd~' +                   //entityUpd
                     name + '~' +                          //heading
                     GetNavigationString(pageId) + '~' +   //navigation
-                    id + '~' +                            //internalNameEntiy
+                    tid + '~' +                            //internalNameEntiy
                     title + '~' +                         //title
                     rgb_dec565(colMediaTitle) + '~' +     //titleColor
                     author + '~' +                        //author
@@ -5692,9 +5791,9 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                     repeatButtonString
             });
         }
-        if (Debug) {
-            log('GenerateMediaPage payload: ' + JSON.stringify(out_msgs), 'info');
-        }
+
+        if (Debug) log('payload length' + JSON.stringify(out_msgs).length, 'info');
+        if (Debug) log('GenerateMediaPage payload: ' + JSON.stringify(out_msgs), 'info');
         return out_msgs
     } catch (err: any) {
         log('error at function GenerateMediaPage: ' + err.message, 'warn');
@@ -6622,13 +6721,14 @@ function HandleButtonEvent(words: any): void {
                                     
                                     switch (deviceAdapterRP) {
                                         case 'spotify-premium':
+                                            log(getState(id + '.REPEAT').val)
                                             let stateSpotifyRepeat = getState(id + '.REPEAT').val
-                                            if (stateSpotifyRepeat == 'none') {
-                                                setIfExists(id + '.REPEAT', 'all');
-                                            } else if (stateSpotifyRepeat == 'all') {
-                                                setIfExists(id + '.REPEAT', 'one');
-                                            } else if (stateSpotifyRepeat == 'one') {
-                                                setIfExists(id + '.REPEAT', 'none');
+                                            if (stateSpotifyRepeat == 'off') {
+                                                setIfExists(id + '.REPEAT', 'context');
+                                            } else if (stateSpotifyRepeat == 'context') {
+                                                setIfExists(id + '.REPEAT', 'track');
+                                            } else if (stateSpotifyRepeat == 'track') {
+                                                setIfExists(id + '.REPEAT', 'off');
                                             }
                                             GeneratePage(activePage!);
                                             break;
@@ -6947,12 +7047,13 @@ function HandleButtonEvent(words: any): void {
                 pageCounter = -1;
                 (function () { if (timeoutSlider) { clearTimeout(timeoutSlider); timeoutSlider = null; } })();
                 timeoutSlider = setTimeout(async function () {
-                    setIfExists(id + '.VOLUME', parseInt(words[4]));
                     setTimeout(async function () {
+                        let vVolume = scale(parseInt(words[4]), 100, 0, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100);
+                        setIfExists(id + '.VOLUME', Math.floor(vVolume));
                         pageCounter = 1;
                         GeneratePage(activePage!);
-                    }, 3000);
-                }, 20);
+                    }, 10);
+                }, 50);
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
@@ -7076,8 +7177,9 @@ function HandleButtonEvent(words: any): void {
 
                 switch (deviceAdapterTL) {
                     case 'spotify-premium':
-                        let trackArray = (function () { try {return JSON.parse(getState(pageItemTL.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
-                        setState(adapterInstanceTL + 'player.trackId', getAttr(trackArray, words[4] + '.id'));
+                        //let trackArray = (function () { try {return JSON.parse(getState(pageItemTL.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
+                        //setState(adapterInstanceTL + 'player.trackId', getAttr(trackArray, words[4] + '.id'));
+                        setState(adapterInstanceTL + 'player.playlist.trackNo', parseInt(words[4]) + 1);
                         break;
                     case 'sonos':
                         setState(adapterInstanceTL + 'root.' + pageItemTL.mediaDevice + '.current_track_number', parseInt(words[4]) + 1);
@@ -7155,6 +7257,7 @@ function HandleButtonEvent(words: any): void {
                 let deviceAdapterSK: NSPanel.PlayerType = adapterSK[0] as NSPanel.PlayerType;
                 switch (deviceAdapterSK) {
                     case 'spotify-premium':
+                        setState(adapterInstanceSK + 'player.progressPercentage', parseInt(words[4]) * 10);
                         break;
                     case 'squeezeboxrpc':
                         const vDuration: number = getState(adapterInstanceSK + 'Players.' + pageItemSeek.mediaDevice + '.Duration').val;
@@ -8252,6 +8355,11 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                                 actualState = Math.round(actualStateTemp / 10) * 10 + '%';
                                 optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
                             }
+                            if (vAdapter == 'spotify-premium') {
+                                const actualStateTemp: number = getState(pageItem.adapterPlayerInstance + 'player.progressPercentage').val;
+                                actualState = Math.round(actualStateTemp / 10) * 10 + '%';
+                                optionalString = '0%?10%?20%?30%?40%?50%?60%?70%?80%?90%?100%';
+                            }
                             if (vAdapter == 'squeezeboxrpc') {
                                 const actualStateTime: number = parseInt(getState(pageItem.adapterPlayerInstance + 'Players.' + pageItem.mediaDevice + '.Time').val);
                                 const actualStateDuration: number = parseInt(getState(pageItem.adapterPlayerInstance + 'Players.' + pageItem.mediaDevice + '.Duration').val);
@@ -8394,7 +8502,7 @@ function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOpti
                             //Limit 900 characters, then memory overflow --> Shorten as much as possible
                             let temp_array: any[] = [];
                             //let trackArray = (function () { try {return JSON.parse(getState(pageItem.adapterPlayerInstance + 'player.playlist.trackListArray').val);} catch(e) {return {};}})();
-                            for (let track_index = 0; track_index < 45; track_index++) {
+                            for (let track_index = 0; track_index < 48; track_index++) {
                                 let temp_cut_array = getAttr(globalTracklist, track_index + '.title');
                                 /* Volumio: @local/NAS no title -> name */
                                 if (temp_cut_array == undefined) {
@@ -8839,9 +8947,10 @@ function HandleScreensaverUpdate(): void {
                                     iconColor + '~' +
                                     config.bottomScreensaverEntity[4].ScreensaverEntityText + '~' +
                                     val
-                }
+                } // Ende zusätzlichen Status Alternativ Layout
 
             } else {
+		    // USER definierte Bottom Entities
                 let checkpoint = true;
                 let i = 0;
                 for (i = 0; i < maxEntities - 1 && i < config.bottomScreensaverEntity.length; i++) {
@@ -8895,7 +9004,7 @@ function HandleScreensaverUpdate(): void {
                         }                
                     }
 
-                    const temp = config.bottomScreensaverEntity[4].ScreensaverEntityIconColor
+                    const temp = config.bottomScreensaverEntity[i].ScreensaverEntityIconColor
                     if (temp && typeof temp == 'string' && existsObject(temp)) {
                         iconColor = getState(temp).val;
                     }
@@ -10020,7 +10129,7 @@ namespace NSPanel {
 
     export type PageGrid2 = {
         type: 'cardGrid2',
-        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?],
     } & PageBaseType
 
     export type PageThermo = {
@@ -10124,7 +10233,6 @@ namespace NSPanel {
         navigate?: boolean,
         colormode?: string,
         colorScale?: IconScaleElement, 
-        //adapterPlayerInstance?: adapterPlayerInstanceType,
         targetPage?: string,
         modeList?: string[],
         hidePassword?: boolean,
