@@ -5332,7 +5332,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 name = page.heading;
             }
 
-            let volume = scale(getState(id + '.VOLUME').val, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100, 100, 0);
+            let volume = scale(getState(id + '.VOLUME').val, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100, 100, 0);
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
@@ -6961,7 +6961,7 @@ function HandleButtonEvent(words: any): void {
                 subscribeMediaSubscriptions(id);
                 useMediaEvents = true;
                 pageCounter = 1; 
-                let vVolume = scale(parseInt(words[4]), 100, 0, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100);
+                let vVolume = scale(parseInt(words[4]), 100, 0, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100);
                 setIfExists(id + '.VOLUME', Math.floor(vVolume));      
                 break;
             case 'mode-speakerlist':
