@@ -138,7 +138,8 @@ Mögliche Seiten-Ansichten:
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
-    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente - auch als Subpage    
+    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente bzw. beim US-Modell im Portrait-Modus
+                          9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage    
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
@@ -5331,7 +5332,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {
                 name = page.heading;
             }
 
-            let volume = scale(getState(id + '.VOLUME').val, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100, 100, 0);
+            let volume = scale(getState(id + '.VOLUME').val, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100, 100, 0);
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
             let onoffbutton = 1374;
@@ -6960,7 +6961,7 @@ function HandleButtonEvent(words: any): void {
                 subscribeMediaSubscriptions(id);
                 useMediaEvents = true;
                 pageCounter = 1; 
-                let vVolume = scale(parseInt(words[4]), 100, 0, activePage.items[0].minValue ?? 0, activePage.items[0].maxValue ?? 100);
+                let vVolume = scale(parseInt(words[4]), 100, 0, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100);
                 setIfExists(id + '.VOLUME', Math.floor(vVolume));      
                 break;
             case 'mode-speakerlist':
