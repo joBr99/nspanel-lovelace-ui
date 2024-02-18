@@ -49,7 +49,7 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         # Request Tasmota Driver Version
         updater.request_berry_driver_version()
 
-        LuiMqttListener(use_api, topic_recv, api_panel_name, api_device_id, controller, updater)
+        LuiMqttListener(use_api, topic_recv, api_panel_name, api_device_id, self._controller, updater)
 
         self.adapi.log(f'Started ({version})')
         
