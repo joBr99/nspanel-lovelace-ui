@@ -28,7 +28,7 @@ class NsPanelLovelaceUIManager(ad.ADBase):
 
         mqttsend = LuiMqttSender(apis.ha_api, use_api, topic_send, api_panel_name, quiet)
 
-        controller = LuiController(cfg, mqttsend.send_mqtt_msg)
+        self._controller = LuiController(cfg, mqttsend.send_mqtt_msg)
         
         desired_tasmota_driver_version   = 8
         desired_display_firmware_version = 53
@@ -52,3 +52,9 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         LuiMqttListener(use_api, topic_recv, api_panel_name, api_device_id, controller, updater)
 
         self.adapi.log(f'Started ({version})')
+        
+    @property
+    def current_card(self) -> str:
+        """Used to get the panel's current card"""
+        
+        return self._controller.current_card.key
