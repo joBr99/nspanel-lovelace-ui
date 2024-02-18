@@ -1,4 +1,4 @@
-import hassapi as hass
+import adbase as ad
 
 from luibackend.config import LuiBackendConfig
 from luibackend.controller import LuiController
@@ -7,14 +7,16 @@ from luibackend.updater import Updater
 
 import apis
 
-class NsPanelLovelaceUIManager(hass.Hass):
+class NsPanelLovelaceUIManager(ad.ADBase):
 
     def initialize(self):
-        self.log('Starting')
-        apis.ha_api   = self
+        self.adapi = self.get_ad_api()
+        self.adapi.log('Starting')
+        apis.ad_api = self.adapi
+        apis.ha_api   = self.get_plugin_api("HASS")
         apis.mqtt_api = self.get_plugin_api("MQTT")
 
-        cfg = self._cfg = LuiBackendConfig(self, self.args["config"])
+        cfg = self._cfg = LuiBackendConfig(apis.ha_api, self.args["config"])
 
         use_api = cfg.get("use_api") == True
 
@@ -23,7 +25,7 @@ class NsPanelLovelaceUIManager(hass.Hass):
         api_panel_name = cfg.get("panelName")
         api_device_id = cfg.get("panelDeviceId")
 
-        mqttsend = LuiMqttSender(self, use_api, topic_send, api_panel_name)
+        mqttsend = LuiMqttSender(apis.ha_api, use_api, topic_send, api_panel_name)
 
         controller = LuiController(cfg, mqttsend.send_mqtt_msg)
         
@@ -41,11 +43,11 @@ class NsPanelLovelaceUIManager(hass.Hass):
         desired_tasmota_driver_url       = cfg._config.get("berryURL",         "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be")
 
         mode = cfg.get("updateMode")
-        updater = Updater(self.log, mqttsend, topic_send, mode, desired_display_firmware_version, model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
+        updater = Updater(self.adapi.log, mqttsend, topic_send, mode, desired_display_firmware_version, model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
         
         # Request Tasmota Driver Version
         updater.request_berry_driver_version()
 
         LuiMqttListener(use_api, topic_recv, api_panel_name, api_device_id, controller, updater)
 
-        self.log(f'Started ({version})')
+        self.adapi.log(f'Started ({version})')
