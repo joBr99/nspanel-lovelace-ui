@@ -458,3 +458,9 @@ class LuiController(object):
             apis.ha_api.get_entity(entity_id).call_service("pause")
         if button_type == "timer-finish":
             apis.ha_api.get_entity(entity_id).call_service("finish")
+            
+    @property
+    def current_card(self) -> str:
+        """Used to get the current card"""
+
+        return self._current_card
