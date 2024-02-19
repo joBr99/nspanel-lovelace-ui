@@ -3576,7 +3576,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                         }
                                     }
                                     let valueScaletemp = (Math.round(valueScale)).toFixed();
-                                    iconColor = HandleColorScale(valueScaletemp);
+                                    iconColor = HandleColorScale(valueScaletemp, (pageItem.colorScaleInvert !== undefined) ? pageItem.colorScaleInvert : false);
                                 }
                             }
                             
@@ -3633,7 +3633,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                         }
                                     }
                                     let valueScaletemp = (Math.round(valueScale)).toFixed();
-                                    iconColor = HandleColorScale(valueScaletemp);
+                                    iconColor = HandleColorScale(valueScaletemp, (pageItem.colorScaleInvert !== undefined) ? pageItem.colorScaleInvert : false);
                                 }
                             }
  
@@ -3989,7 +3989,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                 }
                             }
                             let valueScaletemp = (Math.round(valueScale)).toFixed();
-                            iconColor = HandleColorScale(valueScaletemp);
+                            iconColor = HandleColorScale(valueScaletemp, (pageItem.colorScaleInvert !== undefined) ? pageItem.colorScaleInvert : false);
                         }
                     }
  
@@ -9156,32 +9156,64 @@ function HandleScreensaverStatusIcons() : void {
     }
 }
 
-function HandleColorScale(valueScaletemp: string): number {
-    switch (valueScaletemp) {
-        case '0':
-            return rgb_dec565(colorScale0);
-        case '1':
-            return rgb_dec565(colorScale1);
-        case '2':
-            return rgb_dec565(colorScale2);
-        case '3':
-            return rgb_dec565(colorScale3);
-        case '4':
-            return rgb_dec565(colorScale4);
-        case '5':
-            return rgb_dec565(colorScale5);
-        case '6':
-            return rgb_dec565(colorScale6);
-        case '7':
-            return rgb_dec565(colorScale7);
-        case '8':
-            return rgb_dec565(colorScale8);
-        case '9':
-            return rgb_dec565(colorScale9);
-        case '10':
-            return rgb_dec565(colorScale10);
-        default:
-            return rgb_dec565(colorScale10);
+function HandleColorScale(valueScaletemp: string): number;
+function HandleColorScale(valueScaletemp: string, valueScaleInverted: boolean): number;
+function HandleColorScale(valueScaletemp: string, valueScaleInverted?: boolean): number {
+    valueScaleInverted = (valueScaleInverted !== undefined) ? valueScaleInverted : false;
+    if (valueScaleInverted) {
+        switch (valueScaletemp) {
+            case '0':
+                return rgb_dec565(colorScale10);
+            case '1':
+                return rgb_dec565(colorScale9);
+            case '2':
+                return rgb_dec565(colorScale8);
+            case '3':
+                return rgb_dec565(colorScale7);
+            case '4':
+                return rgb_dec565(colorScale6);
+            case '5':
+                return rgb_dec565(colorScale5);
+            case '6':
+                return rgb_dec565(colorScale4);
+            case '7':
+                return rgb_dec565(colorScale3);
+            case '8':
+                return rgb_dec565(colorScale2);
+            case '9':
+                return rgb_dec565(colorScale1);
+            case '10':
+                return rgb_dec565(colorScale0);
+            default:
+                return rgb_dec565(colorScale0);
+        }
+    } else {
+        switch (valueScaletemp) {
+            case '0':
+                return rgb_dec565(colorScale0);
+            case '1':
+                return rgb_dec565(colorScale1);
+            case '2':
+                return rgb_dec565(colorScale2);
+            case '3':
+                return rgb_dec565(colorScale3);
+            case '4':
+                return rgb_dec565(colorScale4);
+            case '5':
+                return rgb_dec565(colorScale5);
+            case '6':
+                return rgb_dec565(colorScale6);
+            case '7':
+                return rgb_dec565(colorScale7);
+            case '8':
+                return rgb_dec565(colorScale8);
+            case '9':
+                return rgb_dec565(colorScale9);
+            case '10':
+                return rgb_dec565(colorScale10);
+            default:
+                return rgb_dec565(colorScale10);
+        }
     }
 }
 
@@ -10141,7 +10173,8 @@ namespace NSPanel {
         unit?: string,
         navigate?: boolean,
         colormode?: string,
-        colorScale?: IconScaleElement, 
+        colorScale?: IconScaleElement,
+        colorScaleInvert?: boolean,
         targetPage?: string,
         modeList?: string[],
         hidePassword?: boolean,
