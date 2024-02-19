@@ -132,6 +132,7 @@ class LuiBackendConfig(object):
             'sleepTrackingZones': ["not_home", "off"],
             'sleepOverride': None,
             'locale': "en_US",
+            'quiet': True,
             'timeFormat': "%H:%M",
             'dateFormatBabel': "full",
             'dateAdditionalTemplate': "",

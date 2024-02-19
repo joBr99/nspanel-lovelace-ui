@@ -24,8 +24,9 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         topic_recv = cfg.get("panelRecvTopic")
         api_panel_name = cfg.get("panelName")
         api_device_id = cfg.get("panelDeviceId")
+        quiet = cfg.get("quiet")
 
-        mqttsend = LuiMqttSender(apis.ha_api, use_api, topic_send, api_panel_name)
+        mqttsend = LuiMqttSender(apis.ha_api, use_api, topic_send, api_panel_name, quiet)
 
         controller = LuiController(cfg, mqttsend.send_mqtt_msg)
         
