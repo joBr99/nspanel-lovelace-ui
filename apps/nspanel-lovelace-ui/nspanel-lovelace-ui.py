@@ -6,6 +6,7 @@ from luibackend.mqtt import LuiMqttListener, LuiMqttSender
 from luibackend.updater import Updater
 
 import apis
+import json
 
 class NsPanelLovelaceUIManager(ad.ADBase):
 
@@ -26,9 +27,9 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         api_device_id = cfg.get("panelDeviceId")
         quiet = cfg.get("quiet")
 
-        mqttsend = LuiMqttSender(apis.ha_api, use_api, topic_send, api_panel_name, quiet)
+        mqttsender = self._mqttsender = LuiMqttSender(apis.ha_api, use_api, topic_send, api_panel_name, quiet)
 
-        self._controller = LuiController(cfg, mqttsend.send_mqtt_msg)
+        self._controller = LuiController(cfg, mqttsender.send_mqtt_msg)
         
         desired_tasmota_driver_version   = 8
         desired_display_firmware_version = 53
@@ -44,7 +45,7 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         desired_tasmota_driver_url       = cfg._config.get("berryURL",         "https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be")
 
         mode = cfg.get("updateMode")
-        updater = Updater(self.adapi.log, mqttsend, topic_send, mode, desired_display_firmware_version, model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
+        updater = Updater(self.adapi.log, mqttsender, topic_send, mode, desired_display_firmware_version, model, desired_display_firmware_url, desired_tasmota_driver_version, desired_tasmota_driver_url)
         
         # Request Tasmota Driver Version
         updater.request_berry_driver_version()
@@ -52,6 +53,17 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         LuiMqttListener(use_api, topic_recv, api_panel_name, api_device_id, self._controller, updater)
 
         self.adapi.log(f'Started ({version})')
+        
+    #
+    # helpers
+    #
+    
+    def show_card(self, card_key: str) -> None:
+        """Used to show card on panel"""
+        
+        msg = json.dumps({"CustomRecv":f"event,buttonPress2,navigate.{card_key},button"})
+        topic = self._cfg.get("panelRecvTopic")
+        self._mqttsender.send_mqtt_msg(msg, topic)
         
     @property
     def current_card(self) -> str:
