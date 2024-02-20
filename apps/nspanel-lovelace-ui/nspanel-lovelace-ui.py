@@ -7,6 +7,7 @@ from luibackend.updater import Updater
 
 import apis
 import json
+from typing import Literal
 
 class NsPanelLovelaceUIManager(ad.ADBase):
 
@@ -62,6 +63,13 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         """Used to show card on panel"""
         
         msg = json.dumps({"CustomRecv":f"event,buttonPress2,navigate.{card_key},button"})
+        topic = self._cfg.get("panelRecvTopic")
+        self._mqttsender.send_mqtt_msg(msg, topic)
+        
+    def navigate(self, direction: Literal['up', 'prev', 'next']) -> None:
+        """Used to navigate different directions on the panel"""
+        
+        msg = json.dumps({"CustomRecv":f"event,buttonPress2,nav{direction.title()},button"})
         topic = self._cfg.get("panelRecvTopic")
         self._mqttsender.send_mqtt_msg(msg, topic)
         
