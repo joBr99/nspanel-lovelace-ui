@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2024-02-25 10:48:00.364779879 +0000
++++ /dev/fd/62	2024-02-25 11:03:09.634837907 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -2028,22 +2028,3 @@
 +                                 spstr strCommand.txt,tNotifyText.txt,"~",2
 +                                 if(tNotifyHead.txt!=""||tNotifyText.txt!="")
 +                                 {
-+14 +800,18 @@
-+                                 {
-+                                     page cardPower
-+                                 }
-+                                 if(tId.txt=="cardChart")
-+                                 {
-+                                     page cardChart
-+                                 }
-+                                 if(tId.txt=="cardLChart")
-+                                 {
-+                                     page cardLChart
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="timeout")
-+                             {
-+                                 //set timeout to global var
-+                                 spstr strCommand.txt,tTmp.txt,"~",1
-+                                 covx tTmp.txt,sleepTimeout,0,0
-+                             }

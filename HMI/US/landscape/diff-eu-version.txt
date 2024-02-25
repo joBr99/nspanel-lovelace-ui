@@ -543,22 +543,3 @@
 │                                          spstr strCommand.txt,tNotifyText.txt,"~",2
 │                                          if(tNotifyHead.txt!=""||tNotifyText.txt!="")
 │                                          {
-│ @@ -952,14 +812,18 @@
-│                                          {
-│                                              page cardPower
-│                                          }
-│                                          if(tId.txt=="cardChart")
-│                                          {
-│                                              page cardChart
-│                                          }
-│ +                                        if(tId.txt=="cardLChart")
-│ +                                        {
-│ +                                            page cardLChart
-│ +                                        }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│                                      }
