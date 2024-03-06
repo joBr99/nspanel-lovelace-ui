@@ -8984,6 +8984,8 @@ function HandleScreensaverUpdate(): void {
             SendToPanel({ payload: 'weatherUpdate~' + payloadString });
 
             HandleScreensaverStatusIcons();
+
+	    HandleScreensaverColors();
         }
 
     } catch (err: any) {
