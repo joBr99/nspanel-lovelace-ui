@@ -6107,8 +6107,6 @@ function subscribePowerSubscriptions(id: string): void {
 function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     try {
 
-        if (!page.items[0].id) throw new Error ('Missing pageItem.id for PowerPage!');
-
         let obj:object = {};
         let demoMode = false;        
         if (page.items[0].id == undefined){
