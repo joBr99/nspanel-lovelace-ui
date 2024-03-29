@@ -100,39 +100,5 @@ AppDaemon is using the old REST API that until AppDaemon moved on the the websoc
 To get the forecast data in appdaemon, there is a script needed in homeassistant's script.yaml:
 
 ```yaml
-call_service_with_response:
-  description: Calls a service and returns its response to AppDaemon
-  fields:
-    call_id:
-      name: Call id
-      default: 1
-      description: An id to uniquely identify the call
-      required: True
-      selector:
-        text:
-    service_name:
-      name: Service name
-      default: domain.some_service
-      description: The service to call
-      required: True
-      selector:
-        text:
-    service_data:
-      name: Service data
-      default: {}
-      description: Data to pass to the service
-      required: True
-      selector:
-        object:
-  sequence:
-    - service: "{{ service_name }}"
-      data: "{{ service_data }}"
-      response_variable: response
-    - event: call_service_with_response.finished # event name cannot be templated unfortunately
-      event_data:
-        call_id: "{{ call_id }}"
-        response: "{{ response }}"
 ```
-
-![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/ea646579-1287-491e-a1e8-5989c7c34b39)
 
