@@ -192,6 +192,9 @@ class LuiPagesGen(object):
         else:
             entityType = "delete"
 
+        if entityId in ["sensor.weather_forecast_daily", "sensor.weather_forecast_hourly"]:
+            entityType = "weather"
+
         apis.ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
 
         status_entity = apis.ha_api.get_entity(item.status) if item.status and apis.ha_api.entity_exists(item.status) else None
