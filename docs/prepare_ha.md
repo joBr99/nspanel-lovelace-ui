@@ -118,7 +118,7 @@ template:
         attributes:
           temperature: "{{ state_attr('weather.home', 'temperature') }}" # change to your weather entity
           temperature_unit: "{{ state_attr('weather.home', 'temperature_unit') }}" # change to your weather entity
-          forecast: "{{ daily['weather.k3ll3r'].forecast }}" # change to your weather entity
+          forecast: "{{ daily['weather.home'].forecast }}" # change to your weather entity
 ```
 ![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/41f21db3-a6e2-4e4f-8dab-b9351ecd23e5)
 
