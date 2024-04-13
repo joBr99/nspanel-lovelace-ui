@@ -104,6 +104,8 @@ template:
   - trigger:
       - platform: time_pattern
         hours: /1
+      - platform: homeassistant
+        event: start
     action:
       - service: weather.get_forecasts
         data:
