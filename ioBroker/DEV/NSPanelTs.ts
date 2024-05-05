@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.43 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.3.3.44 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -117,6 +117,7 @@ ReleaseNotes:
         - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes; Add miValue / maxValue to Volume-Slider
         - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
 	- 11.02.2024 - v4.3.3.43 Fix VolumeSlider
+        - 05.05.2024 - v4.3.3.44 Fix MQTT-Port-check
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -1208,8 +1209,12 @@ async function CheckMQTTPorts() {
                         let resultString1 = result.split('+');
                         for (let i: number = 1; i < resultString1.length -1; i++) {
                             let resultString2: any = resultString1[i].split(':')
+                            if (Debug) log(`MQTT-PORT-Check Result ` + JSON.stringify(resultString2));
                             let adapterInstanceName: string = resultString2[0].substring(16);
-                            let adapterInstancePort: string = resultString2[3].substring(1,5);
+                            let adapterInstancePort: string = '';
+                            if (resultString2[2].match("port") != null) {
+                                adapterInstancePort = resultString2[3].substring(1, 5);
+                            } else { adapterInstancePort = 'Kein Port gefunden'; }
                             log('-- '+ adapterInstanceName + ' - ' +  adapterInstancePort, 'info');
                             adapterArray[i] = adapterInstanceName.trim();
                             portArray[i] = adapterInstancePort.trim();
