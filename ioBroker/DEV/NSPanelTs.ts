@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.3.3.44 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.3.3 / BerryDriver 9 / Tasmota 13.3.0
+TypeScript v4.4.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 54 / v4.4.0 / BerryDriver 9 / Tasmota 13.4.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -118,6 +118,7 @@ ReleaseNotes:
         - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
 	- 11.02.2024 - v4.3.3.43 Fix VolumeSlider
         - 05.05.2024 - v4.3.3.44 Fix MQTT-Port-check
+	- 13.05.2024 - v4.4.0.0  TFT 54 / 4.4.0
 
         Todo:
         - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
@@ -212,7 +213,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.3.3.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.4.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -986,9 +987,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.3.3.43';
-const tft_version: string = 'v4.3.3';
-const desired_display_firmware_version = 53;
+const scriptVersion: string = 'v4.4.0.0';
+const tft_version: string = 'v4.4.0';
+const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -1251,8 +1252,8 @@ async function CheckMQTTPorts() {
 CheckMQTTPorts();
 
 async function Init_Release() {
-    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55];
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.3','4.4.0','4.5.0'];
+    const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56];
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.3','4.4.0','4.5.0','4.6.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
