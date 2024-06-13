@@ -2085,42 +2085,55 @@ function isDimTimeInRange(strLower, strUpper) {
 //--------------------Begin Consumtion (with Dimmode and Relays On Off)
 // Funktion to calculate mean linear consumtion
 async function Calc_Consumtion(Brightness: number, Relays: number) {
-    return parseFloat(((Relays * 0.25) + ((0.0086 * Brightness) + 0.7429)).toFixed(2));
+    try {
+        return parseFloat(((Relays * 0.25) + ((0.0086 * Brightness) + 0.7429)).toFixed(2));
+    } catch (err: any) {
+        log('error at function Calc_Consumtion: ' + err.message, 'warn');
+    }
 }
 
 // 
 async function CountRelaysOn(Path: string) {
-    let r1: boolean = getState(Path + 'Relay.1').val;
-    let r2: boolean = getState(Path + 'Relay.2').val;
+    try {
+        let r1: boolean = getState(Path + 'Relay.1').val;
+        let r2: boolean = getState(Path + 'Relay.2').val;
 
-    if (r1 && r2) {
-        return 2;
-    } else if (!r1 && !r2) {
-        return 0;
-    } else {
-        return 1;
+        if (r1 && r2) {
+            return 2;
+        } else if (!r1 && !r2) {
+            return 0;
+        } else {
+            return 1;
+        }
+    } catch (err: any) {
+        log('error at function CountRelaysOn: ' + err.message, 'warn');
     }
 }
 
 async function DetermineDimBrightness(Path: string) {
-    const vTimeDay = getState(Path + 'NSPanel_Dimmode_hourDay').val;
-    const vTimeNight = getState(Path + 'NSPanel_Dimmode_hourNight').val;
-    const timeDimMode: NSPanel.DimMode = {
-        dimmodeOn: true,
-        brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
-        brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
-        timeDay: (vTimeDay < 10) ? `0${vTimeDay}:00` : `${vTimeDay}:00`,
-        timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
-    };
+    try {
 
-    if (getState(Path + 'ScreensaverInfo.activeDimmodeBrightness').val == -1) {
-        if (getState(Path + 'ActivePage.id0').val == 'screensaver') {
-            return await DetermineScreensaverDimmode(timeDimMode);
+        const vTimeDay = getState(Path + 'NSPanel_Dimmode_hourDay').val;
+        const vTimeNight = getState(Path + 'NSPanel_Dimmode_hourNight').val;
+        const timeDimMode: NSPanel.DimMode = {
+            dimmodeOn: true,
+            brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
+            brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
+            timeDay: (vTimeDay < 10) ? `0${vTimeDay}:00` : `${vTimeDay}:00`,
+            timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
+        };
+
+        if (getState(Path + 'ScreensaverInfo.activeDimmodeBrightness').val == -1) {
+            if (getState(Path + 'ActivePage.id0').val == 'screensaver') {
+                return await DetermineScreensaverDimmode(timeDimMode);
+            } else {
+                return getState(Path + 'ScreensaverInfo.activeBrightness').val;
+            }
         } else {
-            return getState(Path + 'ScreensaverInfo.activeBrightness').val;
+            return getState(Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
         }
-    } else {
-        return getState(Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+    } catch (err: any) {
+        log('error at function DetermineDimBrightness: ' + err.message, 'warn');
     }
 }
 
@@ -2134,18 +2147,22 @@ async function DetermineScreensaverDimmode(timeDimMode:NSPanel.DimMode) {
             }
         }
     } catch (err: any) {
-        log('error at function ScreensaverDimmode: ' + err.message, 'warn');
+        log('error at function DetermineScreensaverDimmode: ' + err.message, 'warn');
     }
 }
 
 async function InitMeanPowerConsumtion() {
-    const MeanPower = NSPanel_Path + 'Consumtion.MeanPower';
-    let meanConsumtion: number = await Calc_Consumtion(await DetermineDimBrightness(NSPanel_Path), await CountRelaysOn(NSPanel_Path));
-    if (!existsState(MeanPower)) {
-        await createStateAsync(MeanPower, <iobJS.StateCommon>{ type: 'number', write: true, unit: 'W' });
+    try {
+        const MeanPower = NSPanel_Path + 'Consumtion.MeanPower';
+        let meanConsumtion: number = await Calc_Consumtion(await DetermineDimBrightness(NSPanel_Path), await CountRelaysOn(NSPanel_Path));
+        if (!existsState(MeanPower)) {
+            await createStateAsync(MeanPower, <iobJS.StateCommon>{ type: 'number', write: true, unit: 'W' });
+        }
+        await setStateAsync(MeanPower, <iobJS.State>{ val: meanConsumtion, ack: true });
+        if (Debug) log(meanConsumtion  + ' W', 'info');
+    } catch (err: any) {
+        log('error at function InitMeanPowerConsumtion: ' + err.message, 'warn');
     }
-    await setStateAsync(MeanPower, <iobJS.State>{ val: meanConsumtion, ack: true });
-    if (Debug) log(meanConsumtion  + ' W', 'info');
 }
 InitMeanPowerConsumtion();
 
