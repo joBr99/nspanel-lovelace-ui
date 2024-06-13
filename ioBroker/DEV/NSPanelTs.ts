@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 13.4.0
+TypeScript v4.4.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -118,11 +118,12 @@ ReleaseNotes:
         - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
 	- 11.02.2024 - v4.3.3.43 Fix VolumeSlider
         - 05.05.2024 - v4.3.3.44 Fix MQTT-Port-check
-	- 13.05.2024 - v4.4.0.0  TFT 54 / 4.4.0
- 	- 10.06.2024 - v4.4.0.1  TFT 53 / 4.4.0
+        - 13.05.2024 - v4.4.0.0  TFT 54 / 4.4.0
+        - 19.05.2024 - v4.4.0.1  TFT 53 / 4.4.0
+        - 13.06.2024 - v4.4.0.2  Calculated energy consumption in relation to dimming mode and relay state (not the energy consumption of the outputs)
 
         Todo:
-        - XX.XX.XXXX - v5.0.0    Change the bottomScreensaverEntity (rolling) if more than 6 entries are defined	
+        - XX.XX.2024 - v5.0.0    ioBroker Adapter
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -988,7 +989,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.1';
+const scriptVersion: string = 'v4.4.0.2';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2080,6 +2081,88 @@ function isDimTimeInRange(strLower, strUpper) {
 }
 
 //--------------------End Dimmode
+
+//--------------------Begin Consumtion (with Dimmode and Relays On Off)
+// Funktion to calculate mean linear consumtion
+async function Calc_Consumtion(Brightness: number, Relays: number) {
+    return parseFloat(((Relays * 0.25) + ((0.0086 * Brightness) + 0.7429)).toFixed(2));
+}
+
+// 
+async function CountRelaysOn(Path: string) {
+    let r1: boolean = getState(Path + 'Relay.1').val;
+    let r2: boolean = getState(Path + 'Relay.2').val;
+
+    if (r1 && r2) {
+        return 2;
+    } else if (!r1 && !r2) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+async function DetermineDimBrightness(Path: string) {
+    const vTimeDay = getState(Path + 'NSPanel_Dimmode_hourDay').val;
+    const vTimeNight = getState(Path + 'NSPanel_Dimmode_hourNight').val;
+    const timeDimMode: NSPanel.DimMode = {
+        dimmodeOn: true,
+        brightnessDay: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay').val,
+        brightnessNight: getState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight').val,
+        timeDay: (vTimeDay < 10) ? `0${vTimeDay}:00` : `${vTimeDay}:00`,
+        timeNight: (vTimeNight < 10) ? `0${vTimeNight}:00` : `${vTimeNight}:00`
+    };
+
+    if (getState(Path + 'ScreensaverInfo.activeDimmodeBrightness').val == -1) {
+        if (getState(Path + 'ActivePage.id0').val == 'screensaver') {
+            return await DetermineScreensaverDimmode(timeDimMode);
+        } else {
+            return getState(Path + 'ScreensaverInfo.activeBrightness').val;
+        }
+    } else {
+        return getState(Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+    }
+}
+
+async function DetermineScreensaverDimmode(timeDimMode:NSPanel.DimMode) {
+    try {
+        if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
+            if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
+                return timeDimMode.brightnessDay;
+            } else {
+                return timeDimMode.brightnessNight;
+            }
+        }
+    } catch (err: any) {
+        log('error at function ScreensaverDimmode: ' + err.message, 'warn');
+    }
+}
+
+async function InitMeanPowerConsumtion() {
+    const MeanPower = NSPanel_Path + 'Consumtion.MeanPower';
+    let meanConsumtion: number = await Calc_Consumtion(await DetermineDimBrightness(NSPanel_Path), await CountRelaysOn(NSPanel_Path));
+    if (!existsState(MeanPower)) {
+        await createStateAsync(MeanPower, <iobJS.StateCommon>{ type: 'number', write: true, unit: 'W' });
+    }
+    await setStateAsync(MeanPower, <iobJS.State>{ val: meanConsumtion, ack: true });
+    if (Debug) log(meanConsumtion  + ' W', 'info');
+}
+InitMeanPowerConsumtion();
+
+// Trigger fires on currentPage, dim Standby and dimActive 
+on({ id: [].concat(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay')
+           .concat(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight')
+           .concat(NSPanel_Path + 'ScreensaverInfo.activeBrightness')
+           .concat(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness')
+           .concat(NSPanel_Path + 'Relay.1')
+           .concat(NSPanel_Path + 'Relay.2')
+           .concat(NSPanel_Path + 'ActivePage.id0'), change: 'any' }, async (obj) => {
+
+    await InitMeanPowerConsumtion();
+
+});
+
+//--------------------End Consumtion
 
 // Data points for message to screensaver
 const screensaverNotifyHeading = NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading';
