@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.1.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -121,6 +121,7 @@ ReleaseNotes:
         - 13.05.2024 - v4.4.0.0  TFT 54 / 4.4.0
         - 19.05.2024 - v4.4.0.1  TFT 53 / 4.4.0
         - 13.06.2024 - v4.4.0.2  Calculated energy consumption in relation to dimming mode and relay state (not the energy consumption of the outputs)
+        - 13.06.2024 - v4.4.0.3  Check prefix '.tele.' in config.NSPanelReceiveTopic
 
         Todo:
         - XX.XX.2024 - v5.0.0    ioBroker Adapter
@@ -989,7 +990,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.2';
+const scriptVersion: string = 'v4.4.0.3';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1065,6 +1066,9 @@ async function CheckConfigParameters() {
     try {
         if (existsObject(config.panelRecvTopic) == false) {
             log('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> is not reachable. Please Check Parameters!','error');
+        }
+        if (config.panelRecvTopic.indexOf('.tele.') < 0) {
+            log('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> does not refer to the prefix .tele. Please Check Parameters!', 'error');
         }
         if (existsObject(config.panelSendTopic) == false) {
             const n = config.panelSendTopic.split('.');
