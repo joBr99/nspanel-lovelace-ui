@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.1.0
+TypeScript v4.4.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -122,9 +122,10 @@ ReleaseNotes:
         - 19.05.2024 - v4.4.0.1  TFT 53 / 4.4.0
         - 13.06.2024 - v4.4.0.2  Calculated energy consumption in relation to dimming mode and relay state (not the energy consumption of the outputs)
         - 13.06.2024 - v4.4.0.3  Check prefix '.tele.' in config.NSPanelReceiveTopic
+        - 13.09.2024 - v4.4.0.4  New Feature: Hidden Carts
 
         Todo:
-        - XX.XX.2024 - v5.0.0    ioBroker Adapter
+        - XX.12.2024 - v5.0.0    ioBroker Adapter
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -990,7 +991,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.3';
+const scriptVersion: string = 'v4.4.0.4';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1003,6 +1004,7 @@ let vwIconColor: number[] = [];
 let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
+let valueHiddenCards = getState(NSPanel_Path + 'Config.hiddenCards').val;
 
 let buttonToggleState: {[key: string]: boolean} = {};
 
@@ -1259,7 +1261,7 @@ CheckMQTTPorts();
 
 async function Init_Release() {
     const FWVersion = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56];
-    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.3.3','4.4.0','4.5.0','4.6.0'];
+    const FWRelease = ['3.3.1','3.4.0','3.5.0','3.5.X','3.6.0','3.7.3','3.8.0','3.8.3','3.9.4','4.0.5','4.1.4','4.2.1','4.4.0','4.4.0','4.5.0','4.6.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
@@ -1358,12 +1360,31 @@ async function InitConfigParameters() {
                 setObject(AliasPath + 'Config.temperatureUnitNumber', {type: 'channel', common: {role: 'buttonSensor', name:'temperatureUnitNumber'}, native: {}});
                 await createAliasAsync(AliasPath + 'Config.temperatureUnitNumber.VALUE', NSPanel_Path + 'Config.temperatureUnitNumber', true, <iobJS.StateCommon>{ type: 'number', role: 'state', name: 'VALUE' });
             }
+            // Trigger DP for hiddenCards (with hiddenByTrigger)
+            if (existsObject(NSPanel_Path + 'Config.hiddenCards') == false) {
+                await createStateAsync(NSPanel_Path + 'Config.hiddenCards', false, { type: 'boolean', write: true });
+            }
         }
     } catch (err: any) { 
         log('error at function InitConfigParameters: ' + err.message, 'warn'); 
     }
 }
 InitConfigParameters();
+
+// Trigger for hidden Cards - if hiddenByTrigger is true/false
+on({id: [NSPanel_Path + 'Config.hiddenCards'], change: "ne"}, async function (obj) {
+    try {
+        obj.state.val ? log('hidden Cards activated', 'info') : log('hidden Cards disabled', 'info');
+        valueHiddenCards = obj.state.val
+        if (obj.state.val) {
+            activePage = config.pages[0];
+            pageId = 0
+            GeneratePage(activePage);
+        }
+    } catch (err: any) { 
+        log('error at Trigger hidden Cards Status: ' + err.message, 'warn'); 
+    }
+});
 
 on({id: [NSPanel_Path + 'Config.ScripgtDebugStatus'], change: "ne"}, async function (obj) {
     try {
@@ -3291,46 +3312,47 @@ function findPageItem(searching: String): PageItem {
 
 function GeneratePage(page: PageType): void {
     try {
-        activePage = page;
-        setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type, null, true);
-        setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading, null, true);
-        setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0] !== undefined ? activePage.items[0].id : '', null, true);
-        switch (page.type) {
-            case 'cardEntities':
-                SendToPanel(GenerateEntitiesPage(page));
-                break;
-            case 'cardThermo':
-                SendToPanel(GenerateThermoPage(page));
-                break;
-            case 'cardGrid':
-                SendToPanel(GenerateGridPage(page));
-                break;
-            case 'cardGrid2':
-                SendToPanel(GenerateGridPage2(page));
-                break;
-            case 'cardMedia':
-                useMediaEvents = true;
-                SendToPanel(GenerateMediaPage(page));
-                break;
-            case 'cardAlarm':
-                SendToPanel(GenerateAlarmPage(page));
-                break;
-            case 'cardQR':
-                SendToPanel(GenerateQRPage(page));
-                break;
-            case 'cardPower':
-                SendToPanel(GeneratePowerPage(page));
-                break;
-            case 'cardChart':
-                SendToPanel(GenerateChartPage(page));
-                break;
-            case 'cardLChart':
-                SendToPanel(GenerateChartPage(page));
-                break;
-            case 'cardUnlock':
-                SendToPanel(GenerateUnlockPage(page));
-                break;
-        }
+            activePage = page;            
+            setIfExists(NSPanel_Path + 'ActivePage.type', activePage.type, null, true);
+            setIfExists(NSPanel_Path + 'ActivePage.heading', activePage.heading, null, true);
+            setIfExists(NSPanel_Path + 'ActivePage.id0', activePage.items[0] !== undefined ? activePage.items[0].id : '', null, true);
+            switch (page.type) {
+                case 'cardEntities':
+                    SendToPanel(GenerateEntitiesPage(page));
+                    break;
+                case 'cardThermo':
+                    SendToPanel(GenerateThermoPage(page));
+                    break;
+                case 'cardGrid':
+                    SendToPanel(GenerateGridPage(page));
+                    break;
+                case 'cardGrid2':
+                    SendToPanel(GenerateGridPage2(page));
+                    break;
+                case 'cardMedia':
+                    useMediaEvents = true;
+                    SendToPanel(GenerateMediaPage(page));
+                    break;
+                case 'cardAlarm':
+                    SendToPanel(GenerateAlarmPage(page));
+                    break;
+                case 'cardQR':
+                    SendToPanel(GenerateQRPage(page));
+                    break;
+                case 'cardPower':
+                    SendToPanel(GeneratePowerPage(page));
+                    break;
+                case 'cardChart':
+                    SendToPanel(GenerateChartPage(page));
+                    break;
+                case 'cardLChart':
+                    SendToPanel(GenerateChartPage(page));
+                    break;
+                case 'cardUnlock':
+                    SendToPanel(GenerateUnlockPage(page));
+                    break;
+            }
+
     } catch (err: any) {
         if (err.message == "Cannot read properties of undefined (reading 'type')") {
             log('Please wait a few seconds longer when launching the NSPanel. Not all parameters are loaded yet.', 'warn');
@@ -3338,6 +3360,7 @@ function GeneratePage(page: PageType): void {
             log('error at function GeneratePage: ' + err.message, 'warn');
         }
     }
+    
 }
 
 function HandleHardwareButton(method: NSPanel.EventMethod): void {
@@ -6532,6 +6555,18 @@ function HandleButtonEvent(words: any): void {
                 pageNum = (((pageId + 1) % config.pages.length) + config.pages.length) % config.pages.length;
                 pageId = pageNum;
                 UnsubscribeWatcher();
+                //-Serching for next unhidden Page----------------------
+                if (config.pages[pageId].hiddenByTrigger && valueHiddenCards) {
+                    for (let i = pageId; i <= config.pages.length; i++) {
+                        if (i == config.pages.length) {
+                            i = 0
+                        }
+                        if (!config.pages[i].hiddenByTrigger) {
+                            pageId = i;
+                            break;
+                        }
+                    }  
+                }
                 GeneratePage(config.pages[pageId]);
                 break;
             case 'bSubNext':
@@ -6543,6 +6578,15 @@ function HandleButtonEvent(words: any): void {
                 pageNum = (((pageId - 1) % config.pages.length) + config.pages.length) % config.pages.length;
                 pageId = pageNum;
                 UnsubscribeWatcher();
+                //-Searching for previous unhidden Page----------------------
+                if (config.pages[pageId].hiddenByTrigger && valueHiddenCards) {
+                    for (let i = pageId; i >= 0; i--) {
+                        if (config.pages[i].hiddenByTrigger == false || config.pages[i].hiddenByTrigger == undefined) {
+                            pageId = i;
+                            break;
+                        }
+                    }  
+                }
                 if (activePage != undefined && activePage!.parent != undefined) {
                     //update pageID
                     for (let i = 0; i < config.pages.length; i++) {
@@ -7670,6 +7714,7 @@ function GetNavigationString(pageId: number): string {
     }
     return '';
 }
+
 function GenerateDetailPage(type: NSPanel.PopupType, optional: NSPanel.mediaOptional | undefined, pageItem: PageItem, placeId: number | undefined): NSPanel.Payload[] {
     if (Debug) log('GenerateDetailPage Übergabe Type: ' + type + ' - optional: ' + optional + ' - pageItem.id: ' + pageItem.id, 'info');
     try {
@@ -10129,7 +10174,8 @@ namespace NSPanel {
         nextIconColor?: RGB,
         home?: string,
         homeIcon?: string,
-        homeIconColor?: RGB
+        homeIconColor?: RGB,
+        hiddenByTrigger?: boolean
     };
 
 
