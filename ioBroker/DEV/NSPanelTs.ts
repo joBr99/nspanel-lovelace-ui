@@ -6972,7 +6972,7 @@ function HandleButtonEvent(words: any): void {
 
         if (words[2].substring(0, 8) == 'navigate') {
             let temppage: PageType = eval(words[2].substring(9, words[2].length));
-            if (temppage.hiddenByTrigger) {
+            if (temppage.hiddenByTrigger && valueHiddenCards) {
                 log(`Subpage ${words[2].substring(9, words[2].length)} is hidden`);
                 return;
             }
