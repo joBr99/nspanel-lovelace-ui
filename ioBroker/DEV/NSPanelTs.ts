@@ -1456,7 +1456,7 @@ async function InitConfigParameters() {
             // Trigger DP for hiddenCards (with hiddenByTrigger)
             if (existsObject(NSPanel_Path + 'Config.hiddenCards') == false) {
                 await createStateAsync(NSPanel_Path + 'Config.hiddenCards', false, { type: 'boolean', write: true });
-                setObject(AliasPath + 'Config.Screensaver.hiddenCards', { type: 'channel', common: { role: 'socket', name: 'HiddenCrads' }, native: {} });
+                setObject(AliasPath + 'Config.hiddenCards', { type: 'channel', common: { role: 'socket', name: 'hiddenCards' }, native: {} });
                 await createAliasAsync(AliasPath + 'Config.hiddenCards.ACTUAL', NSPanel_Path + 'Config.hiddenCards', true, <iobJS.StateCommon>{
                     type: 'boolean',
                     role: 'switch',
