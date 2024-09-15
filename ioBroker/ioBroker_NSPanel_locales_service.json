@@ -2701,5 +2701,9 @@
    "scriptname":{
       "en-US":"Script name",
       "de-DE":"Skriptname"
+   },
+   "hiddencards_offon":{
+      "en-US":"hidden Cards (on/off)",
+      "de-DE":"ausgeblendete Seiten (an/aus)" 
    }
 }
