@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -25,7 +25,7 @@ durchführen und FlashNextion wiederholen.
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
 *****************************************************************************************************************************
-Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment', 'moment-parseformat' und 'dayjs' eingetragen sein
+Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment' und 'moment-parseformat' eingetragen sein
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#8--einstellungen-in-js-adapter-instanz
 *****************************************************************************************************************************
 
@@ -123,6 +123,7 @@ ReleaseNotes:
         - 13.06.2024 - v4.4.0.2  Calculated energy consumption in relation to dimming mode and relay state (not the energy consumption of the outputs)
         - 13.06.2024 - v4.4.0.3  Check prefix '.tele.' in config.NSPanelReceiveTopic
         - 13.09.2024 - v4.4.0.4  New Feature: Hidden Carts
+        - 18.09.2024 - v4.4.0.5  Remove day.JS
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -992,7 +993,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.4';
+const scriptVersion: string = 'v4.4.0.5';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1010,7 +1011,6 @@ let valueHiddenCards = getState(NSPanel_Path + 'Config.hiddenCards').val;
 let buttonToggleState: { [key: string]: boolean } = {};
 
 const axios = require('axios');
-const dayjs = require('dayjs');
 const moment = require('moment');
 const parseFormat = require('moment-parseformat');
 moment.locale(getState(NSPanel_Path + 'Config.locale').val);
@@ -1021,60 +1021,16 @@ const globalTextColor: any = White;
 const Sliders2: number = 0;
 let checkBlindActive: boolean = false;
 
-async function Init_dayjs() {
+async function Init_momentjs() {
     try {
-        //Loading dayjs
-        const dayjs = require('dayjs');
-        const dayjsLanguages: any = [
-            'en',
-            'de',
-            'nl',
-            'da',
-            'es',
-            'fr',
-            'it',
-            'ru',
-            'nb',
-            'nn',
-            'pl',
-            'pt',
-            'af',
-            'ar',
-            'bg',
-            'ca',
-            'cs',
-            'el',
-            'et',
-            'fa',
-            'fi',
-            'he',
-            'hr',
-            'hu',
-            'hy-am',
-            'id',
-            'is',
-            'lb',
-            'lt',
-            'ro',
-            'sk',
-            'sl',
-            'sv',
-            'th',
-            'tr',
-            'uk',
-            'vi',
-            'zh-cn',
-            'zh-tw',
-        ];
-        for (let i = 0; i < dayjsLanguages.length; i++) {
-            require('dayjs/locale/' + dayjsLanguages[i]);
-        }
-        dayjs.locale(getDayjsLocale());
+
+        moment.locale(`'${getMomentjsLocale()}'`);
+
     } catch (err: any) {
-        log('error at function init_dayjs: ' + err.message, 'warn');
+        log('error at function init_momentjs: ' + err.message, 'warn');
     }
 }
-Init_dayjs();
+Init_momentjs();
 
 let useMediaEvents: boolean = false;
 let timeoutMedia: any;
@@ -2747,7 +2703,7 @@ setTimeout(async function () {
 
 //------------------Begin Update Functions
 
-function getDayjsLocale(): String {
+function getMomentjsLocale(): String {
     try {
         let locale = getState(NSPanel_Path + 'Config.locale').val;
         if (locale == 'hy-AM' || locale == 'zh-CN' || locale == 'zh-TW') {
@@ -2756,9 +2712,8 @@ function getDayjsLocale(): String {
             return locale.substring(0, 2);
         }
     } catch (err: any) {
-        log('error in function getDayjsLocale: ' + err.message, 'warn');
-        // hier muß eine Return oder ein neuer throw err hin
-        return '';
+        log('error in function getMomentjsLocale: ' + err.message, 'warn');
+        return 'en';
     }
 }
 
@@ -3789,7 +3744,7 @@ function SendDate(): void {
 
             const date = new Date();
             const options: any = { weekday: dpWeekday, year: 'numeric', month: dpMonth, day: 'numeric' };
-            const _SendDate = dpCustomFormat != '' ? dayjs().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
+            const _SendDate = dpCustomFormat != '' ? moment().format(dpCustomFormat) : date.toLocaleDateString(getState(NSPanel_Path + 'Config.locale').val, options);
 
             SendToPanel({ payload: 'date~' + _SendDate });
         }
