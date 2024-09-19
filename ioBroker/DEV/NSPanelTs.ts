@@ -25,7 +25,7 @@ durchführen und FlashNextion wiederholen.
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
 *****************************************************************************************************************************
-Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment', 'moment-parseformat' und 'dayjs' eingetragen sein
+Ab Script Version 4.3.2.1 muss in der JavaScript Instanz die npm Module 'moment' und 'moment-parseformat' eingetragen sein
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#8--einstellungen-in-js-adapter-instanz
 *****************************************************************************************************************************
 
@@ -1024,10 +1024,10 @@ let checkBlindActive: boolean = false;
 async function Init_momentjs() {
     try {
 
-        moment.locale(`'${getDayjsLocale()}'`);
+        moment.locale(`'${getMomentjsLocale()}'`);
 
     } catch (err: any) {
-        log('error at function init_dayjs: ' + err.message, 'warn');
+        log('error at function init_momentjs: ' + err.message, 'warn');
     }
 }
 Init_momentjs();
@@ -2703,7 +2703,7 @@ setTimeout(async function () {
 
 //------------------Begin Update Functions
 
-function getDayjsLocale(): String {
+function getMomentjsLocale(): String {
     try {
         let locale = getState(NSPanel_Path + 'Config.locale').val;
         if (locale == 'hy-AM' || locale == 'zh-CN' || locale == 'zh-TW') {
@@ -2712,7 +2712,7 @@ function getDayjsLocale(): String {
             return locale.substring(0, 2);
         }
     } catch (err: any) {
-        log('error in function getDayjsLocale: ' + err.message, 'warn');
+        log('error in function getMomentjsLocale: ' + err.message, 'warn');
         return 'en';
     }
 }
