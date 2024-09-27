@@ -1071,7 +1071,7 @@ async function CheckConfigParameters() {
             const a = n.shift();
             const i = n.shift();
 
-            if (a === 'mqtt' && !isNaN(Number(i))) {
+            if (a.substring(0, 4) === 'mqtt' && !isNaN(Number(i))) {
                 sendTo(`${a}.${i}`, 'sendMessage2Client', { topic: n.join('/'), message: buildNSPanelString('time', '12:00') });
                 await sleep(500);
             }
@@ -3517,6 +3517,9 @@ async function SendToPanel(val: NSPanel.Payload | NSPanel.Payload[]) {
             });
         } else {
             setIfExists(config.panelSendTopic, val.payload);
+            if (Debug) {
+                log('function SendToPanel val-payload: ' + val.payload, 'info');
+            }
         }
     } catch (err: any) {
         log('error at function SendToPanel: ' + err.message, 'warn');
