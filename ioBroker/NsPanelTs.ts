@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -31,8 +31,8 @@ https://github.com/joBr99/nspanel-lovelace-ui/wiki/iobroker---Basisinstallation#
 
 ReleaseNotes:
     Bugfixes und Erweiterungen:
-	See ChangeLog all Release Notes: https://github.com/joBr99/nspanel-lovelace-ui/wiki/Release-Notes
- 
+    See ChangeLog all Release Notes: https://github.com/joBr99/nspanel-lovelace-ui/wiki/Release-Notes
+
         - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
         - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
         - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
@@ -40,7 +40,7 @@ ReleaseNotes:
         - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
         - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
         - 16.11.2023 - v4.3.3.5  Add Multilingualism to Service Menu (39 languages)
-     	- 17.11.2023 - v4.3.3.5  Add Multilingualism to cardUnlock, cardQR, popupFan, popupTimer (39 languages)
+        - 17.11.2023 - v4.3.3.5  Add Multilingualism to cardUnlock, cardQR, popupFan, popupTimer (39 languages)
         - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
         - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
         - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
@@ -116,7 +116,7 @@ ReleaseNotes:
         - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
         - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes; Add miValue / maxValue to Volume-Slider
         - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
-	- 11.02.2024 - v4.3.3.43 Fix VolumeSlider
+        - 11.02.2024 - v4.3.3.43 Fix VolumeSlider
         - 05.05.2024 - v4.3.3.44 Fix MQTT-Port-check
         - 13.05.2024 - v4.4.0.0  TFT 54 / 4.4.0
         - 19.05.2024 - v4.4.0.1  TFT 53 / 4.4.0
@@ -124,12 +124,13 @@ ReleaseNotes:
         - 13.06.2024 - v4.4.0.3  Check prefix '.tele.' in config.NSPanelReceiveTopic
         - 13.09.2024 - v4.4.0.4  New Feature: Hidden Carts
         - 18.09.2024 - v4.4.0.5  Remove day.JS
-	- 19.09.2024 - v4.4.0.6  Check Ports with mqtt.X and mqtt-client.X
+        - 19.09.2024 - v4.4.0.6  Check Ports with mqtt.X and mqtt-client.X
         - 27.09.2024 - v4.4.0.6  Fix: Using MQTT adapter or MQTT-CLIENT adapter / Minor Fix by wolwin
+        - 09.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
-	
+
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
@@ -271,7 +272,7 @@ let Debug: boolean = false;
     // DE: Mögliche Wetteradapter 'accuweather.0.' oder 'daswetter.0.'
     // EN: Possible weather adapters 'accuweather.0.' or 'the weather.0.'
     const weatherAdapterInstance: string = 'accuweather.0.';
-    
+
     // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
     // EN: Possible values: 'Min', 'Max' or 'MinMax' in the screensaver
     const weatherScreensaverTempMinMax: string = 'MinMax';
@@ -400,8 +401,8 @@ let Debug: boolean = false;
 
 //-- Anfang für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich ----------------
 //-- Start for your own pages -- some self-defined aliases required ----------------
-  
-	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+
+    //-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
 
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 //-- END for your own pages -- some self-defined aliases required ------------------------
@@ -995,7 +996,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.6';
+const scriptVersion: string = 'v4.4.0.7';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1008,20 +1009,31 @@ let vwIconColor: number[] = [];
 let weatherForecast: boolean;
 let pageCounter: number = 0;
 let alwaysOn: boolean = false;
-let valueHiddenCards = getState(NSPanel_Path + 'Config.hiddenCards').val;
+let valueHiddenCards: boolean = false;
+if ( existsState(NSPanel_Path + 'Config.hiddenCards')) {
+    valueHiddenCards = getState(NSPanel_Path + 'Config.hiddenCards').val;
+}
 
 let buttonToggleState: { [key: string]: boolean } = {};
 
 const axios = require('axios');
 const moment = require('moment');
 const parseFormat = require('moment-parseformat');
-moment.locale(getState(NSPanel_Path + 'Config.locale').val);
+let firstRun: boolean = false;
+if ( existsState(NSPanel_Path + 'Config.locale')) {
+    moment.locale(getState(NSPanel_Path + 'Config.locale').val);
+} else {
+    moment.locale('en-US');
+    firstRun = true;
+}
 
 const scheduleList: { [key: string]: any } = {};
 
 const globalTextColor: any = White;
 const Sliders2: number = 0;
 let checkBlindActive: boolean = false;
+
+log('--- start of NsPanelTs: ' + NSPanel_Path + ' ---', 'info');
 
 async function Init_momentjs() {
     try {
@@ -1067,6 +1079,7 @@ async function CheckConfigParameters() {
         if (config.panelRecvTopic.indexOf('.tele.') < 0) {
             log('Config-Parameter: << config.panelRecvTopic - ' + config.panelRecvTopic + ' >> does not refer to the prefix .tele. Please Check Parameters!', 'error');
         }
+        
         if (existsObject(config.panelSendTopic) == false) {
             const n = config.panelSendTopic.split('.');
             const a = n.shift();
@@ -1125,10 +1138,10 @@ async function CheckConfigParameters() {
             }
         });
         if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null && existsObject(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == false) {
-            log('mrIcon1ScreensaverEntity data point in the config not available - please adjust', 'warn');
+            if ( existsState(NSPanel_Path + 'Config'))  log('mrIcon1ScreensaverEntity data point in the config not available - please adjust', 'warn');
         }
         if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null && existsObject(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == false) {
-            log('mrIcon2ScreensaverEntity data point in the config not available - please adjust', 'warn');
+            if ( existsState(NSPanel_Path + 'Config'))  log('mrIcon2ScreensaverEntity data point in the config not available - please adjust', 'warn');
         }
         if (CheckEnableSetObject()) {
             log('setObjects enabled - create Alias Channels possible', 'info');
@@ -1162,7 +1175,7 @@ async function InitIoBrokerInfo() {
                 name: 'ACTUAL',
             });
             // ScriptName
-            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptName', 'v' + javaScriptVersion, { type: 'string', write: false });
+            await createStateAsync(NSPanel_Path + 'IoBroker.ScriptName', 'v' + NSPanel_Path + 'IoBroker.ScriptName', { type: 'string', write: false });
             setObject(AliasPath + 'IoBroker.ScriptName', { type: 'channel', common: { role: 'info', name: 'Scriptname' }, native: {} });
             await createAliasAsync(AliasPath + 'IoBroker.ScriptName.ACTUAL', NSPanel_Path + 'IoBroker.ScriptName', true, <iobJS.StateCommon>{ type: 'string', role: 'state', name: 'ACTUAL' });
         }
@@ -1259,17 +1272,18 @@ async function CheckMQTTPorts() {
         log('error at function CheckMQTTPorts: ' + err.message, 'warn');
     }
 }
-
 CheckMQTTPorts();
 
 async function Init_Release() {
-    const FWVersion = [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56];
-    const FWRelease = ['3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.4.0', '4.5.0', '4.6.0'];
+    const FWVersion = [0, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56];
+    const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.4.0', '4.5.0', '4.6.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
+            // if 'desiredVersion' as a string:  await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), { type: 'string', write: false });
         } else {
             await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, true);
+            // if 'desiredVersion' as a string:  await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), true);
         }
 
         if (existsObject(NSPanel_Path + 'Config.Update.activ') == false) {
@@ -1291,7 +1305,7 @@ async function Init_Release() {
             //Create TFT DP's
             if (isSetOptionActive) {
                 await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], { type: 'string', write: false });
-                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version, { type: 'string', write: false });
+                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', String(desired_display_firmware_version), { type: 'string', write: false });
                 setObject(AliasPath + 'Display_Firmware.TFT.currentVersion', { type: 'channel', common: { role: 'info', name: 'current TFT-Version' }, native: {} });
                 setObject(AliasPath + 'Display_Firmware.TFT.desiredVersion', { type: 'channel', common: { role: 'info', name: 'desired TFT-Version' }, native: {} });
                 await createAliasAsync(AliasPath + 'Display_Firmware.TFT.currentVersion.ACTUAL', NSPanel_Path + 'Display_Firmware.TFT.currentVersion', true, <iobJS.StateCommon>{
@@ -1308,7 +1322,7 @@ async function Init_Release() {
         } else {
             //Create TFT DP's
             await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], true);
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', desired_display_firmware_version + ' / ' + tft_version, true);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', String(desired_display_firmware_version) + ' / ' + tft_version, true);
         }
     } catch (err: any) {
         log('error at function Init_Release: ' + err.message, 'warn');
@@ -1666,7 +1680,11 @@ InitActiveBrightness();
 
 on({ id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne' }, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val ?? -1;
+        let dimBrightness:number = -1;
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness')) {
+            dimBrightness = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+        }
+        let active = dimBrightness ?? -1;
         if (obj.state.val >= 0 || obj.state.val <= 100) {
             log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
             SendToPanel({ payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
@@ -1679,7 +1697,11 @@ on({ id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne' }, as
 
 on({ id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne' }, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
+        let brightness:number = 100;
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.activeBrightness')) {
+            brightness = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        }
+        let active = brightness ?? 80;
         if (obj.state.val != null && obj.state.val != -1) {
             if (obj.state.val < -1 || obj.state.val > 100) {
                 log('activeDimmodeBrightness value only between -1 and 100', 'info');
@@ -1709,7 +1731,11 @@ on({ id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne
 
 on({ id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: 'ne' }, async function (obj) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
+        let brightness:number = 100;
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.activeBrightness')) {
+            brightness = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        }
+        let active = brightness ?? 80;
         if (obj.state.val) {
             SendToPanel({ payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
         } else {
@@ -1929,6 +1955,7 @@ async function InitDateformat() {
     }
 }
 InitDateformat();
+
 //Control Dateformat short/long from DP's
 on({ id: [String(NSPanel_Path) + 'Config.Dateformat.Switch.weekday', String(NSPanel_Path) + 'Config.Dateformat.Switch.month'], change: 'ne' }, async function (obj) {
     try {
@@ -2098,7 +2125,7 @@ async function InitPageNavi() {
     try {
         if (!existsState(NSPanel_Path + 'PageNavi')) {
             await createStateAsync(NSPanel_Path + 'PageNavi', <iobJS.StateCommon>{ type: 'string', write: true });
-            await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: { pagetype: 'page', pageId: 0 }, ack: true });
+            await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: "{ pagetype: 'page', pageId: 0 }", ack: true });
         }
     } catch (err: any) {
         log('error at function InitPageNavi: ' + err.message, 'warn');
@@ -2110,11 +2137,15 @@ InitPageNavi();
 on({ id: [NSPanel_Path + 'PageNavi'], change: 'any' }, async function (obj) {
     try {
         if (existsState(NSPanel_Path + 'PageNavi')) {
-            let vObj = JSON.parse(obj.state.val);
-            if (vObj.pagetype == 'page') {
-                GeneratePage(config.pages[vObj.pageId]);
-            } else if (vObj.pagetype == 'subpage') {
-                GeneratePage(config.subPages[vObj.pageId]);
+            try {
+                let vObj = JSON.parse(obj.state.val);
+                if (vObj.pagetype == 'page') {
+                    GeneratePage(config.pages[vObj.pageId]);
+                } else if (vObj.pagetype == 'subpage') {
+                    GeneratePage(config.subPages[vObj.pageId]);
+                }
+            } catch (e) {
+                log('non valid JSON at trigger PageNavi', 'info');
             }
         }
     } catch (err: any) {
@@ -2125,8 +2156,16 @@ on({ id: [NSPanel_Path + 'PageNavi'], change: 'any' }, async function (obj) {
 //----------------------Begin Dimmode
 function ScreensaverDimmode(timeDimMode: NSPanel.DimMode) {
     try {
-        let active = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80;
-        let dimmode = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val ?? -1;
+        let brightness:number = 100;
+        let dimBrightness:number = -1;
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.activeBrightness')) {
+            brightness = getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val;
+        }
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness')) {
+            dimBrightness = getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val;
+        }
+        let active = brightness ?? 80;
+        let dimmode = dimBrightness ?? -1;
         if (Debug) {
             log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark), 'info');
         }
@@ -2349,9 +2388,10 @@ async function Calc_Consumtion(Brightness: number, Relays: number) {
 //
 async function CountRelaysOn(Path: string) {
     try {
-        let r1: boolean = getState(Path + 'Relay.1').val;
-        let r2: boolean = getState(Path + 'Relay.2').val;
-
+        let r1: boolean = true;
+        let r2: boolean = true;
+        if (existsState(Path + 'Relay.1')) r1 = getState(Path + 'Relay.1').val;
+        if (existsState(Path + 'Relay.2')) r2 = getState(Path + 'Relay.2').val;
         if (r1 && r2) {
             return 2;
         } else if (!r1 && !r2) {
@@ -2365,6 +2405,13 @@ async function CountRelaysOn(Path: string) {
 }
 
 async function DetermineDimBrightness(Path: string) {
+    if ( existsState(NSPanel_Path + 'NSPanel_Dimmode_hourDay') && 
+         existsState(NSPanel_Path + 'NSPanel_Dimmode_hourNight') &&
+         existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessDay') &&
+         existsState(NSPanel_Path + 'NSPanel_Dimmode_brightnessNight') &&
+         existsState(NSPanel_Path + 'ScreensaverInfo') &&
+         existsState(NSPanel_Path + 'ActivePage')
+       ) {
     try {
         const vTimeDay = getState(Path + 'NSPanel_Dimmode_hourDay').val;
         const vTimeNight = getState(Path + 'NSPanel_Dimmode_hourNight').val;
@@ -2388,6 +2435,7 @@ async function DetermineDimBrightness(Path: string) {
     } catch (err: any) {
         log('error at function DetermineDimBrightness: ' + err.message, 'warn');
     }
+  }
 }
 
 async function DetermineScreensaverDimmode(timeDimMode: NSPanel.DimMode) {
@@ -2492,8 +2540,14 @@ async function InitPopupNotify() {
 
         // Notification to screensaver
         on({ id: [screensaverNotifyHeading, screensaverNotifyText], change: 'ne', ack: false }, async (obj) => {
-            const heading = getState(screensaverNotifyHeading).val;
-            const text = getState(screensaverNotifyText).val;
+            let heading: string = '';
+            let text: string  = '';
+            if (existsState(screensaverNotifyHeading)) {
+                heading = getState(screensaverNotifyHeading).val;
+            }
+            if (existsState(screensaverNotifyText)) {                
+                text = getState(screensaverNotifyText).val;
+            }
 
             if (screensaverEnabled && heading != '' && text != '') {
                 setIfExists(config.panelSendTopic, `notify~${heading}~${text}`);
@@ -2517,8 +2571,14 @@ async function InitPopupNotify() {
             let v_popupNotifyIcon = getState(popupNotifyIcon).val != null ? getState(popupNotifyIcon).val : 'alert';
             let v_popupNotifyBuzzer = getState(popupNotifyBuzzer).val != null ? getState(popupNotifyBuzzer).val : '0';
 
-            const heading = getState(popupNotifyHeading).val;
-            const text = getState(popupNotifyText).val;
+            let heading: string = '';
+            let text: string  = '';
+            if (existsState(popupNotifyHeading)) {
+                heading = getState(popupNotifyHeading).val;
+            }
+            if (existsState(popupNotifyText)) {
+                text = getState(popupNotifyText).val;
+            }
 
             notification =
                 'entityUpdateDetail' +
@@ -2606,23 +2666,47 @@ let scheduleSendTime = adapterSchedule(new Date().setSeconds(0, 0), 60, () => {
 });
 
 //Switch between Screensaver Entities and WeatherForecast
-let scheduleSwichScreensaver = adapterSchedule(undefined, parseInt(getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val), () => {
+let screensaverChangeTime = 60;
+if (existsState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime')) {
+    screensaverChangeTime = parseInt(getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val);
+}
+let scheduleSwichScreensaver = adapterSchedule(undefined, screensaverChangeTime, () => {
     try {
         //WeatherForecast true/false Switchover delayed
+        let heading: string = '';
+        let text: string  = '';
+        let wForecast: boolean = true;
+        let wForecastTimer: boolean = true;
+        let changeTime:number = 60;
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading')) {
+            heading = getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading').val;
+        }
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText')) {
+            text = getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText').val;
+        }
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.weatherForecast')) {
+            wForecast = getState(NSPanel_Path + 'ScreensaverInfo.weatherForecast').val;
+        }
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.weatherForecastTimer')) {
+            wForecastTimer = getState(NSPanel_Path + 'ScreensaverInfo.weatherForecastTimer').val;
+        }
+        if (existsState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime')) {
+            changeTime = getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val;
+        }
         if (
-            getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading').val == '' &&
-            getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText').val == '' &&
-            getState(NSPanel_Path + 'ScreensaverInfo.weatherForecast').val == true &&
-            getState(NSPanel_Path + 'ScreensaverInfo.weatherForecastTimer').val == true
+            heading == '' &&
+            text == '' &&
+            wForecast == true &&
+            wForecastTimer == true
         ) {
-            setStateDelayed(NSPanel_Path + 'ScreensaverInfo.weatherForecast', false, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2) * 1000, false);
+            setStateDelayed(NSPanel_Path + 'ScreensaverInfo.weatherForecast', false, (changeTime / 2) * 1000, false);
         } else if (
-            getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyHeading').val == '' &&
-            getState(NSPanel_Path + 'ScreensaverInfo.popupNotifyText').val == '' &&
-            getState(NSPanel_Path + 'ScreensaverInfo.weatherForecast').val == false &&
-            getState(NSPanel_Path + 'ScreensaverInfo.weatherForecastTimer').val == true
+            heading == '' &&
+            text == '' &&
+            wForecast == false &&
+            wForecastTimer == true
         ) {
-            setStateDelayed(NSPanel_Path + 'ScreensaverInfo.weatherForecast', true, (getState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime').val / 2) * 1000, false);
+            setStateDelayed(NSPanel_Path + 'ScreensaverInfo.weatherForecast', true, (changeTime / 2) * 1000, false);
         }
     } catch (err: any) {
         log('error at schedule entityChangeTime: ' + err.message, 'warn');
@@ -2683,31 +2767,43 @@ let scheduleStartup = adapterSchedule({ hour: 3, minute: 30 }, 24 * 60 * 60, asy
     setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 });
 
-// Updates currently compare every 12 hours
+// Check for updates with Start
+get_locales();
+get_locales_servicemenu();
+
+// setIfExists(config.panelSendTopic, 'pageType~pageStartup');
+// get_tasmota_status0();
+// get_panel_update_data();
+// check_updates();
+
+// Updates currently compare and every 12 hours
 let scheduleCheckUpdates = adapterSchedule(undefined, 60 * 60 * 12, () => {
     get_tasmota_status0();
     get_panel_update_data();
     check_updates();
 });
 
-// Check for updates with Start
-get_locales();
-get_locales_servicemenu();
-setIfExists(config.panelSendTopic, 'pageType~pageStartup');
-get_tasmota_status0();
-get_panel_update_data();
-check_updates();
+// force manual restart after object initialization
 /*
-setTimeout(async function () {
-    setState(config.panelSendTopic, 'pageType~pageStartup');
-}, 90000);
+if (firstRun) {
+    stopScript(scriptName);
+}
 */
+
+setTimeout(async function () {
+    if (firstRun) {
+        stopScript(scriptName);
+    }
+}, 20000);
 
 //------------------Begin Update Functions
 
 function getMomentjsLocale(): String {
     try {
-        let locale = getState(NSPanel_Path + 'Config.locale').val;
+        let locale = 'en-US';
+        if ( existsState(NSPanel_Path + 'Config.locale')) {
+            let locale = getState(NSPanel_Path + 'Config.locale').val;
+        }
         if (locale == 'hy-AM' || locale == 'zh-CN' || locale == 'zh-TW') {
             return locale.toLowerCase();
         } else {
@@ -2876,44 +2972,52 @@ async function check_updates() {
 
         // TFT-Firmware-Vergleich
         if (existsObject(NSPanel_Path + 'Display_Firmware.currentVersion')) {
-            if (parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val) < desired_display_firmware_version) {
-                if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
-                    if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
-                        log('Auto-updates switched on - update TFT firmware is carried out', 'info');
-
-                        // TFT-Firmware Update durchführen
-                        update_tft_firmware();
-                        // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
-                        await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
-
-                        if (Debug) log('Display firmware updated automatically', 'info');
-                    } else {
-                        // Auf TFT-Firmware hinweisen
-                        if (Debug) log('Display firmware => Automatic updates off, manual update required', 'info');
-
-                        InternalName = 'TFTFirmwareUpdate';
-                        Headline = 'TFT-Firmware Update';
-                        Text = [
-                            'Es ist eine neue Version der TFT-Firmware',
-                            '\r\n',
-                            'verfügbar',
-                            '\r\n',
-                            '\r\n',
-                            'Installierte Version: ' + String(getState(String(NSPanel_Path) + 'Display_Firmware.currentVersion').val),
-                            '\r\n',
-                            'Verfügbare Version: ' + String(desired_display_firmware_version),
-                            '\r\n',
-                            '\r\n',
-                            'Upgrade durchführen?',
-                        ].join('');
-                        Update = true;
-                    }
-                }
+            if (parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val) == 0) {   
+                log('Actual TFT-firmware version just not not initialized', 'info');
             } else {
-                if (Debug) log('Already the latest display firmware on NSPanel', 'info');
+                if (parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val) < desired_display_firmware_version) {
+                    if (existsState(NSPanel_Path + 'NSPanel_autoUpdate')) {
+                        if (getState(NSPanel_Path + 'NSPanel_autoUpdate').val) {
+                            log('Auto-updates switched on - update TFT firmware is carried out', 'info');
+
+                            // TFT-Firmware Update durchführen
+                            update_tft_firmware();
+                            
+                            // Aktuelle TFT-Firmware Version = Online TFT-Firmware Version
+                            await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State>{ val: getState(NSPanel_Path + 'Display_Firmware.onlineVersion').val, ack: true });
+
+                            if (Debug) log('Display firmware updated automatically', 'info');
+                        } else {
+                           // Auf TFT-Firmware hinweisen
+                           if (Debug) log('Display firmware => Automatic updates off, manual update required', 'info');
+
+                           InternalName = 'TFTFirmwareUpdate';
+                           Headline = 'TFT-Firmware Update';
+                            Text = [
+                               'Es ist eine neue Version der TFT-Firmware',
+                               '\r\n',
+                               'verfügbar',
+                               '\r\n',
+                               '\r\n',
+                               'Installierte Version: ' + String(getState(String(NSPanel_Path) + 'Display_Firmware.currentVersion').val),
+                                '\r\n',
+                               'Verfügbare Version: ' + String(desired_display_firmware_version),
+                               '\r\n',
+                               '\r\n',
+                               'Upgrade durchführen?',
+                           ].join('');
+                           Update = true;
+                        }
+                    }
+                } else {
+                    if (Debug) log('Already the latest display firmware on NSPanel', 'info');
+                }
             }
         }
-        let update_message: boolean = getState(NSPanel_Path + 'Config.Update.UpdateMessage').val;
+        let update_message: boolean = true;
+        if (existsState(NSPanel_Path + 'Config.Update.UpdateMessage')) {
+            update_message = getState(NSPanel_Path + 'Config.Update.UpdateMessage').val;
+        }
         if (Update && update_message) {
             await setStateAsync(popupNotifyHeading, <iobJS.State>{ val: Headline, ack: false });
             await setStateAsync(popupNotifyHeadingColor, <iobJS.State>{ val: HeadlineColor, ack: false });
@@ -3396,94 +3500,103 @@ function update_berry_driver_version() {
 }
 
 function update_tft_firmware() {
-    if (getState(NSPanel_Path + 'Config.Update.activ').val == 0) {
-        let desired_display_firmware_url = '';
+    if ((existsObject(NSPanel_Path + 'Config.Update.activ') != false) && (existsObject(NSPanel_Path + 'Display_Firmware.TFT.currentVersion') != false)) {
+        let id = getState(NSPanel_Path + 'Display_Firmware.TFT.currentVersion').val;
+        let currentVersion = id.split('/');
+        let version = parseInt(currentVersion[0]);
+        if ( ! isNaN(version) ) {
+            if ((getState(NSPanel_Path + 'Config.Update.activ').val == 0) && (version != 0)) {
+                if (existsState(NSPanel_Path + 'NSPanel_Version')) {
+                    let desired_display_firmware_url = '';
 
-        if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-l') {
-            desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-${tft_version}.tft`;
-        } else if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
-            desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-${tft_version}.tft`;
-        } else {
-            desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
-        }
-
-        log('Start TFT-Upgrade for: ' + getState(NSPanel_Path + 'NSPanel_Version').val + ' Version', 'info');
-        log('Install NextionTFT: ' + desired_display_firmware_url, 'info');
-
-        try {
-            let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`;
-            if (tasmota_web_admin_password != '') {
-                urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=FlashNextion ${desired_display_firmware_url}`;
-            }
-
-            axios
-                .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
-                .then(async function (response) {
-                    if (response.status === 200) {
-                        if (Debug) {
-                            log(response.data, 'info');
-                        }
-                        await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
-                        await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
-                        Init_Release();
+                    if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-l') {
+                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-${tft_version}.tft`;
+                    } else if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
+                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-${tft_version}.tft`;
                     } else {
-                        log('Axios Status - update_tft_firmware: ' + response.state, 'warn');
+                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
                     }
-                })
-                .catch(function (error) {
-                    log(error, 'warn');
-                });
-        } catch (err: any) {
-            log('error request in function update_tft_firmware: ' + err.message, 'warn');
+
+                    log('Start TFT-Upgrade for: ' + getState(NSPanel_Path + 'NSPanel_Version').val + ' Version', 'info');
+                    log('Install NextionTFT: ' + desired_display_firmware_url, 'info');
+
+                    try {
+                        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=FlashNextion ${desired_display_firmware_url}`;
+                        if (tasmota_web_admin_password != '') {
+                            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=FlashNextion ${desired_display_firmware_url}`;
+                        }
+                        axios
+                            .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
+                            .then(async function (response) {
+                                if (response.status === 200) {
+                                    if (Debug) {
+                                        log(response.data, 'info');
+                                    }
+                                    await createStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.StateCommon>{ type: 'string', write: false });
+                                    await setStateAsync(NSPanel_Path + 'TFT_Firmware.onlineVersion', <iobJS.State>{ val: tft_version, ack: true });
+                                    Init_Release();
+                                } else {
+                                    log('Axios Status - update_tft_firmware: ' + response.state, 'warn');
+                                }
+                            })
+                            .catch(function (error) {
+                                log(error, 'warn');
+                            });
+                    } catch (err: any) {
+                        log('error request in function update_tft_firmware: ' + err.message, 'warn');
+                    }
+                }
+            }
         }
     }
 }
 
 function update_tasmota_firmware() {
-    try {
-        if (getState(NSPanel_Path + 'Config.Update.activ').val == 0) {
-            let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=OtaUrl ${tasmotaOtaUrl}${tasmotaOtaVersion}`;
-            if (tasmota_web_admin_password != '') {
-                urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=OtaUrl ${tasmotaOtaUrl}${tasmotaOtaVersion}`;
-            }
-
-            axios
-                .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
-                .then(async function (response) {
-                    if (response.status === 200) {
-                        if (Debug) {
-                            log(response.data, 'info');
+    if (existsObject(NSPanel_Path + 'Config.Update.activ') != false) {
+        try {
+            if (getState(NSPanel_Path + 'Config.Update.activ').val == 0) {
+                let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=OtaUrl ${tasmotaOtaUrl}${tasmotaOtaVersion}`;
+                if (tasmota_web_admin_password != '') {
+                    urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=OtaUrl ${tasmotaOtaUrl}${tasmotaOtaVersion}`;
+                }
+                axios
+                    .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
+                    .then(async function (response) {
+                        if (response.status === 200) {
+                            if (Debug) {
+                                log(response.data, 'info');
+                            }
+                        } else {
+                            log('Axios Status - update_tasmota_firmware ==> set OTA: ' + response.state, 'warn');
                         }
-                    } else {
-                        log('Axios Status - update_tasmota_firmware ==> set OTA: ' + response.state, 'warn');
-                    }
-                })
-                .catch(function (error) {
-                    log(error, 'warn');
-                });
+                    })
+                    .catch(function (error) {
+                        log(error, 'warn');
+                    });
 
-            urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`;
-            if (tasmota_web_admin_password != '') {
-                urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Upgrade 1`;
-            }
+                urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Upgrade 1`;
+                if (tasmota_web_admin_password != '') {
+                    urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Upgrade 1`;
+                }
 
-            axios
-                .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
-                .then(async function (response) {
-                    if (response.status === 200) {
-                        if (Debug) {
-                            log(response.data, 'info');
+                axios
+                    .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
+                    .then(async function (response) {
+                        if (response.status === 200) {
+                            if (Debug) {
+                                log(response.data, 'info');
+                            }
+                        } else {
+                            log('Axios Status - update_tasmota_firmware: ' + response.state, 'warn');
                         }
-                    } else {
-                        log('Axios Status - update_tasmota_firmware: ' + response.state, 'warn');
-                    }
-                })
-                .catch(function (error) {
-                    log(error, 'warn');
-                });
+                    })
+                    .catch(function (error) {
+                        log(error, 'warn');
+                    });
+            }
+        } catch (err: any) {
+            log('error request in function update_tasmota_firmware: ' + err.message, 'warn');
         }
-    } catch (err: any) {
-        log('error request in function update_tasmota_firmware: ' + err.message, 'warn');
     }
 }
 //mqttCallback (topic: string, message: string): Promise<void> {
@@ -3735,9 +3848,13 @@ function HandleHardwareButton(method: NSPanel.EventMethod): void {
 }
 
 function HandleStartupProcess(): void {
+    let timeout:number = 10;
     SendDate();
     SendTime();
-    SendToPanel({ payload: 'timeout~' + getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val });
+    if (existsState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver')) {
+        timeout = getState(NSPanel_Path + 'Config.Screensaver.timeoutScreensaver').val;
+    }
+    SendToPanel({ payload: 'timeout~' + timeout });
 }
 
 function SendDate(): void {
@@ -3836,20 +3953,28 @@ function GeneratePageElements(page: PageType): string {
                 maxItems = 1;
                 break;
             case 'cardEntities':
-                if (getState(NSPanel_Path + 'NSPanel_Version').val == 'eu') {
-                    maxItems = 4;
+                if (existsState(NSPanel_Path + 'NSPanel_Version')) {
+                    if (getState(NSPanel_Path + 'NSPanel_Version').val == 'eu') {
+                        maxItems = 4;
+                    } else {
+                        maxItems = 5;
+                    }
                 } else {
-                    maxItems = 5;
+                       maxItems = 4;
                 }
                 break;
             case 'cardGrid':
                 maxItems = 6;
                 break;
             case 'cardGrid2':
-                if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
-                    maxItems = 9;
+                if (existsState(NSPanel_Path + 'NSPanel_Version')) {
+                    if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
+                       maxItems = 9;
+                   } else {
+                        maxItems = 8;
+                   }
                 } else {
-                    maxItems = 8;
+                       maxItems = 8;
                 }
                 break;
         }
@@ -4687,62 +4812,91 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 }
 
 function findLocale(controlsObject: string, controlsState: string): string {
+    if ( ! existsState(NSPanel_Path + 'Config.locale')) {
+        if (Debug) {
+            log('findLocaleServMenu missing object: ' + NSPanel_Path + 'Config.locale' + ' -> ' + controlsState, 'warn');
+        }
+        return controlsState;
+    }
+    if ( ! existsState(NSPanel_Path + 'NSPanel_locales_json')) {
+        if (Debug) {
+            log('findLocaleServMenu missing object: ' + NSPanel_Path + 'NSPanel_locales_json' + ' -> ' + controlsState, 'warn');
+        }
+        return controlsState;
+    }
+
     const locale = getState(NSPanel_Path + 'Config.locale').val;
     const strJson = getState(NSPanel_Path + 'NSPanel_locales_json').val;
-
-    if (Debug) {
-        log(controlsObject + ' - ' + controlsState, 'info');
-    }
 
     try {
         const obj = JSON.parse(strJson);
         const strLocale = obj[controlsObject][controlsState][locale];
 
         if (strLocale != undefined) {
+            if (Debug) {
+                log('findLocale: ' + controlsObject + ' - ' + controlsState + ' - ' + strLocale, 'info');
+            }
             return strLocale;
         } else {
+            if (Debug) {
+                log('findLocale missing locale: ' + controlsObject + ' - ' + controlsState, 'info');
+            }
             return controlsState;
         }
     } catch (err: any) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
-            if (Debug) {
-                log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState, 'info');
-            }
+            log('function findLocale: missing translation: ' + controlsObject + ' - ' + controlsState, 'info');
         } else {
-            log('error at function findLocale: ' + err.message, 'warn');
+            log('error at function findLocale: ' + controlsObject + ' - ' + controlsState + ' : ' + err.message, 'warn');
         }
         return controlsState;
     }
 }
 
 function findLocaleServMenu(controlsState: string): string {
+    if ( ! existsState(NSPanel_Path + 'Config.locale')) {
+        if (Debug) {
+            log('findLocaleServMenu missing object: ' + NSPanel_Path + 'Config.locale' + ' -> ' + controlsState, 'warn');
+        }
+        return controlsState;
+    }
+    if ( ! existsState(NSPanel_Path + 'NSPanel_locales_service_json')) {
+        if (Debug) {
+            log('findLocaleServMenu missing object: ' + NSPanel_Path + 'NSPanel_locales_service_json' + ' -> ' + controlsState, 'warn');
+        }
+        return controlsState;
+    }
+
     const locale = getState(NSPanel_Path + 'Config.locale').val;
     const strJson = getState(NSPanel_Path + 'NSPanel_locales_service_json').val;
-
-    if (Debug) {
-        log(controlsState, 'info');
-    }
 
     try {
         const obj = JSON.parse(strJson);
         const strLocale = obj[controlsState][locale];
 
         if (strLocale != undefined) {
+            if (Debug) {
+                log('findLocaleServMenu: ' + controlsState + ' - ' + locale + ' -> ' + strLocale, 'info');
+            }
             return strLocale;
         } else {
             if (obj[controlsState]['en-US'] != undefined) {
+                if (Debug) {
+                    log('findLocaleServMenu: ' + controlsState + ' - ' + locale + ' -> ' + obj[controlsState]['en-US'], 'info');
+                }
                 return obj[controlsState]['en-US'];
             } else {
+                if (Debug) {
+                    log('findLocaleServMenu missing entry: ' + controlsState + ' - en-US', 'info');
+                }
                 return controlsState;
             }
         }
     } catch (err: any) {
         if (err.message.substring(0, 35) == 'Cannot read properties of undefined') {
-            if (Debug) {
-                log('function findLocale: missing translation: ' + controlsState, 'info');
-            }
+            log('function findLocaleServMenu: missing translation: ' + controlsState + ' - ' + locale, 'info');
         } else {
-            log('error at function findLocale: ' + err.message, 'warn');
+            log('error at function findLocaleServMenu: ' + controlsState + ' - ' + locale + ' : ' + err.message, 'warn');
         }
         return controlsState;
     }
@@ -9876,8 +10030,15 @@ function HandleScreensaverStatusIcons(): void {
             }
         }
 
-        let alternateScreensaverMFRIcon1Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1').val;
-        let alternateScreensaverMFRIcon2Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2').val;
+        let alternateScreensaverMFRIcon1Size: boolean = true;
+        let alternateScreensaverMFRIcon2Size: boolean = true;
+        if (existsState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1')) {
+            alternateScreensaverMFRIcon1Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.1').val;
+        }
+        if (existsState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2')) {
+            alternateScreensaverMFRIcon2Size = getState(NSPanel_Path + 'Config.MRIcons.alternateMRIconSize.2').val;
+        }
+
         //Alternate MRIcon Size
         if (alternateScreensaverMFRIcon1Size) {
             payloadString += '1~';
