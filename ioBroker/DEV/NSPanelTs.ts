@@ -1279,9 +1279,11 @@ async function Init_Release() {
     const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.4.0', '4.5.0', '4.6.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
-            await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), { type: 'string', write: false });
+            await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, { type: 'number', write: false });
+            // if 'desiredVersion' as a string:  await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), { type: 'string', write: false });
         } else {
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), true);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, true);
+            // if 'desiredVersion' as a string:  await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), true);
         }
 
         if (existsObject(NSPanel_Path + 'Config.Update.activ') == false) {
