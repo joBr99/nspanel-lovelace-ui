@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -126,7 +126,7 @@ ReleaseNotes:
         - 18.09.2024 - v4.4.0.5  Remove day.JS
         - 19.09.2024 - v4.4.0.6  Check Ports with mqtt.X and mqtt-client.X
         - 27.09.2024 - v4.4.0.6  Fix: Using MQTT adapter or MQTT-CLIENT adapter / Minor Fix by wolwin
-        - 06.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
+        - 09.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -996,7 +996,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.6';
+const scriptVersion: string = 'v4.4.0.7';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2123,7 +2123,7 @@ async function InitPageNavi() {
     try {
         if (!existsState(NSPanel_Path + 'PageNavi')) {
             await createStateAsync(NSPanel_Path + 'PageNavi', <iobJS.StateCommon>{ type: 'string', write: true });
-            await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: String( { pagetype: 'page', pageId: 0 } ), ack: true });
+            await setStateAsync(NSPanel_Path + 'PageNavi', <iobJS.State>{ val: "{ pagetype: 'page', pageId: 0 }", ack: true });
         }
     } catch (err: any) {
         log('error at function InitPageNavi: ' + err.message, 'warn');
