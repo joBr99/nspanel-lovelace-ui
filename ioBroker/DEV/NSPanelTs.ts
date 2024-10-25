@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.2.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -127,6 +127,7 @@ ReleaseNotes:
         - 19.09.2024 - v4.4.0.6  Check Ports with mqtt.X and mqtt-client.X
         - 27.09.2024 - v4.4.0.6  Fix: Using MQTT adapter or MQTT-CLIENT adapter / Minor Fix by wolwin
         - 09.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
+        - 25.10.2024 - v4.4.0.8  Fix: InitDimmode => timeDimMode Day / timeDimMode Night
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -996,7 +997,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.7';
+const scriptVersion: string = 'v4.4.0.8';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2309,13 +2310,13 @@ async function InitDimmode() {
             };
             // timeDimMode Day
             scheduleInitDimModeDay = adapterSchedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourDay').val, minute: 0 }, 24 * 60 * 60, () => {
-                if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
+                if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val == -1) {
                     ScreensaverDimmode(timeDimMode);
                 }
             });
             // timeDimMode Night
             scheduleInitDimModeNight = adapterSchedule({ hour: getState(NSPanel_Path + 'NSPanel_Dimmode_hourNight').val, minute: 0 }, 24 * 60 * 60, () => {
-                if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
+                if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val == -1) {
                     ScreensaverDimmode(timeDimMode);
                 }
             });
