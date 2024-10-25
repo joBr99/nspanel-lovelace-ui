@@ -129,7 +129,8 @@ ReleaseNotes:
         - 09.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
         - 25.10.2024 - v4.4.0.8  Fix: InitDimmode => timeDimMode Day / timeDimMode Night
         - 25.10.2024 - v4.4.0.8  Add Always On Display (AOD) to cardTHermo
-        - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Mode) 
+        - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Alias Channel)
+        - 26.10.2024 - v4.4.0.8  Add Custom Icon Object to cartdThermo (Climate Alias Channel
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -5006,7 +5007,6 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
         UnsubscribeWatcher();
         let id = page.items[0].id;
         let out_msgs: NSPanel.Payload[] = [];
-        //out_msgs.push({ payload: 'pageType~cardThermo' });
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
         if (page.type == 'cardThermo' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
@@ -5065,6 +5065,14 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
             let bt = ['~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~', '~~~~'];
 
             let tempIcon: string = '';
+
+            let iconsObj: any;
+            if (page.items[0].customIcons != undefined) {
+                iconsObj = page.items[0].customIcons[0];
+            }
+
+            let tempIconOnColor: number = 35921;
+            let tempIconOffColor: number = 35921;
 
             if (i_list.length - 3 != 0) {
                 let i = 0;
@@ -5234,72 +5242,90 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
                                                 tempIcon = page.items[0].iconArray[1];
                                             } else {
-                                                tempIcon = 'air-conditioner';
+                                                tempIcon = iconsObj != undefined ? iconsObj['AUTO']['iconName'] : 'air-conditioner';
+                                                tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['AUTO']['iconOnColor']) : 1024;
+                                                tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj['AUTO']['iconOffColor']) : 35921;
                                             }
                                             if (stateKeyNumber == Mode) {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~1024~1~' + 'AUTO' + '~';
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor +'~1~' + 'AUTO' + '~';
                                             } else {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'AUTO' + '~';
+                                                //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'AUTO' + '~'; bis HMI Fix
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'AUTO' + '~';
                                             }
                                             break;
                                         case 'COOL':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
                                                 tempIcon = page.items[0].iconArray[2];
                                             } else {
-                                                tempIcon = 'snowflake';
+                                                tempIcon = iconsObj != undefined ? iconsObj['COOL']["iconName"] : 'snowflake';
+                                                tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['COOL']["iconOnColor"]) : 11487;
+                                                tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj['COOL']['iconOffColor']) : 35921;
                                             }
                                             if (stateKeyNumber == Mode) {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'COOL' + '~';
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor +'~1~' + 'COOL' + '~';
                                             } else {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'COOL' + '~';
+                                                //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'COOL' + '~'; bis HMI Fix
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'COOL' + '~';
                                             }
                                             break;
                                         case 'HEAT':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
                                                 tempIcon = page.items[0].iconArray[3];
                                             } else {
-                                                tempIcon = 'fire';
+                                                tempIcon = iconsObj != undefined ? iconsObj['HEAT']["iconName"] : 'fire';
+                                                tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['HEAT']["iconOnColor"]) : 64512;
+                                                tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj['HEAT']['iconOffColor']) : 35921;
                                             }
                                             if (stateKeyNumber == Mode) {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~64512~1~' + 'HEAT' + '~';
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor +'~1~' + 'HEAT' + '~';
                                             } else {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'HEAT' + '~';
+                                                //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'HEAT' + '~'; bis HMI Fix
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'HEAT' + '~';
                                             }
                                             break;
                                         case 'ECO':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
                                                 tempIcon = page.items[0].iconArray[4];
                                             } else {
-                                                tempIcon = 'alpha-e-circle-outline';
+                                                tempIcon = iconsObj != undefined ? iconsObj['ECO']["iconName"] : 'alpha-e-circle-outline';
+                                                tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['ECO']["iconOnColor"]) : 2016;
+                                                tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj['ECO']['iconOffColor']) : 35921;
                                             }
                                             if (stateKeyNumber == Mode) {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor +'~1~' + 'ECO' + '~';
                                             } else {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                                //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'ECO' + '~'; bis HMI Fix
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'ECO' + '~';
                                             }
                                             break;
                                         case 'FAN_ONLY':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
                                                 tempIcon = page.items[0].iconArray[5];
                                             } else {
-                                                tempIcon = 'fan';
+                                                tempIcon = iconsObj != undefined ? iconsObj['FAN_ONLY']['iconName'] : 'fan';
+                                                tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['FAN_ONLY']['iconOnColor']) : 11487;
+                                                tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj['FAN_ONLY']['iconOffColor']) : 35921;
                                             }
                                             if (stateKeyNumber == Mode) {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~11487~1~' + 'FAN_ONLY' + '~';
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor +'~1~' + 'FAN_ONLY' + '~';
                                             } else {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'FAN_ONLY' + '~';
+                                                //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'FAN_ONLY' + '~'; bis HMI Fix
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'FAN_ONLY' + '~';
                                             }
                                             break;
                                         case 'DRY':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
                                                 tempIcon = page.items[0].iconArray[6];
                                             } else {
-                                                tempIcon = 'water-percent';
+                                                tempIcon = iconsObj != undefined ? iconsObj["DRY"]["iconName"] : 'water-percent';
+                                                tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["DRY"]["iconOnColor"]) : 60897;
+                                                tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj["DRY"]["iconOffColor"]) : 35921;
                                             }
                                             if (stateKeyNumber == Mode) {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~60897~1~' + 'DRY' + '~';
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor +'~1~' + 'DRY' + '~';
                                             } else {
-                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'DRY' + '~';
+                                                //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'DRY' + '~'; // bis HMI Fix
+                                                bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'DRY' + '~';
                                             }
                                             break;
                                     }
@@ -5310,13 +5336,16 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                     if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
                                         tempIcon = page.items[0].iconArray[4];
                                     } else {
-                                        tempIcon = 'alpha-e-circle-outline';
+                                        tempIcon = iconsObj != undefined ? iconsObj["ECO"]["iconName"] : 'alpha-e-circle-outline';
+                                        tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["ECO"]["iconOnColor"]) : 2016;
+                                        tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj["ECO"]["iconOffColor"]) : 35921;
                                     }
                                     if (getState(id + '.ECO').val && getState(id + '.ECO').val == 1) {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'ECO' + '~';
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor + '~1~' + 'ECO' + '~';
                                         statusStr = 'ECO';
                                     } else {
-                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'ECO' + '~';
+                                        //bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'ECO' + '~'; // bis HMI Fix
+                                        bt[iconIndex] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'ECO' + '~';
                                     }
                                     iconIndex++;
                                 }
@@ -5325,13 +5354,16 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                     if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
                                         tempIcon = page.items[0].iconArray[7];
                                     } else {
-                                        tempIcon = 'swap-vertical-bold';
+                                        tempIcon = iconsObj != undefined ? iconsObj["SWING"]["iconName"] : 'swap-vertical-bold';
+                                        tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["SWING"]["iconOnColor"]) : 2016;
+                                        tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj["SWING"]["iconOffColor"]) : 35921;
                                     }
                                     if (getState(id + '.POWER').val && getState(id + '.SWING').val == 1) {
                                         //0=ON oder .SWING = true
-                                        bt[7] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'SWING' + '~';
+                                        bt[7] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor + '~1~' + 'SWING' + '~';
                                     } else {
-                                        bt[7] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'SWING' + '~';
+                                        //bt[7] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'SWING' + '~'; // bis HMI Fix
+                                        bt[7] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'SWING' + '~';
                                     }
                                     iconIndex++;
                                 }
@@ -5341,13 +5373,16 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                     if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
                                         tempIcon = page.items[0].iconArray[0];
                                     } else {
-                                        tempIcon = 'power-standby';
+                                        tempIcon = iconsObj != undefined ? iconsObj["POWER"]["iconName"] : 'power-standby';
+                                        tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["POWER"]["iconOnColor"]) : 2016;
+                                        tempIconOffColor = iconsObj != undefined ? rgb_dec565(iconsObj["POWER"]["iconOffColor"]) : 35921;
                                     }
                                     if (States[Mode] == 'OFF' || !getState(id + '.POWER').val) {
-                                        bt[0] = Icons.GetIcon(tempIcon) + '~35921~0~' + 'POWER' + '~';
+                                        //bt[0] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~0~' + 'POWER' + '~'; // bis HMI Fix
+                                        bt[0] = Icons.GetIcon(tempIcon) + '~' + tempIconOffColor + '~1~' + 'POWER' + '~';
                                         statusStr = 'OFF';
                                     } else {
-                                        bt[0] = Icons.GetIcon(tempIcon) + '~2016~1~' + 'POWER' + '~';
+                                        bt[0] = Icons.GetIcon(tempIcon) + '~' + tempIconOnColor + '~1~' + 'POWER' + '~';
                                     }
                                 }
                             }
@@ -11160,6 +11195,7 @@ namespace NSPanel {
         monobutton?: boolean;
         inSel_ChoiceState?: boolean;
         iconArray?: string[];
+        customIcons?: any[];
         fontSize?: number;
         actionStringArray?: string[];
         alwaysOnDisplay?: boolean;
