@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
 TypeScript v4.4.0.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.2.0
+- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -128,6 +128,8 @@ ReleaseNotes:
         - 27.09.2024 - v4.4.0.6  Fix: Using MQTT adapter or MQTT-CLIENT adapter / Minor Fix by wolwin
         - 09.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
         - 25.10.2024 - v4.4.0.8  Fix: InitDimmode => timeDimMode Day / timeDimMode Night
+        - 25.10.2024 - v4.4.0.8  Add Always On Display (AOD) to cardTHermo
+        - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Mode) 
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -5004,7 +5006,26 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
         UnsubscribeWatcher();
         let id = page.items[0].id;
         let out_msgs: NSPanel.Payload[] = [];
-        out_msgs.push({ payload: 'pageType~cardThermo' });
+        //out_msgs.push({ payload: 'pageType~cardThermo' });
+
+        // Leave the display on if the alwaysOnDisplay parameter is specified (true)
+        if (page.type == 'cardThermo' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
+            out_msgs.push({ payload: 'pageType~cardThermo' });
+            if (page.items[0].alwaysOnDisplay != undefined) {
+                if (page.items[0].alwaysOnDisplay) {
+                    pageCounter = 1;
+                    if (alwaysOn == false) {
+                        alwaysOn = true;
+                        SendToPanel({ payload: 'timeout~0' });
+                        subscribePowerSubscriptions(page.items[0].id);
+                    }
+                }
+            }
+        } else if (page.type == 'cardThermo' && pageCounter == 1) {
+            subscribePowerSubscriptions(page.items[0].id);
+        } else {
+            out_msgs.push({ payload: 'pageType~cardThermo' });
+        }
 
         // ioBroker
         if (id && existsObject(id)) {
@@ -5345,10 +5366,16 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
             if (page.items[0].popupThermoMode1 != undefined) {
                 thermoPopup = 0;
             }
-
+                                        
             let temperatureUnit = getState(NSPanel_Path + 'Config.temperatureUnit').val;
 
             let icon_res = bt[0] + bt[1] + bt[2] + bt[3] + bt[4] + bt[5] + bt[6] + bt[7];
+
+            if (statusStr == 'OFF') {
+                stepTemp = 0;
+                icon_res = bt[0] + '~~~~~~~~~~~~~~~~~~~~~~~~~~~~';
+                thermoPopup = 1;
+            }
 
             out_msgs.push({
                 payload:
@@ -8075,6 +8102,7 @@ function HandleButtonEvent(words: any): void {
                             setIfExists(words[2] + '.' + modesDP[mode], false);
                         }
                     }
+                    pageCounter = 1;
                     GeneratePage(activePage!);
                 } else {
                     let HVACMode = getState(words[2] + '.MODE').val;
@@ -8105,6 +8133,7 @@ function HandleButtonEvent(words: any): void {
                     }
 
                     setIfExists(words[2] + '.' + 'MODE', HVACMode);
+                    pageCounter = 1;
                     GeneratePage(activePage!);
                 }
                 break;
