@@ -5241,6 +5241,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                         case 'AUTO':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[1] !== '') {
                                                 tempIcon = page.items[0].iconArray[1];
+                                                tempIconOnColor = 1024;
                                             } else {
                                                 tempIcon = iconsObj != undefined ? iconsObj['AUTO']['iconName'] : 'air-conditioner';
                                                 tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['AUTO']['iconOnColor']) : 1024;
@@ -5256,6 +5257,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                         case 'COOL':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[2] !== '') {
                                                 tempIcon = page.items[0].iconArray[2];
+                                                tempIconOnColor = 11487;
                                             } else {
                                                 tempIcon = iconsObj != undefined ? iconsObj['COOL']["iconName"] : 'snowflake';
                                                 tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['COOL']["iconOnColor"]) : 11487;
@@ -5271,6 +5273,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                         case 'HEAT':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[3] !== '') {
                                                 tempIcon = page.items[0].iconArray[3];
+                                                tempIconOnColor = 64512;
                                             } else {
                                                 tempIcon = iconsObj != undefined ? iconsObj['HEAT']["iconName"] : 'fire';
                                                 tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['HEAT']["iconOnColor"]) : 64512;
@@ -5286,6 +5289,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                         case 'ECO':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
                                                 tempIcon = page.items[0].iconArray[4];
+                                                tempIconOnColor = 2016;
                                             } else {
                                                 tempIcon = iconsObj != undefined ? iconsObj['ECO']["iconName"] : 'alpha-e-circle-outline';
                                                 tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['ECO']["iconOnColor"]) : 2016;
@@ -5301,6 +5305,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                         case 'FAN_ONLY':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[5] !== '') {
                                                 tempIcon = page.items[0].iconArray[5];
+                                                tempIconOnColor = 11487;
                                             } else {
                                                 tempIcon = iconsObj != undefined ? iconsObj['FAN_ONLY']['iconName'] : 'fan';
                                                 tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj['FAN_ONLY']['iconOnColor']) : 11487;
@@ -5316,6 +5321,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                         case 'DRY':
                                             if (page.items[0].iconArray !== undefined && page.items[0].iconArray[6] !== '') {
                                                 tempIcon = page.items[0].iconArray[6];
+                                                tempIconOnColor = 60897;
                                             } else {
                                                 tempIcon = iconsObj != undefined ? iconsObj["DRY"]["iconName"] : 'water-percent';
                                                 tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["DRY"]["iconOnColor"]) : 60897;
@@ -5335,6 +5341,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                 if (iconIndex <= 7 && existsState(id + '.ECO') && getState(id + '.ECO').val != null) {
                                     if (page.items[0].iconArray !== undefined && page.items[0].iconArray[4] !== '') {
                                         tempIcon = page.items[0].iconArray[4];
+                                        tempIconOnColor = 2016;
                                     } else {
                                         tempIcon = iconsObj != undefined ? iconsObj["ECO"]["iconName"] : 'alpha-e-circle-outline';
                                         tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["ECO"]["iconOnColor"]) : 2016;
@@ -5353,6 +5360,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                 if (iconIndex <= 7 && existsState(id + '.SWING') && getState(id + '.SWING').val != null) {
                                     if (page.items[0].iconArray !== undefined && page.items[0].iconArray[7] !== '') {
                                         tempIcon = page.items[0].iconArray[7];
+                                        tempIconOnColor = 2016;
                                     } else {
                                         tempIcon = iconsObj != undefined ? iconsObj["SWING"]["iconName"] : 'swap-vertical-bold';
                                         tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["SWING"]["iconOnColor"]) : 2016;
@@ -5372,6 +5380,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
                                 if (existsState(id + '.POWER') && getState(id + '.POWER').val != null) {
                                     if (page.items[0].iconArray !== undefined && page.items[0].iconArray[0] !== '') {
                                         tempIcon = page.items[0].iconArray[0];
+                                        tempIconOnColor = 2016;
                                     } else {
                                         tempIcon = iconsObj != undefined ? iconsObj["POWER"]["iconName"] : 'power-standby';
                                         tempIconOnColor = iconsObj != undefined ? rgb_dec565(iconsObj["POWER"]["iconOnColor"]) : 2016;
