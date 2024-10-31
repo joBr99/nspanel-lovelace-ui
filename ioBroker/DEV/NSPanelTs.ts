@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -131,6 +131,7 @@ ReleaseNotes:
         - 25.10.2024 - v4.4.0.8  Add Always On Display (AOD) to cardTHermo
         - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Alias Channel)
         - 26.10.2024 - v4.4.0.8  Add Custom Icon Object to cartdThermo (Climate Alias Channel
+        - 31.10.2024 - v4.4.0.9  Fix: del 'HandleMessage()' in Trigger 'activeDimmodeBrightness'
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -1000,7 +1001,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.8';
+const scriptVersion: string = 'v4.4.0.9';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -1715,9 +1716,9 @@ on({ id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne
                 useMediaEvents = false;
                 screensaverEnabled = true;
                 InitDimmode();
-                HandleMessage('event', 'startup', undefined, undefined);
+                //HandleMessage('event', 'startup', undefined, undefined);
             } else {
-                log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
+              if (Debug) log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
                 SendToPanel({ payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2 });
             }
         } else {
@@ -1726,7 +1727,7 @@ on({ id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne
             useMediaEvents = false;
             screensaverEnabled = true;
             InitDimmode();
-            HandleMessage('event', 'startup', undefined, undefined);
+            //HandleMessage('event', 'startup', undefined, undefined);
         }
     } catch (err: any) {
         log('error at trigger activeDimmodeBrightness: ' + err.message, 'warn');
