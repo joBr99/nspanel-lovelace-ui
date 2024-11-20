@@ -278,6 +278,8 @@ class LovelaceUIPanel:
                             self.privious_cards.append(self.current_card)
                             self.current_card = self.searchCard(card_iid)
                             self.render_current_page(switchPages=True)
+                    case 'mode-light':
+                        ha_control.handle_buttons(entity_id, btype, value, entity_config=entity_config)
                     case _:
                         ha_control.handle_buttons(entity_id, btype, value)
 
