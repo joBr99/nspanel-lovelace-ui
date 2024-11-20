@@ -228,6 +228,8 @@ class LovelaceUIPanel:
                 self.render_current_page(requested=True)
             if msg[1] == "buttonPress2":
                 entity_id = msg[2]
+                if entity_id = "":
+                    return
                 btype = msg[3]
                 value = msg[4] if len(msg) > 4 else None
                 if btype == "bExit":
