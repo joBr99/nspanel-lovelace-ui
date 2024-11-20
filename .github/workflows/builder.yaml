@@ -92,7 +92,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         if: env.BUILD_ARGS != '--test'
-        uses: docker/login-action@v3.0.0
+        uses: docker/login-action@v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -100,7 +100,7 @@ jobs:
 
       - name: Build ${{ matrix.addon }} add-on
         if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@2024.01.0
+        uses: home-assistant/builder@2024.03.5
         with:
           args: |
             ${{ env.BUILD_ARGS }} \

@@ -1985,6 +1985,26 @@
 │  Variable (string) entn
 │      Attributes
 │          Scope         : local
+│ @@ -453,19 +453,14 @@
+│                                      ucopy strCommand.txt,4,payloadLength-5,0
+│                                      // write instruction to tInstuction (debug output, but used as variable here, ui elements will be disabled by default)
+│                                      spstr strCommand.txt,tInstruction.txt,"~",0
+│                                      spstr strCommand.txt,tTmp.txt,"~",1
+│                                      if(tInstruction.txt=="entityUpdateDetail"&&entn.txt==tTmp.txt)
+│                                      {
+│                                          // change icon
+│ -                                        spstr strCommand.txt,tTmp.txt,"~",2
+│ -                                        if(tTmp.txt!="")
+│ -                                        {
+│ -                                            tIcon1.txt=tTmp.txt
+│ -                                        }
+│                                          //spstr strCommand.txt,tIcon1.txt,"~",2
+│                                          vis tIcon1,1
+│                                          // change icon color
+│                                          spstr strCommand.txt,tTmp.txt,"~",3
+│                                          covx tTmp.txt,sys0,0,0
+│                                          tIcon1.pco=sys0
+│                                          // get Button State
 │   --- HMI/n2t-out/popupNotify.txt
 ├── +++ HMI/US/portrait/n2t-out/popupNotify.txt
 │ @@ -348,15 +348,15 @@
@@ -2466,22 +2486,3 @@
 │                                          spstr strCommand.txt,tNotifyText.txt,"~",2
 │                                          if(tNotifyHead.txt!=""||tNotifyText.txt!="")
 │                                          {
-│ @@ -952,14 +800,18 @@
-│                                          {
-│                                              page cardPower
-│                                          }
-│                                          if(tId.txt=="cardChart")
-│                                          {
-│                                              page cardChart
-│                                          }
-│ +                                        if(tId.txt=="cardLChart")
-│ +                                        {
-│ +                                            page cardLChart
-│ +                                        }
-│                                      }
-│                                      if(tInstruction.txt=="timeout")
-│                                      {
-│                                          //set timeout to global var
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
-│                                          covx tTmp.txt,sleepTimeout,0,0
-│                                      }

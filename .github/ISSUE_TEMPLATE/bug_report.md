@@ -58,5 +58,5 @@ _If applicable, add screenshots/pictures to help explain your problem._
 _Add any other context about the problem here._
 _Please note here in case you are using ioBroker_
 
-### PANEL / FIRMWARE VERION
+### PANEL / FIRMWARE VERSION
 _Please add the Panel/Firmware Version you are using (EU, US-L or US-P)_

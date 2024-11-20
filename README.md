@@ -65,3 +65,5 @@ SmartHomeNG: https://github.com/sisamiwe/shng-nspanel-plugin
 OpenHAB: https://github.com/donoo/o2n2l
 
 NodeRed: https://github.com/laluz742/node-red-contrib-nspanel-lui
+
+ESPHome without any Backend: https://github.com/olicooper/esphome-nspanel-lovelace-native

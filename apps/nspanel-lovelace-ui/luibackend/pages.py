@@ -192,6 +192,9 @@ class LuiPagesGen(object):
         else:
             entityType = "delete"
 
+        if entityId in ["sensor.weather_forecast_daily", "sensor.weather_forecast_hourly"]:
+            entityType = "weather"
+
         apis.ha_api.log(f"Generating item for {entityId} with type {entityType}", level="DEBUG")
 
         status_entity = apis.ha_api.get_entity(item.status) if item.status and apis.ha_api.entity_exists(item.status) else None
@@ -221,7 +224,7 @@ class LuiPagesGen(object):
                 if status_entity:
                     icon_res = get_icon_ha(item.status, overwrite=icon)
                     icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
-                    if item.status.startswith("sensor") and (cardType == "cardGrid" or cardType == "cardGrid2") and item.iconOverride is None:
+                    if item.status.startswith("sensor") and cardType in ["cardGrid", "cardGrid1", "cardGrid2"] and item.iconOverride is None:
                         icon_res = status_entity.state[:4]
                         if icon_res[-1] == ".":
                             icon_res = icon_res[:-1]
@@ -245,7 +248,7 @@ class LuiPagesGen(object):
             if status_entity:
                 icon_id = get_icon_ha(item.status, overwrite=icon)
                 icon_color = self.get_entity_color(status_entity, ha_type=item.status.split(".")[0], overwrite=colorOverride)
-                if item.status.startswith("sensor") and (cardType == "cardGrid" or cardType == "cardGrid2") and item.iconOverride is None:
+                if item.status.startswith("sensor") and cardType in ["cardGrid", "cardGrid1", "cardGrid2"] and item.iconOverride is None:
                     icon_id = status_entity.state[:4]
                     if icon_id[-1] == ".":
                         icon_id = icon_id[:-1]
@@ -318,7 +321,7 @@ class LuiPagesGen(object):
             value = value + unit_of_measurement
             if entityType == "binary_sensor":
                 value = get_translation(self._locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
-            if (cardType == "cardGrid" or cardType == "cardGrid2") and entityType == "sensor" and icon is None:
+            if cardType in ["cardGrid", "cardGrid1", "cardGrid2"] and entityType == "sensor" and icon is None:
                 icon_id = entity.state[:4]
                 if icon_id[-1] == ".":
                     icon_id = icon_id[:-1]
@@ -779,6 +782,8 @@ class LuiPagesGen(object):
         if send_page_type:
             if card.cardType == "cardGrid" and len(card.entities) > 6:
                 card.cardType = "cardGrid2"
+            if card.cardType == "cardGrid1":
+                card.cardType = "cardGrid"
             self.page_type(card.cardType)
 
         # send sleep timeout if there is one configured for the current card
@@ -788,7 +793,7 @@ class LuiPagesGen(object):
             self._send_mqtt_msg(f'timeout~{self._config.get("sleepTimeout")}')
         
         temp_unit = card.raw_config.get("temperatureUnit", "celsius")
-        if card.cardType in ["cardEntities", "cardGrid", "cardGrid2"]:
+        if card.cardType in ["cardEntities", "cardGrid", "cardGrid1","cardGrid2"]:
             self.generate_entities_page(navigation, card.title, card.entities, card.cardType, temp_unit)
             return
         if card.cardType == "cardThermo":

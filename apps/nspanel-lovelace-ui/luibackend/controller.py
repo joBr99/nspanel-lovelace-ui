@@ -3,6 +3,7 @@ import datetime
 import apis
 from helper import scale, pos_to_color, rgb_dec565
 from pages import LuiPagesGen
+from luibackend.config import Card
 
 class LuiController(object):
 
@@ -458,3 +459,9 @@ class LuiController(object):
             apis.ha_api.get_entity(entity_id).call_service("pause")
         if button_type == "timer-finish":
             apis.ha_api.get_entity(entity_id).call_service("finish")
+            
+    @property
+    def current_card(self) -> Card:
+        """Used to get the current card"""
+
+        return self._current_card

@@ -77,12 +77,13 @@ class LuiMqttListener(object):
                 self._controller.detail_open(msg[2], msg[3])
 
 class LuiMqttSender(object):
-    def __init__(self, api, use_api, topic_send, api_panel_name):
+    def __init__(self, api, use_api, topic_send, api_panel_name, quiet):
         self._ha_api = api
         self._use_api = use_api
         self._topic_send = topic_send
         self._api_panel_name = api_panel_name
         self._prev_msg = ""
+        self._quiet = quiet
 
     def send_mqtt_msg(self, msg, topic=None, force=False):
         if not force and self._prev_msg == msg:
@@ -90,7 +91,9 @@ class LuiMqttSender(object):
             return
         self._prev_msg = msg
 
-        apis.ha_api.log(f"Sending Message: {msg}")
+        if self._quiet is False:
+            apis.ha_api.log(f"Sending Message: {msg}")
+            
         if self._use_api:
             apis.ha_api.call_service(service="esphome/" + self._api_panel_name + "_nspanelui_api_call", command=2, data=msg)
         else:
