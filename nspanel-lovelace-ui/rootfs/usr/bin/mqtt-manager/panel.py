@@ -279,7 +279,7 @@ class LovelaceUIPanel:
                             self.current_card = self.searchCard(card_iid)
                             self.render_current_page(switchPages=True)
                     case _:
-                        ha_control.handle_buttons(entity_id, btype, value)
+                        ha_control.handle_buttons(entity_id, btype, value, entity_config=entity_config)
 
             if msg[1] == "pageOpenDetail":
                 entity_id = msg[3]
