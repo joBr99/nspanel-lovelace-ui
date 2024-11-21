@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2024-02-25 11:03:09.634837907 +0000
++++ /dev/fd/62	2024-11-21 19:35:42.871078761 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -686,13 +686,6 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 sleepValue=0
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardGrid.txt
 ++ HMI/US/portrait/n2t-out/cardGrid.txt
 + +7,14 @@
@@ -946,6 +939,13 @@
 +                                     spstr strCommand.txt,tEntity9.txt,"~",66
 +                                     vis tEntity9,1
 +                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardLChart.txt
 ++ HMI/US/portrait/n2t-out/cardLChart.txt
 + +7,14 @@
@@ -1821,7 +1821,7 @@
 + Value: 0
 +
 +e (int32) xc1
-+145 +324,50 @@
++160 +324,50 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1832,17 +1832,20 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
++     if(entn1.txt!="")
++     {
++         //send calc crc
++         btlen tSend.txt,sys0
++         crcrest 1,0xffff // reset CRC
++         crcputh 55 bb
++         crcputs sys0,2
++         crcputs tSend.txt,0
++         //send cmd
++         printh 55 bb
++         prints sys0,2
++         prints tSend.txt,0
++         prints crcval,2
++     }
 + 
 +Icon
 +ributes
@@ -1856,17 +1859,20 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
++     if(entn2.txt!="")
++     {
++         //send calc crc
++         btlen tSend.txt,sys0
++         crcrest 1,0xffff // reset CRC
++         crcputh 55 bb
++         crcputs sys0,2
++         crcputs tSend.txt,0
++         //send cmd
++         printh 55 bb
++         prints sys0,2
++         prints tSend.txt,0
++         prints crcval,2
++     }
 + 
 +Icon
 +ributes
@@ -1880,17 +1886,20 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn3.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
++     if(entn3.txt!="")
++     {
++         //send calc crc
++         btlen tSend.txt,sys0
++         crcrest 1,0xffff // reset CRC
++         crcputh 55 bb
++         crcputs sys0,2
++         crcputs tSend.txt,0
++         //send cmd
++         printh 55 bb
++         prints sys0,2
++         prints tSend.txt,0
++         prints crcval,2
++     }
 + 
 +Icon
 +ributes
@@ -1904,17 +1913,20 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn4.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
++     if(entn4.txt!="")
++     {
++         //send calc crc
++         btlen tSend.txt,sys0
++         crcrest 1,0xffff // reset CRC
++         crcputh 55 bb
++         crcputs sys0,2
++         crcputs tSend.txt,0
++         //send cmd
++         printh 55 bb
++         prints sys0,2
++         prints tSend.txt,0
++         prints crcval,2
++     }
 + 
 +Icon
 +ributes
@@ -1928,17 +1940,20 @@
 +nts
 + Touch Press Event
 +     tSend.txt="event,buttonPress2,"+entn5.txt+",button"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
++     if(entn5.txt!="")
++     {
++         //send calc crc
++         btlen tSend.txt,sys0
++         crcrest 1,0xffff // reset CRC
++         crcputh 55 bb
++         crcputs sys0,2
++         crcputs tSend.txt,0
++         //send cmd
++         printh 55 bb
++         prints sys0,2
++         prints tSend.txt,0
++         prints crcval,2
++     }
 + 
 +
 +ributes

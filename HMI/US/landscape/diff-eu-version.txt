@@ -336,7 +336,7 @@
 │          Value: 0
 │      
 │  Variable (int32) xc1
-│ @@ -370,145 +336,50 @@
+│ @@ -370,160 +336,50 @@
 │          Scope              : local
 │          Dragging           : 0
 │          Send Component ID  : disabled
@@ -347,17 +347,20 @@
 │ -    Events
 │ -        Touch Press Event
 │ -            tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
+│ -            if(entn1.txt!="")
+│ -            {
+│ -                //send calc crc
+│ -                btlen tSend.txt,sys0
+│ -                crcrest 1,0xffff // reset CRC
+│ -                crcputh 55 bb
+│ -                crcputs sys0,2
+│ -                crcputs tSend.txt,0
+│ -                //send cmd
+│ -                printh 55 bb
+│ -                prints sys0,2
+│ -                prints tSend.txt,0
+│ -                prints crcval,2
+│ -            }
 │ -        
 │  Text f2Icon
 │      Attributes
@@ -371,17 +374,20 @@
 │ -    Events
 │ -        Touch Press Event
 │ -            tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
+│ -            if(entn2.txt!="")
+│ -            {
+│ -                //send calc crc
+│ -                btlen tSend.txt,sys0
+│ -                crcrest 1,0xffff // reset CRC
+│ -                crcputh 55 bb
+│ -                crcputs sys0,2
+│ -                crcputs tSend.txt,0
+│ -                //send cmd
+│ -                printh 55 bb
+│ -                prints sys0,2
+│ -                prints tSend.txt,0
+│ -                prints crcval,2
+│ -            }
 │ -        
 │  Text f3Icon
 │      Attributes
@@ -395,17 +401,20 @@
 │ -    Events
 │ -        Touch Press Event
 │ -            tSend.txt="event,buttonPress2,"+entn3.txt+",button"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
+│ -            if(entn3.txt!="")
+│ -            {
+│ -                //send calc crc
+│ -                btlen tSend.txt,sys0
+│ -                crcrest 1,0xffff // reset CRC
+│ -                crcputh 55 bb
+│ -                crcputs sys0,2
+│ -                crcputs tSend.txt,0
+│ -                //send cmd
+│ -                printh 55 bb
+│ -                prints sys0,2
+│ -                prints tSend.txt,0
+│ -                prints crcval,2
+│ -            }
 │ -        
 │  Text f4Icon
 │      Attributes
@@ -419,17 +428,20 @@
 │ -    Events
 │ -        Touch Press Event
 │ -            tSend.txt="event,buttonPress2,"+entn4.txt+",button"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
+│ -            if(entn4.txt!="")
+│ -            {
+│ -                //send calc crc
+│ -                btlen tSend.txt,sys0
+│ -                crcrest 1,0xffff // reset CRC
+│ -                crcputh 55 bb
+│ -                crcputs sys0,2
+│ -                crcputs tSend.txt,0
+│ -                //send cmd
+│ -                printh 55 bb
+│ -                prints sys0,2
+│ -                prints tSend.txt,0
+│ -                prints crcval,2
+│ -            }
 │ -        
 │  Text f5Icon
 │      Attributes
@@ -443,17 +455,20 @@
 │ -    Events
 │ -        Touch Press Event
 │ -            tSend.txt="event,buttonPress2,"+entn5.txt+",button"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
+│ -            if(entn5.txt!="")
+│ -            {
+│ -                //send calc crc
+│ -                btlen tSend.txt,sys0
+│ -                crcrest 1,0xffff // reset CRC
+│ -                crcputh 55 bb
+│ -                crcputs sys0,2
+│ -                crcputs tSend.txt,0
+│ -                //send cmd
+│ -                printh 55 bb
+│ -                prints sys0,2
+│ -                prints tSend.txt,0
+│ -                prints crcval,2
+│ -            }
 │ -        
 │ -Text m0
 │ -    Attributes
@@ -482,7 +497,7 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : PM
-│ @@ -690,15 +561,14 @@
+│ @@ -705,15 +561,14 @@
 │                                          if(tTmp.txt!="")
 │                                          {
 │                                              covx tTmp.txt,defaultFontColor,0,0
@@ -498,7 +513,7 @@
 │                                          if(tAMPM.txt=="")
 │                                          {
 │                                              vis tAMPM,0
-│ @@ -819,44 +689,34 @@
+│ @@ -834,44 +689,34 @@
 │                                          //e6Val
 │                                          spstr strCommand.txt,e6Val.txt,"~",60
 │                                          //f1Icon
