@@ -903,20 +903,21 @@ Text f1Icon
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn1.txt+",button"
-            if(entn1.txt!="")
+            if(entn1.txt=="")
             {
-                //send calc crc
-                btlen tSend.txt,sys0
-                crcrest 1,0xffff // reset CRC
-                crcputh 55 bb
-                crcputs sys0,2
-                crcputs tSend.txt,0
-                //send cmd
-                printh 55 bb
-                prints sys0,2
-                prints tSend.txt,0
-                prints crcval,2
+                tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
             }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Text f2Icon
     Attributes
@@ -950,20 +951,21 @@ Text f2Icon
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn2.txt+",button"
-            if(entn2.txt!="")
+            if(entn2.txt=="")
             {
-                //send calc crc
-                btlen tSend.txt,sys0
-                crcrest 1,0xffff // reset CRC
-                crcputh 55 bb
-                crcputs sys0,2
-                crcputs tSend.txt,0
-                //send cmd
-                printh 55 bb
-                prints sys0,2
-                prints tSend.txt,0
-                prints crcval,2
+                tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
             }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Text f3Icon
     Attributes
@@ -997,20 +999,21 @@ Text f3Icon
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn3.txt+",button"
-            if(entn3.txt!="")
+            if(entn3.txt=="")
             {
-                //send calc crc
-                btlen tSend.txt,sys0
-                crcrest 1,0xffff // reset CRC
-                crcputh 55 bb
-                crcputs sys0,2
-                crcputs tSend.txt,0
-                //send cmd
-                printh 55 bb
-                prints sys0,2
-                prints tSend.txt,0
-                prints crcval,2
+                tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
             }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Text f4Icon
     Attributes
@@ -1044,20 +1047,21 @@ Text f4Icon
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn4.txt+",button"
-            if(entn4.txt!="")
+            if(entn4.txt=="")
             {
-                //send calc crc
-                btlen tSend.txt,sys0
-                crcrest 1,0xffff // reset CRC
-                crcputh 55 bb
-                crcputs sys0,2
-                crcputs tSend.txt,0
-                //send cmd
-                printh 55 bb
-                prints sys0,2
-                prints tSend.txt,0
-                prints crcval,2
+                tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
             }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Text f5Icon
     Attributes
@@ -1091,20 +1095,21 @@ Text f5Icon
     Events
         Touch Press Event
             tSend.txt="event,buttonPress2,"+entn5.txt+",button"
-            if(entn5.txt!="")
+            if(entn5.txt=="")
             {
-                //send calc crc
-                btlen tSend.txt,sys0
-                crcrest 1,0xffff // reset CRC
-                crcputh 55 bb
-                crcputs sys0,2
-                crcputs tSend.txt,0
-                //send cmd
-                printh 55 bb
-                prints sys0,2
-                prints tSend.txt,0
-                prints crcval,2
+                tSend.txt="event,buttonPress2,screensaver,bExit,"+tTmp.txt
             }
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
         
 Text m0
     Attributes

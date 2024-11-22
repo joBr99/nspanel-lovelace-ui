@@ -88,8 +88,8 @@ popupThermo
 	276  Unique line(s) of event code
 screensaver2
 	64   Component(s)
-	443  Line(s) of event code
-	280  Unique line(s) of event code
+	448  Line(s) of event code
+	272  Unique line(s) of event code
 cardEntities
 	67   Component(s)
 	1205 Line(s) of event code
@@ -98,5 +98,5 @@ cardEntities
 Total
 	23   Page(s)
 	881  Component(s)
-	10793 Line(s) of event code
-	2471 Unique line(s) of event code
+	10798 Line(s) of event code
+	2472 Unique line(s) of event code
