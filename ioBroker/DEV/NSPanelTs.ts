@@ -132,6 +132,7 @@ ReleaseNotes:
         - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Alias Channel)
         - 26.10.2024 - v4.4.0.8  Add Custom Icon Object to cartdThermo (Climate Alias Channel
         - 31.10.2024 - v4.4.0.9  Fix: del 'HandleMessage()' in Trigger 'activeDimmodeBrightness'
+        - 22.11.2024 - v4.4.0.10 Fix: Bug #1266 trigger timeoutScreensaver
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -2764,6 +2765,16 @@ on({ id: [config.weatherEntity + '.TEMP', config.weatherEntity + '.ICON'], chang
         HandleScreensaverUpdate();
     } catch (err: any) {
         log('error at trigger weatherForecast .TEMP + .ICON: ' + err.message, 'warn');
+    }
+});
+
+//send new Screensavertimeout if Changing of 'timeoutScreensaver'
+on({ id: [NSPanel_Path + 'Config.Screensaver.timeoutScreensaver'], change: 'ne' }, async function (obj) {
+    try {
+        let timeout = obj.state.val;
+        SendToPanel({ payload: 'timeout~' + timeout });
+    } catch (err: any) {
+        log('error at trigger timeoutScreensaver: ' + err.message, 'warn');
     }
 });
 
