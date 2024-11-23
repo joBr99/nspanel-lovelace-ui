@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.10 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -132,6 +132,7 @@ ReleaseNotes:
         - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Alias Channel)
         - 26.10.2024 - v4.4.0.8  Add Custom Icon Object to cartdThermo (Climate Alias Channel
         - 31.10.2024 - v4.4.0.9  Fix: del 'HandleMessage()' in Trigger 'activeDimmodeBrightness'
+        - 22.11.2024 - v4.4.0.10 Fix: Bug #1266 trigger timeoutScreensaver
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -1001,7 +1002,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.9';
+const scriptVersion: string = 'v4.4.0.10';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2764,6 +2765,16 @@ on({ id: [config.weatherEntity + '.TEMP', config.weatherEntity + '.ICON'], chang
         HandleScreensaverUpdate();
     } catch (err: any) {
         log('error at trigger weatherForecast .TEMP + .ICON: ' + err.message, 'warn');
+    }
+});
+
+//send new Screensavertimeout if Changing of 'timeoutScreensaver'
+on({ id: [NSPanel_Path + 'Config.Screensaver.timeoutScreensaver'], change: 'ne' }, async function (obj) {
+    try {
+        let timeout = obj.state.val;
+        SendToPanel({ payload: 'timeout~' + timeout });
+    } catch (err: any) {
+        log('error at trigger timeoutScreensaver: ' + err.message, 'warn');
     }
 });
 
