@@ -1078,6 +1078,11 @@ onStop(function scriptStop() {
     UnsubscribeWatcher();
 }, 1000);
 
+/**
+ * Checks all necessary parameters, objects and adapters for the script.
+ * If one is not reachable, an error message is written to the log.
+ * @function
+ */
 async function CheckConfigParameters() {
     try {
         if (existsObject(config.panelRecvTopic) == false) {
@@ -1162,6 +1167,14 @@ async function CheckConfigParameters() {
 }
 CheckConfigParameters();
 
+/**
+ * Function to create the script information data points.
+ * The function creates the data points for the script version, NodeJS version, JavaScript version and the script name.
+ * The data points are created in the NSPanel_Path + 'IoBroker.' with the corresponding name.
+ * The function also creates an alias for each data point with the name 'ACTUAL'.
+ * The data points are set to read only.
+ * @function
+ */
 async function InitIoBrokerInfo() {
     try {
         if (isSetOptionActive) {
@@ -1193,6 +1206,15 @@ async function InitIoBrokerInfo() {
 }
 InitIoBrokerInfo();
 
+/**
+ * Function to check the debug mode.
+ * If the debug mode is activated, a state NSPanel_Path + 'Config.ScripgtDebugStatus' is created.
+ * The state is a boolean and is set to true if the debug mode is activated.
+ * The state is set to false if the debug mode is disabled.
+ * The state is written to the object tree.
+ * The state is also used to set the Debug variable to true or false.
+ * If an error occurs, a warning is logged.
+ */
 async function CheckDebugMode() {
     try {
         if (isSetOptionActive) {
@@ -1219,6 +1241,11 @@ async function CheckDebugMode() {
 }
 CheckDebugMode();
 
+/**
+ * This function checks if the MQTT-Port is used by another instance. If an instance is found which is using the same port, a warning is logged.
+ * If the debug mode is activated, the result of the iobroker command is logged.
+ * If an error occurs, a warning is logged.
+ */
 async function CheckMQTTPorts() {
     try {
         let instanceName: string = (config.panelRecvTopic).split('.')[0] + "." + (config.panelRecvTopic).split('.')[1];
@@ -1281,6 +1308,11 @@ async function CheckMQTTPorts() {
 }
 CheckMQTTPorts();
 
+    /**
+     * Creates states for the current and desired TFT firmware version.
+     *
+     * @since 4.4.0
+     */
 async function Init_Release() {
     const FWVersion = [0, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56];
     const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.4.0', '4.5.0', '4.6.0'];
@@ -1337,6 +1369,21 @@ async function Init_Release() {
 }
 Init_Release();
 
+/**
+ * Function to initialize all Config Parameters in the NSPanel adapter.
+ * This includes the following config parameters:
+ * - alternativeScreensaverLayout (socket)
+ * - ScreensaverAdvanced (socket)
+ * - autoWeatherColorScreensaverLayout (socket)
+ * - timeoutScreensaver (Slider)
+ * - screenSaverDoubleClick (socket)
+ * - locale (string)
+ * - temperatureUnit (string)
+ * - localeNumber (buttonSensor)
+ * - temperatureUnitNumber (buttonSensor)
+ * - hiddenCards (socket)
+ * @function InitConfigParameters
+ */
 async function InitConfigParameters() {
     try {
         if (isSetOptionActive) {
@@ -1457,6 +1504,17 @@ async function InitConfigParameters() {
 InitConfigParameters();
 
 // Trigger for hidden Cards - if hiddenByTrigger is true/false
+/**
+ * This function is triggered when the state of `id: [NSPanel_Path + 'Config.hiddenCards']` changes.
+ * It logs a message indicating whether hidden cards are activated or disabled.
+ * If the state is true, it sets `valueHiddenCards` to the state value, sets `activePage` to the first page in `config.pages`,
+ * sets `pageId` to 0, and calls `GeneratePage` with `activePage`.
+ * If an error occurs, it logs a warning with the error message.
+ *
+ * @param {Object} obj - The object containing the state of the triggering state.
+ * @param {boolean} obj.state.val - The new value of the triggering state.
+ * @returns {Promise<void>} - A Promise that resolves when the function completes.
+ */
 on({ id: [NSPanel_Path + 'Config.hiddenCards'], change: 'ne' }, async function (obj) {
     try {
         obj.state.val ? log('hidden Cards activated', 'info') : log('hidden Cards disabled', 'info');
@@ -1471,6 +1529,17 @@ on({ id: [NSPanel_Path + 'Config.hiddenCards'], change: 'ne' }, async function (
     }
 });
 
+
+
+/**
+ * This function is triggered when the state of `id: [NSPanel_Path + 'Config.ScripgtDebugStatus']` changes.
+ * It logs a message indicating whether debug mode is activated or disabled.
+ * It sets the `Debug` variable to the new state value.
+ *
+ * @param {Object} obj - The object containing the new state.
+ * @param {boolean} obj.state.val - The new state value.
+ * @returns {Promise<void>} - A Promise that resolves when the function completes.
+ */
 on({ id: [NSPanel_Path + 'Config.ScripgtDebugStatus'], change: 'ne' }, async function (obj) {
     try {
         obj.state.val ? log('Debug mode activated', 'info') : log('Debug mode disabled', 'info');
@@ -1480,9 +1549,22 @@ on({ id: [NSPanel_Path + 'Config.ScripgtDebugStatus'], change: 'ne' }, async fun
     }
 });
 
+/**
+ * This function is triggered when the state of either `id: [NSPanel_Path + 'Config.localeNumber']` or `id: [NSPanel_Path + 'Config.temperatureUnitNumber']` changes.
+ * It updates the locale or temperature unit settings based on the new state value.
+ *
+ * @param {Object} obj - The object containing the new state.
+ * @param {string} obj.id - The ID of the state that changed.
+ * @param {number} obj.state.val - The new state value.
+ * @returns {Promise<void>} - A Promise that resolves when the function completes.
+ */
 on({ id: [NSPanel_Path + 'Config.localeNumber', NSPanel_Path + 'Config.temperatureUnitNumber'], change: 'ne' }, async function (obj) {
     try {
         if (obj.id == NSPanel_Path + 'Config.localeNumber') {
+            /**
+             * List of supported locales.
+             * @type {string[]}
+             */
             let localesList = [
                 'en-US',
                 'de-DE',
@@ -1524,11 +1606,24 @@ on({ id: [NSPanel_Path + 'Config.localeNumber', NSPanel_Path + 'Config.temperatu
                 'zh-CN',
                 'zh-TW',
             ];
+            /**
+             * Update the locale setting.
+             */
             setStateAsync(NSPanel_Path + 'Config.locale', localesList[obj.state.val]);
+            /**
+             * Send the updated date.
+             */
             SendDate();
         }
         if (obj.id == NSPanel_Path + 'Config.temperatureUnitNumber') {
+            /**
+             * List of supported temperature units.
+             * @type {string[]}
+             */
             let tempunitList = ['°C', '°F', 'K'];
+            /**
+             * Update the temperature unit setting.
+             */
             setStateAsync(NSPanel_Path + 'Config.temperatureUnit', tempunitList[obj.state.val]);
         }
     } catch (err: any) {
@@ -1536,7 +1631,13 @@ on({ id: [NSPanel_Path + 'Config.localeNumber', NSPanel_Path + 'Config.temperatu
     }
 });
 
-//switch for Screensaver 1 and Screensaver 2
+
+/**
+ * Creates the state for the screensaver advanced switch if it does not exist.
+ * This switch is used to switch between two different screensaver layouts.
+ * Screensaver 1 and Screensaver 2
+ * @function Init_ScreensaverAdvanced
+ */
 async function Init_ScreensaverAdvanced() {
     try {
         if (existsState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced') == false) {
