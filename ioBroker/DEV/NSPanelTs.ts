@@ -1009,7 +1009,7 @@ const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
-
+// @ts-ignore
 const Icons = new IconsSelector();
 let timeoutSlider: any;
 let vwIconColor: number[] = [];
@@ -1097,7 +1097,7 @@ async function CheckConfigParameters() {
             const a = n.shift();
             const i = n.shift();
 
-            if (a.substring(0, 4) === 'mqtt' && !isNaN(Number(i))) {
+            if (a && a.substring(0, 4) === 'mqtt' && !isNaN(Number(i))) {
                 sendTo(`${a}.${i}`, 'sendMessage2Client', { topic: n.join('/'), message: buildNSPanelString('time', '12:00') });
                 await sleep(500);
             }
@@ -1649,13 +1649,19 @@ async function Init_ScreensaverAdvanced() {
 }
 Init_ScreensaverAdvanced();
 
-// checks whether setObjects() is available for the instance (true/false)
+
+/**
+ * Checks whether setObjects() is available for the instance (true/false)
+ * @returns {boolean} result of the check
+ */
 function CheckEnableSetObject() {
     var enableSetObject = getObject('system.adapter.javascript.' + instance).native.enableSetObject;
     return enableSetObject;
 }
 
-//switch BackgroundColors for Screensaver Indicators
+
+
+
 async function Init_ActivePageData() {
     try {
         if (existsState(NSPanel_Path + 'ActivePage.heading') == false) {
@@ -2018,7 +2024,7 @@ async function InitAlternateMRIconsSize() {
 }
 InitAlternateMRIconsSize();
 
-//DateString short/long
+
 async function InitDateformat() {
     try {
         if (isSetOptionActive) {
@@ -2430,7 +2436,7 @@ async function InitDimmode() {
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
                 SendToPanel({
                     payload:
-                        'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ??
+                        'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? 80) + '~' + getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ??
                         80 + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
                 });
             } else {
@@ -2489,8 +2495,9 @@ function isDimTimeInRange(strLower, strUpper) {
 
 //--------------------Begin Consumtion (with Dimmode and Relays On Off)
 // Funktion to calculate mean linear consumtion
-async function Calc_Consumtion(Brightness: number, Relays: number) {
+async function Calc_Consumtion(Brightness: number, Relays: number|undefined) {
     try {
+        if (Relays == undefined) Relays = 0;
         return parseFloat((Relays * 0.25 + (0.0086 * Brightness + 0.7429)).toFixed(2));
     } catch (err: any) {
         log('error at function Calc_Consumtion: ' + err.message, 'warn');
@@ -2567,7 +2574,7 @@ async function DetermineScreensaverDimmode(timeDimMode: NSPanel.DimMode) {
 async function InitMeanPowerConsumtion() {
     try {
         const MeanPower = NSPanel_Path + 'Consumtion.MeanPower';
-        let meanConsumtion: number = await Calc_Consumtion(await DetermineDimBrightness(NSPanel_Path), await CountRelaysOn(NSPanel_Path));
+        let meanConsumtion: number|undefined = await Calc_Consumtion(await DetermineDimBrightness(NSPanel_Path), await CountRelaysOn(NSPanel_Path));
         if (!existsState(MeanPower)) {
             await createStateAsync(MeanPower, <iobJS.StateCommon>{ type: 'number', write: true, unit: 'W' });
         }
@@ -3746,6 +3753,11 @@ on({ id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESU
 
 //------------------End Update Functions
 
+/**
+ * Send Payload to Panel
+ * @param {NSPanel.Payload | NSPanel.Payload[]} val Payload or Array of Payload to send
+ * @returns {Promise<void>}
+ */
 async function SendToPanel(val: NSPanel.Payload | NSPanel.Payload[]) {
     try {
         if (Array.isArray(val)) {
@@ -3853,10 +3865,20 @@ function HandleMessage(typ: string, method: NSPanel.EventMethod, page: number | 
         log('error at function HandleMessage: ' + err.message, 'warn');
     }
 }
-//@ts-ignore ticaki bitte lösen, rückgabe kann undefined sein und ist es wenn ins catch gesprungen wird.
-function findPageItem(searching: String): PageItem {
+
+/**
+ * Finds and returns a PageItem by its ID from the active page or subpages.
+ *
+ * @param {String} searching - The ID of the PageItem to search for.
+ * @returns {NSPanel.PageItem} The PageItem with the specified ID, or the first item of the active page if an error occurs.
+ * 
+ * The function searches for a PageItem with the specified ID within the active page's items.
+ * If not found, it searches through each subPage's items. Logs the found PageItem details if in debug mode.
+ * Returns the PageItem if found, otherwise returns the first item of the active page in case of an error.
+ */
+function findPageItem(searching: String): NSPanel.PageItem {
     try {
-        let pageItem = activePage!.items.find((e) => e.id === searching);
+        let pageItem = activePage!.items.find((e) => e && e.id === searching);
 
         if (pageItem !== undefined) {
             if (Debug) log('findPageItem -> pageItem ' + JSON.stringify(pageItem), 'info');
@@ -3864,7 +3886,7 @@ function findPageItem(searching: String): PageItem {
         }
 
         config.subPages.every((sp) => {
-            pageItem = sp.items.find((e) => e.id === searching);
+            pageItem = sp.items.find((e) => e && e.id === searching);
 
             return pageItem === undefined;
         });
@@ -3873,7 +3895,8 @@ function findPageItem(searching: String): PageItem {
         //@ts-ignore ticaki bitte lösen, pageItem kann undefined sein.
         return pageItem;
     } catch (err: any) {
-        log('error at function findPageItem: ' + err.message, 'warn');
+        log('error at function findPageItem: ' + err.message, 'error');
+        return activePage!.items[0]!;
     }
 }
 
@@ -4120,6 +4143,14 @@ function GeneratePageElements(page: PageType): string {
     }
 }
 
+/**
+ * Creates an entity for the NSPanel.
+ *
+ * @param {PageItem} pageItem - The object containing information about the entity.
+ * @param {number} placeId - The position of the entity on the NSPanel.
+ * @param {boolean} [useColors=false] - Whether the entity should contain color information.
+ * @returns {string} The string representing the entity.
+ */
 function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = false): string {
     try {
         let iconId = '0';
@@ -5132,15 +5163,16 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {
             if (page.items[0].alwaysOnDisplay != undefined) {
                 if (page.items[0].alwaysOnDisplay) {
                     pageCounter = 1;
-                    if (alwaysOn == false) {
+                    if (id && existsObject(id) && alwaysOn == false) {
                         alwaysOn = true;
                         SendToPanel({ payload: 'timeout~0' });
-                        subscribePowerSubscriptions(page.items[0].id);
+                        subscribePowerSubscriptions(id);
                     }
                 }
             }
-        } else if (page.type == 'cardThermo' && pageCounter == 1) {
-            subscribePowerSubscriptions(page.items[0].id);
+        } else if (id && existsObject(id) && page.type == 'cardThermo' && pageCounter == 1) {
+            subscribePowerSubscriptions(id);
+             
         } else {
             out_msgs.push({ payload: 'pageType~cardThermo' });
         }
@@ -6966,6 +6998,7 @@ function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {
     }
 }
 
+
 function unsubscribePowerSubscriptions(): void {
     for (let i = 0; i < config.pages.length; i++) {
         const page: NSPanel.PageType = config.pages[i];
@@ -6984,6 +7017,14 @@ function unsubscribePowerSubscriptions(): void {
     if (Debug) log('unsubscribePowerSubscriptions getstartet', 'info');
 }
 
+
+/**
+ * @function subscribePowerSubscriptions
+ * @description Subscribes to the power state and registers a change listener.
+ * When the power state changes, it triggers a page update after 25 ms.
+ * @param {string} id - The ID of the page for which the power state is to be subscribed to.
+ * @returns {void}
+ */
 function subscribePowerSubscriptions(id: string): void {
     on({ id: id + '.ACTUAL', change: 'ne' }, async function () {
         (function () {
@@ -6998,6 +7039,13 @@ function subscribePowerSubscriptions(id: string): void {
     });
 }
 
+
+/**
+ * @function GeneratePowerPage
+ * @description Generates a page with power state and energy usage information.
+ * @param {NSPanel.PagePower} page - The page configuration with the power state and energy usage information.
+ * @returns {NSPanel.Payload[]} An array of payloads to be sent to the panel.
+ */
 function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     try {
         let obj: object = {};
@@ -7013,6 +7061,7 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
         }
 
         let heading = 'cardPower Example';
+        if (!page.items[0].id || typeof page.items[0].id !== 'string') {throw Error ('Id ist empty or not a string')}
         if (demoMode != true) {
             let id = page.items[0].id;
             unsubscribePowerSubscriptions();
@@ -7133,7 +7182,23 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
     }
 }
 
+/**
+ * Regular expression pattern to match time values in the format "~<number>:<number>".
+ * 
+ * The pattern matches a tilde (~) followed by one or more digits, a colon (:), and then one or more digits.
+ * The second group of digits is captured and can be accessed using the index 1.
+ * 
+ * @type {RegExp}
+ * @constant
+ */
 const timeValueRegEx = /\~\d+:(\d+)/g;
+
+/**
+ * @function GenerateChartPage
+ * @description generates a chart page with given page data
+ * @param {NSPanel.PageChart} page - the page data
+ * @returns {NSPanel.Payload[]} - an array of payloads
+ */
 function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
     try {
         activePage = page;
