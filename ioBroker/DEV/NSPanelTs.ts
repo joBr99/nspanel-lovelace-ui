@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.11 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.4.0.12 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.3.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -134,6 +134,7 @@ ReleaseNotes:
         - 31.10.2024 - v4.4.0.9  Fix: del 'HandleMessage()' in Trigger 'activeDimmodeBrightness'
         - 22.11.2024 - v4.4.0.10 Fix: Bug #1266 trigger timeoutScreensaver
         - 22.11.2024 - v4.4.0.11 Add new value 'PopupNotify' to ActivePage 
+        - 07.12.2024 - v4.4.0.12 Add JSDocs and some small fixes
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -237,7 +238,7 @@ Upgrades in Konsole:
 
 // DE: liefert bei true detailliertere Meldundgen im Log.
 // EN: if true, provides more detailed messages in the log.
-let Debug: boolean = false;
+var Debug: boolean = false;
 
 
 /***** 1. Tasmota-Config *****/
@@ -1005,7 +1006,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.11';
+const scriptVersion: string = 'v4.4.0.12';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -4840,7 +4841,7 @@ function GeneratePageElements(page: PageType): string {    try {
                 break;
         }
 
-        let pageData = 'entityUpd~' + page.heading + '~' + GetNavigationString(pageId);
+        let pageData = 'entityUpd~' + page.heading + '~' + getNavigationString(pageId);
 
         for (let index = 0; index < maxItems; index++) {
             if (page.items[index] !== undefined) {
@@ -5908,12 +5909,11 @@ function GetUnitOfMeasurement(id: string): string {    try {
         if (typeof obj.common.alias !== 'undefined' && typeof obj.common.alias.id !== 'undefined') {
             return GetUnitOfMeasurement(obj.common.alias.id);
         }
-
-        return '';
     } catch (err: any) {
         log('error at function GetUnitOfMeasurement: ' + err.message, 'warn');
-        return '';
+        
     }
+    return '';
 }
 
 /**
@@ -6349,7 +6349,7 @@ function GenerateThermoPage(page: NSPanel.PageThermo): NSPanel.Payload[] {    tr
                     'entityUpd~' +
                     name +
                     '~' + // Heading
-                    GetNavigationString(pageId) +
+                    getNavigationString(pageId) +
                     '~' + // Page Navigation
                     id +
                     '~' + // internalNameEntity
@@ -7363,7 +7363,7 @@ function GenerateMediaPage(page: NSPanel.PageMedia): NSPanel.Payload[] {    try 
                     'entityUpd~' + //entityUpd
                     name +
                     '~' + //heading
-                    GetNavigationString(pageId) +
+                    getNavigationString(pageId) +
                     '~' + //navigation
                     tid +
                     '~' + //internalNameEntiy
@@ -7567,7 +7567,7 @@ function GenerateAlarmPage(page: NSPanel.PageAlarm): NSPanel.Payload[] {    try 
                     'entityUpd~' + //entityUpd~*
                     name +
                     '~' + //heading
-                    GetNavigationString(pageId) +
+                    getNavigationString(pageId) +
                     '~' + //navigation*~* --> hiddenCardsv
                     id +
                     '~' + //internalNameEntity*~*
@@ -7683,7 +7683,7 @@ function GenerateUnlockPage(page: NSPanel.PageUnlock): NSPanel.Payload[] {    tr
                 'entityUpd~' + //entityUpd~*
                 name +
                 '~' + //heading
-                GetNavigationString(pageId) +
+                getNavigationString(pageId) +
                 '~' + //navigation*~* --> hiddenCardsv
                 id +
                 '~' + //internalNameEntity*~*
@@ -7828,7 +7828,7 @@ function GenerateQRPage(page: NSPanel.PageQR): NSPanel.Payload[] {    try {
                 'entityUpd~' + //entityUpd
                 heading +
                 '~' + //heading
-                GetNavigationString(pageId) +
+                getNavigationString(pageId) +
                 '~' + //navigation
                 textQR +
                 '~' + //textQR
@@ -8014,7 +8014,7 @@ function GeneratePowerPage(page: NSPanel.PagePower): NSPanel.Payload[] {
                 'entityUpd~' + //entityUpd~*
                 heading +
                 '~' + //internalNameEntity*~*
-                GetNavigationString(pageId) +
+                getNavigationString(pageId) +
                 '~' + //navigation*~*
                 // Home Icon / Value below Home Icon
                 '' +
@@ -8122,7 +8122,7 @@ function GenerateChartPage(page: NSPanel.PageChart): NSPanel.Payload[] {
                 'entityUpd~' + //entityUpd
                 heading +
                 '~' + //heading
-                GetNavigationString(pageId) +
+                getNavigationString(pageId) +
                 '~' + //navigation
                 rgb_dec565(page.items[0].onColor) +
                 '~' + //color
@@ -9430,23 +9430,24 @@ function setOrCreate(id: string, value: any, forceCreation: boolean = true, comm
  * 
  * This function returns the navigation string associated with the given page ID.
  * 
- * @function GetNavigationString
+ * @function getNavigationString
  * @param {number} pageId - The ID of the page.
  * @returns {string} The navigation string for the specified page ID.
  */
-function GetNavigationString(pageId: number): string {    try {
+function getNavigationString(pageId: number): string {
+    try {
         if (Debug) {
-            log('GetNavigationString Übergabe pageId: ' + pageId, 'info');
+            log('getNavigationString Übergabe pageId: ' + pageId, 'info');
         }
 
-        var navigationString: string = '';
+        let navigationString: string = '';
 
-        if (activePage!.subPage) {
+        if (activePage && activePage.subPage) {
             //Left icon
-            if (activePage!.prev == undefined) {
-                if (activePage!.parentIcon != undefined) {
-                    navigationString = 'button~bUp~' + Icons.GetIcon(activePage!.parentIcon);
-                    if (activePage!.parentIconColor != undefined) {
+            if (activePage.prev == undefined) {
+                if (activePage.parentIcon != undefined) {
+                    navigationString = 'button~bUp~' + Icons.GetIcon(activePage.parentIcon);
+                    if (activePage.parentIconColor != undefined) {
                         navigationString += '~' + rgb_dec565(activePage!.parentIconColor);
                     } else {
                         navigationString += '~' + rgb_dec565(White);
@@ -9455,9 +9456,9 @@ function GetNavigationString(pageId: number): string {    try {
                     navigationString = 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White);
                 }
             } else {
-                if (activePage!.prevIcon != undefined) {
-                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage!.prevIcon);
-                    if (activePage!.prevIconColor != undefined) {
+                if (activePage.prevIcon != undefined) {
+                    navigationString = 'button~bSubPrev~' + Icons.GetIcon(activePage.prevIcon);
+                    if (activePage.prevIconColor != undefined) {
                         navigationString += '~' + rgb_dec565(activePage!.prevIconColor);
                     } else {
                         navigationString += '~' + rgb_dec565(White);
@@ -9468,11 +9469,11 @@ function GetNavigationString(pageId: number): string {    try {
             }
 
             //Right icon
-            if (activePage!.next == undefined) {
-                if (activePage!.homeIcon != undefined) {
+            if (activePage.next == undefined) {
+                if (activePage.homeIcon != undefined) {
                     navigationString += '~~~button~bHome~' + Icons.GetIcon(activePage!.homeIcon);
-                    if (activePage!.homeIconColor != undefined) {
-                        navigationString += '~' + rgb_dec565(activePage!.homeIconColor) + '~~';
+                    if (activePage.homeIconColor != undefined) {
+                        navigationString += '~' + rgb_dec565(activePage.homeIconColor) + '~~';
                     } else {
                         navigationString += '~' + rgb_dec565(White) + '~~';
                     }
@@ -9480,9 +9481,9 @@ function GetNavigationString(pageId: number): string {    try {
                     navigationString += '~~~button~bHome~' + Icons.GetIcon('home') + '~' + rgb_dec565(White) + '~~';
                 }
             } else {
-                if (activePage!.nextIcon != undefined) {
-                    navigationString += '~~~button~bSubNext~' + Icons.GetIcon(activePage!.nextIcon);
-                    if (activePage!.nextIconColor != undefined) {
+                if (activePage.nextIcon != undefined) {
+                    navigationString += '~~~button~bSubNext~' + Icons.GetIcon(activePage.nextIcon);
+                    if (activePage.nextIconColor != undefined) {
                         navigationString += '~' + rgb_dec565(activePage!.nextIconColor) + '~~';
                     } else {
                         navigationString += '~' + rgb_dec565(White) + '~~';
@@ -9493,43 +9494,27 @@ function GetNavigationString(pageId: number): string {    try {
             }
         }
 
-        if (activePage!.subPage && navigationString != '') {
+        if (activePage && activePage.subPage && navigationString != '') {
             return navigationString;
         }
 
+        const getNavigationStringForPage = (icon: string, color: number) => `button~bUp~${Icons.GetIcon(icon)}~${color} ~~~delete~~~~~`;
+
         switch (pageId) {
             case -1:
-                return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + ' ~~~delete~~~~~';
             case -2:
-                return 'button~bUp~' + Icons.GetIcon('arrow-up-bold') + '~' + rgb_dec565(White) + '~~~delete~~~~~';
+                return getNavigationStringForPage('arrow-up-bold', rgb_dec565(White));
             default: {
-                if (activePage!.prevIcon != undefined) {
-                    navigationString = 'button~bPrev~' + Icons.GetIcon(activePage!.prevIcon);
-                } else {
-                    navigationString = 'button~bPrev~' + Icons.GetIcon('arrow-left-bold');
-                }
+                const prevIcon = activePage && activePage.prevIcon ? Icons.GetIcon(activePage!.prevIcon) : Icons.GetIcon('arrow-left-bold');
+                const prevIconColor = activePage && activePage.prevIconColor ? rgb_dec565(activePage!.prevIconColor) : rgb_dec565(White);
+                const nextIcon = activePage && activePage.nextIcon ? Icons.GetIcon(activePage!.nextIcon) : Icons.GetIcon('arrow-right-bold');
+                const nextIconColor = activePage && activePage.nextIconColor ? rgb_dec565(activePage!.nextIconColor) : rgb_dec565(White);
 
-                if (activePage!.prevIconColor != undefined) {
-                    navigationString += '~' + rgb_dec565(activePage!.prevIconColor);
-                } else {
-                    navigationString += '~' + rgb_dec565(White);
-                }
-
-                if (activePage!.nextIcon != undefined) {
-                    navigationString += '~~~button~bNext~' + Icons.GetIcon(activePage!.nextIcon);
-                } else {
-                    navigationString += '~~~button~bNext~' + Icons.GetIcon('arrow-right-bold');
-                }
-                if (activePage!.nextIconColor != undefined) {
-                    navigationString += '~' + rgb_dec565(activePage!.nextIconColor) + '~~';
-                } else {
-                    navigationString += '~' + rgb_dec565(White) + '~~';
-                }
-                return navigationString;
+                return `button~bPrev~${prevIcon}~${prevIconColor}~~~button~bNext~${nextIcon}~${nextIconColor}~~`;
             }
         }
     } catch (err: any) {
-        log('error at function GetNavigationString: ' + err.message, 'warn');
+        log('error at function getNavigationString: ' + err.message, 'warn');
     }
     return '';
 }
