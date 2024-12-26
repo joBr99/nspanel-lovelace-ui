@@ -2027,13 +2027,25 @@ async function SubscribeMRIcons() {
         arr = config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon1ScreensaverEntity.ScreensaverEntityValue] : arr;
         if (arr.length > 0) {
             on({ id: arr, change: 'ne' }, async function (obj) {
-                if (obj.id!.substring(0, 4) == 'mqtt') {
-                    let Button = obj.id!.split('.');
-                    if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6)).val != obj.state.val) {
-                        await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6), obj.state.val == 'ON' ? true : false);
+                try {
+                    if (obj.id!.substring(0, 4) == 'mqtt') {
+                        let Button = obj.id!.split('.');
+
+                        let relayPath = NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6);
+                        let relayState = getState(relayPath);
+
+                        if (!relayState) {
+                            log('State not found: ' + relayPath, 'warn');
+                        } else if (relayState.val != obj.state.val) {
+                            await setStateAsync(relayPath, obj.state.val == 'ON' ? true : false);
+                        }
+
+                    } else {
+                        HandleScreensaverStatusIcons();
                     }
-                } else {
-                    HandleScreensaverStatusIcons();
+                }
+                catch (err: any) {
+                    log('Error in on callback: ' + err.message, 'warn');
                 }
             });
         }
@@ -2041,13 +2053,24 @@ async function SubscribeMRIcons() {
         arr = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon2ScreensaverEntity.ScreensaverEntityValue] : arr;
         if (arr.length > 0) {
             on({ id: arr, change: 'ne' }, async function (obj) {
-                if (obj.id!.substring(0, 4) == 'mqtt') {
-                    let Button = obj.id!.split('.');
-                    if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6)).val != obj.state.val) {
-                        await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6), obj.state.val == 'ON' ? true : false);
+                try {
+                    if (obj.id!.substring(0, 4) == 'mqtt') {
+                        let Button = obj.id!.split('.');
+
+                        let relayPath = NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6);
+                        let relayState = getState(relayPath);
+
+                        if (!relayState) {
+                            log('State not found: ' + relayPath, 'warn');
+                        } else if (relayState.val != obj.state.val) {
+                            await setStateAsync(relayPath, obj.state.val == 'ON' ? true : false);
+                        }
+                    } else {
+                        HandleScreensaverStatusIcons();
                     }
-                } else {
-                    HandleScreensaverStatusIcons();
+                }
+                catch (err: any) {
+                    log('Error in on callback: ' + err.message, 'warn');
                 }
             });
         }
