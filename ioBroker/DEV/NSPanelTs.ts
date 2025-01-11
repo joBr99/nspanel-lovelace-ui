@@ -135,6 +135,7 @@ ReleaseNotes:
         - 22.11.2024 - v4.4.0.10 Fix: Bug #1266 trigger timeoutScreensaver
         - 22.11.2024 - v4.4.0.11 Add new value 'PopupNotify' to ActivePage 
         - 07.12.2024 - v4.4.0.12 Add JSDocs and some small fixes
+        - 11.01.2025 - v4.4.0.13 Error due to an empty character string when subscribing to icon IDs
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -1006,7 +1007,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.12';
+const scriptVersion: string = 'v4.4.0.13';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -2385,12 +2386,16 @@ on({ id: [String(NSPanel_Path) + 'Relay.1', String(NSPanel_Path) + 'Relay.2'], c
  */
 async function SubscribeMRIcons() {
     try {
-        let arr = config.mrIcon1ScreensaverEntity.ScreensaverEntity != null ? [config.mrIcon1ScreensaverEntity.ScreensaverEntity] : [];
-        arr = config.mrIcon1ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon1ScreensaverEntity.ScreensaverEntityValue] : arr;
+        const mrEntities = [config.mrIcon1ScreensaverEntity, config.mrIcon2ScreensaverEntity];
+        let arr: string[] = []
+        for (const mrEntity of mrEntities) {
+            arr = typeof mrEntity.ScreensaverEntity == 'string' && mrEntity.ScreensaverEntity !== '' ? [mrEntity.ScreensaverEntity] : [];
+            arr = typeof mrEntity.ScreensaverEntityValue == 'string' &&  mrEntity.ScreensaverEntityValue !== '' ? [...arr, mrEntity.ScreensaverEntityValue] : arr;
+        }
         if (arr.length > 0) {
             on({ id: arr, change: 'ne' }, async function (obj) {
-                if (obj.id!.substring(0, 4) == 'mqtt') {
-                    let Button = obj.id!.split('.');
+                if (obj.id && obj.id.substring(0, 4) == 'mqtt') {
+                    let Button = obj.id.split('.');
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6), obj.state.val == 'ON' ? true : false);
                     }
@@ -2399,20 +2404,7 @@ async function SubscribeMRIcons() {
                 }
             });
         }
-        arr = config.mrIcon2ScreensaverEntity.ScreensaverEntity != null ? [config.mrIcon2ScreensaverEntity.ScreensaverEntity] : [];
-        arr = config.mrIcon2ScreensaverEntity.ScreensaverEntityValue != null ? [...arr, config.mrIcon2ScreensaverEntity.ScreensaverEntityValue] : arr;
-        if (arr.length > 0) {
-            on({ id: arr, change: 'ne' }, async function (obj) {
-                if (obj.id!.substring(0, 4) == 'mqtt') {
-                    let Button = obj.id!.split('.');
-                    if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6)).val != obj.state.val) {
-                        await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6), obj.state.val == 'ON' ? true : false);
-                    }
-                } else {
-                    HandleScreensaverStatusIcons();
-                }
-            });
-        }
+        
     } catch (err: any) {
         log('error at function SubscribeMRIcons: ' + err.message, 'warn');
     }
@@ -3252,7 +3244,7 @@ let scheduleSwichScreensaver = adapterSchedule(undefined, screensaverChangeTime,
 
 function InitHWButton1Color() {
     try {
-        if (config.mrIcon1ScreensaverEntity.ScreensaverEntity != null || config.mrIcon1ScreensaverEntity.ScreensaverEntity != undefined) {
+        if ([null, undefined, ''].indexOf(config.mrIcon1ScreensaverEntity.ScreensaverEntity) == -1) {
             on({ id: config.mrIcon1ScreensaverEntity.ScreensaverEntity, change: 'ne' }, async function () {
                 HandleScreensaverUpdate();
             });
@@ -3280,7 +3272,7 @@ InitHWButton1Color();
  */
 function InitHWButton2Color() {
     try {
-        if (config.mrIcon2ScreensaverEntity.ScreensaverEntity != null || config.mrIcon2ScreensaverEntity.ScreensaverEntity != undefined) {
+        if ([null, undefined, ''].indexOf(config.mrIcon2ScreensaverEntity.ScreensaverEntity) == -1 ) {
             on({ id: config.mrIcon2ScreensaverEntity.ScreensaverEntity, change: 'ne' }, async function () {
                 HandleScreensaverUpdate();
             });
