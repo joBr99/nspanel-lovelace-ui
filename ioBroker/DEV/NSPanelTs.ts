@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.12 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.3.0
+TypeScript v4.4.0.14 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.4.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -136,6 +136,7 @@ ReleaseNotes:
         - 22.11.2024 - v4.4.0.11 Add new value 'PopupNotify' to ActivePage 
         - 07.12.2024 - v4.4.0.12 Add JSDocs and some small fixes
         - 11.01.2025 - v4.4.0.13 Error due to an empty character string when subscribing to icon IDs
+        - 20.01.2025 - v4.4.0.14 Add Screensaver3 and cardGrid3
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -230,7 +231,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.pky.eu/lovelace-ui/github/nspanel-v4.4.0.tft
+    TFT EU STABLE Version   : FlashNextion http://logint.de/wp-content/uploads/2025/01/nspanel.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1007,7 +1008,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.13';
+const scriptVersion: string = 'v4.4.0.14';
 const tft_version: string = 'v4.4.0';
 const desired_display_firmware_version = 53;
 const berry_driver_version = 9;
@@ -4567,6 +4568,9 @@ function GeneratePage(page: PageType): void {
             case 'cardGrid2':
                 SendToPanel(GenerateGridPage2(page));
                 break;
+            case 'cardGrid3':
+                SendToPanel(GenerateGridPage3(page));
+                break;
             case 'cardMedia':
                 useMediaEvents = true;
                 SendToPanel(GenerateMediaPage(page));
@@ -4773,6 +4777,25 @@ function GenerateGridPage2(page: NSPanel.PageGrid2): NSPanel.Payload[] {    try 
 }
 
 /**
+ * Generates the payload for a secondary grid page on the NSPanel.
+ * 
+ * This function creates and returns the payload required to display a secondary grid page on the NSPanel.
+ * 
+ * @function GenerateGridPage3
+ * @param {NSPanel.PageGrid3} page - The secondary grid page configuration.
+ * @returns {NSPanel.Payload[]} The payload array for the secondary grid page.
+ */
+function GenerateGridPage3(page: NSPanel.PageGrid3): NSPanel.Payload[] {    try {
+        let out_msgs: NSPanel.Payload[] = [{ payload: 'pageType~cardGrid3' }];
+        out_msgs.push({ payload: GeneratePageElements(page) });
+        return out_msgs;
+    } catch (err: any) {
+        log('error at function GenerateGridPage3: ' + err.message, 'warn');
+        return [];
+    }
+}
+
+/**
  * Generates the page elements for a given page type on the NSPanel.
  * 
  * This function creates and returns the string representation of the page elements for the specified page type.
@@ -4830,6 +4853,9 @@ function GeneratePageElements(page: PageType): string {    try {
                 } else {
                        maxItems = 8;
                 }
+                break;
+            case 'cardGrid3':
+                maxItems = 4;
                 break;
         }
 
@@ -12440,9 +12466,9 @@ namespace NSPanel {
         hiddenByTrigger?: boolean;
     };
 
-    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardGrid' | 'cardGrid2' | 'cardThermo' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
+    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
 
-    export type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower;
+    export type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageGrid3 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower;
 
     export type PageEntities = {
         type: 'cardEntities';
@@ -12457,6 +12483,11 @@ namespace NSPanel {
     export type PageGrid2 = {
         type: 'cardGrid2';
         items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?];
+    } & PageBaseType;
+
+    export type PageGrid3 = {
+        type: 'cardGrid3';
+        items: [PageItem?, PageItem?, PageItem?, PageItem?];
     } & PageBaseType;
 
     export type PageThermo = {
