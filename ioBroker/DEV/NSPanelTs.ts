@@ -137,6 +137,7 @@ ReleaseNotes:
         - 07.12.2024 - v4.4.0.12 Add JSDocs and some small fixes
         - 11.01.2025 - v4.4.0.13 Error due to an empty character string when subscribing to icon IDs
         - 20.01.2025 - v4.4.0.14 Add Screensaver3 and cardGrid3
+        - 20.01.2025 - v4.4.0.14 Added Easy-View Screensaver states handling
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -160,6 +161,7 @@ Mögliche Seiten-Ansichten:
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
     cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente bzw. beim US-Modell im Portrait-Modus
                           9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage    
+    cardGrid3 Page      - 4 horizontal angeordnete Steuerelemente in 2 Reihen a 2 Steuerelemente
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
@@ -1072,6 +1074,9 @@ let javaScriptVersion: string = '';
 let scheduleInitDimModeDay: any;
 let scheduleInitDimModeNight: any;
 
+const ScreensaverAdvancedEndPath = 'Config.Screensaver.ScreensaverAdvanced';
+const ScreensaverEasyViewEndPath = 'Config.Screensaver.ScreensaverEasyView';
+
 onStop(function scriptStop() {
     if (scheduleSendTime != null) _clearSchedule(scheduleSendTime);
     if (scheduleSendDate != null) _clearSchedule(scheduleSendDate);
@@ -1406,14 +1411,27 @@ async function InitConfigParameters() {
                 name: 'SET',
             });
 
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, { type: 'boolean', write: true });
-            setObject(AliasPath + 'Config.Screensaver.ScreensaverAdvanced', { type: 'channel', common: { role: 'socket', name: 'ScreensaverAdvanced' }, native: {} });
-            await createAliasAsync(AliasPath + 'Config.Screensaver.ScreensaverAdvanced.ACTUAL', NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', true, <iobJS.StateCommon>{
+            await createStateAsync(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`, false, { type: 'boolean', write: true });
+            setObject(AliasPath + ScreensaverAdvancedEndPath, { type: 'channel', common: { role: 'socket', name: 'ScreensaverAdvanced' }, native: {} });
+            await createAliasAsync(`${AliasPath}${ScreensaverAdvancedEndPath}.ACTUAL`, `${NSPanel_Path}${ScreensaverAdvancedEndPath}`, true, <iobJS.StateCommon>{
                 type: 'boolean',
                 role: 'switch',
                 name: 'ACTUAL',
             });
-            await createAliasAsync(AliasPath + 'Config.Screensaver.ScreensaverAdvanced.SET', NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', true, <iobJS.StateCommon>{
+            await createAliasAsync(`${AliasPath}${ScreensaverAdvancedEndPath}.SET`, `${NSPanel_Path}${ScreensaverAdvancedEndPath}`, true, <iobJS.StateCommon>{
+                type: 'boolean',
+                role: 'switch',
+                name: 'SET',
+            });
+
+            await createStateAsync(NSPanel_Path + ScreensaverEasyViewEndPath, false, { type: 'boolean', write: true });
+            setObject(AliasPath + ScreensaverEasyViewEndPath, { type: 'channel', common: { role: 'socket', name: 'Easy-View Screensaver' }, native: {} });
+            await createAliasAsync(`${AliasPath}${ScreensaverEasyViewEndPath}.ACTUAL`, NSPanel_Path + ScreensaverEasyViewEndPath, true, <iobJS.StateCommon>{
+                type: 'boolean',
+                role: 'switch',
+                name: 'ACTUAL',
+            });
+            await createAliasAsync(`${AliasPath}${ScreensaverEasyViewEndPath}.SET`, NSPanel_Path + ScreensaverEasyViewEndPath, true, <iobJS.StateCommon>{
                 type: 'boolean',
                 role: 'switch',
                 name: 'SET',
@@ -1645,8 +1663,11 @@ on({ id: [NSPanel_Path + 'Config.localeNumber', NSPanel_Path + 'Config.temperatu
  */
 async function Init_ScreensaverAdvanced() {
     try {
-        if (existsState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced') == false) {
-            await createStateAsync(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false, true, { type: 'boolean', write: true });
+        if (existsState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`) == false) {
+            await createStateAsync(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`, false, true, { type: 'boolean', write: true });
+        }
+        if (existsState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`) == false) {
+            await createStateAsync(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true, { type: 'boolean', write: true });
         }
     } catch (err: any) {
         log('error at function Init_ScreensaverAdvanced: ' + err.message, 'warn');
@@ -1759,9 +1780,21 @@ on({ id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: 'ne' }, asyn
  * @async
  * @throws {Error} If an error occurs while updating the state of the `alternativeScreensaverLayout` object.
  */
-on({ id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: 'ne' }, async function (obj) {
+on({ id: `${NSPanel_Path}${ScreensaverAdvancedEndPath}`, change: 'ne' }, async function (obj) {
     try {
-        if (obj.state.val) setState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', false);
+        if (obj.state.val) setState(`${NSPanel_Path}Config.Screensaver.alternativeScreensaverLayout`, false, true);
+        if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true);
+        if (obj.id) await setStateAsync(obj.id, obj.state.val, true);
+        //setState(config.panelSendTopic, 'pageType~pageStartup');
+    } catch (err: any) {
+        log('error at trigger Screensaver Advanced: ' + err.message, 'warn');
+    }
+});
+on({ id: `${NSPanel_Path}${ScreensaverEasyViewEndPath}`, change: 'ne' }, async function (obj) {
+    try {
+        if (obj.state.val) setState(`${NSPanel_Path}Config.Screensaver.alternativeScreensaverLayout`, false, true);
+        if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`, false, true);
+        if (obj.id) await setStateAsync(obj.id, obj.state.val, true);
         //setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err: any) {
         log('error at trigger Screensaver Advanced: ' + err.message, 'warn');
@@ -1785,7 +1818,10 @@ on({ id: NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', change: 'ne' }
  */
 on({ id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change: 'ne' }, async function (obj) {
     try {
-        if (obj.state.val) setState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced', false);
+        if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`, false, true);
+        if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true);
+        if (obj.id) await setStateAsync(obj.id, obj.state.val, true);
+        
         //setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err: any) {
         log('error at trigger Screensaver Alternativ: ' + err.message, 'warn');
@@ -10745,14 +10781,12 @@ function UnsubscribeWatcher(): void {    try {
 function HandleScreensaver(): void {    setIfExists(NSPanel_Path + 'ActivePage.type', 'screensaver', null, true);
     setIfExists(NSPanel_Path + 'ActivePage.id0', 'screensaver', null, true);
     setIfExists(NSPanel_Path + 'ActivePage.heading', 'Screensaver', null, true);
-    if (existsObject(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced')) {
-        if (getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val) {
-            SendToPanel({ payload: 'pageType~screensaver2' });
-        } else {
-            SendToPanel({ payload: 'pageType~screensaver' });
-        }
-    } else {
-        SendToPanel({ payload: 'pageType~screensaver' }); //Fallback
+    if (existsObject(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`) && getState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`).val) {
+        SendToPanel({ payload: 'pageType~screensaver2' });
+    } else if (existsObject(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`) && getState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`).val) {
+        SendToPanel({ payload: 'pageType~screensaver3' });
+    } else  {
+        SendToPanel({ payload: 'pageType~screensaver' });
     }
     weatherForecast = getState(NSPanel_Path + 'ScreensaverInfo.weatherForecast').val;
     HandleScreensaverUpdate();
@@ -10767,13 +10801,14 @@ function HandleScreensaver(): void {    setIfExists(NSPanel_Path + 'ActivePage.t
  * 
  * @function HandleScreensaverUpdate
  */
-function HandleScreensaverUpdate(): void {    try {
+function HandleScreensaverUpdate(): void {    
+    try {
         if (screensaverEnabled) {
             UnsubscribeWatcher();
 
             let payloadString: string = '';
             let temperatureUnit = getState(NSPanel_Path + 'Config.temperatureUnit').val;
-            let screensaverAdvanced = getState(NSPanel_Path + 'Config.Screensaver.ScreensaverAdvanced').val;
+            let screensaverAdvanced = getState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`).val;
 
             //Create Weather MainIcon
             if (screensaverEnabled && config.weatherEntity != null && existsObject(config.weatherEntity)) {
@@ -12651,6 +12686,9 @@ namespace NSPanel {
     export type ScreenSaverElement = {
         ScreensaverEntity: string;
         ScreensaverEntityText: string;
+         /**
+         * Value wird mit diesem Factor multipliziert.
+         */
         ScreensaverEntityFactor?: number;
         ScreensaverEntityDecimalPlaces?: number;
         ScreensaverEntityDateFormat?: Intl.DateTimeFormatOptions;
