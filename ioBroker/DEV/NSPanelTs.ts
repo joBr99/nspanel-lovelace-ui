@@ -138,6 +138,7 @@ ReleaseNotes:
         - 11.01.2025 - v4.4.0.13 Error due to an empty character string when subscribing to icon IDs
         - 20.01.2025 - v4.4.0.14 Add Screensaver3 and cardGrid3
         - 20.01.2025 - v4.4.0.14 Added Easy-View Screensaver states handling
+        - 20.01.2025 - v4.4.0.14 icon3 added for use in blind for the state between 0-100
         - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
 
         Todo:
@@ -5065,6 +5066,21 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
 
                         case 'blind':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                            /** 
+                             * The same extension can be found below in blind. vval=0 means closed / val=100 means open. If val is in between, icon3 is used.
+                             *  Icons in this part can be states and strings. The specifications are based on German shutters.
+                            */
+                            if (pageItem.icon3 && typeof pageItem.icon3 === 'string'){
+                                let max = pageItem.maxValueLevel ?? 100
+                                let min = pageItem.minValueLevel ?? 0
+                                if (min > max && val >= min || min <= max && val <= min) {
+                                    iconId = pageItem.icon && existsState(pageItem.icon) && Icons.GetIcon(getState(pageItem.icon).val) || Icons.GetIcon(pageItem.icon) || Icons.GetIcon('window-shutter')
+                                } else if (min > max && val <= max || min <= max && val >= max) {
+                                    iconId = pageItem.icon2 && existsState(pageItem.icon2) && Icons.GetIcon(getState(pageItem.icon2).val) || Icons.GetIcon(pageItem.icon2) || Icons.GetIcon('window-shutter-open')
+                                } else {
+                                    iconId = existsState(pageItem.icon3) && Icons.GetIcon(getState(pageItem.icon3).val) || Icons.GetIcon(pageItem.icon3) || Icons.GetIcon('window-shutter-alert')
+                                }
+                            }
                             iconColor = existsState(pageItem.id + '.COLORDEC')
                                 ? getState(pageItem.id + '.COLORDEC').val
                                 : GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
@@ -5090,6 +5106,7 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                                 iconId = iconId2;
                             }
                             break;
+                            
 
                         case 'info':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('gesture-tap-button');
@@ -5398,7 +5415,18 @@ function CreateEntity(pageItem: PageItem, placeId: number, useColors: boolean = 
                     type = 'shutter';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
-
+                    // only if icon3 is set go into 3 icons
+                    if (pageItem.icon3 && typeof pageItem.icon3 === 'string'){
+                        let max = pageItem.maxValueLevel ?? 100
+                        let min = pageItem.minValueLevel ?? 0
+                        if (min > max && val >= min || min <= max && val <= min) {
+                            iconId = pageItem.icon && existsState(pageItem.icon) && Icons.GetIcon(getState(pageItem.icon).val) || Icons.GetIcon(pageItem.icon) || Icons.GetIcon('window-shutter')
+                        } else if (min > max && val <= max || min <= max && val >= max) {
+                            iconId = pageItem.icon2 && existsState(pageItem.icon2) && Icons.GetIcon(getState(pageItem.icon2).val) || Icons.GetIcon(pageItem.icon2) || Icons.GetIcon('window-shutter-open')
+                        } else {
+                            iconId = existsState(pageItem.icon3) && Icons.GetIcon(getState(pageItem.icon3).val) || Icons.GetIcon(pageItem.icon3) || Icons.GetIcon('window-shutter-alert')
+                        }
+                    }
                     let min_Level: number = 0;
                     let max_Level: number = 100;
                     if (pageItem.minValueLevel !== undefined && pageItem.maxValueLevel !== undefined) {
@@ -12651,6 +12679,10 @@ namespace NSPanel {
          * The icon that is used when id is false
          */
         icon2?: string;
+        /**
+         * Used with blinds for partially open.
+         */
+        icon3?: string
         /**
          * The color that is used in the standard case or if ID is true
          */
