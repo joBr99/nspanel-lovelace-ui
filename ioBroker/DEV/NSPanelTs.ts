@@ -3397,6 +3397,7 @@ get_locales_servicemenu();
 // get_panel_update_data();
 // check_updates();
 
+renameChannel();
 // Updates currently compare and every 12 hours
 let scheduleCheckUpdates = adapterSchedule(undefined, 60 * 60 * 12, () => {
     get_tasmota_status0();
@@ -3877,10 +3878,7 @@ function get_current_berry_driver_version() {
             log('Requesting current berry driver version', 'info');
         }
 
-        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=GetDriverVersion`;
-        if (tasmota_web_admin_password != '') {
-            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=GetDriverVersion`;
-        }
+        let urlString = get_tasmot_url('GetDriverVersion')
 
         axios
             .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
@@ -4044,6 +4042,46 @@ function get_tasmota_status0() {
     } catch (err: any) {
         log('error requesting firmware in function get_tasmota_status0: ' + err.message, 'warn');
     }
+}
+
+function renameChannel() {
+    const urlString = get_tasmot_url('DeviceName');
+    axios
+    .get(urlString, { headers: { 'User-Agent': 'ioBroker' } })
+    .then(async function (response) {
+        if (response.status === 200) {
+            if (Debug) {
+                log(JSON.stringify(response.data), 'info');
+            }
+            if (isSetOptionActive) {
+                try {
+                    if (response.data && response.data.DeviceName && response.data.DeviceName !== '') {
+                        await extendObjectAsync(NSPanel_Path.slice(0,-1), {common:{name:response.data.DeviceName}})
+                        await extendObjectAsync(AliasPath.slice(0,-1), {common:{name:response.data.DeviceName}})
+                    }
+                } catch (e) {
+                    //nothing
+                }
+            }
+        } 
+    })
+    .catch(function (error) {
+        if (error.code === 'EHOSTUNREACH') {
+            log(`Can't connect to display!`, 'warn');
+        } else log(error, 'error');
+    });
+}
+
+/**
+ * Get url to tasmota api
+ * @param cmd tasmota command
+ * @returns url
+ */
+function get_tasmot_url(cmd: string): string {
+    if (tasmota_web_admin_password != '') {
+        return `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=${cmd}`;
+    }
+    return `http://${get_current_tasmota_ip_address()}/cm?cmnd=${cmd}`;
 }
 
 /**
@@ -12599,12 +12637,33 @@ namespace NSPanel {
     export type PageBaseItem = {
         uniqueName?: string;
         role?: string;
+        /**
+         * The data point with the data to be used.
+         */
         id?: string | null;
+        /**
+         * The icon that is used in the standard case or if ID is true
+         */
         icon?: string;
+        /**
+         * The icon that is used when id is false
+         */
         icon2?: string;
+        /**
+         * The color that is used in the standard case or if ID is true
+         */
         onColor?: RGB;
+        /**
+         * The color that is used when id is false
+         */
         offColor?: RGB;
+        /**
+         * 
+         */
         useColor?: boolean;
+        /**
+         * Interpolate the icon colour by ID
+         */
         interpolateColor?: boolean;
         minValueBrightness?: number;
         maxValueBrightness?: number;
