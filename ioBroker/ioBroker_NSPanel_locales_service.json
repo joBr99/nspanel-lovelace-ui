@@ -2705,5 +2705,9 @@
    "hiddencards_offon":{
       "en-US":"hidden Cards (on/off)",
       "de-DE":"ausgeblendete Seiten (an/aus)" 
+   },
+   "easyview_layout":{
+      "en-US":"Easyview Layout",
+      "de-DE":"Einfaches Layout"
    }
 }
