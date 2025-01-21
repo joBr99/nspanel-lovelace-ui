@@ -234,7 +234,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://armilar.logint.de/nspanel-4.5.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-4.5.0.tft
 ---------------------------------------------------------------------------------------
 */
 
