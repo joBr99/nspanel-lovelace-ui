@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.4.0.14 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 53 / v4.4.0 / BerryDriver 9 / Tasmota 14.4.1
+TypeScript v4.5.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -138,6 +138,7 @@ ReleaseNotes:
         - 11.01.2025 - v4.4.0.13 Error due to an empty character string when subscribing to icon IDs
         - 20.01.2025 - v4.4.0.14 Add Screensaver3 and cardGrid3
         - 20.01.2025 - v4.4.0.14 Added Easy-View Screensaver states handling
+        - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -233,7 +234,7 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://logint.de/wp-content/uploads/2025/01/nspanel.tft
+    TFT EU STABLE Version   : FlashNextion http://armilar.logint.de/nspanel-4.5.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1011,9 +1012,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.4.0.14';
-const tft_version: string = 'v4.4.0';
-const desired_display_firmware_version = 53;
+const scriptVersion: string = 'v4.5.0.0';
+const tft_version: string = 'v4.5.0';
+const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
