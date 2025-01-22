@@ -672,7 +672,7 @@ let NSPanel_Service_SubPage: PageType =
                             'items': [
                                 /*PageItem*/{ id: AliasPath + 'Config.Screensaver.alternativeScreensaverLayout', name: findLocaleServMenu('alternative_layout') ,icon: 'page-previous-outline', offColor: HMIOff, onColor: HMIOn},
                                 /*PageItem*/{ id: AliasPath + 'Config.Screensaver.ScreensaverAdvanced', name: findLocaleServMenu('advanced_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
-                                /*PageItem*///{ id: AliasPath + 'Config.Screensaver.ScreensaverEasyView', name: findLocaleServMenu('easyview_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
+                                /*PageItem*/{ id: AliasPath + 'Config.Screensaver.ScreensaverEasyView', name: findLocaleServMenu('easyview_layout') ,icon: 'page-next-outline', offColor: HMIOff, onColor: HMIOn},
                             ]
                         };
 
@@ -1427,7 +1427,7 @@ async function InitConfigParameters() {
                 name: 'SET',
             });
 
-            /*await createStateAsync(NSPanel_Path + ScreensaverEasyViewEndPath, false, { type: 'boolean', write: true });
+            await createStateAsync(NSPanel_Path + ScreensaverEasyViewEndPath, false, { type: 'boolean', write: true });
             setObject(AliasPath + ScreensaverEasyViewEndPath, { type: 'channel', common: { role: 'socket', name: 'Easy-View Screensaver' }, native: {} });
             await createAliasAsync(`${AliasPath}${ScreensaverEasyViewEndPath}.ACTUAL`, NSPanel_Path + ScreensaverEasyViewEndPath, true, <iobJS.StateCommon>{
                 type: 'boolean',
@@ -1438,7 +1438,7 @@ async function InitConfigParameters() {
                 type: 'boolean',
                 role: 'switch',
                 name: 'SET',
-            });*/
+            });
 
             // autoWeatherColorScreensaverLayout (socket)
             await createStateAsync(NSPanel_Path + 'Config.Screensaver.autoWeatherColorScreensaverLayout', true, { type: 'boolean', write: true });
@@ -1669,9 +1669,9 @@ async function Init_ScreensaverAdvanced() {
         if (existsState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`) == false) {
             await createStateAsync(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`, false, true, { type: 'boolean', write: true });
         }
-        /*if (existsState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`) == false) {
+        if (existsState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`) == false) {
             await createStateAsync(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true, { type: 'boolean', write: true });
-        }*/
+        }
     } catch (err: any) {
         log('error at function Init_ScreensaverAdvanced: ' + err.message, 'warn');
     }
@@ -1786,7 +1786,7 @@ on({ id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: 'ne' }, asyn
 on({ id: `${NSPanel_Path}${ScreensaverAdvancedEndPath}`, change: 'ne' }, async function (obj) {
     try {
         if (obj.state.val) setState(`${NSPanel_Path}Config.Screensaver.alternativeScreensaverLayout`, false, true);
-        //if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true);
+        if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true);
         if (obj.id) await setStateAsync(obj.id, obj.state.val, true);
         //setState(config.panelSendTopic, 'pageType~pageStartup');
     } catch (err: any) {
@@ -1822,7 +1822,7 @@ on({ id: `${NSPanel_Path}${ScreensaverEasyViewEndPath}`, change: 'ne' }, async f
 on({ id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change: 'ne' }, async function (obj) {
     try {
         if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverAdvancedEndPath}`, false, true);
-        //if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true);
+        if (obj.state.val) setState(`${NSPanel_Path}${ScreensaverEasyViewEndPath}`, false, true);
         if (obj.id) await setStateAsync(obj.id, obj.state.val, true);
         
         //setState(config.panelSendTopic, 'pageType~pageStartup');
