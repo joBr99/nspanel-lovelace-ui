@@ -10979,7 +10979,9 @@ function HandleScreensaverUpdate(): void {
                 maxEntities = 5;
                 if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     maxEntities = 6;
-                }
+                } else if (getState(NSPanel_Path + ScreensaverEasyViewEndPath).val) {
+                    maxEntities = 4;
+                } 
             }
 
             if (weatherForecast) {
