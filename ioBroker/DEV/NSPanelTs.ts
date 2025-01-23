@@ -10915,7 +10915,7 @@ function HandleScreensaverUpdate(): void {
             if (screensaverAdvanced) {
                 let checkpoint = true;
                 let i = 0;
-                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity)) {
+                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
                     for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
                         const leftScreensaverEntity = config.leftScreensaverEntity[i];
                         if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
@@ -10969,7 +10969,12 @@ function HandleScreensaverUpdate(): void {
 
                         payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
                     }
+                } 
+                
+                if (i < 3) {
+                    checkpoint = false;
                 }
+
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
                         payloadString += '~~~~~~';
@@ -12777,7 +12782,7 @@ namespace NSPanel {
         button1: ConfigButtonFunction;
         button2: ConfigButtonFunction;
     };
-    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
     export type indicatorScreensaverEntityType =
         | [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?]
         | [];
