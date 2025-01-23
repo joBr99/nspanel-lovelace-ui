@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.5.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.5.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -141,6 +141,7 @@ ReleaseNotes:
         - 20.01.2025 - v4.4.0.14 icon3 added for use in blind for the state between 0-100
         - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
         - 23.01.2025 - v4.5.0.1  Change TFT URLs
+        - 23.01.2025 - v4.5.0.2  fix handleScreensaverUpdate => leftscreensaverEntity; fix Type leftscreensaverentitiy
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -1017,7 +1018,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.5.0.0';
+const scriptVersion: string = 'v4.5.0.2';
 const tft_version: string = 'v4.5.0';
 const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
