@@ -10911,7 +10911,7 @@ function HandleScreensaverUpdate(): void {
             if (screensaverAdvanced) {
                 let checkpoint = true;
                 let i = 0;
-                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity)) {
+                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
                     for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
                         const leftScreensaverEntity = config.leftScreensaverEntity[i];
                         if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
