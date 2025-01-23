@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.5.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.5.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -140,6 +140,8 @@ ReleaseNotes:
         - 20.01.2025 - v4.4.0.14 Added Easy-View Screensaver states handling
         - 20.01.2025 - v4.4.0.14 icon3 added for use in blind for the state between 0-100
         - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
+        - 23.01.2025 - v4.5.0.1  Change TFT URLs
+        - 23.01.2025 - v4.5.0.2  fix handleScreensaverUpdate => leftscreensaverEntity; fix Type leftscreensaverentitiy
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -235,7 +237,10 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-4.5.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-v4.5.0.tft
+
+    TFT US-L STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-l-v4.5.0.tft
+    TFT US-P STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-p-v4.5.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1019,7 +1024,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.5.0.0';
+const scriptVersion: string = 'v4.5.0.2';
 const tft_version: string = 'v4.5.0';
 const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
@@ -4334,11 +4339,11 @@ function update_tft_firmware () {
                     let desired_display_firmware_url = '';
 
                     if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-l') {
-                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-${tft_version}.tft`;
+                        desired_display_firmware_url = `http://nspanel.de/nspanel-us-l-${tft_version}.tft`;
                     } else if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
-                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-${tft_version}.tft`;
+                        desired_display_firmware_url = `http://nspanel.de/nspanel-us-p-${tft_version}.tft`;
                     } else {
-                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
+                        desired_display_firmware_url = `http://nspanel.de/nspanel-${tft_version}.tft`;
                     }
 
                     log('Start TFT-Upgrade for: ' + getState(NSPanel_Path + 'NSPanel_Version').val + ' Version', 'info');
@@ -10946,7 +10951,7 @@ function HandleScreensaverUpdate (): void {
             if (screensaverAdvanced) {
                 let checkpoint = true;
                 let i = 0;
-                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity)) {
+                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
                     for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
                         const leftScreensaverEntity = config.leftScreensaverEntity[i];
                         if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
@@ -11000,7 +11005,12 @@ function HandleScreensaverUpdate (): void {
 
                         payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
                     }
+                } 
+                
+                if (i < 3) {
+                    checkpoint = false;
                 }
+
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
                         payloadString += '~~~~~~';
@@ -12922,7 +12932,7 @@ namespace NSPanel {
         button1: ConfigButtonFunction;
         button2: ConfigButtonFunction;
     };
-    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
     export type indicatorScreensaverEntityType =
         | [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?]
         | [];
