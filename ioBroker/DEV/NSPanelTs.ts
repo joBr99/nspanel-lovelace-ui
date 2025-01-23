@@ -150,7 +150,51 @@ ReleaseNotes:
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
-***************************************************************************************************************
+***************************************************************************************************************{
+                ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityDateFormat: { hour: '2-digit', minute: '2-digit' }, // Description at Wiki-Pages
+                ScreensaverEntityIconOn: 'weather-sunset-up',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'Sonne',
+                ScreensaverEntityUnitText: '%',
+                ScreensaverEntityIconColor: MSYellow, //{'val_min': 0, 'val_max': 100}
+            },
+            // bottomScreensaverEntity 2
+            {
+                ScreensaverEntity: 'alias.0.zuhause.aussen.Außentemperatur_.ACTUAL',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 1,
+                ScreensaverEntityIconOn: 'thermometer',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityOnColor: Red,
+                ScreensaverEntityOffColor: Blue,
+                ScreensaverEntityText: 'Außen',
+                ScreensaverEntityUnitText: '°C',
+                ScreensaverEntityIconColor: { val_min: -20, val_max: 40, val_best: 20 },
+                ScreensaverEntityIconSelect: [
+                    {icon: 'sun-thermometer', value:40},
+                    {icon: 'sun-thermometer-outline', value: 35},
+                    {icon: 'thermometer-high', value: 30},
+                    {icon: 'thermometer', value: 25},
+                    {icon: 'thermometer-low', value: 15},
+                    {icon: 'thermometer-minus', value: 3},
+                    {icon: 'snowflake-thermometer', value: -3},
+                    {icon: 'snowflake', value: -10},
+                    ]
+            },
+            // bottomScreensaverEntity 3
+            {
+                ScreensaverEntity: 'sainlogic.0.weather.current.windspeed',
+                ScreensaverEntityFactor: 1,
+                ScreensaverEntityDecimalPlaces: 0,
+                ScreensaverEntityIconOn: 'weather-tornado',
+                ScreensaverEntityIconOff: null,
+                ScreensaverEntityText: 'Wind',
+                ScreensaverEntityUnitText: 'km/h',
+                ScreensaverEntityIconColor: { val_min: 0, val_max: 150 },
+            },
 
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
@@ -5201,8 +5245,11 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                                 unit = pageItem.unit !== undefined ? pageItem.unit : GetUnitOfMeasurement(pageItem.id + '.ACTUAL');
                             }
 
-                            iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['snowflake-thermometer', 'sun-thermometer', 'thermometer']);
-
+                            if (role == 'temperature' || role == 'value.temperature' || role == 'thermostat') {
+                                iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['snowflake-thermometer', 'sun-thermometer', 'thermometer']);
+                            } else if (role == 'humidity' || role == 'value.humidity') {
+                                iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['water-off', 'water-percent-alert' , 'water-percent']);
+                            }
                             iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
 
                             if (pageItem.colorScale != undefined) {
@@ -5566,6 +5613,8 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (role == 'temperature' || role == 'value.temperature' || role == 'thermostat') {
                         iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['snowflake-thermometer', 'sun-thermometer', 'thermometer']);
+                    } else if (role == 'humidity' || role == 'value.humidity') {
+                        iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['water-off', 'water-percent-alert' , 'water-percent']);
                     }
 
                     iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
@@ -12272,7 +12321,7 @@ function rgb_to_cie (red: number, green: number, blue: number): string {
  * @param {PageItem} pageItem - Contains icon references (icon, icon2, icon3) and threshold values.
  * @param {number} val - The current value used to evaluate thresholds.
  * @param {string} iconId - The fallback icon ID if no matching icon is found.
- * @param {[string, string, string]} [def] - Optional array of default icons corresponding to threshold levels.
+ * @param {[string, string, string]} [def] - Optional array of default icons corresponding to threshold levels. [low, high, between]
  * @returns {string} The icon ID determined by value, thresholds, and defaults.
  */
 function determinePageItemStatusIcon (pageItem: PageItem, val: number, iconId: string, def?:  [string, string, string]): string {
@@ -12967,9 +13016,9 @@ namespace NSPanel {
                     {icon: 'thermometer-high', value: 30},
                     {icon: 'thermometer', value: 25},
                     {icon: 'thermometer-low', value: 15},
-                    {icon: 'thermometer-minus', value: 3},
-                    {icon: 'snowflake-thermometer', value: -3},
-                    {icon: 'snowflake', value: 10},
+                    {icon: 'thermometer-minus', value: 2},
+                    {icon: 'snowflake-alert', value: -2},
+                    {icon: 'snowflake', value: -10},
                     ]
          */
         ScreensaverEntityIconSelect?: {icon:string, value: number}[] | null;
