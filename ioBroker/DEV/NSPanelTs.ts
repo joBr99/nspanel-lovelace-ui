@@ -12972,8 +12972,8 @@ namespace NSPanel {
                     {icon: 'thermometer-high', value: 30},
                     {icon: 'thermometer', value: 25},
                     {icon: 'thermometer-low', value: 15},
-                    {icon: 'thermometer-minus', value: 2},
-                    {icon: 'snowflake-alert', value: -2},
+                    {icon: 'snowflake-alert', value: 2},
+                    {icon: 'snowflake-thermometer', value: -2},
                     {icon: 'snowflake', value: -10},
                     ]
          */
