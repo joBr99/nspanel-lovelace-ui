@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.5.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.5.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -140,6 +140,7 @@ ReleaseNotes:
         - 20.01.2025 - v4.4.0.14 Added Easy-View Screensaver states handling
         - 20.01.2025 - v4.4.0.14 icon3 added for use in blind for the state between 0-100
         - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
+        - 23.01.2025 - v4.5.0.1  Change TFT URLs
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -235,7 +236,10 @@ Erforderliche Adapter:
 
 Upgrades in Konsole:
     Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-4.5.0.tft
+    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-v4.5.0.tft
+
+    TFT US-L STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-l-v4.5.0.tft
+    TFT US-P STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-p-v4.5.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -4325,11 +4329,11 @@ function update_tft_firmware() {
                     let desired_display_firmware_url = '';
 
                     if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-l') {
-                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-l-${tft_version}.tft`;
+                        desired_display_firmware_url = `http://nspanel.de/nspanel-us-l-${tft_version}.tft`;
                     } else if (getState(NSPanel_Path + 'NSPanel_Version').val == 'us-p') {
-                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-us-p-${tft_version}.tft`;
+                        desired_display_firmware_url = `http://nspanel.de/nspanel-us-p-${tft_version}.tft`;
                     } else {
-                        desired_display_firmware_url = `http://nspanel.pky.eu/lovelace-ui/github/nspanel-${tft_version}.tft`;
+                        desired_display_firmware_url = `http://nspanel.de/nspanel-${tft_version}.tft`;
                     }
 
                     log('Start TFT-Upgrade for: ' + getState(NSPanel_Path + 'NSPanel_Version').val + ' Version', 'info');
