@@ -151,51 +151,7 @@ ReleaseNotes:
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
 ***************************************************************************************************************{
-                ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityDateFormat: { hour: '2-digit', minute: '2-digit' }, // Description at Wiki-Pages
-                ScreensaverEntityIconOn: 'weather-sunset-up',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Sonne',
-                ScreensaverEntityUnitText: '%',
-                ScreensaverEntityIconColor: MSYellow, //{'val_min': 0, 'val_max': 100}
-            },
-            // bottomScreensaverEntity 2
-            {
-                ScreensaverEntity: 'alias.0.zuhause.aussen.Außentemperatur_.ACTUAL',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 1,
-                ScreensaverEntityIconOn: 'thermometer',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityOnColor: Red,
-                ScreensaverEntityOffColor: Blue,
-                ScreensaverEntityText: 'Außen',
-                ScreensaverEntityUnitText: '°C',
-                ScreensaverEntityIconColor: { val_min: -20, val_max: 40, val_best: 20 },
-                ScreensaverEntityIconSelect: [
-                    {icon: 'sun-thermometer', value:40},
-                    {icon: 'sun-thermometer-outline', value: 35},
-                    {icon: 'thermometer-high', value: 30},
-                    {icon: 'thermometer', value: 25},
-                    {icon: 'thermometer-low', value: 15},
-                    {icon: 'thermometer-minus', value: 3},
-                    {icon: 'snowflake-thermometer', value: -3},
-                    {icon: 'snowflake', value: -10},
-                    ]
-            },
-            // bottomScreensaverEntity 3
-            {
-                ScreensaverEntity: 'sainlogic.0.weather.current.windspeed',
-                ScreensaverEntityFactor: 1,
-                ScreensaverEntityDecimalPlaces: 0,
-                ScreensaverEntityIconOn: 'weather-tornado',
-                ScreensaverEntityIconOff: null,
-                ScreensaverEntityText: 'Wind',
-                ScreensaverEntityUnitText: 'km/h',
-                ScreensaverEntityIconColor: { val_min: 0, val_max: 150 },
-            },
-
+              
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
 Tasmota Konsole:
