@@ -142,6 +142,7 @@ ReleaseNotes:
         - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
         - 23.01.2025 - v4.5.0.1  Change TFT URLs
         - 23.01.2025 - v4.5.0.2  fix handleScreensaverUpdate => leftscreensaverEntity; fix Type leftscreensaverentitiy
+        - 23.01.2025 - v4.5.0.2  icon3 functionality also for thermometers and a function based on this in the screensaver
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
