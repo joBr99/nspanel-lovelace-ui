@@ -10969,9 +10969,12 @@ function HandleScreensaverUpdate(): void {
 
                         payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
                     }
-                } else {
+                } 
+                
+                if (i < 3) {
                     checkpoint = false;
                 }
+
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
                         payloadString += '~~~~~~';
@@ -12779,7 +12782,7 @@ namespace NSPanel {
         button1: ConfigButtonFunction;
         button2: ConfigButtonFunction;
     };
-    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined, ScreenSaverElementWithUndefined] | [];
+    export type leftScreensaverEntityType = [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?] | [];
     export type indicatorScreensaverEntityType =
         | [ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?, ScreenSaverElementWithUndefined?]
         | [];
