@@ -10965,6 +10965,8 @@ function HandleScreensaverUpdate(): void {
 
                         payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
                     }
+                } else {
+                    checkpoint = false;
                 }
                 if (checkpoint == false) {
                     for (let j = i; j < 3; j++) {
