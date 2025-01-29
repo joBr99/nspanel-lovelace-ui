@@ -11032,7 +11032,8 @@ function HandleScreensaverUpdate (): void {
                 if (getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
                     maxEntities = 6;
                 } else if (getState(NSPanel_Path + ScreensaverEasyViewEndPath).val) {
-                    maxEntities = 4;
+                    //us-p needs 5 Items - us-l and eu only 4
+                    maxEntities = 5;
                 }
             }
 
