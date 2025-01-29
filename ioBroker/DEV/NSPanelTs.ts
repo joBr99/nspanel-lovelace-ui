@@ -143,6 +143,7 @@ ReleaseNotes:
         - 23.01.2025 - v4.5.0.1  Change TFT URLs
         - 23.01.2025 - v4.5.0.2  fix handleScreensaverUpdate => leftscreensaverEntity; fix Type leftscreensaverentitiy
         - 23.01.2025 - v4.5.0.2  icon3 functionality also for thermometers and a function based on this in the screensaver
+        - 29.01.2025 - v4.5.0.3  Add: bottemEntityText from ID 
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -1025,7 +1026,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.5.0.2';
+const scriptVersion: string = 'v4.5.0.3';
 const tft_version: string = 'v4.5.0';
 const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
@@ -11172,65 +11173,68 @@ function HandleScreensaverUpdate (): void {
                 let checkpoint = true;
                 let i = 0;
                 for (i = 0; i < maxEntities - 1 && i < config.bottomScreensaverEntity.length; i++) {
-                    if (config.bottomScreensaverEntity[i] == null || config.bottomScreensaverEntity[i] === undefined) {
+                    const entity = config.bottomScreensaverEntity[i]
+                    if (entity == null || entity === undefined) {
                         checkpoint = false;
                         break;
                     }
-                    RegisterScreensaverEntityWatcher(config.bottomScreensaverEntity[i].ScreensaverEntity);
+                    RegisterScreensaverEntityWatcher(entity.ScreensaverEntity);
 
-                    let val = getState(config.bottomScreensaverEntity[i].ScreensaverEntity).val;
+                    let val = getState(entity.ScreensaverEntity).val;
                     if (parseFloat(val + '') == val) {
                         val = parseFloat(val);
                     }
                     let iconColor = rgb_dec565(White);
                     let icon;
-                    if (config.bottomScreensaverEntity[i].ScreensaverEntityIconOn && existsObject(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn!)) {
-                        let iconName = getState(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn!).val;
+                    if (entity.ScreensaverEntityIconOn && existsObject(entity.ScreensaverEntityIconOn!)) {
+                        let iconName = getState(entity.ScreensaverEntityIconOn!).val;
                         icon = Icons.GetIcon(iconName);
                     } else {
-                        icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOn);
+                        icon = Icons.GetIcon(entity.ScreensaverEntityIconOn);
                     }
 
                     if (typeof val == 'number') {
-                        val = val * (config.bottomScreensaverEntity[i].ScreensaverEntityFactor ? config.bottomScreensaverEntity[i].ScreensaverEntityFactor! : 0)
-                        icon = determineScreensaverStatusIcon(config.bottomScreensaverEntity[i],val,icon)
+                        val = val * (entity.ScreensaverEntityFactor ? entity.ScreensaverEntityFactor! : 0)
+                        icon = determineScreensaverStatusIcon(entity,val,icon)
                         val = val.toFixed(
-                                config.bottomScreensaverEntity[i].ScreensaverEntityDecimalPlaces
-                            ) + config.bottomScreensaverEntity[i].ScreensaverEntityUnitText;
-                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                                entity.ScreensaverEntityDecimalPlaces
+                            ) + entity.ScreensaverEntityUnitText;
+                        iconColor = GetScreenSaverEntityColor(entity);
                     } else if (typeof val == 'boolean') {
-                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
-                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityIconOff != null) {
-                            icon = Icons.GetIcon(config.bottomScreensaverEntity[i].ScreensaverEntityIconOff);
+                        iconColor = GetScreenSaverEntityColor(entity);
+                        if (!val && entity.ScreensaverEntityIconOff != null) {
+                            icon = Icons.GetIcon(entity.ScreensaverEntityIconOff);
                         }
-                        if (val && config.bottomScreensaverEntity[i].ScreensaverEntityOnText != undefined) {
-                            val = config.bottomScreensaverEntity[i].ScreensaverEntityOnText;
+                        if (val && entity.ScreensaverEntityOnText != undefined) {
+                            val = entity.ScreensaverEntityOnText;
                         }
-                        if (!val && config.bottomScreensaverEntity[i].ScreensaverEntityOffText != undefined) {
-                            val = config.bottomScreensaverEntity[i].ScreensaverEntityOffText;
+                        if (!val && entity.ScreensaverEntityOffText != undefined) {
+                            val = entity.ScreensaverEntityOffText;
                         }
                     } else if (typeof val == 'string') {
-                        iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[i]);
+                        iconColor = GetScreenSaverEntityColor(entity);
                         let pformat = parseFormat(val);
                         if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
                         if (moment(val, pformat, true).isValid()) {
                             let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
-                            if (config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat !== undefined) {
-                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, config.bottomScreensaverEntity[i].ScreensaverEntityDateFormat);
+                            if (entity.ScreensaverEntityDateFormat !== undefined) {
+                                val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, entity.ScreensaverEntityDateFormat);
                             } else {
                                 val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
                             }
                         }
                     }
+                    const text = entity.ScreensaverEntityText && existsState(entity.ScreensaverEntityText) && getState(entity.ScreensaverEntityText).val
+                                        || entity.ScreensaverEntityText || '';
 
-                    const temp = config.bottomScreensaverEntity[i].ScreensaverEntityIconColor;
+                    const temp = entity.ScreensaverEntityIconColor;
                     if (temp && typeof temp == 'string' && existsObject(temp)) {
                         iconColor = getState(temp).val;
                     }
                     if (i < maxEntities - 1) {
                         val = val + '~';
                     }
-                    payloadString += '~' + '~' + icon + '~' + iconColor + '~' + config.bottomScreensaverEntity[i].ScreensaverEntityText + '~' + val;
+                    payloadString += '~' + '~' + icon + '~' + iconColor + '~' + text + '~' + val;
                 }
                 if (checkpoint == false) {
                     for (let j = i; j < maxEntities - 1; j++) {
