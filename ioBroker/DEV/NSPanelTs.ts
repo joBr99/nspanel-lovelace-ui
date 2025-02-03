@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.5.0.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.5.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -145,6 +145,7 @@ ReleaseNotes:
         - 23.01.2025 - v4.5.0.2  icon3 functionality also for thermometers and a function based on this in the screensaver
         - 29.01.2025 - v4.5.0.3  Add: bottemEntityText from ID 
         - 30.01.2025 - v4.5.0.4  fix DetermineDimBrightness (function returns undefined, because wrong DP check)
+        - 03.02.2025 - v4.5.0.5  Bugfix InitDimmode by Gargano
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -1027,7 +1028,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.5.0.4';
+const scriptVersion: string = 'v4.5.0.5';
 const tft_version: string = 'v4.5.0';
 const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
@@ -2784,8 +2785,8 @@ async function InitDimmode () {
             if (getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != null && getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val != -1) {
                 SendToPanel({
                     payload:
-                        'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? '80') + '~' +
-                        (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
+                        'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? '80') + '~' + 
+                         rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2
                 });
             } else {
                 if (isDimTimeInRange(timeDimMode.timeDay, timeDimMode.timeNight)) {
