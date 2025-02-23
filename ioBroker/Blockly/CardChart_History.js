@@ -1,8 +1,9 @@
-var sourceDP = 'alias.0.Wohnzimmer.Heizung.ACTUAL';
-var targetDP = '0_userdata.0.Test.chartTest';
-var rangeHours = 24;
-var maxXAchsisTicks = 6;
-var historyInstance = 'history.0';
+const sourceDP = 'alias.0.Wohnzimmer.Heizung.ACTUAL';
+const targetDP = '0_userdata.0.Test.chartTest';
+const rangeHours = 24;
+const maxXAchsisTicks = 6;
+const historyInstance = 'history.0';
+const factor = 1; // Bei zu großen Werten und negativen Anzeigen im Panel um das 10fache erhöhen
 
 on({id: sourceDP, change: "any"}, async function (obj) {
     sendTo(historyInstance, 'getHistory', {
@@ -25,7 +26,7 @@ on({id: sourceDP, change: "any"}, async function (obj) {
             //Check history items for requested hours
             for (var j = 0, targetValue = 0; j < result.result.length; j++) {
                 var valueDate = new Date(result.result[j].ts);
-                var value = (Math.round(result.result[j].val * 10) / 10);
+                var value = Math.round(result.result[j].val / factor * 10);
 
                 if (valueDate > targetDate){                        
                     if ((targetDate.getHours() % stepXAchsis) == 0){
