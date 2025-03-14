@@ -2564,7 +2564,11 @@
       "crossfade":{
          "en-US":"Crossfade",
          "de-DE":"Überblenden"
-      }, 
+      },
+      "tools":{
+         "en-US":"Tools",
+         "de-DE":"Tools"
+      },      
       "speaker":{
          "en-US":"Speakerlist",
          "de-DE":"Wiedergabegeräte",
