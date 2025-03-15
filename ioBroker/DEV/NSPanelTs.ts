@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.5.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
+TypeScript v4.5.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -146,8 +146,13 @@ ReleaseNotes:
         - 29.01.2025 - v4.5.0.3  Add: bottemEntityText from ID 
         - 30.01.2025 - v4.5.0.4  fix DetermineDimBrightness (function returns undefined, because wrong DP check)
         - 03.02.2025 - v4.5.0.5  Bugfix InitDimmode by Gargano
+        - 14.03.2025 - v4.5.2    Fix Bugs in HUE-Light, Fix Icon-Colors with interpolateColors (Color, ColorTemp, Brightness), Fix ON instead of ON_ACTUAL for writing DP
+        - 15.03.2025 - v4.5.2.1  Add Functions to Calculate Colors of Icons (Darken and CT (Kelvin))
+        - 15.03.2025 - v4.5.2.1  Remove New Sliders (popupLightNew), Fix TFT-Pictures in TFT --> with v4.5.3
 
         Todo:
+        - Fix other Light Types
+        - Scale CT if Adapter has wrong CT Parameters (e.g. Zigbee.0, etc.)
         - XX.12.2024 - v5.0.0    ioBroker Adapter
 
 ***************************************************************************************************************
@@ -239,12 +244,14 @@ Erforderliche Adapter:
     MQTT-Adapter                - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
 
-Upgrades in Konsole:
-    Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-v4.5.0.tft
+Install/Upgrades in Konsole:
 
-    TFT US-L STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-l-v4.5.0.tft
-    TFT US-P STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-p-v4.5.0.tft
+    Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.5.2.tft
+
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.5.2.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.5.2.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1028,7 +1035,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.5.0.5';
+const scriptVersion: string = 'v4.5.2.1';
 const tft_version: string = 'v4.5.0';
 const desired_display_firmware_version = 54;
 const berry_driver_version = 9;
@@ -1062,7 +1069,6 @@ if (existsState(NSPanel_Path + 'Config.locale')) {
 const scheduleList: {[key: string]: any} = {};
 
 const globalTextColor: any = White;
-const Sliders2: number = 0;
 let checkBlindActive: boolean = false;
 
 log('--- start of NsPanelTs: ' + NSPanel_Path + ' ---', 'info');
@@ -1946,7 +1952,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, asyn
         let active = dimBrightness ?? -1;
         if (obj.state.val >= 0 || obj.state.val <= 100) {
             log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
-            SendToPanel({payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+            SendToPanel({payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
             InitDimmode();
         }
     } catch (err: any) {
@@ -1986,7 +1992,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne'
                 //HandleMessage('event', 'startup', undefined, undefined);
             } else {
                 if (Debug) log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
-                SendToPanel({payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+                SendToPanel({payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
             }
         } else {
             alwaysOn = false;
@@ -2022,7 +2028,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: 'ne'},
         }
         let active = brightness ?? 80;
         if (obj.state.val) {
-            SendToPanel({payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+            SendToPanel({payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
         } else {
             InitDimmode();
         }
@@ -2612,27 +2618,26 @@ function ScreensaverDimmode (timeDimMode: NSPanel.DimMode) {
         let active = brightness ?? 80;
         let dimmode = dimBrightness ?? -1;
         if (Debug) {
-            log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark), 'info');
+            log('function ScreensaverDimmode Background rgb_dec565: ' + rgb_dec565(config.defaultBackgroundColor), 'info');
         }
         if (Debug) {
             log('function ScreensaverDimmode Dimmode=' + timeDimMode.dimmodeOn, 'info');
         }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
-                SendToPanel({payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+                SendToPanel({payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
                 if (Debug) {
                     log('function ScreensaverDimmode -> Day NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
                 }
             } else {
                 SendToPanel({
-                    payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
-                });
+                    payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
                 if (Debug) {
                     log('function ScreensaverDimmode -> Night NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
                 }
             }
         } else {
-            SendToPanel({payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+            SendToPanel({payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
         }
     } catch (err: any) {
         log('error at function ScreensaverDimmode: ' + err.message, 'warn');
@@ -2786,20 +2791,20 @@ async function InitDimmode () {
                 SendToPanel({
                     payload:
                         'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? '80') + '~' + 
-                         rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2
+                         rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)
                 });
             } else {
                 if (isDimTimeInRange(timeDimMode.timeDay, timeDimMode.timeNight)) {
                     SendToPanel({
                         payload:
                             'dimmode~' + timeDimMode.brightnessDay + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ??
-                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
+                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)
                     });
                 } else {
                     SendToPanel({
                         payload:
                             'dimmode~' + timeDimMode.brightnessNight + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ??
-                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
+                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)
                     });
                 }
                 ScreensaverDimmode(timeDimMode);
@@ -5308,27 +5313,43 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'hue':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
-                            }
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
                         }
                     }
-
-                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true && val) {
+                    
+                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true /* && val */ ) {
                         if (existsState(pageItem.id + '.HUE')) {
                             if (getState(pageItem.id + '.HUE').val != null) {
                                 let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
                                 let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
                                 iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                             }
+                        }
+                    }
+
+                    //Calculate color for icon based on color, color temperature and brightness
+                    //Check last Change of DP HUE or CT for Icon in GUI
+                    if (existsState(pageItem.id + '.HUE') && existsState(pageItem.id + '.TEMPERATURE') && existsState(pageItem.id + '.DIMMER') && pageItem.interpolateColor) {
+                        let brightness = getState(pageItem.id + '.DIMMER').val;
+                        if (getState(pageItem.id + '.TEMPERATURE').ts < getState(pageItem.id + '.HUE').ts) {
+                            if (Debug) log('HUE wurde zuletzt geändert - Lampe ist Color-Mode');
+                            let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
+                            let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
+                            let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1);
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                        } else {
+                            if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                            let rgb: RGB = kelvinToRGB(getState(pageItem.id + '.TEMPERATURE').val);
+                            iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
                         }
                     }
 
@@ -5342,7 +5363,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -5362,7 +5383,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -5393,7 +5414,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -5424,7 +5445,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
                         if (pageItem.icon !== undefined) {
@@ -8642,7 +8663,7 @@ function HandleButtonEvent (words: any): void {
                         case 'rgb':
                         case 'rgbSingle':
                         case 'hue':
-                            setIfExists(id + '.ON_ACTUAL', action);
+                            setIfExists(id + '.ON', action);
                             break;
                         case 'switch.mode.wlan':
                             setIfExists(id + '.SWITCH', action);
@@ -8697,7 +8718,7 @@ function HandleButtonEvent (words: any): void {
                         case 'rgb':
                         case 'rgbSingle':
                         case 'hue':
-                            toggleState(id + '.ON_ACTUAL');
+                            toggleState(id + '.ON');
                             break;
                         case 'media':
                             if (!activePage || activePage.type != 'cardMedia') {
@@ -8885,7 +8906,7 @@ function HandleButtonEvent (words: any): void {
                             case 'rgbSingle':
                             case 'hue':
                                 if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                                    let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness));
+                                    let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueBrightness, pageItem.maxValueBrightness));
                                     setIfExists(id + '.DIMMER', sliderPos);
                                 } else {
                                     setIfExists(id + '.DIMMER', parseInt(words[4]));
@@ -8905,7 +8926,7 @@ function HandleButtonEvent (words: any): void {
                 timeoutSlider = setTimeout(async function () {
                     let pageItem = findPageItem(id);
                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 100, 0, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
+                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 100, 0, pageItem.maxValueColorTemp, pageItem.minValueColorTemp));
                         setIfExists(id + '.TEMPERATURE', colorTempK);
                     } else {
                         setIfExists(id + '.TEMPERATURE', parseInt(words[4]));
@@ -9708,7 +9729,10 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
         if (id && existsObject(id)) {
             const o = getObject(id);
             let val: boolean | number = 0;
-            let icon = Icons.GetIcon('lightbulb');
+            //let icon = Icons.GetIcon('lightbulb');
+            let icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+            let icon2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
+
             let iconColor = rgb_dec565(config.defaultColor);
             const role = o.common.role as NSPanel.roles;
 
@@ -9870,23 +9894,40 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 switchVal = '1';
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
+                            }
+
+                            //Calculate color for icon based on color, color temperature and brightness
+                            //Check last Change of DP HUE or CT for Icon in GUI
+                            if (existsState(id + '.HUE') && existsState(id + '.TEMPERATURE') && pageItem.interpolateColor) {
+                                RegisterDetailEntityWatcher(id + '.HUE', pageItem, type, placeId);
+                                RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type, placeId);
+                                if (getState(id + '.TEMPERATURE').ts < getState(id + '.HUE').ts) {
+                                    if (Debug) log('HUE wurde zuletzt geändert - Lampe ist Color-Mode')
+                                    let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
+                                    let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
+                                    let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1)
+                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                                } else {
+                                    if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                                    let rgb: RGB = kelvinToRGB(getState(id + '.TEMPERATURE').val);
+                                    iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1))
+                                }
                             }
 
                             let colorMode = 'disable';
                             if (existsState(id + '.HUE')) {
                                 if (getState(id + '.HUE').val != null) {
                                     colorMode = 'enable';
-                                    let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
-                                    let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
-                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                                 }
                             }
+
                             let colorTemp: any;
                             if (existsState(id + '.TEMPERATURE')) {
                                 colorTemp = 0;
                                 if (getState(id + '.TEMPERATURE').val != null) {
                                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
+                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp, 100, 0));
                                     } else {
                                         colorTemp = getState(id + '.TEMPERATURE').val;
                                     }
@@ -12066,23 +12107,6 @@ function formatInSelText (Text: string): string {
 }
 
 /**
- * Retrieves a blended color based on the given percentage.
- * 
- * This function calculates and returns a blended color based on the specified percentage.
- * 
- * @function GetBlendedColor
- * @param {number} percentage - The percentage to determine the blended color.
- * @returns {RGB} The blended color as an RGB object.
- */
-function GetBlendedColor (percentage: number): RGB {
-    if (percentage < 50) {
-        return Interpolate(config.defaultOffColor, config.defaultOnColor, percentage / 50.0);
-    }
-
-    return Interpolate(Red, White, (percentage - 50) / 50.0);
-}
-
-/**
  * Interpolates between two RGB colors based on the given fraction.
  * 
  * This function calculates and returns an interpolated color between two RGB colors based on the specified fraction.
@@ -12126,6 +12150,73 @@ function InterpolateNum (d1: number, d2: number, fraction: number): number {
  */
 function rgb_dec565 (rgb: RGB): number {    //return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)));
     return ((rgb.red >> 3) << 11) | ((rgb.green >> 2) << 5) | (rgb.blue >> 3);
+}
+
+function lightenDarkenColor(color: any, amount: number): RGB { // #FFF not supportet rather use #FFFFFF
+    const clamp = (val: any) => Math.min(Math.max(val, 0), 0xFF);
+    const num: number = parseInt(color.substr(1), 16);
+    const cRed: number = clamp((num >> 16) + amount);
+    const cGreen: number = clamp(((num >> 8) & 0x00FF) + amount);
+    const cBlue: number = clamp((num & 0x0000FF) + amount);
+    return {red: cRed, green: cGreen, blue: cBlue};
+}
+
+function kelvinToRGB (colorTemperature: number): RGB {  
+  colorTemperature = colorTemperature / 100;
+  let red: number;
+  let blue: number; 
+  let green: number;
+  //Calculate Red
+  if (colorTemperature <= 66) {
+    red = 255
+  } else {
+    red = colorTemperature - 60
+    red = 329.698727466 * Math.pow(red, -0.1332047592)
+    if (red < 0) {
+      red = 0
+    }
+    if (red > 255) {
+      red = 255
+    }
+  }
+  //Calculate Green
+  if (colorTemperature <= 66) {
+    green = colorTemperature
+    green = 99.4708025861 * Math.log(green) - 161.1195681661
+    if (green < 0) {
+      green = 0
+    }
+    if (green > 255) {
+      green = 255
+    }
+  } else {
+    green = colorTemperature - 60
+    green = 288.1221695283 * Math.pow(green, -0.0755148492)
+    if (green < 0) {
+      green = 0
+    }
+    if (green > 255) {
+      green = 255
+    }
+  }
+  //Calculate Blue
+  if (colorTemperature >= 66) {
+    blue = 255
+  } else {
+    if (colorTemperature <= 19) {
+      blue = 0
+    } else {
+      blue = colorTemperature - 10
+      blue = 138.5177312231 * Math.log(blue) - 305.0447927307
+      if (blue < 0) {
+        blue = 0
+      }
+      if (blue > 255) {
+        blue = 255
+      }
+    }
+  }
+  return {red: Math.floor(red), green: Math.floor(green), blue: Math.floor(blue)};
 }
 
 /**
