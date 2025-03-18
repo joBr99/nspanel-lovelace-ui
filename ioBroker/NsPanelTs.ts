@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.5.0.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 54 / v4.5.0 / BerryDriver 9 / Tasmota 14.4.1
+TypeScript v4.6.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 55 / v4.6.0 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -146,6 +146,16 @@ ReleaseNotes:
         - 29.01.2025 - v4.5.0.3  Add: bottemEntityText from ID 
         - 30.01.2025 - v4.5.0.4  fix DetermineDimBrightness (function returns undefined, because wrong DP check)
         - 03.02.2025 - v4.5.0.5  Bugfix InitDimmode by Gargano
+        - 14.03.2025 - v4.5.2    Fix Bugs in HUE-Light, Fix Icon-Colors with interpolateColors (Color, ColorTemp, Brightness), Fix ON instead of ON_ACTUAL for writing DP
+        - 15.03.2025 - v4.5.2.1  Add Functions to Calculate Colors of Icons (Darken and CT (Kelvin))
+        - 15.03.2025 - v4.5.2.1  Remove New Sliders (popupLightNew), Fix TFT-Pictures in TFT --> with v4.6.0
+        - 16.03.2025 - v4.6.0    Fix Bugs in Channels Light and RGBsingle-Light, Fix Icon-Colors with interpolateColors (Color, ColorTemp, Brightness), Fix ON instead of ON_ACTUAL for writing DP
+        - 16.03.2025 - v4.6.0.1  Add Functions to Calculate Colors of RGBsingle Icons (Darken and CT (Kelvin/Mired))
+        - 16.03.2025 - v4.6.0.1  Fix Light-Icons if Color-Temperature uses Mired instead of Kelvin (500 Mired - 153 Mired = 2000 K - 6536 K)
+        - 16.03.2025 - v4.6.0.1  Add icon2 to Lights
+        - 17.03.2025 - v4.6.0.1  Add Functions to Calculate Colors of RGB and CT Icons (Darken and CT (Kelvin/Mired))
+        - 17.03.2025 - v4.6.0.1  Add function cie_to_rgb, Add CIE Channel to Lights
+        - 18.03.2025 - v4.6.0.1  Add hidden Entity2 (Password/Switch) to cardQR (PageItem-Parameter "hideEntity2" true/false)
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -239,12 +249,14 @@ Erforderliche Adapter:
     MQTT-Adapter                - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
 
-Upgrades in Konsole:
-    Tasmota BerryDriver     : Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version   : FlashNextion http://nspanel.de/nspanel-v4.5.0.tft
+Install/Upgrades in Konsole:
 
-    TFT US-L STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-l-v4.5.0.tft
-    TFT US-P STABLE Version   : FlashNextion http://nspanel.de/nspanel-us-p-v4.5.0.tft
+    Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.6.0.tft
+
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.5.0.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.5.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1028,9 +1040,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.5.0.5';
-const tft_version: string = 'v4.5.0';
-const desired_display_firmware_version = 54;
+const scriptVersion: string = 'v4.6.0.1';
+const tft_version: string = 'v4.6.0';
+const desired_display_firmware_version = 55;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -1062,7 +1074,6 @@ if (existsState(NSPanel_Path + 'Config.locale')) {
 const scheduleList: {[key: string]: any} = {};
 
 const globalTextColor: any = White;
-const Sliders2: number = 0;
 let checkBlindActive: boolean = false;
 
 log('--- start of NsPanelTs: ' + NSPanel_Path + ' ---', 'info');
@@ -1342,8 +1353,8 @@ CheckMQTTPorts();
  * @since 4.4.0
  */
 async function Init_Release () {
-    const FWVersion = [0, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56];
-    const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.5.0', '4.6.0', '4.6.1'];
+    const FWVersion = [  0,      41,      42,      43,      44,      45,      46,      47,      48,      49,      50,      51,      52,      53,      54,      55,      56];
+    const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.5.0', '4.6.0', '4.7.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, {type: 'number', write: false});
@@ -1946,7 +1957,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, asyn
         let active = dimBrightness ?? -1;
         if (obj.state.val >= 0 || obj.state.val <= 100) {
             log('action at trigger activeBrightness: ' + obj.state.val + ' - activeDimmodeBrightness: ' + active, 'info');
-            SendToPanel({payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+            SendToPanel({payload: 'dimmode~' + active + '~' + obj.state.val + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
             InitDimmode();
         }
     } catch (err: any) {
@@ -1986,7 +1997,7 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne'
                 //HandleMessage('event', 'startup', undefined, undefined);
             } else {
                 if (Debug) log('action at trigger activeDimmodeBrightness: ' + obj.state.val + ' - activeBrightness: ' + active, 'info');
-                SendToPanel({payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+                SendToPanel({payload: 'dimmode~' + obj.state.val + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
             }
         } else {
             alwaysOn = false;
@@ -2022,7 +2033,7 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: 'ne'},
         }
         let active = brightness ?? 80;
         if (obj.state.val) {
-            SendToPanel({payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+            SendToPanel({payload: 'dimmode~' + 100 + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
         } else {
             InitDimmode();
         }
@@ -2612,27 +2623,26 @@ function ScreensaverDimmode (timeDimMode: NSPanel.DimMode) {
         let active = brightness ?? 80;
         let dimmode = dimBrightness ?? -1;
         if (Debug) {
-            log('function ScreensaverDimmode RGB-Wert HMIDark' + rgb_dec565(HMIDark), 'info');
+            log('function ScreensaverDimmode Background rgb_dec565: ' + rgb_dec565(config.defaultBackgroundColor), 'info');
         }
         if (Debug) {
             log('function ScreensaverDimmode Dimmode=' + timeDimMode.dimmodeOn, 'info');
         }
         if (timeDimMode.dimmodeOn != undefined ? timeDimMode.dimmodeOn : false) {
             if (compareTime(timeDimMode.timeNight != undefined ? timeDimMode.timeNight : '22:00', timeDimMode.timeDay != undefined ? timeDimMode.timeDay : '07:00', 'not between', undefined)) {
-                SendToPanel({payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+                SendToPanel({payload: 'dimmode~' + timeDimMode.brightnessDay + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
                 if (Debug) {
                     log('function ScreensaverDimmode -> Day NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessDay + '~' + active, 'info');
                 }
             } else {
                 SendToPanel({
-                    payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
-                });
+                    payload: 'dimmode~' + timeDimMode.brightnessNight + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
                 if (Debug) {
                     log('function ScreensaverDimmode -> Night NSPanel.Payload: ' + 'dimmode~' + timeDimMode.brightnessNight + '~' + active, 'info');
                 }
             }
         } else {
-            SendToPanel({payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2});
+            SendToPanel({payload: 'dimmode~' + dimmode + '~' + active + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)});
         }
     } catch (err: any) {
         log('error at function ScreensaverDimmode: ' + err.message, 'warn');
@@ -2786,20 +2796,20 @@ async function InitDimmode () {
                 SendToPanel({
                     payload:
                         'dimmode~' + getState(NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness').val + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ?? '80') + '~' + 
-                         rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2
+                         rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)
                 });
             } else {
                 if (isDimTimeInRange(timeDimMode.timeDay, timeDimMode.timeNight)) {
                     SendToPanel({
                         payload:
                             'dimmode~' + timeDimMode.brightnessDay + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ??
-                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
+                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)
                     });
                 } else {
                     SendToPanel({
                         payload:
                             'dimmode~' + timeDimMode.brightnessNight + '~' + (getState(NSPanel_Path + 'ScreensaverInfo.activeBrightness').val ??
-                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor) + '~' + Sliders2,
+                                '80') + '~' + rgb_dec565(config.defaultBackgroundColor) + '~' + rgb_dec565(globalTextColor)
                     });
                 }
                 ScreensaverDimmode(timeDimMode);
@@ -5287,7 +5297,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'light':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
-                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
@@ -5295,10 +5305,8 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                         iconColor = GetIconColor(pageItem, true, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
-                            }
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
                         }
                     }
 
@@ -5308,27 +5316,33 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'hue':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
-                            }
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
                         }
                     }
 
-                    if (pageItem.interpolateColor != undefined && pageItem.interpolateColor == true && val) {
-                        if (existsState(pageItem.id + '.HUE')) {
-                            if (getState(pageItem.id + '.HUE').val != null) {
-                                let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
-                                let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
-                                iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
-                            }
+                    //Calculate color for icon based on color, color temperature and brightness
+                    //Check last Change of DP HUE or CT for Icon in GUI
+                    if (existsState(pageItem.id + '.HUE') && existsState(pageItem.id + '.TEMPERATURE') && existsState(pageItem.id + '.DIMMER') && pageItem.interpolateColor) {
+                        let brightness = getState(pageItem.id + '.DIMMER').val;
+                        if (getState(pageItem.id + '.TEMPERATURE').ts < getState(pageItem.id + '.HUE').ts) {
+                            if (Debug) log('HUE wurde zuletzt geändert - Lampe ist Color-Mode');
+                            let huecolor = hsv2rgb(getState(pageItem.id + '.HUE').val, 1, 1);
+                            let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
+                            let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1);
+                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                        } else {
+                            if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                            let rgb: RGB = kelvinToRGB(getState(pageItem.id + '.TEMPERATURE').val);
+                            iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
                         }
                     }
 
@@ -5338,17 +5352,30 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'ct':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
-                            }
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
+                        }
+                    }
+
+                    //Calculate color for icon based on color temperature and brightness
+                    if (existsState(pageItem.id + '.TEMPERATURE') && existsState(pageItem.id + '.DIMMER') && pageItem.interpolateColor) {
+                        let brightness = getState(pageItem.id + '.DIMMER').val;
+                        if (getState(pageItem.id + '.TEMPERATURE').val > 1000) {
+                            //Color-Temperatur in Kelvin
+                            let rgb: RGB = kelvinToRGB(getState(pageItem.id + '.TEMPERATURE').val);
+                            iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                        } else {
+                            //Color-Temperatur in mired
+                            let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
+                            iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
                         }
                     }
 
@@ -5358,27 +5385,44 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'rgb':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
-                            }
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
                         }
                     }
 
-                    if (existsState(pageItem.id + '.RED') && existsState(pageItem.id + '.GREEN') && existsState(pageItem.id + '.BLUE') && val) {
-                        if (getState(pageItem.id + '.RED').val != null && getState(pageItem.id + '.GREEN').val != null && getState(pageItem.id + '.BLUE').val != null) {
-                            let rgbRed = getState(pageItem.id + '.RED').val;
-                            let rgbGreen = getState(pageItem.id + '.GREEN').val;
-                            let rgbBlue = getState(pageItem.id + '.BLUE').val;
-                            let rgb: RGB = {red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue)};
-                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                    //Calculate color for icon based on color, color temperature and brightness
+                    //Check last Change of DP RGB or CT for Icon in GUI
+                    if (existsState(pageItem.id + '.RED') && existsState(pageItem.id + '.GREEN') && existsState(pageItem.id + '.BLUE') && existsState(pageItem.id + '.TEMPERATURE') && existsState(pageItem.id + '.DIMMER') && pageItem.interpolateColor) {
+                        let brightness = getState(pageItem.id + '.DIMMER').val;
+                        if (getState(pageItem.id + '.TEMPERATURE').ts < getState(pageItem.id + '.RED').ts) {
+                            if (Debug) log('RED wurde zuletzt geändert - Lampe ist Color-Mode');
+                            if (getState(pageItem.id + '.RED').val != null) {
+                                let rgbRed = getState(pageItem.id + '.RED').val;
+                                let rgbGreen = getState(pageItem.id + '.GREEN').val;
+                                let rgbBlue = getState(pageItem.id + '.BLUE').val;
+                                let rgb: RGB = {red: Math.round(rgbRed), green: Math.round(rgbGreen), blue: Math.round(rgbBlue)};
+                                let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1);
+                                iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                            }
+                        } else {
+                            if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                            if (getState(pageItem.id + '.TEMPERATURE').val > 1000) {
+                                //Color-Temperatur in Kelvin
+                                let rgb: RGB = kelvinToRGB(getState(pageItem.id + '.TEMPERATURE').val);
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                            } else {
+                                //Color-Temperatur in mired
+                                let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                            }
                         }
                     }
 
@@ -5386,51 +5430,112 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'cie':
-                case 'rgbSingle':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
+                        }
+                    }
+
+                    //Calculate color for icon based on color, color temperature and brightness
+                    //Check last Change of DP CIE or CT for Icon in GUI
+                    if (existsState(pageItem.id + '.CIE') && existsState(pageItem.id + '.TEMPERATURE') && existsState(pageItem.id + '.DIMMER') && pageItem.interpolateColor) {
+                        let brightness = getState(pageItem.id + '.DIMMER').val;
+                        if (getState(pageItem.id + '.TEMPERATURE').ts < getState(pageItem.id + '.CIE').ts) {
+                            if (Debug) log('CIE wurde zuletzt geändert - Lampe ist Color-Mode');
+                            if (getState(pageItem.id + '.CIE').val != null) {
+                                let cie: string = getState(pageItem.id + '.CIE').val;
+                                let cieArray = (cie.substring(1, cie.length -1)).split(',');
+                                let rgb: RGB = cie_to_rgb(parseFloat(cieArray[0]), parseFloat(cieArray[1]), 254);
+                                let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1);
+                                iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                            }
+                        } else {
+                            if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                            if (getState(pageItem.id + '.TEMPERATURE').val > 1000) {
+                                //Color-Temperatur in Kelvin
+                                let rgb: RGB = kelvinToRGB(getState(pageItem.id + '.TEMPERATURE').val);
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                            } else {
+                                //Color-Temperatur in mired
+                                let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
                             }
                         }
                     }
 
-                    if (existsState(pageItem.id + '.RGB') && val) {
-                        if (getState(pageItem.id + '.RGB').val != null) {
-                            let hex = getState(pageItem.id + '.RGB').val;
-                            let hexRed = parseInt(hex[1] + hex[2], 16);
-                            let hexGreen = parseInt(hex[3] + hex[4], 16);
-                            let hexBlue = parseInt(hex[5] + hex[6], 16);
-                            let rgb: RGB = {red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue)};
-                            iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                    if (Debug) log('CreateEntity Icon role cie ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
+
+                case 'rgbSingle':
+                    type = 'light';
+                    iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
+                    optVal = '0';
+
+                    if (val === true || val === 'true') {
+                        optVal = '1';
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.DIMMER') ? getState(pageItem.id + '.DIMMER').val : 100, useColors);
+                    } else {
+                        iconColor = GetIconColor(pageItem, false, useColors);
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
                         }
                     }
 
-                    if (Debug) log('CreateEntity Icon role cie/rgbSingle ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
+                    //Calculate color for icon based on color, color temperature and brightness
+                    //Check last Change of DP RGB or CT for Icon in GUI
+                    if (existsState(pageItem.id + '.RGB') && existsState(pageItem.id + '.TEMPERATURE') && existsState(pageItem.id + '.DIMMER') && pageItem.interpolateColor) {
+                        let brightness = getState(pageItem.id + '.DIMMER').val;
+                        if (getState(pageItem.id + '.TEMPERATURE').ts < getState(pageItem.id + '.RGB').ts) {
+                            if (Debug) log('RGB wurde zuletzt geändert - Lampe ist Color-Mode');
+                            if (getState(pageItem.id + '.RGB').val != null) {
+                                let hex = getState(pageItem.id + '.RGB').val;
+                                let hexRed = parseInt(hex[1] + hex[2], 16);
+                                let hexGreen = parseInt(hex[3] + hex[4], 16);
+                                let hexBlue = parseInt(hex[5] + hex[6], 16);
+                                let rgb: RGB = {red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue)};
+                                let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1);
+                                iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                            }
+                        } else {
+                            if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                            if (getState(pageItem.id + '.TEMPERATURE').val > 1000) {
+                                //Color-Temperatur in Kelvin
+                                let rgb: RGB = kelvinToRGB(getState(pageItem.id + '.TEMPERATURE').val);
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                            } else {
+                                //Color-Temperatur in mired
+                                let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                            }
+                        }
+                    }
+
+                    if (Debug) log('CreateEntity Icon role rgbSingle ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
                     return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal;
 
                 case 'dimmer':
                     type = 'light';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+                    iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
 
                     if (val === true || val === 'true') {
                         optVal = '1';
-                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
+                        iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : 100, useColors);
                     } else {
                         iconColor = GetIconColor(pageItem, false, useColors);
-                        if (pageItem.icon !== undefined) {
-                            if (pageItem.icon2 !== undefined) {
-                                iconId = iconId2;
-                            }
+                        if (pageItem.icon2 !== undefined) {
+                            iconId = iconId2;
                         }
                     }
 
@@ -7947,6 +8052,10 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         if (page.items[0].hidePassword !== undefined && page.items[0].hidePassword == true) {
             hiddenPWD = true;
         }
+        let hiddenSwitch = false;
+        if (page.items[0].hideEntity2 !== undefined && page.items[0].hideEntity2 == true) {
+            hiddenSwitch = true;
+        }
 
         const tempstr = textQR.split(';');
         let optionalValue1: any;
@@ -7968,7 +8077,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         let type1 = 'text';
         let internalName1 = findLocale('qr', 'ssid');
         let iconId1 = Icons.GetIcon('wifi');
-        let iconColor1 = 65535;
+        let iconColor1 = 65535
         let displayName1 = findLocale('qr', 'ssid');
         let type2 = 'text';
         let internalName2 = findLocale('qr', 'password');
@@ -7976,13 +8085,25 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         let iconId2 = Icons.GetIcon('key');
         let displayName2 = findLocale('qr', 'password');
 
-        if (hiddenPWD) {
+        if (existsState(page.items[0].id + '.SWITCH')) {
             iconColor1 = getState(page.items[0].id + '.SWITCH').val ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+        }
+
+        if (hiddenPWD) {
             type2 = 'switch';
             internalName2 = id;
-            iconId2 = '';
+            iconId2 = getState(page.items[0].id + '.SWITCH').val ? Icons.GetIcon('router-wireless') : Icons.GetIcon('router-wireless-off');
             displayName2 = getState(page.items[0].id + '.SWITCH').val ? findLocale('qr', 'Wlan enabled') : findLocale('qr', 'Wlan disabled');
             optionalValue2 = getState(page.items[0].id + '.SWITCH').val ? 1 : 0;
+        }
+
+        if (hiddenSwitch) {
+            iconColor2 = defaultBackgroundColorParam;
+            type2 = 'text';
+            internalName2 = id;
+            iconId2 = '';
+            displayName2 = '';
+            optionalValue2 = '';
         }
 
         out_msgs.push({
@@ -8641,8 +8762,9 @@ function HandleButtonEvent (words: any): void {
                             break;
                         case 'rgb':
                         case 'rgbSingle':
+                        case 'cie':
                         case 'hue':
-                            setIfExists(id + '.ON_ACTUAL', action);
+                            setIfExists(id + '.ON', action);
                             break;
                         case 'switch.mode.wlan':
                             setIfExists(id + '.SWITCH', action);
@@ -8696,8 +8818,9 @@ function HandleButtonEvent (words: any): void {
                             break;
                         case 'rgb':
                         case 'rgbSingle':
+                        case 'cie':
                         case 'hue':
-                            toggleState(id + '.ON_ACTUAL');
+                            toggleState(id + '.ON');
                             break;
                         case 'media':
                             if (!activePage || activePage.type != 'cardMedia') {
@@ -8883,9 +9006,10 @@ function HandleButtonEvent (words: any): void {
                             case 'rgb':
                             case 'ct':
                             case 'rgbSingle':
+                            case 'cie':
                             case 'hue':
                                 if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
-                                    let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.maxValueBrightness, pageItem.minValueBrightness));
+                                    let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItem.minValueBrightness, pageItem.maxValueBrightness));
                                     setIfExists(id + '.DIMMER', sliderPos);
                                 } else {
                                     setIfExists(id + '.DIMMER', parseInt(words[4]));
@@ -8905,7 +9029,7 @@ function HandleButtonEvent (words: any): void {
                 timeoutSlider = setTimeout(async function () {
                     let pageItem = findPageItem(id);
                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 100, 0, pageItem.minValueColorTemp, pageItem.maxValueColorTemp));
+                        let colorTempK = Math.trunc(scale(parseInt(words[4]), 100, 0, pageItem.maxValueColorTemp, pageItem.minValueColorTemp));
                         setIfExists(id + '.TEMPERATURE', colorTempK);
                     } else {
                         setIfExists(id + '.TEMPERATURE', parseInt(words[4]));
@@ -8931,6 +9055,8 @@ function HandleButtonEvent (words: any): void {
                         setIfExists(id + '.GREEN', rgb.green);
                         setIfExists(id + '.BLUE', rgb.blue);
                         break;
+                    case 'cie':
+                        setIfExists(id + '.CIE', rgb_to_cie(rgb.red, rgb.green, rgb.blue));
                     case 'rgbSingle':
                         let pageItem = findPageItem(id);
                         if (pageItem.colormode == 'xy') {
@@ -9708,7 +9834,10 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
         if (id && existsObject(id)) {
             const o = getObject(id);
             let val: boolean | number = 0;
-            let icon = Icons.GetIcon('lightbulb');
+            //let icon = Icons.GetIcon('lightbulb');
+            let icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
+            let icon2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
+
             let iconColor = rgb_dec565(config.defaultColor);
             const role = o.common.role as NSPanel.roles;
 
@@ -9734,11 +9863,12 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
 
                             icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
 
-                            if (val) {
+                            if (val === true) {
+                                iconColor = GetIconColor(pageItem, 100, true);
                                 switchVal = '1';
-                                iconColor = GetIconColor(pageItem, true, true);
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
                             }
 
                             let effect_supported = 'disable';
@@ -9787,11 +9917,6 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 RegisterDetailEntityWatcher(id + '.ON_SET', pageItem, type, placeId);
                             }
 
-                            if (val === true) {
-                                iconColor = GetIconColor(pageItem, val, false);
-                                switchVal = '1';
-                            }
-
                             if (existsState(id + '.ACTUAL')) {
                                 if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
                                     brightness = Math.trunc(scale(getState(id + '.ACTUAL').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
@@ -9807,6 +9932,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 switchVal = '1';
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
                             }
 
                             RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
@@ -9870,23 +9996,47 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 switchVal = '1';
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
+                            }
+
+                            //Calculate color for icon based on color, color temperature and brightness
+                            //Check last Change of DP HUE or CT for Icon in GUI
+                            if (existsState(id + '.HUE') && existsState(id + '.TEMPERATURE') && pageItem.interpolateColor) {
+                                RegisterDetailEntityWatcher(id + '.HUE', pageItem, type, placeId);
+                                RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type, placeId);
+                                if (getState(id + '.TEMPERATURE').ts < getState(id + '.HUE').ts) {
+                                    if (Debug) log('HUE wurde zuletzt geändert - Lampe ist Color-Mode')
+                                    let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
+                                    let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
+                                    let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1)
+                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                                } else {
+                                    if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                                    if (getState(id + '.TEMPERATURE').val > 1000) {
+                                        //Color-Temperatur in Kelvin
+                                        let rgb: RGB = kelvinToRGB(getState(id + '.TEMPERATURE').val);
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                                    } else {
+                                        //Color-Temperatur in Mired
+                                        let rgb: RGB = kelvinToRGB(1000000 / (getState(id + '.TEMPERATURE').val));
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                    }
+                                }
                             }
 
                             let colorMode = 'disable';
                             if (existsState(id + '.HUE')) {
                                 if (getState(id + '.HUE').val != null) {
                                     colorMode = 'enable';
-                                    let huecolor = hsv2rgb(getState(id + '.HUE').val, 1, 1);
-                                    let rgb: RGB = {red: Math.round(huecolor[0]), green: Math.round(huecolor[1]), blue: Math.round(huecolor[2])};
-                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                                 }
                             }
+
                             let colorTemp: any;
                             if (existsState(id + '.TEMPERATURE')) {
                                 colorTemp = 0;
                                 if (getState(id + '.TEMPERATURE').val != null) {
                                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
+                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp, 100, 0));
                                     } else {
                                         colorTemp = getState(id + '.TEMPERATURE').val;
                                     }
@@ -9954,6 +10104,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 switchVal = '1';
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
                             }
 
                             let colorMode = 'disable';
@@ -9964,12 +10115,37 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                     iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
                                 }
                             }
+
+                            //Calculate color for icon based on color, color temperature and brightness
+                            //Check last Change of DP RGB or CT for Icon in GUI
+                            if (existsState(id + '.RED') && existsState(id + '.TEMPERATURE') && pageItem.interpolateColor) {
+                                RegisterDetailEntityWatcher(id + '.RED', pageItem, type, placeId);
+                                RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type, placeId);
+                                if (getState(id + '.TEMPERATURE').ts < getState(id + '.RED').ts) {
+                                    if (Debug) log('RGB wurde zuletzt geändert - Lampe ist Color-Mode')
+                                    let rgb: RGB = {red: Math.round(getState(id + '.RED').val), green: Math.round(getState(id + '.GREEN').val), blue: Math.round(getState(id + '.BLUE').val)};
+                                    let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1)
+                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                                } else {
+                                    if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                                    if (getState(id + '.TEMPERATURE').val > 1000) {
+                                        //Color-Temperatur in Kelvin
+                                        let rgb: RGB = kelvinToRGB(getState(id + '.TEMPERATURE').val);
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                                    } else {
+                                        //Color-Temperatur in Mired
+                                        let rgb: RGB = kelvinToRGB(1000000 / (getState(id + '.TEMPERATURE').val));
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                    }
+                                }
+                            }
+
                             let colorTemp: any;
                             if (existsState(id + '.TEMPERATURE')) {
                                 colorTemp = 0;
                                 if (getState(id + '.TEMPERATURE').val != null) {
                                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp!, 100, 0));
+                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp!, 100, 0));
                                     } else {
                                         colorTemp = getState(id + '.TEMPERATURE').val;
                                     }
@@ -10037,6 +10213,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 switchVal = '1';
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
                             }
 
                             let colorMode = 'disable';
@@ -10052,18 +10229,160 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 }
                             }
 
+                            //Calculate color for icon based on color, color temperature and brightness
+                            //Check last Change of DP RGB or CT for Icon in GUI
+                            if (existsState(id + '.RGB') && existsState(id + '.TEMPERATURE') && pageItem.interpolateColor) {
+                                RegisterDetailEntityWatcher(id + '.RGB', pageItem, type, placeId);
+                                RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type, placeId);
+                                if (getState(id + '.TEMPERATURE').ts < getState(id + '.RGB').ts) {
+                                    if (Debug) log('RGB wurde zuletzt geändert - Lampe ist Color-Mode')
+                                    let hex = getState(id + '.RGB').val;
+                                    let hexRed = parseInt(hex[1] + hex[2], 16);
+                                    let hexGreen = parseInt(hex[3] + hex[4], 16);
+                                    let hexBlue = parseInt(hex[5] + hex[6], 16);
+                                    let rgb: RGB = {red: Math.round(hexRed), green: Math.round(hexGreen), blue: Math.round(hexBlue)};
+                                    let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1)
+                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                                } else {
+                                    if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                                    if (getState(id + '.TEMPERATURE').val > 1000) {
+                                        //Color-Temperatur in Kelvin
+                                        let rgb: RGB = kelvinToRGB(getState(id + '.TEMPERATURE').val);
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                                    } else {
+                                        //Color-Temperatur in Mired
+                                        let rgb: RGB = kelvinToRGB(1000000 / (getState(id + '.TEMPERATURE').val));
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                    }
+                                }
+                            }
+
                             let colorTemp: any;
                             if (existsState(id + '.TEMPERATURE')) {
                                 colorTemp = 0;
                                 if (getState(id + '.TEMPERATURE').val != null) {
                                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
+                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp, 100, 0));
                                     } else {
                                         colorTemp = getState(id + '.TEMPERATURE').val;
                                     }
                                 }
                             } else {
                                 colorTemp = 'disable';
+                            }
+
+                            let effect_supported = 'disable';
+                            if (pageItem.modeList != undefined) {
+                                effect_supported = 'enable';
+                            }
+
+                            let tempId = placeId != undefined ? placeId : id;
+
+                            out_msgs.push({
+                                payload:
+                                    'entityUpdateDetail' +
+                                    '~' + //entityUpdateDetail
+                                    tempId +
+                                    '~' +
+                                    icon +
+                                    '~' + //iconId
+                                    iconColor +
+                                    '~' + //iconColor
+                                    switchVal +
+                                    '~' + //buttonState
+                                    brightness +
+                                    '~' + //sliderBrightnessPos
+                                    colorTemp +
+                                    '~' + //sliderColorTempPos
+                                    colorMode +
+                                    '~' + //colorMode   (if hue-alias without hue-datapoint, then disable)
+                                    'Color' +
+                                    '~' + //Color-identifier
+                                    findLocale('lights', 'Temperature') +
+                                    '~' + //Temperature-identifier
+                                    findLocale('lights', 'Brightness') +
+                                    '~' + //Brightness-identifier
+                                    effect_supported,
+                            });
+                        }
+                        break;
+
+                    //CIE (XY)
+                    case 'cie':
+                        {
+                            if (existsState(id + '.ON')) {
+                                val = getState(id + '.ON').val;
+                                RegisterDetailEntityWatcher(id + '.ON', pageItem, type, placeId);
+                            }
+
+                            if (existsState(id + '.DIMMER')) {
+                                if (pageItem.minValueBrightness != undefined && pageItem.maxValueBrightness != undefined) {
+                                    brightness = Math.trunc(scale(getState(id + '.DIMMER').val, pageItem.minValueBrightness, pageItem.maxValueBrightness, 100, 0));
+                                } else {
+                                    brightness = getState(id + '.DIMMER').val;
+                                }
+                                RegisterDetailEntityWatcher(id + '.DIMMER', pageItem, type, placeId);
+                            } else {
+                                log('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.DIMMER could not be read', 'warn');
+                            }
+
+                            if (val === true) {
+                                iconColor = GetIconColor(pageItem, brightness, true);
+                                switchVal = '1';
+                            } else {
+                                iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
+                            }
+
+                            let colorMode = 'disable';
+                            if (existsState(id + '.CIE')) {
+                                if (getState(id + '.CIE').val != null) {
+                                    colorMode = 'enable';
+                                    let cie: string = getState(id + '.CIE').val;
+                                    let cieArray = (cie.substring(1, cie.length -1)).split(',');
+                                    let rgb: RGB = cie_to_rgb(parseFloat(cieArray[0]), parseFloat(cieArray[1]), 254);
+                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? rgb : config.defaultOnColor);
+                                    log(iconColor)
+                                }
+                            }
+
+                            //Calculate color for icon based on color, color temperature and brightness
+                            //Check last Change of DP CIE or CT for Icon in GUI
+                            if (existsState(id + '.CIE') && existsState(id + '.TEMPERATURE') && pageItem.interpolateColor) {
+                                RegisterDetailEntityWatcher(id + '.CIE', pageItem, type, placeId);
+                                RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type, placeId);
+                                if (getState(id + '.TEMPERATURE').ts < getState(id + '.CIE').ts) {
+                                    if (Debug) log('CIE wurde zuletzt geändert - Lampe ist Color-Mode')
+                                    let cie: string = getState(id + '.CIE').val;
+                                    let cieArray = (cie.substring(1, cie.length -1)).split(',');
+                                    let rgb: RGB = cie_to_rgb(parseFloat(cieArray[0]), parseFloat(cieArray[1]), 254);
+                                    let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1)
+                                    iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
+                                } else {
+                                    if (Debug) log('TEMPERATURE wurde zuletzt geändert - Lampe ist CT-Mode');
+                                    if (getState(id + '.TEMPERATURE').val > 1000) {
+                                        //Color-Temperatur in Kelvin
+                                        let rgb: RGB = kelvinToRGB(getState(id + '.TEMPERATURE').val);
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                                    } else {
+                                        //Color-Temperatur in Mired
+                                        let rgb: RGB = kelvinToRGB(1000000 / (getState(id + '.TEMPERATURE').val));
+                                        iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                    }
+                                }
+                            }
+
+                            let colorTemp = 0;
+                            if (existsState(id + '.TEMPERATURE')) {
+                                if (getState(id + '.TEMPERATURE').val != null) {
+                                    if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
+                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp, 100, 0));
+                                    } else {
+                                        colorTemp = getState(id + '.TEMPERATURE').val;
+                                    }
+                                }
+                            } else {
+                                log('function GenerateDetailPage role:ct -> Alias-Datenpunkt: ' + id + '.TEMPERATURE could not be read', 'warn');
                             }
 
                             let effect_supported = 'disable';
@@ -10125,15 +10444,30 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 switchVal = '1';
                             } else {
                                 iconColor = GetIconColor(pageItem, false, true);
+                                icon = icon2;
                             }
 
                             let colorMode = 'disable';
+
+                            //Calculate color for icon based on color temperature and brightness
+                            if (existsState(id + '.TEMPERATURE') && pageItem.interpolateColor) {
+                                RegisterDetailEntityWatcher(id + '.TEMPERATURE', pageItem, type, placeId);
+                                if (getState(id + '.TEMPERATURE').val > 1000) {
+                                    //Color-Temperatur in Kelvin
+                                    let rgb: RGB = kelvinToRGB(getState(id + '.TEMPERATURE').val);
+                                    iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
+                                } else {
+                                    //Color-Temperatur in Mired
+                                    let rgb: RGB = kelvinToRGB(1000000 / (getState(id + '.TEMPERATURE').val));
+                                    iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                }
+                            }
 
                             let colorTemp = 0;
                             if (existsState(id + '.TEMPERATURE')) {
                                 if (getState(id + '.TEMPERATURE').val != null) {
                                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
-                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.minValueColorTemp, pageItem.maxValueColorTemp, 100, 0));
+                                        colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp, 100, 0));
                                     } else {
                                         colorTemp = getState(id + '.TEMPERATURE').val;
                                     }
@@ -12066,23 +12400,6 @@ function formatInSelText (Text: string): string {
 }
 
 /**
- * Retrieves a blended color based on the given percentage.
- * 
- * This function calculates and returns a blended color based on the specified percentage.
- * 
- * @function GetBlendedColor
- * @param {number} percentage - The percentage to determine the blended color.
- * @returns {RGB} The blended color as an RGB object.
- */
-function GetBlendedColor (percentage: number): RGB {
-    if (percentage < 50) {
-        return Interpolate(config.defaultOffColor, config.defaultOnColor, percentage / 50.0);
-    }
-
-    return Interpolate(Red, White, (percentage - 50) / 50.0);
-}
-
-/**
  * Interpolates between two RGB colors based on the given fraction.
  * 
  * This function calculates and returns an interpolated color between two RGB colors based on the specified fraction.
@@ -12126,6 +12443,73 @@ function InterpolateNum (d1: number, d2: number, fraction: number): number {
  */
 function rgb_dec565 (rgb: RGB): number {    //return ((Math.floor(rgb.red / 255 * 31) << 11) | (Math.floor(rgb.green / 255 * 63) << 5) | (Math.floor(rgb.blue / 255 * 31)));
     return ((rgb.red >> 3) << 11) | ((rgb.green >> 2) << 5) | (rgb.blue >> 3);
+}
+
+function lightenDarkenColor(color: any, amount: number): RGB { // #FFF not supportet rather use #FFFFFF
+    const clamp = (val: any) => Math.min(Math.max(val, 0), 0xFF);
+    const num: number = parseInt(color.substr(1), 16);
+    const cRed: number = clamp((num >> 16) + amount);
+    const cGreen: number = clamp(((num >> 8) & 0x00FF) + amount);
+    const cBlue: number = clamp((num & 0x0000FF) + amount);
+    return {red: cRed, green: cGreen, blue: cBlue};
+}
+
+function kelvinToRGB (colorTemperature: number): RGB {  
+  colorTemperature = colorTemperature / 100;
+  let red: number;
+  let blue: number; 
+  let green: number;
+  //Calculate Red
+  if (colorTemperature <= 66) {
+    red = 255
+  } else {
+    red = colorTemperature - 60
+    red = 329.698727466 * Math.pow(red, -0.1332047592)
+    if (red < 0) {
+      red = 0
+    }
+    if (red > 255) {
+      red = 255
+    }
+  }
+  //Calculate Green
+  if (colorTemperature <= 66) {
+    green = colorTemperature
+    green = 99.4708025861 * Math.log(green) - 161.1195681661
+    if (green < 0) {
+      green = 0
+    }
+    if (green > 255) {
+      green = 255
+    }
+  } else {
+    green = colorTemperature - 60
+    green = 288.1221695283 * Math.pow(green, -0.0755148492)
+    if (green < 0) {
+      green = 0
+    }
+    if (green > 255) {
+      green = 255
+    }
+  }
+  //Calculate Blue
+  if (colorTemperature >= 66) {
+    blue = 255
+  } else {
+    if (colorTemperature <= 19) {
+      blue = 0
+    } else {
+      blue = colorTemperature - 10
+      blue = 138.5177312231 * Math.log(blue) - 305.0447927307
+      if (blue < 0) {
+        blue = 0
+      }
+      if (blue > 255) {
+        blue = 255
+      }
+    }
+  }
+  return {red: Math.floor(red), green: Math.floor(green), blue: Math.floor(blue)};
 }
 
 /**
@@ -12275,6 +12659,61 @@ function rgb_to_cie (red: number, green: number, blue: number): string {
     let cie = '[' + ciex + ',' + ciey + ']';
 
     return cie;
+}
+
+function cie_to_rgb(x: number, y: number, brightness: number): RGB {
+	//Set to maximum brightness if no custom value was given (Not the slick ECMAScript 6 way for compatibility reasons)
+	if (brightness === undefined) {
+		brightness = 254;
+	}
+
+	let z: number = 1.0 - x - y;
+	let Y: number = parseFloat((brightness / 254).toFixed(2));
+	let X: number = (Y / y) * x;
+	let Z: number = (Y / y) * z;
+
+	//Convert to RGB using Wide RGB D65 conversion
+	let red: number 	=  X * 1.656492 - Y * 0.354851 - Z * 0.255038;
+	let green: number 	= -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
+	let blue: number 	=  X * 0.051713 - Y * 0.121364 + Z * 1.011530;
+
+	//If red, green or blue is larger than 1.0 set it back to the maximum of 1.0
+	if (red > blue && red > green && red > 1.0) {
+		green = green / red;
+		blue = blue / red;
+		red = 1.0;
+	}
+	else if (green > blue && green > red && green > 1.0) {
+		red = red / green;
+		blue = blue / green;
+		green = 1.0;
+	}
+	else if (blue > red && blue > green && blue > 1.0) {
+		red = red / blue;
+		green = green / blue;
+		blue = 1.0;
+	}
+
+	//Reverse gamma correction
+	red 	= red <= 0.0031308 ? 12.92 * red : (1.0 + 0.055) * Math.pow(red, (1.0 / 2.4)) - 0.055;
+	green 	= green <= 0.0031308 ? 12.92 * green : (1.0 + 0.055) * Math.pow(green, (1.0 / 2.4)) - 0.055;
+	blue 	= blue <= 0.0031308 ? 12.92 * blue : (1.0 + 0.055) * Math.pow(blue, (1.0 / 2.4)) - 0.055;
+
+	//Convert normalized decimal to decimal
+	red 	= Math.round(red * 255);
+	green 	= Math.round(green * 255);
+	blue 	= Math.round(blue * 255);
+
+	if (isNaN(red))
+		red = 0;
+
+	if (isNaN(green))
+		green = 0;
+
+	if (isNaN(blue))
+		blue = 0;
+
+    return {red: red, green: green, blue: blue};
 }
 
 /**
@@ -12897,6 +13336,7 @@ namespace NSPanel {
         targetPage?: string;
         modeList?: string[];
         hidePassword?: boolean;
+        hideEntity2?: boolean;
         autoCreateALias?: boolean;
         yAxis?: string;
         yAxisTicks?: number[] | string;
