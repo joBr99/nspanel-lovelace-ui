@@ -155,6 +155,7 @@ ReleaseNotes:
         - 16.03.2025 - v4.6.0.1  Add icon2 to Lights
         - 17.03.2025 - v4.6.0.1  Add Functions to Calculate Colors of RGB and CT Icons (Darken and CT (Kelvin/Mired))
         - 17.03.2025 - v4.6.0.1  Add function cie_to_rgb, Add CIE Channel to Lights
+	- 18.03.2025 - v4.6.0.1  Add hidden Entity2 (Password/Switch) to cardQR (PageItem-Parameter "hideEntity2" true/false)
 
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -8051,6 +8052,10 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         if (page.items[0].hidePassword !== undefined && page.items[0].hidePassword == true) {
             hiddenPWD = true;
         }
+        let hiddenSwitch = false;
+        if (page.items[0].hideEntity2 !== undefined && page.items[0].hideEntity2 == true) {
+            hiddenSwitch = true;
+        }
 
         const tempstr = textQR.split(';');
         let optionalValue1: any;
@@ -8072,7 +8077,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         let type1 = 'text';
         let internalName1 = findLocale('qr', 'ssid');
         let iconId1 = Icons.GetIcon('wifi');
-        let iconColor1 = 65535;
+        let iconColor1 = 65535
         let displayName1 = findLocale('qr', 'ssid');
         let type2 = 'text';
         let internalName2 = findLocale('qr', 'password');
@@ -8080,13 +8085,25 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         let iconId2 = Icons.GetIcon('key');
         let displayName2 = findLocale('qr', 'password');
 
-        if (hiddenPWD) {
+        if (existsState(page.items[0].id + '.SWITCH')) {
             iconColor1 = getState(page.items[0].id + '.SWITCH').val ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+        }
+
+        if (hiddenPWD) {
             type2 = 'switch';
             internalName2 = id;
-            iconId2 = '';
+            iconId2 = getState(page.items[0].id + '.SWITCH').val ? Icons.GetIcon('router-wireless') : Icons.GetIcon('router-wireless-off');
             displayName2 = getState(page.items[0].id + '.SWITCH').val ? findLocale('qr', 'Wlan enabled') : findLocale('qr', 'Wlan disabled');
             optionalValue2 = getState(page.items[0].id + '.SWITCH').val ? 1 : 0;
+        }
+
+        if (hiddenSwitch) {
+            iconColor2 = defaultBackgroundColorParam;
+            type2 = 'text';
+            internalName2 = id;
+            iconId2 = '';
+            displayName2 = '';
+            optionalValue2 = '';
         }
 
         out_msgs.push({
@@ -13319,6 +13336,7 @@ namespace NSPanel {
         targetPage?: string;
         modeList?: string[];
         hidePassword?: boolean;
+        hideEntity2?: boolean;
         autoCreateALias?: boolean;
         yAxis?: string;
         yAxisTicks?: number[] | string;
