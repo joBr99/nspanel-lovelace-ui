@@ -33,112 +33,6 @@ ReleaseNotes:
     Bugfixes und Erweiterungen:
     See ChangeLog all Release Notes: https://github.com/joBr99/nspanel-lovelace-ui/wiki/Release-Notes
 
-        - 08.11.2023 - v4.3.3    Upgrade TFT 53 / 4.3.3
-        - 11.11.2023 - v4.3.3.1  Fix for Issues #1020 HandleHardwareButton buttonConfig.mode -> 'toggle' and 'set'
-        - 12.11.2023 - v4.3.3.2  Add autoCreateALias to cardUnlock
-        - 12.11.2023 - v4.3.3.2  Change NodeJS to at least v18.X.X
-        - 13.11.2023 - v4.3.3.3  if setOption = false, do not create autoAlias (Functional/Servicemenu) and Datapoints
-        - 15.11.2023 - v4.3.3.4  New Service Page -> ioBroker Info 
-        - 16.11.2023 - v4.3.3.5  Add Multilingualism to Service Menu (39 languages)
-        - 17.11.2023 - v4.3.3.5  Add Multilingualism to cardUnlock, cardQR, popupFan, popupTimer (39 languages)
-        - 18.11.2023 - v4.3.3.6  Add autoCreateALias to PageAlarm
-        - 20.11.2023 - v4.3.3.6  Add actionStringArray to PageAlarm
-        - 20.11.2023 - v4.3.3.6  Add Multilingualism to cardAlarm (39 languages)
-        - 20.11.2023 - v4.3.3.7  Add Multilingualism to cardMedia (39 languages)
-        - 20.11.2023 - v4.3.3.8  Add Method dayjs (Multilingualism)
-        - 20.11.2023 - v4.3.3.9  Add ScreensaverEntityOnColor, ...OffColor, ...OnText, ...OffText
-        - 23.11.2023 - v4.3.3.10 Code Optimization in Config Area
-        - 24.11.2023 - v4.3.3.11 Add autoCreateALias to PageQR
-        - 24.11.2023 - v4.3.3.12 Separation of page creation and page updates in cardPower
-        - 24.11.2023 - v4.3.3.12 Add alwaysOnDisplay to cardPower - Leave display on if the alwaysOnDisplay parameter is "true"
-        - 25.11.2023 - v4.3.3.13 Separation of page creation and page updates in cardMedia
-        - 25.11.2023 - v4.3.3.13 Add alwaysOnDisplay to cardMedia - Leave display on if the alwaysOnDisplay parameter is "true"
-        - 25.11.2023 - v4.3.3.13 Fix Sonos Repeat/Shuffle
-        - 25.11.2023 - v4.3.3.14 Refactoring Sonos-Player (with Playlist, Tracklist, Favorites, Eqalizer (if no Favorites))
-        - 29.11.2023 - v4.3.3.15 Fix cardMedia Volume-Slider / Add Init Release to Startup
-        - 30.11.2023 - v4.3.3.16 Beautification of the Sonos player Strings / Add Duration & Elapsed
-        - 01.12.2023 - v4.3.3.16 Fix Datapoints with Value null 
-        - 02.12.2023 - v4.3.3.16 Request replaced by Axios
-        - 04.12.2023 - v4.3.3.17 Add SEEK and CROSSFADE to Sonos cardMedia
-        - 05.12.2023 - v4.3.3.18 Add (ELAPSED/DURATION) to v2Adapter alexa2
-        - 06.12.2023 - v4.3.3.18 Replace missing Type console.log --> log(message, 'serverity')
-        - 07.12.2023 - v4.3.3.19 Fix Trigger activeDimmodeBrightness if Dimmode = -1
-        - 08.12.2023 - v4.3.3.20 add Role AlarmTime for Alarm Clock
-        - 09.12.2023 - v4.3.3.21 Add createAutoAlias to popupTimer only for Time
-        - 14.12.2023 - v4.3.3.22 Add UpdateMessage => disable the update messages
-        - 14.12.2023 - v4.3.3.22 Fix name by static Navi Icon 
-        - 17.12.2023 - v4.3.3.23 Optimization of the blind control (enable or disable Up/Stop/Down)
-        - 18.12.2023 - v4.3.3.24 Hotfix Update Message / Add Icon Colors to Entity Button
-        - 21.12.2023 - v4.3.3.25 Add switch of cardQR by hidePassword: true 
-        - 26.12.2023 - v4.3.3.26 Fix Log output payload -> Json.stringify
-        - 28.12.2023 - v4.3.3.27 Fix Payload (pageItem.id -> placeId) by Function CreateEntity
-        - 28.12.2023 - v4.3.3.27 Fix Fallback PageItem.name by Function CreateEntity --> Many Bugs
-        - 30.12.2023 - v4.3.3.28 Fix short ID's in v4.3.3.27
-        - 30.12.2023 - v4.3.3.28 Fix window Icons in CreateEntity 
-        - 30.12.2023 - v4.3.3.28 Add MQTT-Client Check
-        - 02.01.2024 - v4.3.3.29 Add Tasmota Buzzer for NotifyPage
-        - 02.02.2024 - v4.3.3.29 Fix ThermoPage -> UnSubScribsWatcher
-        - 02.02.2024 - v4.3.3.30 Add stronger config type checks
-        - 03.02.2024 - v4.3.3.31 Remove: autoCreateAlias from cardMedia
-        - 03.02.2024 - v4.3.3.31 Remove: adapterPlayerInstance from every card except cardMedia
-        - 03.02.2024 - v4.3.3.31 [dev]: optional with type - cardMedia has adapterPlayerInstance all other not 
-        - 03.02.2024 - v4.3.3.31 [dev]: add PlayerType some more work to do
-        - 03.02.2024 - v4.3.3.31 changed: adapterPlayerInstance instance 0-9 allowed. Always require a '.' at the end.        
-        - 04.01.2024 - v4.3.3.32 Hotfix Spotify
-        - 04.01.2024 - v4.3.3.32 [DEV] Add Types see commits
-        - 04.01.2024 - v4.3.3.32 Add more details to types for: leftScreensaverEntity, indicatorScreensaverEntity, PageThermo, PageMedia 
-        - 04.01.2024 - v4.3.3.32 Remove not uses propertys from PageItem
-        - 05.01.2024 - v4.3.3.32 Add Body for BoseSoundtouch-Player
-        - 05.01.2024 - v4.3.3.33 Add BoseSoundtouch Functions
-        - 05.01.2024 - v4.3.3.33 Screensaver Fix max Number of indicatorScreensaverEntity 
-        - 07.01.2024 - v4.3.3.33 Fix BoseSoundtouch Proto
-        - 08.01.2024 - v4.3.3.34 Fix: Disabled Icon Status while bug in updating data points in ioBroker (reason unknown)
-        - 08.01.2024 - v4.3.3.35 Add: relay.1/relay.2 show the confirmed status
-        - 09.01.2024 - v4.3.3.36 Fix: change ScreensaverTimeout and activeBrightness
-        - 09.01.2024 - v4.3.3.36 Fix: schedule SendTime
-        - 09.01.2024 - v4.3.3.36 Fix: Function _schedule SummerTime/WinterTime
-        - 15.01.2024 - v4.3.3.37 Change: Allow data points to be flushed for popUpNotify. Activate screensaver with one click.
-        - 16.01.2024 - v4.3.3.38 Fix: joBr99#1098
-        - 16.01.2024 - v4.3.3.38 Types: Number of PageItems defined & HandleScreensaverStatusIcons rewritten
-        - 16.01.2024 - v4.3.3.38 Optimate: function SendTime()
-        - 17.01.2024 - v4.3.3.38 Add: ScreensaverEntityIconSelect for MRIcons is like common.states for states.
-        - 17.01.2024 - v4.3.3.38 Add: Changing the ScreensaverEntityValue value updates the screensaver.
-        - 19.01.2024 - v4.3.3.38 Change: yAxisTicks parameter is not required in cardLChart PageItem
-        - 20.01.2024 - v4.3.3.38 Add: click on indicatorIcon navigate to Page
-        - 23.01.2024 - v4.3.3.39 Add: Optional setOn & setOff for HW button with mode 'set'
-        - 28.01.2024 - v4.3.3.39 Fix: ack for read-only state
-        - 03.02.2024 - v4.3.3.40 Fix: RGB maxValueColorTemp
-        - 05.02.2024 - v4.3.3.40 Fix: SqueezeboxRPC-Media-Player and add some Functions
-        - 06.02.2024 - v4.3.3.41 Fix: activeBrightness -> null
-        - 06.02.2024 - v4.3.3.41 Fix: bHome -> corrected PageId
-        - 07.02.2024 - v4.3.3.42 Minor Fixes
-        - 09.02.2024 - v4.3.3.42 Change pageId with Alias in Communication with HMI
-        - 09.02.2024 - v4.3.3.42 Spotify Media-Player: Dynamic loading of the speaker list, playlist, tracklist, fix repeat, add seek, add elapsed/duration
-        - 10.02.2024 - v4.3.3.42 Spotify Minor Fixes; Add miValue / maxValue to Volume-Slider
-        - 10.02.2024 - v4.3.3.43 Fix: cardGrid2 => 9 Entities for Layout 'us-p' issue #1167
-        - 11.02.2024 - v4.3.3.43 Fix VolumeSlider
-        - 05.05.2024 - v4.3.3.44 Fix MQTT-Port-check
-        - 13.05.2024 - v4.4.0.0  TFT 54 / 4.4.0
-        - 19.05.2024 - v4.4.0.1  TFT 53 / 4.4.0
-        - 13.06.2024 - v4.4.0.2  Calculated energy consumption in relation to dimming mode and relay state (not the energy consumption of the outputs)
-        - 13.06.2024 - v4.4.0.3  Check prefix '.tele.' in config.NSPanelReceiveTopic
-        - 13.09.2024 - v4.4.0.4  New Feature: Hidden Carts
-        - 18.09.2024 - v4.4.0.5  Remove day.JS
-        - 19.09.2024 - v4.4.0.6  Check Ports with mqtt.X and mqtt-client.X
-        - 27.09.2024 - v4.4.0.6  Fix: Using MQTT adapter or MQTT-CLIENT adapter / Minor Fix by wolwin
-        - 09.10.2024 - v4.4.0.7  Fix: first start and initialisation with new NSPanel device - Fix by wolwin
-        - 25.10.2024 - v4.4.0.8  Fix: InitDimmode => timeDimMode Day / timeDimMode Night
-        - 25.10.2024 - v4.4.0.8  Add Always On Display (AOD) to cardTHermo
-        - 25.10.2024 - v4.4.0.8  Add Hide Buttons at Power Off to cardThermo (Climate Alias Channel)
-        - 26.10.2024 - v4.4.0.8  Add Custom Icon Object to cartdThermo (Climate Alias Channel
-        - 31.10.2024 - v4.4.0.9  Fix: del 'HandleMessage()' in Trigger 'activeDimmodeBrightness'
-        - 22.11.2024 - v4.4.0.10 Fix: Bug #1266 trigger timeoutScreensaver
-        - 22.11.2024 - v4.4.0.11 Add new value 'PopupNotify' to ActivePage 
-        - 07.12.2024 - v4.4.0.12 Add JSDocs and some small fixes
-        - 11.01.2025 - v4.4.0.13 Error due to an empty character string when subscribing to icon IDs
-        - 20.01.2025 - v4.4.0.14 Add Screensaver3 and cardGrid3
-        - 20.01.2025 - v4.4.0.14 Added Easy-View Screensaver states handling
-        - 20.01.2025 - v4.4.0.14 icon3 added for use in blind for the state between 0-100
         - 21.01.2025 - v4.5.0    TFT 54 / 4.5.0
         - 23.01.2025 - v4.5.0.1  Change TFT URLs
         - 23.01.2025 - v4.5.0.2  fix handleScreensaverUpdate => leftscreensaverEntity; fix Type leftscreensaverentitiy
@@ -156,8 +50,9 @@ ReleaseNotes:
         - 17.03.2025 - v4.6.0.1  Add CIE Channel to Lights
         - 17.03.2025 - v4.6.0.1  Add Functions to Calculate Colors of RGB and CT Icons (Darken and CT (Kelvin/Mired))
         - 18.03.2025 - v4.6.0.1  Add hidden Entity2 (Password/Switch) to cardQR (PageItem-Parameter "hideEntity2" true/false)
-        - 01.04.2025 - v4.6.1    TFT 55 / 4.6.1 - Adapter Functions
+        - 01.04.2025 - v4.6.1    TFT 55 / 4.6.1 - Add Some Adapter Functions
         - 01.04.2025 - v4.6.2    TFT 55 / 4.6.2 - Add cardSchedule
+        - 01.04.2025 - v4.6.2.1  Add startup TFT-Release directly from NSPanel-TFT, Comparison between version number and release removed
         
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -177,17 +72,21 @@ Tasmota Konsole:
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
+                          - weitere Screensaver wie Advanced, Easyview und Alternativ
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
+                          5 vertikale angeordnete Steuerelemente - auch als Subpage beim US-Modell im Portrait-Modus
+    cardSchedule Page   - 6 vertikale angeordnete Text-Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
-    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente bzw. beim US-Modell im Portrait-Modus
-                          9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage    
-    cardGrid3 Page      - 4 horizontal angeordnete Steuerelemente in 2 Reihen a 2 Steuerelemente
+    cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente - auch als Subpage
+                          9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage - beim US-Modell im Portrait-Modus    
+    cardGrid3 Page      - 4 horizontal angeordnete Steuerelemente in 2 Reihen a 2 Steuerelemente - auch als Subpage
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
     cardChart Page      - Balken-Diagramme aus History, SQL oder InfluxDB
     cardLChart Page     - Linien-Diagramme aus History, SQL oder InfluxDB
+    cardQR Page         - QR Code für Bereitstellung Gäste-WLAN
 
     Vollständige Liste zur Einrichtung unter:
     https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Card-Definitionen-(Seiten)
@@ -208,6 +107,7 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Steckdose           - An/Aus (Schalter)
     Dimmer              - An/Aus, Brightness
     Farbtemperatur      - An/Aus, Farbtemperatur und Brightness
+    CIE-Licht           - Zum Schalten von Color-Leuchtmitteln über CIE-Wert [x,y] - Array, Brightness, Farbtemperatur, An/Aus
     HUE-Licht           - Zum Schalten von Color-Leuchtmitteln über HUE-Wert, Brightness, Farbtemperatur, An/Aus (HUE kann auch fehlen)
     RGB-Licht           - RGB-Leuchtmitteln/Stripes welche Rot/Grün/ und Blau separat benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
     RGB-Licht-einzeln   - RGB-Leuchtmitteln/Stripes welche HEX-Farbwerte benötigen (Tasmota, WifiLight, etc.) + Brightness, Farbtemperatur
@@ -261,8 +161,6 @@ Install/Upgrades in Konsole:
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.6.0.tft
 ---------------------------------------------------------------------------------------
 */
-
-
 
 /******************************* Begin CONFIG Parameter *******************************/
 
@@ -1356,15 +1254,11 @@ CheckMQTTPorts();
  * @since 4.4.0
  */
 async function Init_Release () {
-    const FWVersion = [  0,      41,      42,      43,      44,      45,      46,      47,      48,      49,      50,      51,      52,      53,      54,      55,      56];
-    const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.5.0', '4.6.2', '4.7.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, {type: 'number', write: false});
-            // if 'desiredVersion' as a string:  await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), { type: 'string', write: false });
         } else {
             await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, true);
-            // if 'desiredVersion' as a string:  await setStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', String(desired_display_firmware_version), true);
         }
 
         if (existsObject(NSPanel_Path + 'Config.Update.activ') == false) {
@@ -1373,19 +1267,21 @@ async function Init_Release () {
             await setStateAsync(NSPanel_Path + 'Config.Update.activ', 0, true);
         }
 
-        let currentFW = 0;
+        let currentFWV = 0;
+        let currentFWR = '0.0.0'
         let findFWIndex = 0;
         log('Desired TFT Firmware: ' + desired_display_firmware_version + ' / ' + tft_version, 'info');
-        if (existsObject(NSPanel_Path + 'Display_Firmware.currentVersion')) {
-            currentFW = parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val);
-            findFWIndex = FWVersion.indexOf(currentFW);
-            log('Installed TFT Firmware: ' + currentFW + ' / v' + FWRelease[findFWIndex], 'info');
+
+        if (existsObject(NSPanel_Path + 'Display_Firmware.currentRelease')) {
+            currentFWV = parseInt(getState(NSPanel_Path + 'Display_Firmware.currentVersion').val);
+            currentFWR = getState(NSPanel_Path + 'Display_Firmware.currentRelease').val;
+            log('Installed TFT Firmware: ' + currentFWV + ' / v' + currentFWR, 'info');
         }
         //Create Long Term
         if (existsObject(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion') == false) {
             //Create TFT DP's
             if (isSetOptionActive) {
-                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], {type: 'string', write: false});
+                await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFWV + ' / v' + currentFWR, {type: 'string', write: false});
                 await createStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', String(desired_display_firmware_version), {type: 'string', write: false});
                 setObject(AliasPath + 'Display_Firmware.TFT.currentVersion', {type: 'channel', common: {role: 'info', name: 'current TFT-Version'}, native: {}});
                 setObject(AliasPath + 'Display_Firmware.TFT.desiredVersion', {type: 'channel', common: {role: 'info', name: 'desired TFT-Version'}, native: {}});
@@ -1402,7 +1298,7 @@ async function Init_Release () {
             }
         } else {
             //Create TFT DP's
-            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFW + ' / v' + FWRelease[findFWIndex], true);
+            await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.currentVersion', currentFWV + ' / v' + currentFWR, true);
             await setStateAsync(NSPanel_Path + 'Display_Firmware.TFT.desiredVersion', String(desired_display_firmware_version) + ' / ' + tft_version, true);
         }
     } catch (err: any) {
@@ -1584,8 +1480,6 @@ on({id: [NSPanel_Path + 'Config.hiddenCards'], change: 'ne'}, async function (ob
     }
 });
 
-
-
 /**
  * This function is triggered when the state of `id: [NSPanel_Path + 'Config.ScripgtDebugStatus']` changes.
  * It logs a message indicating whether debug mode is activated or disabled.
@@ -1686,7 +1580,6 @@ on({id: [NSPanel_Path + 'Config.localeNumber', NSPanel_Path + 'Config.temperatur
     }
 });
 
-
 /**
  * Creates the state for the screensaver advanced switch if it does not exist.
  * This switch is used to switch between two different screensaver layouts.
@@ -1716,9 +1609,6 @@ function CheckEnableSetObject () {
     var enableSetObject = getObject('system.adapter.javascript.' + instance).native.enableSetObject;
     return enableSetObject;
 }
-
-
-
 
 /**
  * Creates the states for the current active page if they do not exist.
@@ -2652,7 +2542,6 @@ function ScreensaverDimmode (timeDimMode: NSPanel.DimMode) {
     }
 }
 
-
 /**
  * Initializes the weather forecast states if they do not exist.
  * This function creates a new state for weatherForecast, weatherForecastTimer and entityChangeTime with a default value if they are not already present.
@@ -2848,7 +2737,6 @@ function addDimTime (strTime) {
     return d;
 }
 
-
 /**
  * Checks if the current time is within the given range.
  * The range is defined by two strings in the format HH:MM:SS.
@@ -2893,7 +2781,6 @@ async function Calc_Consumption (Brightness: number, Relays: number | undefined)
         return undefined
     }
 }
-
 
 /**
  * Counts the number of Relays that are currently on in the given Path.
@@ -2982,7 +2869,6 @@ async function DetermineScreensaverDimmode (timeDimMode: NSPanel.DimMode): Promi
     }
     return 100
 }
-
 
 /**
  * Initializes the mean power consumption of the NSPanel.
@@ -4277,15 +4163,23 @@ on({id: config.panelRecvTopic}, async (obj) => {
             if (isSetOptionActive) {
                 if (split[0] == 'event' && split[1] == 'startup') {
                     await createStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.StateCommon> {type: 'string', write: false});
+                    await createStateAsync(NSPanel_Path + 'Display_Firmware.currentRelease', <iobJS.StateCommon> {type: 'string', write: false});
                     await createStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.StateCommon> {type: 'string', write: false});
 
                     await setStateAsync(NSPanel_Path + 'Display_Firmware.currentVersion', <iobJS.State> {val: split[2], ack: true});
+                    await setStateAsync(NSPanel_Path + 'Display_Firmware.currentRelease', <iobJS.State> {val: split[4], ack: true});
                     await setStateAsync(NSPanel_Path + 'NSPanel_Version', <iobJS.State> {val: split[3], ack: true});
 
                     if (autoCreateAlias) {
                         setObject(AliasPath + 'Display.TFTVersion', {type: 'channel', common: {role: 'info', name: 'Display.TFTVersion'}, native: {}});
+                        setObject(AliasPath + 'Display.TFTRelease', {type: 'channel', common: {role: 'info', name: 'Display.TFTRelease'}, native: {}});
                         setObject(AliasPath + 'Display.Model', {type: 'channel', common: {role: 'info', name: 'Display.Model'}, native: {}});
                         await createAliasAsync(AliasPath + 'Display.TFTVersion.ACTUAL', NSPanel_Path + 'Display_Firmware.currentVersion', true, <iobJS.StateCommon> {
+                            type: 'string',
+                            role: 'state',
+                            name: 'ACTUAL',
+                        });
+                        await createAliasAsync(AliasPath + 'Display.TFTRelease.ACTUAL', NSPanel_Path + 'Display_Firmware.currentRelease', true, <iobJS.StateCommon> {
                             type: 'string',
                             role: 'state',
                             name: 'ACTUAL',
