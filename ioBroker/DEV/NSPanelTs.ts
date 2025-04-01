@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.6.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 55 / v4.6.0 / BerryDriver 9 / Tasmota 14.5.0
+TypeScript v4.6.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 55 / v4.6.2 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -147,16 +147,18 @@ ReleaseNotes:
         - 30.01.2025 - v4.5.0.4  fix DetermineDimBrightness (function returns undefined, because wrong DP check)
         - 03.02.2025 - v4.5.0.5  Bugfix InitDimmode by Gargano
         - 14.03.2025 - v4.5.2    Fix Bugs in HUE-Light, Fix Icon-Colors with interpolateColors (Color, ColorTemp, Brightness), Fix ON instead of ON_ACTUAL for writing DP
-        - 15.03.2025 - v4.5.2.1  Add Functions to Calculate Colors of Icons (Darken and CT (Kelvin))
-        - 15.03.2025 - v4.5.2.1  Remove New Sliders (popupLightNew), Fix TFT-Pictures in TFT --> with v4.6.0
+        - 15.03.2025 - v4.5.2.1  Add Functions to Calculate Colors of HUE Icons (Darken and CT (Kelvin/Mired))
+        - 15.03.2025 - v4.5.2.1  Remove New Sliders (popupLightNew), Fix TFT-Pictures in TFT --> with v4.6.0 / TFT 55
         - 16.03.2025 - v4.6.0    Fix Bugs in Channels Light and RGBsingle-Light, Fix Icon-Colors with interpolateColors (Color, ColorTemp, Brightness), Fix ON instead of ON_ACTUAL for writing DP
         - 16.03.2025 - v4.6.0.1  Add Functions to Calculate Colors of RGBsingle Icons (Darken and CT (Kelvin/Mired))
         - 16.03.2025 - v4.6.0.1  Fix Light-Icons if Color-Temperature uses Mired instead of Kelvin (500 Mired - 153 Mired = 2000 K - 6536 K)
         - 16.03.2025 - v4.6.0.1  Add icon2 to Lights
+        - 17.03.2025 - v4.6.0.1  Add CIE Channel to Lights
         - 17.03.2025 - v4.6.0.1  Add Functions to Calculate Colors of RGB and CT Icons (Darken and CT (Kelvin/Mired))
-        - 17.03.2025 - v4.6.0.1  Add function cie_to_rgb, Add CIE Channel to Lights
-	- 18.03.2025 - v4.6.0.1  Add hidden Entity2 (Password/Switch) to cardQR (PageItem-Parameter "hideEntity2" true/false)
-
+        - 18.03.2025 - v4.6.0.1  Add hidden Entity2 (Password/Switch) to cardQR (PageItem-Parameter "hideEntity2" true/false)
+        - 01.04.2025 - v4.6.1    TFT 55 / 4.6.1 - Adapter Functions
+        - 01.04.2025 - v4.6.2    TFT 55 / 4.6.2 - Add cardSchedule
+        
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
 
@@ -253,12 +255,13 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.6.0.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.6.2.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.5.0.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.5.0.tft
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.6.0.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.6.0.tft
 ---------------------------------------------------------------------------------------
 */
+
 
 
 /******************************* Begin CONFIG Parameter *******************************/
@@ -1040,8 +1043,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.6.0.1';
-const tft_version: string = 'v4.6.0';
+const scriptVersion: string = 'v4.6.2.1';
+const tft_version: string = 'v4.6.2';
 const desired_display_firmware_version = 55;
 const berry_driver_version = 9;
 
@@ -1354,7 +1357,7 @@ CheckMQTTPorts();
  */
 async function Init_Release () {
     const FWVersion = [  0,      41,      42,      43,      44,      45,      46,      47,      48,      49,      50,      51,      52,      53,      54,      55,      56];
-    const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.5.0', '4.6.0', '4.7.0'];
+    const FWRelease = ['0', '3.3.1', '3.4.0', '3.5.0', '3.5.X', '3.6.0', '3.7.3', '3.8.0', '3.8.3', '3.9.4', '4.0.5', '4.1.4', '4.2.1', '4.4.0', '4.5.0', '4.6.2', '4.7.0'];
     try {
         if (existsObject(NSPanel_Path + 'Display_Firmware.desiredVersion') == false) {
             await createStateAsync(NSPanel_Path + 'Display_Firmware.desiredVersion', desired_display_firmware_version, {type: 'number', write: false});
@@ -4668,6 +4671,9 @@ function GeneratePage (page: PageType): void {
             case 'cardEntities':
                 SendToPanel(GenerateEntitiesPage(page));
                 break;
+            case 'cardSchedule':
+                SendToPanel(GenerateSchedulePage(page));
+                break;
             case 'cardThermo':
                 SendToPanel(GenerateThermoPage(page));
                 break;
@@ -4853,6 +4859,27 @@ function GenerateEntitiesPage (page: NSPanel.PageEntities): NSPanel.Payload[] {
 }
 
 /**
+ * Generates the payload for an Schedule page on the NSPanel.
+ * 
+ * This function creates and returns the payload required to display an schedule page on the NSPanel.
+ * 
+ * @function GenerateSchedulePage
+ * @param {NSPanel.PageSchedule} page - The entities page configuration.
+ * @returns {NSPanel.Payload[]} The payload array for the schedule page.
+ */
+function GenerateSchedulePage (page: NSPanel.PageSchedule): NSPanel.Payload[] {
+    try {
+        let out_msgs: NSPanel.Payload[];
+        out_msgs = [{payload: 'pageType~cardSchedule'}];
+        out_msgs.push({payload: GeneratePageElements(page)});
+        return out_msgs;
+    } catch (err: any) {
+        log('error at function GenerateSchedulePage: ' + err.message, 'warn');
+        return [];
+    }
+}
+
+/**
  * Generates the payload for a grid page on the NSPanel.
  * 
  * This function creates and returns the payload required to display a grid page on the NSPanel.
@@ -4957,6 +4984,9 @@ function GeneratePageElements (page: PageType): string {
                 } else {
                     maxItems = 4;
                 }
+                break;
+            case 'cardSchedule':
+                maxItems = 6;
                 break;
             case 'cardGrid':
                 maxItems = 6;
@@ -12661,6 +12691,22 @@ function rgb_to_cie (red: number, green: number, blue: number): string {
     return cie;
 }
 
+function perc2color(percent: number) {
+	let red: number = 0;
+    let green: number = 0;
+    let blue: number = 0;
+	if(percent < 50) {
+		red = 255;
+		green = Math.round(5.1 * percent);
+	}
+	else {
+		green = 255;
+		red = Math.round(510 - 5.10 * percent);
+	}
+	var h = red * 0x10000 + green * 0x100 + blue * 0x1;
+	return '#' + ('000000' + h.toString(16)).slice(-6);
+}
+
 function cie_to_rgb(x: number, y: number, brightness: number): RGB {
 	//Set to maximum brightness if no custom value was given (Not the slick ECMAScript 6 way for compatibility reasons)
 	if (brightness === undefined) {
@@ -12845,11 +12891,13 @@ type PageItem = NSPanel.PageItem;
 type PageType = NSPanel.PageType;
 type Config = NSPanel.Config;
 type PageEntities = NSPanel.PageEntities;
+type PageSchedule = NSPanel.PageSchedule;
 type PageChart = NSPanel.PageChart;
 type PagePower = NSPanel.PagePower;
 type PageGrid = NSPanel.PageGrid;
-type PageQR = NSPanel.PageQR;
 type PageGrid2 = NSPanel.PageGrid2;
+type PageGrid3 = NSPanel.PageGrid3;
+type PageQR = NSPanel.PageQR;
 type PageMedia = NSPanel.PageMedia;
 type PageThermo = NSPanel.PageThermo;
 type PageUnlock = NSPanel.PageUnlock;
@@ -13183,13 +13231,18 @@ namespace NSPanel {
         hiddenByTrigger?: boolean;
     };
 
-    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
+    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardSchedule' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
 
-    export type PageType = PageChart | PageEntities | PageGrid | PageGrid2 | PageGrid3 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower;
+    export type PageType = PageChart | PageEntities | PageSchedule | PageGrid | PageGrid2 | PageGrid3 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower;
 
     export type PageEntities = {
         type: 'cardEntities';
         items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?];
+    } & PageBaseType;
+
+    export type PageSchedule = {
+        type: 'cardSchedule';
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?];
     } & PageBaseType;
 
     export type PageGrid = {
@@ -13361,7 +13414,7 @@ namespace NSPanel {
 
     export type ConfigButtonFunction = {
         mode: 'page' | 'toggle' | 'set' | null;
-        page: PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageGrid | PageGrid2 | PagePower | PageChart | PageUnlock | null;
+        page: PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageSchedule | PageGrid | PageGrid2 | PageGrid3 | PagePower | PageChart | PageUnlock | null;
         entity: string | null;
         setValue: string | number | boolean | null;
         setOn?: {dp: string; val: iobJS.StateValue};
