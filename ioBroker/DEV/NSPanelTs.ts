@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.6.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 55 / v4.6.2 / BerryDriver 9 / Tasmota 14.5.0
+TypeScript v4.7.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 56 / v4.7.0 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -53,6 +53,7 @@ ReleaseNotes:
         - 01.04.2025 - v4.6.1    TFT 55 / 4.6.1 - Add Some Adapter Functions
         - 01.04.2025 - v4.6.2    TFT 55 / 4.6.2 - Add cardSchedule
         - 01.04.2025 - v4.6.2.1  Add startup TFT-Release directly from NSPanel-TFT, Comparison between version number and release removed
+        - 02.04.2025 - v4.7.0    TFT 56 / 4.7.0 - Fix cardSchedule
         
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -155,7 +156,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.6.2.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.0.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.6.0.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.6.0.tft
@@ -941,9 +942,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.6.2.1';
-const tft_version: string = 'v4.6.2';
-const desired_display_firmware_version = 55;
+const scriptVersion: string = 'v4.7.0.1';
+const tft_version: string = 'v4.7.0';
+const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
