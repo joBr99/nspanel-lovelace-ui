@@ -6936,8 +6936,50 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                             log('error at function createAutoMediaAlias Adapter bosesoundtouch: ' + err.message, 'warn');
                         }
                     }
-                    break;
                 }
+                break;
+                case 'mpd.0.':
+                case 'mpd.1.':
+                case 'mpd.2.':
+                case 'mpd.3.':
+                case 'mpd.4.':
+                case 'mpd.5.':
+                case 'mpd.6.':
+                case 'mpd.7.':
+                case 'mpd.8.':
+                case 'mpd.9.': 
+                    {
+                        if (existsObject(id) == false) {
+                            log('MPD Alias ' + id + ' does not exist - will be created now', 'info');
+
+                            try {
+                                let dpPath: string = adapterPlayerInstance;
+                                await extendObjectAsync(id, {_id: id, type: 'channel', common: {role: 'media', name: 'media'}, native: {}});
+                                await createAliasAsync(id + '.ACTUAL', dpPath + 'volume', true, <iobJS.StateCommon> {type: 'number', role: 'value.volume', name: 'ACTUAL'});
+                                await createAliasAsync(id + '.VOLUME', dpPath + 'volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
+                                //await createAliasAsync(id + '.STATE', dpPath + 'on', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.state', name: 'STATE'});
+    
+                                await createAliasAsync(id + '.ALBUM', dpPath + 'album', true, <iobJS.StateCommon> {type: 'string', role: 'media.album', name: 'ALBUM'});
+                                await createAliasAsync(id + '.ARTIST', dpPath + 'artist', true, <iobJS.StateCommon> {type: 'string', role: 'media.artist', name: 'ARTIST'});
+                                await createAliasAsync(id + '.TITLE', dpPath + 'track', true, <iobJS.StateCommon> {type: 'string', role: 'media.title', name: 'TITLE'});
+                                await createAliasAsync(id + '.DURATION', dpPath + 'current_duration', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
+                                await createAliasAsync(id + '.ELAPSED', dpPath + 'current_elapsed', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
+                                await createAliasAsync(id + '.REPEAT', dpPath + '.repeat', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT'});
+                                await createAliasAsync(id + '.SHUFFLE', dpPath + '.shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+    
+                                await createAliasAsync(id + '.NEXT', dpPath + 'next', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.next', name: 'NEXT'});
+                                await createAliasAsync(id + '.PREV', dpPath + 'previous', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.prev', name: 'PREV'});
+                                await createAliasAsync(id + '.PLAY', dpPath + 'play', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.play', name: 'PLAY'});
+                                await createAliasAsync(id + '.PAUSE', dpPath + 'pause', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.pause', name: 'PAUSE'});
+                                await createAliasAsync(id + '.STOP', dpPath + 'stop', true, <iobJS.StateCommon> {type: 'boolean', role: 'button.stop', name: 'STOP'});
+                            } catch (error: any) {
+                                log('error at function createAutoMediaAlias Adapter MPD: ' + error.message, 'warn');
+                            }
+
+                        }
+                    }
+
+                break;
                 default: {
                     log(`Dont find adapterPlayerInstance: ${adapterPlayerInstance}!`, 'warn');
                 }
@@ -7116,6 +7158,26 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                 }
             }
 
+            //MPD MediaServer
+            if (v2Adapter == 'mpd') {
+                if (existsObject(id + '.DURATION') && existsObject(id + '.ELAPSED')) {
+                    let vElapsed: string = getState(id + '.ELAPSED').val;
+                    if (vElapsed.substring(0, 1) == '0') {
+                        vElapsed = vElapsed.slice(1);
+                    }
+                    let vDuration: string = getState(id + '.DURATION').val;
+                    if (vDuration.substring(0, 1) == '0') {
+                        vDuration = vDuration.slice(1);
+                    }
+                    title = title + ' (' + vElapsed + '|' + vDuration + ')';
+                    if (title == ' (0:00|0:00)') {
+                        title = '';
+                    }
+                } else {
+                    log('MPD DURATION or ELAPSED not found!', 'warn');
+                }
+            }
+
             let shuffle = getState(id + '.SHUFFLE').val;
 
             //New Adapter/Player
@@ -7235,6 +7297,28 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                 name = page.heading;
             }
 
+            //MPD MediaServer
+            if (v2Adapter == 'mpd') {
+                media_icon = Icons.GetIcon('alpha-m-circle');
+                name = getState(id + '.ALBUM').val;
+                if (name.length = 0) {
+                    name = page.heading;
+                } else if (name.length > 16) {
+                    name = name.slice(0, 16) + '...';
+                }
+                if (getState(id + '.ALBUM').val.length > 0) {
+                    author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
+                    if (author.length > 37) {
+                        author = author.slice(0, 37) + '...';
+                    }
+                } else {
+                    author = getState(id + '.ARTIST').val;
+                }
+                if (getState(id + '.ARTIST').val.length == 0) {
+                    author = findLocale('media', 'no_music_to_control');
+                }   
+            }
+
             let volume = scale(getState(id + '.VOLUME').val, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100, 100, 0);
             let iconplaypause = Icons.GetIcon('pause'); //pause
             let shuffle_icon = Icons.GetIcon('shuffle-variant'); //shuffle
@@ -7268,6 +7352,16 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Ausnahme Volumio: status = string: play, pause, stop usw.
             if (v2Adapter == 'volumio') {
                 if (getState(id + '.status').val == 'play') {
+                    onoffbutton = 65535;
+                    iconplaypause = Icons.GetIcon('pause'); //pause
+                } else {
+                    iconplaypause = Icons.GetIcon('play'); //play
+                }
+            }
+
+            //Ausnahme MPD MediaServer
+            if (v2Adapter == 'mpd') {
+                if (getState(id + '.state').val == 'play') {
                     onoffbutton = 65535;
                     iconplaypause = Icons.GetIcon('pause'); //pause
                 } else {
@@ -7516,9 +7610,14 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     repeatIcon = Icons.GetIcon('repeat-variant');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
+            } else if (v2Adapter == 'mpd') {
+                if (getState(id + '.REPEAT').val == true) {
+                    repeatIcon = Icons.GetIcon('repeat-variant');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                }
             }
 
-            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'bosesoundtouch' || v2Adapter == 'volumio' || v2Adapter == 'squeezeboxrpc') {
+            if (v2Adapter == 'spotify-premium' || v2Adapter == 'alexa2' || v2Adapter == 'sonos' || v2Adapter == 'bosesoundtouch' || v2Adapter == 'volumio' || v2Adapter == 'squeezeboxrpc' || v2Adapter == 'mpd') {
                 repeatButtonString = 'button' + '~' + tid + '?repeat' + '~' + repeatIcon + '~' + repeatIconCol + '~' + 'Repeat' + '~' + 'media4';
             }
 
@@ -12860,7 +12959,7 @@ function _clearSchedule (ref: number): null {
     return null;
 }
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const;
-const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch'] as const;
+const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch', 'mpd'] as const;
 
 /**
  * Checks if the given player type is a player with a media device.
@@ -13464,7 +13563,17 @@ namespace NSPanel {
         | 'bosesoundtouch.6.'
         | 'bosesoundtouch.7.'
         | 'bosesoundtouch.8.'
-        | 'bosesoundtouch.9.';
+        | 'bosesoundtouch.9.'
+        | 'mpd.0.'
+        | 'mpd.1.'
+        | 'mpd.2.'
+        | 'mpd.3.'
+        | 'mpd.4.'
+        | 'mpd.5.'
+        | 'mpd.6.'
+        | 'mpd.7.'
+        | 'mpd.8.'
+        | 'mpd.9.';
 
     export type PlayerType = _PlayerTypeWithMediaDevice | _PlayerTypeWithOutMediaDevice;
 
