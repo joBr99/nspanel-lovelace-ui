@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.7.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 56 / v4.7.0 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -55,6 +55,7 @@ ReleaseNotes:
         - 01.04.2025 - v4.6.2.1  Add startup TFT-Release directly from NSPanel-TFT, Comparison between version number and release removed
         - 02.04.2025 - v4.7.0    TFT 56 / 4.7.0 - Fix cardSchedule
         - 10.04.2025 - v4.7.0.2  Add cardMedia "Music Player Daemon (MPD)" (One-Instance-Player with Playlists, Tracklists, Shuffle, Repeat, Seek/Crossfade); mpd.X - Instance required
+        - 10.04.2025 - v4.7.0.3  Fix cardMedia "Music Player Daemon (MPD)" shuffle with repeat and repeat with repeat/single
         
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -943,7 +944,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.0.2';
+const scriptVersion: string = 'v4.7.0.3';
 const tft_version: string = 'v4.7.0';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
@@ -6929,7 +6930,8 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
                                 await createAliasAsync(id + '.STATE', dpPath + 'state', true, <iobJS.StateCommon> {type: 'string', role: 'media.state', name: 'STATE'});
                                 await createAliasAsync(id + '.VOLUME', dpPath + 'volume', true, <iobJS.StateCommon> {type: 'number', role: 'level.volume', name: 'VOLUME'});
                                 await createAliasAsync(id + '.REPEAT', dpPath + 'repeat', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.repeat', name: 'REPEAT'});
-                                await createAliasAsync(id + '.SHUFFLE', dpPath + 'shuffle', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
+                                await createAliasAsync(id + '.SINGLE', dpPath + 'single', true, <iobJS.StateCommon> {type: 'number', role: 'media', name: 'SINGLE'});
+                                await createAliasAsync(id + '.SHUFFLE', dpPath + 'random', true, <iobJS.StateCommon> {type: 'boolean', role: 'media.mode.shuffle', name: 'SHUFFLE'});
                                 await createAliasAsync(id + '.DURATION', dpPath + 'current_duration', true, <iobJS.StateCommon> {type: 'string', role: 'media.duration.text', name: 'DURATION'});
                                 await createAliasAsync(id + '.ELAPSED', dpPath + 'current_elapsed', true, <iobJS.StateCommon> {type: 'string', role: 'media.elapsed.text', name: 'ELAPSED'});
                             } catch (err: any) {
@@ -7615,8 +7617,11 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
             } else if (v2Adapter == 'mpd') {
-                if (getState(id + '.REPEAT').val == true) {
+                if (getState(id + '.REPEAT').val == true && getState(id + '.SINGLE').val == 0) {
                     repeatIcon = Icons.GetIcon('repeat');
+                    repeatIconCol = rgb_dec565(HMIOn);
+                } else if (getState(id + '.REPEAT').val == true && getState(id + '.SINGLE').val == 1) {
+                    repeatIcon = Icons.GetIcon('repeat-once');
                     repeatIconCol = rgb_dec565(HMIOn);
                 }
             }
@@ -8909,7 +8914,16 @@ function HandleButtonEvent (words: any): void {
                                             GeneratePage(activePage!);
                                             break;
                                         case 'mpd':
-                                            setIfExists(id + '.REPEAT', !getState(id + '.REPEAT').val);
+                                            if (getState(id + '.REPEAT').val == false) {
+                                                setIfExists(id + '.REPEAT', true);
+                                                setIfExists(id + '.SINGLE', 0);
+                                            } else if (getState(id + '.REPEAT').val == true && getState(id + '.SINGLE').val == 0) {
+                                                setIfExists(id + '.REPEAT', true);
+                                                setIfExists(id + '.SINGLE', 1);
+                                            } else if (getState(id + '.REPEAT').val == true && getState(id + '.SINGLE').val == 1) {
+                                                setIfExists(id + '.REPEAT', false);
+                                                setIfExists(id + '.SINGLE', 0);
+                                            }
                                             GeneratePage(activePage!);
                                             break;
                                         case 'volumio':
@@ -9433,8 +9447,13 @@ function HandleButtonEvent (words: any): void {
                     case 'mpd':
                         if (getState(id + '.REPEAT').val == false) {
                             setIfExists(id + '.REPEAT', true);
-                        } else {
+                            setIfExists(id + '.SINGLE', 0);
+                        } else if (getState(id + '.REPEAT').val == true && getState(id + '.SINGLE').val == 0) {
+                            setIfExists(id + '.REPEAT', true);
+                            setIfExists(id + '.SINGLE', 1);
+                        } else if (getState(id + '.REPEAT').val == true && getState(id + '.SINGLE').val == 1) {
                             setIfExists(id + '.REPEAT', false);
+                            setIfExists(id + '.SINGLE', 0);
                         }
                         GeneratePage(activePage!);
                         break;
