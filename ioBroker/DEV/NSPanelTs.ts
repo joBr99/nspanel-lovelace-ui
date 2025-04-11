@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 56 / v4.7.0 / BerryDriver 9 / Tasmota 14.5.0
+TypeScript v4.7.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 56 / v4.7.1 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -56,6 +56,8 @@ ReleaseNotes:
         - 02.04.2025 - v4.7.0    TFT 56 / 4.7.0 - Fix cardSchedule
         - 10.04.2025 - v4.7.0.2  Add cardMedia "Music Player Daemon (MPD)" (One-Instance-Player with Playlists, Tracklists, Shuffle, Repeat, Seek/Crossfade); mpd.X - Instance required
         - 10.04.2025 - v4.7.0.3  Fix cardMedia "Music Player Daemon (MPD)" shuffle with repeat and repeat with repeat/single
+        - 10.04.2025 - v4.7.1    TFT 56 / 4.7.1 - Add Player Icon-Logos logo-alexa, logo-spotify, logo-dlna, logo-sonos, logo-mpd, logo-volumios, logo-bose 
+        - 10.04.2025 - v4.7.1.1  Add parameter playerMediaIcon to cardMedia
         
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -158,7 +160,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.0.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.1.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.6.0.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.6.0.tft
@@ -944,8 +946,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.0.3';
-const tft_version: string = 'v4.7.0';
+const scriptVersion: string = 'v4.7.1.1';
+const tft_version: string = 'v4.7.1';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
 
@@ -7175,6 +7177,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Spotify-Premium
             if (v2Adapter == 'spotify-premium') {
                 media_icon = Icons.GetIcon('spotify');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-spotify') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLength = name.length;
                 if (name.substring(0, 17) == 'Playlist: This Is') {
@@ -7203,6 +7212,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Sonos
             if (v2Adapter == 'sonos') {
                 media_icon = Icons.GetIcon('alpha-s-circle');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-sonos') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 name = getState(id + '.CONTEXT_DESCRIPTION').val;
                 let nameLenght = name.length;
                 if (nameLenght == 0) {
@@ -7226,6 +7242,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Bose Soundtouch
             if (v2Adapter == 'bosesoundtouch') {
                 media_icon = Icons.GetIcon('alpha-b-circle');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-bose') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 name = page.heading;
 
                 if (getState(id + '.ALBUM').val.length > 0) {
@@ -7244,6 +7267,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Logitech Squeezebox RPC
             if (v2Adapter == 'squeezeboxrpc') {
                 media_icon = Icons.GetIcon('dlna');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-dnla') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 if (name.length == 0) {
                     name = page.heading;
                 } else if (name.length > 16) {
@@ -7254,6 +7284,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Alexa2
             if (v2Adapter == 'alexa2') {
                 media_icon = Icons.GetIcon('alpha-a-circle');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-alexa') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 name = getState(id + '.ALBUM').val;
                 let nameLength = name.length;
                 if (name.substring(0, 9) == 'Playlist:') {
@@ -7280,6 +7317,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //Volumio
             if (v2Adapter == 'volumio') {
                 media_icon = Icons.GetIcon('clock-time-twelve-outline');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-volumio') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 if (name != undefined) {
                     author = author + ' | ' + name;
                 }
@@ -7289,6 +7333,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
             //MPD
             if (v2Adapter == 'mpd') {
                 media_icon = Icons.GetIcon('alpha-m-circle');
+                if (page.items[0].playerMediaIcon !== undefined) {
+                    if (page.items[0].playerMediaIcon == 'logo-mpd') {
+                        media_icon = page.items[0].playerMediaIcon;
+                    } else {
+                        media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
+                    }
+                }
                 if (getState(id + '.ALBUM').val.length > 0) {
                     author = getState(id + '.ARTIST').val + ' | ' + getState(id + '.ALBUM').val;
                     if (author.length > 37) {
@@ -13388,6 +13439,7 @@ namespace NSPanel {
     export type PageMediaItem = {
         adapterPlayerInstance: adapterPlayerInstanceType;
         mediaDevice?: string;
+        playerMediaIcon?: string;
         colorMediaIcon?: RGB;
         colorMediaArtist?: RGB;
         colorMediaTitle?: RGB;
