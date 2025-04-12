@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.7.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 56 / v4.7.1 / BerryDriver 9 / Tasmota 14.5.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -58,6 +58,7 @@ ReleaseNotes:
         - 10.04.2025 - v4.7.0.3  Fix cardMedia "Music Player Daemon (MPD)" shuffle with repeat and repeat with repeat/single
         - 10.04.2025 - v4.7.1    TFT 56 / 4.7.1 - Add Player Icon-Logos logo-alexa, logo-spotify, logo-dlna, logo-sonos, logo-mpd, logo-volumios, logo-bose 
         - 10.04.2025 - v4.7.1.1  Add parameter playerMediaIcon to cardMedia
+        - 12.04.2025 - v4.7.1.2  Fix Play/Pause in MediaPlayers
         
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -946,7 +947,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.1.1';
+const scriptVersion: string = 'v4.7.1.2';
 const tft_version: string = 'v4.7.1';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
@@ -9208,17 +9209,17 @@ function HandleButtonEvent (words: any): void {
                         } else if (stateVal == null) {
                             setState(adapterPlayerInstanceStateSeceltor, 1);
                         }
+                    } else if (adaInstanceSplit[0] == 'mpd') {
+                        if (getState(id + '.STATE').val === 'play') {
+                            setIfExists(id + '.PAUSE', true);
+                        } else {
+                            setIfExists(id + '.PLAY', true);
+                        }
                     } else if (pageItemTemp.adapterPlayerInstance.startsWith('bosesoundtouch')) {
                         setIfExists(pageItemTemp.adapterPlayerInstance + 'key', 'PLAY_PAUSE');
                     } else {
                         if (Debug) log('HandleButtonEvent media-pause -> .STATE Value: ' + getState(id + '.STATE').val, 'info');
                         if (getState(id + '.STATE').val === true) {
-                            setIfExists(id + '.PAUSE', true);
-                        } else {
-                            setIfExists(id + '.PLAY', true);
-                        }
-                        //MPD
-                        if (getState(id + '.STATE').val === 'play') {
                             setIfExists(id + '.PAUSE', true);
                         } else {
                             setIfExists(id + '.PLAY', true);
