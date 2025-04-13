@@ -59,6 +59,7 @@ ReleaseNotes:
         - 10.04.2025 - v4.7.1    TFT 56 / 4.7.1 - Add Player Icon-Logos logo-alexa, logo-spotify, logo-dlna, logo-sonos, logo-mpd, logo-volumios, logo-bose 
         - 10.04.2025 - v4.7.1.1  Add parameter playerMediaIcon to cardMedia
         - 12.04.2025 - v4.7.1.2  Fix Play/Pause in MediaPlayers
+	- 13.04.2025 - v4.7.1.2  TFT 56 / 4.7.1 (US-P and US-L)
         
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -163,8 +164,8 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.1.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.6.0.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.6.0.tft
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.7.1.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.7.1.tft
 ---------------------------------------------------------------------------------------
 */
 
