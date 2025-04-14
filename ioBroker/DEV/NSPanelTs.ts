@@ -2361,7 +2361,7 @@ async function SubscribeMRIcons () {
         }
         if (arr.length > 0) {
             on({id: arr, change: 'ne'}, async function (obj) {
-                if (obj.id && obj.id.substring(0, 4) == 'mqtt' &&(obj.id.endsWith('Relay.1') || obj.id.endsWith('Relay.2'))) {
+                if (obj.id && obj.id.substring(0, 4) == 'mqtt' &&(obj.id.endsWith('.stat.POWER1') || obj.id.endsWith('.stat.Power2'))) {
                     let Button = obj.id.split('.');
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6), obj.state.val == 'ON' ? true : false);
