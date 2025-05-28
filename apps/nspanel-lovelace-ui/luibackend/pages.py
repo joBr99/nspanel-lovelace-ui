@@ -97,9 +97,9 @@ class LuiPagesGen(object):
                 if state == "sunny":
                     icon_color = 65504 #bright-yellow
 
-            if "rgb_color" in attr and attr.rgb_color:
+            if "rgb_color" in attr and attr["rgb_color"]:
                 color = attr.rgb_color
-                if "brightness" in attr and attr.brightness:
+                if "brightness" in attr and attr["brightness"]:
                     color = rgb_brightness(color, attr.brightness)
                 icon_color = rgb_dec565(color)
             elif "brightness" in attr and attr.brightness:
