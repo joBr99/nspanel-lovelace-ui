@@ -348,8 +348,8 @@ class LuiController(object):
             else:
                 apis.ha_api.get_entity(entity_id).call_service("turn_off")
         if button_type == "media-shuffle":
-            suffle = not apis.ha_api.get_entity(entity_id).attributes.shuffle
-            apis.ha_api.get_entity(entity_id).call_service("shuffle_set", shuffle=suffle)
+            shuffle = not apis.ha_api.get_entity(entity_id).attributes['shuffle']
+            apis.ha_api.get_entity(entity_id).call_service("shuffle_set", shuffle=shuffle)
         if button_type == "volumeSlider":
             pos = int(value)
             # HA wants this value between 0 and 1 as float
@@ -366,7 +366,7 @@ class LuiController(object):
         if button_type == "colorTempSlider":
             entity = apis.ha_api.get_entity(entity_id)
             #scale 0-100 from slider to color range of lamp
-            color_val = scale(int(value), (0, 100), (entity.attributes.min_mireds, entity.attributes.max_mireds))
+            color_val = scale(int(value), (0, 100), (entity.attributes['min_mireds'], entity.attributes['max_mireds']))
             apis.ha_api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
         if button_type == "colorWheel":
             apis.ha_api.log(value)
@@ -393,9 +393,9 @@ class LuiController(object):
         if button_type == "opnSensorNotify":
             msg = ""
             entity = apis.ha_api.get_entity(entity_id)
-            if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
-                for e in entity.attributes.open_sensors:
-                    msg += f"- {apis.ha_api.get_entity(e).attributes.friendly_name}\r\n"
+            if open_sensors := entity.attributes.get("open_sensors") is not None:
+                for e in open_sensors:
+                    msg += f"- {apis.ha_api.get_entity(e).attributes['friendly_name']}\r\n"
             self._pages_gen.send_message_page("opnSensorNotifyRes", "", msg, "", "")
 
         # for cardUnlock
@@ -412,22 +412,22 @@ class LuiController(object):
 
         if button_type == "mode-preset_modes":
             entity = apis.ha_api.get_entity(entity_id)
-            preset_mode = entity.attributes.preset_modes[int(value)]
+            preset_mode = entity.attributes['preset_modes'][int(value)]
             entity.call_service("set_preset_mode", preset_mode=preset_mode)
 
         if button_type == "mode-swing_modes":
             entity = apis.ha_api.get_entity(entity_id)
-            swing_mode = entity.attributes.swing_modes[int(value)]
+            swing_mode = entity.attributes['swing_modes'][int(value)]
             entity.call_service("set_swing_mode", swing_mode=swing_mode)
 
         if button_type == "mode-fan_modes":
             entity = apis.ha_api.get_entity(entity_id)
-            fan_mode = entity.attributes.fan_modes[int(value)]
+            fan_mode = entity.attributes['fan_modes'][int(value)]
             entity.call_service("set_fan_mode", fan_mode=fan_mode)
 
         if button_type in ["mode-input_select", "mode-select"]:
             entity = apis.ha_api.get_entity(entity_id)
-            option = entity.attributes.options[int(value)]
+            option = entity.attributes['options'][int(value)]
             entity.call_service("select_option", option=option)
 
         if button_type == "mode-light":
@@ -439,12 +439,12 @@ class LuiController(object):
             if options_list is not None:
                 option = options_list[int(value)]
             else:
-                option = entity.attributes.effect_list[int(value)]
+                option = entity.attributes['effect_list'][int(value)]
             entity.call_service("turn_on", effect=option)
             
         if button_type == "mode-media_player":
             entity = apis.ha_api.get_entity(entity_id)
-            option = entity.attributes.source_list[int(value)]
+            option = entity.attributes['source_list'][int(value)]
             entity.call_service("select_source", source=option)
             
         # timer detail page

@@ -97,13 +97,12 @@ class LuiPagesGen(object):
                 if state == "sunny":
                     icon_color = 65504 #bright-yellow
 
-            if "rgb_color" in attr and attr["rgb_color"]:
-                color = attr.rgb_color
-                if "brightness" in attr and attr["brightness"]:
-                    color = rgb_brightness(color, attr.brightness)
+            if color := attr.get("rgb_color"):
+                if brightness := attr.get("brightness"):
+                    color = rgb_brightness(color, brightness)
                 icon_color = rgb_dec565(color)
-            elif "brightness" in attr and attr.brightness:
-                color = rgb_brightness([253, 216, 53], attr.brightness)
+            elif brightness := attr.get("brightness"):
+                color = rgb_brightness([253, 216, 53], brightness)
                 icon_color = rgb_dec565(color)
             return icon_color
 
@@ -276,7 +275,7 @@ class LuiPagesGen(object):
             icon_up_status = "disable"
             icon_stop_status = "disable"
             icon_down_status = "disable"
-            bits = entity.attributes.supported_features
+            bits = entity.attributes['supported_features']
             pos = entity.attributes.get("current_position")
             if pos is None:
                 pos_status = entity.state
@@ -383,18 +382,18 @@ class LuiPagesGen(object):
         elif entityType == "weather":
             entityTypePanel = "text"
             unit = get_attr_safe(entity, "temperature_unit", "")
-            #if type(item.stype) == int and len(entity.attributes.forecast) >= item.stype:
-            #    fdate = dp.parse(entity.attributes.forecast[item.stype]['datetime'])
-            #    global babel_spec
-            #    if babel_spec is not None:
-            #        dateformat = "E" if item.nameOverride is None else item.nameOverride
-            #        name = babel.dates.format_datetime(fdate.astimezone(), dateformat, locale=self._locale)
-            #    else:
-            #        dateformat = "%a" if item.nameOverride is None else item.nameOverride
-            #        name = fdate.astimezone().strftime(dateformat)
-            #    icon_id = get_icon_ha(entityId, stateOverwrite=entity.attributes.forecast[item.stype]['condition'])
-            #    value = f'{entity.attributes.forecast[item.stype].get("temperature", "")}{unit}'
-            #    color = self.get_entity_color(entity, ha_type=entityType, stateOverwrite=entity.attributes.forecast[item.stype]['condition'], overwrite=colorOverride)
+            if type(item.stype) == int and len(entity.attributes['forecast']) >= item.stype:
+                fdate = dp.parse(entity.attributes['forecast'][item.stype]['datetime'])
+                global babel_spec
+                if babel_spec is not None:
+                    dateformat = "E" if item.nameOverride is None else item.nameOverride
+                    name = babel.dates.format_datetime(fdate.astimezone(), dateformat, locale=self._locale)
+                else:
+                    dateformat = "%a" if item.nameOverride is None else item.nameOverride
+                    name = fdate.astimezone().strftime(dateformat)
+                icon_id = get_icon_ha(entityId, stateOverwrite=entity.attributes['forecast'][item.stype]['condition'])
+                value = f'{entity.attributes['forecast'][item.stype].get("temperature", "")}{unit}'
+                color = self.get_entity_color(entity, ha_type=entityType, stateOverwrite=entity.attributes['forecast'][item.stype]['condition'], overwrite=colorOverride)
             else:
                 value = f'{get_attr_safe(entity, "temperature", "")}{unit}'
         else:
@@ -455,7 +454,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~Not found~{navigation}~{item}~check~220~apps.yaml~150~300~5~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Please~your~~"
         else:
             entity       = apis.ha_api.get_entity(item)
-            heading      = title if title != "unknown" else entity.attributes.friendly_name
+            heading      = title if title != "unknown" else entity.attributes['friendly_name']
             current_temp = get_attr_safe(entity, "current_temperature", "")
             dest_temp    = get_attr_safe(entity, "temperature", None)
             dest_temp2   = ""
@@ -537,7 +536,7 @@ class LuiPagesGen(object):
             command = f"entityUpd~Not found~{navigation}"
         else:
             entity       = apis.ha_api.get_entity(item)
-            heading      = title if title != "unknown" else entity.attributes.friendly_name
+            heading      = title if title != "unknown" else entity.attributes['friendly_name']
 
             # get data from homeassistant
             data_raw = apis.ha_api.get_history(entity_id = item, days = 7)
@@ -584,12 +583,12 @@ class LuiPagesGen(object):
         else:
             media_icon = self.generate_entities_item(entity, "cardGrid")
             ha_entity     = apis.ha_api.get_entity(entityId)
-            heading       = title if title != "unknown" else ha_entity.attributes.friendly_name
+            heading       = title if title != "unknown" else ha_entity.attributes['friendly_name']
             title         = get_attr_safe(ha_entity, "media_title", "")
             author        = get_attr_safe(ha_entity, "media_artist", "")
             volume        = int(get_attr_safe(ha_entity, "volume_level", 0)*100)
             iconplaypause = get_icon_id("pause") if ha_entity.state == "playing" else get_icon_id("play")
-            bits = ha_entity.attributes.supported_features
+            bits = ha_entity.attributes['supported_features']
             onoffbutton = "disable"
             if bits & 0b10000000:
                 if ha_entity.state == "off":
@@ -639,7 +638,7 @@ class LuiPagesGen(object):
                 if not entity.attributes.get("code_arm_required", False):
                     numpad = "disable"
                 if overwrite_supported_modes is None:
-                    bits = entity.attributes.supported_features
+                    bits = entity.attributes['supported_features']
                     if bits & 0b000001:
                         supported_modes.append("arm_home")
                     if bits & 0b000010:
@@ -678,7 +677,7 @@ class LuiPagesGen(object):
 
             #add button to show sensor state
             add_btn = ""
-            if "open_sensors" in entity.attributes and entity.attributes.open_sensors is not None:
+            if entity.attributes.get("open_sensors") is not None:
                 add_btn=f"{get_icon_id('progress-alert')}~{rgb_dec565([243,179,0])}~"
             if alarmBtn is not None and type(alarmBtn) is dict:
                 entity  = alarmBtn.get("entity")
@@ -845,25 +844,26 @@ class LuiPagesGen(object):
         color_temp = "disable"
         color = "disable"
         effect_supported = "disable"
+        supported_color_modes = entity.attributes['supported_color_modes']
         
-        if "onoff" not in entity.attributes.supported_color_modes:
+        if "onoff" not in supported_color_modes:
             brightness = 0
         if entity.state == "on":
-            if "brightness" in entity.attributes and entity.attributes.brightness:
+            if brightness := entity.attributes.get("brightness"):
                 # scale 0-255 brightness from ha to 0-100
-                brightness = int(scale(entity.attributes.brightness,(0,255),(0,100)))
+                brightness = int(scale(brightness, (0,255), (0,100)))
             else:
                 brightness = "disable"
-            if "color_temp" in entity.attributes.supported_color_modes and entity.attributes.supported_color_modes:
-                if "color_temp" in entity.attributes and entity.attributes.color_temp:
+            if "color_temp" in supported_color_modes:
+                if color_temp := entity.attributes.get("color_temp"):
                     # scale ha color temp range to 0-100
-                    color_temp = int(scale(entity.attributes.color_temp,(entity.attributes.min_mireds, entity.attributes.max_mireds),(0,100)))
+                    color_temp = int(scale(color_temp, (entity.attributes['min_mireds'], entity.attributes['max_mireds']),(0, 100)))
                 else:
                     color_temp = "unknown"
             else:
                 color_temp = "disable"
             list_color_modes = ["xy", "rgb", "rgbw", "hs"]
-            if any(item in list_color_modes for item in entity.attributes.supported_color_modes):
+            if any(item in list_color_modes for item in supported_color_modes):
                 color = "enable"
             else:
                 color = "disable"
@@ -903,7 +903,7 @@ class LuiPagesGen(object):
         iconTiltRightStatus = "disable"
         tilt_pos = "disable"
 
-        bits = entity.attributes.supported_features
+        bits = entity.attributes['supported_features']
 
         # position supported
         if bits & 0b00001111:

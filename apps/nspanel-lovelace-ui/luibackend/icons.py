@@ -266,8 +266,8 @@ def get_icon_ha(entity_id, overwrite=None, stateOverwrite=None):
     # based on media_content_type
     elif ha_type == "media_player":
         result_icon = "speaker-off"
-        if "media_content_type" in entity.attributes:
-            if entity.attributes.media_content_type in media_content_type_mapping:
-                result_icon = media_content_type_mapping[entity.attributes.media_content_type]
+        if media_content_type := entity.attributes.get("media_content_type"):
+            if media_content_type in media_content_type_mapping:
+                result_icon = media_content_type_mapping[media_content_type]
 
     return get_icon_char(result_icon)
