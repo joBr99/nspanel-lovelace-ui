@@ -275,7 +275,7 @@ class LuiPagesGen(object):
             icon_up_status = "disable"
             icon_stop_status = "disable"
             icon_down_status = "disable"
-            bits = entity.attributes['supported_features']
+            bits = entity.attributes.get('supported_features')
             pos = entity.attributes.get("current_position")
             if pos is None:
                 pos_status = entity.state
