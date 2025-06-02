@@ -159,8 +159,8 @@ alarm_control_panel_mapping = {
 }
 
 climate_mapping = {
-    'auto':       'calendar-sync',
-    'heat_cool':  'calendar-sync',
+    'auto':       'fan-auto',
+    'heat_cool':  'sun-snowflake-variant',
     'heat':  'fire',
     'off':  'power',
     'cool':  'snowflake',
