@@ -399,12 +399,11 @@ class LuiPagesGen(object):
         elif entityType == "valve":
             entityTypePanel = "valve"
             value = get_translation(self._locale, f"backend.component.binary_sensor.state.door.{entity.state}")
+            color = self.get_entity_color(entity, ha_type=entityType, overwrite=colorOverride)
             if entity.state == "open":
                 icon_id = get_icon_id("valve-open")
-                color = rgb_dec565([0, 0, 255])
             else:
                 icon_id = get_icon_id("valve-closed")
-                color = rgb_dec565([255, 0, 0])  
         else:
             name = "unsupported"
         # Overwrite for value
