@@ -334,6 +334,11 @@ class LuiController(object):
                     apis.ha_api.get_entity(entity_id).call_service("return_to_base")
             elif entity_id.startswith('service'):
                 apis.ha_api.call_service(entity_id.replace('service.', '', 1).replace('.','/', 1), **entity_config.data)
+            elif entity_id.startswith('valve'):
+                if apis.ha_api.get_entity(entity_id).state == "open":
+                    apis.ha_api.get_entity(entity_id).call_service("close_valve")
+                else:
+                    apis.ha_api.get_entity(entity_id).call_service("open_valve")
 
         # for media page
         if button_type == "media-next":
