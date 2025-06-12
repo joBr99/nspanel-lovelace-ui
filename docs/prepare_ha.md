@@ -94,37 +94,3 @@ Now, to install NSPanel Lovelace UI Backend with HACS, follow these steps:
    proceed with the download
 7. The Backend Application is now installed, and HACS will inform you when updates are available
 
-# Workaround for HomeAssistant 2024.04
-AppDaemon is using the old REST API that until AppDaemon moved on the the websocket API this woraround is needed to get weather forecast data from homeassistant. (https://github.com/AppDaemon/appdaemon/issues/1837)
-
-To get the forecast data in appdaemon, there is a script needed in homeassistant's configuration.yaml:
-
-```yaml
-template:
-  - trigger:
-      - platform: time_pattern
-        hours: /1
-      - platform: homeassistant
-        event: start
-    action:
-      - service: weather.get_forecasts
-        data:
-          type: daily
-        target:
-          entity_id: weather.home # change to your weather entity
-        response_variable: daily
-    sensor:
-      - name: Weather Forecast Daily
-        unique_id: weather_forecast_daily
-        state: "{{ states('weather.home') }}" # # change to your weather entity in this line
-        attributes:
-          temperature: "{{ state_attr('weather.home', 'temperature') }}" # change to your weather entity
-          temperature_unit: "{{ state_attr('weather.home', 'temperature_unit') }}" # change to your weather entity
-          forecast: "{{ daily['weather.home'].forecast }}" # change to your weather entity
-```
-![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/41f21db3-a6e2-4e4f-8dab-b9351ecd23e5)
-
-Adjust the entities in your apps.yaml that are accessing the forecast to the newly created trigger template:
-
-![image](https://github.com/joBr99/nspanel-lovelace-ui/assets/29555657/1cfd913d-88be-4cb0-9a68-0e864ee1ad4f)
-
