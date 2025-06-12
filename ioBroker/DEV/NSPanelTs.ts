@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.7.2.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 56 / v4.7.2 / BerryDriver 9 / Tasmota 14.6.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -62,6 +62,8 @@ ReleaseNotes:
         - 13.04.2025 - v4.7.1.2  TFT 56 / 4.7.1 (US-P and US-L)
         - 14.04.2025 - v4.7.1.3  MrIcons also allow other mqtt states
         - 24.04.2025 - v4.7.2.1  Add popupSlider to cardMedia (alexa)
+        - 12.06.2025 - v4.7.2.2  States only respond to any if ack = false
+       
        
         Todo:
         - XX.12.2024 - v5.0.0    ioBroker Adapter
@@ -951,7 +953,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.2.1';
+const scriptVersion: string = 'v4.7.2.2';
 const tft_version: string = 'v4.7.2';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
@@ -6034,7 +6036,10 @@ function RegisterEntityWatcher (id: string): void {
             return;
         }
 
-        subscriptions[id] = on({id: id, change: 'any'}, () => {
+        subscriptions[id] = on({id: id, change: 'any'}, (obj) => {
+            if (obj.oldState && obj.oldState.val === obj.state.val && obj.state.ack) {
+                return;
+            }
             if (pageId == -1 && config.button1.page) {
                 SendToPanel({payload: GeneratePageElements(config.button1.page)});
             }
@@ -6070,7 +6075,10 @@ function RegisterDetailEntityWatcher (id: string, pageItem: PageItem, type: NSPa
 
         if (Debug) log('id: ' + id + ' - pageItem: ' + JSON.stringify(pageItem) + ' - type: ' + type + ' - placeId: ' + placeId, 'info');
 
-        subscriptions[id] = on({id: id, change: 'any'}, () => {
+        subscriptions[id] = on({id: id, change: 'any'}, (obj) => {
+            if (obj.oldState && obj.oldState.val === obj.state.val && obj.state.ack) {
+                return;
+            }
             SendToPanel(GenerateDetailPage(type, undefined, pageItem, placeId));
         });
     } catch (err: any) {
