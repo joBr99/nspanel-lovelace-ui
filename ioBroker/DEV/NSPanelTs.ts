@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.2.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.7.2.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 56 / v4.7.2 / BerryDriver 9 / Tasmota 14.6.0
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -64,6 +64,7 @@ ReleaseNotes:
         - 24.04.2025 - v4.7.2.1  Add popupSlider to cardMedia (alexa)
         - 12.06.2025 - v4.7.2.2  States only respond to any if ack = false
         - 20.06.2025 - v4.7.2.3  IconSelect left- and indicatorScreensaverEntity added
+        - 21.06.2025 - v4.7.2.4  Fix Demomodus Powerpage
        
        
         Todo:
@@ -954,7 +955,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.2.3';
+const scriptVersion: string = 'v4.7.2.4';
 const tft_version: string = 'v4.7.2';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
@@ -8311,7 +8312,7 @@ function GeneratePowerPage (page: NSPanel.PagePower): NSPanel.Payload[] {
     try {
         let obj: object = {};
         let demoMode = false;
-        if (page.items[0].id == undefined) {
+        if (page.items[0].id === 'DEMO') {
             log('No PageItem defined - cardPower demo mode active', 'info');
             demoMode = true;
         }
