@@ -383,10 +383,18 @@ class LuiPagesGen(object):
             entityTypePanel = "text"
             unit = get_attr_safe(entity, "temperature_unit", "")
             if type(item.stype) == int:
+                bits = get_attr_safe(entity, "supported_features", 0b0)
+                rt = "daily"
+                if bits & 0b001: #FORECAST_DAILY
+                    rt = "daily"
+                elif bits & 0b010: #FORECAST_HOURLY
+                    rt = "hourly"
+                elif bits & 0b100: #FORECAST_TWICE_DAILY
+                    rt = "twice_daily"
+
                 results = apis.ha_api.call_service(
-                    "weather/get_forecasts", target={"entity_id": entityId}, service_data={"type": "daily"}
-                )
-                forecast = results.get("result", {}).get("response", {}).get(entityId, {}).get('forecast') or entity.attributes.get('forecast', [])
+                    "weather/get_forecasts", target={"entity_id": entityId}, service_data={"type": rt}
+                )                forecast = results.get("result", {}).get("response", {}).get(entityId, {}).get('forecast') or entity.attributes.get('forecast', [])
                 if len(forecast) >= item.stype:
                     day_forecast = forecast[item.stype]
                     fdate = dp.parse(day_forecast['datetime'])
