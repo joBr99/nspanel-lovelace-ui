@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.2.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 56 / v4.7.2 / BerryDriver 9 / Tasmota 14.6.0
+TypeScript v4.7.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 56 / v4.7.4 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -65,6 +65,9 @@ ReleaseNotes:
         - 12.06.2025 - v4.7.2.2  States only respond to any if ack = false
         - 20.06.2025 - v4.7.2.3  IconSelect left- and indicatorScreensaverEntity added
         - 21.06.2025 - v4.7.2.4  Fix Demomodus Powerpage
+        - 22.06.2025 - v4.7.3    TFT 56 / 4.7.3 - Change Direction Pictures ColorTemperature (warmwhite left/coldwhite right) 
+        - 23.06.2025 - v4.7.4    TFT 56 / 4.7.4 - Refactoring popupShutter (shutter/shutter2)
+        - 24.06.2025 - v4.7.4.1  Refactoring popupShutter (split into shutter/shutter2)
        
        
         Todo:
@@ -169,7 +172,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.2.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.4.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.7.1.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.7.1.tft
@@ -955,8 +958,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.2.4';
-const tft_version: string = 'v4.7.2';
+const scriptVersion: string = 'v4.7.4.1';
+const tft_version: string = 'v4.7.4';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
 
@@ -5482,6 +5485,14 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'blind':
                     type = 'shutter';
+                    if (pageItem.popupShutterVersion !== undefined) {
+                        if (pageItem.popupShutterVersion == 1) {
+                            type = 'shutter';    
+                        } else if (pageItem.popupShutterVersion == 2){
+                            type = 'shutter2';    
+                        }
+                    }
+
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
                     // only if icon3 is set go into 3 icons
@@ -9065,6 +9076,39 @@ function HandleButtonEvent (words: any): void {
                 setIfExists(id + '.CLOSE', true);
                 checkBlindActive = true;
                 break;
+            case 'button1Press':
+                let pageItemShutterButton1 = findPageItem(id);
+                if (pageItemShutterButton1.customIcons[0].Button1.buttonType != undefined && pageItemShutterButton1.customIcons[0].Button1.buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton1.customIcons[0].Button1.id);
+                } else if (pageItemShutterButton1.customIcons[0].Button1.buttonType != undefined && pageItemShutterButton1.customIcons[0].Button1.buttonType == 'press') {
+                    setIfExists(pageItemShutterButton1.customIcons[0].Button1.id, true);
+                } else {
+                    //do nothing
+                }
+                if (Debug) log("Shutter2 - Button1 Touch Press Event", 'info');
+                break;
+            case 'button2Press':
+                let pageItemShutterButton2 = findPageItem(id);
+                if (pageItemShutterButton2.customIcons[0].Button2.buttonType != undefined && pageItemShutterButton2.customIcons[0].Button2.buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton2.customIcons[0].Button2.id);
+                } else if (pageItemShutterButton2.customIcons[0].Button2.buttonType != undefined && pageItemShutterButton2.customIcons[0].Button2.buttonType == 'press') {
+                    setIfExists(pageItemShutterButton2.customIcons[0].Button2.id, true);
+                } else {
+                    //do nothing
+                }
+                if (Debug) log("Shutter2 - Button2 Touch Press Event", 'info');
+                break;
+            case 'button3Press':
+                let pageItemShutterButton3 = findPageItem(id);
+                if (pageItemShutterButton3.customIcons[0].Button3.buttonType != undefined && pageItemShutterButton3.customIcons[0].Button3.buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton3.customIcons[0].Button3.id);
+                } else if (pageItemShutterButton3.customIcons[0].Button3.buttonType != undefined && pageItemShutterButton3.customIcons[0].Button3.buttonType == 'press') {
+                    setIfExists(pageItemShutterButton3.customIcons[0].Button3.id, true);
+                } else {
+                    //do nothing
+                }
+                if (Debug) log("Shutter2 - Button3 Touch Press Event", 'info');
+                break;
             case 'positionSlider':
                 (function () {
                     if (timeoutSlider) {
@@ -10944,6 +10988,166 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         iconTiltRightStatus +
                         '~' + //{iconTiltRightStatus}~
                         tilt_pos, //{tilt_pos}")
+                });
+            }
+
+            if (type == 'popupShutter2') {
+                icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                if (existsState(id + '.ACTUAL')) {
+                    val = getState(id + '.ACTUAL').val;
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
+                } else if (existsState(id + '.SET')) {
+                    val = getState(id + '.SET').val;
+                }
+
+                let min_Level: number = 0;
+                let max_Level: number = 100;
+
+                if (pageItem.minValueLevel !== undefined && pageItem.maxValueLevel !== undefined) {
+                    min_Level = pageItem.minValueLevel;
+                    max_Level = pageItem.maxValueLevel;
+                    val = Math.trunc(scale(getState(id + '.ACTUAL').val, pageItem.minValueLevel, pageItem.maxValueLevel, 100, 0));
+                }
+
+                if (Debug) log('minLevel ' + min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
+
+                let textSecondRow = '';
+                let icon_id = icon;
+                let icon_up = Icons.GetIcon('arrow-up');
+                let icon_stop = Icons.GetIcon('stop');
+                let icon_down = Icons.GetIcon('arrow-down');
+                let tempVal: number = getState(pageItem.id + '.ACTUAL').val;
+
+                //Disabled Status while bug in updating origin adapter data points of lift values
+                let icon_up_status = 'enable';
+                //let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+                let icon_stop_status = 'enable';
+                if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
+                    //icon_stop_status = 'disable';
+                }
+                let icon_down_status = 'enable';
+                //let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+
+                if (pageItem.secondRow != undefined) {
+                    textSecondRow = pageItem.secondRow;
+                }
+
+                let tempId = placeId != undefined ? placeId : id;
+
+                //CustomIcons - Button1
+                let bEntity1State : boolean = false;
+                let bEntity1Icon : string = 'power';
+                let bEntity1Color : number = rgb_dec565(White);
+                let bEntity1Visibility : string = 'disable';
+                if (pageItem.customIcons[0].Button1 != undefined) {
+                    if (pageItem.customIcons[0].Button1.id != undefined) {
+                        bEntity1Visibility = 'enable';
+                        RegisterDetailEntityWatcher(pageItem.customIcons[0].Button1.id, pageItem, type, placeId);
+                        bEntity1State = getState(pageItem.customIcons[0].Button1.id).val;
+                        if (bEntity1State) {
+                            bEntity1Icon = Icons.GetIcon(pageItem.customIcons[0].Button1.icon) ?? bEntity1Icon;
+                            bEntity1Color = rgb_dec565(pageItem.customIcons[0].Button1.iconOnColor) ?? bEntity1Color;
+                        } else {
+                            bEntity1Icon = Icons.GetIcon(pageItem.customIcons[0].Button1.icon2) ?? bEntity1Icon;
+                            bEntity1Color = rgb_dec565(pageItem.customIcons[0].Button1.iconOffColor) ?? bEntity1Color;
+                        }
+                    }
+                }
+
+                //CustomIcons - Button2
+                let bEntity2State : boolean = false;
+                let bEntity2Icon : string = 'power';
+                let bEntity2Color : number = rgb_dec565(White);
+                let bEntity2Visibility : string = 'disable';
+                if (pageItem.customIcons[0].Button2 != undefined) {
+                    if (pageItem.customIcons[0].Button2.id != undefined) {
+                        bEntity2Visibility = 'enable';
+                        RegisterDetailEntityWatcher(pageItem.customIcons[0].Button2.id, pageItem, type, placeId);
+                        bEntity2State = getState(pageItem.customIcons[0].Button2.id).val;
+                        if (bEntity2State) {
+                            bEntity2Icon = Icons.GetIcon(pageItem.customIcons[0].Button2.icon) ?? bEntity2Icon;
+                            bEntity2Color = rgb_dec565(pageItem.customIcons[0].Button2.iconOnColor) ?? bEntity2Color;
+                        } else {
+                            bEntity2Icon = Icons.GetIcon(pageItem.customIcons[0].Button2.icon2) ?? bEntity2Icon;
+                            bEntity2Color = rgb_dec565(pageItem.customIcons[0].Button2.iconOffColor) ?? bEntity2Color;
+                        }
+                    }
+                }
+
+                //CustomIcons - Button3
+                let bEntity3State : boolean = false;
+                let bEntity3Icon : string = 'power';
+                let bEntity3Color : number = rgb_dec565(White);
+                let bEntity3Visibility : string = 'disable';
+                if (pageItem.customIcons[0].Button3 != undefined) {
+                    if (pageItem.customIcons[0].Button3.id != undefined) {
+                        bEntity3Visibility = 'enable';
+                        RegisterDetailEntityWatcher(pageItem.customIcons[0].Button3.id, pageItem, type, placeId);
+                        bEntity3State = getState(pageItem.customIcons[0].Button3.id).val;
+                        if (bEntity3State) {
+                            bEntity3Icon = Icons.GetIcon(pageItem.customIcons[0].Button3.icon) ?? bEntity3Icon;
+                            bEntity3Color = rgb_dec565(pageItem.customIcons[0].Button3.iconOnColor) ?? bEntity3Color;
+                        } else {
+                            bEntity3Icon = Icons.GetIcon(pageItem.customIcons[0].Button3.icon2) ?? bEntity3Icon;
+                            bEntity3Color = rgb_dec565(pageItem.customIcons[0].Button3.iconOffColor) ?? bEntity3Color;
+                        }
+                    }
+                }
+
+                let shutterTyp = 'shutter';
+                if (pageItem.shutterType != undefined) {
+                    shutterTyp = pageItem.shutterType;
+                }
+
+                out_msgs.push({
+                    payload:
+                        'entityUpdateDetail' +
+                        '~' + //entityUpdateDetail
+                        tempId +
+                        '~' + //entity_id
+                        val +
+                        '~' + //Shutterposition
+                        textSecondRow +
+                        '~' + //pos_status 2.line
+                        findLocale('blinds', 'Position') +
+                        '~' + //pos_translation
+                        icon_id +
+                        '~' + //{icon_id}~
+                        icon_up +
+                        '~' + //{icon_up}~
+                        icon_stop +
+                        '~' + //{icon_stop}~
+                        icon_down +
+                        '~' + //{icon_down}~
+                        icon_up_status +
+                        '~' + //{icon_up_status}~
+                        icon_stop_status +
+                        '~' + //{icon_stop_status}~
+                        icon_down_status +
+                        //CustomIcons
+                        //bEntity1
+                        '~' +
+                        bEntity1Icon + //12
+                        '~' +
+                        bEntity1Color + //13
+                        '~' + 
+                        bEntity1Visibility + //14
+                        //bEntity2
+                        '~' + 
+                        bEntity2Icon + //15
+                        '~' +
+                        bEntity2Color + //16
+                        '~' +
+                        bEntity2Visibility + //17
+                        //bEntity3
+                        '~' +
+                        bEntity3Icon + //18
+                        '~' +
+                        bEntity3Color + //19
+                        '~' +
+                        bEntity3Visibility + //20
+                        '~' +
+                        shutterTyp //21 for Future
                 });
             }
 
@@ -13366,6 +13570,7 @@ function isPopupType (F: NSPanel.PopupType | string): F is NSPanel.PopupType {
         case 'popupLightNew':
         case 'popupNotify':
         case 'popupShutter':
+        case 'popupShutter2':
         case 'popupThermo':
         case 'popupTimer':
         case 'popupSlider':
@@ -13395,7 +13600,7 @@ function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.Pag
 }
 
 namespace NSPanel {
-    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupSlider' | 'popupThermo' | 'popupTimer';
+    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer';
 
     export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2';
     export type panelRecvType = {
@@ -13403,7 +13608,7 @@ namespace NSPanel {
         method: EventMethod;
     };
 
-    export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' | 'slider';
+    export type SerialType = 'button' | 'light' | 'shutter' | 'shutter2' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' | 'slider';
 
     /**
  * Defines the possible roles for entities in the NSPanel.
@@ -13464,6 +13669,9 @@ namespace NSPanel {
         | 'up'
         | 'stop'
         | 'down'
+        | 'button1Press'
+        | 'button2Press'
+        | 'button3Press'
         | 'positionSlider'
         | 'positionSlider1'
         | 'positionSlider2'
@@ -13719,6 +13927,8 @@ namespace NSPanel {
         fontSize?: number;
         actionStringArray?: string[];
         alwaysOnDisplay?: boolean;
+        popupShutterVersion?: number;
+        shutterType?: string;
     };
 
     export type DimMode = {
