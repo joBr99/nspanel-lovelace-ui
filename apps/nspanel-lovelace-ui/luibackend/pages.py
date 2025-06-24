@@ -394,7 +394,8 @@ class LuiPagesGen(object):
 
                 results = apis.ha_api.call_service(
                     "weather/get_forecasts", target={"entity_id": entityId}, service_data={"type": rt}
-                )                forecast = results.get("result", {}).get("response", {}).get(entityId, {}).get('forecast') or entity.attributes.get('forecast', [])
+                )
+                forecast = results.get("result", {}).get("response", {}).get(entityId, {}).get('forecast') or entity.attributes.get('forecast', [])
                 if len(forecast) >= item.stype:
                     day_forecast = forecast[item.stype]
                     fdate = dp.parse(day_forecast['datetime'])
