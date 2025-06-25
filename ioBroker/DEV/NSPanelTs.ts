@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 56 / v4.7.4 / BerryDriver 9 / Tasmota 15.0.1
+TypeScript v4.7.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 56 / v4.7.5 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -68,6 +68,8 @@ ReleaseNotes:
         - 22.06.2025 - v4.7.3    TFT 56 / 4.7.3 - Change Direction Pictures ColorTemperature (warmwhite left/coldwhite right) 
         - 23.06.2025 - v4.7.4    TFT 56 / 4.7.4 - Refactoring popupShutter (shutter/shutter2)
         - 24.06.2025 - v4.7.4.1  Refactoring popupShutter (split into shutter/shutter2)
+        - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2)
+        - 25.06.2025 - v4.7.5.1  Add popupLight2 (split into light/light2)
        
        
         Todo:
@@ -172,7 +174,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.4.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.5.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.7.1.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.7.1.tft
@@ -958,8 +960,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.4.1';
-const tft_version: string = 'v4.7.4';
+const scriptVersion: string = 'v4.7.5.1';
+const tft_version: string = 'v4.7.5';
 const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
 
@@ -5237,6 +5239,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'socket':
                 case 'light':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5256,6 +5265,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'hue':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5292,6 +5308,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'ct':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5325,6 +5348,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'rgb':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5372,6 +5402,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'cie':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5418,6 +5455,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'rgbSingle':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5466,6 +5510,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'dimmer':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5485,14 +5536,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'blind':
                     type = 'shutter';
-                    if (pageItem.popupShutterVersion !== undefined) {
-                        if (pageItem.popupShutterVersion == 1) {
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
                             type = 'shutter';    
-                        } else if (pageItem.popupShutterVersion == 2){
+                        } else if (pageItem.popupVersion == 2){
                             type = 'shutter2';    
                         }
                     }
-
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
                     // only if icon3 is set go into 3 icons
@@ -13567,7 +13617,6 @@ function isPopupType (F: NSPanel.PopupType | string): F is NSPanel.PopupType {
         case 'popupFan':
         case 'popupInSel':
         case 'popupLight':
-        case 'popupLightNew':
         case 'popupNotify':
         case 'popupShutter':
         case 'popupShutter2':
@@ -13600,7 +13649,7 @@ function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.Pag
 }
 
 namespace NSPanel {
-    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer';
+    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer';
 
     export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2';
     export type panelRecvType = {
@@ -13608,7 +13657,7 @@ namespace NSPanel {
         method: EventMethod;
     };
 
-    export type SerialType = 'button' | 'light' | 'shutter' | 'shutter2' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' | 'slider';
+    export type SerialType = 'button' | 'light' | 'light2' | 'shutter' | 'shutter2' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' | 'slider';
 
     /**
  * Defines the possible roles for entities in the NSPanel.
@@ -13927,7 +13976,7 @@ namespace NSPanel {
         fontSize?: number;
         actionStringArray?: string[];
         alwaysOnDisplay?: boolean;
-        popupShutterVersion?: number;
+        popupVersion?: number;
         shutterType?: string;
     };
 
