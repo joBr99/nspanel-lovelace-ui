@@ -68,7 +68,7 @@ ReleaseNotes:
         - 22.06.2025 - v4.7.3    TFT 56 / 4.7.3 - Change Direction Pictures ColorTemperature (warmwhite left/coldwhite right) 
         - 23.06.2025 - v4.7.4    TFT 56 / 4.7.4 - Refactoring popupShutter (shutter/shutter2)
         - 24.06.2025 - v4.7.4.1  Refactoring popupShutter (split into shutter/shutter2)
-        - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2)
+        - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> EU + US-P
         - 25.06.2025 - v4.7.5.1  Add popupLight2 (split into light/light2)
        
        
