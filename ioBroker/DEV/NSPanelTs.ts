@@ -70,6 +70,7 @@ ReleaseNotes:
         - 24.06.2025 - v4.7.4.1  Refactoring popupShutter (split into shutter/shutter2)
         - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> EU + US-P
         - 25.06.2025 - v4.7.5.1  Add popupLight2 (split into light/light2)
+	- 26.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> US-L
        
        
         Todo:
