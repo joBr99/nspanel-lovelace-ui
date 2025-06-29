@@ -11090,7 +11090,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                 let bEntity1Icon : string = 'power';
                 let bEntity1Color : number = rgb_dec565(White);
                 let bEntity1Visibility : string = 'disable';
-                if (pageItem.customIcons[0] != undefined) {
+                if (pageItem.customIcons && pageItem.customIcons[0] != undefined) {
                     if (pageItem.customIcons[0].id != undefined) {
                         bEntity1Visibility = 'enable';
                         RegisterDetailEntityWatcher(pageItem.customIcons[0].id, pageItem, type, placeId);
@@ -11110,7 +11110,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                 let bEntity2Icon : string = 'power';
                 let bEntity2Color : number = rgb_dec565(White);
                 let bEntity2Visibility : string = 'disable';
-                if (pageItem.customIcons[1] != undefined) {
+                if (pageItem.customIcons && pageItem.customIcons[1] != undefined) {
                     if (pageItem.customIcons[1].id != undefined) {
                         bEntity2Visibility = 'enable';
                         RegisterDetailEntityWatcher(pageItem.customIcons[1].id, pageItem, type, placeId);
@@ -11130,7 +11130,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                 let bEntity3Icon : string = 'power';
                 let bEntity3Color : number = rgb_dec565(White);
                 let bEntity3Visibility : string = 'disable';
-                if (pageItem.customIcons[2] != undefined) {
+                if (pageItem.customIcons && pageItem.customIcons[2] != undefined) {
                     if (pageItem.customIcons[2].id != undefined) {
                         bEntity3Visibility = 'enable';
                         RegisterDetailEntityWatcher(pageItem.customIcons[2].id, pageItem, type, placeId);
