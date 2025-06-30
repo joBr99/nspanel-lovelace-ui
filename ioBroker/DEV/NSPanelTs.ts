@@ -9132,10 +9132,10 @@ function HandleButtonEvent (words: any): void {
                 break;
             case 'button1Press':
                 let pageItemShutterButton1 = findPageItem(id);
-                if (pageItemShutterButton1.customIcons[0].Button1.buttonType != undefined && pageItemShutterButton1.customIcons[0].Button1.buttonType == 'toggle') {
-                    toggleState(pageItemShutterButton1.customIcons[0].Button1.id);
-                } else if (pageItemShutterButton1.customIcons[0].Button1.buttonType != undefined && pageItemShutterButton1.customIcons[0].Button1.buttonType == 'press') {
-                    setIfExists(pageItemShutterButton1.customIcons[0].Button1.id, true);
+                if (pageItemShutterButton1.shutterIcons[0].buttonType != undefined && pageItemShutterButton1.shutterIcons[0].buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton1.shutterIcons[0].id);
+                } else if (pageItemShutterButton1.shutterIcons[0].buttonType != undefined && pageItemShutterButton1.shutterIcons[0].buttonType == 'press') {
+                    setIfExists(pageItemShutterButton1.shutterIcons[0].id, true);
                 } else {
                     //do nothing
                 }
@@ -9143,10 +9143,10 @@ function HandleButtonEvent (words: any): void {
                 break;
             case 'button2Press':
                 let pageItemShutterButton2 = findPageItem(id);
-                if (pageItemShutterButton2.customIcons[0].Button2.buttonType != undefined && pageItemShutterButton2.customIcons[0].Button2.buttonType == 'toggle') {
-                    toggleState(pageItemShutterButton2.customIcons[0].Button2.id);
-                } else if (pageItemShutterButton2.customIcons[0].Button2.buttonType != undefined && pageItemShutterButton2.customIcons[0].Button2.buttonType == 'press') {
-                    setIfExists(pageItemShutterButton2.customIcons[0].Button2.id, true);
+                if (pageItemShutterButton2.shutterIcons[1].buttonType != undefined && pageItemShutterButton2.shutterIcons[1].buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton2.shutterIcons[1].id);
+                } else if (pageItemShutterButton2.shutterIcons[1].buttonType != undefined && pageItemShutterButton2.shutterIcons[1].buttonType == 'press') {
+                    setIfExists(pageItemShutterButton2.shutterIcons[1].id, true);
                 } else {
                     //do nothing
                 }
@@ -9154,10 +9154,10 @@ function HandleButtonEvent (words: any): void {
                 break;
             case 'button3Press':
                 let pageItemShutterButton3 = findPageItem(id);
-                if (pageItemShutterButton3.customIcons[0].Button3.buttonType != undefined && pageItemShutterButton3.customIcons[0].Button3.buttonType == 'toggle') {
-                    toggleState(pageItemShutterButton3.customIcons[0].Button3.id);
-                } else if (pageItemShutterButton3.customIcons[0].Button3.buttonType != undefined && pageItemShutterButton3.customIcons[0].Button3.buttonType == 'press') {
-                    setIfExists(pageItemShutterButton3.customIcons[0].Button3.id, true);
+                if (pageItemShutterButton3.shutterIcons[2].buttonType != undefined && pageItemShutterButton3.shutterIcons[2].buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton3.shutterIcons[2].id);
+                } else if (pageItemShutterButton3.shutterIcons[2].buttonType != undefined && pageItemShutterButton3.shutterIcons[2].buttonType == 'press') {
+                    setIfExists(pageItemShutterButton3.shutterIcons[2].id, true);
                 } else {
                     //do nothing
                 }
@@ -11088,62 +11088,62 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
 
                 let tempId = placeId != undefined ? placeId : id;
 
-                //CustomIcons - Button1
+                //shutterIcons - Button1
                 let bEntity1State : boolean = false;
                 let bEntity1Icon : string = 'power';
                 let bEntity1Color : number = rgb_dec565(White);
                 let bEntity1Visibility : string = 'disable';
-                if (pageItem.customIcons[0].Button1 != undefined) {
-                    if (pageItem.customIcons[0].Button1.id != undefined) {
+                if (pageItem.shutterIcons && pageItem.shutterIcons[0] != undefined) {
+                    if (pageItem.shutterIcons[0].id != undefined) {
                         bEntity1Visibility = 'enable';
-                        RegisterDetailEntityWatcher(pageItem.customIcons[0].Button1.id, pageItem, type, placeId);
-                        bEntity1State = getState(pageItem.customIcons[0].Button1.id).val;
+                        RegisterDetailEntityWatcher(pageItem.shutterIcons[0].id, pageItem, type, placeId);
+                        bEntity1State = getState(pageItem.shutterIcons[0].id).val;
                         if (bEntity1State) {
-                            bEntity1Icon = Icons.GetIcon(pageItem.customIcons[0].Button1.icon) ?? bEntity1Icon;
-                            bEntity1Color = rgb_dec565(pageItem.customIcons[0].Button1.iconOnColor) ?? bEntity1Color;
+                            bEntity1Icon = Icons.GetIcon(pageItem.shutterIcons[0].icon) ?? bEntity1Icon;
+                            bEntity1Color = rgb_dec565(pageItem.shutterIcons[0].iconOnColor) ?? bEntity1Color;
                         } else {
-                            bEntity1Icon = Icons.GetIcon(pageItem.customIcons[0].Button1.icon2) ?? bEntity1Icon;
-                            bEntity1Color = rgb_dec565(pageItem.customIcons[0].Button1.iconOffColor) ?? bEntity1Color;
+                            bEntity1Icon = Icons.GetIcon(pageItem.shutterIcons[0].icon2) ?? bEntity1Icon;
+                            bEntity1Color = rgb_dec565(pageItem.shutterIcons[0].iconOffColor) ?? bEntity1Color;
                         }
                     }
                 }
 
-                //CustomIcons - Button2
+                //shutterIcons - Button2
                 let bEntity2State : boolean = false;
                 let bEntity2Icon : string = 'power';
                 let bEntity2Color : number = rgb_dec565(White);
                 let bEntity2Visibility : string = 'disable';
-                if (pageItem.customIcons[0].Button2 != undefined) {
-                    if (pageItem.customIcons[0].Button2.id != undefined) {
+                if (pageItem.shutterIcons && pageItem.shutterIcons[1] != undefined) {
+                    if (pageItem.shutterIcons[1].id != undefined) {
                         bEntity2Visibility = 'enable';
-                        RegisterDetailEntityWatcher(pageItem.customIcons[0].Button2.id, pageItem, type, placeId);
-                        bEntity2State = getState(pageItem.customIcons[0].Button2.id).val;
+                        RegisterDetailEntityWatcher(pageItem.shutterIcons[1].id, pageItem, type, placeId);
+                        bEntity2State = getState(pageItem.shutterIcons[1].id).val;
                         if (bEntity2State) {
-                            bEntity2Icon = Icons.GetIcon(pageItem.customIcons[0].Button2.icon) ?? bEntity2Icon;
-                            bEntity2Color = rgb_dec565(pageItem.customIcons[0].Button2.iconOnColor) ?? bEntity2Color;
+                            bEntity2Icon = Icons.GetIcon(pageItem.shutterIcons[1].icon) ?? bEntity2Icon;
+                            bEntity2Color = rgb_dec565(pageItem.shutterIcons[1].iconOnColor) ?? bEntity2Color;
                         } else {
-                            bEntity2Icon = Icons.GetIcon(pageItem.customIcons[0].Button2.icon2) ?? bEntity2Icon;
-                            bEntity2Color = rgb_dec565(pageItem.customIcons[0].Button2.iconOffColor) ?? bEntity2Color;
+                            bEntity2Icon = Icons.GetIcon(pageItem.shutterIcons[1].icon2) ?? bEntity2Icon;
+                            bEntity2Color = rgb_dec565(pageItem.shutterIcons[1].iconOffColor) ?? bEntity2Color;
                         }
                     }
                 }
 
-                //CustomIcons - Button3
+                //shutterIcons - Button3
                 let bEntity3State : boolean = false;
                 let bEntity3Icon : string = 'power';
                 let bEntity3Color : number = rgb_dec565(White);
                 let bEntity3Visibility : string = 'disable';
-                if (pageItem.customIcons[0].Button3 != undefined) {
-                    if (pageItem.customIcons[0].Button3.id != undefined) {
+                if (pageItem.shutterIcons && pageItem.shutterIcons[2] != undefined) {
+                    if (pageItem.shutterIcons[2].id != undefined) {
                         bEntity3Visibility = 'enable';
-                        RegisterDetailEntityWatcher(pageItem.customIcons[0].Button3.id, pageItem, type, placeId);
-                        bEntity3State = getState(pageItem.customIcons[0].Button3.id).val;
+                        RegisterDetailEntityWatcher(pageItem.shutterIcons[2].id, pageItem, type, placeId);
+                        bEntity3State = getState(pageItem.shutterIcons[2].id).val;
                         if (bEntity3State) {
-                            bEntity3Icon = Icons.GetIcon(pageItem.customIcons[0].Button3.icon) ?? bEntity3Icon;
-                            bEntity3Color = rgb_dec565(pageItem.customIcons[0].Button3.iconOnColor) ?? bEntity3Color;
+                            bEntity3Icon = Icons.GetIcon(pageItem.shutterIcons[2].icon) ?? bEntity3Icon;
+                            bEntity3Color = rgb_dec565(pageItem.shutterIcons[2].iconOnColor) ?? bEntity3Color;
                         } else {
-                            bEntity3Icon = Icons.GetIcon(pageItem.customIcons[0].Button3.icon2) ?? bEntity3Icon;
-                            bEntity3Color = rgb_dec565(pageItem.customIcons[0].Button3.iconOffColor) ?? bEntity3Color;
+                            bEntity3Icon = Icons.GetIcon(pageItem.shutterIcons[2].icon2) ?? bEntity3Icon;
+                            bEntity3Color = rgb_dec565(pageItem.shutterIcons[2].iconOffColor) ?? bEntity3Color;
                         }
                     }
                 }
@@ -11178,7 +11178,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         icon_stop_status +
                         '~' + //{icon_stop_status}~
                         icon_down_status +
-                        //CustomIcons
+                        //shutterIcons
                         //bEntity1
                         '~' +
                         bEntity1Icon + //12
@@ -13979,11 +13979,21 @@ namespace NSPanel {
         inSel_ChoiceState?: boolean;
         iconArray?: string[];
         customIcons?: any[];
+        shutterIcons?: [ shutterIcons?, shutterIcons?, shutterIcons?] | null;
         fontSize?: number;
         actionStringArray?: string[];
         alwaysOnDisplay?: boolean;
         popupVersion?: number;
         shutterType?: string;
+    };
+
+    type shutterIcons = {
+        id: string;
+        icon: string;
+        icon2?: string;
+        iconOnColor?: RGB;
+        iconOffColor?: RGB; 
+        buttonType: string;
     };
 
     export type DimMode = {
