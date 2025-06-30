@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 56 / v4.7.1 / BerryDriver 9 / Tasmota 14.5.0
+TypeScript v4.8.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 57 / v4.8.0 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -59,10 +59,19 @@ ReleaseNotes:
         - 10.04.2025 - v4.7.1    TFT 56 / 4.7.1 - Add Player Icon-Logos logo-alexa, logo-spotify, logo-dlna, logo-sonos, logo-mpd, logo-volumios, logo-bose 
         - 10.04.2025 - v4.7.1.1  Add parameter playerMediaIcon to cardMedia
         - 12.04.2025 - v4.7.1.2  Fix Play/Pause in MediaPlayers
-	- 13.04.2025 - v4.7.1.2  TFT 56 / 4.7.1 (US-P and US-L)
-        
-        Todo:
-        - XX.12.2024 - v5.0.0    ioBroker Adapter
+        - 13.04.2025 - v4.7.1.2  TFT 56 / 4.7.1 (US-P and US-L)
+        - 14.04.2025 - v4.7.1.3  MrIcons also allow other mqtt states
+        - 24.04.2025 - v4.7.2.1  Add popupSlider to cardMedia (alexa)
+        - 12.06.2025 - v4.7.2.2  States only respond to any if ack = false
+        - 20.06.2025 - v4.7.2.3  IconSelect left- and indicatorScreensaverEntity added
+        - 21.06.2025 - v4.7.2.4  Fix Demomodus Powerpage
+        - 22.06.2025 - v4.7.3    TFT 56 / 4.7.3 - Change Direction Pictures ColorTemperature (warmwhite left/coldwhite right) 
+        - 23.06.2025 - v4.7.4    TFT 56 / 4.7.4 - Refactoring popupShutter (shutter/shutter2)
+        - 24.06.2025 - v4.7.4.1  Refactoring popupShutter (split into shutter/shutter2)
+        - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> EU + US-P
+        - 25.06.2025 - v4.7.5.1  Add popupLight2 (split into light/light2)
+        - 26.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> US-L
+        - 30.06.2025 - v4.8.0    TFT 57 / 4.8.0 - Stable - Fix popupShutter2 (eu/us-l/us-p)
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -104,6 +113,7 @@ Popup-Pages:
     popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
     screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
     popupInSel Page     - Auswahlliste (InputSelect)
+    popupSlider Page    - 3 vertikal ausgerichtete Slider. Abweichender 0 Punkt möglich
 
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
@@ -162,10 +172,10 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.1.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.8.0.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.7.1.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.7.1.tft
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.8.0.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.8.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -948,9 +958,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.1.2';
-const tft_version: string = 'v4.7.1';
-const desired_display_firmware_version = 56;
+const scriptVersion: string = 'v4.8.0.1';
+const tft_version: string = 'v4.8.0';
+const desired_display_firmware_version = 57;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -2360,7 +2370,7 @@ async function SubscribeMRIcons () {
         }
         if (arr.length > 0) {
             on({id: arr, change: 'ne'}, async function (obj) {
-                if (obj.id && obj.id.substring(0, 4) == 'mqtt') {
+                if (obj.id && obj.id.substring(0, 4) == 'mqtt' &&(obj.id.endsWith('.stat.POWER1') || obj.id.endsWith('.stat.Power2'))) {
                     let Button = obj.id.split('.');
                     if (getState(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6)).val != obj.state.val) {
                         await setStateAsync(NSPanel_Path + 'Relay.' + Button[Button.length - 1].substring(5, 6), obj.state.val == 'ON' ? true : false);
@@ -5119,6 +5129,8 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                         case 'temperature':
 
+                        case 'illuminance':
+
                         case 'value.temperature':
 
                         case 'value.humidity':
@@ -5227,6 +5239,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'socket':
                 case 'light':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5246,6 +5265,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'hue':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5282,6 +5308,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'ct':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5315,6 +5348,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'rgb':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5362,6 +5402,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'cie':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5408,6 +5455,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'rgbSingle':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5456,6 +5510,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'dimmer':
                     type = 'light';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'light';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'light2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
                     iconId2 = pageItem.icon2 !== undefined ? Icons.GetIcon(pageItem.icon2) : Icons.GetIcon('lightbulb-outline');
                     optVal = '0';
@@ -5475,6 +5536,13 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                 case 'blind':
                     type = 'shutter';
+                    if (pageItem.popupVersion !== undefined) {
+                        if (pageItem.popupVersion == 1) {
+                            type = 'shutter';    
+                        } else if (pageItem.popupVersion == 2){
+                            type = 'shutter2';    
+                        }
+                    }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                     iconColor = GetIconColor(pageItem, existsState(pageItem.id + '.ACTUAL') ? getState(pageItem.id + '.ACTUAL').val : true, useColors);
                     // only if icon3 is set go into 3 icons
@@ -5575,6 +5643,8 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'info':
 
                 case 'humidity':
+
+                case 'illuminance':
 
                 case 'temperature':
 
@@ -6031,7 +6101,10 @@ function RegisterEntityWatcher (id: string): void {
             return;
         }
 
-        subscriptions[id] = on({id: id, change: 'any'}, () => {
+        subscriptions[id] = on({id: id, change: 'any'}, (obj) => {
+            if (obj.oldState && obj.oldState.val === obj.state.val && obj.state.ack) {
+                return;
+            }
             if (pageId == -1 && config.button1.page) {
                 SendToPanel({payload: GeneratePageElements(config.button1.page)});
             }
@@ -6067,7 +6140,10 @@ function RegisterDetailEntityWatcher (id: string, pageItem: PageItem, type: NSPa
 
         if (Debug) log('id: ' + id + ' - pageItem: ' + JSON.stringify(pageItem) + ' - type: ' + type + ' - placeId: ' + placeId, 'info');
 
-        subscriptions[id] = on({id: id, change: 'any'}, () => {
+        subscriptions[id] = on({id: id, change: 'any'}, (obj) => {
+            if (obj.oldState && obj.oldState.val === obj.state.val && obj.state.ack) {
+                return;
+            }
             SendToPanel(GenerateDetailPage(type, undefined, pageItem, placeId));
         });
     } catch (err: any) {
@@ -7060,8 +7136,8 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (existsObject(id)) {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
-            if (title.length > 26) {
-                title = title.slice(0, 26) + '...';
+            if (title.length > 24) {
+                title = title.slice(0, 24) + '...';
             }
             if (existsObject(id + '.DURATION') && existsObject(id + '.ELAPSED')) {
                 if (v2Adapter == 'alexa2') {
@@ -7315,7 +7391,7 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     author = findLocale('media', 'no_music_to_control');
                 }
             }
-
+            
             //Volumio
             if (v2Adapter == 'volumio') {
                 media_icon = Icons.GetIcon('clock-time-twelve-outline');
@@ -7607,13 +7683,18 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     'input_sel' + '~' + tid + '?tracklist' + '~' + Icons.GetIcon('animation-play-outline') + '~' + trackListIconCol + '~' + findLocale('media', 'tracklist') + '~' + 'media2~';
             }
 
-            //InSel EQ
+            // InSel/Slider EQ
             let equalizerListString: string = '~~~~~~';
             let equalizerListIconCol = rgb_dec565(HMIOff);
+
             if (page.items[0].equalizerList != undefined) {
                 equalizerListIconCol = rgb_dec565(HMIOn);
                 equalizerListString =
                     'input_sel' + '~' + tid + '?equalizer' + '~' + Icons.GetIcon('equalizer-outline') + '~' + equalizerListIconCol + '~' + findLocale('media', 'equalizer') + '~' + 'media3~';
+            } else if (page.items[0].equalizerSlider != undefined && v2Adapter == 'alexa2') {
+                equalizerListIconCol = rgb_dec565(HMIOn);
+                equalizerListString =
+                    'slider' + '~' + tid + '~' + Icons.GetIcon('equalizer-outline') + '~' + equalizerListIconCol + '~' + findLocale('media', 'equalizer') + '~' + 'media3~';
             } else if (page.items[0].equalizerList == undefined && v2Adapter == 'sonos') {
                 let equalizerListIconCol = rgb_dec565(HMIOn);
                 //equalizerListString is used for favariteList
@@ -8294,7 +8375,7 @@ function GeneratePowerPage (page: NSPanel.PagePower): NSPanel.Payload[] {
     try {
         let obj: object = {};
         let demoMode = false;
-        if (page.items[0].id == undefined) {
+        if (page.items[0].id === 'DEMO') {
             log('No PageItem defined - cardPower demo mode active', 'info');
             demoMode = true;
         }
@@ -8791,6 +8872,18 @@ function HandleButtonEvent (words: any): void {
                     pageCounter = 0;
                     GeneratePage(activePage!);
                 }
+                if (words[2] == 'popupSlider' && activePage!.type == 'cardMedia') {
+                    if (Debug) log('Leave popupSlider without any action', 'info');
+                    pageCounter = 0;
+                    GeneratePage(activePage!);
+                    setTimeout(async function () {
+                        pageCounter = 1;
+                        GeneratePage(activePage!);
+                    }, 3000);
+                } else {
+                    pageCounter = 0;
+                    GeneratePage(activePage!);
+                }
                 break;
             case 'bHome':
                 if (Debug) {
@@ -9034,6 +9127,39 @@ function HandleButtonEvent (words: any): void {
             case 'down':
                 setIfExists(id + '.CLOSE', true);
                 checkBlindActive = true;
+                break;
+            case 'button1Press':
+                let pageItemShutterButton1 = findPageItem(id);
+                if (pageItemShutterButton1.shutterIcons[0].buttonType != undefined && pageItemShutterButton1.shutterIcons[0].buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton1.shutterIcons[0].id);
+                } else if (pageItemShutterButton1.shutterIcons[0].buttonType != undefined && pageItemShutterButton1.shutterIcons[0].buttonType == 'press') {
+                    setIfExists(pageItemShutterButton1.shutterIcons[0].id, true);
+                } else {
+                    //do nothing
+                }
+                if (Debug) log("Shutter2 - Button1 Touch Press Event", 'info');
+                break;
+            case 'button2Press':
+                let pageItemShutterButton2 = findPageItem(id);
+                if (pageItemShutterButton2.shutterIcons[1].buttonType != undefined && pageItemShutterButton2.shutterIcons[1].buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton2.shutterIcons[1].id);
+                } else if (pageItemShutterButton2.shutterIcons[1].buttonType != undefined && pageItemShutterButton2.shutterIcons[1].buttonType == 'press') {
+                    setIfExists(pageItemShutterButton2.shutterIcons[1].id, true);
+                } else {
+                    //do nothing
+                }
+                if (Debug) log("Shutter2 - Button2 Touch Press Event", 'info');
+                break;
+            case 'button3Press':
+                let pageItemShutterButton3 = findPageItem(id);
+                if (pageItemShutterButton3.shutterIcons[2].buttonType != undefined && pageItemShutterButton3.shutterIcons[2].buttonType == 'toggle') {
+                    toggleState(pageItemShutterButton3.shutterIcons[2].id);
+                } else if (pageItemShutterButton3.shutterIcons[2].buttonType != undefined && pageItemShutterButton3.shutterIcons[2].buttonType == 'press') {
+                    setIfExists(pageItemShutterButton3.shutterIcons[2].id, true);
+                } else {
+                    //do nothing
+                }
+                if (Debug) log("Shutter2 - Button3 Touch Press Event", 'info');
                 break;
             case 'positionSlider':
                 (function () {
@@ -9527,6 +9653,37 @@ function HandleButtonEvent (words: any): void {
                     pageCounter = 1;
                     GeneratePage(activePage!);
                 }, 3000);
+                break;
+            case 'positionSlider1':
+            case 'positionSlider2':
+            case 'positionSlider3':
+                let newSliderVal: number = 0
+                let pageItemSlider = findPageItem(id);
+                if (isPageMediaItem(pageItemSlider)) {
+                    let adaInstanceSplit = pageItemSlider.adapterPlayerInstance!.split('.');
+                    if (adaInstanceSplit[0] == 'alexa2') {
+                        if (words[4] > 6) {
+                            newSliderVal = words[4] - 6;
+                        } else if (words[4] < 6) {
+                            newSliderVal = (6 - words[4]) * -1;
+                        }   
+                        if (Debug) log(words[3] + ': ' + newSliderVal);
+                        switch (words[3]) {
+                            case 'positionSlider1':
+                                if (Debug) log(pageItemSlider.adapterPlayerInstance + 'Echo-Devices.' + pageItemSlider.mediaDevice + '.Preferences.equalizerBass');
+                                setState(pageItemSlider.adapterPlayerInstance + 'Echo-Devices.' + pageItemSlider.mediaDevice + '.Preferences.equalizerBass', newSliderVal);
+                                break;
+                            case 'positionSlider2':
+                                if (Debug) log(pageItemSlider.adapterPlayerInstance + 'Echo-Devices.' + pageItemSlider.mediaDevice + '.Preferences.equalizerMidRange');
+                                setState(pageItemSlider.adapterPlayerInstance + 'Echo-Devices.' + pageItemSlider.mediaDevice + '.Preferences.equalizerMidRange', newSliderVal);
+                                break;
+                            case 'positionSlider3':
+                                if (Debug) log(pageItemSlider.adapterPlayerInstance + 'Echo-Devices.' + pageItemSlider.mediaDevice + '.Preferences.equalizerTreble');
+                                setState(pageItemSlider.adapterPlayerInstance + 'Echo-Devices.' + pageItemSlider.mediaDevice + '.Preferences.equalizerTreble', newSliderVal);
+                                break;
+                        }
+                    }
+                }
                 break;
             case 'mode-seek':
                 let pageItemSeek = findPageItem(id);
@@ -10655,6 +10812,114 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                 }
             }
 
+            if (type == 'popupSlider') {
+
+                let tempId = placeId != undefined ? placeId : id;
+                
+                if (isPageMediaItem(pageItem)) {
+
+                    const vTempAdapter = pageItem.adapterPlayerInstance!.split('.');
+                    const vAdapter: NSPanel.PlayerType = vTempAdapter[0] as NSPanel.PlayerType;
+
+                    if (vAdapter == 'alexa2') {
+
+                        let tSlider1: string = pageItem.equalizerSlider[0].Slider1.heading ?? "Bass";
+                        let tIconS1M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider1.icon1 ?? "minus-box"); 
+                        let tIconS1P: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider1.icon2 ?? "plus-box");
+                        let hSlider1MinVal: number = pageItem.equalizerSlider[0].Slider1.minValue ?? 0;
+                        let hSlider1MaxVal: number = pageItem.equalizerSlider[0].Slider1.maxValue ?? 12;
+                        let hSlider1ZeroVal: number = pageItem.equalizerSlider[0].Slider1.zeroValue ?? 6;
+                        let hSlider1CurVal: number = getState(pageItem.adapterPlayerInstance! + 'Echo-Devices.' + pageItem.mediaDevice! + '.Preferences.equalizerBass').val + hSlider1ZeroVal;
+                        let hSlider1Step: number = pageItem.equalizerSlider[0].Slider1.stepValue ?? 1;
+                        let hSlider1Visibility: string = "enable";
+
+                        let tSlider2: string = pageItem.equalizerSlider[0].Slider2.heading ?? "MidRange";
+                        let tIconS2M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider2.icon1 ?? "minus-box"); 
+                        let tIconS2P: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider2.icon2 ?? "plus-box");
+                        let hSlider2MinVal: number = pageItem.equalizerSlider[0].Slider2.minValue ?? 0;
+                        let hSlider2MaxVal: number = pageItem.equalizerSlider[0].Slider2.maxValue ?? 12;
+                        let hSlider2ZeroVal: number = pageItem.equalizerSlider[0].Slider2.zeroValue ?? 6;
+                        let hSlider2CurVal: number = getState(pageItem.adapterPlayerInstance! + 'Echo-Devices.' + pageItem.mediaDevice! + '.Preferences.equalizerMidRange').val + hSlider2ZeroVal;
+                        let hSlider2Step: number = pageItem.equalizerSlider[0].Slider2.stepValue ?? 1;
+                        let hSlider2Visibility: string = "enable";
+
+                        let tSlider3: string = pageItem.equalizerSlider[0].Slider3.heading ?? "Treble";
+                        let tIconS3M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider3.icon1 ?? "minus-box"); 
+                        let tIconS3P: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider3.icon2 ?? "plus-box");
+                        let hSlider3MinVal: number = pageItem.equalizerSlider[0].Slider3.minValue ?? 0;
+                        let hSlider3MaxVal: number = pageItem.equalizerSlider[0].Slider3.maxValue ?? 12;
+                        let hSlider3ZeroVal: number = pageItem.equalizerSlider[0].Slider3.zeroValue ?? 6;
+                        let hSlider3CurVal: number = getState(pageItem.adapterPlayerInstance! + 'Echo-Devices.' + pageItem.mediaDevice! + '.Preferences.equalizerTreble').val + hSlider3ZeroVal;
+                        let hSlider3Step: number = pageItem.equalizerSlider[0].Slider3.stepValue ?? 1;
+                        let hSlider3Visibility: string = "enable";
+
+                        out_msgs.push({
+                            payload:
+                                'entityUpdateDetail' +
+                                '~' + //entityUpdateDetail
+                                tempId +
+                                '~' +
+                                // Slider1
+                                tSlider1 +           // Slider1 Headline --> tmSerial 2
+                                '~' +
+                                tIconS1M +           // Slider1 Left Icon --> tmSerial 3
+                                '~' + 
+                                tIconS1P +           // Slider1 Right Icon --> tmSerial 4
+                                '~' +
+                                hSlider1CurVal +     // Slider1 Current Slider Value --> tmSerial 5
+                                '~' +
+                                hSlider1MinVal +     // Slider1 Minimal Slider Value --> tmSerial 6
+                                '~' +
+                                hSlider1MaxVal +     // Slider1 Maximal Slider Value --> tmSerial 7
+                                '~' +
+                                hSlider1ZeroVal +    // If Slider 0 is betweeb Min and Max --> tmSerial 8
+                                '~' +
+                                hSlider1Step +       // If Slider Tap >  --> tmSerial 9
+                                '~' +
+                                hSlider1Visibility   // If Slider Tap >  --> tmSerial 10
+                                // Slider2
+                                + '~' +
+                                tSlider2 +           // Slider2 Headline --> tmSerial 11
+                                '~' +
+                                tIconS2M +           // Slider2 Left Icon --> tmSerial 12
+                                '~' +
+                                tIconS2P +           // Slider2 Right Icon --> tmSerial 13
+                                '~' +
+                                hSlider2CurVal +     // Slider2 Current Slider Value --> tmSerial 14
+                                '~' +
+                                hSlider2MinVal +     // Slider2 Minimal Slider Value --> tmSerial 15
+                                '~' +
+                                hSlider2MaxVal +     // Slider2 Maximal Slider Value --> tmSerial 16
+                                '~' +
+                                hSlider2ZeroVal +    // If Slider2 0 is betweeb Min and Max --> tmSerial 17
+                                '~' +
+                                hSlider2Step +       // If Slider2 Tap > 1 --> tmSerial 18
+                                '~' +
+                                hSlider2Visibility   // If Slider Tap >  --> tmSerial 19
+                                // Slider3
+                                + '~' +
+                                tSlider3 +           // Slider3 Headline --> tmSerial 20
+                                '~' +
+                                tIconS3M +           // Slider3 Left Icon --> tmSerial 21
+                                '~' +
+                                tIconS3P +           // Slider3 Right Icon --> tmSerial 22
+                                '~' +
+                                hSlider3CurVal +     // Slider3 Current Slider Value --> tmSerial 23
+                                '~' +
+                                hSlider3MinVal +     // Slider2 Minimal Slider Value --> tmSerial 24
+                                '~' +
+                                hSlider3MaxVal +     // Slider2 Maximal Slider Value --> tmSerial 25
+                                '~' +
+                                hSlider3ZeroVal +    // If Slider3 0 is betweeb Min and Max --> tmSerial 26
+                                '~' +
+                                hSlider3Step +       // If Slider3 Tap > 1 --> tmSerial 27
+                                '~' +
+                                hSlider3Visibility   // If Slider Tap >  --> tmSerial 28
+                        });
+                    }
+                }
+            }
+
             if (type == 'popupShutter') {
                 icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
                 if (existsState(id + '.ACTUAL')) {
@@ -10775,6 +11040,166 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         iconTiltRightStatus +
                         '~' + //{iconTiltRightStatus}~
                         tilt_pos, //{tilt_pos}")
+                });
+            }
+
+            if (type == 'popupShutter2') {
+                icon = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
+                if (existsState(id + '.ACTUAL')) {
+                    val = getState(id + '.ACTUAL').val;
+                    RegisterDetailEntityWatcher(id + '.ACTUAL', pageItem, type, placeId);
+                } else if (existsState(id + '.SET')) {
+                    val = getState(id + '.SET').val;
+                }
+
+                let min_Level: number = 0;
+                let max_Level: number = 100;
+
+                if (pageItem.minValueLevel !== undefined && pageItem.maxValueLevel !== undefined) {
+                    min_Level = pageItem.minValueLevel;
+                    max_Level = pageItem.maxValueLevel;
+                    val = Math.trunc(scale(getState(id + '.ACTUAL').val, pageItem.minValueLevel, pageItem.maxValueLevel, 100, 0));
+                }
+
+                if (Debug) log('minLevel ' + min_Level + ' maxLevel ' + max_Level + ' Level ' + val, 'info');
+
+                let textSecondRow = '';
+                let icon_id = icon;
+                let icon_up = Icons.GetIcon('arrow-up');
+                let icon_stop = Icons.GetIcon('stop');
+                let icon_down = Icons.GetIcon('arrow-down');
+                let tempVal: number = getState(pageItem.id + '.ACTUAL').val;
+
+                //Disabled Status while bug in updating origin adapter data points of lift values
+                let icon_up_status = 'enable';
+                //let icon_up_status = tempVal === min_Level ? 'disable' : 'enable';
+                let icon_stop_status = 'enable';
+                if (tempVal === min_Level || tempVal === max_Level || checkBlindActive === false) {
+                    //icon_stop_status = 'disable';
+                }
+                let icon_down_status = 'enable';
+                //let icon_down_status = tempVal === max_Level ? 'disable' : 'enable';
+
+                if (pageItem.secondRow != undefined) {
+                    textSecondRow = pageItem.secondRow;
+                }
+
+                let tempId = placeId != undefined ? placeId : id;
+
+                //shutterIcons - Button1
+                let bEntity1State : boolean = false;
+                let bEntity1Icon : string = 'power';
+                let bEntity1Color : number = rgb_dec565(White);
+                let bEntity1Visibility : string = 'disable';
+                if (pageItem.shutterIcons && pageItem.shutterIcons[0] != undefined) {
+                    if (pageItem.shutterIcons[0].id != undefined) {
+                        bEntity1Visibility = 'enable';
+                        RegisterDetailEntityWatcher(pageItem.shutterIcons[0].id, pageItem, type, placeId);
+                        bEntity1State = getState(pageItem.shutterIcons[0].id).val;
+                        if (bEntity1State) {
+                            bEntity1Icon = Icons.GetIcon(pageItem.shutterIcons[0].icon) ?? bEntity1Icon;
+                            bEntity1Color = rgb_dec565(pageItem.shutterIcons[0].iconOnColor) ?? bEntity1Color;
+                        } else {
+                            bEntity1Icon = Icons.GetIcon(pageItem.shutterIcons[0].icon2) ?? bEntity1Icon;
+                            bEntity1Color = rgb_dec565(pageItem.shutterIcons[0].iconOffColor) ?? bEntity1Color;
+                        }
+                    }
+                }
+
+                //shutterIcons - Button2
+                let bEntity2State : boolean = false;
+                let bEntity2Icon : string = 'power';
+                let bEntity2Color : number = rgb_dec565(White);
+                let bEntity2Visibility : string = 'disable';
+                if (pageItem.shutterIcons && pageItem.shutterIcons[1] != undefined) {
+                    if (pageItem.shutterIcons[1].id != undefined) {
+                        bEntity2Visibility = 'enable';
+                        RegisterDetailEntityWatcher(pageItem.shutterIcons[1].id, pageItem, type, placeId);
+                        bEntity2State = getState(pageItem.shutterIcons[1].id).val;
+                        if (bEntity2State) {
+                            bEntity2Icon = Icons.GetIcon(pageItem.shutterIcons[1].icon) ?? bEntity2Icon;
+                            bEntity2Color = rgb_dec565(pageItem.shutterIcons[1].iconOnColor) ?? bEntity2Color;
+                        } else {
+                            bEntity2Icon = Icons.GetIcon(pageItem.shutterIcons[1].icon2) ?? bEntity2Icon;
+                            bEntity2Color = rgb_dec565(pageItem.shutterIcons[1].iconOffColor) ?? bEntity2Color;
+                        }
+                    }
+                }
+
+                //shutterIcons - Button3
+                let bEntity3State : boolean = false;
+                let bEntity3Icon : string = 'power';
+                let bEntity3Color : number = rgb_dec565(White);
+                let bEntity3Visibility : string = 'disable';
+                if (pageItem.shutterIcons && pageItem.shutterIcons[2] != undefined) {
+                    if (pageItem.shutterIcons[2].id != undefined) {
+                        bEntity3Visibility = 'enable';
+                        RegisterDetailEntityWatcher(pageItem.shutterIcons[2].id, pageItem, type, placeId);
+                        bEntity3State = getState(pageItem.shutterIcons[2].id).val;
+                        if (bEntity3State) {
+                            bEntity3Icon = Icons.GetIcon(pageItem.shutterIcons[2].icon) ?? bEntity3Icon;
+                            bEntity3Color = rgb_dec565(pageItem.shutterIcons[2].iconOnColor) ?? bEntity3Color;
+                        } else {
+                            bEntity3Icon = Icons.GetIcon(pageItem.shutterIcons[2].icon2) ?? bEntity3Icon;
+                            bEntity3Color = rgb_dec565(pageItem.shutterIcons[2].iconOffColor) ?? bEntity3Color;
+                        }
+                    }
+                }
+
+                let shutterTyp = 'shutter';
+                if (pageItem.shutterType != undefined) {
+                    shutterTyp = pageItem.shutterType;
+                }
+
+                out_msgs.push({
+                    payload:
+                        'entityUpdateDetail' +
+                        '~' + //entityUpdateDetail
+                        tempId +
+                        '~' + //entity_id
+                        val +
+                        '~' + //Shutterposition
+                        textSecondRow +
+                        '~' + //pos_status 2.line
+                        findLocale('blinds', 'Position') +
+                        '~' + //pos_translation
+                        icon_id +
+                        '~' + //{icon_id}~
+                        icon_up +
+                        '~' + //{icon_up}~
+                        icon_stop +
+                        '~' + //{icon_stop}~
+                        icon_down +
+                        '~' + //{icon_down}~
+                        icon_up_status +
+                        '~' + //{icon_up_status}~
+                        icon_stop_status +
+                        '~' + //{icon_stop_status}~
+                        icon_down_status +
+                        //shutterIcons
+                        //bEntity1
+                        '~' +
+                        bEntity1Icon + //12
+                        '~' +
+                        bEntity1Color + //13
+                        '~' + 
+                        bEntity1Visibility + //14
+                        //bEntity2
+                        '~' + 
+                        bEntity2Icon + //15
+                        '~' +
+                        bEntity2Color + //16
+                        '~' +
+                        bEntity2Visibility + //17
+                        //bEntity3
+                        '~' +
+                        bEntity3Icon + //18
+                        '~' +
+                        bEntity3Color + //19
+                        '~' +
+                        bEntity3Visibility + //20
+                        '~' +
+                        shutterTyp //21 for Future
                 });
             }
 
@@ -11489,8 +11914,9 @@ function HandleScreensaverUpdate (): void {
                         }
 
                         if (typeof val == 'number') {
-                            val =
-                                (val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)).toFixed(
+                            val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
+                            icon = determineScreensaverStatusIcon(leftScreensaverEntity,val,icon)
+                            val = val.toFixed(
                                     leftScreensaverEntity.ScreensaverEntityDecimalPlaces
                                 ) + leftScreensaverEntity.ScreensaverEntityUnitText;
                             iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
@@ -11774,8 +12200,9 @@ function HandleScreensaverUpdate (): void {
                     }
 
                     if (typeof val == 'number') {
-                        val =
-                            (val * (indicatorScreensaverEntity.ScreensaverEntityFactor ? indicatorScreensaverEntity.ScreensaverEntityFactor! : 0)).toFixed(
+                        val = val * (indicatorScreensaverEntity.ScreensaverEntityFactor ? indicatorScreensaverEntity.ScreensaverEntityFactor! : 0)
+                        icon = determineScreensaverStatusIcon(indicatorScreensaverEntity,val,icon)
+                        val = val.toFixed(
                                 indicatorScreensaverEntity.ScreensaverEntityDecimalPlaces
                             ) + indicatorScreensaverEntity.ScreensaverEntityUnitText;
                         iconColor = GetScreenSaverEntityColor(indicatorScreensaverEntity);
@@ -13192,11 +13619,13 @@ function isPopupType (F: NSPanel.PopupType | string): F is NSPanel.PopupType {
         case 'popupFan':
         case 'popupInSel':
         case 'popupLight':
-        case 'popupLightNew':
         case 'popupNotify':
         case 'popupShutter':
+        case 'popupShutter2':
         case 'popupThermo':
         case 'popupTimer':
+        case 'popupSlider':
+        case 'popupColor':
             return true;
         default:
             log(`Please report to developer: Unknown NSPanel.PopupType: ${F} `, 'warn');
@@ -13223,7 +13652,7 @@ function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.Pag
 }
 
 namespace NSPanel {
-    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupLightNew' | 'popupNotify' | 'popupShutter' | 'popupThermo' | 'popupTimer';
+    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer' | 'popupColor';
 
     export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2';
     export type panelRecvType = {
@@ -13231,7 +13660,7 @@ namespace NSPanel {
         method: EventMethod;
     };
 
-    export type SerialType = 'button' | 'light' | 'shutter' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan';
+    export type SerialType = 'button' | 'light' | 'light2' | 'shutter' | 'shutter2' | 'text' | 'input_sel' | 'timer' | 'number' | 'fan' | 'slider';
 
     /**
  * Defines the possible roles for entities in the NSPanel.
@@ -13276,7 +13705,8 @@ namespace NSPanel {
         | 'switch.mode.wlan'
         | 'media'
         | 'timeTable'
-        | 'airCondition';
+        | 'airCondition'
+        | 'illuminance';
 
     export type ButtonActionType =
         | 'bExit'
@@ -13292,7 +13722,13 @@ namespace NSPanel {
         | 'up'
         | 'stop'
         | 'down'
+        | 'button1Press'
+        | 'button2Press'
+        | 'button3Press'
         | 'positionSlider'
+        | 'positionSlider1'
+        | 'positionSlider2'
+        | 'positionSlider3'
         | 'tiltOpen'
         | 'tiltStop'
         | 'tiltSlider'
@@ -13448,6 +13884,7 @@ namespace NSPanel {
         speakerList?: string[];
         playList?: string[];
         equalizerList?: string[];
+        equalizerSlider?: any[];
         repeatList?: string[];
         globalTracklist?: string[];
         crossfade?: boolean;
@@ -13540,9 +13977,21 @@ namespace NSPanel {
         inSel_ChoiceState?: boolean;
         iconArray?: string[];
         customIcons?: any[];
+        shutterIcons?: [ shutterIcons?, shutterIcons?, shutterIcons?] | null;
         fontSize?: number;
         actionStringArray?: string[];
         alwaysOnDisplay?: boolean;
+        popupVersion?: number;
+        shutterType?: string;
+    };
+
+    type shutterIcons = {
+        id: string;
+        icon: string;
+        icon2?: string;
+        iconOnColor?: RGB;
+        iconOffColor?: RGB; 
+        buttonType: string;
     };
 
     export type DimMode = {
