@@ -959,9 +959,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.0.1';
-const tft_version: string = 'v4.9.0';
-const desired_display_firmware_version = 58;
+const scriptVersion: string = 'v4.7.5.1';
+const tft_version: string = 'v4.7.5';
+const desired_display_firmware_version = 56;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -5130,6 +5130,8 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                         case 'temperature':
 
+                        case 'illuminance':
+
                         case 'value.temperature':
 
                         case 'value.humidity':
@@ -5241,7 +5243,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
                             type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
+                        } else if (pageItem.popupVersion == 2) {
                             type = 'light2';    
                         }
                     }
@@ -5642,6 +5644,8 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'info':
 
                 case 'humidity':
+
+                case 'illuminance':
 
                 case 'temperature':
 
@@ -7680,7 +7684,7 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     'input_sel' + '~' + tid + '?tracklist' + '~' + Icons.GetIcon('animation-play-outline') + '~' + trackListIconCol + '~' + findLocale('media', 'tracklist') + '~' + 'media2~';
             }
 
-            //InSel EQ
+            // InSel/Slider EQ
             let equalizerListString: string = '~~~~~~';
             let equalizerListIconCol = rgb_dec565(HMIOff);
 
@@ -13622,6 +13626,7 @@ function isPopupType (F: NSPanel.PopupType | string): F is NSPanel.PopupType {
         case 'popupThermo':
         case 'popupTimer':
         case 'popupSlider':
+        case 'popupColor':
             return true;
         default:
             log(`Please report to developer: Unknown NSPanel.PopupType: ${F} `, 'warn');
@@ -13648,7 +13653,7 @@ function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.Pag
 }
 
 namespace NSPanel {
-    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer';
+    export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer' | 'popupColor';
 
     export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2';
     export type panelRecvType = {
@@ -13701,7 +13706,8 @@ namespace NSPanel {
         | 'switch.mode.wlan'
         | 'media'
         | 'timeTable'
-        | 'airCondition';
+        | 'airCondition'
+        | 'illuminance';
 
     export type ButtonActionType =
         | 'bExit'
