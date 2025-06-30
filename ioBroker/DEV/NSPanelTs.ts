@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.7.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 56 / v4.7.5 / BerryDriver 9 / Tasmota 15.0.1
+TypeScript v4.9.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 56 / v4.9.0 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -71,10 +71,8 @@ ReleaseNotes:
         - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> EU + US-P
         - 25.06.2025 - v4.7.5.1  Add popupLight2 (split into light/light2)
 	- 26.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> US-L
-       
-       
-        Todo:
-        - XX.12.2024 - v5.0.0    ioBroker Adapter
+	- 30.06.2025 - v4.8.0    TFT 57 / 4.8.0 - Stable - Fix popupShutter2 (eu/us-l/us-p)
+	- 30.06.2025 - v4.9.0    TFT 58 / 4.9.0 - Beta - Adapter & Script (eu/us-l/us-p)
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -175,10 +173,10 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.7.5.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.0.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.7.5.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.7.1.tft
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.0.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -961,9 +959,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.5.1';
-const tft_version: string = 'v4.7.5';
-const desired_display_firmware_version = 56;
+const scriptVersion: string = 'v4.9.0.1';
+const tft_version: string = 'v4.9.0';
+const desired_display_firmware_version = 58;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
