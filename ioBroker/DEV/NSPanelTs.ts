@@ -73,6 +73,7 @@ ReleaseNotes:
 	- 26.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> US-L
 	- 30.06.2025 - v4.8.0    TFT 57 / 4.8.0 - Stable - Fix popupShutter2 (eu/us-l/us-p)
 	- 30.06.2025 - v4.9.0    TFT 58 / 4.9.0 - Beta - Adapter & Script (eu/us-l/us-p)
+ 	- 30.06.2025 - v4.9.0.1  Small Fixes
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -959,9 +960,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.7.5.1';
-const tft_version: string = 'v4.7.5';
-const desired_display_firmware_version = 56;
+const scriptVersion: string = 'v4.9.0.1';
+const tft_version: string = 'v4.9.0';
+const desired_display_firmware_version = 58;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
