@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 58 / v4.9.0 / BerryDriver 9 / Tasmota 15.0.1
+TypeScript v4.9.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 58 / v4.9.2 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -74,6 +74,8 @@ ReleaseNotes:
 	- 30.06.2025 - v4.8.0    TFT 57 / 4.8.0 - Stable - Fix popupShutter2 (eu/us-l/us-p)
 	- 30.06.2025 - v4.9.0    TFT 58 / 4.9.0 - Beta - Adapter & Script (eu/us-l/us-p)
  	- 30.06.2025 - v4.9.0.1  Small Fixes
+  	- 24.07.2025 - v4.9.1    Adapter Changes
+        - 24.07.2025 - v4.9.2.1  Add icon2 Parameter to Info Alias Channels
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -174,7 +176,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.0.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.2.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.0.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.0.tft
@@ -960,8 +962,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.0.1';
-const tft_version: string = 'v4.9.0';
+const scriptVersion: string = 'v4.9.2.1';
+const tft_version: string = 'v4.9.2';
 const desired_display_firmware_version = 58;
 const berry_driver_version = 9;
 
@@ -5723,6 +5725,28 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             iconId = optVal + '¬' + pageItem.fontSize;
                         } else {
                             iconId = optVal;
+                        }
+                    }
+
+                    if (existsState(pageItem.id + '.ACTUAL') && pageItem.icon2 != undefined) {
+                        // Read Alias Datapoint Objectdata
+                        let obj = getObject(pageItem.id + ".ACTUAL");
+                        // Read origin Datapoint Objectdata
+                        if (existsState(obj.common.alias.id)) {
+                            let obj2 = getObject(obj.common.alias.id);
+                            // Register Origin Datapoint
+                            RegisterEntityWatcher(obj.common.alias.id);
+                            // Check Data-Type (This must be boolean)
+                            if (obj2.common.type == "boolean") {
+                                if (Debug) log(getState(obj.common.alias.id).val, 'info');
+                                if (getState(obj.common.alias.id).val) {
+                                    iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
+                                    iconColor = pageItem.onColor != undefined ? rgb_dec565(pageItem.onColor) : iconColor;
+                                } else {
+                                    iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+                                    iconColor = pageItem.offColor != undefined ? rgb_dec565(pageItem.offColor) : iconColor;
+                                }
+                            }
                         }
                     }
 
