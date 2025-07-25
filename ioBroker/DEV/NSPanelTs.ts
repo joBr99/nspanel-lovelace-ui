@@ -822,22 +822,22 @@ export const config: Config = {
     ],
 
     bottomScreensaverEntity: [
+
         // bottomScreensaverEntity 1
         {
-            ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
+            ScreensaverEntity: 'openweathermap.0.forecast.current.pressure',
             ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 0,
-            ScreensaverEntityDateFormat: {hour: '2-digit', minute: '2-digit'}, // Description at Wiki-Pages
-            ScreensaverEntityIconOn: 'weather-sunset-up',
+            ScreensaverEntityIconOn: 'gauge',
             ScreensaverEntityIconOff: null,
-            ScreensaverEntityText: 'Sonne',
-            ScreensaverEntityUnitText: '%',
-            ScreensaverEntityIconColor: MSYellow //{'val_min': 0, 'val_max': 100}
+            ScreensaverEntityText: 'Druck',
+            ScreensaverEntityUnitText: 'hPa',
+            ScreensaverEntityIconColor: {'val_min': 950, 'val_max': 1050, 'val_best': 1013}
         },
         // bottomScreensaverEntity 2
         {
-            ScreensaverEntity: 'accuweather.0.Current.WindSpeed',
-            ScreensaverEntityFactor: (1000 / 3600),
+            ScreensaverEntity: 'openweathermap.0.forecast.current.windSpeed',
+            ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 1,
             ScreensaverEntityIconOn: 'weather-windy',
             ScreensaverEntityIconOff: null,
@@ -847,8 +847,8 @@ export const config: Config = {
         },
         // bottomScreensaverEntity 3
         {
-            ScreensaverEntity: 'accuweather.0.Current.WindGust',
-            ScreensaverEntityFactor: (1000 / 3600),
+            ScreensaverEntity: 'openweathermap.0.forecast.current.windGust',
+            ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 1,
             ScreensaverEntityIconOn: 'weather-tornado',
             ScreensaverEntityIconOff: null,
@@ -856,20 +856,21 @@ export const config: Config = {
             ScreensaverEntityUnitText: 'm/s',
             ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120}
         },
+
         // bottomScreensaverEntity 4
         {
-            ScreensaverEntity: 'accuweather.0.Current.WindDirectionText',
+            ScreensaverEntity: 'openweathermap.0.forecast.current.clouds',
             ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 0,
-            ScreensaverEntityIconOn: 'windsock',
+            ScreensaverEntityIconOn: 'weather-cloudy',
             ScreensaverEntityIconOff: null,
-            ScreensaverEntityText: 'Windr.',
-            ScreensaverEntityUnitText: '°',
-            ScreensaverEntityIconColor: White
+            ScreensaverEntityText: 'Wolken',
+            ScreensaverEntityUnitText: '%',
+            ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100}
         },
         // bottomScreensaverEntity 5 (for Alternative and Advanced Screensaver)
         {
-            ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity',
+            ScreensaverEntity: 'openweathermap.0.forecast.current.humidity',
             ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 1,
             ScreensaverEntityIconOn: 'water-percent',
@@ -887,8 +888,8 @@ export const config: Config = {
             ScreensaverEntityOffColor: White,
             ScreensaverEntityOnText: 'Is ON',
             ScreensaverEntityOffText: 'Not ON'
-        },
-        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+        },        
+	// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
     ],
 
     indicatorScreensaverEntity: [
@@ -13068,8 +13069,9 @@ function GetOpenWeatherMapIcon (icon: string): string {
             case "01n":
                 return 'weather-night';
             case "02d": //few clouds day
-            case "02n": //few clouds night
                 return 'weather-partly-cloudy';
+            case "02n": //few clouds night
+                return 'weather-night-partly-cloudy';
             case "03d": //scattered clouds
             case "03n":
                 return 'weather-cloudy';
