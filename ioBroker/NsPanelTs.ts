@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.8.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 57 / v4.8.0 / BerryDriver 9 / Tasmota 15.0.1
+TypeScript v4.9.2.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 58 / v4.9.2 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -72,6 +72,11 @@ ReleaseNotes:
         - 25.06.2025 - v4.7.5.1  Add popupLight2 (split into light/light2)
         - 26.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> US-L
         - 30.06.2025 - v4.8.0    TFT 57 / 4.8.0 - Stable - Fix popupShutter2 (eu/us-l/us-p)
+        - 30.06.2025 - v4.9.0    TFT 58 / 4.9.0 - Beta - Adapter & Script (eu/us-l/us-p)
+        - 30.06.2025 - v4.9.0.1  Small Fixes
+        - 24.07.2025 - v4.9.1    Adapter Changes
+        - 24.07.2025 - v4.9.2.1  Add icon2 Parameter to Info Alias Channels
+        - 25.07.2025 - v4.9.2.2  Add OpenWeatherMap (AccuWeather deprecated)
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -162,20 +167,21 @@ Tasmota-Status0 - (zyklische Ausführung)
 
 Erforderliche Adapter:
 
-    AccuWeather oder DasWetter: - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
-    Alexa2:                     - Bei Nutzung der dynamischen SpeakerList in der cardMedia
-    Geräte verwalten            - Für Erstellung der Aliase
-    MQTT-Adapter                - Für Kommunikation zwischen Skript und Tasmota
+    OpenWeatherMap oder DasWetter: - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
+    !!!AccuWeather deprecated      - Dienst schaltet Free-Account ab!!!
+    Alexa2:                        - Bei Nutzung der dynamischen SpeakerList in der cardMedia
+    Geräte verwalten               - Für Erstellung der Aliase
+    MQTT-Adapter                   - Für Kommunikation zwischen Skript und Tasmota
     JavaScript-Adapter
 
 Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.8.0.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.2.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.8.0.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.8.0.tft
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.0.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -222,9 +228,9 @@ const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
 /***** 3. Weather adapter Config *****/
 
-// DE: Mögliche Wetteradapter 'accuweather.0.' oder 'daswetter.0.'
-// EN: Possible weather adapters 'accuweather.0.' or 'the weather.0.'
-const weatherAdapterInstance: string = 'accuweather.0.';
+// DE: Mögliche Wetteradapter 'openweathermap.0.' oder 'daswetter.0.' oder 'accuweather.0.' (deprecated)
+// EN: Possible weather adapters 'openweathermap.0.' or 'daswetter.0.' or 'accuweather.0.' (deprecated)
+const weatherAdapterInstance: string = 'openweathermap.0.';
 
 // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
 // EN: Possible values: 'Min', 'Max' or 'MinMax' in the screensaver
@@ -232,7 +238,7 @@ const weatherScreensaverTempMinMax: string = 'MinMax';
 
 // DE: Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
 // EN: This alias is automatically created for the selected weather and can be adjusted accordingly
-const weatherEntityPath: string = 'alias.0.Wetter';
+const weatherEntityPath: string = 'alias.0.OWMWetter';
 
 
 /***** 4. Color constants for use in the PageItems *****/
@@ -816,22 +822,22 @@ export const config: Config = {
     ],
 
     bottomScreensaverEntity: [
+
         // bottomScreensaverEntity 1
         {
-            ScreensaverEntity: 'accuweather.0.Daily.Day1.Sunrise',
+            ScreensaverEntity: 'openweathermap.0.forecast.current.pressure',
             ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 0,
-            ScreensaverEntityDateFormat: {hour: '2-digit', minute: '2-digit'}, // Description at Wiki-Pages
-            ScreensaverEntityIconOn: 'weather-sunset-up',
+            ScreensaverEntityIconOn: 'gauge',
             ScreensaverEntityIconOff: null,
-            ScreensaverEntityText: 'Sonne',
-            ScreensaverEntityUnitText: '%',
-            ScreensaverEntityIconColor: MSYellow //{'val_min': 0, 'val_max': 100}
+            ScreensaverEntityText: 'Druck',
+            ScreensaverEntityUnitText: 'hPa',
+            ScreensaverEntityIconColor: {'val_min': 950, 'val_max': 1050, 'val_best': 1013}
         },
         // bottomScreensaverEntity 2
         {
-            ScreensaverEntity: 'accuweather.0.Current.WindSpeed',
-            ScreensaverEntityFactor: (1000 / 3600),
+            ScreensaverEntity: 'openweathermap.0.forecast.current.windSpeed',
+            ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 1,
             ScreensaverEntityIconOn: 'weather-windy',
             ScreensaverEntityIconOff: null,
@@ -841,8 +847,8 @@ export const config: Config = {
         },
         // bottomScreensaverEntity 3
         {
-            ScreensaverEntity: 'accuweather.0.Current.WindGust',
-            ScreensaverEntityFactor: (1000 / 3600),
+            ScreensaverEntity: 'openweathermap.0.forecast.current.windGust',
+            ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 1,
             ScreensaverEntityIconOn: 'weather-tornado',
             ScreensaverEntityIconOff: null,
@@ -850,20 +856,21 @@ export const config: Config = {
             ScreensaverEntityUnitText: 'm/s',
             ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 120}
         },
+
         // bottomScreensaverEntity 4
         {
-            ScreensaverEntity: 'accuweather.0.Current.WindDirectionText',
+            ScreensaverEntity: 'openweathermap.0.forecast.current.clouds',
             ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 0,
-            ScreensaverEntityIconOn: 'windsock',
+            ScreensaverEntityIconOn: 'weather-cloudy',
             ScreensaverEntityIconOff: null,
-            ScreensaverEntityText: 'Windr.',
-            ScreensaverEntityUnitText: '°',
-            ScreensaverEntityIconColor: White
+            ScreensaverEntityText: 'Wolken',
+            ScreensaverEntityUnitText: '%',
+            ScreensaverEntityIconColor: {'val_min': 0, 'val_max': 100}
         },
         // bottomScreensaverEntity 5 (for Alternative and Advanced Screensaver)
         {
-            ScreensaverEntity: 'accuweather.0.Current.RelativeHumidity',
+            ScreensaverEntity: 'openweathermap.0.forecast.current.humidity',
             ScreensaverEntityFactor: 1,
             ScreensaverEntityDecimalPlaces: 1,
             ScreensaverEntityIconOn: 'water-percent',
@@ -881,8 +888,8 @@ export const config: Config = {
             ScreensaverEntityOffColor: White,
             ScreensaverEntityOnText: 'Is ON',
             ScreensaverEntityOffText: 'Not ON'
-        },
-        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+        },        
+	// Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
     ],
 
     indicatorScreensaverEntity: [
@@ -958,9 +965,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.8.0.1';
-const tft_version: string = 'v4.8.0';
-const desired_display_firmware_version = 57;
+const scriptVersion: string = 'v4.9.2.2';
+const tft_version: string = 'v4.9.2';
+const desired_display_firmware_version = 58;
 const berry_driver_version = 9;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -1070,6 +1077,11 @@ async function CheckConfigParameters () {
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'accuweather') {
             if (existsObject(weatherAdapterInstance + 'Current.WeatherIcon') == false) {
+                log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
+            }
+        }
+        if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'openweathermap') {
+            if (existsObject(weatherAdapterInstance + 'forecast.current.icon') == false) {
                 log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
             }
         }
@@ -2453,6 +2465,43 @@ async function CreateWeatherAlias () {
                     }
                 } catch (err: any) {
                     log('error at function CreateWeatherAlias accuweather.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
+                }
+            } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
+                try {
+                    if (isSetOptionActive) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.icon')) {
+                            log('Weather alias for openweathermap.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'media'}, native: {}});
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.icon'), true, <iobJS.StateCommon> {
+                                type: 'string',
+                                role: 'value',
+                                name: 'ICON',
+                                alias: {id: 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.icon', read: '(val.split("/").pop()).split(".").shift()'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.temperature', true, <iobJS.StateCommon> {
+                                type: 'number',
+                                role: 'value.temperature',
+                                name: 'TEMP',
+                                alias: {id: 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.temperature', read: 'Math.round(val*10)/10'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.temperatureMin', true, <iobJS.StateCommon> {
+                                type: 'number',
+                                role: 'value.temperature.forecast.0',
+                                name: 'TEMP_MIN',
+                                alias: {id: 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.temperatureMin', read: 'Math.round(val)'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.temperatureMax', true, <iobJS.StateCommon> {
+                                type: 'number',
+                                role: 'value.temperature.max.forecast.0',
+                                name: 'TEMP_MAX',
+                                alias: {id: 'openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.temperatureMax', read: 'Math.round(val)'},
+                            });
+                        } else {
+                            log('weather alias for openweathermap.' + weatherAdapterInstanceNumber + '. already exists', 'info');
+                        }
+                    }
+                } catch (err: any) {
+                    log('error at function CreateWeatherAlias openweathermap.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         }
@@ -5721,6 +5770,28 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             iconId = optVal + '¬' + pageItem.fontSize;
                         } else {
                             iconId = optVal;
+                        }
+                    }
+
+                    if (existsState(pageItem.id + '.ACTUAL') && pageItem.icon2 != undefined) {
+                        // Read Alias Datapoint Objectdata
+                        let obj = getObject(pageItem.id + ".ACTUAL");
+                        // Read origin Datapoint Objectdata
+                        if (existsState(obj.common.alias.id)) {
+                            let obj2 = getObject(obj.common.alias.id);
+                            // Register Origin Datapoint
+                            RegisterEntityWatcher(obj.common.alias.id);
+                            // Check Data-Type (This must be boolean)
+                            if (obj2.common.type == "boolean") {
+                                if (Debug) log(getState(obj.common.alias.id).val, 'info');
+                                if (getState(obj.common.alias.id).val) {
+                                    iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
+                                    iconColor = pageItem.onColor != undefined ? rgb_dec565(pageItem.onColor) : iconColor;
+                                } else {
+                                    iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+                                    iconColor = pageItem.offColor != undefined ? rgb_dec565(pageItem.offColor) : iconColor;
+                                }
+                            }
                         }
                     }
 
@@ -10331,7 +10402,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
 
                             let colorTemp: any;
                             if (existsState(id + '.TEMPERATURE')) {
-                                colorTemp = 0;
+                                colorTemp = 'enable';
                                 if (getState(id + '.TEMPERATURE').val != null) {
                                     if (pageItem.minValueColorTemp !== undefined && pageItem.maxValueColorTemp !== undefined) {
                                         colorTemp = Math.trunc(scale(getState(id + '.TEMPERATURE').val, pageItem.maxValueColorTemp, pageItem.minValueColorTemp, 100, 0));
@@ -11867,7 +11938,7 @@ function HandleScreensaverUpdate (): void {
                     RegisterScreensaverEntityWatcher(config.weatherEntity + '.ACTUAL');
                 } else {
                     if (existsState(config.weatherEntity + '.TEMP')) {
-                        temperature = getState(config.weatherEntity + '.TEMP').val;
+                        temperature = String(Math.round(getState(config.weatherEntity + '.TEMP').val * 10)/10);
                     } else {
                         ('null');
                     }
@@ -11881,6 +11952,9 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon)));
                     entityIconCol = GetAccuWeatherIconColor(parseInt(icon));
+                } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
+                    entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
+                    entityIconCol = GetOpenWeatherMapIconColor(icon);
                 }
 
                 payloadString += '~' + '~' + entityIcon + '~' + entityIconCol + '~' + '~' + optionalValue + '~';
@@ -11976,11 +12050,12 @@ function HandleScreensaverUpdate (): void {
                 }
 
                 for (let i = 1; i < maxEntities; i++) {
+                    
                     let TempMin = 0;
                     let TempMax = 0;
-                    let DayOfWeek = 0;
+                    let DayOfWeek: any = 0;
                     let WeatherIcon = '0';
-                    let WheatherColor = 0;
+                    let WheatherColor: any = 0;
 
                     if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                         TempMin = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
@@ -12017,6 +12092,33 @@ function HandleScreensaverUpdate (): void {
                             RegisterScreensaverEntityWatcher('accuweather.' + weatherAdapterInstanceNumber + '.Summary.DayOfWeek_d' + i);
                             RegisterScreensaverEntityWatcher('accuweather.' + weatherAdapterInstanceNumber + '.Summary.WeatherIcon_d' + i);
                         }
+                    } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
+                        if (i < 6) {
+                        
+                            //Maximal 5 Tage bei openweathermap
+                            TempMin = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin')
+                                ? Math.round(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin').val * 10) / 10
+                                : 0;
+                            TempMax = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMax')
+                                ? Math.round(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMax').val * 10) / 10
+                                : 0;
+                            //openweathermap.0.forecast.day0.date
+                            //log(formatDate(getDateObject(getState('openweathermap.0.forecast.day0.date').val), 'W', 'de'),'info');
+                            DayOfWeek = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.date')
+                                ? formatDate(getDateObject(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.date').val), 'W', 'de')
+                                : 0;
+                            WeatherIcon = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.icon')
+                                ? GetOpenWeatherMapIcon((getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.icon').val).split('/').pop().split('.').shift())
+                                : '';
+                            WheatherColor = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.icon')
+                                ? GetOpenWeatherMapIconColor(String(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.icon').val).split('/').pop().split('.').shift())
+                                : 0;
+
+                            RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin');
+                            RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMax');
+                            RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.date');
+                            RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.icon');
+                        }
                     }
 
                     let tempMinMaxString: string = '';
@@ -12036,6 +12138,32 @@ function HandleScreensaverUpdate (): void {
                         arraySunEvent[0] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Sunrise').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day1.Sunset').val).getTime();
                         arraySunEvent[2] = getDateObject(getState('accuweather.' + weatherAdapterInstanceNumber + '.Daily.Day2.Sunrise').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = new Date().getTime();
+                        let arraySunEvent: number[] = [];
+                        //openweathermap.0.forecast.current.sunrise
+                        //openweathermap.0.forecast.current.sunset
+                        //no Sunset for Next day
+                        arraySunEvent[0] = getDateObject(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.sunrise').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.sunset').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.sunrise').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -12907,6 +13035,118 @@ function GetDasWetterIconColor (icon: number): number {
         }
     } catch (err: any) {
         log('error at function GetDasWetterIconColor: ' + err.message, 'warn');
+    }
+    return 0;
+}
+
+/**
+ * Retrieves the AccuWeather icon string based on the provided icon number.
+ * 
+ * This function maps the given AccuWeather icon number to its corresponding icon string representation.
+ * 
+ * @function GetAccuWeatherIcon
+ * @param {number} icon - The AccuWeather icon number.
+ * @returns {string} The corresponding icon string.
+ */
+function GetOpenWeatherMapIcon (icon: string): string {
+    try {
+        switch (icon) {
+            /*
+            01d.png 	return rgb_dec565(swSunny);
+            01n.png 	return rgb_dec565(swClearNight);
+            02d.png 	02n.png 	few clouds*
+            03d.png 	03n.png 	scattered clouds
+            04d.png 	04n.png 	broken clouds
+            09d.png 	09n.png 	shower rain
+            10d.png 	10n.png 	rain*
+            11d.png 	11n.png 	thunderstorm
+            13d.png 	13n.png 	snow
+            50d.png 	50n.png 	mist
+            */
+
+            case "01d":
+                return 'weather-sunny';
+            case "01n":
+                return 'weather-night';
+            case "02d": //few clouds day
+                return 'weather-partly-cloudy';
+            case "02n": //few clouds night
+                return 'weather-night-partly-cloudy';
+            case "03d": //scattered clouds
+            case "03n":
+                return 'weather-cloudy';
+            case "04d": // cloudy
+            case "04n":
+                return 'weather-cloudy'; 
+            case "09d": //shower rain 
+            case "09n":
+                return 'weather-rainy';
+            case "10d": //rain 
+            case "10n":
+                return 'weather-pouring';
+            case "11d": //Thunderstorm 
+            case "11n":
+                return 'weather-lightning';
+            case "13d": //snow 
+            case "13n":
+                return 'weather-snowy';
+            case "50d": //mist 
+            case "50n":
+                return 'weather-fog';
+            default:
+                return 'alert-circle-outline';
+        }
+    } catch (err: any) {
+        log('error at function GetAccuWeatherIcon: ' + err.message, 'warn');
+    }
+    return '';
+}
+
+/**
+ * Retrieves the color code for a given AccuWeather icon number.
+ * 
+ * This function maps the provided AccuWeather icon number to its corresponding color code.
+ * 
+ * @function GetAccuWeatherIconColor
+ * @param {number} icon - The AccuWeather icon number.
+ * @returns {number} The corresponding color code.
+ */
+function GetOpenWeatherMapIconColor (icon: string): number {
+    try {
+        switch (icon) {
+            case "01d": //clear sky day
+                return rgb_dec565(swSunny);
+            case "01n": //clear sky night
+                return rgb_dec565(swClearNight);
+            case "02d": //few clouds day
+            case "02n": //few clouds night
+                return rgb_dec565(swPartlycloudy);
+            case "03d": //scattered clouds
+            case "03n":
+                return rgb_dec565(swCloudy);
+            case "04d": //broken clouds
+            case "04n":
+                return rgb_dec565(swCloudy);
+            case "09d": //shower rain 
+            case "09n":
+                return rgb_dec565(swRainy);
+            case "10d": //rain 
+            case "10n":
+                return rgb_dec565(swPouring);
+            case "11d": //Thunderstorm 
+            case "11n":
+                return rgb_dec565(swLightningRainy);
+            case "13d": //snow 
+            case "13n":
+                return rgb_dec565(swSnowy);
+            case "50d": //mist 
+            case "50n":
+                return rgb_dec565(swFog);
+            default:
+                return rgb_dec565(White);
+        }
+    } catch (err: any) {
+        log('error at function GetAccuWeatherIconColor: ' + err.message, 'warn');
     }
     return 0;
 }
