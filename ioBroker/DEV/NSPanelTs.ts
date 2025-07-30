@@ -5789,7 +5789,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             // Register Origin Datapoint
                             RegisterEntityWatcher(obj.common.alias.id);
                             // Check Data-Type (This must be boolean)
-                            if (obj2.common.type == "boolean") {
+                            if (obj2.type === 'state' && obj2.common.type == "boolean") {
                                 if (Debug) log(getState(obj.common.alias.id).val, 'info');
                                 if (getState(obj.common.alias.id).val) {
                                     iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
@@ -6297,7 +6297,7 @@ function GenerateThermoPage (page: NSPanel.PageThermo): NSPanel.Payload[] {
         // ioBroker
         if (id && existsObject(id)) {
             let o = getObject(id);
-            let name = page.heading !== undefined ? page.heading : o.common.name.de;
+            let name = page.heading !== undefined ? page.heading : o.common.name && typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
             let currentTemp = 0;
             if (existsState(id + '.ACTUAL')) {
                 currentTemp = Math.round(parseFloat(getState(id + '.ACTUAL').val) * 10) / 10;
@@ -8292,7 +8292,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
 
         let o = getObject(id);
 
-        let heading = page.heading !== undefined ? page.heading : o.common.name.de;
+        let heading = page.heading !== undefined ? page.heading : typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
         let textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;';
         let hiddenPWD = false;
         if (page.items[0].hidePassword !== undefined && page.items[0].hidePassword == true) {
@@ -8472,7 +8472,7 @@ function GeneratePowerPage (page: NSPanel.PagePower): NSPanel.Payload[] {
             unsubscribePowerSubscriptions();
 
             let o = getObject(id);
-            heading = page.heading !== undefined ? page.heading : o.common.name.de;
+            heading = page.heading !== undefined ? page.heading : typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
 
             obj = JSON.parse(getState(page.items[0].id + '.ACTUAL').val);
         }
@@ -11290,7 +11290,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         '~' +
                         bEntity3Visibility + //20
                         '~' +
-                        shutterTyp + //21 for Future
+                        shutterTyp +//21 for Future
                         '~' +
                         shutterZeroIsClosed //21 for Future
                 });
