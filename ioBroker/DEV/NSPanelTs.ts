@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.2.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.9.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 58 / v4.9.2 / BerryDriver 9 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -78,7 +78,9 @@ ReleaseNotes:
         - 24.07.2025 - v4.9.2.1  Add icon2 Parameter to Info Alias Channels
         - 25.07.2025 - v4.9.2.2  Add OpenWeatherMap (AccuWeather deprecated)
 	- 28.07.2025 - v4.9.2.3  Quick-Fix Errors with TypeScript in JS > 9.X (by ticaki)
-
+ 	- 30.07.2025 - v4.9.3    TFT 58 / 4.9.3
+        - 30.07.2025 - v4.9.3.1  popupShutter2 Changes (new Parameter shutterZeroIsClosed changing Direction of %-Value in HMI (0 <--> 100))
+	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
@@ -179,7 +181,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.2.tft
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.3.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.0.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.0.tft
@@ -966,8 +968,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.2.3';
-const tft_version: string = 'v4.9.2';
+const scriptVersion: string = 'v4.9.3.1';
+const tft_version: string = 'v4.9.3';
 const desired_display_firmware_version = 58;
 const berry_driver_version = 9;
 
@@ -11233,6 +11235,13 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                     shutterTyp = pageItem.shutterType;
                 }
 
+                let shutterZeroIsClosed:string = "0";
+                if (pageItem.shutterZeroIsClosed != undefined) {
+                    if(pageItem.shutterZeroIsClosed==true) {
+                        shutterZeroIsClosed = "1";
+                    }
+                }
+
                 out_msgs.push({
                     payload:
                         'entityUpdateDetail' +
@@ -11281,7 +11290,9 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         '~' +
                         bEntity3Visibility + //20
                         '~' +
-                        shutterTyp //21 for Future
+                        shutterTyp + //21 for Future
+                        '~' +
+                        shutterZeroIsClosed //21 for Future
                 });
             }
 
@@ -14235,6 +14246,7 @@ namespace NSPanel {
         alwaysOnDisplay?: boolean;
         popupVersion?: number;
         shutterType?: string;
+        shutterZeroIsClosed?: boolean;
     };
 
     type shutterIcons = {
