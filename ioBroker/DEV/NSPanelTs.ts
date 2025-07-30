@@ -968,8 +968,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.2.3';
-const tft_version: string = 'v4.9.2';
+const scriptVersion: string = 'v4.9.3.1';
+const tft_version: string = 'v4.9.3';
 const desired_display_firmware_version = 58;
 const berry_driver_version = 9;
 
@@ -11235,6 +11235,13 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                     shutterTyp = pageItem.shutterType;
                 }
 
+                let shutterZeroIsClosed:string = "0";
+                if (pageItem.shutterZeroIsClosed != undefined) {
+                    if(pageItem.shutterZeroIsClosed==true) {
+                        shutterZeroIsClosed = "1";
+                    }
+                }
+
                 out_msgs.push({
                     payload:
                         'entityUpdateDetail' +
@@ -11283,7 +11290,9 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         '~' +
                         bEntity3Visibility + //20
                         '~' +
-                        shutterTyp //21 for Future
+                        shutterTyp +//21 for Future
+                        '~' +
+                        shutterZeroIsClosed //21 for Future
                 });
             }
 
@@ -14237,6 +14246,7 @@ namespace NSPanel {
         alwaysOnDisplay?: boolean;
         popupVersion?: number;
         shutterType?: string;
+        shutterZeroIsClosed?: boolean;
     };
 
     type shutterIcons = {
