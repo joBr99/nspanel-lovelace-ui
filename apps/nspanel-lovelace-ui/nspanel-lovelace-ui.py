@@ -34,7 +34,7 @@ class NsPanelLovelaceUIManager(ad.ADBase):
         
         desired_tasmota_driver_version   = 8
         desired_display_firmware_version = 53
-        version     = "v4.3.3"
+        version     = "v4.7.3"
         
         model       = cfg.get("model")
         if model == "us-l":
