@@ -183,8 +183,8 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
     TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.3.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.0.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.0.tft
+    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.3.tft
+    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.3.tft
 ---------------------------------------------------------------------------------------
 */
 
