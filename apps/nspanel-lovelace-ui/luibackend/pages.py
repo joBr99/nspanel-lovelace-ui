@@ -309,6 +309,11 @@ class LuiPagesGen(object):
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state
 
+            try:
+                value = str(round(float(value), 1))
+            except:
+                print("An exception occurred") 
+                
             # limit value to 4 chars on us-p
             if self._config.get("model") == "us-p" and cardType == "cardEntities":
                 value = entity.state[:4]
