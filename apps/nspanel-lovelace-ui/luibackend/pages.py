@@ -388,7 +388,7 @@ class LuiPagesGen(object):
             entityTypePanel = "text"
             unit = get_attr_safe(entity, "temperature_unit", "")
             rt = None
-            if type(item.stype) == str:
+            if type(item.stype) == str and ":" in item.stype and len(item.stype.split(":")) == 2:
                 spintstr = item.stype.split(":")
                 rt = spintstr[0]
                 item.stype = int(spintstr[1])
@@ -1093,4 +1093,5 @@ class LuiPagesGen(object):
     def send_message_page(self, ident, heading, msg, b1, b2):
         self._send_mqtt_msg(f"pageType~popupNotify")
         self._send_mqtt_msg(f"entityUpdateDetail~{ident}~{heading}~65535~{b1}~65535~{b2}~65535~{msg}~65535~0")
+
 
