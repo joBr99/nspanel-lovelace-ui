@@ -83,7 +83,7 @@ ReleaseNotes:
         - 05.08.2025 - v4.9.4    TFT 58 / 4.9.4 - Communication with 921600 bps with Berry Driver 10 / Slider Fix in card Entities
         - 05.08.2025 - v4.9.4.1  Fix Sliders (volume/slider) in createEntity
         - 05.08.2025 - v4.9.4.1  Add USERICONS and colorScale to Alias-Channel Slider
-        - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver)
+        - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver) + New Berry Update Path (RAW)
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -183,8 +183,8 @@ Erforderliche Adapter:
 
 Install/Upgrades in Konsole:
 
-    Tasmota BerryDriver Install: Backlog UrlFetch https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/10/autoexec.be; Restart 1
-    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/10/autoexec.be; Restart 1
+    Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
+    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.4.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.3.tft
@@ -4296,9 +4296,9 @@ on({id: config.panelRecvTopic}, async (obj) => {
  */
 function update_berry_driver_version () {
     try {
-        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
         if (tasmota_web_admin_password != '') {
-            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
         }
 
         axios
