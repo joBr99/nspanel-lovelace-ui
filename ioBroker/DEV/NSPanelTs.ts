@@ -82,6 +82,7 @@ ReleaseNotes:
         - 30.07.2025 - v4.9.3.1  popupShutter2 Changes (new Parameter shutterZeroIsClosed changing Direction of %-Value in HMI (0 <--> 100))
 	- 05.08.2025 - v4.9.4    TFT 58 / 4.9.4 - Communication with 921600 bps with Berry Driver 10 / Slider Fix in card Entities
         - 05.08.2025 - v4.9.4.1  Fix Sliders (volume/slider) in createEntity
+	- 05.08.2025 - v4.9.4.1  Add USERICONS and colorScale to Alias-Channel Slider
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
