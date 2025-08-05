@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.9.4.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 58 / v4.9.4 / BerryDriver 10 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -77,12 +77,13 @@ ReleaseNotes:
         - 24.07.2025 - v4.9.1    Adapter Changes
         - 24.07.2025 - v4.9.2.1  Add icon2 Parameter to Info Alias Channels
         - 25.07.2025 - v4.9.2.2  Add OpenWeatherMap (AccuWeather deprecated)
-	- 28.07.2025 - v4.9.2.3  Quick-Fix Errors with TypeScript in JS > 9.X (by ticaki)
- 	- 30.07.2025 - v4.9.3    TFT 58 / 4.9.3
+        - 28.07.2025 - v4.9.2.3  Quick-Fix Errors with TypeScript in JS > 9.X (by ticaki)
+        - 30.07.2025 - v4.9.3    TFT 58 / 4.9.3
         - 30.07.2025 - v4.9.3.1  popupShutter2 Changes (new Parameter shutterZeroIsClosed changing Direction of %-Value in HMI (0 <--> 100))
-	- 05.08.2025 - v4.9.4    TFT 58 / 4.9.4 - Communication with 921600 bps with Berry Driver 10 / Slider Fix in card Entities
+        - 05.08.2025 - v4.9.4    TFT 58 / 4.9.4 - Communication with 921600 bps with Berry Driver 10 / Slider Fix in card Entities
         - 05.08.2025 - v4.9.4.1  Fix Sliders (volume/slider) in createEntity
-	- 05.08.2025 - v4.9.4.1  Add USERICONS and colorScale to Alias-Channel Slider
+        - 05.08.2025 - v4.9.4.1  Add USERICONS and colorScale to Alias-Channel Slider
+        - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver)
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -971,7 +972,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.4.1';
+const scriptVersion: string = 'v4.9.4.2';
 const tft_version: string = 'v4.9.4';
 const desired_display_firmware_version = 58;
 const berry_driver_version = 10;
@@ -4086,13 +4087,15 @@ function get_tasmot_url (cmd: string): string {
  * @returns {Promise<void>} A promise that resolves when the firmware update has been completed.
  * @throws {Error} If an error occurs during the firmware update.
  */
-function get_online_berry_driver_version () {
+async function get_online_berry_driver_version () {
     try {
         if (NSPanel_Path + 'Config.Update.activ') {
             if (Debug) {
                 log('Requesting online berry driver version', 'info');
             }
 
+            //Use version.json in Future
+            /*
             let urlString = 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be';
 
             axios
@@ -4123,6 +4126,19 @@ function get_online_berry_driver_version () {
                 .catch(function (error) {
                     log(error, 'warn');
                 });
+            */
+
+            if (isSetOptionActive) {
+                await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', {type: 'string', write: false});
+                setObject(AliasPath + 'Berry_Driver.onlineVersion', {type: 'channel', common: {role: 'info', name: 'onlineVersion'}, native: {}});
+                await createAliasAsync(AliasPath + 'Berry_Driver.onlineVersion.ACTUAL', NSPanel_Path + 'Berry_Driver.onlineVersion', true, {
+                    type: 'string',
+                    role: 'state',
+                    name: 'ACTUAL',
+                });
+                await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', {val: String(berry_driver_version), ack: true});
+                if (Debug) log('online berry driver version => ' + String(berry_driver_version), 'info');
+            }
         }
     } catch (err: any) {
         log('error requesting firmware in function get_online_berry_driver_version: ' + err.message, 'warn');
@@ -4280,9 +4296,9 @@ on({id: config.panelRecvTopic}, async (obj) => {
  */
 function update_berry_driver_version () {
     try {
-        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`;
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
         if (tasmota_web_admin_password != '') {
-            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`;
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
         }
 
         axios
