@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 58 / v4.9.3 / BerryDriver 9 / Tasmota 15.0.1
+TypeScript v4.9.4.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 58 / v4.9.4 / BerryDriver 10 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -80,6 +80,8 @@ ReleaseNotes:
 	- 28.07.2025 - v4.9.2.3  Quick-Fix Errors with TypeScript in JS > 9.X (by ticaki)
  	- 30.07.2025 - v4.9.3    TFT 58 / 4.9.3
         - 30.07.2025 - v4.9.3.1  popupShutter2 Changes (new Parameter shutterZeroIsClosed changing Direction of %-Value in HMI (0 <--> 100))
+	- 05.08.2025 - v4.9.4    TFT 58 / 4.9.4 - Communication with 921600 bps with Berry Driver 10 / Slider Fix in card Entities
+        - 05.08.2025 - v4.9.4.1  Fix Sliders (volume/slider) in createEntity
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -179,9 +181,9 @@ Erforderliche Adapter:
 
 Install/Upgrades in Konsole:
 
-    Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.3.tft
+    Tasmota BerryDriver Install: Backlog UrlFetch https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/10/autoexec.be; Restart 1
+    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/blob/main/tasmota/berry/10/autoexec.be; Restart 1
+    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.4.tft
 
     TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.3.tft
     TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.3.tft
@@ -968,10 +970,10 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.3.1';
-const tft_version: string = 'v4.9.3';
+const scriptVersion: string = 'v4.9.4.1';
+const tft_version: string = 'v4.9.4';
 const desired_display_firmware_version = 58;
-const berry_driver_version = 9;
+const berry_driver_version = 10;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 // @ts-ignore
@@ -4517,6 +4519,7 @@ function HandleMessage (typ: string, method: NSPanel.EventMethod, page: number |
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
                     HandleStartupProcess();
+                    InitDimmode();
                     pageId = 0;
                     GeneratePage(config.pages[0]);
                     if (Debug) log('HandleMessage -> Startup', 'info');
@@ -5906,15 +5909,49 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'slider':
                     type = 'number';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('plus-minus-variant');
+                    
+                    let minValueSlider: number = pageItem.minValue !== undefined ? pageItem.minValue : 0;
+                    let maxValueSlider: number = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
 
                     iconColor = GetIconColor(pageItem, false, useColors);
 
+                    if (pageItem.colorScale != undefined) {
+                        let iconvalmin = pageItem.colorScale.val_min != undefined ? pageItem.colorScale.val_min : 0;
+                        let iconvalmax = pageItem.colorScale.val_max != undefined ? pageItem.colorScale.val_max : 100;
+                        let iconvalbest = pageItem.colorScale.val_best != undefined ? pageItem.colorScale.val_best : iconvalmin;
+                        let valueScale = val;
+
+                        if (iconvalmin == 0 && iconvalmax == 1) {
+                            iconColor = !pageItem.id || getState(pageItem.id).val == 1 ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        } else {
+                            if (iconvalbest == iconvalmin) {
+                                valueScale = scale(valueScale, iconvalmin, iconvalmax, 10, 0);
+                            } else {
+                                if (valueScale < iconvalbest) {
+                                    valueScale = scale(valueScale, iconvalmin, iconvalbest, 0, 10);
+                                } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                    valueScale = scale(valueScale, iconvalbest, iconvalmax, 10, 0);
+                                } else {
+                                    valueScale = scale(valueScale, iconvalmin, iconvalmax, 10, 0);
+                                }
+                            }
+                            let valueScaletemp = Math.round(valueScale).toFixed();
+                            iconColor = HandleColorScale(valueScaletemp);
+                        }
+                    }
+
+                    if (existsState(pageItem.id + '.USERICON')) {
+                        iconId = Icons.GetIcon(getState(pageItem.id + '.USERICON').val);
+                        if (Debug) log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val, 'info');
+                        RegisterEntityWatcher(pageItem.id + '.USERICON');
+                    }
+
                     if (Debug)
                         log(
-                            'CreateEntity  Icon role slider ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue,
+                            'CreateEntity  Icon role slider ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + minValueSlider + '|' + maxValueSlider,
                             'info'
                         );
-                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + minValueSlider + '|' + maxValueSlider;
 
                 case 'volumeGroup':
                 case 'volume':
@@ -5935,6 +5972,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                         iconId = Icons.GetIcon('volume-mute');
                     }
 
+                    let minValueVolume: number = pageItem.minValue !== undefined ? pageItem.minValue : 0;
+                    let maxValueVolume: number = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
+
                     if (Debug)
                         log(
                             'CreateEntity  Icon role volumeGroup/volume ~' +
@@ -5950,12 +5990,12 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             '~' +
                             val +
                             '|' +
-                            pageItem.minValue +
+                            minValueVolume +
                             '|' +
-                            pageItem.maxValue,
+                            maxValueVolume,
                             'info'
                         );
-                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + minValueVolume + '|' + maxValueVolume;
 
                 case 'warning':
                     type = 'text';
@@ -9971,6 +10011,16 @@ function HandleButtonEvent (words: any): void {
                             setIfExists(id + '.SPEED', parseInt(words[4]));
                         }, 250);
                         break;
+                    case 'slider':
+                        (function () {
+                            if (timeoutSlider) {
+                                clearTimeout(timeoutSlider);
+                                timeoutSlider = null;
+                            }
+                        })();
+                        timeoutSlider = setTimeout(async function () {
+                            setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                        }, 250);
                     default:
                         (function () {
                             if (timeoutSlider) {
