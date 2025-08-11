@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.4.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 58 / v4.9.4 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v4.9.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 58 / v4.9.5 / BerryDriver 10 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -86,6 +86,7 @@ ReleaseNotes:
         - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver) + New Berry Update Path (RAW)
         - 08.08.2025 - v4.9.4.3  Add Beta Logic for cardThermo2 (future)
         - 10.08.2025 - v4.9.4.3  Add Pirate-Weather Adapter
+        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu)
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -187,7 +188,7 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v4.9.4.tft
+    TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v4.9.5.tft
 
     TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v4.9.4.tft
     TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v4.9.4.tft
@@ -271,7 +272,8 @@ const DarkBlue: RGB = {red: 0, green: 0, blue: 136};
 const Gray: RGB = {red: 136, green: 136, blue: 136};
 const Black: RGB = {red: 0, green: 0, blue: 0};
 const Cyan: RGB = {red: 0, green: 255, blue: 255};
-const Magenta: RGB = {red: 255, green: 0, blue: 255};
+const Magenta: RGB = {red: 255, green: 0, blue: 255}
+const Orange: RGB = { red: 255, green: 130, blue:   0 };
 const colorSpotify: RGB = {red: 30, green: 215, blue: 96};
 const colorAlexa: RGB = {red: 49, green: 196, blue: 243};
 const colorSonos: RGB = {red: 216, green: 161, blue: 88};
@@ -974,8 +976,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.4.3';
-const tft_version: string = 'v4.9.4';
+const scriptVersion: string = 'v4.9.5.1';
+const tft_version: string = 'v4.9.5';
 const desired_display_firmware_version = 58;
 const berry_driver_version = 10;
 
@@ -5951,7 +5953,6 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                                 iconId = iconId2;
                             }
                         }
-                        log(iconColor)
                     }
 
                     if (Debug) log('CreateEntity  Icon role level.mode.fan ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + optVal, 'info');
@@ -6919,12 +6920,12 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
         let out_msgs: NSPanel.Payload[] = [];
 
         // Leave the display on if the alwaysOnDisplay parameter is specified (true)
-        if (page.type == 'cardThermo2' && pageCounter == 0 && page.items[0].alwaysOnDisplay != undefined) {
+        if (page.type == 'cardThermo2' && pageCounter == 0 && page.alwaysOnDisplay != undefined) {
             out_msgs.push({payload: 'pageType~cardThermo2'});
-            if (page.items[0].alwaysOnDisplay != undefined) {
-                if (page.items[0].alwaysOnDisplay) {
+            if (page.alwaysOnDisplay != undefined) {
+                if (page.alwaysOnDisplay) {
                     pageCounter = 1;
-                    if (/*id && */ existsObject(id) && alwaysOn == false) {
+                    if (existsObject(id) && alwaysOn == false) {
                         alwaysOn = true;
                         SendToPanel({payload: 'timeout~0'});
                         subscribeThermo2Subscriptions(id);
@@ -6941,32 +6942,32 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
             let o = getObject(id);
             let name = page.heading !== undefined ? page.heading : o.common.name && typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
             let currentTemp = 0;
-            if (existsState(id + '.ACTUAL')) {
-                currentTemp = Math.round(parseFloat(getState(id + '.ACTUAL').val) * 10);
+            if (existsState(page.thermoItems[1].id)) {
+                currentTemp = Math.round(parseFloat(getState(page.thermoItems[1].id).val) * 10);
             }
-            let tempUnit = page.thermoItems[0].unit !== undefined ? page.thermoItems[0].unit : "°C";
+            let tempUnit = page.thermoItems[1].unit !== undefined ? page.thermoItems[1].unit : "?";
+            let tempColor = page.thermoItems[1].unit !== undefined ? rgb_dec565(page.thermoItems[1].onColor) : '64512';
 
             let currentHumidity = 0;
-            if (existsState(id + '.HUMIDITY')) {
-                currentHumidity = Math.round(parseFloat(getState(id + '.HUMIDITY').val) * 10);
+            if (existsState(page.thermoItems[2].id)) {
+                currentHumidity = Math.round(parseFloat(getState(page.thermoItems[2].id).val) * 10);
             }
-            let humidityUnit = "%";
+            let humidityUnit = page.thermoItems[2].unit !== undefined ? page.thermoItems[2].unit : "?";
+            let humColor = page.thermoItems[2].unit !== undefined ? rgb_dec565(page.thermoItems[2].onColor) : '1048';
 
-//Armilar verbessern
-            let obj = getObject(id + '.MODE');
-            //log(obj.common.states);
-            //log(getState(id + '.MODE').val);
-            let actualModeState = getState(id + '.MODE').val;
-            //log(obj.common.states[getState(id + '.MODE').val]);
-            let modeStatus = obj.common.states[getState(id + '.MODE').val]
+//Armilar Text-State flexibler machen
+            let obj = getObject(page.thermoItems[3].id);
+            let actualModeState = getState(page.thermoItems[3].id).val;
+            let modeStatus = obj.common['states'][getState(page.thermoItems[3].id).val] ?? ''
+            let textStateColor = page.thermoItems[3].unit !== undefined ? rgb_dec565(page.thermoItems[3].onColor) : '64512';
 
-            let minTemp = page.thermoItems[0].minValue !== undefined ? page.thermoItems[0].minValue : 45; //Min Temp 4,5°C
-            let maxTemp = page.thermoItems[0].maxValue !== undefined ? page.thermoItems[0].maxValue : 305; //Max Temp 30,5°C
-            let stepTemp = page.thermoItems[0].stepValue !== undefined ? page.thermoItems[0].stepValue : 5; //Default 0,5° Schritte
+            let minTemp: number = page.thermoItems[0].minValue !== undefined ? page.thermoItems[0].minValue * 10 : 45; //Min Temp 4,5°C
+            let maxTemp: number = page.thermoItems[0].maxValue !== undefined ? page.thermoItems[0].maxValue * 10 : 305; //Max Temp 30,5°C
+            let stepTemp: number = page.thermoItems[0].stepValue !== undefined ? page.thermoItems[0].stepValue * 10 : 5; //Default 0,5° Schritte
+            let unit: string = page.thermoItems[0].unit !== undefined ? page.thermoItems[0].unit : '°C'; //Default 0,5° Schritte
 
             let destTemp = 0;
             if (existsState(id + '.SET')) {
-                // using minValue, if .SET is null (e.g. for tado AWAY or tado is off)
                 let setValue = getState(id + '.SET').val;
                 if (setValue == null) {
                     setValue = minTemp;
@@ -6992,100 +6993,23 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
                     '~' + 
                     stepTemp +                           // 18 Temperature Steps
                     '~' + 
-                    tempUnit +                           // 19 Temperature Unit (°C/K/°F)
+                    unit +                               // 19 Temperature Unit (°C/K/°F)
                     '~' +
                     '1' +                                // 20 Status Off = 0 = no point on gray Slider and taget tempearture is not visible
-                    /*-Entity 1 - Actual Temperature--------------------------------------*/
-                    '~' +
-                    'text' +                             // 21
-                    '~' + 
-                    pageId + '?1' +                      // 22
-                    '~' + 
-                    Icons.GetIcon('thermometer') +       // 23
-                    '~' +
-                    '64512' +                            // 24
-                    '~' +
-                    '' +                                 // 25
-                    '~' +
-                    '' +                                 // 26
-                    /*-Entity 2---------------------------------------*/
-                    '~' +
-                    'text' +                             // 27
-                    '~' + 
-                    pageId + '?2' +                      // 28
-                    '~' + 
-                    currentTemp +                        // 29
-                    '~' +
-                    '64512' +                            // 30
-                    '~' +
-                    '' +                                 // 31
-                    '~' +
-                    '' +                                 // 32
-                    /*-Entity 3---------------------------------------*/
-                    '~' +
-                    'text' +                             // 33
-                    '~' + 
-                    pageId + '?3' +                      // 34
-                    '~' + 
-                    tempUnit +                           // 35
-                    '~' +
-                    '64512' +                            // 36
-                    '~' +
-                    '' +                                 // 37
-                    '~' +
-                    '' +                                 // 38
-                    /*-Entity 4 - Actual Humidity--------------------------------------*/
-                    '~' +
-                    'text' +                             // 39
-                    '~' + 
-                    pageId + '?4' +                      // 40
-                    '~' + 
-                    Icons.GetIcon('water-percent') +     // 41
-                    '~' +
-                    '1048' +                             // 42
-                    '~' +
-                    '' +                                 // 43
-                    '~' +
-                    '' +                                 // 44
-                    /*-Entity 5---------------------------------------*/
-                    '~' +
-                    'text' +                             // 45
-                    '~' + 
-                    pageId + '?5' +                      // 46
-                    '~' + 
-                    currentHumidity +                    // 47
-                    '~' +
-                    '1048' +                             // 48
-                    '~' +
-                    '' +                                 // 49
-                    '~' +
-                    '' +                                 // 50
-                    /*-Entity 6---------------------------------------*/
-                    '~' +
-                    'text' +                             // 51
-                    '~' + 
-                    pageId + '?6' +                      // 52
-                    '~' + 
-                    humidityUnit +                       // 53
-                    '~' +
-                    '1048' +                             // 54
-                    '~' +
-                    '' +                                 // 55
-                    '~' +
-                    '' +                                 // 56
-                    /*-Entity 7---------------------------------------*/
-                    '~' +
-                    'text' +                             // 57
-                    '~' + 
-                    pageId + '?7' +                      // 58
-                    '~' + 
-                    modeStatus +                         // 59
-                    '~' +
-                    '64512' +                            // 60
-                    '~' +
-                    '' +                                 // 61
-                    '~' +
-                    actualModeState;                     // 62
+                    /* Entity 1 - Actual Temperature (Icon) */
+                    '~text~' + pageId + '?1~' + Icons.GetIcon('thermometer') + '~' + tempColor + '~~' +
+                    /* Entity 2 - Actual Temperature (Temp) */
+                    '~text~' + pageId + '?2~' + currentTemp + '~' + tempColor + '~~' +
+                    /* Entity 3 - Actual Temperature (Unit) */
+                    '~text~' + pageId + '?3~' + tempUnit + '~' + tempColor + '~~' +
+                    /* Entity 4 - Actual Humidity (Icon) */
+                    '~text~' + pageId + '?4~' + Icons.GetIcon('water-percent') + '~' + humColor + '~~' +
+                    /* Entity 5 - Actual Humidity (Hum) */
+                    '~text~' + pageId + '?5~' + currentHumidity + '~' + humColor + '~~' +
+                    /* Entity 6 - Actual Humidity (Unit) */
+                    '~text~' + pageId + '?6~' + humidityUnit + '~' + humColor + '~~' +
+                    /* Entity 7 - Text-State */
+                    '~text~' + pageId + '?7~' + modeStatus + '~' + textStateColor + '~~' + actualModeState;
                     
             for (let i=0; i<9; i++) {
                 if(page.items[i] != undefined) {
@@ -13665,7 +13589,6 @@ function GetPirateWeatherIcon (icon: string): string {
             case 'partly-cloudy-night':
                 return 'weather-night-partly-cloudy';
 
-            case 'mostly-cloudy-day':
             case 'partly-cloudy-day':
                 return 'weather-partly-cloudy';
 
@@ -14708,6 +14631,7 @@ namespace NSPanel {
         homeIconColor?: RGB;
         hiddenByTrigger?: boolean;
         thermoItems?: any;
+        alwaysOnDisplay?: boolean;
     };
 
     export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardSchedule' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardThermo2' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
