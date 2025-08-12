@@ -5851,7 +5851,11 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (pageItem.useValue) {
                         if (pageItem.fontSize != undefined) {
-                            iconId = optVal + '¬' + pageItem.fontSize;
+                            if (pageItem.suffixName == undefined) {
+                                iconId = optVal + '¬' + pageItem.fontSize;
+                            } else {
+                                iconId = optVal + pageItem.suffixName + '¬' + pageItem.fontSize;
+                            }
                         } else {
                             iconId = optVal;
                         }
@@ -12109,7 +12113,10 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 actualState +
                                 '~' +
                                 optionalString,
+
+                                
                         });
+
                         GeneratePage(activePage!);
                     }
                 } else if (role == 'buttonSensor') {
