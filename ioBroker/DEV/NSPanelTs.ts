@@ -86,7 +86,7 @@ ReleaseNotes:
         - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver) + New Berry Update Path (RAW)
         - 08.08.2025 - v4.9.4.3  Add Beta Logic for cardThermo2 (future)
         - 10.08.2025 - v4.9.4.3  Add Pirate-Weather Adapter
-        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu)
+        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu/us-l/us-p)
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -190,8 +190,8 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v4.9.5.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v4.9.4.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v4.9.4.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v4.9.5.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v4.9.5.tft
 ---------------------------------------------------------------------------------------
 */
 
