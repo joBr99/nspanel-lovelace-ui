@@ -6918,7 +6918,7 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
         
         UnsubscribeWatcher();
         activePage = page;
-        unsubscribeThermo2Subscriptions
+        unsubscribeThermo2Subscriptions;
 
         let id = page.thermoItems[0].id;
         let out_msgs: NSPanel.Payload[] = [];
@@ -6959,7 +6959,6 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
             let humidityUnit = page.thermoItems[2].unit !== undefined ? page.thermoItems[2].unit : "?";
             let humColor = page.thermoItems[2].unit !== undefined ? rgb_dec565(page.thermoItems[2].onColor) : '1048';
 
-//Armilar Text-State flexibler machen
             let obj = getObject(page.thermoItems[3].id);
             let actualModeState = getState(page.thermoItems[3].id).val;
             let modeStatus = obj.common['states'][getState(page.thermoItems[3].id).val] ?? ''
@@ -6986,20 +6985,7 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
                     '~' + 
                     getNavigationString(pageId) +   // 2-13 Page Navigation 
                     /*-Temp Control-----------------------------------*/
-                    '~' +
-                    id +                                 // 14 - internalNameEntity
-                    '~' + 
-                    destTemp +                           // 15 - targetTemperature
-                    '~' + 
-                    minTemp +                            // 16 Min Temp
-                    '~' + 
-                    maxTemp +                            // 17 Max Temp
-                    '~' + 
-                    stepTemp +                           // 18 Temperature Steps
-                    '~' + 
-                    unit +                               // 19 Temperature Unit (°C/K/°F)
-                    '~' +
-                    '1' +                                // 20 Status Off = 0 = no point on gray Slider and taget tempearture is not visible
+                    '~' + id + '~' + destTemp + '~' + minTemp + '~' + maxTemp + '~' + stepTemp + '~' + unit + '~' + '1' +
                     /* Entity 1 - Actual Temperature (Icon) */
                     '~text~' + pageId + '?1~' + Icons.GetIcon('thermometer') + '~' + tempColor + '~~' +
                     /* Entity 2 - Actual Temperature (Temp) */
