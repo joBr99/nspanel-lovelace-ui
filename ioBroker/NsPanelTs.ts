@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.3.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 58 / v4.9.3 / BerryDriver 9 / Tasmota 15.0.1
+TypeScript v4.9.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 58 / v4.9.5 / BerryDriver 10 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
@@ -77,9 +77,16 @@ ReleaseNotes:
         - 24.07.2025 - v4.9.1    Adapter Changes
         - 24.07.2025 - v4.9.2.1  Add icon2 Parameter to Info Alias Channels
         - 25.07.2025 - v4.9.2.2  Add OpenWeatherMap (AccuWeather deprecated)
-	- 28.07.2025 - v4.9.2.3  Quick-Fix Errors with TypeScript in JS > 9.X (by ticaki)
- 	- 30.07.2025 - v4.9.3    TFT 58 / 4.9.3
+        - 28.07.2025 - v4.9.2.3  Quick-Fix Errors with TypeScript in JS > 9.X (by ticaki)
+        - 30.07.2025 - v4.9.3    TFT 58 / 4.9.3
         - 30.07.2025 - v4.9.3.1  popupShutter2 Changes (new Parameter shutterZeroIsClosed changing Direction of %-Value in HMI (0 <--> 100))
+        - 05.08.2025 - v4.9.4    TFT 58 / 4.9.4 - Communication with 921600 bps with Berry Driver 10 / Slider Fix in card Entities
+        - 05.08.2025 - v4.9.4.1  Fix Sliders (volume/slider) in createEntity
+        - 05.08.2025 - v4.9.4.1  Add USERICONS and colorScale to Alias-Channel Slider
+        - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver) + New Berry Update Path (RAW)
+        - 08.08.2025 - v4.9.4.3  Add Beta Logic for cardThermo2 (future)
+        - 10.08.2025 - v4.9.4.3  Add Pirate-Weather Adapter
+        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu/us-l/us-p)
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -179,12 +186,12 @@ Erforderliche Adapter:
 
 Install/Upgrades in Konsole:
 
-    Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextion http://nspanel.de/nspanel-v4.9.3.tft
+    Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
+    Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
+    TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v4.9.5.tft
 
-    TFT US-L STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-l-v4.9.3.tft
-    TFT US-P STABLE Version:     FlashNextion http://nspanel.de/nspanel-us-p-v4.9.3.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v4.9.5.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v4.9.5.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -265,7 +272,8 @@ const DarkBlue: RGB = {red: 0, green: 0, blue: 136};
 const Gray: RGB = {red: 136, green: 136, blue: 136};
 const Black: RGB = {red: 0, green: 0, blue: 0};
 const Cyan: RGB = {red: 0, green: 255, blue: 255};
-const Magenta: RGB = {red: 255, green: 0, blue: 255};
+const Magenta: RGB = {red: 255, green: 0, blue: 255}
+const Orange: RGB = { red: 255, green: 130, blue:   0 };
 const colorSpotify: RGB = {red: 30, green: 215, blue: 96};
 const colorAlexa: RGB = {red: 49, green: 196, blue: 243};
 const colorSonos: RGB = {red: 216, green: 161, blue: 88};
@@ -968,10 +976,10 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.3.1';
-const tft_version: string = 'v4.9.3';
+const scriptVersion: string = 'v4.9.5.1';
+const tft_version: string = 'v4.9.5';
 const desired_display_firmware_version = 58;
-const berry_driver_version = 9;
+const berry_driver_version = 10;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
 // @ts-ignore
@@ -2416,7 +2424,7 @@ async function CreateWeatherAlias () {
                     if (isSetOptionActive) {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value')) {
                             log('Weather alias for daswetter.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
-                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'media'}, native: {}});
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
                             await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value', true, <
                                 iobJS.StateCommon
                                 > {type: 'number', role: 'value', name: 'ICON'});
@@ -2441,7 +2449,7 @@ async function CreateWeatherAlias () {
                     if (isSetOptionActive) {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('accuweather.' + weatherAdapterInstanceNumber + '.Current.WeatherIcon')) {
                             log('Weather alias for accuweather.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
-                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'media'}, native: {}});
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
                             await createAliasAsync(config.weatherEntity + '.ICON', 'accuweather.' + weatherAdapterInstanceNumber + '.Current.WeatherIcon', true, {
                                 type: 'number',
                                 role: 'value',
@@ -2474,7 +2482,7 @@ async function CreateWeatherAlias () {
                     if (isSetOptionActive) {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.icon')) {
                             log('Weather alias for openweathermap.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
-                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'media'}, native: {}});
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
                             await createAliasAsync(config.weatherEntity + '.ICON', ('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.current.icon'), true, {
                                 type: 'string',
                                 role: 'value',
@@ -2505,6 +2513,43 @@ async function CreateWeatherAlias () {
                     }
                 } catch (err: any) {
                     log('error at function CreateWeatherAlias openweathermap.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
+                }
+            } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
+                try {
+                    if (isSetOptionActive) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.currently.icon')) {
+                            log('Weather alias for pirate-weather.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.currently.icon'), true, {
+                                type: 'string',
+                                role: 'value',
+                                name: 'ICON',
+                                alias: {id: 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.currently.icon'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.currently.temperature', true, {
+                                type: 'number',
+                                role: 'value.temperature',
+                                name: 'TEMP',
+                                alias: {id: 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.currently.temperature', read: 'Math.round(val*10)/10'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.temperatureMin', true, {
+                                type: 'number',
+                                role: 'value.temperature.forecast.0',
+                                name: 'TEMP_MIN',
+                                alias: {id: 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.temperatureMin', read: 'Math.round(val)'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.temperatureMax', true, {
+                                type: 'number',
+                                role: 'value.temperature.max.forecast.0',
+                                name: 'TEMP_MAX',
+                                alias: {id: 'pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.temperatureMax', read: 'Math.round(val)'},
+                            });
+                        } else {
+                            log('weather alias for pirate-weather.' + weatherAdapterInstanceNumber + '. already exists', 'info');
+                        }
+                    }
+                } catch (err: any) {
+                    log('error at function CreateWeatherAlias pirate-weather.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         }
@@ -4083,13 +4128,15 @@ function get_tasmot_url (cmd: string): string {
  * @returns {Promise<void>} A promise that resolves when the firmware update has been completed.
  * @throws {Error} If an error occurs during the firmware update.
  */
-function get_online_berry_driver_version () {
+async function get_online_berry_driver_version () {
     try {
         if (NSPanel_Path + 'Config.Update.activ') {
             if (Debug) {
                 log('Requesting online berry driver version', 'info');
             }
 
+            //Use version.json in Future
+            /*
             let urlString = 'https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be';
 
             axios
@@ -4120,6 +4167,19 @@ function get_online_berry_driver_version () {
                 .catch(function (error) {
                     log(error, 'warn');
                 });
+            */
+
+            if (isSetOptionActive) {
+                await createStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', {type: 'string', write: false});
+                setObject(AliasPath + 'Berry_Driver.onlineVersion', {type: 'channel', common: {role: 'info', name: 'onlineVersion'}, native: {}});
+                await createAliasAsync(AliasPath + 'Berry_Driver.onlineVersion.ACTUAL', NSPanel_Path + 'Berry_Driver.onlineVersion', true, {
+                    type: 'string',
+                    role: 'state',
+                    name: 'ACTUAL',
+                });
+                await setStateAsync(NSPanel_Path + 'Berry_Driver.onlineVersion', {val: String(berry_driver_version), ack: true});
+                if (Debug) log('online berry driver version => ' + String(berry_driver_version), 'info');
+            }
         }
     } catch (err: any) {
         log('error requesting firmware in function get_online_berry_driver_version: ' + err.message, 'warn');
@@ -4277,9 +4337,9 @@ on({id: config.panelRecvTopic}, async (obj) => {
  */
 function update_berry_driver_version () {
     try {
-        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`;
+        let urlString = `http://${get_current_tasmota_ip_address()}/cm?cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
         if (tasmota_web_admin_password != '') {
-            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/joBr99/nspanel-lovelace-ui/main/tasmota/autoexec.be; Restart 1`;
+            urlString = `http://${get_current_tasmota_ip_address()}/cm?user=${tasmota_web_admin_user}&password=${tasmota_web_admin_password}&cmnd=Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/${berry_driver_version}/autoexec.be; Restart 1`;
         }
 
         axios
@@ -4517,6 +4577,7 @@ function HandleMessage (typ: string, method: NSPanel.EventMethod, page: number |
                     screensaverEnabled = false;
                     UnsubscribeWatcher();
                     HandleStartupProcess();
+                    InitDimmode();
                     pageId = 0;
                     GeneratePage(config.pages[0]);
                     if (Debug) log('HandleMessage -> Startup', 'info');
@@ -4639,6 +4700,9 @@ function GeneratePage (page: PageType): void {
                 break;
             case 'cardThermo':
                 SendToPanel(GenerateThermoPage(page));
+                break;
+            case 'cardThermo2':
+                SendToPanel(GenerateThermo2Page(page));
                 break;
             case 'cardGrid':
                 SendToPanel(GenerateGridPage(page));
@@ -4919,6 +4983,9 @@ function GeneratePageElements (page: PageType): string {
             case 'cardThermo':
                 maxItems = 1;
                 break;
+            case 'cardThermo2':
+                maxItems = 9;
+                break;
             case 'cardAlarm':
                 maxItems = 1;
                 break;
@@ -4970,15 +5037,22 @@ function GeneratePageElements (page: PageType): string {
                 break;
         }
 
-        let pageData = 'entityUpd~' + page.heading + '~' + getNavigationString(pageId);
+        if (activePage.type != 'cardThermo2') {
+            let pageData = 'entityUpd~' + page.heading + '~' + getNavigationString(pageId);
 
-        for (let index = 0; index < maxItems; index++) {
-            if (page.items[index] !== undefined) {
-                pageData += CreateEntity(page.items[index], index, 'useColor' in page ? page.useColor : false);
+            for (let index = 0; index < maxItems; index++) {
+                if (page.items[index] !== undefined) {
+                    pageData += CreateEntity(page.items[index], index, 'useColor' in page ? page.useColor : false);
+                }
             }
+            if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
+            return pageData;
+        } else {
+            setTimeout(async function () {
+                pageCounter = 1;
+                GeneratePage(activePage!);
+            }, 500);
         }
-        if (Debug) log('GeneratePageElements pageData ' + pageData, 'info');
-        return pageData;
     } catch (err: any) {
         log('error at function GeneratePageElements: ' + err.message, 'warn');
         return '';
@@ -4994,6 +5068,9 @@ function GeneratePageElements (page: PageType): string {
  * @returns {string} The string representing the entity.
  */
 function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean = false): string {
+
+    if (Debug) log(JSON.stringify(pageItem) + ' - ' + placeId, 'info');
+    
     try {
         let iconId = '0';
         let iconId2 = '0';
@@ -5774,7 +5851,11 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                     if (pageItem.useValue) {
                         if (pageItem.fontSize != undefined) {
-                            iconId = optVal + '¬' + pageItem.fontSize;
+                            if (pageItem.suffixName == undefined) {
+                                iconId = optVal + '¬' + pageItem.fontSize;
+                            } else {
+                                iconId = optVal + pageItem.suffixName + '¬' + pageItem.fontSize;
+                            }
                         } else {
                             iconId = optVal;
                         }
@@ -5906,15 +5987,49 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'slider':
                     type = 'number';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('plus-minus-variant');
+                    
+                    let minValueSlider: number = pageItem.minValue !== undefined ? pageItem.minValue : 0;
+                    let maxValueSlider: number = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
 
                     iconColor = GetIconColor(pageItem, false, useColors);
 
+                    if (pageItem.colorScale != undefined) {
+                        let iconvalmin = pageItem.colorScale.val_min != undefined ? pageItem.colorScale.val_min : 0;
+                        let iconvalmax = pageItem.colorScale.val_max != undefined ? pageItem.colorScale.val_max : 100;
+                        let iconvalbest = pageItem.colorScale.val_best != undefined ? pageItem.colorScale.val_best : iconvalmin;
+                        let valueScale = val;
+
+                        if (iconvalmin == 0 && iconvalmax == 1) {
+                            iconColor = !pageItem.id || getState(pageItem.id).val == 1 ? rgb_dec565(colorScale0) : rgb_dec565(colorScale10);
+                        } else {
+                            if (iconvalbest == iconvalmin) {
+                                valueScale = scale(valueScale, iconvalmin, iconvalmax, 10, 0);
+                            } else {
+                                if (valueScale < iconvalbest) {
+                                    valueScale = scale(valueScale, iconvalmin, iconvalbest, 0, 10);
+                                } else if (valueScale > iconvalbest || iconvalbest != iconvalmin) {
+                                    valueScale = scale(valueScale, iconvalbest, iconvalmax, 10, 0);
+                                } else {
+                                    valueScale = scale(valueScale, iconvalmin, iconvalmax, 10, 0);
+                                }
+                            }
+                            let valueScaletemp = Math.round(valueScale).toFixed();
+                            iconColor = HandleColorScale(valueScaletemp);
+                        }
+                    }
+
+                    if (existsState(pageItem.id + '.USERICON')) {
+                        iconId = Icons.GetIcon(getState(pageItem.id + '.USERICON').val);
+                        if (Debug) log('iconid von ' + pageItem.id + '.USERICON: ' + getState(pageItem.id + '.USERICON').val, 'info');
+                        RegisterEntityWatcher(pageItem.id + '.USERICON');
+                    }
+
                     if (Debug)
                         log(
-                            'CreateEntity  Icon role slider ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue,
+                            'CreateEntity  Icon role slider ~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + minValueSlider + '|' + maxValueSlider,
                             'info'
                         );
-                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + minValueSlider + '|' + maxValueSlider;
 
                 case 'volumeGroup':
                 case 'volume':
@@ -5935,6 +6050,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                         iconId = Icons.GetIcon('volume-mute');
                     }
 
+                    let minValueVolume: number = pageItem.minValue !== undefined ? pageItem.minValue : 0;
+                    let maxValueVolume: number = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
+
                     if (Debug)
                         log(
                             'CreateEntity  Icon role volumeGroup/volume ~' +
@@ -5950,12 +6068,12 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             '~' +
                             val +
                             '|' +
-                            pageItem.minValue +
+                            minValueVolume +
                             '|' +
-                            pageItem.maxValue,
+                            maxValueVolume,
                             'info'
                         );
-                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + pageItem.minValue + '|' + pageItem.maxValue;
+                    return '~' + type + '~' + placeId + '~' + iconId + '~' + iconColor + '~' + name + '~' + val + '|' + minValueVolume + '|' + maxValueVolume;
 
                 case 'warning':
                     type = 'text';
@@ -6729,6 +6847,183 @@ function GenerateThermoPage (page: NSPanel.PageThermo): NSPanel.Payload[] {
         return out_msgs;
     } catch (err: any) {
         log('error at function GenerateThermoPage: ' + err.message, 'warn');
+        return [];
+    }
+}
+
+/**
+ * Unsubscribes from all thermo2-related subscriptions.
+ * 
+ * This function removes all active subscriptions related to thermo2 entities.
+ * 
+ * @function unsubscribeThermo2Subscriptions
+ */
+function unsubscribeThermo2Subscriptions (): void {
+    for (let i = 0; i < config.pages.length; i++) {
+        const page: NSPanel.PageType = config.pages[i];
+        if (isPageThermoItem(page)) {
+            let thermo2ID = page.thermoItems[0].id;
+            unsubscribe(thermo2ID + '.ACTUAL');
+            unsubscribe(thermo2ID + '.SET');
+            unsubscribe(thermo2ID + '.MODE');
+            unsubscribe(thermo2ID + '.HUMIDITY');
+        }
+    }
+    for (let i = 0; i < config.subPages.length; i++) {
+        const page: NSPanel.PageType = config.subPages[i];
+        if (isPageThermoItem(page)) {
+            let thermo2ID = page.thermoItems[0].id;
+            unsubscribe(thermo2ID + '.ACTUAL');
+            unsubscribe(thermo2ID + '.SET');
+            unsubscribe(thermo2ID + '.MODE');
+            unsubscribe(thermo2ID + '.HUMIDITY');
+        }
+    }
+    if (Debug) log('unsubscribeMediaSubscriptions gestartet', 'info');
+}
+
+/**
+ * Subscribes to thermo2-related subscriptions for the specified entity ID.
+ * 
+ * This function sets up subscriptions to monitor changes in media entities and perform actions when changes occur.
+ * 
+ * @function subscribeThermo2Subscriptions
+ * @param {string} id - The ID of the media entity to subscribe to.
+ */
+function subscribeThermo2Subscriptions (id: string): void {
+    on(
+        {id: [id + '.ACTUAL', id + '.MODE', id + '.SET', id + '.HUMIDITY'], change: 'any', ack: true},
+        async function () {
+
+            setTimeout(async function () {
+                //pageCounter = 1;
+                GeneratePage(activePage!);
+            }, 500);
+
+        }
+    );
+}
+
+/**
+ * Generates the payload for a thermostat page on the NSPanel.
+ * 
+ * This function creates and returns the payload required to display a thermostat page on the NSPanel.
+ * 
+ * @function GenerateThermo2Page
+ * @param {NSPanel.PageThermo2} page - The thermostat page configuration.
+ * @returns {NSPanel.Payload[]} The payload array for the cardThermo2.
+ */
+function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
+    try {
+        
+        UnsubscribeWatcher();
+        activePage = page;
+        unsubscribeThermo2Subscriptions;
+
+        let id = page.thermoItems[0].id;
+        let out_msgs: NSPanel.Payload[] = [];
+
+        // Leave the display on if the alwaysOnDisplay parameter is specified (true)
+        if (page.type == 'cardThermo2' && pageCounter == 0 && page.alwaysOnDisplay != undefined) {
+            out_msgs.push({payload: 'pageType~cardThermo2'});
+            if (page.alwaysOnDisplay != undefined) {
+                if (page.alwaysOnDisplay) {
+                    pageCounter = 1;
+                    if (existsObject(id) && alwaysOn == false) {
+                        alwaysOn = true;
+                        SendToPanel({payload: 'timeout~0'});
+                        subscribeThermo2Subscriptions(id);
+                    }
+                }
+            }
+        } else if (id && existsObject(id) && page.type == 'cardThermo2' && pageCounter == 1) {
+            subscribeThermo2Subscriptions(id);
+        } else {
+            out_msgs.push({payload: 'pageType~cardThermo2'});
+        }
+
+        if (id && existsObject(id)) {
+            let o = getObject(id);
+            let name = page.heading !== undefined ? page.heading : o.common.name && typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
+            let currentTemp = 0;
+            if (existsState(page.thermoItems[1].id)) {
+                currentTemp = Math.round(parseFloat(getState(page.thermoItems[1].id).val) * 10);
+            }
+            let tempUnit = page.thermoItems[1].unit !== undefined ? page.thermoItems[1].unit : "?";
+            let tempColor = page.thermoItems[1].unit !== undefined ? rgb_dec565(page.thermoItems[1].onColor) : '64512';
+
+            let currentHumidity = 0;
+            if (existsState(page.thermoItems[2].id)) {
+                currentHumidity = Math.round(parseFloat(getState(page.thermoItems[2].id).val) * 10);
+            }
+            let humidityUnit = page.thermoItems[2].unit !== undefined ? page.thermoItems[2].unit : "?";
+            let humColor = page.thermoItems[2].unit !== undefined ? rgb_dec565(page.thermoItems[2].onColor) : '1048';
+
+            let obj = getObject(page.thermoItems[3].id);
+            let actualModeState = getState(page.thermoItems[3].id).val;
+            let modeStatus = obj.common['states'][getState(page.thermoItems[3].id).val] ?? ''
+            let textStateColor = page.thermoItems[3].unit !== undefined ? rgb_dec565(page.thermoItems[3].onColor) : '64512';
+
+            let minTemp: number = page.thermoItems[0].minValue !== undefined ? page.thermoItems[0].minValue * 10 : 45; //Min Temp 4,5°C
+            let maxTemp: number = page.thermoItems[0].maxValue !== undefined ? page.thermoItems[0].maxValue * 10 : 305; //Max Temp 30,5°C
+            let stepTemp: number = page.thermoItems[0].stepValue !== undefined ? page.thermoItems[0].stepValue * 10 : 5; //Default 0,5° Schritte
+            let unit: string = page.thermoItems[0].unit !== undefined ? page.thermoItems[0].unit : '°C'; //Default 0,5° Schritte
+
+            let destTemp = 0;
+            if (existsState(id + '.SET')) {
+                let setValue = getState(id + '.SET').val;
+                if (setValue == null) {
+                    setValue = minTemp;
+                }
+
+                destTemp = setValue.toFixed(2) * 10;
+            }
+
+            let message: string = 
+                    'entityUpd~' +
+                    name + // Heading 1
+                    '~' + 
+                    getNavigationString(pageId) +   // 2-13 Page Navigation 
+                    /*-Temp Control-----------------------------------*/
+                    '~' + id + '~' + destTemp + '~' + minTemp + '~' + maxTemp + '~' + stepTemp + '~' + unit + '~' + '1' +
+                    /* Entity 1 - Actual Temperature (Icon) */
+                    '~text~' + pageId + '?1~' + Icons.GetIcon('thermometer') + '~' + tempColor + '~~' +
+                    /* Entity 2 - Actual Temperature (Temp) */
+                    '~text~' + pageId + '?2~' + currentTemp + '~' + tempColor + '~~' +
+                    /* Entity 3 - Actual Temperature (Unit) */
+                    '~text~' + pageId + '?3~' + tempUnit + '~' + tempColor + '~~' +
+                    /* Entity 4 - Actual Humidity (Icon) */
+                    '~text~' + pageId + '?4~' + Icons.GetIcon('water-percent') + '~' + humColor + '~~' +
+                    /* Entity 5 - Actual Humidity (Hum) */
+                    '~text~' + pageId + '?5~' + currentHumidity + '~' + humColor + '~~' +
+                    /* Entity 6 - Actual Humidity (Unit) */
+                    '~text~' + pageId + '?6~' + humidityUnit + '~' + humColor + '~~' +
+                    /* Entity 7 - Text-State */
+                    '~text~' + pageId + '?7~' + modeStatus + '~' + textStateColor + '~~' + actualModeState;
+                    
+            for (let i=0; i<9; i++) {
+                if(page.items[i] != undefined) {
+                    id = page.items[i];
+                    message = message + CreateEntity(id, i, true);
+                } else {
+                    id = 'delete'
+                    message = message + CreateEntity(id, i);
+                }
+            }
+
+            out_msgs.push({
+                payload:
+                    message
+            });
+
+        }
+
+        if (Debug) {
+            log('GenerateThermo2Page payload: ' + JSON.stringify(out_msgs), 'info');
+        }
+        return out_msgs;
+    } catch (err: any) {
+        log('error at function GenerateThermo2Page: ' + err.message, 'warn');
         return [];
     }
 }
@@ -9048,7 +9343,13 @@ function HandleButtonEvent (words: any): void {
                     let action = false;
                     if (words[4] == '1') action = true;
                     let o = getObject(id);
+
+                    if (Debug) log(o.common.role)
+
                     switch (o.common.role as NSPanel.roles) {
+                        case 'level.mode.fan':
+                            toggleState(id + '.SET') ? true : toggleState(id + '.ACTUAL');
+                            break;
                         case 'lock':
                         case 'button':
                             toggleState(id + '.SET') ? true : toggleState(id + '.ON_SET');
@@ -9971,6 +10272,16 @@ function HandleButtonEvent (words: any): void {
                             setIfExists(id + '.SPEED', parseInt(words[4]));
                         }, 250);
                         break;
+                    case 'slider':
+                        (function () {
+                            if (timeoutSlider) {
+                                clearTimeout(timeoutSlider);
+                                timeoutSlider = null;
+                            }
+                        })();
+                        timeoutSlider = setTimeout(async function () {
+                            setIfExists(id + '.SET', parseInt(words[4])) ? true : setIfExists(id + '.ACTUAL', parseInt(words[4]));
+                        }, 250);
                     default:
                         (function () {
                             if (timeoutSlider) {
@@ -11788,7 +12099,10 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 actualState +
                                 '~' +
                                 optionalString,
+
+                                
                         });
+
                         GeneratePage(activePage!);
                     }
                 } else if (role == 'buttonSensor') {
@@ -11978,6 +12292,9 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
                     entityIconCol = GetOpenWeatherMapIconColor(icon);
+                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
+                    entityIcon = Icons.GetIcon(GetPirateWeatherIcon(icon));
+                    entityIconCol = GetPirateWeatherIconColor(icon);
                 }
 
                 payloadString += '~' + '~' + entityIcon + '~' + entityIconCol + '~' + '~' + optionalValue + '~';
@@ -12118,7 +12435,7 @@ function HandleScreensaverUpdate (): void {
                     } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                         if (i < 6) {
                         
-                            //Maximal 5 Tage bei openweathermap
+                            //Maximal 6 Tage bei openweathermap
                             TempMin = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin')
                                 ? Math.round(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin').val * 10) / 10
                                 : 0;
@@ -12141,6 +12458,30 @@ function HandleScreensaverUpdate (): void {
                             RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMax');
                             RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.date');
                             RegisterScreensaverEntityWatcher('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.icon');
+                        }
+                    } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
+                        if (i < 6) {
+                            //Maximal 8 Tage bei openweathermap - pirate-weather.0.weather.daily.00.icon
+                            TempMin = existsObject('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.temperatureMin')
+                                ? Math.round(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.temperatureMin').val * 10) / 10
+                                : 0;
+                            TempMax = existsObject('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.temperatureMax')
+                                ? Math.round(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.temperatureMax').val * 10) / 10
+                                : 0;
+                            DayOfWeek = existsObject('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.time')
+                                ? formatDate(getDateObject((getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.time').val)), 'W', 'de')
+                                : 0;
+                            WeatherIcon = existsObject('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon')
+                                ? GetPirateWeatherIcon(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon').val)
+                                : '';
+                            WheatherColor = existsObject('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon')
+                                ? GetPirateWeatherIconColor(String(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon').val))
+                                : 0;
+
+                            RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.temperatureMin');
+                            RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.temperatureMax');
+                            RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.time');
+                            RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon');
                         }
                     }
 
@@ -12203,10 +12544,34 @@ function HandleScreensaverUpdate (): void {
                         }
 
                         payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = getDateObject((new Date().getTime())).getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunsetTime').val).getTime();
+                        arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
                     } else {
                         payloadString += '~' + '~' + Icons.GetIcon(WeatherIcon) + '~' + WheatherColor + '~' + DayOfWeek + '~' + tempMinMaxString + '~';
                     }
-                }
+                }  
 
                 //Alternativ Layout bekommt zusätzlichen Status
                 if (config.bottomScreensaverEntity[4] && getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
@@ -13063,12 +13428,12 @@ function GetDasWetterIconColor (icon: number): number {
 }
 
 /**
- * Retrieves the AccuWeather icon string based on the provided icon number.
+ * Retrieves the OpenWeatherMap icon string based on the provided icon string.
  * 
- * This function maps the given AccuWeather icon number to its corresponding icon string representation.
+ * This function maps the given OpenWeatherMap icon string to its corresponding icon string representation.
  * 
- * @function GetAccuWeatherIcon
- * @param {number} icon - The AccuWeather icon number.
+ * @function GetOpenWeatherMapIcon
+ * @param {string} icon - The AccuWeather icon string.
  * @returns {string} The corresponding icon string.
  */
 function GetOpenWeatherMapIcon (icon: string): string {
@@ -13120,18 +13485,18 @@ function GetOpenWeatherMapIcon (icon: string): string {
                 return 'alert-circle-outline';
         }
     } catch (err: any) {
-        log('error at function GetAccuWeatherIcon: ' + err.message, 'warn');
+        log('error at function GetOpenWeatherMapIcon: ' + err.message, 'warn');
     }
     return '';
 }
 
 /**
- * Retrieves the color code for a given AccuWeather icon number.
+ * Retrieves the color code for a given OpenWeatherMap icon string.
  * 
- * This function maps the provided AccuWeather icon number to its corresponding color code.
+ * This function maps the provided OpenWeatherMap icon string to its corresponding color code.
  * 
- * @function GetAccuWeatherIconColor
- * @param {number} icon - The AccuWeather icon number.
+ * @function GetOpenWeatherMapIconColor
+ * @param {string} icon - The OpenWeatherMap icon string.
  * @returns {number} The corresponding color code.
  */
 function GetOpenWeatherMapIconColor (icon: string): number {
@@ -13169,7 +13534,196 @@ function GetOpenWeatherMapIconColor (icon: string): number {
                 return rgb_dec565(White);
         }
     } catch (err: any) {
-        log('error at function GetAccuWeatherIconColor: ' + err.message, 'warn');
+        log('error at function GetOpenWeatherMapIconColor: ' + err.message, 'warn');
+    }
+    return 0;
+}
+
+/**
+ * Retrieves the PirateWeather icon string based on the provided icon string.
+ * 
+ * This function maps the given PirateWeather icon string to its corresponding icon string representation.
+ * 
+ * @function GetPirateWeatherIcon
+ * @param {string} icon - The PirateWeather icon string.
+ * @returns {string} The corresponding icon string.
+ */
+function GetPirateWeatherIcon (icon: string): string {
+    try {
+        switch (icon) {
+
+            case 'cloudy':
+            case 'mostly-cloudy-day':
+            case 'mostly-cloudy-night':
+                return 'weather-cloudy';
+
+            case 'fog':
+            case 'mist':
+            case 'smoke':
+                return 'weather-fog';
+
+            case 'hail':
+                return 'weather-hail';
+
+            case 'haze':
+                return 'weather-hazy'
+
+            case 'thunderstorm':
+                return 'weather-lightning';
+
+            case 'possible-precipitation-day':
+            case 'possible-precipitation-night':
+                return 'weather-lightning-rainy';
+
+            case 'clear-night':
+            case 'mostly-clear-night':
+                return 'weather-night';
+
+            case 'partly-cloudy-night':
+                return 'weather-night-partly-cloudy';
+
+            case 'partly-cloudy-day':
+                return 'weather-partly-cloudy';
+
+            case 'possible-rain-day':
+            case 'possible-rain-night':
+                return 'weather-partly-rainy';
+
+            case 'possible-snow-night':
+            case 'possible-snow-day':
+                return 'weather-partly-snowy';
+
+            case 'possible-sleet-day':
+            case 'possible-sleet-night':
+                return 'weather-partly-snowy-rainy';
+
+            case 'rain':
+            case 'heavy-rain':
+            case 'precipitation':
+                return 'weather-pouring';
+
+            case 'drizzle':
+            case 'light-rain':
+                return 'weather-rainy';
+
+            case 'light-snow':
+            case 'snow':
+                return 'weather-snowy';
+
+            case 'heavy-sleet':
+            case 'heavy-snow':
+            case 'flurries':
+                return 'weather-snowy-heavy';
+
+            case 'sleet':
+            case 'light-sleet':
+            case 'very-light-sleet':
+                return 'weather-snowy-rainy';
+
+            case 'clear-day':
+            case 'mostly-clear-day':
+                return 'weather-sunny';
+
+            case 'dangerous-wind':
+                return 'weather-tornado';
+
+            case 'wind':
+                return 'weather-windy';
+
+            case 'breezy':
+                return 'weather-windy-variant';
+
+            default:
+                return 'alert-circle-outline';
+        }
+    } catch (err: any) {
+        log('error at function GetPirateWeatherIcon: ' + err.message, 'warn');
+    }
+    return '';
+}
+
+/**
+ * Retrieves the color code for a given AccuWeather icon number.
+ * 
+ * This function maps the provided AccuWeather icon number to its corresponding color code.
+ * 
+ * @function GetPirateWeatherIconColor
+ * @param {string} icon - The PirateWeather icon string.
+ * @returns {number} The corresponding color code.
+ */
+function GetPirateWeatherIconColor (icon: string): number {
+    try {
+        switch (icon) {
+            case 'cloudy':
+            case 'mostly-cloudy-day':
+            case 'mostly-cloudy-night':
+                return rgb_dec565(swCloudy); // cloudy
+
+            case 'fog':
+            case 'mist':
+            case 'haze':
+            case 'smoke':
+                return rgb_dec565(swFog);
+
+            case 'hail':
+                return rgb_dec565(swHail);
+
+            case 'thunderstorm': // T-Storms
+                return rgb_dec565(swLightning);
+
+            case 'clear-night':
+            case 'mostly-clear-night':
+                return rgb_dec565(swClearNight);
+
+            case 'partly-cloudy-day':
+                return rgb_dec565(swPartlycloudy);
+
+            case 'partly-cloudy-night':
+                return rgb_dec565(swPartlycloudy);
+
+            case 'rain':
+            case 'heavy-rain':
+            case 'precipitation':
+                return rgb_dec565(swPouring);
+
+            case 'possible-rain-day':
+            case 'possible-rain-night':
+            case 'possible-precipitation-night':
+            case 'possible-precipitation-day':
+            case 'drizzle':
+            case 'light-rain':
+                return rgb_dec565(swRainy);
+
+            case 'light-snow':
+            case 'snow':
+            case 'heavy-sleet':
+            case 'heavy-snow':
+            case 'flurries':
+            case 'possible-snow-day':
+            case 'possible-snow-night':
+            case 'possible-sleet-day':
+            case 'possible-sleet-night':
+                return rgb_dec565(swSnowy)
+
+            case 'sleet':
+            case 'light-sleet':
+            case 'very-light-sleet':
+                return rgb_dec565(swSnowyRainy);
+
+            case 'clear-day':
+            case 'mostly-clear-day':
+                return rgb_dec565(swSunny);
+
+            case 'dangerous-wind':
+            case 'breezy':
+            case 'wind':
+                return rgb_dec565(swWindy);
+
+            default:
+                return rgb_dec565(White);
+        }
+    } catch (err: any) {
+        log('error at function GetPirateWeatherIconColor: ' + err.message, 'warn');
     }
     return 0;
 }
@@ -13730,6 +14284,7 @@ type PageGrid3 = NSPanel.PageGrid3;
 type PageQR = NSPanel.PageQR;
 type PageMedia = NSPanel.PageMedia;
 type PageThermo = NSPanel.PageThermo;
+type PageThermo2 = NSPanel.PageThermo2;
 type PageUnlock = NSPanel.PageUnlock;
 type PageAlarm = NSPanel.PageAlarm;
 
@@ -14068,11 +14623,13 @@ namespace NSPanel {
         homeIcon?: string;
         homeIconColor?: RGB;
         hiddenByTrigger?: boolean;
+        thermoItems?: any;
+        alwaysOnDisplay?: boolean;
     };
 
-    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardSchedule' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
+    export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardSchedule' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardThermo2' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
 
-    export type PageType = PageChart | PageEntities | PageSchedule | PageGrid | PageGrid2 | PageGrid3 | PageThermo | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower;
+    export type PageType = PageChart | PageEntities | PageSchedule | PageGrid | PageGrid2 | PageGrid3 | PageThermo | PageThermo2 | PageMedia | PageUnlock | PageQR | PageAlarm | PagePower;
 
     export type PageEntities = {
         type: 'cardEntities';
@@ -14102,6 +14659,11 @@ namespace NSPanel {
     export type PageThermo = {
         type: 'cardThermo';
         items: [PageThermoItem];
+    } & Omit<PageBaseType, 'useColor'>;
+
+    export type PageThermo2 = {
+        type: 'cardThermo2';
+        items: [PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?, PageItem?];
     } & Omit<PageBaseType, 'useColor'>;
 
     export type PageMedia = {
@@ -14268,7 +14830,7 @@ namespace NSPanel {
 
     export type ConfigButtonFunction = {
         mode: 'page' | 'toggle' | 'set' | null;
-        page: PageThermo | PageMedia | PageAlarm | PageQR | PageEntities | PageSchedule | PageGrid | PageGrid2 | PageGrid3 | PagePower | PageChart | PageUnlock | null;
+        page: PageThermo | PageThermo2 | PageMedia | PageAlarm | PageQR | PageEntities | PageSchedule | PageGrid | PageGrid2 | PageGrid3 | PagePower | PageChart | PageUnlock | null;
         entity: string | null;
         setValue: string | number | boolean | null;
         setOn?: {dp: string; val: any};
