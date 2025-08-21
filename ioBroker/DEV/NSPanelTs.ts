@@ -14898,6 +14898,18 @@ namespace NSPanel {
         popupVersion?: number;
         shutterType?: string;
         shutterZeroIsClosed?: boolean;
+        sliderItems?: [sliderItems?, sliderItems?, sliderItems?] | null;
+    };
+
+    type sliderItems = {
+        heading: string;
+        icon1?: string;
+        icon2?: string;
+        minValue?: number;
+        maxValue?: number;
+        stepValue?: number;
+        zeroValue?: boolean;
+        id?: string; // writeable overwrite actual and set
     };
 
     type shutterIcons = {
