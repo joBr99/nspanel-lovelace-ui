@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v4.9.5.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 58 / v4.9.5 / BerryDriver 10 / Tasmota 15.0.1
 @joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
@@ -86,7 +86,9 @@ ReleaseNotes:
         - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver) + New Berry Update Path (RAW)
         - 08.08.2025 - v4.9.4.3  Add Beta Logic for cardThermo2 (future)
         - 10.08.2025 - v4.9.4.3  Add Pirate-Weather Adapter
-        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu/us-l/us-p)
+        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu)
+        - 21.08.2025 - v4.9.5.2  Add Bright Sky Weather Adapter
+        
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -177,7 +179,8 @@ Tasmota-Status0 - (zyklische Ausführung)
 
 Erforderliche Adapter:
 
-    OpenWeatherMap oder DasWetter: - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
+    Pirate-Weather oder BrightSky oder OpenWeatherMap --> Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver 
+	!!!DasWetter deprecated        - Dienst nur noch für ältere Accounts funktional 
     !!!AccuWeather deprecated      - Dienst schaltet Free-Account ab!!!
     Alexa2:                        - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten               - Für Erstellung der Aliase
@@ -238,9 +241,9 @@ const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
 /***** 3. Weather adapter Config *****/
 
-// DE: Mögliche Wetteradapter 'openweathermap.0.' oder 'daswetter.0.' oder 'accuweather.0.' (deprecated)
-// EN: Possible weather adapters 'openweathermap.0.' or 'daswetter.0.' or 'accuweather.0.' (deprecated)
-const weatherAdapterInstance: string = 'openweathermap.0.';
+// DE: Mögliche Wetteradapter 'pirate-weather.0.' oder 'brightsky.0.' oder 'openweathermap.0.' oder 'daswetter.0.' (deprecated) oder 'accuweather.0.' (deprecated)
+// EN: Possible weather adapters 'pirate-weather.0.' or 'brightsky.0.' or 'openweathermap.0.' or 'daswetter.0.' (deprecated) or 'accuweather.0.' (deprecated)
+const weatherAdapterInstance: string = 'pirate-weather.0.';
 
 // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
 // EN: Possible values: 'Min', 'Max' or 'MinMax' in the screensaver
@@ -248,7 +251,7 @@ const weatherScreensaverTempMinMax: string = 'MinMax';
 
 // DE: Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
 // EN: This alias is automatically created for the selected weather and can be adjusted accordingly
-const weatherEntityPath: string = 'alias.0.OWMWetter';
+const weatherEntityPath: string = 'alias.0.Pirate_Weather'; //Please rename if change weatherAdapterInstance!
 
 
 /***** 4. Color constants for use in the PageItems *****/
@@ -273,7 +276,7 @@ const Gray: RGB = {red: 136, green: 136, blue: 136};
 const Black: RGB = {red: 0, green: 0, blue: 0};
 const Cyan: RGB = {red: 0, green: 255, blue: 255};
 const Magenta: RGB = {red: 255, green: 0, blue: 255}
-const Orange: RGB = { red: 255, green: 130, blue:   0 };
+const Orange: RGB = {red: 255, green: 130, blue: 0};
 const colorSpotify: RGB = {red: 30, green: 215, blue: 96};
 const colorAlexa: RGB = {red: 49, green: 196, blue: 243};
 const colorSonos: RGB = {red: 216, green: 161, blue: 88};
@@ -976,7 +979,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.5.1';
+const scriptVersion: string = 'v4.9.5.2';
 const tft_version: string = 'v4.9.5';
 const desired_display_firmware_version = 58;
 const berry_driver_version = 10;
@@ -2550,6 +2553,43 @@ async function CreateWeatherAlias () {
                     }
                 } catch (err: any) {
                     log('error at function CreateWeatherAlias pirate-weather.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
+                }
+            } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                try {
+                    if (isSetOptionActive) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('brightsky.' + weatherAdapterInstanceNumber + '.current.icon')) {
+                            log('Weather alias for brightsky.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('brightsky.' + weatherAdapterInstanceNumber + '.current.icon'), true, {
+                                type: 'string',
+                                role: 'value',
+                                name: 'ICON',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.icon'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'brightsky.' + weatherAdapterInstanceNumber + '.current.temperature', true, {
+                                type: 'number',
+                                role: 'value.temperature',
+                                name: 'TEMP',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.temperature', read: 'Math.round(val*10)/10'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_min', true, {
+                                type: 'number',
+                                role: 'value.temperature.forecast.0',
+                                name: 'TEMP_MIN',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_min', read: 'Math.round(val)'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_max', true, {
+                                type: 'number',
+                                role: 'value.temperature.max.forecast.0',
+                                name: 'TEMP_MAX',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_max', read: 'Math.round(val)'},
+                            });
+                        } else {
+                            log('weather alias for brightsky.' + weatherAdapterInstanceNumber + '. already exists', 'info');
+                        }
+                    }
+                } catch (err: any) {
+                    log('error at function CreateWeatherAlias brightsky.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         }
@@ -8678,7 +8718,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
                 '~' + //iconColor
                 displayName2 +
                 '~' + //displayName
-                optionalValue2,
+                optionalValue2
         });
 
         if (Debug) {
@@ -12214,6 +12254,7 @@ function scale (number: number, inMin: number, inMax: number, outMin: number, ou
  * @function UnsubscribeWatcher
  */
 function UnsubscribeWatcher (): void {
+    //log(Object.entries(subscriptions));
     try {
         for (const [key, value] of Object.entries(subscriptions)) {
             //@ts-ignore
@@ -12292,7 +12333,7 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
                     entityIconCol = GetOpenWeatherMapIconColor(icon);
-                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
+                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.' || weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetPirateWeatherIcon(icon));
                     entityIconCol = GetPirateWeatherIconColor(icon);
                 }
@@ -12483,6 +12524,30 @@ function HandleScreensaverUpdate (): void {
                             RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.time');
                             RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon');
                         }
+                    } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                        if (i < 6) {
+                            //Maximal 8 Tage bei openweathermap - pirate-weather.0.weather.daily.00.icon
+                            TempMin = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min')
+                                ? Math.round(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min').val * 10) / 10
+                                : 0;
+                            TempMax = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max')
+                                ? Math.round(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max').val * 10) / 10
+                                : 0;
+                            DayOfWeek = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp')
+                                ? formatDate(getDateObject((getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp').val)), 'W', 'de')
+                                : 0;
+                            WeatherIcon = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
+                                ? GetPirateWeatherIcon(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val)
+                                : '';
+                            WheatherColor = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
+                                ? GetPirateWeatherIconColor(String(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val))
+                                : 0;
+
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon');
+                        }
                     }
 
                     let tempMinMaxString: string = '';
@@ -12552,6 +12617,30 @@ function HandleScreensaverUpdate (): void {
                         arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunsetTime').val).getTime();
                         arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = getDateObject((new Date().getTime())).getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunset').val).getTime();
+                        arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
