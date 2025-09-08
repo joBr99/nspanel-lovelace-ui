@@ -1,10 +1,14 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.5.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 58 / v4.9.5 / BerryDriver 10 / Tasmota 15.0.1
-@joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+TypeScript v5.0.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 59 / v5.0.0 / BerryDriver 10 / Tasmota 15.0.1
+
+Projekt: 
+https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/tree/main
+
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
-ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
+ioBroker-Unterstützung: https://forum.iobroker.net/topic/58170/sonoff-nspanel-mit-lovelace-ui
 @Kuckuckmann: WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 
 ***************************************************************************************************************
@@ -17,10 +21,6 @@ Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-H
 ************************************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
-************************************************************************************************
-In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
-unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Downgrade 
-durchführen und FlashNextion wiederholen.
 ************************************************************************************************
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
@@ -86,7 +86,11 @@ ReleaseNotes:
         - 05.08.2025 - v4.9.4.2  Prevent version search to the old directory path (Berry-Driver) + New Berry Update Path (RAW)
         - 08.08.2025 - v4.9.4.3  Add Beta Logic for cardThermo2 (future)
         - 10.08.2025 - v4.9.4.3  Add Pirate-Weather Adapter
-        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu/us-l/us-p)
+        - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu)
+        - 21.08.2025 - v4.9.5.2  Add Bright Sky Weather Adapter
+        - 05.09.2025 - v5.0.0    TFT 59 / 5.0.0 - EU Changes in cardMedia, popupInSel, card Grid 1, 2, 3
+        - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
+        
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -103,7 +107,7 @@ Tasmota Konsole:
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
-                          - weitere Screensaver wie Advanced, Easyview und Alternativ
+                        - weitere Screensaver wie Advanced, Easyview und Alternativ
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
                           5 vertikale angeordnete Steuerelemente - auch als Subpage beim US-Modell im Portrait-Modus
     cardSchedule Page   - 6 vertikale angeordnete Text-Steuerelemente - auch als Subpage
@@ -112,6 +116,7 @@ Mögliche Seiten-Ansichten:
                           9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage - beim US-Modell im Portrait-Modus    
     cardGrid3 Page      - 4 horizontal angeordnete Steuerelemente in 2 Reihen a 2 Steuerelemente - auch als Subpage
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
+    cardThermo2 Page    - weiterer Thermostat (Circular Slider) mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
@@ -123,12 +128,16 @@ Mögliche Seiten-Ansichten:
     https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Card-Definitionen-(Seiten)
 
 Popup-Pages:
-    popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
-    popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
-    popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
-    screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
-    popupInSel Page     - Auswahlliste (InputSelect)
-    popupSlider Page    - 3 vertikal ausgerichtete Slider. Abweichender 0 Punkt möglich
+    popupLight         - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
+	popupLight2        - (größere Elemente) in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
+    popupShutter       - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
+	popupShutter2      - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
+    popupNotify        - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
+    screensaver Notify - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
+    popupInSel         - Auswahlliste (InputSelect)
+    popupSlider        - 3 vertikal ausgerichtete Slider. Abweichender 0 Punkt möglich
+	popupFan           - Ventilatorsteuerung
+    popupTimer         - Stopuhr, Countdown, Wecker oder Zeitschaltuhr
 
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
@@ -156,10 +165,10 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperatur - Datenpunkten, analog Info
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
-    Medien              - Steuerung von Alexa, etc. - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
+    Medien              - Steuerung von Alexa, etc. - Der erforderliche Media Alias-Channel legt sich selbst an
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
     Warnung             - Abfall, etc. -- Info mit IconColor
-
+    Ventilator          - An/Aus mit Steuerung über popupFan
     Timer (siehe Wiki)
 
     Vollständige Liste zur Einrichtung unter:
@@ -177,7 +186,8 @@ Tasmota-Status0 - (zyklische Ausführung)
 
 Erforderliche Adapter:
 
-    OpenWeatherMap oder DasWetter: - Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver
+    Pirate-Weather oder BrightSky oder OpenWeatherMap --> Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver 
+	!!!DasWetter deprecated        - Dienst nur noch für ältere Accounts funktional 
     !!!AccuWeather deprecated      - Dienst schaltet Free-Account ab!!!
     Alexa2:                        - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten               - Für Erstellung der Aliase
@@ -188,10 +198,11 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v4.9.5.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v4.9.5.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v4.9.5.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.0.tft
+
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.0.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -238,9 +249,9 @@ const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
 /***** 3. Weather adapter Config *****/
 
-// DE: Mögliche Wetteradapter 'openweathermap.0.' oder 'daswetter.0.' oder 'accuweather.0.' (deprecated)
-// EN: Possible weather adapters 'openweathermap.0.' or 'daswetter.0.' or 'accuweather.0.' (deprecated)
-const weatherAdapterInstance: string = 'openweathermap.0.';
+// DE: Mögliche Wetteradapter 'pirate-weather.0.' oder 'brightsky.0.' oder 'openweathermap.0.' oder 'daswetter.0.' (deprecated) oder 'accuweather.0.' (deprecated)
+// EN: Possible weather adapters 'pirate-weather.0.' or 'brightsky.0.' or 'openweathermap.0.' or 'daswetter.0.' (deprecated) or 'accuweather.0.' (deprecated)
+const weatherAdapterInstance: string = 'pirate-weather.0.';
 
 // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
 // EN: Possible values: 'Min', 'Max' or 'MinMax' in the screensaver
@@ -248,7 +259,7 @@ const weatherScreensaverTempMinMax: string = 'MinMax';
 
 // DE: Dieser Alias wird automatisch für den gewählten Wetter erstellt und kann entsprechend angepasst werden
 // EN: This alias is automatically created for the selected weather and can be adjusted accordingly
-const weatherEntityPath: string = 'alias.0.OWMWetter';
+const weatherEntityPath: string = 'alias.0.Pirate_Weather'; //Please rename if change weatherAdapterInstance!
 
 
 /***** 4. Color constants for use in the PageItems *****/
@@ -273,7 +284,7 @@ const Gray: RGB = {red: 136, green: 136, blue: 136};
 const Black: RGB = {red: 0, green: 0, blue: 0};
 const Cyan: RGB = {red: 0, green: 255, blue: 255};
 const Magenta: RGB = {red: 255, green: 0, blue: 255}
-const Orange: RGB = { red: 255, green: 130, blue:   0 };
+const Orange: RGB = {red: 255, green: 130, blue: 0};
 const colorSpotify: RGB = {red: 30, green: 215, blue: 96};
 const colorAlexa: RGB = {red: 49, green: 196, blue: 243};
 const colorSonos: RGB = {red: 216, green: 161, blue: 88};
@@ -976,9 +987,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.5.1';
-const tft_version: string = 'v4.9.5';
-const desired_display_firmware_version = 58;
+const scriptVersion: string = 'v5.0.0.1';
+const tft_version: string = 'v5.0.0';
+const desired_display_firmware_version = 59;
 const berry_driver_version = 10;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -2550,6 +2561,43 @@ async function CreateWeatherAlias () {
                     }
                 } catch (err: any) {
                     log('error at function CreateWeatherAlias pirate-weather.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
+                }
+            } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                try {
+                    if (isSetOptionActive) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('brightsky.' + weatherAdapterInstanceNumber + '.current.icon')) {
+                            log('Weather alias for brightsky.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
+                            setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('brightsky.' + weatherAdapterInstanceNumber + '.current.icon'), true, {
+                                type: 'string',
+                                role: 'value',
+                                name: 'ICON',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.icon'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'brightsky.' + weatherAdapterInstanceNumber + '.current.temperature', true, {
+                                type: 'number',
+                                role: 'value.temperature',
+                                name: 'TEMP',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.temperature', read: 'Math.round(val*10)/10'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_min', true, {
+                                type: 'number',
+                                role: 'value.temperature.forecast.0',
+                                name: 'TEMP_MIN',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_min', read: 'Math.round(val)'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_max', true, {
+                                type: 'number',
+                                role: 'value.temperature.max.forecast.0',
+                                name: 'TEMP_MAX',
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.daily.00.temperature_max', read: 'Math.round(val)'},
+                            });
+                        } else {
+                            log('weather alias for brightsky.' + weatherAdapterInstanceNumber + '. already exists', 'info');
+                        }
+                    }
+                } catch (err: any) {
+                    log('error at function CreateWeatherAlias brightsky.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         }
@@ -8678,7 +8726,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
                 '~' + //iconColor
                 displayName2 +
                 '~' + //displayName
-                optionalValue2,
+                optionalValue2
         });
 
         if (Debug) {
@@ -12214,6 +12262,7 @@ function scale (number: number, inMin: number, inMax: number, outMin: number, ou
  * @function UnsubscribeWatcher
  */
 function UnsubscribeWatcher (): void {
+    //log(Object.entries(subscriptions));
     try {
         for (const [key, value] of Object.entries(subscriptions)) {
             //@ts-ignore
@@ -12292,7 +12341,7 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
                     entityIconCol = GetOpenWeatherMapIconColor(icon);
-                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
+                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.' || weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetPirateWeatherIcon(icon));
                     entityIconCol = GetPirateWeatherIconColor(icon);
                 }
@@ -12483,6 +12532,30 @@ function HandleScreensaverUpdate (): void {
                             RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.time');
                             RegisterScreensaverEntityWatcher('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.0' + String(i-1) + '.icon');
                         }
+                    } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                        if (i < 6) {
+                            //Maximal 8 Tage bei openweathermap - pirate-weather.0.weather.daily.00.icon
+                            TempMin = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min')
+                                ? Math.round(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min').val * 10) / 10
+                                : 0;
+                            TempMax = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max')
+                                ? Math.round(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max').val * 10) / 10
+                                : 0;
+                            DayOfWeek = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp')
+                                ? formatDate(getDateObject((getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp').val)), 'W', 'de')
+                                : 0;
+                            WeatherIcon = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
+                                ? GetPirateWeatherIcon(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val)
+                                : '';
+                            WheatherColor = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
+                                ? GetPirateWeatherIconColor(String(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val))
+                                : 0;
+
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon');
+                        }
                     }
 
                     let tempMinMaxString: string = '';
@@ -12552,6 +12625,30 @@ function HandleScreensaverUpdate (): void {
                         arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunsetTime').val).getTime();
                         arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = getDateObject((new Date().getTime())).getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunset').val).getTime();
+                        arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -14809,6 +14906,18 @@ namespace NSPanel {
         popupVersion?: number;
         shutterType?: string;
         shutterZeroIsClosed?: boolean;
+        sliderItems?: [sliderItems?, sliderItems?, sliderItems?] | null;
+    };
+
+    type sliderItems = {
+        heading: string;
+        icon1?: string;
+        icon2?: string;
+        minValue?: number;
+        maxValue?: number;
+        stepValue?: number;
+        zeroValue?: boolean;
+        id?: string; // writeable overwrite actual and set
     };
 
     type shutterIcons = {
