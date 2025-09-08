@@ -1,10 +1,14 @@
 /*-----------------------------------------------------------------------
-TypeScript v4.9.5.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 58 / v4.9.5 / BerryDriver 10 / Tasmota 15.0.1
-@joBr99 Projekt: https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+TypeScript v5.0.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 59 / v5.0.0 / BerryDriver 10 / Tasmota 15.0.1
+
+Projekt: 
+https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
+https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/tree/main
+
 NsPanelTs.ts (dieses TypeScript in ioBroker) Stable: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/NsPanelTs.ts
 icon_mapping.ts: https://github.com/joBr99/nspanel-lovelace-ui/blob/main/ioBroker/icon_mapping.ts (TypeScript muss in global liegen)
-ioBroker-Unterstützung: https://forum.iobroker.net/topic/50888/sonoff-nspanel
+ioBroker-Unterstützung: https://forum.iobroker.net/topic/58170/sonoff-nspanel-mit-lovelace-ui
 @Kuckuckmann: WIKI zu diesem Projekt unter: https://github.com/joBr99/nspanel-lovelace-ui/wiki (siehe Sidebar)
 
 ***************************************************************************************************************
@@ -17,10 +21,6 @@ Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-H
 ************************************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
-************************************************************************************************
-In bestimmten Situationen kommt es vor, dass sich das Panel mit FlashNextion
-unter Tasmota > 12.2.0 nicht flashen lässt. Für den Fall ein Tasmota Downgrade 
-durchführen und FlashNextion wiederholen.
 ************************************************************************************************
 Ab Tasmota > 13.0.0 ist für ein Upgrade ggfs. eine Umpartitionierung erforderlich
 https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Tasmota-FAQ#3-tasmota-update-probleme
@@ -88,6 +88,8 @@ ReleaseNotes:
         - 10.08.2025 - v4.9.4.3  Add Pirate-Weather Adapter
         - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu)
         - 21.08.2025 - v4.9.5.2  Add Bright Sky Weather Adapter
+        - 05.09.2025 - v5.0.0    TFT 59 / 5.0.0 - EU Changes in cardMedia, popupInSel, card Grid 1, 2, 3
+        - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
         
 	
 ***************************************************************************************************************
@@ -105,7 +107,7 @@ Tasmota Konsole:
 Mögliche Seiten-Ansichten:
     screensaver Page    - wird nach definiertem Zeitraum (config) mit Dimm-Modus aktiv (Uhrzeit, Datum, Aktuelle Temperatur mit Symbol)
                           (die 4 kleineren Icons können als Wetter-Vorschau + 4Tage (Symbol + Höchsttemperatur) oder zur Anzeige definierter Infos konfiguriert werden)
-                          - weitere Screensaver wie Advanced, Easyview und Alternativ
+                        - weitere Screensaver wie Advanced, Easyview und Alternativ
     cardEntities Page   - 4 vertikale angeordnete Steuerelemente - auch als Subpage
                           5 vertikale angeordnete Steuerelemente - auch als Subpage beim US-Modell im Portrait-Modus
     cardSchedule Page   - 6 vertikale angeordnete Text-Steuerelemente - auch als Subpage
@@ -114,6 +116,7 @@ Mögliche Seiten-Ansichten:
                           9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage - beim US-Modell im Portrait-Modus    
     cardGrid3 Page      - 4 horizontal angeordnete Steuerelemente in 2 Reihen a 2 Steuerelemente - auch als Subpage
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
+    cardThermo2 Page    - weiterer Thermostat (Circular Slider) mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardMedia Page      - Mediaplayer - Ausnahme: Alias sollte mit Alias-Manager automatisch über Alexa-Verzeichnis Player angelegt werden
     cardAlarm Page      - Alarmseite mit Zustand und Tastenfeld
     cardPower Page      - Energiefluss
@@ -125,12 +128,16 @@ Mögliche Seiten-Ansichten:
     https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Card-Definitionen-(Seiten)
 
 Popup-Pages:
-    popupLight Page     - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
-    popupShutter Page   - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
-    popupNotify Page    - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
-    screensaver Notify  - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
-    popupInSel Page     - Auswahlliste (InputSelect)
-    popupSlider Page    - 3 vertikal ausgerichtete Slider. Abweichender 0 Punkt möglich
+    popupLight         - in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
+	popupLight2        - (größere Elemente) in Abhängigkeit zum gewählten Alias werden "Helligkeit", "Farbtemperatur" und "Farbauswahl" bereitgestellt
+    popupShutter       - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
+	popupShutter2      - die Shutter-Position (Rollo, Jalousie, Markise, Leinwand, etc.) kann über einen Slider verändert werden.
+    popupNotify        - Info - Seite mit Headline Text und Buttons - Intern für manuelle Updates / Extern zur Befüllung von Datenpunkten unter 0_userdata
+    screensaver Notify - Über zwei externe Datenpunkte in 0_userdata können "Headline" und "Text" an den Screensaver zur Info gesendet werden
+    popupInSel         - Auswahlliste (InputSelect)
+    popupSlider        - 3 vertikal ausgerichtete Slider. Abweichender 0 Punkt möglich
+	popupFan           - Ventilatorsteuerung
+    popupTimer         - Stopuhr, Countdown, Wecker oder Zeitschaltuhr
 
 Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigurieren, da SET, GET, ACTUAL, etc. verwendet werden)
     Info                - Werte aus Datenpunkt
@@ -158,10 +165,10 @@ Mögliche Aliase: (Vorzugsweise mit ioBroker-Adapter "Geräte verwalten" konfigu
     Klimaanlage         - Buttons zur Steuerung der Klimaanlage im unteren Bereich
     Temperatur          - Anzeige von Temperatur - Datenpunkten, analog Info
     Feuchtigkeit        - Anzeige von Humidity - Datenpunkten, analog Info
-    Medien              - Steuerung von Alexa, etc. - Über Alias-Manager im Verzeichnis Player automatisch anlegen (Geräte-Manager funktioniert nicht)
+    Medien              - Steuerung von Alexa, etc. - Der erforderliche Media Alias-Channel legt sich selbst an
     Wettervorhersage    - Aktuelle Außen-Temperatur (Temp) und aktuelles AccuWeather-Icon (Icon) für Screensaver
     Warnung             - Abfall, etc. -- Info mit IconColor
-
+    Ventilator          - An/Aus mit Steuerung über popupFan
     Timer (siehe Wiki)
 
     Vollständige Liste zur Einrichtung unter:
@@ -191,10 +198,11 @@ Install/Upgrades in Konsole:
 
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
-    TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v4.9.5.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v4.9.5.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v4.9.5.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.0.tft
+
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.0.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -979,9 +987,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v4.9.5.2';
-const tft_version: string = 'v4.9.5';
-const desired_display_firmware_version = 58;
+const scriptVersion: string = 'v5.0.0.1';
+const tft_version: string = 'v5.0.0';
+const desired_display_firmware_version = 59;
 const berry_driver_version = 10;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
