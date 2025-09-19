@@ -1057,7 +1057,6 @@ onStop(function scriptStop () {
     if (scheduleSendTime != null) _clearSchedule(scheduleSendTime);
     if (scheduleSendDate != null) _clearSchedule(scheduleSendDate);
     if (scheduleSwichScreensaver != null) _clearSchedule(scheduleSwichScreensaver);
-    if (scheduleStartup != null) _clearSchedule(scheduleStartup);
     if (scheduleCheckUpdates != null) _clearSchedule(scheduleCheckUpdates);
     if (scheduleInitDimModeDay != null) _clearSchedule(scheduleInitDimModeDay);
     if (scheduleInitDimModeNight != null) _clearSchedule(scheduleInitDimModeNight);
@@ -3461,11 +3460,6 @@ on({id: [NSPanel_Path + 'Config.Screensaver.timeoutScreensaver'], change: 'ne'},
 
 let scheduleSendDate = adapterSchedule(new Date().setMinutes(0, 0), 60 * 60, () => {
     SendDate();
-});
-
-// 3:30 a.m. Perform startup and receive current TFT version
-let scheduleStartup = adapterSchedule({hour: 3, minute: 30}, 24 * 60 * 60, async () => {
-    setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 });
 
 // Check for updates with Start
@@ -7033,7 +7027,7 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
                     '~' + 
                     getNavigationString(pageId) +   // 2-13 Page Navigation 
                     /*-Temp Control-----------------------------------*/
-                    '~' + id + '~' + destTemp + '~' + minTemp + '~' + maxTemp + '~' + stepTemp + '~' + unit + '~' + '1' +
+                    '~' + id + '~' + destTemp + '~' + minTemp + '~' + maxTemp + '~' + stepTemp + '~' + unit + '~' + /* 20 */ actualModeState +
                     /* Entity 1 - Actual Temperature (Icon) */
                     '~text~' + pageId + '?1~' + Icons.GetIcon('thermometer') + '~' + tempColor + '~~' +
                     /* Entity 2 - Actual Temperature (Temp) */
@@ -7047,7 +7041,7 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
                     /* Entity 6 - Actual Humidity (Unit) */
                     '~text~' + pageId + '?6~' + humidityUnit + '~' + humColor + '~~' +
                     /* Entity 7 - Text-State */
-                    '~text~' + pageId + '?7~' + modeStatus + '~' + textStateColor + '~~' + actualModeState;
+                    '~text~' + pageId + '?7~' + modeStatus + '~' + textStateColor + '~~' + /* 62 */ actualModeState;
                     
             for (let i=0; i<9; i++) {
                 if(page.items[i] != undefined) {
@@ -11258,7 +11252,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
             if (type == 'popupSlider') {
 
                 let tempId = placeId != undefined ? placeId : id;
-                
+
                 if (isPageMediaItem(pageItem)) {
 
                     const vTempAdapter = pageItem.adapterPlayerInstance!.split('.');
@@ -11360,6 +11354,49 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 hSlider3Visibility   // If Slider Tap >  --> tmSerial 28
                         });
                     }
+                } else { // no Media Item
+
+                        let tSlider2: string = "";
+                        let tIconS2M: string = Icons.GetIcon("minus-box"); 
+                        let tIconS2P: string = Icons.GetIcon("plus-box");
+                        let hSlider2MinVal: number = pageItem.minValue ?? 0;
+                        let hSlider2MaxVal: number = pageItem.maxValue ?? 100;
+                        let hSlider2ZeroVal: number = 0;
+                        let hSlider2CurVal: number = getState(id + '.ACTUAL').val;
+                        let hSlider2Step: number = 1;
+                        let hSlider2Visibility: string = "enable";
+
+                        out_msgs.push({
+                            payload:
+                                'entityUpdateDetail' +
+                                '~' + //entityUpdateDetail
+                                tempId +
+                                // Slider1
+                                '~~~~~~~~~disable' +
+                                // Slider2
+                                '~' +
+                                tSlider2 +           // Slider2 Headline --> tmSerial 11
+                                '~' +
+                                tIconS2M +           // Slider2 Left Icon --> tmSerial 12
+                                '~' +
+                                tIconS2P +           // Slider2 Right Icon --> tmSerial 13
+                                '~' +
+                                hSlider2CurVal +     // Slider2 Current Slider Value --> tmSerial 14
+                                '~' +
+                                hSlider2MinVal +     // Slider2 Minimal Slider Value --> tmSerial 15
+                                '~' +
+                                hSlider2MaxVal +     // Slider2 Maximal Slider Value --> tmSerial 16
+                                '~' +
+                                hSlider2ZeroVal +    // If Slider2 0 is betweeb Min and Max --> tmSerial 17
+                                '~' +
+                                hSlider2Step +       // If Slider2 Tap > 1 --> tmSerial 18
+                                '~' +
+                                hSlider2Visibility + // If Slider Tap >  --> tmSerial 19
+                                // Slider3
+                                '~~~~~~~~~disable' 
+                        });
+
+
                 }
             }
 
@@ -12624,7 +12661,7 @@ function HandleScreensaverUpdate (): void {
 
                         arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunsetTime').val).getTime();
-                        arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.01.sunriseTime').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -12648,7 +12685,7 @@ function HandleScreensaverUpdate (): void {
 
                         arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunset').val).getTime();
-                        arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.01.sunrise').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -14906,18 +14943,6 @@ namespace NSPanel {
         popupVersion?: number;
         shutterType?: string;
         shutterZeroIsClosed?: boolean;
-        sliderItems?: [sliderItems?, sliderItems?, sliderItems?] | null;
-    };
-
-    type sliderItems = {
-        heading: string;
-        icon1?: string;
-        icon2?: string;
-        minValue?: number;
-        maxValue?: number;
-        stepValue?: number;
-        zeroValue?: boolean;
-        id?: string; // writeable overwrite actual and set
     };
 
     type shutterIcons = {
