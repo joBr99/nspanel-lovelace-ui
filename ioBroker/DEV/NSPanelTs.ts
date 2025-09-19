@@ -90,7 +90,7 @@ ReleaseNotes:
         - 21.08.2025 - v4.9.5.2  Add Bright Sky Weather Adapter
         - 05.09.2025 - v5.0.0    TFT 59 / 5.0.0 - EU Changes in cardMedia, popupInSel, card Grid 1, 2, 3
         - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
-        - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am 
+        - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
 
 	
 ***************************************************************************************************************
