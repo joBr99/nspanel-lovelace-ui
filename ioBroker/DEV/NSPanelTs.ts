@@ -5916,10 +5916,10 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             if (obj2.type === 'state' && obj2.common.type == "boolean") {
                                 if (Debug) log(getState(obj.common.alias.id).val, 'info');
                                 if (getState(obj.common.alias.id).val) {
-                                    if (!pageItem.maxValue) iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
+                                    if (!pageItem.useValue) iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
                                     iconColor = pageItem.onColor != undefined ? rgb_dec565(pageItem.onColor) : iconColor;
                                 } else {
-                                    if(!pageItem.maxValue) iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+                                    if(!pageItem.useValue) iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
                                     iconColor = pageItem.offColor != undefined ? rgb_dec565(pageItem.offColor) : iconColor;
                                 }
                             }
