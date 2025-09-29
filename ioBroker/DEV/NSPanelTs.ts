@@ -5904,7 +5904,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                         }
                     }
 
-                    if (existsState(pageItem.id + '.ACTUAL') && pageItem.icon2 != undefined) {
+                    if (existsState(pageItem.id + '.ACTUAL') && (pageItem.icon2 != undefined || pageItem.useValue)) {
                         // Read Alias Datapoint Objectdata
                         let obj = getObject(pageItem.id + ".ACTUAL");
                         // Read origin Datapoint Objectdata
@@ -5916,14 +5916,20 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             if (obj2.type === 'state' && obj2.common.type == "boolean") {
                                 if (Debug) log(getState(obj.common.alias.id).val, 'info');
                                 if (getState(obj.common.alias.id).val) {
-                                    iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
+                                    if (!pageItem.maxValue) iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
                                     iconColor = pageItem.onColor != undefined ? rgb_dec565(pageItem.onColor) : iconColor;
                                 } else {
-                                    iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+                                    if(!pageItem.maxValue) iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
                                     iconColor = pageItem.offColor != undefined ? rgb_dec565(pageItem.offColor) : iconColor;
                                 }
                             }
                         }
+                    }
+
+                    if (existsState(pageItem.id + '.COLORDEC')) {
+                        if (Debug) log('iconcolor von ' + pageItem.id + '.COLORDEC: ' + getState(pageItem.id + '.COLORDEC').val, 'info');
+                        RegisterEntityWatcher(pageItem.id + '.COLORDEC');
+                        iconColor = getState(pageItem.id + '.COLORDEC').val;
                     }
 
                     if (Debug) log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat', 'info');
