@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.0.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 59 / v5.0.0 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v5.0.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 59 / v5.0.2 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt: 
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -18,6 +18,8 @@ Achtung: Keine Beispiele mehr im Script. Die Beispiele sind jetzt unter nachfolg
 
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
 
+************************************************************************************************
+Achtung Tasmota 15.1.0 lässt kein FlashNextion zu --> stattdessen v15.0.1 verwenden
 ************************************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
@@ -91,6 +93,7 @@ ReleaseNotes:
         - 05.09.2025 - v5.0.0    TFT 59 / 5.0.0 - EU Changes in cardMedia, popupInSel, card Grid 1, 2, 3
         - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
         - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
+        - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart 
 
 	
 ***************************************************************************************************************
@@ -200,10 +203,10 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
 
-	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.0.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.2.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.0.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.0.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.2.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.2.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -229,12 +232,12 @@ const tasmota_web_admin_user: string = 'admin';
 // EN set if "Web Admin Password" is assigned in Tasmota
 const tasmota_web_admin_password: string = '';
 
-// DE: Setzen der bevorzugten Tasmota32-Version (für Updates)
+// Setzen der bevorzugten Tasmota32-Version (für Updates)
 // EN: Set preferred Tasmota32 version (for updates)
-const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
-// DE: Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
-// EN: Other versions can also be used, such as:
-// 'tasmota32-nspanel.bin' or 'tasmota32.bin' or 'tasmota32-DE.bin' or etc.
+const tasmotaOtaVersion: string = 'tasmota32-nspanel.bin';
+// Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
+// 'tasmota32-DE.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
+// !!!Anmerkung!!! Seit Tasmota v15.0.X wird der 4Mb PSRAM im ESP32 nur noch in der tasmota32-nspanel.bin verwendet   
 
 
 /***** 2. Directories in 0_userdata.0... *****/
@@ -988,8 +991,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.0.0.2';
-const tft_version: string = 'v5.0.0';
+const scriptVersion: string = 'v5.0.2.1';
+const tft_version: string = 'v5.0.2';
 const desired_display_firmware_version = 59;
 const berry_driver_version = 10;
 
