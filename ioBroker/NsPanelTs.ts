@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.0.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 59 / v5.0.0 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v5.0.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 59 / v5.0.2 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt: 
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -18,6 +18,8 @@ Achtung: Keine Beispiele mehr im Script. Die Beispiele sind jetzt unter nachfolg
 
 Icons unter: https://htmlpreview.github.io/?https://github.com/jobr99/Generate-HASP-Fonts/blob/master/cheatsheet.html
 
+************************************************************************************************
+Achtung Tasmota 15.1.0 lässt kein FlashNextion zu --> stattdessen v15.0.1 verwenden
 ************************************************************************************************
 Achtung Änderung des Sonoff ESP-Temperatursensors
 !!! Bitte "SetOption146 1" in der Tasmota-Console ausführen !!!
@@ -90,7 +92,9 @@ ReleaseNotes:
         - 21.08.2025 - v4.9.5.2  Add Bright Sky Weather Adapter
         - 05.09.2025 - v5.0.0    TFT 59 / 5.0.0 - EU Changes in cardMedia, popupInSel, card Grid 1, 2, 3
         - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
-        
+        - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
+        - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart 
+
 	
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -199,10 +203,10 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
 
-	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.0.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.2.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.0.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.0.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.2.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.2.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -230,10 +234,11 @@ const tasmota_web_admin_password: string = '';
 
 // DE: Setzen der bevorzugten Tasmota32-Version (für Updates)
 // EN: Set preferred Tasmota32 version (for updates)
-const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
+const tasmotaOtaVersion: string = 'tasmota32-nspanel.bin';
 // DE: Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
-// EN: Other versions can also be used, such as:
-// 'tasmota32-nspanel.bin' or 'tasmota32.bin' or 'tasmota32-DE.bin' or etc.
+// EN: 'tasmota32-DE.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
+// DE: !!!Anmerkung!!! Seit Tasmota v15.0.X wird der 4Mb PSRAM im ESP32 nur noch in der tasmota32-nspanel.bin verwendet
+// EN: !!!Note!!! Since Tasmota v15.0.X, the 4Mb PSRAM in the ESP32 is only used in the tasmota32-nspanel.bin
 
 
 /***** 2. Directories in 0_userdata.0... *****/
@@ -987,8 +992,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.0.0.1';
-const tft_version: string = 'v5.0.0';
+const scriptVersion: string = 'v5.0.2.1';
+const tft_version: string = 'v5.0.2';
 const desired_display_firmware_version = 59;
 const berry_driver_version = 10;
 
@@ -1057,7 +1062,6 @@ onStop(function scriptStop () {
     if (scheduleSendTime != null) _clearSchedule(scheduleSendTime);
     if (scheduleSendDate != null) _clearSchedule(scheduleSendDate);
     if (scheduleSwichScreensaver != null) _clearSchedule(scheduleSwichScreensaver);
-    if (scheduleStartup != null) _clearSchedule(scheduleStartup);
     if (scheduleCheckUpdates != null) _clearSchedule(scheduleCheckUpdates);
     if (scheduleInitDimModeDay != null) _clearSchedule(scheduleInitDimModeDay);
     if (scheduleInitDimModeNight != null) _clearSchedule(scheduleInitDimModeNight);
@@ -3461,11 +3465,6 @@ on({id: [NSPanel_Path + 'Config.Screensaver.timeoutScreensaver'], change: 'ne'},
 
 let scheduleSendDate = adapterSchedule(new Date().setMinutes(0, 0), 60 * 60, () => {
     SendDate();
-});
-
-// 3:30 a.m. Perform startup and receive current TFT version
-let scheduleStartup = adapterSchedule({hour: 3, minute: 30}, 24 * 60 * 60, async () => {
-    setIfExists(config.panelSendTopic, 'pageType~pageStartup');
 });
 
 // Check for updates with Start
@@ -5909,7 +5908,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                         }
                     }
 
-                    if (existsState(pageItem.id + '.ACTUAL') && pageItem.icon2 != undefined) {
+                    if (existsState(pageItem.id + '.ACTUAL') && (pageItem.icon2 != undefined || pageItem.useValue)) {
                         // Read Alias Datapoint Objectdata
                         let obj = getObject(pageItem.id + ".ACTUAL");
                         // Read origin Datapoint Objectdata
@@ -5921,14 +5920,20 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             if (obj2.type === 'state' && obj2.common.type == "boolean") {
                                 if (Debug) log(getState(obj.common.alias.id).val, 'info');
                                 if (getState(obj.common.alias.id).val) {
-                                    iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
+                                    if (!pageItem.useValue) iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
                                     iconColor = pageItem.onColor != undefined ? rgb_dec565(pageItem.onColor) : iconColor;
                                 } else {
-                                    iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+                                    if(!pageItem.useValue) iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
                                     iconColor = pageItem.offColor != undefined ? rgb_dec565(pageItem.offColor) : iconColor;
                                 }
                             }
                         }
+                    }
+
+                    if (existsState(pageItem.id + '.COLORDEC')) {
+                        if (Debug) log('iconcolor von ' + pageItem.id + '.COLORDEC: ' + getState(pageItem.id + '.COLORDEC').val, 'info');
+                        RegisterEntityWatcher(pageItem.id + '.COLORDEC');
+                        iconColor = getState(pageItem.id + '.COLORDEC').val;
                     }
 
                     if (Debug) log('CreateEntity Icon role info, humidity, temperature, value.temperature, value.humidity, sensor.door, sensor.window, thermostat', 'info');
@@ -7033,7 +7038,7 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
                     '~' + 
                     getNavigationString(pageId) +   // 2-13 Page Navigation 
                     /*-Temp Control-----------------------------------*/
-                    '~' + id + '~' + destTemp + '~' + minTemp + '~' + maxTemp + '~' + stepTemp + '~' + unit + '~' + '1' +
+                    '~' + id + '~' + destTemp + '~' + minTemp + '~' + maxTemp + '~' + stepTemp + '~' + unit + '~' + /* 20 */ actualModeState +
                     /* Entity 1 - Actual Temperature (Icon) */
                     '~text~' + pageId + '?1~' + Icons.GetIcon('thermometer') + '~' + tempColor + '~~' +
                     /* Entity 2 - Actual Temperature (Temp) */
@@ -7047,7 +7052,7 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
                     /* Entity 6 - Actual Humidity (Unit) */
                     '~text~' + pageId + '?6~' + humidityUnit + '~' + humColor + '~~' +
                     /* Entity 7 - Text-State */
-                    '~text~' + pageId + '?7~' + modeStatus + '~' + textStateColor + '~~' + actualModeState;
+                    '~text~' + pageId + '?7~' + modeStatus + '~' + textStateColor + '~~' + /* 62 */ actualModeState;
                     
             for (let i=0; i<9; i++) {
                 if(page.items[i] != undefined) {
@@ -11258,7 +11263,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
             if (type == 'popupSlider') {
 
                 let tempId = placeId != undefined ? placeId : id;
-                
+
                 if (isPageMediaItem(pageItem)) {
 
                     const vTempAdapter = pageItem.adapterPlayerInstance!.split('.');
@@ -11360,6 +11365,49 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 hSlider3Visibility   // If Slider Tap >  --> tmSerial 28
                         });
                     }
+                } else { // no Media Item
+
+                        let tSlider2: string = "";
+                        let tIconS2M: string = Icons.GetIcon("minus-box"); 
+                        let tIconS2P: string = Icons.GetIcon("plus-box");
+                        let hSlider2MinVal: number = pageItem.minValue ?? 0;
+                        let hSlider2MaxVal: number = pageItem.maxValue ?? 100;
+                        let hSlider2ZeroVal: number = 0;
+                        let hSlider2CurVal: number = getState(id + '.ACTUAL').val;
+                        let hSlider2Step: number = 1;
+                        let hSlider2Visibility: string = "enable";
+
+                        out_msgs.push({
+                            payload:
+                                'entityUpdateDetail' +
+                                '~' + //entityUpdateDetail
+                                tempId +
+                                // Slider1
+                                '~~~~~~~~~disable' +
+                                // Slider2
+                                '~' +
+                                tSlider2 +           // Slider2 Headline --> tmSerial 11
+                                '~' +
+                                tIconS2M +           // Slider2 Left Icon --> tmSerial 12
+                                '~' +
+                                tIconS2P +           // Slider2 Right Icon --> tmSerial 13
+                                '~' +
+                                hSlider2CurVal +     // Slider2 Current Slider Value --> tmSerial 14
+                                '~' +
+                                hSlider2MinVal +     // Slider2 Minimal Slider Value --> tmSerial 15
+                                '~' +
+                                hSlider2MaxVal +     // Slider2 Maximal Slider Value --> tmSerial 16
+                                '~' +
+                                hSlider2ZeroVal +    // If Slider2 0 is betweeb Min and Max --> tmSerial 17
+                                '~' +
+                                hSlider2Step +       // If Slider2 Tap > 1 --> tmSerial 18
+                                '~' +
+                                hSlider2Visibility + // If Slider Tap >  --> tmSerial 19
+                                // Slider3
+                                '~~~~~~~~~disable' 
+                        });
+
+
                 }
             }
 
@@ -12624,7 +12672,7 @@ function HandleScreensaverUpdate (): void {
 
                         arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunsetTime').val).getTime();
-                        arraySunEvent[0] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.00.sunriseTime').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('pirate-weather.' + weatherAdapterInstanceNumber + '.weather.daily.01.sunriseTime').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -12648,7 +12696,7 @@ function HandleScreensaverUpdate (): void {
 
                         arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunset').val).getTime();
-                        arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.01.sunrise').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
