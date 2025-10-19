@@ -232,12 +232,13 @@ const tasmota_web_admin_user: string = 'admin';
 // EN set if "Web Admin Password" is assigned in Tasmota
 const tasmota_web_admin_password: string = '';
 
-// Setzen der bevorzugten Tasmota32-Version (für Updates)
+// DE: Setzen der bevorzugten Tasmota32-Version (für Updates)
 // EN: Set preferred Tasmota32 version (for updates)
 const tasmotaOtaVersion: string = 'tasmota32-nspanel.bin';
-// Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
-// 'tasmota32-DE.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
-// !!!Anmerkung!!! Seit Tasmota v15.0.X wird der 4Mb PSRAM im ESP32 nur noch in der tasmota32-nspanel.bin verwendet   
+// DE: Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
+// EN: 'tasmota32-DE.bin' oder 'tasmota32.bin' oder 'tasmota32-DE.bin' oder etc.
+// DE: !!!Anmerkung!!! Seit Tasmota v15.0.X wird der 4Mb PSRAM im ESP32 nur noch in der tasmota32-nspanel.bin verwendet
+// EN: !!!Note!!! Since Tasmota v15.0.X, the 4Mb PSRAM in the ESP32 is only used in the tasmota32-nspanel.bin
 
 
 /***** 2. Directories in 0_userdata.0... *****/
