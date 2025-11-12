@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.0.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 59 / v5.0.2 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v5.1.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 60 / v5.1.0 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt: 
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -94,6 +94,7 @@ ReleaseNotes:
         - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
         - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
         - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart 
+		- 12.11.2025 - v5.1.0.0  TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
 
 	
 ***************************************************************************************************************
@@ -203,10 +204,10 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
 
-	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.2.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.1.0.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.2.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.2.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.1.0.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.1.0.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -992,9 +993,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.0.2.1';
-const tft_version: string = 'v5.0.2';
-const desired_display_firmware_version = 59;
+const scriptVersion: string = 'v5.1.0.0';
+const tft_version: string = 'v5.1.0';
+const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -3218,6 +3219,8 @@ async function InitPopupNotify () {
                 '~' +
                 v_popupNotifyButton1TextColor +
                 '~' +
+                '~' + // Fix Button3_Text for Adapter
+                '~' + // Fix Button3_Color for Adapter
                 getState(popupNotifyButton2Text).val +
                 '~' +
                 v_popupNotifyButton2TextColor +
@@ -9328,11 +9331,11 @@ function HandleButtonEvent (words: any): void {
                     GeneratePage(config.pages[0]);
                 }
                 break;
-            case 'notifyAction':
-                if (words[4] == 'yes') {
+            case 'notifyAction': 
+                if (words[4] == 'button1') { //Changes button1 retuns "button1" instead of "yes"
                     setState(popupNotifyInternalName, {val: words[2], ack: true});
                     setState(popupNotifyAction, {val: true, ack: true});
-                } else if (words[4] == 'no') {
+                } else if (words[4] == 'button3') { //Changes button3 retuns "button3" instead of "no" --> button2 has no functionality in Script (only Adapter)
                     setState(popupNotifyInternalName, {val: words[2], ack: true});
                     setState(popupNotifyAction, {val: false, ack: true});
                 }
