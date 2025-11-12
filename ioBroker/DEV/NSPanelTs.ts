@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.0.0 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v5.1.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 60 / v5.1.0 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt: 
@@ -94,7 +94,8 @@ ReleaseNotes:
         - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
         - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
         - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart 
-		- 12.11.2025 - v5.1.0.0  TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
+        - 12.11.2025 - v5.1.0    TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
+        - 12.11.2025 - v5.1.0.1  Change Brightsky icon to icon_special
 
 	
 ***************************************************************************************************************
@@ -993,7 +994,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.0.0';
+const scriptVersion: string = 'v5.1.0.1';
 const tft_version: string = 'v5.1.0';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -2573,11 +2574,11 @@ async function CreateWeatherAlias () {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('brightsky.' + weatherAdapterInstanceNumber + '.current.icon')) {
                             log('Weather alias for brightsky.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
                             setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
-                            await createAliasAsync(config.weatherEntity + '.ICON', ('brightsky.' + weatherAdapterInstanceNumber + '.current.icon'), true, {
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('brightsky.' + weatherAdapterInstanceNumber + '.current.icon_special'), true, {
                                 type: 'string',
                                 role: 'value',
                                 name: 'ICON',
-                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.icon'},
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.icon_special'},
                             });
                             await createAliasAsync(config.weatherEntity + '.TEMP', 'brightsky.' + weatherAdapterInstanceNumber + '.current.temperature', true, {
                                 type: 'number',
@@ -12392,9 +12393,12 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
                     entityIconCol = GetOpenWeatherMapIconColor(icon);
-                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.' || weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetPirateWeatherIcon(icon));
                     entityIconCol = GetPirateWeatherIconColor(icon);
+                } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                    entityIcon = Icons.GetIcon(icon);
+                    entityIconCol = GetBrightskyWeatherIconColor(icon);
                 }
 
                 payloadString += '~' + '~' + entityIcon + '~' + entityIconCol + '~' + '~' + optionalValue + '~';
@@ -12595,17 +12599,17 @@ function HandleScreensaverUpdate (): void {
                             DayOfWeek = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp')
                                 ? formatDate(getDateObject((getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp').val)), 'W', 'de')
                                 : 0;
-                            WeatherIcon = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
-                                ? GetPirateWeatherIcon(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val)
+                            WeatherIcon = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special')
+                                ? getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special').val
                                 : '';
-                            WheatherColor = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
-                                ? GetPirateWeatherIconColor(String(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val))
+                            WheatherColor = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special')
+                                ? GetBrightskyWeatherIconColor(String(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special').val))
                                 : 0;
 
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min');
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max');
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp');
-                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special');
                         }
                     }
 
@@ -13874,6 +13878,82 @@ function GetPirateWeatherIconColor (icon: string): number {
         log('error at function GetPirateWeatherIconColor: ' + err.message, 'warn');
     }
     return 0;
+}
+
+function GetBrightskyWeatherIconColor (icon: string): number {
+    try {
+        switch (icon) {
+
+            case 'weather-cloudy':
+                return rgb_dec565(swCloudy); // cloudy
+
+            case 'weather-fog':
+                return rgb_dec565(swFog);
+
+            case 'weather-hail':
+                return rgb_dec565(swHail);
+
+            case 'weather-hazy':
+                return rgb_dec565(swFog);
+
+            case 'weather-lightning':
+                return rgb_dec565(swLightning);
+
+            case 'weather-lightning-rainy':
+                return rgb_dec565(swLightningRainy);
+
+            case 'weather-night':
+                return rgb_dec565(swClearNight);
+
+            case 'weather-night-partly-cloudy':
+                return rgb_dec565(swPartlycloudy);
+
+            case 'weather-partly-cloudy':
+                return rgb_dec565(swPartlycloudy);
+
+            case 'weather-partly-rainy':
+                return rgb_dec565(swRainy);
+
+            case 'weather-partly-snowy':
+                return rgb_dec565(swSnowy);
+
+            case 'weather-partly-snowy-rainy':
+                return rgb_dec565(swSnowyRainy);
+
+            case 'weather-pouring':
+                return rgb_dec565(swPouring);
+
+            case 'weather-rainy':
+                return rgb_dec565(swRainy);
+
+            case 'weather-snowy':
+                return rgb_dec565(swSnowy);
+
+            case 'weather-snowy-heavy':
+                return rgb_dec565(swSnowy);
+
+            case 'weather-snowy-rainy':
+                return rgb_dec565(swSnowyRainy);
+
+            case 'weather-sunny':
+                return rgb_dec565(swSunny);
+
+            case 'weather-tornado':
+                return rgb_dec565(swExceptional);
+
+            case 'weather-windy':
+                return rgb_dec565(swWindy);
+
+            case 'weather-windy-variant':
+                return rgb_dec565(swWindy);
+
+            default:
+                return rgb_dec565(swExceptional);
+        }
+    } catch (err: any) {
+        log('error at function GetPirateWeatherIcon: ' + err.message, 'warn');
+    }
+    return rgb_dec565(swExceptional);
 }
 
 //------------------Begin Read Internal Sensor Data
