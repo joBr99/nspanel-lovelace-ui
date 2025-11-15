@@ -96,6 +96,7 @@ ReleaseNotes:
         - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart 
         - 12.11.2025 - v5.1.0    TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
         - 12.11.2025 - v5.1.0.1  Change Brightsky icon to icon_special
+        - 15.11.2025 - v5.1.0.2  Add Swiss-Weather-API Adapter
 
 	
 ***************************************************************************************************************
@@ -192,9 +193,13 @@ Tasmota-Status0 - (zyklische Ausführung)
 
 Erforderliche Adapter:
 
-    Pirate-Weather oder BrightSky oder OpenWeatherMap --> Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver 
-	!!!DasWetter deprecated        - Dienst nur noch für ältere Accounts funktional 
-    !!!AccuWeather deprecated      - Dienst schaltet Free-Account ab!!!
+    Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver einen der folgenden Wetter-Adapter:
+    - Pirate-Weather
+    - BrightSky
+    - OpenWeatherMap
+    - Swiss-Weather-API
+	- !!!DasWetter deprecated      - Dienst nur noch für ältere Accounts funktional
+    - !!!AccuWeather deprecated    - Dienst schaltet Free-Account ab!!!
     Alexa2:                        - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten               - Für Erstellung der Aliase
     MQTT-Adapter                   - Für Kommunikation zwischen Skript und Tasmota
@@ -256,8 +261,8 @@ const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
 /***** 3. Weather adapter Config *****/
 
-// DE: Mögliche Wetteradapter 'pirate-weather.0.' oder 'brightsky.0.' oder 'openweathermap.0.' oder 'daswetter.0.' (deprecated) oder 'accuweather.0.' (deprecated)
-// EN: Possible weather adapters 'pirate-weather.0.' or 'brightsky.0.' or 'openweathermap.0.' or 'daswetter.0.' (deprecated) or 'accuweather.0.' (deprecated)
+// DE: Mögliche Wetteradapter 'pirate-weather.0.' oder 'brightsky.0.' oder 'openweathermap.0.' oder 'swiss-weather-api.0.' oder 'daswetter.0.' (deprecated) oder 'accuweather.0.' (deprecated)
+// EN: Possible weather adapters 'pirate-weather.0.' or 'brightsky.0.' or 'openweathermap.0.' or 'swiss-weather-api.0.' or 'daswetter.0.' (deprecated) or 'accuweather.0.' (deprecated)
 const weatherAdapterInstance: string = 'pirate-weather.0.';
 
 // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
@@ -1110,6 +1115,11 @@ async function CheckConfigParameters () {
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'openweathermap') {
             if (existsObject(weatherAdapterInstance + 'forecast.current.icon') == false) {
+                log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
+            }
+        }
+        if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'swiss-weather-api') {
+            if (existsObject(weatherAdapterInstance + 'forecast.days.day0.0000.symbol_code') == false) {
                 log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
             }
         }
@@ -2604,6 +2614,57 @@ async function CreateWeatherAlias () {
                     }
                 } catch (err: any) {
                     log('error at function CreateWeatherAlias brightsky.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
+                }
+            } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.') {
+                try {
+                    if (isSetOptionActive) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.symbol_code')) {
+                            log('Weather alias for swiss-weather-api.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
+                            setObject(config.weatherEntity, {
+                                _id: config.weatherEntity,
+                                type: 'channel',
+                                common: {role: 'weatherCurrent', name: 'weatherCurrent'},
+                                native: {}
+                            });
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.symbol_code'), true, {
+                                type: 'string',
+                                role: 'value',
+                                name: 'ICON',
+                                alias: {id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.symbol_code'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.current_hour.TTT_C', true, {
+                                type: 'number',
+                                role: 'value.temperature',
+                                name: 'TEMP',
+                                alias: {
+                                    id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.current_hour.TTT_C',
+                                    read: 'Math.round(val*10)/10'
+                                },
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TN_C', true, {
+                                type: 'number',
+                                role: 'value.temperature.forecast.0',
+                                name: 'TEMP_MIN',
+                                alias: {
+                                    id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TN_C',
+                                    read: 'Math.round(val)'
+                                },
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TX_C', true, {
+                                type: 'number',
+                                role: 'value.temperature.max.forecast.0',
+                                name: 'TEMP_MAX',
+                                alias: {
+                                    id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TX_C',
+                                    read: 'Math.round(val)'
+                                },
+                            });
+                        } else {
+                            log('weather alias for swiss-weather-api.' + weatherAdapterInstanceNumber + '. already exists', 'info');
+                        }
+                    }
+                } catch (err: any) {
+                    log('error at function CreateWeatherAlias swiss-weather-api.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         }
@@ -12393,7 +12454,10 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
                     entityIconCol = GetOpenWeatherMapIconColor(icon);
-                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.') {
+                } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.') {
+                    entityIcon = Icons.GetIcon(GetSwissWeatherApiIcon(icon));
+                    entityIconCol = GetSwissWeatherApiIconColor(icon);
+                } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.' || weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetPirateWeatherIcon(icon));
                     entityIconCol = GetPirateWeatherIconColor(icon);
                 } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
@@ -12611,6 +12675,30 @@ function HandleScreensaverUpdate (): void {
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp');
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special');
                         }
+                    } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.') {
+                        if (i < 6) {
+                            //                      swiss-weather-api.    0                               .forecast.days.day    0                .0000.TN_C
+                            TempMin = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TN_C')
+                                ? Math.round(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TN_C').val * 10) / 10
+                                : 0;
+                            TempMax = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TX_C')
+                                ? Math.round(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TX_C').val * 10) / 10
+                                : 0;
+                            DayOfWeek = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.day_name')
+                                ? getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.day_name').val
+                                : 0;
+                            WeatherIcon = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code')
+                                ? GetSwissWeatherApiIcon(String(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code').val))
+                                : '';
+                            WheatherColor = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code')
+                                ? GetSwissWeatherApiIconColor(String(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code').val))
+                                : 0;
+
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TN_C');
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TX_C');
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.day_name');
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code');
+                        }
                     }
 
                     let tempMinMaxString: string = '';
@@ -12704,6 +12792,30 @@ function HandleScreensaverUpdate (): void {
                         arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunset').val).getTime();
                         arraySunEvent[2] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.01.sunrise').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = getDateObject((new Date().getTime())).getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.SUNRISE').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.SUNSET').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day1.0000.SUNRISE').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -13687,6 +13799,193 @@ function GetOpenWeatherMapIconColor (icon: string): number {
         }
     } catch (err: any) {
         log('error at function GetOpenWeatherMapIconColor: ' + err.message, 'warn');
+    }
+    return 0;
+}
+
+/**
+ * Retrieves the SwissWeatherApi icon string based on the provided icon string.
+ *
+ * This function maps the given SwissWeatherApi icon string to its corresponding icon string representation.
+ * See https://github.com/baerengraben/ioBroker.swiss-weather-api/tree/master/img/Meteo_API_Icons/Color for
+ * list of icons.
+ *
+ * @function GetSwissWeatherApiIcon
+ * @param {string} icon - The icon string.
+ * @returns {string} The corresponding icon string.
+ */
+function GetSwissWeatherApiIcon(icon: string): string {
+    try {
+        switch (icon) {
+            case "1":
+                return 'weather-sunny';
+            case "-1":
+                return 'weather-night';
+            case "3": //few clouds day
+                return 'weather-partly-cloudy';
+            case "-3": //few clouds night
+                return 'weather-night-partly-cloudy';
+            case "10": //scattered clouds
+            case "-10":
+                return 'weather-cloudy';
+            case "18": //cloudy
+            case "-18":
+            case "19":
+            case "-19":
+                return 'weather-cloudy';
+            case "23": //shower rain
+            case "-23":
+                return 'weather-rainy';
+            case "4": //rain
+            case "-4":
+            case "8":
+            case "-8":
+            case "11":
+            case "-11":
+            case "15":
+            case "-15":
+            case "20":
+            case "-20":
+            case "22":
+            case "-22":
+            case "25":
+            case "-25":
+            case "29":
+            case "-29":
+                return 'weather-pouring';
+            case "5": //Thunderstorm
+            case "-5":
+            case "7":
+            case "-7":
+            case "9":
+            case "-9":
+            case "12":
+            case "-12":
+            case "14":
+            case "-14":
+            case "16":
+            case "-16":
+            case "26":
+            case "-26":
+            case "28":
+            case "-28":
+            case "30":
+            case "-30":
+                return 'weather-lightning';
+            case "6": //snow
+            case "-6":
+            case "13":
+            case "-13":
+            case "21":
+            case "-21":
+            case "24":
+            case "-24":
+            case "27":
+            case "-27":
+                return 'weather-snowy';
+            case "2": //mist
+            case "-2":
+            case "17":
+            case "-17":
+                return 'weather-fog';
+            default:
+                return 'alert-circle-outline';
+        }
+    } catch (err: any) {
+        log('error at function GetSwissWeatherApiIcon: ' + err.message, 'warn');
+    }
+    return '';
+}
+
+/**
+ * Retrieves the color code for a given SwissWeatherApi icon string.
+ *
+ * This function maps the provided SwissWeatherApi icon string to its corresponding color code.
+ * See https://github.com/baerengraben/ioBroker.swiss-weather-api/tree/master/img/Meteo_API_Icons/Color for
+ * list of icons.
+ *
+ * @function GetSwissWeatherApiIconColor
+ * @param {string} icon - The icon string.
+ * @returns {number} The corresponding color code.
+ */
+function GetSwissWeatherApiIconColor(icon: string): number {
+    try {
+        switch (icon) {
+            case "1": //clear sky day
+                return rgb_dec565(swSunny);
+            case "-1": //clear sky night
+                return rgb_dec565(swClearNight);
+            case "3": //few clouds day
+            case "-3": //few clouds night
+                return rgb_dec565(swPartlycloudy);
+            case "10": //scattered clouds
+            case "-10":
+                return rgb_dec565(swCloudy);
+            case "18": //cloudy
+            case "-18":
+            case "19":
+            case "-19":
+                return rgb_dec565(swCloudy);
+            case "23": //shower rain
+            case "-23":
+                return rgb_dec565(swRainy);
+            case "4": //rain
+            case "-4":
+            case "8":
+            case "-8":
+            case "11":
+            case "-11":
+            case "15":
+            case "-15":
+            case "20":
+            case "-20":
+            case "22":
+            case "-22":
+            case "25":
+            case "-25":
+            case "29":
+            case "-29":
+                return rgb_dec565(swPouring);
+            case "5": //Thunderstorm
+            case "-5":
+            case "7":
+            case "-7":
+            case "9":
+            case "-9":
+            case "12":
+            case "-12":
+            case "14":
+            case "-14":
+            case "16":
+            case "-16":
+            case "26":
+            case "-26":
+            case "28":
+            case "-28":
+            case "30":
+            case "-30":
+                return rgb_dec565(swLightningRainy);
+            case "6": //snow
+            case "-6":
+            case "13":
+            case "-13":
+            case "21":
+            case "-21":
+            case "24":
+            case "-24":
+            case "27":
+            case "-27":
+                return rgb_dec565(swSnowy);
+            case "2": //mist
+            case "-2":
+            case "17":
+            case "-17":
+                return rgb_dec565(swFog);
+            default:
+                return rgb_dec565(White);
+        }
+    } catch (err: any) {
+        log('error at function GetSwissWeatherApiIconColor: ' + err.message, 'warn');
     }
     return 0;
 }
