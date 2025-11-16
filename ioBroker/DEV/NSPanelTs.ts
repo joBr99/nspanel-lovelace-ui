@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v5.1.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 60 / v5.1.0 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt:
@@ -999,7 +999,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.0.1';
+const scriptVersion: string = 'v5.1.0.2';
 const tft_version: string = 'v5.1.0';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
