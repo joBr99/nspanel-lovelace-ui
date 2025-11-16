@@ -2,7 +2,7 @@
 TypeScript v5.1.0.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 60 / v5.1.0 / BerryDriver 10 / Tasmota 15.0.1
 
-Projekt: 
+Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
 https://github.com/ticaki/ioBroker.nspanel-lovelace-ui/tree/main
 
@@ -39,7 +39,7 @@ ReleaseNotes:
         - 23.01.2025 - v4.5.0.1  Change TFT URLs
         - 23.01.2025 - v4.5.0.2  fix handleScreensaverUpdate => leftscreensaverEntity; fix Type leftscreensaverentitiy
         - 23.01.2025 - v4.5.0.2  icon3 functionality also for thermometers and a function based on this in the screensaver
-        - 29.01.2025 - v4.5.0.3  Add: bottemEntityText from ID 
+        - 29.01.2025 - v4.5.0.3  Add: bottemEntityText from ID
         - 30.01.2025 - v4.5.0.4  fix DetermineDimBrightness (function returns undefined, because wrong DP check)
         - 03.02.2025 - v4.5.0.5  Bugfix InitDimmode by Gargano
         - 14.03.2025 - v4.5.2    Fix Bugs in HUE-Light, Fix Icon-Colors with interpolateColors (Color, ColorTemp, Brightness), Fix ON instead of ON_ACTUAL for writing DP
@@ -58,7 +58,7 @@ ReleaseNotes:
         - 02.04.2025 - v4.7.0    TFT 56 / 4.7.0 - Fix cardSchedule
         - 10.04.2025 - v4.7.0.2  Add cardMedia "Music Player Daemon (MPD)" (One-Instance-Player with Playlists, Tracklists, Shuffle, Repeat, Seek/Crossfade); mpd.X - Instance required
         - 10.04.2025 - v4.7.0.3  Fix cardMedia "Music Player Daemon (MPD)" shuffle with repeat and repeat with repeat/single
-        - 10.04.2025 - v4.7.1    TFT 56 / 4.7.1 - Add Player Icon-Logos logo-alexa, logo-spotify, logo-dlna, logo-sonos, logo-mpd, logo-volumios, logo-bose 
+        - 10.04.2025 - v4.7.1    TFT 56 / 4.7.1 - Add Player Icon-Logos logo-alexa, logo-spotify, logo-dlna, logo-sonos, logo-mpd, logo-volumios, logo-bose
         - 10.04.2025 - v4.7.1.1  Add parameter playerMediaIcon to cardMedia
         - 12.04.2025 - v4.7.1.2  Fix Play/Pause in MediaPlayers
         - 13.04.2025 - v4.7.1.2  TFT 56 / 4.7.1 (US-P and US-L)
@@ -67,7 +67,7 @@ ReleaseNotes:
         - 12.06.2025 - v4.7.2.2  States only respond to any if ack = false
         - 20.06.2025 - v4.7.2.3  IconSelect left- and indicatorScreensaverEntity added
         - 21.06.2025 - v4.7.2.4  Fix Demomodus Powerpage
-        - 22.06.2025 - v4.7.3    TFT 56 / 4.7.3 - Change Direction Pictures ColorTemperature (warmwhite left/coldwhite right) 
+        - 22.06.2025 - v4.7.3    TFT 56 / 4.7.3 - Change Direction Pictures ColorTemperature (warmwhite left/coldwhite right)
         - 23.06.2025 - v4.7.4    TFT 56 / 4.7.4 - Refactoring popupShutter (shutter/shutter2)
         - 24.06.2025 - v4.7.4.1  Refactoring popupShutter (split into shutter/shutter2)
         - 25.06.2025 - v4.7.5    TFT 56 / 4.7.5 - Refactoring popupLight2 (light/light2) --> EU + US-P
@@ -91,18 +91,18 @@ ReleaseNotes:
         - 11.08.2025 - v4.9.5    TFT 58 / 4.9.5 - Add cardThermo2 (eu)
         - 21.08.2025 - v4.9.5.2  Add Bright Sky Weather Adapter
         - 05.09.2025 - v5.0.0    TFT 59 / 5.0.0 - EU Changes in cardMedia, popupInSel, card Grid 1, 2, 3
-        - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3 
+        - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3
         - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
-        - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart 
+        - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart
         - 12.11.2025 - v5.1.0    TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
         - 12.11.2025 - v5.1.0.1  Change Brightsky icon to icon_special
 
-	
+
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
-***************************************************************************************************************{
-              
+***************************************************************************************************************
+
 Wenn Rule definiert, dann können die Hardware-Tasten ebenfalls für Seitensteuerung (dann nicht mehr als Relais) genutzt werden
 
 Tasmota Konsole:
@@ -119,7 +119,7 @@ Mögliche Seiten-Ansichten:
     cardSchedule Page   - 6 vertikale angeordnete Text-Steuerelemente - auch als Subpage
     cardGrid Page       - 6 horizontal angeordnete Steuerelemente in 2 Reihen a 3 Steuerelemente - auch als Subpage
     cardGrid2 Page      - 8 horizontal angeordnete Steuerelemente in 2 Reihen a 4 Steuerelemente - auch als Subpage
-                          9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage - beim US-Modell im Portrait-Modus    
+                          9 horizontal angeordnete Steuerelemente in 3 Reihen a 3 Steuerelemente - auch als Subpage - beim US-Modell im Portrait-Modus
     cardGrid3 Page      - 4 horizontal angeordnete Steuerelemente in 2 Reihen a 2 Steuerelemente - auch als Subpage
     cardThermo Page     - Thermostat mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
     cardThermo2 Page    - weiterer Thermostat (Circular Slider) mit Solltemperatur, Isttemperatur, Mode - Weitere Eigenschaften können im Alias definiert werden
@@ -402,16 +402,16 @@ const defaultBackgroundColorParam: any = HMIDark;
  ***********************************************************************************************/
 
 /* DE: German
-   Wenn das Service Menü abgesichert werden soll, kann eine cardUnlock vorgeschaltet werden. 
+   Wenn das Service Menü abgesichert werden soll, kann eine cardUnlock vorgeschaltet werden.
    Für diesen Fall ist folgende Vorgehensweise erforderlich:
    - cardUnlock Seite "Unlock_Service" in der Config unter pages auskommentieren ("//" entfernen)
    - Servicemenü aus pages "NSPanel_Service" unter pages kommentieren ("//" hinzufügen)
 */
 
-/*************************************************************************************************
-  ** Service pages with auto alias (subsequent pages are automatically created with alias)      **
-  ** https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Service-Men%C3%BC               **
-  ************************************************************************************************/
+/***********************************************************************************************
+ ** Service pages with auto alias (subsequent pages are automatically created with alias)     **
+ ** https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Service-Men%C3%BC              **
+ ***********************************************************************************************/
 
 /* EN: English
     If the service menu needs to be secured, a cardUnlock can be installed upstream.
@@ -824,7 +824,7 @@ export const config: Config = {
         NSPanel_Wifi_Info_2, //Auto-Alias Service Page
         NSPanel_Sensoren, //Auto-Alias Service Page
         NSPanel_Hardware, //Auto-Alias Service Page
-        NSPanel_IoBroker, //Auot-Alias Service Page
+        NSPanel_IoBroker, //Auto-Alias Service Page
         NSPanel_Einstellungen, //Auto-Alias Service Page
         NSPanel_Screensaver, //Auto-Alias Service Page
         NSPanel_ScreensaverDimmode, //Auto-Alias Service Page
@@ -847,7 +847,7 @@ export const config: Config = {
      **                                                                   **
      ***********************************************************************/
     leftScreensaverEntity: [
-        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400
     ],
 
     bottomScreensaverEntity: [
@@ -922,10 +922,10 @@ export const config: Config = {
     ],
 
     indicatorScreensaverEntity: [
-        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400 
+        // Examples for Advanced-Screensaver: https://github.com/joBr99/nspanel-lovelace-ui/wiki/ioBroker-Config-Screensaver#entity-status-icons-ab-v400
     ],
 
-    // Status Icon 
+    // Status Icon
     mrIcon1ScreensaverEntity: {
         ScreensaverEntity: NSPanel_Path + 'Relay.1',
         ScreensaverEntityIconOn: 'lightbulb',
@@ -1726,13 +1726,13 @@ Init_Screensaver_Backckground_Color_Switch();
 
 /**
  * Event listener for changes to the Screensaver background color indicator.
- * 
+ *
  * When the value of the `bgColorIndicator` object changes, this function is triggered.
  * It updates the `bgColorScrSaver` variable with the new value and calls the `HandleScreensaverUpdate` function if the value is less than 6.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {string} obj.state.val - The new value of the `bgColorIndicator` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while updating the `bgColorScrSaver` variable or calling `HandleScreensaverUpdate`.
  */
@@ -1749,13 +1749,13 @@ on({id: NSPanel_Path + 'ScreensaverInfo.bgColorIndicator', change: 'ne'}, async 
 
 /**
  * Event listener for changes to the Screensaver Advanced configuration.
- * 
+ *
  * When the value of the `ScreensaverAdvanced` object changes, this function is triggered.
  * If the value is true, it sets the state of the `alternativeScreensaverLayout` object to false.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {boolean} obj.state.val - The new value of the `ScreensaverAdvanced` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while updating the state of the `alternativeScreensaverLayout` object.
  */
@@ -1782,16 +1782,16 @@ on({id: `${NSPanel_Path}${ScreensaverEasyViewEndPath}`, change: 'ne'}, async fun
 
 /**
  * Event listener for changes to the alternative Screensaver layout configuration.
- * 
+ *
  * When the value of the `alternativeScreensaverLayout` object changes, this function is triggered.
  * If the value is true, it sets the state of the `ScreensaverAdvanced` object to false.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {boolean} obj.state.val - The new value of the `alternativeScreensaverLayout` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while updating the state of the `ScreensaverAdvanced` object.
- * 
+ *
  * @note This function appears to be a toggle with the `ScreensaverAdvanced` configuration.
  *       When `alternativeScreensaverLayout` is true, `ScreensaverAdvanced` is set to false.
  */
@@ -1809,9 +1809,9 @@ on({id: NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout', change
 
 /**
  * Initializes the `bExitPage` state object and sets the `alwaysOn` and `pageCounter` variables.
- * 
+ *
  * This function is called once at startup and is used to initialize the `bExitPage` state object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while creating the `bExitPage` state object.
  */
@@ -1830,11 +1830,11 @@ Init_bExit_Page_Change();
 
 /**
  * Initializes the `Trigger_Dimmode` state object if it does not exist.
- * 
+ *
  * This function checks if the `Trigger_Dimmode` state is present. If not, it creates the state
  * with a default value of `false` and sets it to writable. This state is used to control
  * whether the dim mode is triggered.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while creating the `Trigger_Dimmode` state.
  */
@@ -1852,10 +1852,10 @@ Init_Dimmode_Trigger();
 /**
  * Initializes the `activeBrightness` and `activeDimmodeBrightness` state objects if they do not exist.
  * Also creates aliases for the `activeBrightness` state object with roles for actual and set values.
- * 
- * This function checks if the necessary states exist and creates them if not. It then sets up aliases 
+ *
+ * This function checks if the necessary states exist and creates them if not. It then sets up aliases
  * to manage `activeBrightness` with specific roles and names for easier access.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while creating the state objects or aliases.
  */
@@ -1887,14 +1887,14 @@ InitActiveBrightness();
 
 /**
  * Event listener for changes to the active brightness value of the Screensaver.
- * 
+ *
  * When the value of the `activeBrightness` object changes, this function is triggered.
  * It retrieves the current dimmode brightness value, calculates the active brightness value,
  * and sends a message to the panel with the updated brightness values.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {number} obj.state.val - The new value of the `activeBrightness` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while retrieving the dimmode brightness value or sending the message to the panel.
  */
@@ -1917,14 +1917,14 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeBrightness'], change: 'ne'}, asyn
 
 /**
  * Event listener for changes to the active dimmode brightness value of the Screensaver.
- * 
+ *
  * When the value of the `activeDimmodeBrightness` object changes, this function is triggered.
  * It retrieves the current brightness value, calculates the active dimmode brightness value,
  * and sends a message to the panel with the updated brightness values.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {number} obj.state.val - The new value of the `activeDimmodeBrightness` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while retrieving the brightness value or sending the message to the panel.
  */
@@ -1964,14 +1964,14 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.activeDimmodeBrightness'], change: 'ne'
 
 /**
  * Event listener for changes to the Trigger Dimmode state of the Screensaver.
- * 
+ *
  * When the value of the `Trigger_Dimmode` object changes, this function is triggered.
  * It retrieves the current brightness value, calculates the active dimmode brightness value,
  * and sends a message to the panel with the updated brightness values if the trigger is enabled.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {boolean} obj.state.val - The new value of the `Trigger_Dimmode` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while retrieving the brightness value or sending the message to the panel.
  */
@@ -1994,9 +1994,9 @@ on({id: String(NSPanel_Path) + 'ScreensaverInfo.Trigger_Dimmode', change: 'ne'},
 
 /**
  * Initialize the Reboot NSPanel state and channel.
- * 
+ *
  * If the `rebootNSPanel` state does not exist, this function creates it, sets its initial value to false, and creates an alias for it.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while creating the state or alias.
  */
@@ -2015,13 +2015,13 @@ InitRebootPanel();
 
 /**
  * Event listener for changes to the Reboot NSPanel state.
- * 
+ *
  * When the value of the `rebootNSPanel.SET` object changes, this function is triggered.
  * It sends a request to the Tasmota device to restart the NSPanel.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {boolean} obj.state.val - The new value of the `rebootNSPanel.SET` object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while sending the request to the Tasmota device.
  */
@@ -2125,13 +2125,13 @@ InitUpdateDatapoints();
 
 /**
  * Event listener for changes to the Update Firmware states.
- * 
+ *
  * When the value of one of the `UpdateTasmota`, `UpdateBerry`, or `UpdateNextion` objects changes,
  * this function is triggered. It performs the corresponding firmware update action.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {string} obj.id - The ID of the object that changed.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while performing the firmware update action.
  */
@@ -2158,16 +2158,16 @@ on({id: [NSPanel_Path + 'Config.Update.UpdateTasmota', NSPanel_Path + 'Config.Up
 
 /**
  * Initializes the relay datapoints and their corresponding aliases for the NSPanel.
- * 
+ *
  * This function checks if the relay states `Relay.1` and `Relay.2` exist in the
  * namespace. If not, it creates them with the type `boolean` and allows writing.
- * 
+ *
  * The function then sets up aliases for these relays under the alias path.
  * Each relay has an `ACTUAL` and `SET` alias created with the type `boolean` and
  * role `switch`.
- * 
+ *
  * The relays are represented as channels with the role `socket`.
- * 
+ *
  * @async
  * @throws {Error} Logs an error message if any error occurs during the initialization.
  */
@@ -2194,16 +2194,16 @@ Init_Relays();
 
 /**
  * Initializes the alternateMRIconSize datapoints and their corresponding aliases for the NSPanel.
- * 
+ *
  * This function checks if the alternateMRIconSize states `Config.MRIcons.alternateMRIconSize.1` and `Config.MRIcons.alternateMRIconSize.2` exist in the
  * namespace. If not, it creates them with the type `boolean` and allows writing.
- * 
+ *
  * The function then sets up aliases for these alternateMRIconSize states under the alias path.
  * Each alternateMRIconSize state has an `ACTUAL` and `SET` alias created with the type `boolean` and
  * role `switch`.
- * 
+ *
  * The alternateMRIconSize states are represented as channels with the role `socket`.
- * 
+ *
  * @async
  * @throws {Error} Logs an error message if any error occurs during the initialization.
  */
@@ -2297,13 +2297,13 @@ InitDateformat();
 
 /**
  * Event listener for changes to the Dateformat states.
- * 
+ *
  * When the value of one of the `Switch.weekday` or `Switch.month` objects changes,
  * this function is triggered. It updates the corresponding date format state and sends a message to the panel.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {string} obj.id - The ID of the object that changed.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while updating the date format state.
  */
@@ -2333,14 +2333,14 @@ const NSPanelStatTopic = NSPanelSendTopic.replace('.cmnd.', '.stat.').replace(/\
 
 /**
  * Event listener for changes to the POWER1 and POWER2 states in the Tasmota device.
- * 
+ *
  * When the value of one of the POWER1 or POWER2 objects changes, this function is triggered.
  * It updates the corresponding Relay state in the NSPanel device if the values are different.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {string} obj.id - The ID of the object that changed.
  * @param {string} obj.state.val - The new value of the object.
- * 
+ *
  * @returns {void}
  */
 on({id: [String(NSPanelStatTopic) + 'POWER1', String(NSPanelStatTopic) + 'POWER2'], change: 'ne'}, (obj) => {
@@ -2356,14 +2356,14 @@ on({id: [String(NSPanelStatTopic) + 'POWER1', String(NSPanelStatTopic) + 'POWER2
 
 /**
  * Event listener for changes to the Relay.1 and Relay.2 states.
- * 
+ *
  * When the value of one of the Relay.1 or Relay.2 objects changes, this function is triggered.
  * It sends a request to the Tasmota device to update the corresponding relay state.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {string} obj.id - The ID of the object that changed.
  * @param {boolean} obj.state - The new value of the object.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while sending the request to the Tasmota device.
  */
@@ -2393,11 +2393,11 @@ on({id: [String(NSPanel_Path) + 'Relay.1', String(NSPanel_Path) + 'Relay.2'], ch
 
 /**
  * Subscribe to the specified MQTT entities and their values.
- * 
+ *
  * This function subscribes to the MQTT entities specified in the configuration
  * and listens for changes to their values. When a value changes, the corresponding
  * relay state is updated.
- * 
+ *
  * @throws {Error} If an error occurs while subscribing to the MQTT entities.
  */
 async function SubscribeMRIcons () {
@@ -2635,13 +2635,13 @@ InitPageNavi();
 
 /**
  * Event listener for changes to the PageNavi state.
- * 
+ *
  * When the value of the PageNavi object changes, this function is triggered.
  * It generates a page or subpage based on the new value.
- * 
+ *
  * @param {object} obj - The object containing the new state value.
  * @param {string} obj.state.val - The new value of the object as a JSON string.
- * 
+ *
  * @async
  * @throws {Error} If an error occurs while parsing the JSON value or generating the page.
  */
@@ -3040,11 +3040,11 @@ async function DetermineScreensaverDimmode (timeDimMode: NSPanel.DimMode): Promi
 
 /**
  * Initializes the mean power consumption of the NSPanel.
- * 
+ *
  * This function calculates the mean power consumption based on the brightness and the number of relays that are on.
  * If the state for mean power consumption does not exist, it will be created.
  * The calculated value is then written to the state.
- * 
+ *
  * @async
  * @function InitMeanPowerConsumption
  * @returns {Promise<void>} A promise that resolves when the initialization is complete.
@@ -3070,7 +3070,7 @@ InitMeanPowerConsumption();
 
 /**
  * Sets up a subscription to monitor changes in specific states and triggers the initialization of mean power consumption.
- * 
+ *
  * This subscription listens for changes in the following states:
  * - NSPanel_Dimmode_brightnessDay
  * - NSPanel_Dimmode_brightnessNight
@@ -3079,9 +3079,9 @@ InitMeanPowerConsumption();
  * - Relay.1
  * - Relay.2
  * - ActivePage.id0
- * 
+ *
  * When any of these states change, the `InitMeanPowerConsumption` function is called to recalculate and update the mean power consumption.
- * 
+ *
  * @event
  */
 on(
@@ -3127,10 +3127,10 @@ const popupNotifyBuzzer = NSPanel_Path + 'popupNotify.popupNotifyBuzzer'; // 1,1
 
 /**
  * Initializes the popup notification system for the NSPanel.
- * 
+ *
  * This function creates the necessary states for popup notifications and sets up event listeners to handle notifications.
  * It handles notifications for both the screensaver and a separate popup page.
- * 
+ *
  * @async
  * @function InitPopupNotify
  * @returns {Promise<void>} A promise that resolves when the initialization is complete.
@@ -3239,7 +3239,7 @@ async function InitPopupNotify () {
             if (heading != '' && text != '') {
                 setIfExists(config.panelSendTopic, 'pageType~popupNotify');
                 setIfExists(config.panelSendTopic, notification);
-                // Set ActivePage 
+                // Set ActivePage
                 setIfExists(NSPanel_Path + 'ActivePage.type', 'popupNotify', null, true);
                 setIfExists(NSPanel_Path + 'ActivePage.heading', heading, null, true);
                 setIfExists(NSPanel_Path + 'ActivePage.id0', '', null, true);
@@ -3291,10 +3291,10 @@ let activePage: PageType | undefined = undefined;
 //Send time to NSPanel
 /**
  * Schedules a task to send the current time and handle screensaver updates every 60 seconds.
- * 
+ *
  * This scheduled task calls the `SendTime` and `HandleScreensaverUpdate` functions every minute.
  * If an error occurs during the execution of these functions, it is logged.
- * 
+ *
  * @constant
  * @type {Object}
  */
@@ -3316,11 +3316,11 @@ if (existsState(NSPanel_Path + 'ScreensaverInfo.entityChangeTime')) {
 
 /**
  * Schedules a task to switch the screensaver state based on certain conditions.
- * 
+ *
  * This scheduled task checks various states related to the screensaver and weather forecast.
  * It toggles the weather forecast state with a delay based on the entity change time.
  * If an error occurs during the execution of this task, it is logged.
- * 
+ *
  * @constant
  * @type {Object}
  */
@@ -3383,16 +3383,16 @@ InitHWButton1Color();
 /**
  * Initializes the hardware button 2 color by setting up an event listener
  * that triggers when the specified screensaver entity changes.
- * 
- * This function checks if the `ScreensaverEntity` property of 
+ *
+ * This function checks if the `ScreensaverEntity` property of
  * `config.mrIcon2ScreensaverEntity` is not null or undefined. If it is valid,
  * it sets up an event listener using the `on` function to listen for changes
  * (with change type 'ne') on the specified entity. When a change is detected,
  * the `HandleScreensaverUpdate` function is called.
- * 
+ *
  * If an error occurs during the execution of this function, it is caught and
  * logged with a warning message.
- * 
+ *
  * @throws Will log a warning message if an error occurs during execution.
  */
 function InitHWButton2Color () {
@@ -3411,10 +3411,10 @@ InitHWButton2Color();
 //Switch between data points and weather forecast in the screensaver
 /**
  * Sets up a subscription to monitor changes in the weather forecast state.
- * 
+ *
  * This subscription listens for changes in the `ScreensaverInfo.weatherForecast` state.
  * When the state changes, the `HandleScreensaverUpdate` function is called to update the screensaver.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -3431,10 +3431,10 @@ on({id: [NSPanel_Path + 'ScreensaverInfo.weatherForecast'], change: 'ne'}, async
 //Update if Changing Values on Wheather Alias
 /**
  * Sets up a subscription to monitor changes in the weather entity's temperature and icon states.
- * 
+ *
  * This subscription listens for changes in the `TEMP` and `ICON` states of the configured weather entity.
  * When either state changes, the `HandleScreensaverUpdate` function is called to update the screensaver.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -3450,10 +3450,10 @@ on({id: [config.weatherEntity + '.TEMP', config.weatherEntity + '.ICON'], change
 //send new Screensavertimeout if Changing of 'timeoutScreensaver'
 /**
  * Sets up a subscription to monitor changes in the screensaver timeout configuration.
- * 
+ *
  * This subscription listens for changes in the `Config.Screensaver.timeoutScreensaver` state.
  * When the state changes, the new timeout value is sent to the panel.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -3505,12 +3505,12 @@ setTimeout(async function () {
 
 /**
  * Retrieves the locale setting for Moment.js.
- * 
+ *
  * This function checks the `Config.locale` state and returns the appropriate locale string for Moment.js.
  * If the locale is 'hy-AM', 'zh-CN', or 'zh-TW', it returns the locale in lowercase.
  * Otherwise, it returns the first two characters of the locale string.
  * If an error occurs, it logs the error and returns 'en' as the default locale.
- * 
+ *
  * @function getMomentjsLocale
  * @returns {String} The locale string for Moment.js.
  * @throws {Error} If an error occurs during the locale retrieval.
@@ -3534,11 +3534,11 @@ function getMomentjsLocale (): String {
 
 /**
  * Fetches the locales JSON from a remote URL and stores it in a state.
- * 
+ *
  * This function sends a GET request to a specified URL to retrieve the locales JSON.
  * If the request is successful, the JSON data is stored in the `NSPanel_locales_json` state.
  * If an error occurs during the request, it is logged.
- * 
+ *
  * @async
  * @function get_locales
  * @returns {Promise<void>} A promise that resolves when the locales have been fetched and stored.
@@ -3574,11 +3574,11 @@ async function get_locales () {
 
 /**
  * Fetches the locales JSON for the service menu from a remote URL and stores it in a state.
- * 
+ *
  * This function sends a GET request to a specified URL to retrieve the locales JSON for the service menu.
  * If the request is successful, the JSON data is stored in the `NSPanel_locales_service_json` state.
  * If an error occurs during the request, it is logged.
- * 
+ *
  * @async
  * @function get_locales_servicemenu
  * @returns {Promise<void>} A promise that resolves when the locales have been fetched and stored.
@@ -3614,9 +3614,9 @@ async function get_locales_servicemenu () {
 
 /**
  * Checks for updates to the NSPanel firmware or configuration.
- * 
+ *
  * This function performs a check for updates and handles the update process if any updates are found.
- * 
+ *
  * @async
  * @function check_updates
  * @returns {Promise<void>} A promise that resolves when the update check is complete.
@@ -3792,10 +3792,10 @@ async function check_updates () {
 
 /**
  * Sets up a subscription to monitor changes in the popup notification action state.
- * 
+ *
  * This subscription listens for changes in the `popupNotify.popupNotifyAction` state.
  * When the state changes, the specified callback function is executed.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -3829,9 +3829,9 @@ on({id: NSPanel_Path + 'popupNotify.popupNotifyAction', change: 'any'}, async fu
 
 /**
  * Retrieves the update data for the NSPanel.
- * 
+ *
  * This function fetches the latest update data for the NSPanel, including firmware and configuration updates.
- * 
+ *
  * @async
  * @function get_panel_update_data
  * @returns {Promise<void>} A promise that resolves when the update data has been retrieved.
@@ -3879,9 +3879,9 @@ async function get_panel_update_data () {
 
 /**
  * Retrieves the current IP address of the Tasmota device.
- * 
+ *
  * This function returns the IP address of the Tasmota device currently in use.
- * 
+ *
  * @function get_current_tasmota_ip_address
  * @returns {string} The IP address of the Tasmota device.
  */
@@ -3899,11 +3899,12 @@ function get_current_tasmota_ip_address () {
         log('error at function get_current_tasmota_ip_address: ' + err.message, 'warn');
     }
 }
-/** 
+
+/**
  * Retrieves the current IP address of the Tasmota device.
- * 
+ *
  * This function returns the IP address of the Tasmota device currently in use.
- * 
+ *
  * @function get_current_tasmota_ip_address
  * @returns {string} The IP address of the Tasmota device.
  * @throws {Error} If an error occurs during the IP address retrieval.
@@ -3951,9 +3952,9 @@ function get_online_tasmota_firmware_version () {
 
 /**
  * Retrieves the current Berry driver version.
- * 
+ *
  * This function retrieves the current Berry driver version from the Tasmota device.
- * 
+ *
  * @function get_current_berry_driver_version
  * @returns {Promise<void>} A promise that resolves when the current Berry driver version has been retrieved.
  * @throws {Error} If an error occurs during the version retrieval.
@@ -4003,9 +4004,9 @@ function get_current_berry_driver_version () {
 
 /**
  * Retrieves the online Berry driver version.
- * 
+ *
  * This function retrieves the latest online Berry driver version from the Tasmota device.
- * 
+ *
  * @function get_online_berry_driver_version
  * @returns {Promise<void>} A promise that resolves when the online Berry driver version has been retrieved.
  * @throws {Error} If an error occurs during the version retrieval.
@@ -4172,9 +4173,9 @@ function get_tasmot_url (cmd: string): string {
 
 /**
  * Updates the Tasmota firmware.
- * 
+ *
  * This function updates the Tasmota firmware on the NSPanel.
- * 
+ *
  * @function update_tasmota_firmware
  * @returns {Promise<void>} A promise that resolves when the firmware update has been completed.
  * @throws {Error} If an error occurs during the firmware update.
@@ -4239,9 +4240,9 @@ async function get_online_berry_driver_version () {
 
 /**
  * Updates the Berry driver version.
- * 
+ *
  * This function updates the Berry driver version on the NSPanel.
- * 
+ *
  * @function update_berry_driver_version
  * @returns {Promise<void>} A promise that resolves when the Berry driver update has been completed.
  * @throws {Error} If an error occurs during the update.
@@ -4282,9 +4283,9 @@ function check_version_tft_firmware () {
 
 /**
  * Checks for online display firmware updates.
- * 
+ *
  * This function checks for online display firmware updates for the NSPanel.
- * 
+ *
  * @function check_online_display_firmware
  * @returns {Promise<void>} A promise that resolves when the display firmware update data has been retrieved.
  * @throws {Error} If an error occurs during the update data retrieval.
@@ -4324,11 +4325,11 @@ function check_online_display_firmware () {
 }
 
 //mqttCallback (topic: string, message: string): Promise<void> {
-/** 
+/**
  * Handles incoming MQTT messages.
- * 
+ *
  * This function handles incoming MQTT messages from the NSPanel.
- * 
+ *
  * @function mqttCallback
  * @param {string} topic - The incoming message topic.
  * @param {string} message - The incoming message.
@@ -4377,12 +4378,11 @@ on({id: config.panelRecvTopic}, async (obj) => {
 });
 
 
-
 /**
  * Updates the Berry driver version on the NSPanel.
- * 
+ *
  * This function handles the process of updating the Berry driver version on the NSPanel.
- * 
+ *
  * @function update_berry_driver_version
  * @throws {Error} If an error occurs during the update process.
  */
@@ -4414,9 +4414,9 @@ function update_berry_driver_version () {
 
 /**
  * Updates the display firmware on the NSPanel.
- * 
+ *
  * This function updates the display firmware on the NSPanel.
- * 
+ *
  * @function update_display_firmware
  * @throws {Error} If an error occurs during the firmware update.
  */
@@ -4474,9 +4474,9 @@ function update_tft_firmware () {
 
 /**
  * Checks for updates.
- * 
+ *
  * This function checks for updates for the Tasmota Firmware.
- * 
+ *
  * @function check_updates
  * @throws {Error} If an error occurs during the update check.
  */
@@ -4531,10 +4531,10 @@ function update_tasmota_firmware () {
 
 /**
  * Sets up a subscription to monitor changes in the INFO1 state of the panel.
- * 
+ *
  * This subscription listens for changes in the `INFO1` state of the panel.
  * When the state changes, the specified callback function is executed.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -4586,10 +4586,10 @@ async function SendToPanel (val: NSPanel.Payload | NSPanel.Payload[]) {
 
 /**
  * Sets up a subscription to monitor changes in the alarm state.
- * 
+ *
  * This subscription listens for changes in the `Alarm.AlarmState` state.
  * When the state changes, the specified callback function is executed.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -4611,9 +4611,9 @@ on({id: NSPanel_Alarm_Path + 'Alarm.AlarmState', change: 'ne'}, async (obj) => {
 
 /**
  * Handles incoming messages and performs actions based on the message type and method.
- * 
+ *
  * This function processes incoming messages, determines the type and method, and performs the appropriate actions.
- * 
+ *
  * @function HandleMessage
  * @param {string} typ - The type of the message.
  * @param {NSPanel.EventMethod} method - The method associated with the event.
@@ -4699,7 +4699,7 @@ function HandleMessage (typ: string, method: NSPanel.EventMethod, page: number |
  *
  * @param {String} searching - The ID of the PageItem to search for.
  * @returns {NSPanel.PageItem} The PageItem with the specified ID, or the first item of the active page if an error occurs.
- * 
+ *
  * The function searches for a PageItem with the specified ID within the active page's items.
  * If not found, it searches through each subPage's items. Logs the found PageItem details if in debug mode.
  * Returns the PageItem if found, otherwise returns the first item of the active page in case of an error.
@@ -4730,9 +4730,9 @@ function findPageItem (searching: String): NSPanel.PageItem {
 
 /**
  * Generates a page based on the specified PageType.
- * 
+ *
  * This function generates a page based on the specified PageType.
- * 
+ *
  * @function GeneratePage
  * @param {NSPanel.PageType} page - The page type to generate.
  */
@@ -4798,9 +4798,9 @@ function GeneratePage (page: PageType): void {
 
 /**
  * Handles actions triggered by hardware button events.
- * 
+ *
  * This function processes events triggered by hardware button interactions and performs the appropriate actions based on the event method.
- * 
+ *
  * @function HandleHardwareButton
  * @param {NSPanel.EventMethod} method - The method associated with the hardware button event.
  */
@@ -4851,9 +4851,9 @@ function HandleHardwareButton (method: NSPanel.EventMethod): void {
 
 /**
  * Handles the startup process for the NSPanel.
- * 
+ *
  * This function performs the necessary initialization steps and configurations required during the startup of the NSPanel.
- * 
+ *
  * @function HandleStartupProcess
  */
 function HandleStartupProcess (): void {
@@ -4868,9 +4868,9 @@ function HandleStartupProcess (): void {
 
 /**
  * Sends the current date to the NSPanel.
- * 
+ *
  * This function retrieves the current date and sends it to the NSPanel for display or processing.
- * 
+ *
  * @function SendDate
  */
 function SendDate (): void {
@@ -4897,9 +4897,9 @@ function SendDate (): void {
 
 /**
  * Sends the current time to the NSPanel.
- * 
+ *
  * This function retrieves the current time and sends it to the NSPanel for display or processing.
- * 
+ *
  * @function SendTime
  */
 function SendTime (): void {
@@ -4917,9 +4917,9 @@ function SendTime (): void {
 
 /**
  * Generates the payload for an entities page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display an entities page on the NSPanel.
- * 
+ *
  * @function GenerateEntitiesPage
  * @param {NSPanel.PageEntities} page - The entities page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the entities page.
@@ -4938,9 +4938,9 @@ function GenerateEntitiesPage (page: NSPanel.PageEntities): NSPanel.Payload[] {
 
 /**
  * Generates the payload for an Schedule page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display an schedule page on the NSPanel.
- * 
+ *
  * @function GenerateSchedulePage
  * @param {NSPanel.PageSchedule} page - The entities page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the schedule page.
@@ -4959,9 +4959,9 @@ function GenerateSchedulePage (page: NSPanel.PageSchedule): NSPanel.Payload[] {
 
 /**
  * Generates the payload for a grid page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a grid page on the NSPanel.
- * 
+ *
  * @function GenerateGridPage
  * @param {NSPanel.PageGrid} page - The grid page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the grid page.
@@ -4979,9 +4979,9 @@ function GenerateGridPage (page: NSPanel.PageGrid): NSPanel.Payload[] {
 
 /**
  * Generates the payload for a secondary grid page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a secondary grid page on the NSPanel.
- * 
+ *
  * @function GenerateGridPage2
  * @param {NSPanel.PageGrid2} page - The secondary grid page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the secondary grid page.
@@ -4999,9 +4999,9 @@ function GenerateGridPage2 (page: NSPanel.PageGrid2): NSPanel.Payload[] {
 
 /**
  * Generates the payload for a secondary grid page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a secondary grid page on the NSPanel.
- * 
+ *
  * @function GenerateGridPage3
  * @param {NSPanel.PageGrid3} page - The secondary grid page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the secondary grid page.
@@ -5019,9 +5019,9 @@ function GenerateGridPage3 (page: NSPanel.PageGrid3): NSPanel.Payload[] {
 
 /**
  * Generates the page elements for a given page type on the NSPanel.
- * 
+ *
  * This function creates and returns the string representation of the page elements for the specified page type.
- * 
+ *
  * @function GeneratePageElements
  * @param {PageType} page - The page type configuration.
  * @returns {string} The string representation of the page elements.
@@ -5121,7 +5121,7 @@ function GeneratePageElements (page: PageType): string {
 function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean = false): string {
 
     if (Debug) log(JSON.stringify(pageItem) + ' - ' + placeId, 'info');
-    
+
     try {
         let iconId = '0';
         let iconId2 = '0';
@@ -5228,10 +5228,10 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
                         case 'blind':
                             iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
-                            /** 
+                            /**
                              * The same extension can be found below in blind. vval=0 means closed / val=100 means open. If val is in between, icon3 is used.
                              *  Icons in this part can be states and strings. The specifications are based on German shutters.
-                            */
+                             */
                             iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['window-shutter', 'window-shutter-open', 'window-shutter-alert']);
                             iconColor = existsState(pageItem.id + '.COLORDEC')
                                 ? getState(pageItem.id + '.COLORDEC').val
@@ -5341,7 +5341,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             if (role == 'temperature' || role == 'value.temperature' || role == 'thermostat') {
                                 iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['snowflake-thermometer', 'sun-thermometer', 'thermometer']);
                             } else if (role == 'humidity' || role == 'value.humidity') {
-                                iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['water-off', 'water-percent-alert' , 'water-percent']);
+                                iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['water-off', 'water-percent-alert', 'water-percent']);
                             }
                             iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
 
@@ -5421,9 +5421,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
+                            type = 'light';
                         } else if (pageItem.popupVersion == 2) {
-                            type = 'light2';    
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : role == 'socket' ? Icons.GetIcon('power-socket-de') : Icons.GetIcon('lightbulb');
@@ -5447,9 +5447,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'light2';    
+                            type = 'light';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
@@ -5491,9 +5491,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'light2';    
+                            type = 'light';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
@@ -5520,7 +5520,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                         } else {
                             //Color-Temperatur in mired
                             let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
-                            iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                            iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
                         }
                     }
 
@@ -5531,9 +5531,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'light2';    
+                            type = 'light';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
@@ -5574,7 +5574,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             } else {
                                 //Color-Temperatur in mired
                                 let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
-                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
                             }
                         }
                     }
@@ -5586,9 +5586,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'light2';    
+                            type = 'light';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
@@ -5614,7 +5614,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             if (Debug) log('CIE wurde zuletzt geändert - Lampe ist Color-Mode');
                             if (getState(pageItem.id + '.CIE').val != null) {
                                 let cie: string = getState(pageItem.id + '.CIE').val;
-                                let cieArray = (cie.substring(1, cie.length -1)).split(',');
+                                let cieArray = (cie.substring(1, cie.length - 1)).split(',');
                                 let rgb: RGB = cie_to_rgb(parseFloat(cieArray[0]), parseFloat(cieArray[1]), 254);
                                 let cRGB: RGB = lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1);
                                 iconColor = rgb_dec565(pageItem.interpolateColor !== undefined ? cRGB : config.defaultOnColor);
@@ -5628,7 +5628,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             } else {
                                 //Color-Temperatur in mired
                                 let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
-                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
                             }
                         }
                     }
@@ -5640,9 +5640,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'light2';    
+                            type = 'light';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
@@ -5684,7 +5684,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                             } else {
                                 //Color-Temperatur in mired
                                 let rgb: RGB = kelvinToRGB(1000000 / (getState(pageItem.id + '.TEMPERATURE').val));
-                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));                  
+                                iconColor = rgb_dec565(lightenDarkenColor(ConvertRGBtoHex(rgb.red, rgb.green, rgb.blue), (100 - brightness) * -1));
                             }
                         }
                     }
@@ -5696,9 +5696,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'light';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'light';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'light2';    
+                            type = 'light';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'light2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('lightbulb');
@@ -5722,9 +5722,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     type = 'shutter';
                     if (pageItem.popupVersion !== undefined) {
                         if (pageItem.popupVersion == 1) {
-                            type = 'shutter';    
-                        } else if (pageItem.popupVersion == 2){
-                            type = 'shutter2';    
+                            type = 'shutter';
+                        } else if (pageItem.popupVersion == 2) {
+                            type = 'shutter2';
                         }
                     }
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('window-open');
@@ -5864,7 +5864,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     if (role == 'temperature' || role == 'value.temperature' || role == 'thermostat') {
                         iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['snowflake-thermometer', 'sun-thermometer', 'thermometer']);
                     } else if (role == 'humidity' || role == 'value.humidity') {
-                        iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['water-off', 'water-percent-alert' , 'water-percent']);
+                        iconId = determinePageItemStatusIcon(pageItem, val, iconId, ['water-off', 'water-percent-alert', 'water-percent']);
                     }
 
                     iconColor = GetIconColor(pageItem, parseInt(optVal), useColors);
@@ -5927,7 +5927,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                                     if (!pageItem.useValue) iconId = pageItem.icon != undefined ? Icons.GetIcon(pageItem.icon) : iconId;
                                     iconColor = pageItem.onColor != undefined ? rgb_dec565(pageItem.onColor) : iconColor;
                                 } else {
-                                    if(!pageItem.useValue) iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
+                                    if (!pageItem.useValue) iconId = pageItem.icon2 != undefined ? Icons.GetIcon(pageItem.icon2) : iconId;
                                     iconColor = pageItem.offColor != undefined ? rgb_dec565(pageItem.offColor) : iconColor;
                                 }
                             }
@@ -6044,7 +6044,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 case 'slider':
                     type = 'number';
                     iconId = pageItem.icon !== undefined ? Icons.GetIcon(pageItem.icon) : Icons.GetIcon('plus-minus-variant');
-                    
+
                     let minValueSlider: number = pageItem.minValue !== undefined ? pageItem.minValue : 0;
                     let maxValueSlider: number = pageItem.maxValue !== undefined ? pageItem.maxValue : 100;
 
@@ -6187,9 +6187,9 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
 
 /**
  * Finds the locale string for a given controls object and state.
- * 
+ *
  * This function retrieves the locale string based on the specified controls object and state.
- * 
+ *
  * @function findLocale
  * @param {string} controlsObject - The controls object identifier.
  * @param {string} controlsState - The controls state identifier.
@@ -6239,9 +6239,9 @@ function findLocale (controlsObject: string, controlsState: string): string {
 
 /**
  * Finds the locale string for a given service menu controls state.
- * 
+ *
  * This function retrieves the locale string based on the specified service menu controls state.
- * 
+ *
  * @function findLocaleServMenu
  * @param {string} controlsState - The service menu controls state identifier.
  * @returns {string} The locale string for the specified service menu controls state.
@@ -6297,9 +6297,9 @@ function findLocaleServMenu (controlsState: string): string {
 
 /**
  * Retrieves the icon color for a given page item based on its value and color usage settings.
- * 
+ *
  * This function determines the appropriate icon color for the specified page item, considering its value and whether colors should be used.
- * 
+ *
  * @function GetIconColor
  * @param {PageItem} pageItem - The page item configuration.
  * @param {boolean | number} value - The value associated with the page item.
@@ -6342,9 +6342,9 @@ function GetIconColor (pageItem: PageItem, value: boolean | number, useColors: b
 
 /**
  * Registers an entity watcher for the specified entity ID.
- * 
+ *
  * This function sets up a watcher to monitor changes in the specified entity and perform actions when changes occur.
- * 
+ *
  * @function RegisterEntityWatcher
  * @param {string} id - The ID of the entity to watch.
  */
@@ -6376,10 +6376,10 @@ function RegisterEntityWatcher (id: string): void {
 
 /**
  * Registers a detailed entity watcher for the specified entity ID and page item.
- * 
+ *
  * This function sets up a watcher to monitor changes in the specified entity and perform actions when changes occur,
  * considering the page item configuration, popup type, and place ID.
- * 
+ *
  * @function RegisterDetailEntityWatcher
  * @param {string} id - The ID of the entity to watch.
  * @param {PageItem} pageItem - The page item configuration.
@@ -6408,9 +6408,9 @@ function RegisterDetailEntityWatcher (id: string, pageItem: PageItem, type: NSPa
 
 /**
  * Retrieves the unit of measurement for the specified entity ID.
- * 
+ *
  * This function returns the unit of measurement associated with the given entity ID.
- * 
+ *
  * @function GetUnitOfMeasurement
  * @param {string} id - The ID of the entity.
  * @returns {string} The unit of measurement for the entity.
@@ -6436,9 +6436,9 @@ function GetUnitOfMeasurement (id: string): string {
 
 /**
  * Generates the payload for a thermostat page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a thermostat page on the NSPanel.
- * 
+ *
  * @function GenerateThermoPage
  * @param {NSPanel.PageThermo} page - The thermostat page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the thermostat page.
@@ -6910,9 +6910,9 @@ function GenerateThermoPage (page: NSPanel.PageThermo): NSPanel.Payload[] {
 
 /**
  * Unsubscribes from all thermo2-related subscriptions.
- * 
+ *
  * This function removes all active subscriptions related to thermo2 entities.
- * 
+ *
  * @function unsubscribeThermo2Subscriptions
  */
 function unsubscribeThermo2Subscriptions (): void {
@@ -6941,9 +6941,9 @@ function unsubscribeThermo2Subscriptions (): void {
 
 /**
  * Subscribes to thermo2-related subscriptions for the specified entity ID.
- * 
+ *
  * This function sets up subscriptions to monitor changes in media entities and perform actions when changes occur.
- * 
+ *
  * @function subscribeThermo2Subscriptions
  * @param {string} id - The ID of the media entity to subscribe to.
  */
@@ -6963,16 +6963,16 @@ function subscribeThermo2Subscriptions (id: string): void {
 
 /**
  * Generates the payload for a thermostat page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a thermostat page on the NSPanel.
- * 
+ *
  * @function GenerateThermo2Page
  * @param {NSPanel.PageThermo2} page - The thermostat page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the cardThermo2.
  */
 function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
     try {
-        
+
         UnsubscribeWatcher();
         activePage = page;
         unsubscribeThermo2Subscriptions;
@@ -7087,9 +7087,9 @@ function GenerateThermo2Page (page: NSPanel.PageThermo2): NSPanel.Payload[] {
 
 /**
  * Unsubscribes from all media-related subscriptions.
- * 
+ *
  * This function removes all active subscriptions related to media entities.
- * 
+ *
  * @function unsubscribeMediaSubscriptions
  */
 function unsubscribeMediaSubscriptions (): void {
@@ -7130,9 +7130,9 @@ function unsubscribeMediaSubscriptions (): void {
 
 /**
  * Subscribes to media-related subscriptions for the specified entity ID.
- * 
+ *
  * This function sets up subscriptions to monitor changes in media entities and perform actions when changes occur.
- * 
+ *
  * @function subscribeMediaSubscriptions
  * @param {string} id - The ID of the media entity to subscribe to.
  */
@@ -7149,9 +7149,9 @@ function subscribeMediaSubscriptions (id: string): void {
 
 /**
  * Subscribes to Sonos media-related subscriptions for the specified entity ID.
- * 
+ *
  * This function sets up subscriptions to monitor changes in Sonos media entities and perform actions when changes occur.
- * 
+ *
  * @function subscribeMediaSubscriptionsSonosAdd
  * @param {string} id - The ID of the Sonos media entity to subscribe to.
  */
@@ -7162,6 +7162,7 @@ function subscribeMediaSubscriptionsSonosAdd (id: string): void {
         }
     });
 }
+
 /**
  * Creates media aliases for a specific media device and adapter player instance.
  *
@@ -7504,9 +7505,9 @@ async function createAutoMediaAlias (id: string, mediaDevice: string, adapterPla
 
 /**
  * Generates the payload for a media page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a media page on the NSPanel.
- * 
+ *
  * @function GenerateMediaPage
  * @param {NSPanel.PageMedia} page - The media page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the media page.
@@ -7823,7 +7824,7 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     author = findLocale('media', 'no_music_to_control');
                 }
             }
-            
+
             //Volumio
             if (v2Adapter == 'volumio') {
                 media_icon = Icons.GetIcon('clock-time-twelve-outline');
@@ -8018,9 +8019,9 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     page.items[0].playList = getState(page.items[0].adapterPlayerInstance + 'playlists.playlistListString').val.split(';');
                 } else if (v2Adapter == 'mpd') {
                     let tempPL = getState(page.items[0].adapterPlayerInstance + 'listplaylists').val;
-                    tempPL = tempPL.replace('[','');
-                    tempPL = tempPL.replace(']','');
-                    tempPL = tempPL.replaceAll('"','');
+                    tempPL = tempPL.replace('[', '');
+                    tempPL = tempPL.replace(']', '');
+                    tempPL = tempPL.replaceAll('"', '');
                     page.items[0].playList = tempPL.split(',');
                 }
                 playListIconCol = rgb_dec565(HMIOn);
@@ -8262,9 +8263,9 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
 
 /**
  * Creates an automatic alarm alias for the specified entity ID and namespace path.
- * 
+ *
  * This function sets up an alias for the specified entity ID within the given namespace path to handle automatic alarm configurations.
- * 
+ *
  * @async
  * @function createAutoAlarmAlias
  * @param {string} id - The ID of the entity to create an alias for.
@@ -8308,9 +8309,9 @@ async function createAutoAlarmAlias (id: string, nsPath: string) {
 
 /**
  * Generates the payload for an alarm page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display an alarm page on the NSPanel.
- * 
+ *
  * @function GenerateAlarmPage
  * @param {NSPanel.PageAlarm} page - The alarm page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the alarm page.
@@ -8471,9 +8472,9 @@ function GenerateAlarmPage (page: NSPanel.PageAlarm): NSPanel.Payload[] {
 
 /**
  * Creates an automatic unlock alias for the specified entity ID and datapoint path.
- * 
+ *
  * This function sets up an alias for the specified entity ID within the given datapoint path to handle automatic unlock configurations.
- * 
+ *
  * @async
  * @function createAutoUnlockAlias
  * @param {string} id - The ID of the entity to create an alias for.
@@ -8505,9 +8506,9 @@ async function createAutoUnlockAlias (id: string, dpPath: string) {
 
 /**
  * Generates the payload for an unlock page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display an unlock page on the NSPanel.
- * 
+ *
  * @function GenerateUnlockPage
  * @param {NSPanel.PageUnlock} page - The unlock page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the unlock page.
@@ -8581,9 +8582,9 @@ function GenerateUnlockPage (page: NSPanel.PageUnlock): NSPanel.Payload[] {
 
 /**
  * Creates an automatic QR alias for the specified entity ID and datapoint path.
- * 
+ *
  * This function sets up an alias for the specified entity ID within the given datapoint path to handle automatic QR configurations.
- * 
+ *
  * @async
  * @function createAutoQRAlias
  * @param {string} id - The ID of the entity to create an alias for.
@@ -8616,9 +8617,9 @@ async function createAutoQRAlias (id: string, dpPath: string) {
 
 /**
  * Generates the payload for a QR page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a QR page on the NSPanel.
- * 
+ *
  * @function GenerateQRPage
  * @param {NSPanel.PageQR} page - The QR page configuration.
  * @returns {NSPanel.Payload[]} The payload array for the QR page.
@@ -8751,9 +8752,9 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
 
 /**
  * Unsubscribes from all power-related subscriptions.
- * 
+ *
  * This function removes all active subscriptions related to power entities.
- * 
+ *
  * @function unsubscribePowerSubscriptions
  */
 function unsubscribePowerSubscriptions (): void {
@@ -8941,10 +8942,10 @@ function GeneratePowerPage (page: NSPanel.PagePower): NSPanel.Payload[] {
 
 /**
  * Regular expression pattern to match time values in the format "~<number>:<number>".
- * 
+ *
  * The pattern matches a tilde (~) followed by one or more digits, a colon (:), and then one or more digits.
  * The second group of digits is captured and can be accessed using the index 1.
- * 
+ *
  * @type {RegExp}
  * @constant
  */
@@ -9025,10 +9026,10 @@ function GenerateChartPage (page: NSPanel.PageChart): NSPanel.Payload[] {
 
 /**
  * Sets the value of a state if it exists.
- * 
+ *
  * This function checks if the specified state exists and sets its value if it does.
  * Optionally, the type and acknowledgment flag can be specified.
- * 
+ *
  * @function setIfExists
  * @param {string} id - The ID of the state to set.
  * @param {any} value - The value to set for the state.
@@ -9058,9 +9059,9 @@ function setIfExists (id: string, value: any, type: string | null = null, ack: b
 
 /**
  * Toggles the state of the specified entity.
- * 
+ *
  * This function retrieves the current state of the specified entity and toggles its value.
- * 
+ *
  * @function toggleState
  * @param {string} id - The ID of the entity to toggle.
  * @returns {boolean} True if the state was successfully toggled, false otherwise.
@@ -9081,9 +9082,9 @@ function toggleState (id: string): boolean {
 // Begin Monobutton
 /**
  * Triggers a button action for the specified entity.
- * 
+ *
  * This function simulates a button press action for the specified entity by toggling its state.
- * 
+ *
  * @function triggerButton
  * @param {string} id - The ID of the entity to trigger.
  * @returns {boolean} True if the button action was successfully triggered, false otherwise.
@@ -9103,13 +9104,14 @@ function triggerButton (id: string): boolean {
     }
     return false;
 }
+
 // End Monobutton
 
 /**
  * Handles button events based on the provided words.
- * 
+ *
  * This function processes button events by interpreting the provided words and performing the appropriate actions.
- * 
+ *
  * @function HandleButtonEvent
  * @param {any} words - The words or parameters associated with the button event.
  */
@@ -9332,7 +9334,7 @@ function HandleButtonEvent (words: any): void {
                     GeneratePage(config.pages[0]);
                 }
                 break;
-            case 'notifyAction': 
+            case 'notifyAction':
                 if (words[4] == 'button1') { //Changes button1 retuns "button1" instead of "yes"
                     setState(popupNotifyInternalName, {val: words[2], ack: true});
                     setState(popupNotifyAction, {val: true, ack: true});
@@ -10104,7 +10106,7 @@ function HandleButtonEvent (words: any): void {
                             newSliderVal = words[4] - 6;
                         } else if (words[4] < 6) {
                             newSliderVal = (6 - words[4]) * -1;
-                        }   
+                        }
                         if (Debug) log(words[3] + ': ' + newSliderVal);
                         switch (words[3]) {
                             case 'positionSlider1':
@@ -10442,11 +10444,11 @@ function HandleButtonEvent (words: any): void {
 
 /**
  * Sets the value of a state or creates it if it does not exist.
- * 
+ *
  * This function checks if the specified state exists and sets its value if it does.
  * If the state does not exist, it creates the state with the provided common properties and sets its value.
  * Optionally, a callback function can be provided.
- * 
+ *
  * @function setOrCreate
  * @param {string} id - The ID of the state to set or create.
  * @param {any} value - The value to set for the state.
@@ -10467,9 +10469,9 @@ function setOrCreate (id: string, value: any, forceCreation: boolean = true, com
 //Determination of page navigation (CustomSend-Payload)
 /**
  * Retrieves the navigation string for the specified page ID.
- * 
+ *
  * This function returns the navigation string associated with the given page ID.
- * 
+ *
  * @function getNavigationString
  * @param {number} pageId - The ID of the page.
  * @returns {string} The navigation string for the specified page ID.
@@ -10561,9 +10563,9 @@ function getNavigationString (pageId: number): string {
 
 /**
  * Generates the payload for a detail page on the NSPanel.
- * 
+ *
  * This function creates and returns the payload required to display a detail page on the NSPanel.
- * 
+ *
  * @function GenerateDetailPage
  * @param {NSPanel.PopupType} type - The type of popup to display.
  * @param {NSPanel.mediaOptional | undefined} optional - Optional media configuration for the detail page.
@@ -11276,7 +11278,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                     if (vAdapter == 'alexa2') {
 
                         let tSlider1: string = pageItem.equalizerSlider[0].Slider1.heading ?? "Bass";
-                        let tIconS1M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider1.icon1 ?? "minus-box"); 
+                        let tIconS1M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider1.icon1 ?? "minus-box");
                         let tIconS1P: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider1.icon2 ?? "plus-box");
                         let hSlider1MinVal: number = pageItem.equalizerSlider[0].Slider1.minValue ?? 0;
                         let hSlider1MaxVal: number = pageItem.equalizerSlider[0].Slider1.maxValue ?? 12;
@@ -11286,7 +11288,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         let hSlider1Visibility: string = "enable";
 
                         let tSlider2: string = pageItem.equalizerSlider[0].Slider2.heading ?? "MidRange";
-                        let tIconS2M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider2.icon1 ?? "minus-box"); 
+                        let tIconS2M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider2.icon1 ?? "minus-box");
                         let tIconS2P: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider2.icon2 ?? "plus-box");
                         let hSlider2MinVal: number = pageItem.equalizerSlider[0].Slider2.minValue ?? 0;
                         let hSlider2MaxVal: number = pageItem.equalizerSlider[0].Slider2.maxValue ?? 12;
@@ -11296,7 +11298,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         let hSlider2Visibility: string = "enable";
 
                         let tSlider3: string = pageItem.equalizerSlider[0].Slider3.heading ?? "Treble";
-                        let tIconS3M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider3.icon1 ?? "minus-box"); 
+                        let tIconS3M: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider3.icon1 ?? "minus-box");
                         let tIconS3P: string = Icons.GetIcon(pageItem.equalizerSlider[0].Slider3.icon2 ?? "plus-box");
                         let hSlider3MinVal: number = pageItem.equalizerSlider[0].Slider3.minValue ?? 0;
                         let hSlider3MaxVal: number = pageItem.equalizerSlider[0].Slider3.maxValue ?? 12;
@@ -11315,7 +11317,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 tSlider1 +           // Slider1 Headline --> tmSerial 2
                                 '~' +
                                 tIconS1M +           // Slider1 Left Icon --> tmSerial 3
-                                '~' + 
+                                '~' +
                                 tIconS1P +           // Slider1 Right Icon --> tmSerial 4
                                 '~' +
                                 hSlider1CurVal +     // Slider1 Current Slider Value --> tmSerial 5
@@ -11684,10 +11686,10 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         bEntity1Icon + //12
                         '~' +
                         bEntity1Color + //13
-                        '~' + 
+                        '~' +
                         bEntity1Visibility + //14
                         //bEntity2
-                        '~' + 
+                        '~' +
                         bEntity2Icon + //15
                         '~' +
                         bEntity2Color + //16
@@ -12200,7 +12202,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 '~' +
                                 optionalString,
 
-                                
+
                         });
 
                         GeneratePage(activePage!);
@@ -12286,9 +12288,9 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
 
 /**
  * Scales a number from one range to another.
- * 
+ *
  * This function takes a number and scales it from the input range [inMin, inMax] to the output range [outMin, outMax].
- * 
+ *
  * @function scale
  * @param {number} number - The number to scale.
  * @param {number} inMin - The minimum value of the input range.
@@ -12308,9 +12310,9 @@ function scale (number: number, inMin: number, inMax: number, outMin: number, ou
 
 /**
  * Unsubscribes from all active watchers.
- * 
+ *
  * This function removes all active watchers that have been set up to monitor changes in entities.
- * 
+ *
  * @function UnsubscribeWatcher
  */
 function UnsubscribeWatcher (): void {
@@ -12328,9 +12330,9 @@ function UnsubscribeWatcher (): void {
 
 /**
  * Handles the screensaver functionality for the NSPanel.
- * 
+ *
  * This function manages the screensaver behavior, including activation, updates, and deactivation.
- * 
+ *
  * @function HandleScreensaver
  */
 function HandleScreensaver (): void {
@@ -12352,9 +12354,9 @@ function HandleScreensaver (): void {
 
 /**
  * Updates the screensaver state and content on the NSPanel.
- * 
+ *
  * This function handles the updates to the screensaver, including refreshing the displayed content and managing state changes.
- * 
+ *
  * @function HandleScreensaverUpdate
  */
 function HandleScreensaverUpdate (): void {
@@ -12463,8 +12465,8 @@ function HandleScreensaverUpdate (): void {
 
                         payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
                     }
-                } 
-                
+                }
+
                 if (i < 3) {
                     checkpoint = false;
                 }
@@ -12494,7 +12496,7 @@ function HandleScreensaverUpdate (): void {
                 }
 
                 for (let i = 1; i < maxEntities; i++) {
-                    
+
                     let TempMin = 0;
                     let TempMax = 0;
                     let DayOfWeek: any = 0;
@@ -12538,7 +12540,7 @@ function HandleScreensaverUpdate (): void {
                         }
                     } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                         if (i < 6) {
-                        
+
                             //Maximal 6 Tage bei openweathermap
                             TempMin = existsObject('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin')
                                 ? Math.round(getState('openweathermap.' + weatherAdapterInstanceNumber + '.forecast.day' + String(i-1) + '.temperatureMin').val * 10) / 10
@@ -12723,7 +12725,7 @@ function HandleScreensaverUpdate (): void {
                     } else {
                         payloadString += '~' + '~' + Icons.GetIcon(WeatherIcon) + '~' + WheatherColor + '~' + DayOfWeek + '~' + tempMinMaxString + '~';
                     }
-                }  
+                }
 
                 //Alternativ Layout bekommt zusätzlichen Status
                 if (config.bottomScreensaverEntity[4] && getState(NSPanel_Path + 'Config.Screensaver.alternativeScreensaverLayout').val) {
@@ -12902,9 +12904,9 @@ function HandleScreensaverUpdate (): void {
 
 /**
  * Registers a watcher for the specified screensaver entity.
- * 
+ *
  * This function sets up a watcher to monitor changes in the specified screensaver entity and perform actions when changes occur.
- * 
+ *
  * @function RegisterScreensaverEntityWatcher
  * @param {string} id - The ID of the screensaver entity to watch.
  */
@@ -12924,9 +12926,9 @@ function RegisterScreensaverEntityWatcher (id: string): void {
 
 /**
  * Handles the status icons for the screensaver on the NSPanel.
- * 
+ *
  * This function manages the display and updates of status icons on the screensaver.
- * 
+ *
  * @function HandleScreensaverStatusIcons
  */
 function HandleScreensaverStatusIcons (): void {
@@ -13074,9 +13076,9 @@ function HandleScreensaverStatusIcons (): void {
 
 /**
  * Handles the color scale conversion for a given temperature value.
- * 
+ *
  * This function converts a temperature value to a corresponding color scale value.
- * 
+ *
  * @function HandleColorScale
  * @param {string} valueScaletemp - The temperature value to convert.
  * @returns {number} The corresponding color scale value.
@@ -13112,9 +13114,9 @@ function HandleColorScale (valueScaletemp: string): number {
 
 /**
  * Handles the color settings for the screensaver on the NSPanel.
- * 
+ *
  * This function manages the color configurations and updates for the screensaver.
- * 
+ *
  * @function HandleScreensaverColors
  */
 function HandleScreensaverColors (): void {
@@ -13186,9 +13188,9 @@ function HandleScreensaverColors (): void {
 
 /**
  * Retrieves the color for a screensaver entity based on its configuration.
- * 
+ *
  * This function determines and returns the color for the specified screensaver entity configuration.
- * 
+ *
  * @function GetScreenSaverEntityColor
  * @param {NSPanel.ScreenSaverElement | null} configElement - The configuration element for the screensaver entity.
  * @returns {number} The color code for the screensaver entity.
@@ -13263,9 +13265,9 @@ function GetScreenSaverEntityColor (configElement: NSPanel.ScreenSaverElement | 
 
 /**
  * Retrieves the AccuWeather icon string based on the provided icon number.
- * 
+ *
  * This function maps the given AccuWeather icon number to its corresponding icon string representation.
- * 
+ *
  * @function GetAccuWeatherIcon
  * @param {number} icon - The AccuWeather icon number.
  * @returns {string} The corresponding icon string.
@@ -13354,9 +13356,9 @@ function GetAccuWeatherIcon (icon: number): string {
 
 /**
  * Retrieves the color code for a given AccuWeather icon number.
- * 
+ *
  * This function maps the provided AccuWeather icon number to its corresponding color code.
- * 
+ *
  * @function GetAccuWeatherIconColor
  * @param {number} icon - The AccuWeather icon number.
  * @returns {number} The corresponding color code.
@@ -13443,9 +13445,9 @@ function GetAccuWeatherIconColor (icon: number): number {
 
 /**
  * Retrieves the DasWetter icon string based on the provided icon number.
- * 
+ *
  * This function maps the given DasWetter icon number to its corresponding icon string representation.
- * 
+ *
  * @function GetDasWetterIcon
  * @param {number} icon - The DasWetter icon number.
  * @returns {string} The corresponding icon string.
@@ -13512,9 +13514,9 @@ function GetDasWetterIcon (icon: number): string {
 
 /**
  * Retrieves the color code for a given DasWetter icon number.
- * 
+ *
  * This function maps the provided DasWetter icon number to its corresponding color code.
- * 
+ *
  * @function GetDasWetterIconColor
  * @param {number} icon - The DasWetter icon number.
  * @returns {number} The corresponding color code.
@@ -13581,9 +13583,9 @@ function GetDasWetterIconColor (icon: number): number {
 
 /**
  * Retrieves the OpenWeatherMap icon string based on the provided icon string.
- * 
+ *
  * This function maps the given OpenWeatherMap icon string to its corresponding icon string representation.
- * 
+ *
  * @function GetOpenWeatherMapIcon
  * @param {string} icon - The AccuWeather icon string.
  * @returns {string} The corresponding icon string.
@@ -13617,20 +13619,20 @@ function GetOpenWeatherMapIcon (icon: string): string {
                 return 'weather-cloudy';
             case "04d": // cloudy
             case "04n":
-                return 'weather-cloudy'; 
-            case "09d": //shower rain 
+                return 'weather-cloudy';
+            case "09d": //shower rain
             case "09n":
                 return 'weather-rainy';
-            case "10d": //rain 
+            case "10d": //rain
             case "10n":
                 return 'weather-pouring';
-            case "11d": //Thunderstorm 
+            case "11d": //Thunderstorm
             case "11n":
                 return 'weather-lightning';
-            case "13d": //snow 
+            case "13d": //snow
             case "13n":
                 return 'weather-snowy';
-            case "50d": //mist 
+            case "50d": //mist
             case "50n":
                 return 'weather-fog';
             default:
@@ -13644,9 +13646,9 @@ function GetOpenWeatherMapIcon (icon: string): string {
 
 /**
  * Retrieves the color code for a given OpenWeatherMap icon string.
- * 
+ *
  * This function maps the provided OpenWeatherMap icon string to its corresponding color code.
- * 
+ *
  * @function GetOpenWeatherMapIconColor
  * @param {string} icon - The OpenWeatherMap icon string.
  * @returns {number} The corresponding color code.
@@ -13667,19 +13669,19 @@ function GetOpenWeatherMapIconColor (icon: string): number {
             case "04d": //broken clouds
             case "04n":
                 return rgb_dec565(swCloudy);
-            case "09d": //shower rain 
+            case "09d": //shower rain
             case "09n":
                 return rgb_dec565(swRainy);
-            case "10d": //rain 
+            case "10d": //rain
             case "10n":
                 return rgb_dec565(swPouring);
-            case "11d": //Thunderstorm 
+            case "11d": //Thunderstorm
             case "11n":
                 return rgb_dec565(swLightningRainy);
-            case "13d": //snow 
+            case "13d": //snow
             case "13n":
                 return rgb_dec565(swSnowy);
-            case "50d": //mist 
+            case "50d": //mist
             case "50n":
                 return rgb_dec565(swFog);
             default:
@@ -13693,9 +13695,9 @@ function GetOpenWeatherMapIconColor (icon: string): number {
 
 /**
  * Retrieves the PirateWeather icon string based on the provided icon string.
- * 
+ *
  * This function maps the given PirateWeather icon string to its corresponding icon string representation.
- * 
+ *
  * @function GetPirateWeatherIcon
  * @param {string} icon - The PirateWeather icon string.
  * @returns {string} The corresponding icon string.
@@ -13796,9 +13798,9 @@ function GetPirateWeatherIcon (icon: string): string {
 
 /**
  * Retrieves the color code for a given AccuWeather icon number.
- * 
+ *
  * This function maps the provided AccuWeather icon number to its corresponding color code.
- * 
+ *
  * @function GetPirateWeatherIconColor
  * @param {string} icon - The PirateWeather icon string.
  * @returns {number} The corresponding color code.
@@ -13960,10 +13962,10 @@ function GetBrightskyWeatherIconColor (icon: string): number {
 //mqttCallback (topic: string, message: string): Promise<void> {
 /**
  * Sets up a subscription to monitor changes in the SENSOR state of the panel.
- * 
+ *
  * This subscription listens for changes in the `SENSOR` state of the panel.
  * When the state changes, the specified callback function is executed.
- * 
+ *
  * @event
  * @param {Object} obj - The object containing the state change information.
  * @throws {Error} If an error occurs during the state change handling.
@@ -14002,13 +14004,14 @@ on({id: config.panelRecvTopic.substring(0, config.panelRecvTopic.length - 'RESUL
         log('error Trigger reading senor-data: ' + err.message, 'warn');
     }
 });
+
 //------------------End Read Internal Sensor Data
 
 /**
  * Formats the input text for selection display.
- * 
+ *
  * This function processes the input text and formats it for display in a selection context.
- * 
+ *
  * @function formatInSelText
  * @param {string} Text - The input text to format.
  * @returns {string} The formatted text.
@@ -14043,9 +14046,9 @@ function formatInSelText (Text: string): string {
 
 /**
  * Interpolates between two RGB colors based on the given fraction.
- * 
+ *
  * This function calculates and returns an interpolated color between two RGB colors based on the specified fraction.
- * 
+ *
  * @function Interpolate
  * @param {RGB} color1 - The first RGB color.
  * @param {RGB} color2 - The second RGB color.
@@ -14061,9 +14064,9 @@ function Interpolate (color1: RGB, color2: RGB, fraction: number): RGB {
 
 /**
  * Interpolates between two numbers based on the given fraction.
- * 
+ *
  * This function calculates and returns an interpolated value between two numbers based on the specified fraction.
- * 
+ *
  * @function InterpolateNum
  * @param {number} d1 - The first number.
  * @param {number} d2 - The second number.
@@ -14076,9 +14079,9 @@ function InterpolateNum (d1: number, d2: number, fraction: number): number {
 
 /**
  * Converts an RGB color to a 16-bit 565 color format.
- * 
+ *
  * This function takes an RGB color object and converts it to a 16-bit 565 color format.
- * 
+ *
  * @function rgb_dec565
  * @param {RGB} rgb - The RGB color object.
  * @returns {number} The 16-bit 565 color value.
@@ -14165,9 +14168,9 @@ function rad2deg (rad): number {
 
 /**
  * Converts a color value to its hexadecimal string representation.
- * 
+ *
  * This function takes a color value and converts it to a hexadecimal string.
- * 
+ *
  * @function ColorToHex
  * @param {number} color - The color value to convert.
  * @returns {string} The hexadecimal string representation of the color.
@@ -14179,9 +14182,9 @@ function ColorToHex (color): string {
 
 /**
  * Converts RGB color values to a hexadecimal string representation.
- * 
+ *
  * This function takes red, green, and blue color values and converts them to a hexadecimal string.
- * 
+ *
  * @function ConvertRGBtoHex
  * @param {number} red - The red color value.
  * @param {number} green - The green color value.
@@ -14210,9 +14213,9 @@ function hsv2rgb (hue: number, saturation: number, value: number): [number, numb
 
 /**
  * Calculates the hue value from RGB color values.
- * 
+ *
  * This function takes red, green, and blue color values and calculates the corresponding hue value.
- * 
+ *
  * @function getHue
  * @param {number} red - The red color value.
  * @param {number} green - The green color value.
@@ -14244,10 +14247,10 @@ function getHue (red: number, green: number, blue: number): number {
 
 /**
  * Converts a position (x, y) to an RGB color.
- * 
+ *
  * This function takes x and y coordinates, calculates the corresponding hue, saturation, and value (HSV),
  * and converts them to an RGB color.
- * 
+ *
  * @function pos_to_color
  * @param {number} x - The x-coordinate of the position.
  * @param {number} y - The y-coordinate of the position.
@@ -14275,9 +14278,9 @@ function pos_to_color (x: number, y: number): RGB {
 
 /**
  * Converts RGB color values to CIE 1931 color space coordinates.
- * 
+ *
  * This function applies gamma correction to the RGB values and converts them to CIE 1931 color space coordinates.
- * 
+ *
  * @function rgb_to_cie
  * @param {number} red - The red color value.
  * @param {number} green - The green color value.
@@ -14396,7 +14399,7 @@ function determinePageItemStatusIcon (pageItem: PageItem, val: number, iconId: s
 
 /**
  * Determines an icon for the screensaver based on the provided value and icon configuration.
- * 
+ *
  * @param {NSPanel.ScreenSaverElement} ss - Object containing the ScreensaverEntityIconSelect array.
  * @param {number} val - The current value used to determine which icon to select.
  * @param {string} iconId - A fallback icon ID if no suitable icon can be retrieved.
@@ -14449,6 +14452,7 @@ function determineStatusIcon (
     if (min === undefined || max === undefined) {
         return iconId;
     }
+
     function pickIcon(iconKey?: string, defIndex?: number): string {
         return (
             (iconKey && existsState(iconKey) && Icons.GetIcon(getState(iconKey).val)) ||
@@ -14473,9 +14477,9 @@ function determineStatusIcon (
 
 /**
  * Retrieves the Spotify device ID for a given device name.
- * 
+ *
  * This function takes a device name string, searches the available Spotify devices, and returns the corresponding device ID.
- * 
+ *
  * @function spotifyGetDeviceID
  * @param {string} vDeviceString - The name of the Spotify device.
  * @returns {string} The ID of the Spotify device.
@@ -14489,6 +14493,7 @@ function spotifyGetDeviceID (vDeviceString: string): string {
     let strDevID = arrayDeviceListIds[indexPos];
     return strDevID;
 }
+
 /**
  * Join arguments with ~ and return the string;
  * @param tokens unlimited numbers of strings
@@ -14532,9 +14537,9 @@ function adapterSchedule (time: {hour?: number; minute?: number} | undefined | n
 
 /**
  * Schedules a recurring task based on the specified time and repeat interval.
- * 
+ *
  * This function sets up a recurring task that executes the provided callback function at the specified time and repeats at the given interval.
- * 
+ *
  * @function _schedule
  * @param {Object | undefined | number} time - The time to schedule the task. Can be an object with hour and minute properties, undefined, or a timestamp.
  * @param {number} ref - The reference ID for the scheduled task.
@@ -14564,11 +14569,12 @@ function _schedule (time: {hour?: number; minute?: number} | undefined | number,
     const timeout = targetTime - new Date().getTime();
     scheduleList[ref] = setTimeout(_schedule, timeout, time, ref, repeatTime, callback);
 }
+
 /**
  * Clears a scheduled task based on the reference ID.
- * 
+ *
  * This function cancels the scheduled task associated with the provided reference ID and removes it from the schedule list.
- * 
+ *
  * @function _clearSchedule
  * @param {number} ref - The reference ID of the scheduled task to clear.
  * @returns {null} Returns null after clearing the scheduled task.
@@ -14578,14 +14584,15 @@ function _clearSchedule (ref: number): null {
     delete scheduleList[ref];
     return null;
 }
+
 const ArrayPlayerTypeWithMediaDevice = ['alexa2', 'sonos', 'squeezeboxrpc'] as const;
 const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'bosesoundtouch', 'mpd'] as const;
 
 /**
  * Checks if the given player type is a player with a media device.
- * 
+ *
  * This function determines if the provided player type is included in the list of player types with media devices.
- * 
+ *
  * @function isPlayerWithMediaDevice
  * @param {string | NSPanel._PlayerTypeWithMediaDevice} F - The player type to check.
  * @returns {boolean} True if the player type is a player with a media device, false otherwise.
@@ -14593,6 +14600,7 @@ const ArrayPlayerTypeWithOutMediaDevice = ['spotify-premium', 'volumio', 'boseso
 function isPlayerWithMediaDevice (F: string | NSPanel._PlayerTypeWithMediaDevice): F is NSPanel._PlayerTypeWithMediaDevice {
     return ArrayPlayerTypeWithMediaDevice.indexOf(F as NSPanel._PlayerTypeWithMediaDevice) != -1;
 }
+
 /** check if NSPanel.adapterPlayerInstanceType has all Playertypes */
 function checkSortedPlayerType (F: NSPanel.notSortedPlayerType) {
     const test: NSPanel.adapterPlayerInstanceType = F;
@@ -14600,9 +14608,9 @@ function checkSortedPlayerType (F: NSPanel.notSortedPlayerType) {
 
 /**
  * Checks if the given string is a valid media optional type.
- * 
+ *
  * This function determines if the provided string is included in the list of valid media optional types.
- * 
+ *
  * @function isMediaOptional
  * @param {string | NSPanel.mediaOptional} F - The string to check.
  * @returns {boolean} True if the string is a valid media optional type, false otherwise.
@@ -14625,10 +14633,10 @@ function isMediaOptional (F: string | NSPanel.mediaOptional): F is NSPanel.media
 
 /**
  * Checks if the given string is a valid event method.
- * 
+ *
  * This function determines if the provided string is included in the list of valid event methods.
  * If the event method is unknown, it logs a warning message.
- * 
+ *
  * @function isEventMethod
  * @param {string | NSPanel.EventMethod} F - The string to check.
  * @returns {boolean} True if the string is a valid event method, false otherwise.
@@ -14652,10 +14660,10 @@ function isEventMethod (F: string | NSPanel.EventMethod): F is NSPanel.EventMeth
 
 /**
  * Checks if the given string is a valid popup type.
- * 
+ *
  * This function determines if the provided string is included in the list of valid popup types.
  * If the popup type is unknown, it logs a warning message.
- * 
+ *
  * @function isPopupType
  * @param {NSPanel.PopupType | string} F - The string to check.
  * @returns {boolean} True if the string is a valid popup type, false otherwise.
@@ -14678,10 +14686,12 @@ function isPopupType (F: NSPanel.PopupType | string): F is NSPanel.PopupType {
             return false;
     }
 }
+
 // If u get a error here u forgot something in PagetypeType or PageType
 function checkPageType (F: NSPanel.PagetypeType, A: NSPanel.PageType) {
     A.type = F;
 }
+
 function isPageMediaItem (F: NSPanel.PageItem | NSPanel.PageMediaItem): F is NSPanel.PageMediaItem {
     return 'adapterPlayerInstance' in F;
 }
@@ -14693,6 +14703,7 @@ function isPageThermoItem (F: PageItem | NSPanel.PageThermoItem): F is NSPanel.P
 function isPageMedia (F: NSPanel.PageType | NSPanel.PageMedia): F is NSPanel.PageMedia {
     return F.type == 'cardMedia';
 }
+
 function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.PagePower {
     return F.type == 'cardPower';
 }
@@ -14710,9 +14721,9 @@ namespace NSPanel {
 
     /**
  * Defines the possible roles for entities in the NSPanel.
- * 
+ *
  * This type represents the various roles that entities can have within the NSPanel system.
- * 
+ *
  * @typedef {string} roles
  * @enum {string}
  */
@@ -14990,7 +15001,7 @@ namespace NSPanel {
          */
         offColor?: RGB;
         /**
-         * 
+         *
          */
         useColor?: boolean;
         /**
@@ -15056,7 +15067,7 @@ namespace NSPanel {
         icon: string;
         icon2?: string;
         iconOnColor?: RGB;
-        iconOffColor?: RGB; 
+        iconOffColor?: RGB;
         buttonType: string;
     };
 
@@ -15120,7 +15131,7 @@ namespace NSPanel {
         ScreensaverEntityNaviToPage?: PageType;
         /**
          * To show different icons for different values in the screensaver
-         * 
+         *
          * Value is the threshold for the icon. Lower values are first.
          * Example:
          * [
