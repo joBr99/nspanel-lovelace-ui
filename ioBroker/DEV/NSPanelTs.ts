@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.0.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v5.1.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 61 / v5.1.0 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt:
@@ -97,6 +97,7 @@ ReleaseNotes:
         - 12.11.2025 - v5.1.0    TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
         - 12.11.2025 - v5.1.0.1  Change Brightsky icon to icon_special
         - 15.11.2025 - v5.1.0.2  Add Swiss-Weather-API Adapter
+        - 18.11.2025 - v5.1.0.3  Fix QR-Code Generation cardQR 
 
 
 ***************************************************************************************************************
@@ -999,7 +1000,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.0.2';
+const scriptVersion: string = 'v5.1.0.3';
 const tft_version: string = 'v5.1.0';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -8662,7 +8663,7 @@ async function createAutoQRAlias (id: string, dpPath: string) {
         if (autoCreateAlias) {
             if (isSetOptionActive) {
                 if (existsState(dpPath + 'Daten') == false) {
-                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', {type: 'string', write: true});
+                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:;', {type: 'string', write: true});
                     await createStateAsync(dpPath + 'Switch', false, {type: 'boolean', write: true});
                     setObject(id, {_id: id, type: 'channel', common: {role: 'switch.mode.wlan', name: 'QR Page'}, native: {}});
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, {type: 'string', role: 'state', name: 'ACTUAL'});
@@ -8707,7 +8708,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         let o = getObject(id);
 
         let heading = page.heading !== undefined ? page.heading : typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
-        let textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;';
+        let textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:;';
         let hiddenPWD = false;
         if (page.items[0].hidePassword !== undefined && page.items[0].hidePassword == true) {
             hiddenPWD = true;
