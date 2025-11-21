@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.0.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.0 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v5.1.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 / BerryDriver 10 / Tasmota 15.0.1
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -98,7 +98,8 @@ ReleaseNotes:
         - 12.11.2025 - v5.1.0.1  Change Brightsky icon to icon_special
         - 15.11.2025 - v5.1.0.2  Add Swiss-Weather-API Adapter
         - 18.11.2025 - v5.1.0.3  Fix QR-Code Generation cardQR 
-
+        - 21.11.2025 - v5.1.1.1  Add some LongPress Actions in TFT/HMI v5.1.1 for NSPanel Adapter
+		- 21.11.2025 - v5.1.1.1  Remove Subscription if .ON and ON_ACTUAL
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -211,10 +212,10 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
 
-	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.1.0.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.1.1.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.1.0.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.1.0.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.1.1.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.1.1.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -1000,8 +1001,8 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.0.3';
-const tft_version: string = 'v5.1.0';
+const scriptVersion: string = 'v5.1.1.1';
+const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
 
@@ -4730,6 +4731,7 @@ function HandleMessage (typ: string, method: NSPanel.EventMethod, page: number |
                         }
                     }
                     break;
+                case 'buttonPress3':
                 case 'buttonPress2':
                     screensaverEnabled = false;
                     HandleButtonEvent(words);
@@ -5249,7 +5251,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 val = getState(pageItem.id + '.ON_SET').val;
                 RegisterEntityWatcher(pageItem.id + '.ON_SET');
             }
-            if (existsState(pageItem.id + '.ON')) {
+            if (existsState(pageItem.id + '.ON') && !existsState(pageItem.id + '.ON_ACTUAL')) {
                 val = getState(pageItem.id + '.ON').val;
                 RegisterEntityWatcher(pageItem.id + '.ON');
             }
@@ -10500,7 +10502,11 @@ function HandleButtonEvent (words: any): void {
                 break;
         }
     } catch (err: any) {
-        log('error at function HandleButtonEvent: ' + err.message, 'warn');
+        if (err.message == "Cannot read properties of undefined (reading 'id')") {
+
+        } else {
+            log('error at function HandleButtonEvent: ' + err.message, 'warn');
+        }
     }
 }
 
@@ -14947,6 +14953,7 @@ function isEventMethod (F: string | NSPanel.EventMethod): F is NSPanel.EventMeth
         case 'sleepReached':
         case 'pageOpenDetail':
         case 'buttonPress2':
+        case 'buttonPress3':
         case 'renderCurrentPage':
         case 'button1':
         case 'button2':
@@ -15011,7 +15018,7 @@ function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.Pag
 namespace NSPanel {
     export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer' | 'popupColor';
 
-    export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2';
+    export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'buttonPress3' | 'renderCurrentPage' | 'button1' | 'button2';
     export type panelRecvType = {
         event: 'event';
         method: EventMethod;
