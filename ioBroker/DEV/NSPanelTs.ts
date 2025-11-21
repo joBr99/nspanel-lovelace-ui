@@ -5238,7 +5238,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     val = getState(pageItem.id + '.ACTUAL').val;
                     RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                 }
-                if (existsState(pageItem.id + '.SET')) {
+				if (existsState(pageItem.id + '.SET') && !existsState(pageItem.id + 'ACTUAL')) {
                     val = getState(pageItem.id + '.SET').val;
                     RegisterEntityWatcher(pageItem.id + '.SET');
                 }
