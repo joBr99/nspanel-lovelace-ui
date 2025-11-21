@@ -6418,7 +6418,7 @@ function RegisterEntityWatcher (id: string): void {
             return;
         }
 
-        subscriptions[id] = on({id: id, change: 'any'}, (obj) => {
+        subscriptions[id] = on({id: id, change: 'ne'}, (obj) => {
             //@ts-ignore
             if (obj.oldState && obj.oldState.val === obj.state.val && obj.state.ack) {
                 return;
