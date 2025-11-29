@@ -388,11 +388,12 @@ class LuiPagesGen(object):
             entityTypePanel = "text"
             unit = get_attr_safe(entity, "temperature_unit", "")
             rt = None
+            index = item.stype
             if type(item.stype) == str and ":" in item.stype and len(item.stype.split(":")) == 2:
                 spintstr = item.stype.split(":")
                 rt = spintstr[0]
-                item.stype = int(spintstr[1])
-            if type(item.stype) == int:
+                index = int(spintstr[1])
+            if type(index) == int:
                 bits = get_attr_safe(entity, "supported_features", 0b0)
                 if not rt:
                     rt = "daily"
@@ -407,8 +408,8 @@ class LuiPagesGen(object):
                     "weather/get_forecasts", target={"entity_id": entityId}, service_data={"type": rt}
                 )
                 forecast = results.get("result", {}).get("response", {}).get(entityId, {}).get('forecast') or entity.attributes.get('forecast', [])
-                if len(forecast) >= item.stype:
-                    day_forecast = forecast[item.stype]
+                if len(forecast) >= index:
+                    day_forecast = forecast[index]
                     fdate = dp.parse(day_forecast['datetime'])
                     global babel_spec
                     if babel_spec is not None:
