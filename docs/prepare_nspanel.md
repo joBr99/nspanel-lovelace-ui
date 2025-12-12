@@ -9,13 +9,6 @@ Check out Blakadder's Template Repo for more information on flashing. **Do not**
 If you prefer ESPHome over Tasmota, you can use this third-party ESPHome component, which replaces Tasmota and the Berry driver used in this project.  
 [ESPHome Component](https://github.com/sairon/esphome-nspanel-lovelace-ui)
 
----
-
-## Downgrade Tasmota
-
-Downgrade your Tasmota to version **15.0.1** - in newer versions, flashing the display currently does not work.
-
-https://ota.tasmota.com/tasmota32/release-15.0.1/tasmota32-nspanel.bin
 
 ---
 
