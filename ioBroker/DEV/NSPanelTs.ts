@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.1 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v5.1.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 / BerryDriver 10 / Tasmota 15.2.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -100,6 +100,7 @@ ReleaseNotes:
         - 18.11.2025 - v5.1.0.3  Fix QR-Code Generation cardQR 
         - 21.11.2025 - v5.1.1.1  Add some LongPress Actions in TFT/HMI v5.1.1 for NSPanel Adapter
 		- 21.11.2025 - v5.1.1.1  Remove Subscription if .ON and ON_ACTUAL
+		- 21.12.2025 - v5.1.1.2  Left screensaver unit from ioBroker data point to create a dynamic screensaver (by ernstdaheim-hub)
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -1001,7 +1002,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.1';
+const scriptVersion: string = 'v5.1.1.2';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -12478,76 +12479,85 @@ function HandleScreensaverUpdate (): void {
             }
 
             // 3 leftScreensaverEntities
-            if (screensaverAdvanced) {
-                let checkpoint = true;
-                let i = 0;
-                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
-                    for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
-                        const leftScreensaverEntity = config.leftScreensaverEntity[i];
-                        if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
-                            checkpoint = false;
-                            break;
-                        }
-                        RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity);
-
-                        let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
-                        let iconColor = rgb_dec565(White);
-                        let icon;
-                        if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
-                            let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
-                            icon = Icons.GetIcon(iconName);
-                        } else {
-                            icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
-                        }
-
-                        if (parseFloat(val + '') == val) {
-                            val = parseFloat(val);
-                        }
-
-                        if (typeof val == 'number') {
-                            val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
-                            icon = determineScreensaverStatusIcon(leftScreensaverEntity,val,icon)
-                            val = val.toFixed(
-                                    leftScreensaverEntity.ScreensaverEntityDecimalPlaces
-                                ) + leftScreensaverEntity.ScreensaverEntityUnitText;
-                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-                        } else if (typeof val == 'boolean') {
-                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-                            if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
-                                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff);
-                            }
-                        } else if (typeof val == 'string') {
-                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-                            let pformat = parseFormat(val);
-                            if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
-                            if (moment(val, pformat, true).isValid()) {
-                                let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
-                                if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
-                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
-                                } else {
-                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
-                                }
-                            }
-                        }
-                        const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
-                        if (temp && typeof temp == 'string' && existsObject(temp)) {
-                            iconColor = getState(temp).val;
-                        }
-
-                        payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
-                    }
-                }
-
-                if (i < 3) {
-                    checkpoint = false;
-                }
-
-                if (checkpoint == false) {
-                    for (let j = i; j < 3; j++) {
-                        payloadString += '~~~~~~';
-                    }
-                }
-            }
+			if (screensaverAdvanced) {
+			    let checkpoint = true;
+			    let i = 0;
+			    if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
+			        for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
+			            const leftScreensaverEntity = config.leftScreensaverEntity[i];
+			            if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
+			                checkpoint = false;
+			                break;
+			            }
+			            RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity);
+			
+			            let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
+			            let iconColor = rgb_dec565(White);
+			            let icon;
+			            if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
+			                let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
+			                icon = Icons.GetIcon(iconName);
+			            } else {
+			                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
+			            }
+			
+			            if (parseFloat(val + '') == val) {
+			                val = parseFloat(val);
+			            }
+			
+			            if (typeof val == 'number') {
+			                val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
+			                icon = determineScreensaverStatusIcon(leftScreensaverEntity, val, icon)
+			
+			                // Einheit ermitteln: String oder aus DP
+			                let unitText = '';
+			                if (typeof leftScreensaverEntity.ScreensaverEntityUnitText === 'string') {
+			                    if (existsObject(leftScreensaverEntity.ScreensaverEntityUnitText)) {
+			                        unitText = getState(leftScreensaverEntity.ScreensaverEntityUnitText).val;
+			                    } else {
+			                        unitText = leftScreensaverEntity.ScreensaverEntityUnitText;
+			                    }
+			                }
+			
+			                val = val.toFixed(leftScreensaverEntity.ScreensaverEntityDecimalPlaces) + unitText;
+			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+			            } else if (typeof val == 'boolean') {
+			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+			                if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
+			                    icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff);
+			                }
+			            } else if (typeof val == 'string') {
+			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+			                let pformat = parseFormat(val);
+			                if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
+			                if (moment(val, pformat, true).isValid()) {
+			                    let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+			                    if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
+			                        val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
+			                    } else {
+			                        val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+			                    }
+			                }
+			            }
+			            const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
+			            if (temp && typeof temp == 'string' && existsObject(temp)) {
+			                iconColor = getState(temp).val;
+			            }
+			
+			            payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
+			        }
+			    }
+			
+			    if (i < 3) {
+			        checkpoint = false;
+			    }
+			
+			    if (checkpoint == false) {
+			        for (let j = i; j < 3; j++) {
+			            payloadString += '~~~~~~';
+			        }
+			    }
+			}
 
             // 6 bottomScreensaverEntities
             let maxEntities: number = 7;
