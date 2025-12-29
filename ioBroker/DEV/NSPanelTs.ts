@@ -1003,7 +1003,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.2';
+const scriptVersion: string = 'v5.1.1.3';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -10191,7 +10191,7 @@ function HandleButtonEvent (words: any): void {
                     }
                 } else {
                      let pageItemSlider = findPageItem(id);
-                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItemSlider.maxValueLevel ?? pageItemSlider.maxValue, pageItemSlider.minValueLevel ?? pageItemSlider.minValue));
+                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItemSlider.maxValueLevel ? pageItemSlider.maxValue : 100, pageItemSlider.minValueLevel ? pageItemSlider.minValue : 0));
                      setIfExists(pageItemSlider.id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
                 }
                 break;
@@ -11453,7 +11453,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         let hSlider2MinVal: number = pageItem.minValue ?? 0;
                         let hSlider2MaxVal: number = pageItem.maxValue ?? 100;
                         let hSlider2ZeroVal: number = 0;
-                        let hSlider2CurVal: number = getState(id + '.ACTUAL').val;
+                        let hSlider2CurVal: number = existsState(id + '.ACTUAL') ? getState(id + '.ACTUAL').val : getState(id + '.SET').val;
                         let hSlider2Step: number = 1;
                         let hSlider2Visibility: string = "enable";
 
