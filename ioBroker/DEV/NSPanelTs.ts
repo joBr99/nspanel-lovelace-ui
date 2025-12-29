@@ -9472,14 +9472,6 @@ function HandleButtonEvent (words: any): void {
                     if (Debug) log(o.common.role)
 
                     switch (o.common.role as NSPanel.roles) {
-                        case 'volume':
-                            let pageItem = findPageItem(id);
-                            if (pageItem.minValueLevel != undefined) {
-                                setIfExists(id + '.SET', pageItem.minValueLevel);
-                            } else {
-                                setIfExists(id + '.SET', 0);
-                            }
-                            break;
                         case 'level.mode.fan':
                             toggleState(id + '.SET') ? true : toggleState(id + '.ACTUAL');
                             break;
