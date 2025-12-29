@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.2 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.1 / BerryDriver 10 / Tasmota 15.2.0
+TypeScript v5.1.1.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -101,6 +101,7 @@ ReleaseNotes:
         - 21.11.2025 - v5.1.1.1  Add some LongPress Actions in TFT/HMI v5.1.1 for NSPanel Adapter
 		- 21.11.2025 - v5.1.1.1  Remove Subscription if .ON and ON_ACTUAL
 		- 21.12.2025 - v5.1.1.2  Left screensaver unit from ioBroker data point to create a dynamic screensaver (by ernstdaheim-hub)
+		- 29.12.2025 - v5.1.1.3  Fix popupSlider (Standard-Slider (not cardMedia) with Functionality on popupSlider) / Wrong Pictures in us-p Slider if BG-Color is black (0)
 
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
@@ -216,7 +217,7 @@ Install/Upgrades in Konsole:
 	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.1.1.tft
 
     TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.1.1.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.1.1.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.1.2.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -10188,6 +10189,10 @@ function HandleButtonEvent (words: any): void {
                                 break;
                         }
                     }
+                } else {
+                     let pageItemSlider = findPageItem(id);
+                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItemSlider.maxValueLevel ?? pageItemSlider.maxValue, pageItemSlider.minValueLevel ?? pageItemSlider.minValue));
+                     setIfExists(pageItemSlider.id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
                 }
                 break;
             case 'mode-seek':
