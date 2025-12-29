@@ -9487,7 +9487,7 @@ function HandleButtonEvent (words: any): void {
                         case 'socket':
                         case 'light':
                             // Change for monobutton
-                            pageItem = findPageItem(id);
+                            let pageItem = findPageItem(id);
                             if (pageItem.monobutton != undefined && pageItem.monobutton == true) {
                                 triggerButton(id + '.SET');
                             } else {
