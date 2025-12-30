@@ -11,7 +11,7 @@ jobs:
     name: HACS Action
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v5"
+      - uses: "actions/checkout@v6"
       - name: HACS Action
         uses: "hacs/action@main"
         with:
