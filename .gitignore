@@ -7,3 +7,4 @@ panels.yaml
 
 # don't add Webstorm project stuff
 .idea
+.DS_Store
