@@ -227,8 +227,8 @@ let Debug: boolean = false;
 
     // DE: Anpassen an die Verzeichnisse der MQTT-Adapter-Instanz
     // EN: Adapt to the MQTT adapter instance directories
-    const NSPanelReceiveTopic: string = 'mqtt.0.SmartHome.NSPanel_1.tele.RESULT';
-    const NSPanelSendTopic: string = 'mqtt.0.SmartHome.NSPanel_1.cmnd.CustomSend';
+    const NSPanelReceiveTopic: string = 'mqtt.0.SmartHome.nspanel_Kueche.tele.RESULT';
+    const NSPanelSendTopic: string = 'mqtt.0.SmartHome.nspanel_Kueche.cmnd.CustomSend';
 
     // DE: nur ändern, falls der User im Tasmota vor dem Kompilieren umbenannt wurde (Standard Tasmota: admin)
     // EN: only change if the user was renamed in Tasmota before compiling (default Tasmota: admin)
@@ -236,11 +236,11 @@ let Debug: boolean = false;
     
     // DE: setzten, falls "Web Admin Password" in Tasmota vergeben
     // EN set if "Web Admin Password" is assigned in Tasmota
-    const tasmota_web_admin_password: string = '';
+    const tasmota_web_admin_password: string = 'win2glet';
 
     // DE: Setzen der bevorzugten Tasmota32-Version (für Updates)
     // EN: Set preferred Tasmota32 version (for updates)
-    const tasmotaOtaVersion: string = 'tasmota32-DE.bin';
+    const tasmotaOtaVersion: string = 'tasmota32-nspanel.bin';
         // DE: Es können ebenfalls andere Versionen verwendet werden wie zum Beispiel:
         // EN: Other versions can also be used, such as:
         // 'tasmota32-nspanel.bin' or 'tasmota32.bin' or 'tasmota32-DE.bin' or etc.
@@ -393,6 +393,97 @@ let Debug: boolean = false;
 //-- Start for your own pages -- some self-defined aliases required ----------------
   
 	//-- https://github.com/joBr99/nspanel-lovelace-ui/wiki/NSPanel-Page-%E2%80%90-Typen_How-2_Beispiele
+
+    let NSPanel_Main = <PageGrid>
+    {
+        'type': 'cardGrid',
+        'heading': 'Hauptmenü',
+        'useColor': true,
+        'items': [
+            <PageItem>{ navigate: true, id: 'NSPanel_Kueche_Default', icon: 'hamburger',offColor: Menu, onColor: Menu, name: 'Küche', buttonText: 'mehr...'},
+            <PageItem>{ navigate: true, id: 'NSPanel_Garage_Default', icon: 'garage',offColor: Menu, onColor: Menu, name: 'Garage', buttonText: 'mehr...'},
+            <PageItem>{ navigate: true, id: 'NSPanel_Abfall', icon: 'trash-can-outline', offColor: Menu, onColor: Menu, name: 'Abfall', buttonText: 'mehr...'},
+            <PageItem>{ navigate: true, id: 'NSPanel_Garage_Audi1', icon: 'car', offColor: Menu, onColor: Menu, name: 'Audi A6', buttonText: 'mehr...'},
+            <PageItem>{ navigate: true, id: 'NSPanel_WLAN', icon: 'wifi', offColor: Menu, onColor: Menu, name: 'Gast WLAN', buttonText: 'mehr...'},
+            <PageItem>{ navigate: true, id: 'NSPanel_Service', icon: 'tools', offColor: Menu, onColor: Menu, name: 'Einstellungen', buttonText: 'mehr...'}
+        ]
+    };
+    
+    let NSPanel_Kueche_Default = <PageEntities>
+    {
+        'type': 'cardEntities',
+        'heading': 'Küche Licht',
+        'useColor': true,
+        'subPage': true,
+        'parent': NSPanel_Main,
+        'home': 'NSPanel_Main',
+        'items': [
+            <PageItem>{ id: "alias.0.NSPanel.Kueche.Arbeitslicht", name: 'Arbeitslicht', minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: true, colormode: 'xy'},
+            <PageItem>{ id: "alias.0.NSPanel.Kueche.Kuechentisch", name: 'Küchentisch', minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: true, colormode: 'xy'},
+            <PageItem>{ id: "alias.0.NSPanel.Kueche.Unterschraenke", name: 'Unterschränke', minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: true, colormode: 'xy'},
+            <PageItem>{ id: "alias.0.NSPanel.Kueche.Decke", name: 'Decke', minValueBrightness: 0, maxValueBrightness: 100, minValueColorTemp: 500, maxValueColorTemp: 150, interpolateColor: true, colormode: 'xy'},
+        ]
+    };       
+    
+    let NSPanel_Garage_Default = <PageEntities>
+    {
+        'type': 'cardEntities',
+        'heading': 'Garage',
+        'useColor': true,
+        'subPage': true,
+        'parent': NSPanel_Main,
+        'home': 'NSPanel_Main',
+        'items': [
+            <PageItem>{ id: "alias.0.NSPanel.Aussen.Garagentor", name: 'Garagentor', icon2: 'garage-lock', icon: 'garage-open', offColor: MSRed, onColor: MSGreen},
+            <PageItem>{ id: "alias.0.NSPanel.Aussen.GaragenlichtAussen", name: 'Gargen Aussenlicht'},
+            <PageItem>{ id: "alias.0.NSPanel.Aussen.Lichterkette", name: 'Lichterkette'},
+        ]
+    };       
+    
+    let NSPanel_Garage_Audi1 = <PageEntities>
+    {
+        'type': 'cardEntities',
+        'heading': 'Audi A6 Info',
+        'useColor': true,
+        'subPage': true,
+        'parent': NSPanel_Main,
+        'home': 'NSPanel_Main',
+        'items': [
+            <PageItem>{ id: "alias.0.NSPanel.AudiA6.KM_Stand", name: 'KM-Stand', unit: 'km'},
+            <PageItem>{ id: "alias.0.NSPanel.AudiA6.Gesamtreichweite", name: 'Reichweite', unit: 'km'},
+            <PageItem>{ id: "alias.0.NSPanel.AudiA6.Ladezustand_Batterie", name: 'Ladezustand Batterie', unit: '%'},
+            <PageItem>{ id: 'alias.0.NSPanel.AudiA6.Türen_verschlossen', icon:'car-door', icon2:'car-door-lock', offColor: MSRed, onColor: MSGreen, name: 'Abgeschlossen'},
+        ]
+    };    
+    
+    let NSPanel_Abfall = <PageEntities>
+    {
+        'type': 'cardEntities',
+        'heading': 'Abfallkalender',
+        'useColor': true,
+        'subPage': true,
+        'parent': NSPanel_Main,
+        'home': 'NSPanel_Main',
+        'items': [ 
+            <PageItem>{ id: 'alias.0.NSPanel.Abfall.event1',icon: 'trash-can'},  
+            <PageItem>{ id: 'alias.0.NSPanel.Abfall.event2',icon: 'trash-can'},  
+            <PageItem>{ id: 'alias.0.NSPanel.Abfall.event3',icon: 'trash-can'},  
+            <PageItem>{ id: 'alias.0.NSPanel.Abfall.event4',icon: 'trash-can'}  
+        ]
+    };
+    
+    let NSPanel_WLAN = <PageQR> 
+    {
+        'type': 'cardQR',
+        'heading': 'Gast WLAN',
+        'useColor': true,
+        'subPage': true,
+        'parent': NSPanel_Main,
+        'home': 'NSPanel_Main', 
+        'items': [
+            <PageItem>{ id: 'alias.0.NSPanel.Guest_Wifi', icon: 'trash-can', hidePassword: true, autoCreateALias: true }
+         ]
+    };
 
 //-- ENDE für eigene Seiten -- z.T. selbstdefinierte Aliase erforderlich -------------------------
 //-- END for your own pages -- some self-defined aliases required ------------------------
@@ -805,11 +896,17 @@ export const config: Config = {
     // Seiteneinteilung / Page division
     // Hauptseiten / Mainpages
     pages: [
+        NSPanel_Main,
         NSPanel_Service, //Auto-Alias Service Page
         //Unlock_Service            //Auto-Alias Service Page (Service Pages used with cardUnlock)
     ],
     // Unterseiten / Subpages
     subPages: [
+        NSPanel_Kueche_Default,
+        NSPanel_Abfall,
+        NSPanel_Garage_Default,
+        NSPanel_Garage_Audi1,
+        NSPanel_WLAN,
         NSPanel_Service_SubPage, //Auto-Alias Service Page (only used with cardUnlock)
         NSPanel_Infos, //Auto-Alias Service Page
         NSPanel_Wifi_Info_1, //Auto-Alias Service Page
@@ -945,28 +1042,17 @@ export const config: Config = {
     // DE: Konfiguration des linken Schalters des NSPanels
     // EN: Configuration of the left switch of the NSPanel
     button1: {
-        // DE: Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
-        // EN: Possible values if Rule2 defined: 'page', 'toggle', 'set' - If not defined --> mode: null
-        mode: null,
-        // DE: Zielpage - Verwendet wenn mode = page
-        // EN: Target page - Used if mode = page
-        page: null,
-        // DE: Zielentity - Verwendet wenn mode = set oder toggle
-        // EN: Target entity - Used if mode = set or toggle
-        entity: null,
-        // DE: Zielwert - Verwendet wenn mode = set
-        // EN: Target value - Used if mode = set
-        setValue: null
+        mode: 'page',     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
+        page: NSPanel_Kueche_Default,     // Zielpage - Verwendet wenn mode = page (bisher button1Page)
+        entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
+        setValue: null  // Zielwert - Verwendet wenn mode = set
     },
-
-    // DE: Konfiguration des rechten Schalters des NSPanels
-    // EN: Configuration of the right switch of the NSPanel
     button2: {
-        mode: null,
-        page: null,
-        entity: null,
-        setValue: null
-    },
+        mode: 'page',     // Mögliche Werte wenn Rule2 definiert: 'page', 'toggle', 'set' - Wenn nicht definiert --> mode: null
+        page: NSPanel_Abfall,     // Zielpage - Verwendet wenn mode = page (bisher button2Page)
+        entity: null,   // Zielentity - Verwendet wenn mode = set oder toggle
+        setValue: null  // Zielwert - Verwendet wenn mode = set
+    }
 
 //--------- DE: Ende - Einstellungen für Hardware Button, wenn Sie softwareseitig genutzt werden (Rule2) -------------
 //--------- EN: End - settings for hardware button if they are used in software (Rule2) ------------------------------
