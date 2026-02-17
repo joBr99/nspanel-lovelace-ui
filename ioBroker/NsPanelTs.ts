@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.0.2.1 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 59 / v5.0.2 / BerryDriver 10 / Tasmota 15.0.1
+TypeScript v5.1.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -94,8 +94,17 @@ ReleaseNotes:
         - 08.09.2025 - v5.0.0    TFT 59 / 5.0.0 - US-L/US-P Changes in cardMedia, popupInSel, card Grid 1, 2, 3
         - 19.09.2025 - v5.0.0.2  Remove Startup Scheedule at 3:30am / Small fix
         - 19.10.2025 - v5.0.2.1  TFT 59 / 5.0.2 - EU/US-L/US-P - Fix cardAlarm Icon; Fix Notification in Advanced Screensaver; Fix Dimensions in cardChart/cardLChart
+        - 12.11.2025 - v5.1.0    TFT 61 / 5.1.0 - Breaking Changes in popupNotify TFT - add 3. Button only for Adapter
+        - 12.11.2025 - v5.1.0.1  Change Brightsky icon to icon_special
+        - 15.11.2025 - v5.1.0.2  Add Swiss-Weather-API Adapter
+        - 18.11.2025 - v5.1.0.3  Fix QR-Code Generation cardQR 
+        - 21.11.2025 - v5.1.1.1  Add some LongPress Actions in TFT/HMI v5.1.1 for NSPanel Adapter
+		- 21.11.2025 - v5.1.1.1  Remove Subscription if .ON and ON_ACTUAL
+		- 21.12.2025 - v5.1.1.2  Left screensaver unit from ioBroker data point to create a dynamic screensaver (by ernstdaheim-hub)
+		- 29.12.2025 - v5.1.1.3  Fix popupSlider (Standard-Slider (not cardMedia) with Functionality on popupSlider) / Wrong Pictures in us-p Slider if BG-Color is black (0)
+		- 29.12.2025 - v5.1.1.4  Refactor power subscription handling in NSPanelTs (#1421 by lubepi)
 
-
+		
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
@@ -190,9 +199,13 @@ Tasmota-Status0 - (zyklische Ausführung)
 
 Erforderliche Adapter:
 
-    Pirate-Weather oder BrightSky oder OpenWeatherMap --> Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver 
-	!!!DasWetter deprecated        - Dienst nur noch für ältere Accounts funktional 
-    !!!AccuWeather deprecated      - Dienst schaltet Free-Account ab!!!
+    Bei Nutzung der Wetterfunktionen (und zur Icon-Konvertierung) im Screensaver einen der folgenden Wetter-Adapter:
+    - Pirate-Weather
+    - BrightSky
+    - OpenWeatherMap
+    - Swiss-Weather-API
+	- !!!DasWetter deprecated      - Dienst nur noch für ältere Accounts funktional
+    - !!!AccuWeather deprecated    - Dienst schaltet Free-Account ab!!!
     Alexa2:                        - Bei Nutzung der dynamischen SpeakerList in der cardMedia
     Geräte verwalten               - Für Erstellung der Aliase
     MQTT-Adapter                   - Für Kommunikation zwischen Skript und Tasmota
@@ -203,10 +216,10 @@ Install/Upgrades in Konsole:
     Tasmota BerryDriver Install: Backlog UrlFetch https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
     Tasmota BerryDriver Update:  Backlog UpdateDriverVersion https://raw.githubusercontent.com/ticaki/ioBroker.nspanel-lovelace-ui/refs/heads/main/tasmota/berry/10/autoexec.be; Restart 1
 
-	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.0.2.tft
+	TFT EU STABLE Version:       FlashNextionAdv0 http://nspanel.de/nspanel-v5.1.1.tft
 
-    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.0.2.tft
-    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.0.2.tft
+    TFT US-L STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-l-v5.1.1.tft
+    TFT US-P STABLE Version:     FlashNextionAdv0 http://nspanel.de/nspanel-us-p-v5.1.2.tft
 ---------------------------------------------------------------------------------------
 */
 
@@ -254,8 +267,8 @@ const NSPanel_Alarm_Path = '0_userdata.0.NSPanel.';
 
 /***** 3. Weather adapter Config *****/
 
-// DE: Mögliche Wetteradapter 'pirate-weather.0.' oder 'brightsky.0.' oder 'openweathermap.0.' oder 'daswetter.0.' (deprecated) oder 'accuweather.0.' (deprecated)
-// EN: Possible weather adapters 'pirate-weather.0.' or 'brightsky.0.' or 'openweathermap.0.' or 'daswetter.0.' (deprecated) or 'accuweather.0.' (deprecated)
+// DE: Mögliche Wetteradapter 'pirate-weather.0.' oder 'brightsky.0.' oder 'openweathermap.0.' oder 'swiss-weather-api.0.' oder 'daswetter.0.' (deprecated) oder 'accuweather.0.' (deprecated)
+// EN: Possible weather adapters 'pirate-weather.0.' or 'brightsky.0.' or 'openweathermap.0.' or 'swiss-weather-api.0.' or 'daswetter.0.' (deprecated) or 'accuweather.0.' (deprecated)
 const weatherAdapterInstance: string = 'pirate-weather.0.';
 
 // DE: Mögliche Werte: 'Min', 'Max' oder 'MinMax' im Screensaver
@@ -992,9 +1005,9 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.0.2.1';
-const tft_version: string = 'v5.0.2';
-const desired_display_firmware_version = 59;
+const scriptVersion: string = 'v5.1.1.4';
+const tft_version: string = 'v5.1.1';
+const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
 
 const tasmotaOtaUrl: string = 'http://ota.tasmota.com/tasmota32/release/';
@@ -1108,6 +1121,11 @@ async function CheckConfigParameters () {
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'openweathermap') {
             if (existsObject(weatherAdapterInstance + 'forecast.current.icon') == false) {
+                log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
+            }
+        }
+        if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'swiss-weather-api') {
+            if (existsObject(weatherAdapterInstance + 'forecast.days.day0.0000.symbol_code') == false) {
                 log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
             }
         }
@@ -2572,11 +2590,11 @@ async function CreateWeatherAlias () {
                         if (!existsState(config.weatherEntity + '.ICON') && existsState('brightsky.' + weatherAdapterInstanceNumber + '.current.icon')) {
                             log('Weather alias for brightsky.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
                             setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
-                            await createAliasAsync(config.weatherEntity + '.ICON', ('brightsky.' + weatherAdapterInstanceNumber + '.current.icon'), true, {
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('brightsky.' + weatherAdapterInstanceNumber + '.current.icon_special'), true, {
                                 type: 'string',
                                 role: 'value',
                                 name: 'ICON',
-                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.icon'},
+                                alias: {id: 'brightsky.' + weatherAdapterInstanceNumber + '.current.icon_special'},
                             });
                             await createAliasAsync(config.weatherEntity + '.TEMP', 'brightsky.' + weatherAdapterInstanceNumber + '.current.temperature', true, {
                                 type: 'number',
@@ -2602,6 +2620,57 @@ async function CreateWeatherAlias () {
                     }
                 } catch (err: any) {
                     log('error at function CreateWeatherAlias brightsky.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
+                }
+            } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.') {
+                try {
+                    if (isSetOptionActive) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.symbol_code')) {
+                            log('Weather alias for swiss-weather-api.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
+                            setObject(config.weatherEntity, {
+                                _id: config.weatherEntity,
+                                type: 'channel',
+                                common: {role: 'weatherCurrent', name: 'weatherCurrent'},
+                                native: {}
+                            });
+                            await createAliasAsync(config.weatherEntity + '.ICON', ('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.symbol_code'), true, {
+                                type: 'string',
+                                role: 'value',
+                                name: 'ICON',
+                                alias: {id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.symbol_code'},
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.current_hour.TTT_C', true, {
+                                type: 'number',
+                                role: 'value.temperature',
+                                name: 'TEMP',
+                                alias: {
+                                    id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.current_hour.TTT_C',
+                                    read: 'Math.round(val*10)/10'
+                                },
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TN_C', true, {
+                                type: 'number',
+                                role: 'value.temperature.forecast.0',
+                                name: 'TEMP_MIN',
+                                alias: {
+                                    id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TN_C',
+                                    read: 'Math.round(val)'
+                                },
+                            });
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TX_C', true, {
+                                type: 'number',
+                                role: 'value.temperature.max.forecast.0',
+                                name: 'TEMP_MAX',
+                                alias: {
+                                    id: 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.TX_C',
+                                    read: 'Math.round(val)'
+                                },
+                            });
+                        } else {
+                            log('weather alias for swiss-weather-api.' + weatherAdapterInstanceNumber + '. already exists', 'info');
+                        }
+                    }
+                } catch (err: any) {
+                    log('error at function CreateWeatherAlias swiss-weather-api.' + weatherAdapterInstanceNumber + '.: ' + err.message, 'warn');
                 }
             }
         }
@@ -3218,6 +3287,8 @@ async function InitPopupNotify () {
                 '~' +
                 v_popupNotifyButton1TextColor +
                 '~' +
+                '~' + // Fix Button3_Text for Adapter
+                '~' + // Fix Button3_Color for Adapter
                 getState(popupNotifyButton2Text).val +
                 '~' +
                 v_popupNotifyButton2TextColor +
@@ -4664,6 +4735,7 @@ function HandleMessage (typ: string, method: NSPanel.EventMethod, page: number |
                         }
                     }
                     break;
+                case 'buttonPress3':
                 case 'buttonPress2':
                     screensaverEnabled = false;
                     HandleButtonEvent(words);
@@ -5170,7 +5242,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     val = getState(pageItem.id + '.ACTUAL').val;
                     RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                 }
-                if (existsState(pageItem.id + '.SET')) {
+				if (existsState(pageItem.id + '.SET') && !existsState(pageItem.id + 'ACTUAL')) {
                     val = getState(pageItem.id + '.SET').val;
                     RegisterEntityWatcher(pageItem.id + '.SET');
                 }
@@ -5183,7 +5255,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                 val = getState(pageItem.id + '.ON_SET').val;
                 RegisterEntityWatcher(pageItem.id + '.ON_SET');
             }
-            if (existsState(pageItem.id + '.ON')) {
+            if (existsState(pageItem.id + '.ON') && !existsState(pageItem.id + '.ON_ACTUAL')) {
                 val = getState(pageItem.id + '.ON').val;
                 RegisterEntityWatcher(pageItem.id + '.ON');
             }
@@ -6350,7 +6422,7 @@ function RegisterEntityWatcher (id: string): void {
             return;
         }
 
-        subscriptions[id] = on({id: id, change: 'any'}, (obj) => {
+        subscriptions[id] = on({id: id, change: 'ne'}, (obj) => {
             //@ts-ignore
             if (obj.oldState && obj.oldState.val === obj.state.val && obj.state.ack) {
                 return;
@@ -8597,7 +8669,7 @@ async function createAutoQRAlias (id: string, dpPath: string) {
         if (autoCreateAlias) {
             if (isSetOptionActive) {
                 if (existsState(dpPath + 'Daten') == false) {
-                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;', {type: 'string', write: true});
+                    await createStateAsync(dpPath + 'Daten', 'WIFI:T:undefined;S:undefined;P:undefined;H:;', {type: 'string', write: true});
                     await createStateAsync(dpPath + 'Switch', false, {type: 'boolean', write: true});
                     setObject(id, {_id: id, type: 'channel', common: {role: 'switch.mode.wlan', name: 'QR Page'}, native: {}});
                     await createAliasAsync(id + '.ACTUAL', dpPath + 'Daten', true, {type: 'string', role: 'state', name: 'ACTUAL'});
@@ -8642,7 +8714,7 @@ function GenerateQRPage (page: NSPanel.PageQR): NSPanel.Payload[] {
         let o = getObject(id);
 
         let heading = page.heading !== undefined ? page.heading : typeof o.common.name === 'object' ? o.common.name.de : o.common.name;
-        let textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:undefined;';
+        let textQR = page.items[0].id + '.ACTUAL' !== undefined ? getState(page.items[0].id + '.ACTUAL').val : 'WIFI:T:undefined;S:undefined;P:undefined;H:;';
         let hiddenPWD = false;
         if (page.items[0].hidePassword !== undefined && page.items[0].hidePassword == true) {
             hiddenPWD = true;
@@ -8796,7 +8868,6 @@ function subscribePowerSubscriptions (id: string): void {
         }, 25);
     });
 }
-
 
 /**
  * @function GeneratePowerPage
@@ -9335,10 +9406,10 @@ function HandleButtonEvent (words: any): void {
                 }
                 break;
             case 'notifyAction':
-                if (words[4] == 'yes') {
+                if (words[4] == 'button1') { //Changes button1 retuns "button1" instead of "yes"
                     setState(popupNotifyInternalName, {val: words[2], ack: true});
                     setState(popupNotifyAction, {val: true, ack: true});
-                } else if (words[4] == 'no') {
+                } else if (words[4] == 'button3') { //Changes button3 retuns "button3" instead of "no" --> button2 has no functionality in Script (only Adapter)
                     setState(popupNotifyInternalName, {val: words[2], ack: true});
                     setState(popupNotifyAction, {val: false, ack: true});
                 }
@@ -10123,6 +10194,10 @@ function HandleButtonEvent (words: any): void {
                                 break;
                         }
                     }
+                } else {
+                     let pageItemSlider = findPageItem(id);
+                     let sliderPos = Math.trunc(scale(parseInt(words[4]), 0, 100, pageItemSlider.maxValueLevel ? pageItemSlider.maxValue : 100, pageItemSlider.minValueLevel ? pageItemSlider.minValue : 0));
+                     setIfExists(pageItemSlider.id + '.SET', sliderPos) ? true : setIfExists(id + '.ACTUAL', sliderPos);
                 }
                 break;
             case 'mode-seek':
@@ -10438,7 +10513,11 @@ function HandleButtonEvent (words: any): void {
                 break;
         }
     } catch (err: any) {
-        log('error at function HandleButtonEvent: ' + err.message, 'warn');
+        if (err.message == "Cannot read properties of undefined (reading 'id')") {
+
+        } else {
+            log('error at function HandleButtonEvent: ' + err.message, 'warn');
+        }
     }
 }
 
@@ -11379,7 +11458,7 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                         let hSlider2MinVal: number = pageItem.minValue ?? 0;
                         let hSlider2MaxVal: number = pageItem.maxValue ?? 100;
                         let hSlider2ZeroVal: number = 0;
-                        let hSlider2CurVal: number = getState(id + '.ACTUAL').val;
+                        let hSlider2CurVal: number = existsState(id + '.ACTUAL') ? getState(id + '.ACTUAL').val : getState(id + '.SET').val;
                         let hSlider2Step: number = 1;
                         let hSlider2Visibility: string = "enable";
 
@@ -12395,85 +12474,100 @@ function HandleScreensaverUpdate (): void {
                 } else if (weatherAdapterInstance == 'openweathermap.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetOpenWeatherMapIcon(icon));
                     entityIconCol = GetOpenWeatherMapIconColor(icon);
+                } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.') {
+                    entityIcon = Icons.GetIcon(GetSwissWeatherApiIcon(icon));
+                    entityIconCol = GetSwissWeatherApiIconColor(icon);
                 } else if (weatherAdapterInstance == 'pirate-weather.' + weatherAdapterInstanceNumber + '.' || weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetPirateWeatherIcon(icon));
                     entityIconCol = GetPirateWeatherIconColor(icon);
+                } else if (weatherAdapterInstance == 'brightsky.' + weatherAdapterInstanceNumber + '.') {
+                    entityIcon = Icons.GetIcon(icon);
+                    entityIconCol = GetBrightskyWeatherIconColor(icon);
                 }
 
                 payloadString += '~' + '~' + entityIcon + '~' + entityIconCol + '~' + '~' + optionalValue + '~';
             }
 
             // 3 leftScreensaverEntities
-            if (screensaverAdvanced) {
-                let checkpoint = true;
-                let i = 0;
-                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
-                    for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
-                        const leftScreensaverEntity = config.leftScreensaverEntity[i];
-                        if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
-                            checkpoint = false;
-                            break;
-                        }
-                        RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity);
-
-                        let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
-                        let iconColor = rgb_dec565(White);
-                        let icon;
-                        if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
-                            let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
-                            icon = Icons.GetIcon(iconName);
-                        } else {
-                            icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
-                        }
-
-                        if (parseFloat(val + '') == val) {
-                            val = parseFloat(val);
-                        }
-
-                        if (typeof val == 'number') {
-                            val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
-                            icon = determineScreensaverStatusIcon(leftScreensaverEntity,val,icon)
-                            val = val.toFixed(
-                                    leftScreensaverEntity.ScreensaverEntityDecimalPlaces
-                                ) + leftScreensaverEntity.ScreensaverEntityUnitText;
-                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-                        } else if (typeof val == 'boolean') {
-                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-                            if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
-                                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff);
-                            }
-                        } else if (typeof val == 'string') {
-                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-                            let pformat = parseFormat(val);
-                            if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
-                            if (moment(val, pformat, true).isValid()) {
-                                let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
-                                if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
-                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
-                                } else {
-                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
-                                }
-                            }
-                        }
-                        const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
-                        if (temp && typeof temp == 'string' && existsObject(temp)) {
-                            iconColor = getState(temp).val;
-                        }
-
-                        payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
-                    }
-                }
-
-                if (i < 3) {
-                    checkpoint = false;
-                }
-
-                if (checkpoint == false) {
-                    for (let j = i; j < 3; j++) {
-                        payloadString += '~~~~~~';
-                    }
-                }
-            }
+			if (screensaverAdvanced) {
+			    let checkpoint = true;
+			    let i = 0;
+			    if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
+			        for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
+			            const leftScreensaverEntity = config.leftScreensaverEntity[i];
+			            if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
+			                checkpoint = false;
+			                break;
+			            }
+			            RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity);
+			
+			            let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
+			            let iconColor = rgb_dec565(White);
+			            let icon;
+			            if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
+			                let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
+			                icon = Icons.GetIcon(iconName);
+			            } else {
+			                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
+			            }
+			
+			            if (parseFloat(val + '') == val) {
+			                val = parseFloat(val);
+			            }
+			
+			            if (typeof val == 'number') {
+			                val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
+			                icon = determineScreensaverStatusIcon(leftScreensaverEntity, val, icon)
+			
+			                // Einheit ermitteln: String oder aus DP
+			                let unitText = '';
+			                if (typeof leftScreensaverEntity.ScreensaverEntityUnitText === 'string') {
+			                    if (existsObject(leftScreensaverEntity.ScreensaverEntityUnitText)) {
+			                        unitText = getState(leftScreensaverEntity.ScreensaverEntityUnitText).val;
+			                    } else {
+			                        unitText = leftScreensaverEntity.ScreensaverEntityUnitText;
+			                    }
+			                }
+			
+			                val = val.toFixed(leftScreensaverEntity.ScreensaverEntityDecimalPlaces) + unitText;
+			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+			            } else if (typeof val == 'boolean') {
+			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+			                if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
+			                    icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff);
+			                }
+			            } else if (typeof val == 'string') {
+			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+			                let pformat = parseFormat(val);
+			                if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
+			                if (moment(val, pformat, true).isValid()) {
+			                    let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+			                    if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
+			                        val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
+			                    } else {
+			                        val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+			                    }
+			                }
+			            }
+			            const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
+			            if (temp && typeof temp == 'string' && existsObject(temp)) {
+			                iconColor = getState(temp).val;
+			            }
+			
+			            payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
+			        }
+			    }
+			
+			    if (i < 3) {
+			        checkpoint = false;
+			    }
+			
+			    if (checkpoint == false) {
+			        for (let j = i; j < 3; j++) {
+			            payloadString += '~~~~~~';
+			        }
+			    }
+			}
 
             // 6 bottomScreensaverEntities
             let maxEntities: number = 7;
@@ -12598,17 +12692,41 @@ function HandleScreensaverUpdate (): void {
                             DayOfWeek = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp')
                                 ? formatDate(getDateObject((getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp').val)), 'W', 'de')
                                 : 0;
-                            WeatherIcon = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
-                                ? GetPirateWeatherIcon(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val)
+                            WeatherIcon = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special')
+                                ? getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special').val
                                 : '';
-                            WheatherColor = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon')
-                                ? GetPirateWeatherIconColor(String(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon').val))
+                            WheatherColor = existsObject('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special')
+                                ? GetBrightskyWeatherIconColor(String(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special').val))
                                 : 0;
 
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_min');
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.temperature_max');
                             RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.timestamp');
-                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon');
+                            RegisterScreensaverEntityWatcher('brightsky.' + weatherAdapterInstanceNumber + '.daily.0' + String(i-1) + '.icon_special');
+                        }
+                    } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.') {
+                        if (i < 6) {
+                            //                      swiss-weather-api.    0                               .forecast.days.day    0                .0000.TN_C
+                            TempMin = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TN_C')
+                                ? Math.round(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TN_C').val * 10) / 10
+                                : 0;
+                            TempMax = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TX_C')
+                                ? Math.round(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TX_C').val * 10) / 10
+                                : 0;
+                            DayOfWeek = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.day_name')
+                                ? getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.day_name').val
+                                : 0;
+                            WeatherIcon = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code')
+                                ? GetSwissWeatherApiIcon(String(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code').val))
+                                : '';
+                            WheatherColor = existsObject('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code')
+                                ? GetSwissWeatherApiIconColor(String(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code').val))
+                                : 0;
+
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TN_C');
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.TX_C');
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.day_name');
+                            RegisterScreensaverEntityWatcher('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day' + String(i - 1) + '.0000.symbol_code');
                         }
                     }
 
@@ -12703,6 +12821,30 @@ function HandleScreensaverUpdate (): void {
                         arraySunEvent[0] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunrise').val).getTime();
                         arraySunEvent[1] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.00.sunset').val).getTime();
                         arraySunEvent[2] = getDateObject(getState('brightsky.' + weatherAdapterInstanceNumber + '.daily.01.sunrise').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'swiss-weather-api.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = getDateObject((new Date().getTime())).getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.SUNRISE').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day0.0000.SUNSET').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('swiss-weather-api.' + weatherAdapterInstanceNumber + '.forecast.days.day1.0000.SUNRISE').val).getTime();
 
                         let j = 0;
                         for (j = 0; j < 3; j++) {
@@ -13691,6 +13833,193 @@ function GetOpenWeatherMapIconColor (icon: string): number {
 }
 
 /**
+ * Retrieves the SwissWeatherApi icon string based on the provided icon string.
+ *
+ * This function maps the given SwissWeatherApi icon string to its corresponding icon string representation.
+ * See https://github.com/baerengraben/ioBroker.swiss-weather-api/tree/master/img/Meteo_API_Icons/Color for
+ * list of icons.
+ *
+ * @function GetSwissWeatherApiIcon
+ * @param {string} icon - The icon string.
+ * @returns {string} The corresponding icon string.
+ */
+function GetSwissWeatherApiIcon(icon: string): string {
+    try {
+        switch (icon) {
+            case "1":
+                return 'weather-sunny';
+            case "-1":
+                return 'weather-night';
+            case "3": //few clouds day
+                return 'weather-partly-cloudy';
+            case "-3": //few clouds night
+                return 'weather-night-partly-cloudy';
+            case "10": //scattered clouds
+            case "-10":
+                return 'weather-cloudy';
+            case "18": //cloudy
+            case "-18":
+            case "19":
+            case "-19":
+                return 'weather-cloudy';
+            case "23": //shower rain
+            case "-23":
+                return 'weather-rainy';
+            case "4": //rain
+            case "-4":
+            case "8":
+            case "-8":
+            case "11":
+            case "-11":
+            case "15":
+            case "-15":
+            case "20":
+            case "-20":
+            case "22":
+            case "-22":
+            case "25":
+            case "-25":
+            case "29":
+            case "-29":
+                return 'weather-pouring';
+            case "5": //Thunderstorm
+            case "-5":
+            case "7":
+            case "-7":
+            case "9":
+            case "-9":
+            case "12":
+            case "-12":
+            case "14":
+            case "-14":
+            case "16":
+            case "-16":
+            case "26":
+            case "-26":
+            case "28":
+            case "-28":
+            case "30":
+            case "-30":
+                return 'weather-lightning';
+            case "6": //snow
+            case "-6":
+            case "13":
+            case "-13":
+            case "21":
+            case "-21":
+            case "24":
+            case "-24":
+            case "27":
+            case "-27":
+                return 'weather-snowy';
+            case "2": //mist
+            case "-2":
+            case "17":
+            case "-17":
+                return 'weather-fog';
+            default:
+                return 'alert-circle-outline';
+        }
+    } catch (err: any) {
+        log('error at function GetSwissWeatherApiIcon: ' + err.message, 'warn');
+    }
+    return '';
+}
+
+/**
+ * Retrieves the color code for a given SwissWeatherApi icon string.
+ *
+ * This function maps the provided SwissWeatherApi icon string to its corresponding color code.
+ * See https://github.com/baerengraben/ioBroker.swiss-weather-api/tree/master/img/Meteo_API_Icons/Color for
+ * list of icons.
+ *
+ * @function GetSwissWeatherApiIconColor
+ * @param {string} icon - The icon string.
+ * @returns {number} The corresponding color code.
+ */
+function GetSwissWeatherApiIconColor(icon: string): number {
+    try {
+        switch (icon) {
+            case "1": //clear sky day
+                return rgb_dec565(swSunny);
+            case "-1": //clear sky night
+                return rgb_dec565(swClearNight);
+            case "3": //few clouds day
+            case "-3": //few clouds night
+                return rgb_dec565(swPartlycloudy);
+            case "10": //scattered clouds
+            case "-10":
+                return rgb_dec565(swCloudy);
+            case "18": //cloudy
+            case "-18":
+            case "19":
+            case "-19":
+                return rgb_dec565(swCloudy);
+            case "23": //shower rain
+            case "-23":
+                return rgb_dec565(swRainy);
+            case "4": //rain
+            case "-4":
+            case "8":
+            case "-8":
+            case "11":
+            case "-11":
+            case "15":
+            case "-15":
+            case "20":
+            case "-20":
+            case "22":
+            case "-22":
+            case "25":
+            case "-25":
+            case "29":
+            case "-29":
+                return rgb_dec565(swPouring);
+            case "5": //Thunderstorm
+            case "-5":
+            case "7":
+            case "-7":
+            case "9":
+            case "-9":
+            case "12":
+            case "-12":
+            case "14":
+            case "-14":
+            case "16":
+            case "-16":
+            case "26":
+            case "-26":
+            case "28":
+            case "-28":
+            case "30":
+            case "-30":
+                return rgb_dec565(swLightningRainy);
+            case "6": //snow
+            case "-6":
+            case "13":
+            case "-13":
+            case "21":
+            case "-21":
+            case "24":
+            case "-24":
+            case "27":
+            case "-27":
+                return rgb_dec565(swSnowy);
+            case "2": //mist
+            case "-2":
+            case "17":
+            case "-17":
+                return rgb_dec565(swFog);
+            default:
+                return rgb_dec565(White);
+        }
+    } catch (err: any) {
+        log('error at function GetSwissWeatherApiIconColor: ' + err.message, 'warn');
+    }
+    return 0;
+}
+
+/**
  * Retrieves the PirateWeather icon string based on the provided icon string.
  *
  * This function maps the given PirateWeather icon string to its corresponding icon string representation.
@@ -13877,6 +14206,82 @@ function GetPirateWeatherIconColor (icon: string): number {
         log('error at function GetPirateWeatherIconColor: ' + err.message, 'warn');
     }
     return 0;
+}
+
+function GetBrightskyWeatherIconColor (icon: string): number {
+    try {
+        switch (icon) {
+
+            case 'weather-cloudy':
+                return rgb_dec565(swCloudy); // cloudy
+
+            case 'weather-fog':
+                return rgb_dec565(swFog);
+
+            case 'weather-hail':
+                return rgb_dec565(swHail);
+
+            case 'weather-hazy':
+                return rgb_dec565(swFog);
+
+            case 'weather-lightning':
+                return rgb_dec565(swLightning);
+
+            case 'weather-lightning-rainy':
+                return rgb_dec565(swLightningRainy);
+
+            case 'weather-night':
+                return rgb_dec565(swClearNight);
+
+            case 'weather-night-partly-cloudy':
+                return rgb_dec565(swPartlycloudy);
+
+            case 'weather-partly-cloudy':
+                return rgb_dec565(swPartlycloudy);
+
+            case 'weather-partly-rainy':
+                return rgb_dec565(swRainy);
+
+            case 'weather-partly-snowy':
+                return rgb_dec565(swSnowy);
+
+            case 'weather-partly-snowy-rainy':
+                return rgb_dec565(swSnowyRainy);
+
+            case 'weather-pouring':
+                return rgb_dec565(swPouring);
+
+            case 'weather-rainy':
+                return rgb_dec565(swRainy);
+
+            case 'weather-snowy':
+                return rgb_dec565(swSnowy);
+
+            case 'weather-snowy-heavy':
+                return rgb_dec565(swSnowy);
+
+            case 'weather-snowy-rainy':
+                return rgb_dec565(swSnowyRainy);
+
+            case 'weather-sunny':
+                return rgb_dec565(swSunny);
+
+            case 'weather-tornado':
+                return rgb_dec565(swExceptional);
+
+            case 'weather-windy':
+                return rgb_dec565(swWindy);
+
+            case 'weather-windy-variant':
+                return rgb_dec565(swWindy);
+
+            default:
+                return rgb_dec565(swExceptional);
+        }
+    } catch (err: any) {
+        log('error at function GetPirateWeatherIcon: ' + err.message, 'warn');
+    }
+    return rgb_dec565(swExceptional);
 }
 
 //------------------Begin Read Internal Sensor Data
@@ -14568,6 +14973,7 @@ function isEventMethod (F: string | NSPanel.EventMethod): F is NSPanel.EventMeth
         case 'sleepReached':
         case 'pageOpenDetail':
         case 'buttonPress2':
+        case 'buttonPress3':
         case 'renderCurrentPage':
         case 'button1':
         case 'button2':
@@ -14632,7 +15038,7 @@ function isPagePower (F: NSPanel.PageType | NSPanel.PagePower): F is NSPanel.Pag
 namespace NSPanel {
     export type PopupType = 'popupFan' | 'popupInSel' | 'popupLight' | 'popupNotify' | 'popupShutter' | 'popupShutter2' | 'popupSlider' | 'popupThermo' | 'popupTimer' | 'popupColor';
 
-    export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'renderCurrentPage' | 'button1' | 'button2';
+    export type EventMethod = 'startup' | 'sleepReached' | 'pageOpenDetail' | 'buttonPress2' | 'buttonPress3' | 'renderCurrentPage' | 'button1' | 'button2';
     export type panelRecvType = {
         event: 'event';
         method: EventMethod;
