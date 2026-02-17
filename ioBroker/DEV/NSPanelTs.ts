@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.3 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v5.1.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
 
 Projekt:
@@ -102,7 +102,9 @@ ReleaseNotes:
 		- 21.11.2025 - v5.1.1.1  Remove Subscription if .ON and ON_ACTUAL
 		- 21.12.2025 - v5.1.1.2  Left screensaver unit from ioBroker data point to create a dynamic screensaver (by ernstdaheim-hub)
 		- 29.12.2025 - v5.1.1.3  Fix popupSlider (Standard-Slider (not cardMedia) with Functionality on popupSlider) / Wrong Pictures in us-p Slider if BG-Color is black (0)
+		- 29.12.2025 - v5.1.1.4  Refactor power subscription handling in NSPanelTs (#1421 by lubepi)
 
+		
 ***************************************************************************************************************
 * DE: Für die Erstellung der Aliase durch das Skript, muss in der JavaScript Instanz "setObject" gesetzt sein! *
 * EN: In order for the script to create the aliases, “setObject” must be set in the JavaScript instance!       *
@@ -1003,7 +1005,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.3';
+const scriptVersion: string = 'v5.1.1.4';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
