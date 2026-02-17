@@ -8850,7 +8850,11 @@ function unsubscribePowerSubscriptions (): void {
  * @returns {void}
  */
 function subscribePowerSubscriptions (id: string): void {
-    on({id: id + '.ACTUAL', change: 'ne'}, async function () {
+    const subscriptionKey = 'power_' + id + '.ACTUAL';
+    if (subscriptions.hasOwnProperty(subscriptionKey)) {
+        return;
+    }
+    subscriptions[subscriptionKey] = on({id: id + '.ACTUAL', change: 'ne'}, async function () {
         (function () {
             if (timeoutPower) {
                 clearTimeout(timeoutPower);
@@ -8862,7 +8866,6 @@ function subscribePowerSubscriptions (id: string): void {
         }, 25);
     });
 }
-
 
 /**
  * @function GeneratePowerPage
