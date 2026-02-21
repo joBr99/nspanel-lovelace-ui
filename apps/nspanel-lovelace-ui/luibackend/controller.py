@@ -206,11 +206,15 @@ class LuiController(object):
             self._pages_gen.generate_timer_detail_page(entity_id, True)
 
     def button_press(self, entity_id, button_type, value):
-        apis.ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
+        #apis.ha_api.log(f"Button Press Event; entity_id: {entity_id}; button_type: {button_type}; value: {value} ")
+        entity_id_new = entity_id
         if entity_id.startswith('uuid'):
             entity_config = self._config._config_entites_table.get(entity_id)
             if entity_config is not None:
-                entity_id = entity_config.entityId
+                entity_id_new = entity_config.entityId
+        apis.ha_api.log(f"Button Press Event; entity_id: {entity_id}; entity_id_resolved: {entity_id_new}; button_type: {button_type}; value: {value} ")
+        entity_id = entity_id_new
+        
         # internal buttons
         if entity_id == "screensaver" and button_type == "bExit":
             # get default card if there is one
