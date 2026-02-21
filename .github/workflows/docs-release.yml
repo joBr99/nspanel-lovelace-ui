@@ -25,11 +25,20 @@ jobs:
       - run: pip install zensical
       - run: cp HMI/README.md docs/hmi-serial-protocol.md
       - run: zensical build --config-file mkdocs.yml
+      - run: mv site _site_main
       - run: zensical build --config-file docs-standalone/mkdocs.yml
       - run: mkdir -p _site/standalone _site/stable
-      - run: cp -a site/. _site/
-      - run: cp -a site/. _site/stable/
-      - run: cp -a site-standalone/. _site/standalone/
+      - run: cp -a _site_main/. _site/
+      - run: cp -a _site_main/. _site/stable/
+      - run: |
+          if [ -d site-standalone ]; then
+            cp -a site-standalone/. _site/standalone/
+          elif [ -d site ]; then
+            cp -a site/. _site/standalone/
+          else
+            echo "Standalone docs output not found (expected 'site-standalone' or 'site')."
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site

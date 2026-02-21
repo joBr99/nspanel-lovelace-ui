@@ -42,8 +42,6 @@ extra_css:
 extra:
   analytics:
     provider: custom
-  version:
-    provider: mike
 
 markdown_extensions:
     - admonition
@@ -63,7 +61,6 @@ markdown_extensions:
 plugins:
     - search:
         lang: en
-    - mkdocs-video
 
 nav:
     - "Overview": index.md

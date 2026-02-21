@@ -1,7 +1,7 @@
 site_name: NsPanel Lovelace UI Standalone Docs
 site_description: Documentation for the standalone/Home Assistant add-on rewrite in nspanel-lovelace-ui.
 site_author: Johannes Braun
-site_url: https://jobr99.github.io/nspanel-lovelace-ui
+site_url: https://jobr99.github.io/nspanel-lovelace-ui/standalone
 
 repo_name: jobr99/nspanel-lovelace-ui
 repo_url: https://github.com/jobr99/nspanel-lovelace-ui
@@ -10,6 +10,7 @@ edit_uri: ""
 copyright: "Copyright © 2026 Johannes Braun"
 
 docs_dir: .
+site_dir: ../site-standalone
 
 theme:
   name: material
