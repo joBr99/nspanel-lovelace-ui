@@ -6,24 +6,44 @@ on:
     branches:
       - main
     paths:
-      - docs/*
+      - docs/**
+      - docs-standalone/**
       - .github/workflows/docs-release.yml
       - mkdocs.yml
+      - docs-standalone/mkdocs.yml
       - HMI/README.md
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/configure-pages@v5
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material mkdocs-video markdown-include mike
+      - run: pip install zensical
       - run: cp HMI/README.md docs/hmi-serial-protocol.md
-      - run: git config --global user.name Docs deploy
-      - run: git config --global user.email docs@dummy.bot.com
-      - run: mike set-default stable
-      - run: mike deploy --push --update-aliases stable
+      - run: zensical build --config-file mkdocs.yml
+      - run: zensical build --config-file docs-standalone/mkdocs.yml
+      - run: mkdir -p _site/standalone _site/stable
+      - run: cp -a site/. _site/
+      - run: cp -a site/. _site/stable/
+      - run: cp -a site-standalone/. _site/standalone/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
