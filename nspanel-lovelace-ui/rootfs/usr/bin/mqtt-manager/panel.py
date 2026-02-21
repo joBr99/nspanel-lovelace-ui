@@ -242,6 +242,11 @@ class LovelaceUIPanel:
                 btype = msg[3]
                 value = msg[4] if len(msg) > 4 else None
                 entity_config = {}
+                action_context = {
+                    "panel": self.name,
+                    "btype": btype,
+                    "value": value,
+                }
                 if btype == "bExit":
                     if entity_id in ["screensaver", "screensaver2"] and self.settings.get("screensaver").get("doubleTapToUnlock") and value == "1":
                         return
@@ -283,7 +288,13 @@ class LovelaceUIPanel:
                                     self.render_current_page(switchPages=True)
                             # send ha stuff to ha
                             case _:
-                                ha_control.handle_buttons(entity_id, btype, value, entity_config=entity_config)
+                                ha_control.handle_buttons(
+                                    entity_id,
+                                    btype,
+                                    value,
+                                    entity_config=entity_config,
+                                    action_context=action_context,
+                                )
                     case 'cardUnlock-unlock':
                         card_iid = entity_id.split(".")[1]
                         if int(self.current_card.config.get("pin")) == int(value):
@@ -291,9 +302,20 @@ class LovelaceUIPanel:
                             self.current_card = self.searchCard(card_iid)
                             self.render_current_page(switchPages=True)
                     case 'mode-light':
-                        ha_control.handle_buttons(entity_id, btype, value, entity_config=entity_config)
+                        ha_control.handle_buttons(
+                            entity_id,
+                            btype,
+                            value,
+                            entity_config=entity_config,
+                            action_context=action_context,
+                        )
                     case _:
-                        ha_control.handle_buttons(entity_id, btype, value)
+                        ha_control.handle_buttons(
+                            entity_id,
+                            btype,
+                            value,
+                            action_context=action_context,
+                        )
 
             if msg[1] == "pageOpenDetail":
                 if len(msg) < 4:

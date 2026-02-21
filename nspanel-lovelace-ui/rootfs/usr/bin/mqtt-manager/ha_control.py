@@ -71,12 +71,13 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
     else:
         return dimmode, dimValueNormal
 
-def handle_buttons(entity_id, btype, value, entity_config=None):
+def handle_buttons(entity_id, btype, value, entity_config=None, action_context=None):
+    action_context = action_context or {}
     match btype:
         case 'button':
-            button_press(entity_id, value)
+            button_press(entity_id, value, action_context=action_context)
         case 'OnOff':
-            on_off(entity_id, value)
+            on_off(entity_id, value, action_context=action_context)
         case 'number-set':
             if entity_id.startswith('fan'):
                 attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
@@ -84,7 +85,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
             service_data = {
                 "value": int(value)
             }
-            call_ha_service(entity_id, "set_value", service_data=service_data)
+            call_ha_service(entity_id, "set_value", service_data=service_data, action_context=action_context)
         case 'up' | 'stop' | 'down' | 'tiltOpen' | 'tiltStop' | 'tiltClose' | 'media-next' | 'media-back' | 'media-pause' | 'timer-cancel' | 'timer-pause' | 'timer-finish':
             action_service_mapping = {
                 'up': 'open_cover',
@@ -101,37 +102,37 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
                 'timer-finish': 'finish',
             }
             service = action_service_mapping[btype]
-            call_ha_service(entity_id, service)
+            call_ha_service(entity_id, service, action_context=action_context)
         case 'timer-start':
             if value:
                 service_data = {
                     "duration": value
                 }
-                call_ha_service(entity_id, "start", service_data=service_data)
+                call_ha_service(entity_id, "start", service_data=service_data, action_context=action_context)
             else:
-                call_ha_service(entity_id, "start")
+                call_ha_service(entity_id, "start", action_context=action_context)
         case 'positionSlider':
             service_data = {
                 "position": int(value)
             }
-            call_ha_service(entity_id, "set_cover_position", service_data=service_data)
+            call_ha_service(entity_id, "set_cover_position", service_data=service_data, action_context=action_context)
         case 'tiltSlider':
             service_data = {
                 "tilt_position": int(value)
             }
-            call_ha_service(entity_id, "set_cover_tilt_position", service_data=service_data)
+            call_ha_service(entity_id, "set_cover_tilt_position", service_data=service_data, action_context=action_context)
         case 'media-OnOff':
             state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
             if state == "off":
-                call_ha_service(entity_id, "turn_on")
+                call_ha_service(entity_id, "turn_on", action_context=action_context)
             else:
-                call_ha_service(entity_id, "turn_off")
+                call_ha_service(entity_id, "turn_off", action_context=action_context)
         case 'media-shuffle':
             suffle = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get('shuffle')
             service_data = {
                 "shuffle": not suffle
             }
-            call_ha_service(entity_id, "set_value", service_data=service_data)
+            call_ha_service(entity_id, "set_value", service_data=service_data, action_context=action_context)
         case 'volumeSlider':
             pos = int(value)
             # HA wants to have this value between 0 and 1 as float
@@ -139,12 +140,12 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
             service_data = {
                 "volume_level": pos
             }
-            call_ha_service(entity_id, "volume_set", service_data=service_data)
+            call_ha_service(entity_id, "volume_set", service_data=service_data, action_context=action_context)
         case 'speaker-sel':
             service_data = {
                 "volume_level": value
             }
-            call_ha_service(entity_id, "select_source", service_data=service_data)
+            call_ha_service(entity_id, "select_source", service_data=service_data, action_context=action_context)
         # for light detail page
         case 'brightnessSlider':
             # scale 0-100 to ha brightness range
@@ -152,7 +153,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
             service_data = {
                 "brightness": brightness
             }
-            call_ha_service(entity_id, "turn_on", service_data=service_data)
+            call_ha_service(entity_id, "turn_on", service_data=service_data, action_context=action_context)
         case 'colorTempSlider':
             attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
             min_mireds = attr.get("min_mireds")
@@ -162,19 +163,19 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
             service_data = {
                 "color_temp": color_val
             }
-            call_ha_service(entity_id, "turn_on", service_data=service_data)
+            call_ha_service(entity_id, "turn_on", service_data=service_data, action_context=action_context)
         case 'colorWheel':
             value = value.split('|')
             color = pos_to_color(int(value[0]), int(value[1]), int(value[2]))
             service_data = {
                 "rgb_color": color
             }
-            call_ha_service(entity_id, "turn_on", service_data=service_data)
+            call_ha_service(entity_id, "turn_on", service_data=service_data, action_context=action_context)
         case 'disarm' | 'arm_home' | 'arm_away' | 'arm_night' | 'arm_vacation':
             service_data = {
                 "code": value
             }
-            call_ha_service(entity_id, f"alarm_{btype}", service_data=service_data)
+            call_ha_service(entity_id, f"alarm_{btype}", service_data=service_data, action_context=action_context)
         case 'mode-preset_modes' | 'mode-swing_modes' | 'mode-fan_modes':
             attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
             mapping = {
@@ -189,7 +190,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
                     service_data = {
                         mapping[btype][:-1]: mode
                     }
-                    call_ha_service(entity_id, f"set_{mapping[btype][:-1]}", service_data=service_data)
+                    call_ha_service(entity_id, f"set_{mapping[btype][:-1]}", service_data=service_data, action_context=action_context)
         case 'mode-input_select' | 'mode-select':
             options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("options", [])
             if options:
@@ -197,7 +198,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
                 service_data = {
                     "option": option
                 }
-                call_ha_service(entity_id, "select_option", service_data=service_data)
+                call_ha_service(entity_id, "select_option", service_data=service_data, action_context=action_context)
         case 'mode-media_player':
             options = libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("source_list", [])
             if options:
@@ -205,7 +206,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
                 service_data = {
                     "source": option
                 }
-                call_ha_service(entity_id, "select_source", service_data=service_data)
+                call_ha_service(entity_id, "select_source", service_data=service_data, action_context=action_context)
         case 'mode-light':
             options = entity_config.get("effectList", libs.home_assistant.get_entity_data(entity_id).get('attributes', []).get("effect_list", []))
             if options:
@@ -213,13 +214,13 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
                 service_data = {
                     "effect": option
                 }
-                call_ha_service(entity_id, "turn_on", service_data=service_data)
+                call_ha_service(entity_id, "turn_on", service_data=service_data, action_context=action_context)
         case 'tempUpd':
             temp = int(value)/10
             service_data = {
                 "temperature": temp
             }
-            call_ha_service(entity_id, "set_temperature", service_data=service_data)
+            call_ha_service(entity_id, "set_temperature", service_data=service_data, action_context=action_context)
         case 'tempUpdHighLow':
             value = value.split("|")
             temp_high = int(value[0])/10
@@ -228,16 +229,19 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
                 "target_temp_high": temp_high,
                 "target_temp_low": temp_low,
             }
-            call_ha_service(entity_id, "set_temperature", service_data=service_data)
+            call_ha_service(entity_id, "set_temperature", service_data=service_data, action_context=action_context)
         case 'hvac_action':
             service_data = {
                 "hvac_mode": value
             }
-            call_ha_service(entity_id, "set_hvac_mode", service_data=service_data)
+            call_ha_service(entity_id, "set_hvac_mode", service_data=service_data, action_context=action_context)
         case _:
            logging.error("Not implemented: %s", btype)
 
-def call_ha_service(entity_id, service, service_data = {}):
+def call_ha_service(entity_id, service, service_data=None, action_context=None):
+    if service_data is None:
+        service_data = {}
+    action_context = action_context or {}
     etype = entity_id.split(".")[0]
     ok = libs.home_assistant.call_service(
         entity_name=entity_id,
@@ -245,6 +249,16 @@ def call_ha_service(entity_id, service, service_data = {}):
         service=service,
         service_data=service_data
     )
+    if ok:
+        logging.info(
+            "Panel action forwarded to Home Assistant: panel='%s', action='%s', value='%s', entity='%s', service='%s', data=%s",
+            action_context.get("panel", "unknown"),
+            action_context.get("btype", "unknown"),
+            action_context.get("value"),
+            entity_id,
+            service,
+            service_data,
+        )
     if not ok:
         logging.error(
             "Home Assistant service call failed: entity='%s', service='%s', data=%s",
@@ -253,29 +267,29 @@ def call_ha_service(entity_id, service, service_data = {}):
             service_data,
         )
 
-def button_press(entity_id, value):
+def button_press(entity_id, value, action_context=None):
     etype = entity_id.split(".")[0]
     match etype:
         case 'scene' | 'script':
-            call_ha_service(entity_id, "turn_on")
+            call_ha_service(entity_id, "turn_on", action_context=action_context)
         case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
-            call_ha_service(entity_id, "toggle")
+            call_ha_service(entity_id, "toggle", action_context=action_context)
         case 'lock':
             state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
             if state == "locked":
-                call_ha_service(entity_id, "unlock")
+                call_ha_service(entity_id, "unlock", action_context=action_context)
             else:
-                call_ha_service(entity_id, "lock")
+                call_ha_service(entity_id, "lock", action_context=action_context)
         case 'button' | 'input_button':
-            call_ha_service(entity_id, "press")
+            call_ha_service(entity_id, "press", action_context=action_context)
         case 'input_select' | 'select':
-            call_ha_service(entity_id, "select_next")
+            call_ha_service(entity_id, "select_next", action_context=action_context)
         case 'vacuum':
             state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
             if state == "docked":
-                call_ha_service(entity_id, "start")
+                call_ha_service(entity_id, "start", action_context=action_context)
             else:
-                call_ha_service(entity_id, "return_to_base")
+                call_ha_service(entity_id, "return_to_base", action_context=action_context)
         case _:
             logging.error("buttonpress for entity type %s not implemented", etype)
 
@@ -283,14 +297,14 @@ def button_press(entity_id, value):
     #          apis.ha_api.call_service(entity_id.replace(
     #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
 
-def on_off(entity_id, value):
+def on_off(entity_id, value, action_context=None):
     etype = entity_id.split(".")[0]
     match etype:
         case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
             service = "turn_off"
             if value == "1":
                 service = "turn_on"
-            call_ha_service(entity_id, service)
+            call_ha_service(entity_id, service, action_context=action_context)
         case _:
             logging.error(
                 "Control action on_off not implemented for %s", entity_id)
