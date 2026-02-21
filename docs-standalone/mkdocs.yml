@@ -1,0 +1,59 @@
+site_name: NsPanel Lovelace UI Standalone Docs
+site_description: Documentation for the standalone/Home Assistant add-on rewrite in nspanel-lovelace-ui.
+site_author: Johannes Braun
+site_url: https://jobr99.github.io/nspanel-lovelace-ui
+
+repo_name: jobr99/nspanel-lovelace-ui
+repo_url: https://github.com/jobr99/nspanel-lovelace-ui
+edit_uri: ""
+
+copyright: "Copyright © 2026 Johannes Braun"
+
+docs_dir: .
+
+theme:
+  name: material
+  palette:
+    accent: blue
+  font:
+    text: "arial, sans-serif"
+    code: monospace
+  features:
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.expand
+    - search.highlight
+    - search.share
+    - search.suggest
+
+extra_css:
+  - _assets/user.css
+
+markdown_extensions:
+  - admonition
+  - def_list
+  - attr_list
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.magiclink
+  - toc:
+      permalink: true
+  - codehilite:
+      guess_lang: false
+
+plugins:
+  - search:
+      lang: en
+
+nav:
+  - "Overview": index.md
+  - "Getting Started": getting-started.md
+  - "Configuration": configuration.md
+  - "Screensaver": screensaver.md
+  - "Cards": cards.md
+  - "Entities": entities.md
+  - "Connection Modes": connection-modes.md
+  - "Troubleshooting": troubleshooting.md
