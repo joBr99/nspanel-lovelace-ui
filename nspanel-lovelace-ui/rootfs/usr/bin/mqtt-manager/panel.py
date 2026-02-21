@@ -105,7 +105,10 @@ class LovelaceUIPanel:
 
     def schedule_thread_target(self):
         while True:
-            self.schedule.exec_jobs()
+            try:
+                self.schedule.exec_jobs()
+            except Exception:
+                logging.exception("Scheduler execution failed for panel '%s'", self.name)
             time.sleep(1)
 
     def update_time(self):
@@ -203,6 +206,9 @@ class LovelaceUIPanel:
     def customrecv_event_callback(self, msg):
         logging.debug("Recv Message from NsPanel (%s): %s", self.name, msg)
         msg = msg.split(",")
+        if len(msg) < 2:
+            logging.error("Malformed panel message on '%s': %s", self.name, msg)
+            return
         # run action based on received command
         if msg[0] == "event":
             if msg[1] == "startup":
@@ -227,11 +233,15 @@ class LovelaceUIPanel:
             if msg[1] == "renderCurrentPage":
                 self.render_current_page(requested=True)
             if msg[1] == "buttonPress2":
+                if len(msg) < 4:
+                    logging.error("Malformed buttonPress2 payload on '%s': %s", self.name, msg)
+                    return
                 entity_id = msg[2]
                 if entity_id == "":
                     return
                 btype = msg[3]
                 value = msg[4] if len(msg) > 4 else None
+                entity_config = {}
                 if btype == "bExit":
                     if entity_id in ["screensaver", "screensaver2"] and self.settings.get("screensaver").get("doubleTapToUnlock") and value == "1":
                         return
@@ -286,14 +296,17 @@ class LovelaceUIPanel:
                         ha_control.handle_buttons(entity_id, btype, value)
 
             if msg[1] == "pageOpenDetail":
+                if len(msg) < 4:
+                    logging.error("Malformed pageOpenDetail payload on '%s': %s", self.name, msg)
+                    return
                 entity_id = msg[3]
+                effectList = None
                 # replace iid with real entity id
                 if entity_id.startswith("iid."):
                     iid = entity_id.split(".")[1]
                     for e in self.current_card.entities:
                         if e.iid == iid:
                             entity_id = e.entity_id
-                            effectList = None
                             if entity_id.startswith("light"):
                                 effectList = e.config.get("effectList")
                 if msg[2] == "popupInSel": #entity_id.split(".")[0] in ['input_select', 'media_player']:

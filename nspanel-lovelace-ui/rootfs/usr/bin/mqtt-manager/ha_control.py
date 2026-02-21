@@ -8,6 +8,8 @@ def wait_for_ha_cache():
     while time.time() < mustend:
         if len(libs.home_assistant.home_assistant_entity_state_cache) == 0:
             time.sleep(0.1)
+    if len(libs.home_assistant.home_assistant_entity_state_cache) == 0:
+        logging.warning("Home Assistant entity cache is still empty after waiting 5 seconds")
     time.sleep(1)
 
 def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, screenBrightness, sleepOverride, return_involved_entities=False):
@@ -28,8 +30,8 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             involved_entities.append(sleepBrightness)
             try:
                 dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
-            except ValueError:
-                print("sleepBrightness entity invalid")
+            except (TypeError, ValueError):
+                logging.exception("sleepBrightness entity '%s' has an invalid state value", sleepBrightness)
 
     if screenBrightness:
         if isinstance(screenBrightness, int):
@@ -44,8 +46,8 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
             involved_entities.append(screenBrightness)
             try:
                 dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
-            except ValueError:
-                print("screenBrightness entity invalid")
+            except (TypeError, ValueError):
+                logging.exception("screenBrightness entity '%s' has an invalid state value", screenBrightness)
     # force sleep brightness to zero in case sleepTracking is active
     if sleepTracking:
         if libs.home_assistant.is_existent(sleepTracking):
@@ -237,12 +239,19 @@ def handle_buttons(entity_id, btype, value, entity_config=None):
 
 def call_ha_service(entity_id, service, service_data = {}):
     etype = entity_id.split(".")[0]
-    libs.home_assistant.call_service(
+    ok = libs.home_assistant.call_service(
         entity_name=entity_id,
         domain=etype,
         service=service,
         service_data=service_data
     )
+    if not ok:
+        logging.error(
+            "Home Assistant service call failed: entity='%s', service='%s', data=%s",
+            entity_id,
+            service,
+            service_data,
+        )
 
 def button_press(entity_id, value):
     etype = entity_id.split(".")[0]

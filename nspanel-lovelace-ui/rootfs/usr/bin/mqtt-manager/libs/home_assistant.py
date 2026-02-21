@@ -16,6 +16,7 @@ ws_connected = False
 home_assistant_entity_state_cache = {}
 template_cache = {}
 response_buffer = {}
+nspanel_event_handler = None
 
 
 ON_CONNECT_HANDLER = None
@@ -46,10 +47,16 @@ def register_on_disconnect_handler(handler):
 
 def on_message(ws, message):
     global auth_ok, request_all_states_id, home_assistant_entity_state_cache, response_buffer, template_cache
-    json_msg = json.loads(message)
-    if json_msg["type"] == "auth_required":
+    try:
+        json_msg = json.loads(message)
+    except json.JSONDecodeError:
+        logging.exception("Failed to parse Home Assistant websocket message as JSON")
+        return
+
+    message_type = json_msg.get("type")
+    if message_type == "auth_required":
         authenticate_client()
-    elif json_msg["type"] == "auth_ok":
+    elif message_type == "auth_ok":
         auth_ok = True
         logging.info("Home Assistant auth OK. Requesting existing states.")
         subscribe_to_events()
@@ -57,30 +64,41 @@ def on_message(ws, message):
         if ON_CONNECT_HANDLER is not None:
             ON_CONNECT_HANDLER()
     # for templates
-    elif json_msg["type"] == "event" and json_msg["id"] in response_buffer:
+    elif message_type == "event" and json_msg.get("id") in response_buffer:
+        event = json_msg.get("event", {})
+        listeners = event.get("listeners", {})
         template_cache[response_buffer[json_msg["id"]]] = {
-            "result": json_msg["event"]["result"],
-            "listener-entities": json_msg["event"]["listeners"]["entities"]
+            "result": event.get("result"),
+            "listener-entities": listeners.get("entities", [])
         }
-    elif json_msg["type"] == "event" and json_msg["event"]["event_type"] == "state_changed":
-        entity_id = json_msg["event"]["data"]["entity_id"]
-        home_assistant_entity_state_cache[entity_id] = json_msg["event"]["data"]["new_state"]
+    elif message_type == "event" and json_msg.get("event", {}).get("event_type") == "state_changed":
+        event_data = json_msg.get("event", {}).get("data", {})
+        entity_id = event_data.get("entity_id")
+        if not entity_id:
+            logging.debug("Received state_changed event without entity_id")
+            return
+        home_assistant_entity_state_cache[entity_id] = event_data.get("new_state")
         send_entity_update(entity_id)
         # rerender template
         for template, template_cache_entry in template_cache.items():
             if entity_id in template_cache_entry.get("listener-entities", []):
                 cache_template(template)
-    elif json_msg["type"] == "event" and json_msg["event"]["event_type"] == "esphome.nspanel.data":
-        nspanel_data_callback(json_msg["event"]["data"]["device_id"], json_msg["event"]["data"]["CustomRecv"])
-    elif json_msg["type"] == "result" and not json_msg["success"]:
-        logging.error("Failed result: ")
-        logging.error(json_msg)
-    elif json_msg["type"] == "result" and json_msg["success"]:
-        if json_msg["id"] == request_all_states_id:
-            for entity in json_msg["result"]:
+    elif message_type == "event" and json_msg.get("event", {}).get("event_type") == "esphome.nspanel.data":
+        event_data = json_msg.get("event", {}).get("data", {})
+        device_id = event_data.get("device_id")
+        custom_recv = event_data.get("CustomRecv")
+        if nspanel_event_handler is None:
+            logging.debug("No NsPanel event handler registered; dropping event for device '%s'", device_id)
+            return
+        nspanel_event_handler(device_id, custom_recv)
+    elif message_type == "result" and not json_msg.get("success"):
+        logging.error("Home Assistant request failed: %s", json_msg)
+    elif message_type == "result" and json_msg.get("success"):
+        if json_msg.get("id") == request_all_states_id:
+            for entity in json_msg.get("result", []):
                 home_assistant_entity_state_cache[entity["entity_id"]] = entity
         else:
-            if json_msg["id"] in response_buffer and json_msg.get("result"):
+            if json_msg.get("id") in response_buffer and json_msg.get("result"):
                 response_buffer[json_msg["id"]] = json_msg["result"]
         return None  # Ignore success result messages
     else:
@@ -98,7 +116,11 @@ def _ws_connection_open(ws):
 def _ws_connection_close(ws, close_status_code, close_msg):
     global ws_connected
     ws_connected = False
-    logging.error("WebSocket connection closed!")
+    logging.error(
+        "WebSocket connection closed (status=%s, message=%s)",
+        close_status_code,
+        close_msg,
+    )
     if ON_DISCONNECT_HANDLER is not None:
         ON_DISCONNECT_HANDLER()
 
@@ -119,9 +141,12 @@ def _do_connection():
                                 on_open=_ws_connection_open, on_close=_ws_connection_close)
     while True:
         logging.info(F"Connecting to Home Assistant at {ws_url}")
-        ws.close()
-        time.sleep(1)
-        ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+        try:
+            ws.close()
+            time.sleep(1)
+            ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
+        except Exception:
+            logging.exception("WebSocket connection loop failed")
         time.sleep(10)
 
 
@@ -145,8 +170,8 @@ def subscribe_to_events():
     send_message(json.dumps(msg))
 
 def subscribe_to_nspanel_events(nsp_callback):
-    global next_id, nspanel_data_callback
-    nspanel_data_callback = nsp_callback
+    global next_id, nspanel_event_handler
+    nspanel_event_handler = nsp_callback
     msg = {
         "id": next_id,
         "type": "subscribe_events",
@@ -169,8 +194,10 @@ def send_entity_update(entity_id):
     on_ha_update(entity_id)
 
 def nspanel_data_callback(device_id, msg):
-    global nspanel_data_callback
-    nspanel_data_callback(device_id, msg)
+    if nspanel_event_handler is None:
+        logging.debug("NsPanel callback invoked before handler was registered")
+        return
+    nspanel_event_handler(device_id, msg)
 
 def call_service(entity_name: str, domain: str, service: str, service_data: dict) -> bool:
     global next_id
@@ -187,8 +214,11 @@ def call_service(entity_name: str, domain: str, service: str, service_data: dict
         }
         send_message(json.dumps(msg))
         return True
-    except Exception as e:
-        logging.exception("Failed to call Home Assisatant service.")
+    except Exception:
+        logging.exception(
+            "Failed to call Home Assistant service: %s.%s for %s",
+            domain, service, entity_name
+        )
         return False
 
 def send_msg_to_panel(service: str, service_data: dict) -> bool:
@@ -203,8 +233,8 @@ def send_msg_to_panel(service: str, service_data: dict) -> bool:
         }
         send_message(json.dumps(msg))
         return True
-    except Exception as e:
-        logging.exception("Failed to call Home Assisatant service.")
+    except Exception:
+        logging.exception("Failed to call Home Assistant panel service: %s", service)
         return False
 
 def execute_script(entity_name: str, domain: str, service: str, service_data: dict) -> str:
@@ -241,13 +271,13 @@ def execute_script(entity_name: str, domain: str, service: str, service_data: di
             else:
                 return response_buffer[call_id]["response"]
         raise TimeoutError("Did not recive respose in time to HA script call")
-    except Exception as e:
-        logging.exception("Failed to call Home Assisatant script.")
+    except Exception:
+        logging.exception("Failed to call Home Assistant script: %s.%s", domain, service)
         return {}
 
 def cache_template(template):
     if not template:
-        raise Exception("Invalid template")
+        raise ValueError("Invalid template")
     global next_id, response_buffer
     try:
         call_id = next_id
@@ -259,7 +289,7 @@ def cache_template(template):
         }
         send_message(json.dumps(msg))
         return True
-    except Exception as e:
+    except Exception:
         logging.exception("Failed to render template.")
         return False
 
@@ -301,5 +331,10 @@ def is_existent(entity_id: str):
 
 def send_message(message):
     global ws, next_id
-    next_id += 1
-    ws.send(message)
+    try:
+        next_id += 1
+        ws.send(message)
+    except NameError:
+        logging.error("WebSocket client is not initialized; dropping outgoing message")
+    except Exception:
+        logging.exception("Failed sending websocket message to Home Assistant")

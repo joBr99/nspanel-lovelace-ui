@@ -475,7 +475,7 @@ class AlarmCard(HACard):
         main_entity = self.entities[0]
         main_entity.render()
 
-        print(main_entity.state)
+        logging.debug("Alarm card state for '%s': %s", main_entity.entity_id, main_entity.state)
 
         icon = get_icon_char("shield-off")
         color = rgb_dec565([255,255,255])
