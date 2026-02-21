@@ -25,7 +25,7 @@ last_settings_file_mtime = 0
 mqtt_connect_time = 0
 has_sent_reload_command = False
 
-log_level_name = os.getenv("loglevel", "DEBUG").upper()
+log_level_name = os.getenv("LOGLEVEL", "DEBUG").upper()
 log_level = getattr(logging, log_level_name, None)
 invalid_log_level = not isinstance(log_level, int)
 if invalid_log_level:
@@ -237,4 +237,5 @@ if __name__ == '__main__':
             time.sleep(100)
     else:
         while True:
+
           time.sleep(100)
