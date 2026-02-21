@@ -25,10 +25,18 @@ last_settings_file_mtime = 0
 mqtt_connect_time = 0
 has_sent_reload_command = False
 
+log_level_name = os.getenv("loglevel", "DEBUG").upper()
+log_level = getattr(logging, log_level_name, None)
+invalid_log_level = not isinstance(log_level, int)
+if invalid_log_level:
+    log_level = logging.DEBUG
+
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=log_level,
     format="%(asctime)s %(levelname)s [%(threadName)s] %(name)s: %(message)s",
 )
+if invalid_log_level:
+    logging.warning("Invalid loglevel '%s', defaulting to DEBUG", log_level_name)
 
 def on_ha_update(entity_id):
     global panel_in_queues
