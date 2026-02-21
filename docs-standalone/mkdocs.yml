@@ -9,8 +9,7 @@ edit_uri: ""
 
 copyright: "Copyright © 2026 Johannes Braun"
 
-docs_dir: .
-site_dir: ../site-standalone
+docs_dir: docs
 
 theme:
   name: material
