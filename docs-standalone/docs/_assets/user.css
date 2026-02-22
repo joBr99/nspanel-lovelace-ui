@@ -15,6 +15,38 @@
 	background-color: #333333;
 }
 
+/* Footer contrast fixes for Zensical/Material variants */
+:root {
+	--md-footer-bg-color: #333333;
+	--md-footer-bg-color--dark: #2b2b2b;
+	--md-footer-fg-color: #f2f2f2;
+	--md-footer-fg-color--light: #ffffff;
+	--md-footer-fg-color--lighter: #ffffff;
+}
+
+.md-footer,
+.md-footer-meta,
+.md-footer * {
+	color: #f2f2f2;
+}
+
+.md-footer a,
+.md-footer-meta a,
+.md-footer .md-footer__link {
+	color: #ffffff;
+}
+
+.md-footer a:hover,
+.md-footer-meta a:hover,
+.md-footer .md-footer__link:hover {
+	color: #d9e7ff;
+}
+
+.md-footer .md-icon svg,
+.md-footer-meta .md-icon svg {
+	fill: currentColor;
+}
+
 /* Zensical keeps footer content in the inner/meta containers.
    Don't hide footer structure, only style it. */
 

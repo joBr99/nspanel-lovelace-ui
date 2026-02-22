@@ -72,6 +72,7 @@ nav:
         - "FAQ": faq.md
     - "Configuration - apps.yaml (Home Assistant)":
         - "Overview": config-overview.md
+        #- "Migration to Standalone Rewrite": config-migration-standalone.md
         - "Screensaver": config-screensaver.md
         - "Cards":
             - "Entities Card": card-entities.md

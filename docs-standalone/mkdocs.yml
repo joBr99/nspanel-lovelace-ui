@@ -52,6 +52,7 @@ nav:
   - "Overview": index.md
   - "Getting Started": getting-started.md
   - "Configuration": configuration.md
+  - "Migration from AppDaemon": migration-appdaemon.md
   - "Screensaver": screensaver.md
   - "Cards": cards.md
   - "Entities": entities.md
