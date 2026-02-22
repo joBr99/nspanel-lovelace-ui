@@ -1,0 +1,3851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Custom Firmware for NsPanel with the design of HomeAssistant's lovelace UI in mind, works with Tasmota.">
+      
+      
+        <meta name="author" content="Johannes Braun">
+      
+      
+        <link rel="canonical" href="https://jobr99.github.io/nspanel-lovelace-ui/hmi-serial-protocol/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.23">
+    
+    
+      
+        <title>NSPanel Lovelace UI - NsPanel Lovelace UI Docs</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.1e989742.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=arial,+sans-serif:300,300i,400,400i,500,500i,700,700i%7Cmonospace:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"arial, sans-serif";--md-code-font:"monospace"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../_assets/user.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+  
+
+
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//ua.pky.eu/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nspanel-lovelace-ui" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="NsPanel Lovelace UI Docs" class="md-header__button md-logo" aria-label="NsPanel Lovelace UI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NsPanel Lovelace UI Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NSPanel Lovelace UI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/jobr99/nspanel-lovelace-ui" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jobr99/nspanel-lovelace-ui
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="NsPanel Lovelace UI Docs" class="md-nav__button md-logo" aria-label="NsPanel Lovelace UI Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    NsPanel Lovelace UI Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jobr99/nspanel-lovelace-ui" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jobr99/nspanel-lovelace-ui
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started (Home Assistant)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started (Home Assistant)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First steps
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    First steps
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare_nspanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare NsPanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare_ha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare Home Assistant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configure_mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration - apps.yaml (Home Assistant)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration - apps.yaml (Home Assistant)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config-screensaver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Screensaver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cards
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cards
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-entities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entities Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-grid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grid Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-climate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Climate/Thermo Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-media/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Media Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-alarm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Alarm Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-qr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wifi/QR Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-power/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../card-unlock/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unlock Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Special Settings for Entities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subpages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subpages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phys-btn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physical Buttons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started (ioBroker)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started (ioBroker)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare_nspanel_ioBroker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare NsPanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iobroker-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare ioBroker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="nspanel-lovelace-ui">NSPanel Lovelace UI<a class="headerlink" href="#nspanel-lovelace-ui" title="Permanent link">&para;</a></h1>
+<p>The HMI Project of this project is only used to display stuff, navigation ist mostly up to the backend. This allows to be way more flexible.</p>
+<p>Messages to the Panel can be send through the Command <code>CustomSend</code>, which is implemented in the berry driver.
+You can issue this command through MQTT by sending messages to the <code>cmnd/XXX/CustomSend</code> Topic.
+Messages from the Panel are send to the <code>tele/XXX/RESULT</code> Topic, encoded in json <code>{"CustomRecv":"message_from_screen"}</code></p>
+<h1 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h1>
+<ul>
+<li><a href="#startup">Startup</a><ul>
+<li><a href="#some-preperation-before-we-are-acually-navigating-away">Some preperation before we are acually navigating away:</a></li>
+<li><a href="#navigate-from-the-startup-page-to-the-screensaver-by-sending-this-command-to-the-customsend-topic">Navigate from the startup page to the screensaver, by sending this command to the CustomSend Topic.</a></li>
+<li><a href="#exit-screensaver">Exit Screensaver</a></li>
+</ul>
+</li>
+<li><a href="#messages-to-nextion-display">Messages to Nextion Display</a><ul>
+<li><a href="#general-commands-implemented-on-all-pages">General Commands, implemented on all pages</a></li>
+<li><a href="#screensaver-page">screensaver page</a></li>
+<li><a href="#cardentities-page">cardEntities Page</a></li>
+<li><a href="#cardgrid-page">cardGrid Page</a></li>
+<li><a href="#cardmedia">cardMedia</a></li>
+<li><a href="#cardthermo">cardThermo</a></li>
+<li><a href="#cardalarm">cardAlarm</a></li>
+<li><a href="#cardqr">cardQR</a></li>
+<li><a href="#cardpower">cardPower</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="startup">Startup<a class="headerlink" href="#startup" title="Permanent link">&para;</a></h2>
+<p>On startup the panel will send <code>{"CustomRecv":"event,startup,39,eu"}</code> every few seconds.</p>
+<div class="highlight"><pre><span></span><code>event,   #Every message from the screen will start with `event`
+startup, #Startup Event
+39,      #Current HMI Project Version
+eu       #Current HMI Project Model
+</code></pre></div>
+<p>You can answer this message in many different ways, but in general the goal is to navigate way from the startup page. In the following example we will navigate to the screensaver page.</p>
+<p>Send the following messages to the CustomSend Topic. (You can also send them on tasmota console for testing)</p>
+<h3 id="some-preperation-before-we-are-acually-navigating-away">Some preperation before we are acually navigating away:<a class="headerlink" href="#some-preperation-before-we-are-acually-navigating-away" title="Permanent link">&para;</a></h3>
+<p>Send this every minute: <code>time~18:17</code></p>
+<p>Send this at least once at midnight: <code>date~Donnerstag, 25. August 2022</code></p>
+<p>Send theese message once after receiving the startup event (parameters will be explained later):</p>
+<p><code>timeout~20</code></p>
+<p><code>dimmode~10~100~6371</code></p>
+<h3 id="navigate-from-the-startup-page-to-the-screensaver-by-sending-this-command-to-the-customsend-topic">Navigate from the startup page to the screensaver, by sending this command to the CustomSend Topic.<a class="headerlink" href="#navigate-from-the-startup-page-to-the-screensaver-by-sending-this-command-to-the-customsend-topic" title="Permanent link">&para;</a></h3>
+<p><code>pageType~screensaver</code></p>
+<p>After sending this command you should already see the time and date.
+To also show weather data you have to send them with weatherUpdate, but we will skip this for now.</p>
+<h3 id="exit-screensaver">Exit Screensaver<a class="headerlink" href="#exit-screensaver" title="Permanent link">&para;</a></h3>
+<p>Touching the panel on the screensaver will result in this MQTT Message on the result topic:</p>
+<p><code>event,buttonPress2,screensaver,bExit,1</code></p>
+<p>You can answer this by sending theese commands to the CustomSend Topic.</p>
+<p><code>pageType~cardEntities</code></p>
+<p><code>entityUpd~test~~button~navigate.prev~&lt;~65535~~~button~navigate.next~&gt;~65535~~~~light~light.schreibtischlampe~X~17299~Schreibtischlampe~0~text~sensor.server_energy_power~Y~17299~Server ENERGY Power~155 W~shutter~cover.rolladenfenster_cover_1~Z~17299~Fenster Eingang~A|B|C|disable|enable|enable~switch~switch.bad~D~63142~Bad~1</code></p>
+<h2 id="messages-to-nextion-display">Messages to Nextion Display<a class="headerlink" href="#messages-to-nextion-display" title="Permanent link">&para;</a></h2>
+<h3 id="general-commands-implemented-on-all-pages">General Commands, implemented on all pages<a class="headerlink" href="#general-commands-implemented-on-all-pages" title="Permanent link">&para;</a></h3>
+<p>set brightness of screensaver and active-brightness:</p>
+<p><code>dimmode~0~100 - (screen off)</code></p>
+<p><code>dimmode~100~100 - (screen on with full brightness)</code></p>
+<p>set current time:</p>
+<p><code>time~22:26</code></p>
+<p>set current date:</p>
+<p><code>date~Di 24. Februar</code></p>
+<p>set screensaver timeout (set time in sec~ max 65):</p>
+<p><code>timeout~15 - timeout after 15 seconds</code></p>
+<p><code>timeout~0 - disable screensaver</code></p>
+<p>change the page type:</p>
+<p><code>pageType~pageStartup</code></p>
+<p><code>pageType~cardEntities</code></p>
+<p><code>pageType~cardThermo</code></p>
+<p><code>pageType~cardMedia</code></p>
+<p><code>pageType~popupLight~Schreibtischlampe~light.schreibtischlampe</code></p>
+<p><code>pageType~popupNotify</code></p>
+<p><code>pageType~screensaver</code></p>
+<h3 id="screensaver-page">screensaver page<a class="headerlink" href="#screensaver-page" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>weatherupdate</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td rowspan="6">Main Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td rowspan="6">First Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td></td>
+    <td rowspan="6">Second Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td></td>
+    <td rowspan="6">Third Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td></td>
+    <td rowspan="6">Fourth Forecast Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td></td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td></td>
+    <td rowspan="6">Alternative Layout Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td></td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td></td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td></td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td></td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<p><code>color~background~tTime~timeAMPM~tDate~tMainText~tForecast1~tForecast2~tForecast3~tForecast4~tForecast1Val~tForecast2Val~tForecast3Val~tForecast4Val~bar~tMainTextAlt2~tTimeAdd</code></p>
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td colspan="3">instruction</td>
+    <td>color</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>background</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tTime</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>timeAMPM</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tDate</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMainText</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast1</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast3</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast4</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast1Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast2Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast3Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tForecast4Val</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>bar</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tMainTextAlt2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>tTimeAdd</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<p><code>notify~heading~text</code></p>
+<p><code>statusUpdate~icon1~icon1Color~icon2~icon2~icon2color~icon1font~icon2font</code></p>
+<h3 id="cardentities-page">cardEntities Page<a class="headerlink" href="#cardentities-page" title="Permanent link">&para;</a></h3>
+<p>Structure (Category): <code>entityUpd~title~[navigation]~[entity_information]</code>
+Example with 4 Entities: 
+<div class="highlight"><pre><span></span><code>entityUpd~LightTest~button~navigate.prev~&lt;~65535~~~button~navigate.next~&gt;~65535~~~light~light.bed_light~A~17299~Bed Light~0~light~light.ceiling_lights~B~52231~Ceiling Lights~1~switch~switch.ac~C~17299~AC~0~switch~switch.decorative_lights~D~65222~Decorative Lights~1
+</code></pre></div></p>
+<p>Possible entities on cardEntities/cardGrid:</p>
+<p><code>~light~light.entityName~1~17299~Light1~0</code></p>
+<p><code>~shutter~cover.entityName~0~17299~Shutter2~iconUp|iconStop|iconDown</code></p>
+<p><code>~delete~~~~~</code></p>
+<p><code>~text~sensor.entityName~3~17299~Temperature~content</code></p>
+<p><code>~button~button.entityName~3~17299~bt-name~bt-text</code></p>
+<p><code>~switch~switch.entityName~4~17299~Switch1~0</code></p>
+<p><code>~number~input_number.entityName~4~17299~Number123~value|min|max</code></p>
+<p><code>~input_sel~input_select.entityName~3~17299~sel-name~sel-text</code></p>
+<table>
+<thead>
+  <tr>
+    <th>Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="36">Entities</td>
+    <td rowspan="6">First Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td colspan="2">optionalValue</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td rowspan="6">Second Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td colspan="2">optionalValue</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td rowspan="6">Thrid Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td colspan="2">optionalValue</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td rowspan="6">Forth Entiry</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td colspan="2">optionalValue</td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td rowspan="6">Fifth Entiy (US Portrait&nbsp;&nbsp;&nbsp;Version)</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td colspan="2">optionalValue</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td rowspan="6">Sixth Entiy (US Portrait&nbsp;&nbsp;&nbsp;Version)</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td colspan="2">optionalValue</td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardgrid-page">cardGrid Page<a class="headerlink" href="#cardgrid-page" title="Permanent link">&para;</a></h3>
+<p>cardGrid is using the exact same messageformat like cardEntities does. The only difference is, it ignores the information supplied in optionalValue, because it isn't needed for cardGrid.</p>
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="36">Entities</td>
+    <td rowspan="6">First Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td rowspan="6">Second Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td rowspan="6">Thrid Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td rowspan="6">Forth Entiry</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td rowspan="6">Fifth Entiy (US Portrait&nbsp;&nbsp;&nbsp;Version)</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td rowspan="6">Sixth Entiy (US Portrait&nbsp;&nbsp;&nbsp;Version)</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td colspan="2">intNameEntity</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardmedia">cardMedia<a class="headerlink" href="#cardmedia" title="Permanent link">&para;</a></h3>
+<p>Example without icons in bottom row: <code>entityUpd~Kitchen~button~navigation.up~U~65535~~~delete~~~~~~media_player.kitchen~I'm a Hurricane~~Wellmess~~100~A~64704~B~media_pl~media_player.kitchen~C~17299~Kitchen~</code></p>
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="9">cardMedia specific</td>
+    <td></td>
+    <td rowspan="9">cardMedia specific</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td rowspan="2">1st text row</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>titleColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td rowspan="2">2nd text row</td>
+    <td>author</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>authorColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>slider</td>
+    <td>volume</td>
+    <td>0-100</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>icon middle</td>
+    <td>playPauseIcon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>icon right side</td>
+    <td>onOffBtn</td>
+    <td>"disable" or color</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>icon left side</td>
+    <td>iconShuffle</td>
+    <td>"disable" or icon</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td rowspan="36">Entities</td>
+    <td rowspan="6">upper left corner media&nbsp;&nbsp;&nbsp;icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td rowspan="6">First Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td rowspan="6">Second Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td rowspan="6">Thrid Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td rowspan="6">Forth Entiry</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td rowspan="6">Fifth Entiy</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>displayName</td>
+    <td>only used for popups</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardthermo">cardThermo<a class="headerlink" href="#cardthermo" title="Permanent link">&para;</a></h3>
+<p>Serial Protocol of cardThermo is about to change; table will be completed later</p>
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td></td>
+    <td></td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td colspan="2">2nd text box</td>
+    <td>currentTemp</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td colspan="2">target temperature</td>
+    <td>dstTemp</td>
+    <td>multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td colspan="2">Text 4th Box Left Side</td>
+    <td>status</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td colspan="2">Min Temp</td>
+    <td>minTemp</td>
+    <td>multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td colspan="2">Max Temp</td>
+    <td>maxTemp</td>
+    <td>multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td colspan="2">Temperature Steps</td>
+    <td>tempStep</td>
+    <td>multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td rowspan="4">bottom hvac_action 1</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td rowspan="4">bottom hvac_action 2</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td rowspan="4">bottom hvac_action 3</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td rowspan="4">bottom hvac_action 4</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td rowspan="4">bottom hvac_action 5</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td rowspan="4">bottom hvac_action 6</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td rowspan="4">bottom hvac_action 7</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td rowspan="4">bottom hvac_action 8</td>
+    <td rowspan="4">Hvac Action</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>iconColorActive</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>buttonState</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>intName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td colspan="2">Currently Label 1th Text Box</td>
+    <td>tCurTempLbl</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td colspan="2">State Label 3th Text Box</td>
+    <td>tStateLbl</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td></td>
+    <td></td>
+    <td>tALbl</td>
+    <td>deprecated; ignored</td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td colspan="2">Temperature Unit (Celcius/Farhenheit)</td>
+    <td>tCF</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>Second Destination Tempature (Heat/Cool)</td>
+    <td></td>
+    <td>second temp</td>
+    <td>; multiplied by 10</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td colspan="2">additonal detail button to open another page</td>
+    <td>btDetail</td>
+    <td>"1" to hide</td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardalarm">cardAlarm<a class="headerlink" href="#cardalarm" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="16">cardAlarm specific</td>
+    <td colspan="2">card intNameEntity</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td colspan="2" rowspan="2">1st button right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td colspan="2" rowspan="2">2nd button right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td colspan="2" rowspan="2">3rd button right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td colspan="2" rowspan="2">4th button right side</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>intId</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td colspan="2" rowspan="2">icon next to code display</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td colspan="2">numpad</td>
+    <td>numpadStatus</td>
+    <td>"disable" or "enable"</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td colspan="2">flashing of icon next to code</td>
+    <td>flashing status</td>
+    <td>"enable" or "disable"</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td colspan="2" rowspan="3">button bottom left corner</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardqr">cardQR<a class="headerlink" href="#cardqr" title="Permanent link">&para;</a></h3>
+<p>Example: <code>entityUpd~Guest Wifi~button~navigate.prev~&lt;~65535~~~button~navigate.next~&gt;~65535~~~WIFI:S:test_ssid;T:WPA;P:test_pw;;~text~iText.test_ssid~���~17299~Name~test_ssid~text~iText.test_pw~���~17299~Password~test_pw</code></p>
+<table>
+<thead>
+  <tr>
+    <th>Parameter&nbsp;&nbsp;&nbsp;Number</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td>instruction</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="12">Navigation</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td colspan="3">cardQR specific</td>
+    <td>qrcode text</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td rowspan="12">Entities</td>
+    <td rowspan="6">1st Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td rowspan="6">2nd Entity</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardpower">cardPower<a class="headerlink" href="#cardpower" title="Permanent link">&para;</a></h3>
+<p><code>entityUpd~PowerTest~x~navUp~A~65535~~~delete~~~~~~text~sensor.power_consumption~B~17299~Power consumption~100W~1~text~sensor.power_consumption~C~17299~Power consumption~100W~1~text~sensor.today_energy~D~17299~Total energy 1~5836.0kWh~0~delete~~~~~~0~text~sensor.today_energy~E~17299~Total energy 1~5836.0kWh~-30~delete~~~~~~0~text~sensor.today_energy~F~65504~Total energy 1~5836.0kWh~90~text~sensor.today_energy~G~17299~Total energy 1~5836.0kWh~10</code></p>
+<table>
+<thead>
+  <tr>
+    <th>Parameter Number</th>
+    <th>Location</th>
+    <th>Type</th>
+    <th>Field</th>
+    <th>Addional Information</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>0</td>
+    <td></td>
+    <td>instruction</td>
+    <td>entityUpd</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>title</td>
+    <td>title</td>
+    <td>title</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td rowspan="6">Upper Left Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td rowspan="6">Upper Right Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>(ignored)¹</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>intNameEntity</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>optionalValue</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td rowspan="7">Home Icon / Value below Home Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td colspan="2">speed</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td rowspan="7">Value above Home Icon</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>icon</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>iconColor</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>displayName</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td colspan="2">speed</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td rowspan="7">1st Item Upper Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td rowspan="7">2nd Item Middle Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td rowspan="7">3rd Item Bottom Left</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td rowspan="7">4th Item Upper Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td rowspan="7">5th Item Middle Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>62</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td rowspan="7">6th Item Bottom Right</td>
+    <td rowspan="6">Entity Definition</td>
+    <td>type</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td>intNameEntity</td>
+    <td>ignored</td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>icon</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>66</td>
+    <td>iconColor</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td>displayName</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>optionalValue</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td colspan="2">speed</td>
+    <td>numbers (between -120 and 120)</td>
+  </tr>
+</tbody>
+</table>
+
+<h3 id="cardchart-page">cardChart Page<a class="headerlink" href="#cardchart-page" title="Permanent link">&para;</a></h3>
+<p><code>entityUpd~heading~navigation~color~yAxisLabel~yAxisTick:[yAxisTick]*[~value[:xAxisLabel]?]*</code>  </p>
+<p><code>entityUpd~Chart Demo~~button~navigate.prev~&lt;~65535~~~button~navigate.next~&gt;~65535~~~~6666~Gas [kWh]~20:40:60:80:100~10~7^2:00~7~6^4:00~6~7^6:00~0~7^8:00~5~1^10:00~1~10^12:00~5~6^14:00~8</code></p>
+<h3 id="popuplight-page">popupLight Page<a class="headerlink" href="#popuplight-page" title="Permanent link">&para;</a></h3>
+<p><code>entityUpdateDetail~entityName~*ignored*~*iconColor*~*buttonState*~*sliderBrightnessPos*~*sliderColorTempPos*~*colorMode*~*color_translation*~*color_temp_translation*~*brightness_translation*</code></p>
+<p><code>entityUpdateDetail~1~17299~1~100~78~enable</code></p>
+<p><code>entityUpdateDetail~1~17299~1~100~disable</code></p>
+<h3 id="popupshutter-page">popupShutter Page<a class="headerlink" href="#popupshutter-page" title="Permanent link">&para;</a></h3>
+<p><code>entityUpdateDetail~entityName~*sliderPos*~2ndrow~textPosition~icon1~iconUp~iconStop~iconDown~iconUpStatus~iconStopStatus~iconDownStatus~textTilt~iconTiltLeft~iconTiltStop~iconTiltRight~iconTiltLeftStatus~iconTiltStopStatus~iconTiltLeftStatus~tiltPos</code></p>
+<p><code>entityUpdateDetail~1~77</code></p>
+<h3 id="popupnotify-page">popupNotify Page<a class="headerlink" href="#popupnotify-page" title="Permanent link">&para;</a></h3>
+<p><code>entityUpdateDetail~*internalName*~*tHeading*~*tHeadingColor*~*b1*~*tB1Color*~*b2*~*tB2Color*~*tText*~*tTextColor*~*sleepTimeout*~*font*~*alt_icon*~*altIconColor*</code></p>
+<p><code>exitPopup</code></p>
+<h3 id="popupthermo-page">popupThermo Page<a class="headerlink" href="#popupthermo-page" title="Permanent link">&para;</a></h3>
+<p><code>entityUpdateDetail~{entity_id}~{icon_id}~{icon_color}~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~{heading}~{mode}~mode1~mode1?mode2?mode3~</code></p>
+<h3 id="popupinsel-page-input_select-detail-page">popupInSel Page (input_select detail page)<a class="headerlink" href="#popupinsel-page-input_select-detail-page" title="Permanent link">&para;</a></h3>
+<p><code>entityUpdateDetail2~*entity_id*~~*icon_color*~*input_sel*~*state*~*options*</code></p>
+<p>options are ? seperated</p>
+<h3 id="popuptimer">popupTimer<a class="headerlink" href="#popuptimer" title="Permanent link">&para;</a></h3>
+<p>editable is 0 or 1</p>
+<p>action fields are in the answer on the button press</p>
+<p>in case action is empty the button will be hidden</p>
+<p><code>entityUpdateDetail~{entity_id}~~{icon_color}~{entity_id}~{min_remaining}~{sec_remaining}~{editable}~{action1}~{action2}~{action3}~{label1}~{label2}~{label3}</code></p>
+<h2 id="messages-from-nextion-display">Messages from Nextion Display<a class="headerlink" href="#messages-from-nextion-display" title="Permanent link">&para;</a></h2>
+<p><code>event,buttonPress2,pageName,bNext</code></p>
+<p><code>event,buttonPress2,pageName,bPrev</code></p>
+<p><code>event,buttonPress2,pageName,bExit,number_of_taps</code></p>
+<p><code>event,buttonPress2,pageName,sleepReached</code></p>
+<h3 id="startup-page">startup page<a class="headerlink" href="#startup-page" title="Permanent link">&para;</a></h3>
+<p><code>event,startup,version,model</code></p>
+<h3 id="screensaver-page_1">screensaver page<a class="headerlink" href="#screensaver-page_1" title="Permanent link">&para;</a></h3>
+<p><code>event,buttonPress2,screensaver,exit</code> - Touch Event on Screensaver</p>
+<p><code>event,screensaverOpen</code> - Screensaver has opened</p>
+<h3 id="cardentities-page_1">cardEntities Page<a class="headerlink" href="#cardentities-page_1" title="Permanent link">&para;</a></h3>
+<p><code>event,*eventName*,*entityName*,*actionName*,*optionalValue*</code></p>
+<p><code>event,buttonPress2,internalNameEntity,up</code></p>
+<p><code>event,buttonPress2,internalNameEntity,down</code></p>
+<p><code>event,buttonPress2,internalNameEntity,stop</code></p>
+<p><code>event,buttonPress2,internalNameEntity,OnOff,1</code></p>
+<p><code>event,buttonPress2,internalNameEntity,button</code></p>
+<h3 id="popuplight-page_1">popupLight Page<a class="headerlink" href="#popuplight-page_1" title="Permanent link">&para;</a></h3>
+<p><code>event,pageOpenDetail,popupLight,internalNameEntity</code></p>
+<p><code>event,buttonPress2,internalNameEntity,OnOff,1</code></p>
+<p><code>event,buttonPress2,internalNameEntity,brightnessSlider,50</code></p>
+<p><code>event,buttonPress2,internalNameEntity,colorTempSlider,50</code></p>
+<p><code>event,buttonPress2,internalNameEntity,colorWheel,x|y|wh</code></p>
+<h3 id="popupshutter-page_1">popupShutter Page<a class="headerlink" href="#popupshutter-page_1" title="Permanent link">&para;</a></h3>
+<p><code>event,pageOpenDetail,popupShutter,internalNameEntity</code></p>
+<p><code>event,buttonPress2,internalNameEntity,positionSlider,50</code></p>
+<h3 id="popupnotify-page_1">popupNotify Page<a class="headerlink" href="#popupnotify-page_1" title="Permanent link">&para;</a></h3>
+<p><code>event,buttonPress2,*internalName*,notifyAction,yes</code></p>
+<p><code>event,buttonPress2,*internalName*,notifyAction,no</code></p>
+<h3 id="cardthermo-page">cardThermo Page<a class="headerlink" href="#cardthermo-page" title="Permanent link">&para;</a></h3>
+<p><code>event,buttonPress2,*entityName*,tempUpd,*temperature*</code></p>
+<p><code>event,buttonPress2,*entityName*,hvac_action,*hvac_action*</code></p>
+<h3 id="cardmedia-page">cardMedia Page<a class="headerlink" href="#cardmedia-page" title="Permanent link">&para;</a></h3>
+<p><code>event,buttonPress2,internalNameEntity,media-back</code></p>
+<p><code>event,buttonPress2,internalNameEntity,media-pause</code></p>
+<p><code>event,buttonPress2,internalNameEntity,media-next</code></p>
+<p><code>event,buttonPress2,internalNameEntity,volumeSlider,75</code></p>
+<h3 id="cardalarm-page">cardAlarm Page<a class="headerlink" href="#cardalarm-page" title="Permanent link">&para;</a></h3>
+<p><code>event,buttonPress2,internalNameEntity,actionName,code</code></p>
+<h1 id="custom-protocol">Custom Protocol<a class="headerlink" href="#custom-protocol" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code>55 BB [payload length] [payload length] [payload] [crc] [crc]
+</code></pre></div>
+<p>Payload length contains the number of bytes of the payload.</p>
+<p>CRC is "CRC-16 (MODBUS) Big Endian" calculated over the whole message</p>
+<p>This protocol does not try to implement broken JSON Commands with a specified type (lol).
+Instead the commands are plain text commands with parameters.</p>
+<h2 id="example-for-valid-message">Example for valid Message<a class="headerlink" href="#example-for-valid-message" title="Permanent link">&para;</a></h2>
+<p>This message has to be generated for the Message "1337" (1337 is not a valid command~ this is just an example)</p>
+<div class="highlight"><pre><span></span><code>55 BB  04 00  31 33 33 37  5F 5B
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Johannes Braun
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["navigation.indexes","navigation.sections","navigation.top","navigation.tracking","navigation.expand","search.highlight","search.share","search.suggest"],"search":"../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5fcf0de6.min.js"></script>
+      
+    
+  </body>
+</html>
