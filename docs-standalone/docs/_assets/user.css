@@ -10,13 +10,13 @@
 	display: none;
 }
 
-/*.md-header,*/ .md-footer {
+/*.md-header,*/ .md-footer,
+.md-footer-meta {
 	background-color: #333333;
 }
 
-.md-footer__inner.md-grid {
-	display: none;
-}
+/* Zensical keeps footer content in the inner/meta containers.
+   Don't hide footer structure, only style it. */
 
 .md-sidebar {
 	padding-top: 0px;
