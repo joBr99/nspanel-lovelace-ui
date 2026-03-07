@@ -1,5 +1,7 @@
 # Overview
 
+## Important Note - The documentation for the re-write is mostly AI generated and not yet reviewed.
+
 This documentation covers the standalone rewrite located in `nspanel-lovelace-ui/`.
 
 It is a Python backend that:

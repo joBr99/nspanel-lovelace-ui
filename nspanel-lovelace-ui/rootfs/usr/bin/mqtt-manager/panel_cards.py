@@ -21,7 +21,7 @@ class Card:
 
 class Entity:
     def __init__(self, locale, config, panel):
-        self.iid = iid()
+        self.iid = config.get("iid") or iid()
         self.locale = locale
         self.entity_id = config["entity"]
         self.etype = self.entity_id.split(".")[0]
