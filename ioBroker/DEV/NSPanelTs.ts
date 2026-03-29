@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v5.1.1.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
 
 Projekt:
@@ -103,6 +103,7 @@ ReleaseNotes:
 		- 21.12.2025 - v5.1.1.2  Left screensaver unit from ioBroker data point to create a dynamic screensaver (by ernstdaheim-hub)
 		- 29.12.2025 - v5.1.1.3  Fix popupSlider (Standard-Slider (not cardMedia) with Functionality on popupSlider) / Wrong Pictures in us-p Slider if BG-Color is black (0)
 		- 29.12.2025 - v5.1.1.4  Refactor power subscription handling in NSPanelTs (#1421 by lubepi)
+		- 29.03.2026 - v5.1.1.5  Fix DasWetter (meteored/Adapter Refactoring) and [BUG] Type at createEntity #1426
 
 		
 ***************************************************************************************************************
@@ -1005,7 +1006,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.4';
+const scriptVersion: string = 'v5.1.1.5';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -5242,7 +5243,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     val = getState(pageItem.id + '.ACTUAL').val;
                     RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                 }
-				if (existsState(pageItem.id + '.SET') && !existsState(pageItem.id + 'ACTUAL')) {
+				if (existsState(pageItem.id + '.SET') && !existsState(pageItem.id + '.ACTUAL')) {
                     val = getState(pageItem.id + '.SET').val;
                     RegisterEntityWatcher(pageItem.id + '.SET');
                 }
@@ -12468,6 +12469,29 @@ function HandleScreensaverUpdate (): void {
                 if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetDasWetterIcon(parseInt(icon)));
                     entityIconCol = GetDasWetterIconColor(parseInt(icon));
+                    if (getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.night').val) {
+                        switch (icon) {
+                            case 1:
+                            case 2:
+                            case 3:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(50));
+                                entityIconCol = GetDasWetterIconColor(50);
+                                break;
+                            case 4:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(51));
+                                entityIconCol = GetDasWetterIconColor(51);
+                                break;
+                            case 10:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(11));
+                                entityIconCol = GetDasWetterIconColor(11);
+                                break;
+                            case 12:
+                            case 13:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(52));
+                                entityIconCol = GetDasWetterIconColor(52);
+                                break;
+                        }
+                    }            
                 } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon)));
                     entityIconCol = GetAccuWeatherIconColor(parseInt(icon));
@@ -12489,85 +12513,76 @@ function HandleScreensaverUpdate (): void {
             }
 
             // 3 leftScreensaverEntities
-			if (screensaverAdvanced) {
-			    let checkpoint = true;
-			    let i = 0;
-			    if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
-			        for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
-			            const leftScreensaverEntity = config.leftScreensaverEntity[i];
-			            if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
-			                checkpoint = false;
-			                break;
-			            }
-			            RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity);
-			
-			            let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
-			            let iconColor = rgb_dec565(White);
-			            let icon;
-			            if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
-			                let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
-			                icon = Icons.GetIcon(iconName);
-			            } else {
-			                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
-			            }
-			
-			            if (parseFloat(val + '') == val) {
-			                val = parseFloat(val);
-			            }
-			
-			            if (typeof val == 'number') {
-			                val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
-			                icon = determineScreensaverStatusIcon(leftScreensaverEntity, val, icon)
-			
-			                // Einheit ermitteln: String oder aus DP
-			                let unitText = '';
-			                if (typeof leftScreensaverEntity.ScreensaverEntityUnitText === 'string') {
-			                    if (existsObject(leftScreensaverEntity.ScreensaverEntityUnitText)) {
-			                        unitText = getState(leftScreensaverEntity.ScreensaverEntityUnitText).val;
-			                    } else {
-			                        unitText = leftScreensaverEntity.ScreensaverEntityUnitText;
-			                    }
-			                }
-			
-			                val = val.toFixed(leftScreensaverEntity.ScreensaverEntityDecimalPlaces) + unitText;
-			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-			            } else if (typeof val == 'boolean') {
-			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-			                if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
-			                    icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff);
-			                }
-			            } else if (typeof val == 'string') {
-			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-			                let pformat = parseFormat(val);
-			                if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
-			                if (moment(val, pformat, true).isValid()) {
-			                    let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
-			                    if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
-			                        val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
-			                    } else {
-			                        val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
-			                    }
-			                }
-			            }
-			            const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
-			            if (temp && typeof temp == 'string' && existsObject(temp)) {
-			                iconColor = getState(temp).val;
-			            }
-			
-			            payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
-			        }
-			    }
-			
-			    if (i < 3) {
-			        checkpoint = false;
-			    }
-			
-			    if (checkpoint == false) {
-			        for (let j = i; j < 3; j++) {
-			            payloadString += '~~~~~~';
-			        }
-			    }
-			}
+            if (screensaverAdvanced) {
+                let checkpoint = true;
+                let i = 0;
+                if (config.leftScreensaverEntity && Array.isArray(config.leftScreensaverEntity) && config.leftScreensaverEntity.length > 0) {
+                    for (i = 0; i < 3 && i < config.leftScreensaverEntity.length; i++) {
+                        const leftScreensaverEntity = config.leftScreensaverEntity[i];
+                        if (leftScreensaverEntity === null || leftScreensaverEntity === undefined) {
+                            checkpoint = false;
+                            break;
+                        }
+                        RegisterScreensaverEntityWatcher(leftScreensaverEntity.ScreensaverEntity);
+
+                        let val = getState(leftScreensaverEntity.ScreensaverEntity).val;
+                        let iconColor = rgb_dec565(White);
+                        let icon;
+                        if (typeof leftScreensaverEntity.ScreensaverEntityIconOn == 'string' && existsObject(leftScreensaverEntity.ScreensaverEntityIconOn as string)) {
+                            let iconName = getState(leftScreensaverEntity.ScreensaverEntityIconOn!).val;
+                            icon = Icons.GetIcon(iconName);
+                        } else {
+                            icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOn);
+                        }
+
+                        if (parseFloat(val + '') == val) {
+                            val = parseFloat(val);
+                        }
+
+                        if (typeof val == 'number') {
+                            val = val * (leftScreensaverEntity.ScreensaverEntityFactor ? leftScreensaverEntity.ScreensaverEntityFactor! : 0)
+                            icon = determineScreensaverStatusIcon(leftScreensaverEntity,val,icon)
+                            val = val.toFixed(
+                                    leftScreensaverEntity.ScreensaverEntityDecimalPlaces
+                                ) + leftScreensaverEntity.ScreensaverEntityUnitText;
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                        } else if (typeof val == 'boolean') {
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                            if (!val && leftScreensaverEntity.ScreensaverEntityIconOff != null) {
+                                icon = Icons.GetIcon(leftScreensaverEntity.ScreensaverEntityIconOff);
+                            }
+                        } else if (typeof val == 'string') {
+                            iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
+                            let pformat = parseFormat(val);
+                            if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
+                            if (moment(val, pformat, true).isValid()) {
+                                let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
+                                if (leftScreensaverEntity.ScreensaverEntityDateFormat !== undefined) {
+                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val, leftScreensaverEntity.ScreensaverEntityDateFormat);
+                                } else {
+                                    val = new Date(DatumZeit * 1000).toLocaleString(getState(NSPanel_Path + 'Config.locale').val);
+                                }
+                            }
+                        }
+                        const temp = leftScreensaverEntity.ScreensaverEntityIconColor;
+                        if (temp && typeof temp == 'string' && existsObject(temp)) {
+                            iconColor = getState(temp).val;
+                        }
+
+                        payloadString += '~' + '~' + icon + '~' + iconColor + '~' + leftScreensaverEntity.ScreensaverEntityText + '~' + val + '~';
+                    }
+                }
+
+                if (i < 3) {
+                    checkpoint = false;
+                }
+
+                if (checkpoint == false) {
+                    for (let j = i; j < 3; j++) {
+                        payloadString += '~~~~~~';
+                    }
+                }
+            }
 
             // 6 bottomScreensaverEntities
             let maxEntities: number = 7;
@@ -12595,16 +12610,18 @@ function HandleScreensaverUpdate (): void {
                     let WheatherColor: any = 0;
 
                     if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
-                        TempMin = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
-                        TempMax = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value').val;
-                        DayOfWeek = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Tag_value').val.substring(0, 2);
-                        WeatherIcon = GetDasWetterIcon(getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
-                        WheatherColor = GetDasWetterIconColor(getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                        if (i < 6) {
+                            TempMin = getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Temperature_Min').val;
+                            TempMax = getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Temperature_Max').val;
+                            DayOfWeek = getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.NameOfDay').val.substring(0, 2);
+                            WeatherIcon = GetDasWetterIcon(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.symbol').val);
+                            WheatherColor = GetDasWetterIconColor(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.symbol').val);
 
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value');
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value');
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Tag_value');
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Minimale_Temperatur_value');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Maximale_Temperatur_value');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.NameOfDay');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Wetter_Symbol_id');
+                        }
                     } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                         if (i < 6) {
                             //Maximal 5 Tage bei accuweather
@@ -12739,7 +12756,32 @@ function HandleScreensaverUpdate (): void {
                         tempMinMaxString = Math.round(TempMin) + '° ' + Math.round(TempMax) + '°';
                     }
 
-                    if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+
+                    if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = new Date().getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Sun_in').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Sun_out').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_2.Sun_in').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6) {
                         let nextSunEvent = 0;
                         let valDateNow = new Date().getTime();
                         let arraySunEvent: number[] = [];
@@ -13594,53 +13636,102 @@ function GetAccuWeatherIconColor (icon: number): number {
 function GetDasWetterIcon (icon: number): string {
     try {
         switch (icon) {
-            case 1: // Sonnig
-                return 'weather-sunny'; // sunny
 
-            case 2: // Teils bewölkt
-            case 3: // Bewölkt
-                return 'weather-partly-cloudy'; // partlycloudy
+            case 1: // Klar
+            case 2: // Hohe Wolken
+            case 3: // Aufgelockerte Bewölkung
+                return 'weather-sunny';
 
-            case 4: // Bedeckt
-                return 'weather-cloudy'; // cloudy
+            case 4: // Teilweise bewölkt
+                return 'weather-partly-cloudy';
 
-            case 5: // Teils bewölkt mit leichtem Regen
-            case 6: // Bewölkt mit leichtem Regen
-            case 8: // Teils bewölkt mit mäßigem Regen
-            case 9: // Bewölkt mit mäßigem Regen
-                return 'weather-partly-rainy'; // partly-rainy
+            case 5: // Bedeckt
+                return 'weather-cloudy';
 
-            case 7: // Bedeckt mit leichtem Regen
-                return 'weather-rainy'; // rainy
+            case 6: 
+            case 7: // Staubdunst bei klarem Himmel
+                return 'weather-hazy';
 
-            case 10: // Bedeckt mit mäßigem Regen
-                return 'weather-pouring'; // pouring
+            case 8: // Nebel
+            case 9: // Dichter Nebel
+                return 'weather-fog';
 
-            case 11: // Teils bewölkt mit starken Regenschauern
-            case 12: // Bewölkt mit stürmischen Regenschauern
-                return 'weather-partly-lightning'; // partlylightning
+            case 10: // Trockengewitter bei teilweise bewölktem Himmel
+                return 'weather-partly-lightning';
 
-            case 13: // Bedeckt mit stürmischen Regenschauern
-                return 'weather-lightning'; // lightning
+            case 11: // Trockengewitter bei bewölktem Himmel
+                return 'weather-lightning';
 
-            case 14: // Teils bewölkt mit stürmischen Regenschauern und Hagel
-            case 15: // Bewölkt mit stürmischen Regenschauern und Hagel
-            case 16: // Bedeckt mit stürmischen Regenschauern und Hagel
-                return 'weather-hail'; // Hail
+            case 12: // Leichter Regen bei teilweise bewölktem Himmel
+            case 13: // Leichter Regen bei bewölktem Himmel
+                return 'weather-partly-rainy';
+            
+            case 14: // Mäßiger Regen bei teilweise bewölktem Himmel
+            case 15: // Mäßiger Regen bei bewölktem Himmel
+                return 'weather-pouring';
 
-            case 17: // Teils bewölkt mit Schnee
-            case 18: // Bewölkt mit Schnee
-                return 'weather-partly-snowy'; // partlysnowy
+            case 16: // Staubregegen bei teilweise bewölktem Himmel
+                return 'weather-hazy';
 
-            case 19: // Bedeckt mit Schneeschauern
-                return 'weather-snowy'; // snowy
+            case 17: // Staubregen bei bewölktem Himmel
+                return 'weather-fog';
 
-            case 20: // Teils bewölkt mit Schneeregen
-            case 21: // Bewölkt mit Schneeregen
+            case 18: // Gefrierender Regen bei teilweise bewölktem Himmel
+            case 19: // Gefrierender Regen bei bewölktem Himmel
+            case 20: // Regen und Schnee bei teilweise bewölktem Himmel
+            case 21: // Regen und Schnee bei bewölktem Himmel
+                return 'weather-snowy-rainy';
+
+            case 22: // Staubregen und Schnee bei teilweise bewölktem Himmel
+            case 23: // Staubregen und Schnee bei bewölktem Himmel
+                return 'weather-snowy-rainy';
+
+            case 24: // Schnee bei teilweise bewölktem Himmel
+            case 25: // Schnee bei bewölktem Himmel
+            case 26: // Staubschnee bei teilweise bewölktem Himmel
+            case 27: // Staubschnee bei bewölktem Himmel
+                return 'weather-snowy-rainy';
+
+            case 28: // Starker Regen bei teilweise bewölktem Himmel
+            case 29: // Starker Regen bei bewölktem Himmel
+            case 30: // Starker Regen und Schnee bei teilweise bewölktem Himmel
+            case 31: // Starker Regen und Schnee bei bewölktem Himmel
                 return 'weather-partly-snowy-rainy';
 
-            case 22: // Bedeckt mit Schneeregen
-                return 'weather-snowy-rainy'; // snowy-rainy
+            case 32: // Starker Schneefall bei teilweise bewölktem Himmel
+                return 'weather-partly-snowy-rainy';
+
+            case 33: // Starker Schneefall bei bewölktem Himmel
+                return 'weather-snowy-heavy';
+
+            case 34: // Gewitter bei teilweise bewölktem Himmel
+                return 'weather-partly-lightning';
+            
+            case 35: // Gewitter bei bewölktem Himmel
+                return 'weather-lightning';
+
+            case 36: // Hagel bei teilweise bewölktem Himmel
+            case 37: // Hagel bei bewölktem Himmel
+                return 'weather-hail';
+
+            case 38: // Gewitter mit Hagel bei teilweise bewölktem Himmel
+            case 39: // Gewitter mit Hagel bei bewölktem Himmel
+                return 'weather-lightning-rainy';
+
+            case 40: // Staubsturm
+                return 'weather-windy';
+
+            case 41: // Schneesturm
+                return 'weather-snowy-heavy';
+
+            case 50: // Klare Nacht
+                return 'weather-night';
+
+            case 51: // Bewölkte Nacht
+                return 'weather-night-partly-cloudy';
+
+            case 52:  // Regnerisch Nachts
+                return 'weather-rainy';
 
             default:
                 return 'alert-circle-outline';
@@ -13663,53 +13754,91 @@ function GetDasWetterIcon (icon: number): string {
 function GetDasWetterIconColor (icon: number): number {
     try {
         switch (icon) {
-            case 1: // Sonnig
+            case 1: // Klar
+            case 2: // Hohe Wolken
+            case 3: // Aufgelockerte Bewölkung
                 return rgb_dec565(swSunny);
 
-            case 2: // Teils bewölkt
-            case 3: // Bewölkt
+            case 4: // Teilweise bewölkt
                 return rgb_dec565(swPartlycloudy);
 
-            case 4: // Bedeckt
+            case 5: // Bedeckt
                 return rgb_dec565(swCloudy);
 
-            case 5: // Teils bewölkt mit leichtem Regen
-            case 6: // Bewölkt mit leichtem Regen
-            case 8: // Teils bewölkt mit mäßigem Regen
-            case 9: // Bewölkt mit mäßigem Regen
-                return rgb_dec565(swRainy);
+            case 6: 
+            case 7: // Staubdunst bei klarem Himmel
+                return rgb_dec565(swFog);
 
-            case 7: // Bedeckt mit leichtem Regen
-                return rgb_dec565(swRainy);
+            case 8: // Nebel
+            case 9: // Dichter Nebel
+                return rgb_dec565(swFog);
 
-            case 10: // Bedeckt mit mäßigem Regen
-                return rgb_dec565(swPouring);
-
-            case 11: // Teils bewölkt mit starken Regenschauern
-            case 12: // Bewölkt mit stürmischen Regenschauern
+            case 10: // Trockengewitter bei teilweise bewölktem Himmel
                 return rgb_dec565(swLightningRainy);
 
-            case 13: // Bedeckt mit stürmischen Regenschauern
+            case 11: // Trockengewitter bei bewölktem Himmel
                 return rgb_dec565(swLightning);
 
-            case 14: // Teils bewölkt mit stürmischen Regenschauern und Hagel
-            case 15: // Bewölkt mit stürmischen Regenschauern und Hagel
-            case 16: // Bedeckt mit stürmischen Regenschauern und Hagel
+            case 12: // Leichter Regen bei teilweise bewölktem Himmel
+            case 13: // Leichter Regen bei bewölktem Himmel
+                return rgb_dec565(swRainy);
+            
+            case 14: // Mäßiger Regen bei teilweise bewölktem Himmel
+            case 15: // Mäßiger Regen bei bewölktem Himmel
+                return rgb_dec565(swPouring);
+
+            case 16: // Staubregegen bei teilweise bewölktem Himmel
+            case 17: // Staubregen bei bewölktem Himmel
+                return rgb_dec565(swFog);
+
+            case 18: // Gefrierender Regen bei teilweise bewölktem Himmel
+            case 19: // Gefrierender Regen bei bewölktem Himmel
+            case 20: // Regen und Schnee bei teilweise bewölktem Himmel
+            case 21: // Regen und Schnee bei bewölktem Himmel
+                return rgb_dec565(swSnowyRainy);
+
+            case 22: // Staubregen und Schnee bei teilweise bewölktem Himmel
+            case 23: // Staubregen und Schnee bei bewölktem Himmel
+            case 24: // Schnee bei teilweise bewölktem Himmel
+            case 25: // Schnee bei bewölktem Himmel
+            case 26: // Staubschnee bei teilweise bewölktem Himmel
+            case 27: // Staubschnee bei bewölktem Himmel
+                return rgb_dec565(swSnowyRainy);
+
+            case 28: // Starker Regen bei teilweise bewölktem Himmel
+            case 29: // Starker Regen bei bewölktem Himmel
+            case 30: // Starker Regen und Schnee bei teilweise bewölktem Himmel
+            case 31: // Starker Regen und Schnee bei bewölktem Himmel
+                return rgb_dec565(swPouring);
+
+            case 32: // Starker Schneefall bei teilweise bewölktem Himmel
+            case 33: // Starker Schneefall bei bewölktem Himmel
+                return rgb_dec565(swSnowy);
+
+            case 34: // Gewitter bei teilweise bewölktem Himmel            
+            case 35: // Gewitter bei bewölktem Himmel
+                return rgb_dec565(swLightning);
+
+            case 36: // Hagel bei teilweise bewölktem Himmel
+            case 37: // Hagel bei bewölktem Himmel
                 return rgb_dec565(swHail);
 
-            case 17: // Teils bewölkt mit Schnee
-            case 18: // Bewölkt mit Schnee
-                return rgb_dec565(swSnowy);
+            case 38: // Gewitter mit Hagel bei teilweise bewölktem Himmel
+            case 39: // Gewitter mit Hagel bei bewölktem Himmel
+                return rgb_dec565(swHail);
 
-            case 19: // Bedeckt mit Schneeschauern
-                return rgb_dec565(swSnowy);
+            case 40: // Staubsturm
+            case 41: // Schneesturm
+                return rgb_dec565(swWindy);
 
-            case 20: // Teils bewölkt mit Schneeregen
-            case 21: // Bewölkt mit Schneeregen
-                return rgb_dec565(swSnowyRainy); // snowy-rainy
+            case 50: // Klare Nacht
+                return rgb_dec565(swClearNight);
+                
+            case 51: // Bewölkte Nacht
+                return rgb_dec565(swPartlycloudy);
 
-            case 22: // Bedeckt mit Schneeregen
-                return rgb_dec565(swSnowyRainy);
+            case 52:  // Regnerisch Nachts
+                return rgb_dec565(swRainy);
 
             default:
                 return rgb_dec565(White);
