@@ -1111,7 +1111,7 @@ async function CheckConfigParameters () {
             }
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'daswetter') {
-            if (existsObject(weatherAdapterInstance + 'NextHours.Location_1.Day_1.current.symbol_value') == false) {
+            if (existsObject(weatherAdapterInstance + 'location_1.ForecastHourly.Current.symbol') == false) {
                 log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
             }
         }
@@ -2456,21 +2456,32 @@ async function CreateWeatherAlias () {
             if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                 try {
                     if (isSetOptionActive) {
-                        if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value')) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.symbol')) {
                             log('Weather alias for daswetter.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
                             setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
-                            await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value', true, <
+                            await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.symbol', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value', name: 'ICON'});
-                            await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.temp_value', true, <
+                                > {type: 'number', 
+                                   role: 'value', 
+                                   name: 'ICON'});
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.temperature', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value.temperature', name: 'TEMP'});
-                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <
+                                > {type: 'number', 
+                                   role: 'value.temperature', 
+                                   name: 'TEMP',
+                                   alias: {id: 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.temperature', read: 'Math.round(val)'}});
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Min', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN'});
-                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <
+                                > {type: 'number', 
+                                   role: 'value.temperature.forecast.0', 
+                                   name: 'TEMP_MIN',
+                                   alias: {id: 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Min', read: 'Math.round(val)'}});
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Max', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX'});
+                                > {type: 'number', 
+                                   role: 'value.temperature.max.forecast.0', 
+                                   name: 'TEMP_MAX',
+                                   alias: {id: 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Max', read: 'Math.round(val)'}});
                         } else {
                             log('weather alias for daswetter.' + weatherAdapterInstanceNumber + '. already exists', 'info');
                         }
