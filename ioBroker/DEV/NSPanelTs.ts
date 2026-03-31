@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.5 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+TypeScript v5.1.1.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
 - abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
 
 Projekt:
@@ -1006,7 +1006,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.5';
+const scriptVersion: string = 'v5.1.1.6';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -8843,6 +8843,9 @@ function unsubscribePowerSubscriptions (): void {
         if (isPagePower(page)) {
             let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
+            // MODIFICATION - properly delete subscriptions to fix missing refresh
+            delete subscriptions['power_' + powerID + '.ACTUAL'];
+            // END
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
@@ -8850,6 +8853,9 @@ function unsubscribePowerSubscriptions (): void {
         if (isPagePower(page)) {
             let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
+            // MODIFICATION - properly delete subscriptions to fix missing refresh
+            delete subscriptions['power_' + powerID + '.ACTUAL'];
+            // END
         }
     }
     if (Debug) log('unsubscribePowerSubscriptions getstartet', 'info');
