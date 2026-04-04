@@ -29,6 +29,16 @@ class HAEntity(panel_cards.Entity):
         config_icon = self.config.get("icon", None)
         if config_icon and isinstance(config_icon, str) and config_icon.startswith("ha:"):
             self.icon_overwrite = libs.home_assistant.get_template(config_icon)
+        elif config_icon and isinstance(config_icon, dict) and self.etype in ["navigate", "iText"]:
+            # Dict-style icon (e.g. {on: mdi:..., off: mdi:...}) is not supported by super().render(),
+            # so resolve it to a string here using the status entity state if available.
+            status_entity = self.config.get("status")
+            if status_entity:
+                status_data = libs.home_assistant.get_entity_data(status_entity)
+                state = status_data.get("state", "off") if status_data else "off"
+            else:
+                state = "off"
+            self.icon_overwrite = config_icon.get(state, config_icon.get("off", "mdi:gesture-tap-button"))
         config_color = self.config.get("color", None)
         if config_color and isinstance(config_color, str) and config_color.startswith("ha:"):
             self.color_overwrite = json.loads(libs.home_assistant.get_template(config_color)[3:])
