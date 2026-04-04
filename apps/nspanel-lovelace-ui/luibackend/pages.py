@@ -308,11 +308,11 @@ class LuiPagesGen(object):
             device_class = entity.attributes.get("device_class", "")
             unit_of_measurement = entity.attributes.get("unit_of_measurement", "")
             value = entity.state
-
-            try:
-                value = str(round(float(value), 1))
-            except:
-                print("An exception occurred") 
+            if entityType == "sensor":
+                try:
+                    value = str(round(float(value), 1))
+                except:
+                    print("An exception occurred") 
                 
             # limit value to 4 chars on us-p
             if self._config.get("model") == "us-p" and cardType == "cardEntities":
@@ -323,8 +323,10 @@ class LuiPagesGen(object):
             if device_class != "temperature":
                 value = value + " "
             value = value + unit_of_measurement
+            
             if entityType == "binary_sensor":
                 value = get_translation(self._locale, f"backend.component.binary_sensor.state.{device_class}.{entity.state}")
+                
             if cardType in ["cardGrid", "cardGrid1", "cardGrid2"] and entityType == "sensor" and icon is None:
                 icon_id = entity.state[:4]
                 if icon_id[-1] == ".":
