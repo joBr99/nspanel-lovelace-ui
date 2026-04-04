@@ -19,4 +19,4 @@ options:
 schema:
   loglevel: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
   logtofile: bool
-image: "ghcr.io/bernadoDavinci/{arch}-nspanel-lovelace-ui"
+image: "ghcr.io/bernadodavinci/{arch}-nspanel-lovelace-ui"
