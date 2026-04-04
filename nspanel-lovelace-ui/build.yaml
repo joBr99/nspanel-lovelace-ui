@@ -8,4 +8,4 @@ build_from:
 labels:
   org.opencontainers.image.title: "Home Assistant Add-on: NSPanel Lovelace UI"
   org.opencontainers.image.description: ""
-  org.opencontainers.image.source: "https://github.com/joBr99/nspanel-lovelace-ui"
+  org.opencontainers.image.source: "https://github.com/bernadoDavinci/nspanel-lovelace-ui"
