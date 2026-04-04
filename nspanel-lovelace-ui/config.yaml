@@ -6,7 +6,7 @@ description: NSPanel Lovelace UI Addon
 services:
   - "mqtt:want"
 homeassistant_api: true
-url: "https://github.com/joBr99/nspanel-lovelace-ui/tree/main/nspanel-lovelace-ui"
+url: "https://github.com/bernadoDavinci/nspanel-lovelace-ui/tree/main/nspanel-lovelace-ui"
 arch:
   - armhf
   - armv7
@@ -22,4 +22,4 @@ options:
 schema:
   loglevel: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
   logtofile: bool
-image: "ghcr.io/jobr99/{arch}-nspanel-lovelace-ui"
+image: "ghcr.io/bernadoDavinci/{arch}-nspanel-lovelace-ui"
