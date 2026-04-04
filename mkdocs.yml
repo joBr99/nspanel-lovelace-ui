@@ -8,8 +8,8 @@ site_description: Custom Firmware for NsPanel with the design of HomeAssistant's
 site_author: Johannes Braun
 site_url: https://jobr99.github.io/nspanel-lovelace-ui
 
-repo_name: jobr99/nspanel-lovelace-ui
-repo_url: https://github.com/jobr99/nspanel-lovelace-ui
+repo_name: bernadoDavinci/nspanel-lovelace-ui
+repo_url: https://github.com/bernadoDavinci/nspanel-lovelace-ui
 edit_uri: ""
 
 copyright: "Copyright &copy; 2026 Johannes Braun"

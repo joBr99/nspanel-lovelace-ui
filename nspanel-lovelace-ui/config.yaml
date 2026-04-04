@@ -8,11 +8,8 @@ services:
 homeassistant_api: true
 url: "https://github.com/bernadoDavinci/nspanel-lovelace-ui/tree/main/nspanel-lovelace-ui"
 arch:
-  - armhf
-  - armv7
   - aarch64
   - amd64
-  - i386
 init: false
 map:
   - addon_config:rw
