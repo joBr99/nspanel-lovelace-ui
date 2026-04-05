@@ -12538,7 +12538,7 @@ function HandleScreensaverUpdate (): void {
 			                }
 			            } else if (typeof val == 'string') {
 			                iconColor = GetScreenSaverEntityColor(leftScreensaverEntity);
-			                let pformat = parseFormat(val);
+			                let pformat = ['L', 'LL', 'LLL', 'LLLL'];
 			                if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
 			                if (moment(val, pformat, true).isValid()) {
 			                    let DatumZeit = moment(val, pformat).unix(); // Umwandlung in Unix Time-Stamp
@@ -12884,7 +12884,7 @@ function HandleScreensaverUpdate (): void {
                     } else if (typeof val == 'string') {
                         iconColor = GetScreenSaverEntityColor(config.bottomScreensaverEntity[4]);
 
-                        let pformat = parseFormat(val);
+                        let pformat = ['L', 'LL', 'LLL', 'LLLL'];
                         if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
                         if (moment(val, pformat, true).isValid()) {
                             let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
@@ -12955,7 +12955,7 @@ function HandleScreensaverUpdate (): void {
                         }
                     } else if (typeof val == 'string') {
                         iconColor = GetScreenSaverEntityColor(entity);
-                        let pformat = parseFormat(val);
+                        let pformat = ['L', 'LL', 'LLL', 'LLLL'];
                         if (Debug) log('moments.js --> Datum ' + val + ' valid?: ' + moment(val, pformat, true).isValid(), 'info');
                         if (moment(val, pformat, true).isValid()) {
                             let DatumZeit = moment(val, pformat).unix(); // Conversion to Unix time stamp
