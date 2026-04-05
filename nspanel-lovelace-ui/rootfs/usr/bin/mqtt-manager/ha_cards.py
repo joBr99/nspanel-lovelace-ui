@@ -42,6 +42,16 @@ class HAEntity(panel_cards.Entity):
         config_color = self.config.get("color", None)
         if config_color and isinstance(config_color, str) and config_color.startswith("ha:"):
             self.color_overwrite = json.loads(libs.home_assistant.get_template(config_color)[3:])
+        elif config_color and isinstance(config_color, dict) and self.etype in ["navigate", "iText"]:
+            # Dict-style color (e.g. {on: [...], off: [...]}) is not supported by super().render(),
+            # so resolve it to a list here using the status entity state if available.
+            status_entity = self.config.get("status")
+            if status_entity:
+                status_data = libs.home_assistant.get_entity_data(status_entity)
+                state = status_data.get("state", "off") if status_data else "off"
+            else:
+                state = "off"
+            self.color_overwrite = config_color.get(state, config_color.get("off", None))
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
