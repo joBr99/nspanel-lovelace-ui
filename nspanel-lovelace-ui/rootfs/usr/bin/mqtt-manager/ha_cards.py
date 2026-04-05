@@ -68,6 +68,9 @@ class HAEntity(panel_cards.Entity):
                     status_out[3] = out_parts[3]
                 if isinstance(self.config.get("color"), dict):
                     status_out[4] = out_parts[4]
+                # Keep explicitly configured name instead of the status entity's
+                if self.config.get("name"):
+                    status_out[5] = out_parts[5]
                 status_out = "~".join(status_out)
                 return status_out
             return out
@@ -84,11 +87,19 @@ class HAEntity(panel_cards.Entity):
             return "~text~iid.404~X~6666~not found~"
 
         # State filter: only show entity if state matches config
+        # Note: YAML parses `on`/`off` as booleans, so normalize them to HA state strings
+        def _normalize_state(v):
+            if v is True:
+                return "on"
+            if v is False:
+                return "off"
+            return str(v)
+
         state_filter = self.config.get("state")
-        if state_filter is not None and str(self.state) != str(state_filter):
+        if state_filter is not None and self.state != _normalize_state(state_filter):
             return ""
         state_not_filter = self.config.get("state_not")
-        if state_not_filter is not None and str(self.state) == str(state_not_filter):
+        if state_not_filter is not None and self.state == _normalize_state(state_not_filter):
             return ""
 
         # HA Entities
