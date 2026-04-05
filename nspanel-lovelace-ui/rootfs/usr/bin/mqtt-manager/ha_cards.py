@@ -61,7 +61,13 @@ class HAEntity(panel_cards.Entity):
                                         'entity': f'{self.config.get("status")}',
                                     }, self.panel
                                 ).render().split("~")
-                status_out[2] = out.split("~")[2]
+                out_parts = out.split("~")
+                status_out[2] = out_parts[2]
+                # Keep explicitly configured dict-style icon/color instead of the status entity's
+                if isinstance(self.config.get("icon"), dict):
+                    status_out[3] = out_parts[3]
+                if isinstance(self.config.get("color"), dict):
+                    status_out[4] = out_parts[4]
                 status_out = "~".join(status_out)
                 return status_out
             return out
@@ -76,6 +82,14 @@ class HAEntity(panel_cards.Entity):
             self.state = "not found"
             self.attributes = []
             return "~text~iid.404~X~6666~not found~"
+
+        # State filter: only show entity if state matches config
+        state_filter = self.config.get("state")
+        if state_filter is not None and str(self.state) != str(state_filter):
+            return ""
+        state_not_filter = self.config.get("state_not")
+        if state_not_filter is not None and str(self.state) == str(state_not_filter):
+            return ""
 
         # HA Entities
         entity_type_panel = "text"
