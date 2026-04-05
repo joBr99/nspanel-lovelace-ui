@@ -268,7 +268,12 @@ class HACard(panel_cards.Card):
         return [(e.iid, e.entity_id) for e in self.entities]
 
     def get_entities(self):
-        return [e.entity_id for e in self.entities]
+        result = [e.entity_id for e in self.entities]
+        for e in self.entities:
+            status = e.config.get("status")
+            if status and status not in result:
+                result.append(status)
+        return result
 
     def gen_nav(self):
         leftBtn = "delete~~~~~"
