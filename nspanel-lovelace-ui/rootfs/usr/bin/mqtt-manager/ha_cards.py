@@ -57,7 +57,8 @@ class HAEntity(panel_cards.Entity):
             return out
 
         # get data from HA
-        data = libs.home_assistant.get_entity_data(self.entity_id)
+        status_entity = self.config.get("status")
+        data = libs.home_assistant.get_entity_data(status_entity if status_entity else self.entity_id)
         if data:
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
