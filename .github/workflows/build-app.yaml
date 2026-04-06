@@ -13,7 +13,7 @@ on:
 jobs:
   prepare:
     name: Prepare
-    if: github.repository == 'home-assistant/apps-example'
+    if: github.repository == 'joBr99/nspanel-lovelace-ui'
     runs-on: ubuntu-latest
     outputs:
       architectures: ${{ steps.info.outputs.architectures }}
