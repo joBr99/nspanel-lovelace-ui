@@ -13,6 +13,35 @@ import threading
 import datetime
 import json
 
+DEFAULT_SCREENSAVER_COLOR_MAPPING = {
+    "background": 0,
+    "time": 65535,
+    "timeAMPM": 65535,
+    "date": 65535,
+    "tMainText": 65535,
+    "tForecast1": 65535,
+    "tForecast2": 65535,
+    "tForecast3": 65535,
+    "tForecast4": 65535,
+    "tForecast1Val": 65535,
+    "tForecast2Val": 65535,
+    "tForecast3Val": 65535,
+    "tForecast4Val": 65535,
+    "bar": 65535,
+    "tMainTextAlt2": 65535,
+    "tTimeAdd": 65535,
+}
+
+
+def get_screensaver_color_output(theme):
+    colors = []
+    for key, default_color in DEFAULT_SCREENSAVER_COLOR_MAPPING.items():
+        config_color = theme.get(key, default_color)
+        if isinstance(config_color, list):
+            config_color = rgb_dec565(config_color)
+        colors.append(str(config_color))
+    return "~".join(colors)
+
 class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
@@ -576,6 +605,7 @@ class Screensaver(HACard):
         self.statusIcon2 = None
         if "statusIcon2" in config:
             self.statusIcon2 = HAEntity(locale, config.get("statusIcon2"), panel)
+        self.theme = config.get("theme")
 
     def get_entities(self):
         ent = [e.entity_id for e in self.entities]
@@ -590,6 +620,12 @@ class Screensaver(HACard):
         for e in self.entities:
             result += e.render(cardType=self.type)
         libs.panel_cmd.weatherUpdate(self.panel.msg_out_queue, self.panel.sendTopic, result[1:])
+        if self.type == "screensaver" and self.theme:
+            libs.panel_cmd.screensaverColor(
+                self.panel.msg_out_queue,
+                self.panel.sendTopic,
+                get_screensaver_color_output(self.theme),
+            )
 
         statusUpdateResult = ""
         icon1font = ""

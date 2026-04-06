@@ -25,6 +25,9 @@ def entityUpd(msg_out_queue, topic, data):
 def weatherUpdate(msg_out_queue, topic, data):
     custom_send(msg_out_queue, topic, f"weatherUpdate~{data}")
 
+def screensaverColor(msg_out_queue, topic, data):
+    custom_send(msg_out_queue, topic, f"color~{data}")
+
 def timeout(msg_out_queue, topic, timeout):
     custom_send(msg_out_queue, topic, f"timeout~{timeout}")
 
