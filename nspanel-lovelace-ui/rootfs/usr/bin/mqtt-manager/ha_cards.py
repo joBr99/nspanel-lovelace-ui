@@ -46,6 +46,26 @@ class HAEntity(panel_cards.Entity):
     def __init__(self, locale, config, panel):
         super().__init__(locale, config, panel)
 
+    @staticmethod
+    def _normalize_state_filter(value):
+        # YAML parses bare `on`/`off` as booleans, but HA states are strings.
+        if value is True:
+            return "on"
+        if value is False:
+            return "off"
+        return str(value)
+
+    def _resolve_internal_overwrite(self, overwrite, default=None):
+        status_entity = self.config.get("status")
+        if not isinstance(overwrite, dict):
+            return overwrite
+        if status_entity:
+            status_data = libs.home_assistant.get_entity_data(status_entity)
+            state = status_data.get("state", "off") if status_data else "off"
+        else:
+            state = "off"
+        return overwrite.get(state, overwrite.get("off", default))
+
     def prerender(self):
         # pre render templates
         for p in ["color_overwrite", "icon_overwrite", "value_overwrite"]:
@@ -58,9 +78,13 @@ class HAEntity(panel_cards.Entity):
         config_icon = self.config.get("icon", None)
         if config_icon and isinstance(config_icon, str) and config_icon.startswith("ha:"):
             self.icon_overwrite = libs.home_assistant.get_template(config_icon)
+        elif config_icon and self.etype in ["navigate", "iText"]:
+            self.icon_overwrite = self._resolve_internal_overwrite(config_icon, "mdi:gesture-tap-button")
         config_color = self.config.get("color", None)
         if config_color and isinstance(config_color, str) and config_color.startswith("ha:"):
             self.color_overwrite = json.loads(libs.home_assistant.get_template(config_color)[3:])
+        elif config_color and self.etype in ["navigate", "iText"]:
+            self.color_overwrite = self._resolve_internal_overwrite(config_color)
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
@@ -70,13 +94,21 @@ class HAEntity(panel_cards.Entity):
                                         'entity': f'{self.config.get("status")}',
                                     }, self.panel
                                 ).render().split("~")
-                status_out[2] = out.split("~")[2]
+                out_parts = out.split("~")
+                status_out[2] = out_parts[2]
+                if self.config.get("icon") is not None:
+                    status_out[3] = out_parts[3]
+                if self.config.get("color") is not None:
+                    status_out[4] = out_parts[4]
+                if self.config.get("name"):
+                    status_out[5] = out_parts[5]
                 status_out = "~".join(status_out)
                 return status_out
             return out
 
         # get data from HA
-        data = libs.home_assistant.get_entity_data(self.entity_id)
+        status_entity = self.config.get("status")
+        data = libs.home_assistant.get_entity_data(status_entity if status_entity else self.entity_id)
         if data:
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
@@ -84,6 +116,13 @@ class HAEntity(panel_cards.Entity):
             self.state = "not found"
             self.attributes = []
             return "~text~iid.404~X~6666~not found~"
+
+        state_filter = self.config.get("state")
+        if state_filter is not None and self.state != self._normalize_state_filter(state_filter):
+            return ""
+        state_not_filter = self.config.get("state_not")
+        if state_not_filter is not None and self.state == self._normalize_state_filter(state_not_filter):
+            return ""
 
         # HA Entities
         entity_type_panel = "text"
@@ -286,7 +325,12 @@ class HACard(panel_cards.Card):
         return [(e.iid, e.entity_id) for e in self.entities]
 
     def get_entities(self):
-        return [e.entity_id for e in self.entities]
+        entities = [e.entity_id for e in self.entities]
+        for entity in self.entities:
+            status_entity = entity.config.get("status")
+            if status_entity and status_entity not in entities:
+                entities.append(status_entity)
+        return entities
 
     def gen_nav(self):
         leftBtn = "delete~~~~~"

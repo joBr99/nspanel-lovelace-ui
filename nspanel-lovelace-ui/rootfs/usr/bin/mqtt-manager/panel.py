@@ -216,7 +216,10 @@ class LovelaceUIPanel:
                 self.update_date()
                 self.update_time()
 
-                self.current_card = self.screensaver
+                if self.settings.get("screensaver", {}).get("disable", False):
+                    self.current_card = self.get_default_card()
+                else:
+                    self.current_card = self.screensaver
                 self.render_current_page(switchPages=True)
 
                 # send sleepTimeout
