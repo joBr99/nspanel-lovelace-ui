@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 4.7.91
+
+- Keep the new runtime entity and screensaver features while reverting the add-on config mount change
+
 ## 4.7.90
 
 - Add support for `status` entities in HAEntity state lookup and subscriptions
