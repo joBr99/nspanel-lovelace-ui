@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.6 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
+TypeScript v5.1.1.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.3.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -104,6 +104,8 @@ ReleaseNotes:
 		- 29.12.2025 - v5.1.1.3  Fix popupSlider (Standard-Slider (not cardMedia) with Functionality on popupSlider) / Wrong Pictures in us-p Slider if BG-Color is black (0)
 		- 29.12.2025 - v5.1.1.4  Refactor power subscription handling in NSPanelTs (#1421 by lubepi)
 		- 29.03.2026 - v5.1.1.5  Fix DasWetter (meteored/Adapter Refactoring) and [BUG] Type at createEntity #1426
+        - 31.03.2026 - v5.1.1.6  Refresh on cardPower not working in ioBroker/NsPanelTs.tst #1428 
+        - 12.04.2026 - v5.5.1.7  Sonos: speakerlist and group volume not implemented #1434 by Smokey7672
 
 		
 ***************************************************************************************************************
@@ -1006,7 +1008,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.6';
+const scriptVersion: string = 'v5.1.1.7';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -7649,6 +7651,9 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (existsObject(id)) {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
+            if (title && title.indexOf('~') !== -1) {
+                title = title.split('~')[0].trim();
+            }
             if (title.length > 24) {
                 title = title.slice(0, 24) + '...';
             }
@@ -8861,7 +8866,6 @@ function unsubscribePowerSubscriptions (): void {
     if (Debug) log('unsubscribePowerSubscriptions getstartet', 'info');
 }
 
-
 /**
  * @function subscribePowerSubscriptions
  * @description Subscribes to the power state and registers a change listener.
@@ -9957,6 +9961,13 @@ function HandleButtonEvent (words: any): void {
                 pageCounter = 1;
                 let vVolume = scale(parseInt(words[4]), 100, 0, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100);
                 setIfExists(id + '.VOLUME', Math.floor(vVolume));
+                const mediaItem = findPageItem(id);
+                if (isPageMediaItem(mediaItem) && mediaItem.adapterPlayerInstance) {
+                    const coordinator = mediaItem.mediaDevice;
+                    if (coordinator) {
+                        setState(mediaItem.adapterPlayerInstance + 'root.' + coordinator + '.group_volume', Math.floor(vVolume));
+                    }
+                }
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
@@ -9984,8 +9995,19 @@ function HandleButtonEvent (words: any): void {
                                 }
                             }
                             break;
-                        case 'sonos':
+                        case 'sonos': {
+                            const selectedName = pageItem.speakerList![words[4]];
+                            const coordinator  = pageItem.mediaDevice;
+                            const membersNames = getState(adapterInstance + 'root.' + coordinator + '.members').val as string;
+                            const nameArr = membersNames ? membersNames.split(',').map((s: string) => s.trim()) : [];
+                            const idx = nameArr.indexOf(selectedName);
+                            if (idx !== -1) {
+                                setState(adapterInstance + 'root.' + coordinator + '.remove_from_group', selectedName);
+                            } else {
+                                setState(adapterInstance + 'root.' + coordinator + '.add_to_group', selectedName);
+                            }
                             break;
+                        }
                         /*case 'chromecast':
                             break;*/
                         case 'squeezeboxrpc':
