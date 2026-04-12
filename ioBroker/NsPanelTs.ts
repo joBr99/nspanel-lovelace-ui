@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.4 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.2.0
+TypeScript v5.1.1.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.3.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -103,6 +103,9 @@ ReleaseNotes:
 		- 21.12.2025 - v5.1.1.2  Left screensaver unit from ioBroker data point to create a dynamic screensaver (by ernstdaheim-hub)
 		- 29.12.2025 - v5.1.1.3  Fix popupSlider (Standard-Slider (not cardMedia) with Functionality on popupSlider) / Wrong Pictures in us-p Slider if BG-Color is black (0)
 		- 29.12.2025 - v5.1.1.4  Refactor power subscription handling in NSPanelTs (#1421 by lubepi)
+		- 29.03.2026 - v5.1.1.5  Fix DasWetter (meteored/Adapter Refactoring) and [BUG] Type at createEntity #1426
+        - 31.03.2026 - v5.1.1.6  Refresh on cardPower not working in ioBroker/NsPanelTs.tst #1428 
+        - 12.04.2026 - v5.5.1.7  Sonos: speakerlist and group volume not implemented #1434 by Smokey7672
 
 		
 ***************************************************************************************************************
@@ -1005,7 +1008,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.4';
+const scriptVersion: string = 'v5.1.1.7';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -1110,7 +1113,7 @@ async function CheckConfigParameters () {
             }
         }
         if (weatherAdapterInstance.substring(0, weatherAdapterInstance.length - 3) == 'daswetter') {
-            if (existsObject(weatherAdapterInstance + 'NextHours.Location_1.Day_1.current.symbol_value') == false) {
+            if (existsObject(weatherAdapterInstance + 'location_1.ForecastHourly.Current.symbol') == false) {
                 log('Weather adapter: << weatherAdapterInstance - ' + weatherAdapterInstance + ' >> is not installed. Please Check Adapter!', 'error');
             }
         }
@@ -2455,21 +2458,32 @@ async function CreateWeatherAlias () {
             if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                 try {
                     if (isSetOptionActive) {
-                        if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value')) {
+                        if (!existsState(config.weatherEntity + '.ICON') && existsState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.symbol')) {
                             log('Weather alias for daswetter.' + weatherAdapterInstanceNumber + '. does not exist yet, will be created now', 'info');
                             setObject(config.weatherEntity, {_id: config.weatherEntity, type: 'channel', common: {role: 'weatherCurrent', name: 'weatherCurrent'}, native: {}});
-                            await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.symbol_value', true, <
+                            await createAliasAsync(config.weatherEntity + '.ICON', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.symbol', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value', name: 'ICON'});
-                            await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.' + weatherAdapterInstanceNumber + '.NextHours.Location_1.Day_1.current.temp_value', true, <
+                                > {type: 'number', 
+                                   role: 'value', 
+                                   name: 'ICON'});
+                            await createAliasAsync(config.weatherEntity + '.TEMP', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.temperature', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value.temperature', name: 'TEMP'});
-                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Minimale_Temperatur_value', true, <
+                                > {type: 'number', 
+                                   role: 'value.temperature', 
+                                   name: 'TEMP',
+                                   alias: {id: 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.temperature', read: 'Math.round(val)'}});
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MIN', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Min', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value.temperature.forecast.0', name: 'TEMP_MIN'});
-                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_1.Maximale_Temperatur_value', true, <
+                                > {type: 'number', 
+                                   role: 'value.temperature.forecast.0', 
+                                   name: 'TEMP_MIN',
+                                   alias: {id: 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Min', read: 'Math.round(val)'}});
+                            await createAliasAsync(config.weatherEntity + '.TEMP_MAX', 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Max', true, <
                                 iobJS.StateCommon
-                                > {type: 'number', role: 'value.temperature.max.forecast.0', name: 'TEMP_MAX'});
+                                > {type: 'number', 
+                                   role: 'value.temperature.max.forecast.0', 
+                                   name: 'TEMP_MAX',
+                                   alias: {id: 'daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Temperature_Max', read: 'Math.round(val)'}});
                         } else {
                             log('weather alias for daswetter.' + weatherAdapterInstanceNumber + '. already exists', 'info');
                         }
@@ -5242,7 +5256,7 @@ function CreateEntity (pageItem: PageItem, placeId: number, useColors: boolean =
                     val = getState(pageItem.id + '.ACTUAL').val;
                     RegisterEntityWatcher(pageItem.id + '.ACTUAL');
                 }
-				if (existsState(pageItem.id + '.SET') && !existsState(pageItem.id + 'ACTUAL')) {
+				if (existsState(pageItem.id + '.SET') && !existsState(pageItem.id + '.ACTUAL')) {
                     val = getState(pageItem.id + '.SET').val;
                     RegisterEntityWatcher(pageItem.id + '.SET');
                 }
@@ -7637,6 +7651,9 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
         if (existsObject(id)) {
             let name = getState(id + '.ALBUM').val;
             let title = getState(id + '.TITLE').val;
+            if (title && title.indexOf('~') !== -1) {
+                title = title.split('~')[0].trim();
+            }
             if (title.length > 24) {
                 title = title.slice(0, 24) + '...';
             }
@@ -8831,6 +8848,9 @@ function unsubscribePowerSubscriptions (): void {
         if (isPagePower(page)) {
             let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
+            // MODIFICATION - properly delete subscriptions to fix missing refresh
+            delete subscriptions['power_' + powerID + '.ACTUAL'];
+            // END
         }
     }
     for (let i = 0; i < config.subPages.length; i++) {
@@ -8838,11 +8858,13 @@ function unsubscribePowerSubscriptions (): void {
         if (isPagePower(page)) {
             let powerID = page.items[0].id;
             unsubscribe(powerID + '.ACTUAL');
+            // MODIFICATION - properly delete subscriptions to fix missing refresh
+            delete subscriptions['power_' + powerID + '.ACTUAL'];
+            // END
         }
     }
     if (Debug) log('unsubscribePowerSubscriptions getstartet', 'info');
 }
-
 
 /**
  * @function subscribePowerSubscriptions
@@ -9939,6 +9961,13 @@ function HandleButtonEvent (words: any): void {
                 pageCounter = 1;
                 let vVolume = scale(parseInt(words[4]), 100, 0, activePage!.items[0]!.minValue ?? 0, activePage!.items[0]!.maxValue ?? 100);
                 setIfExists(id + '.VOLUME', Math.floor(vVolume));
+                const mediaItem = findPageItem(id);
+                if (isPageMediaItem(mediaItem) && mediaItem.adapterPlayerInstance) {
+                    const coordinator = mediaItem.mediaDevice;
+                    if (coordinator) {
+                        setState(mediaItem.adapterPlayerInstance + 'root.' + coordinator + '.group_volume', Math.floor(vVolume));
+                    }
+                }
                 break;
             case 'mode-speakerlist':
                 let pageItem = findPageItem(id);
@@ -9966,8 +9995,19 @@ function HandleButtonEvent (words: any): void {
                                 }
                             }
                             break;
-                        case 'sonos':
+                        case 'sonos': {
+                            const selectedName = pageItem.speakerList![words[4]];
+                            const coordinator  = pageItem.mediaDevice;
+                            const membersNames = getState(adapterInstance + 'root.' + coordinator + '.members').val as string;
+                            const nameArr = membersNames ? membersNames.split(',').map((s: string) => s.trim()) : [];
+                            const idx = nameArr.indexOf(selectedName);
+                            if (idx !== -1) {
+                                setState(adapterInstance + 'root.' + coordinator + '.remove_from_group', selectedName);
+                            } else {
+                                setState(adapterInstance + 'root.' + coordinator + '.add_to_group', selectedName);
+                            }
                             break;
+                        }
                         /*case 'chromecast':
                             break;*/
                         case 'squeezeboxrpc':
@@ -12468,6 +12508,29 @@ function HandleScreensaverUpdate (): void {
                 if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetDasWetterIcon(parseInt(icon)));
                     entityIconCol = GetDasWetterIconColor(parseInt(icon));
+                    if (getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastHourly.Current.night').val) {
+                        switch (icon) {
+                            case 1:
+                            case 2:
+                            case 3:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(50));
+                                entityIconCol = GetDasWetterIconColor(50);
+                                break;
+                            case 4:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(51));
+                                entityIconCol = GetDasWetterIconColor(51);
+                                break;
+                            case 10:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(11));
+                                entityIconCol = GetDasWetterIconColor(11);
+                                break;
+                            case 12:
+                            case 13:
+                                entityIcon = Icons.GetIcon(GetDasWetterIcon(52));
+                                entityIconCol = GetDasWetterIconColor(52);
+                                break;
+                        }
+                    }            
                 } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                     entityIcon = Icons.GetIcon(GetAccuWeatherIcon(parseInt(icon)));
                     entityIconCol = GetAccuWeatherIconColor(parseInt(icon));
@@ -12595,16 +12658,18 @@ function HandleScreensaverUpdate (): void {
                     let WheatherColor: any = 0;
 
                     if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.') {
-                        TempMin = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value').val;
-                        TempMax = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value').val;
-                        DayOfWeek = getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Tag_value').val.substring(0, 2);
-                        WeatherIcon = GetDasWetterIcon(getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
-                        WheatherColor = GetDasWetterIconColor(getState('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id').val);
+                        if (i < 6) {
+                            TempMin = getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Temperature_Min').val;
+                            TempMax = getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Temperature_Max').val;
+                            DayOfWeek = getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.NameOfDay').val.substring(0, 2);
+                            WeatherIcon = GetDasWetterIcon(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.symbol').val);
+                            WheatherColor = GetDasWetterIconColor(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.symbol').val);
 
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Minimale_Temperatur_value');
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Maximale_Temperatur_value');
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Tag_value');
-                        RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.NextDays.Location_1.Day_' + i + '.Wetter_Symbol_id');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Minimale_Temperatur_value');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Maximale_Temperatur_value');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.NameOfDay');
+                            RegisterScreensaverEntityWatcher('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_' + i + '.Wetter_Symbol_id');
+                        }
                     } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.') {
                         if (i < 6) {
                             //Maximal 5 Tage bei accuweather
@@ -12739,7 +12804,32 @@ function HandleScreensaverUpdate (): void {
                         tempMinMaxString = Math.round(TempMin) + '° ' + Math.round(TempMax) + '°';
                     }
 
-                    if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+
+                    if (weatherAdapterInstance == 'daswetter.' + weatherAdapterInstanceNumber + '.' && i == 6) {
+                        let nextSunEvent = 0;
+                        let valDateNow = new Date().getTime();
+                        let arraySunEvent: number[] = [];
+
+                        arraySunEvent[0] = getDateObject(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Sun_in').val).getTime();
+                        arraySunEvent[1] = getDateObject(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_1.Sun_out').val).getTime();
+                        arraySunEvent[2] = getDateObject(getState('daswetter.' + weatherAdapterInstanceNumber + '.location_1.ForecastDaily.Day_2.Sun_in').val).getTime();
+
+                        let j = 0;
+                        for (j = 0; j < 3; j++) {
+                            if (arraySunEvent[j] > valDateNow) {
+                                nextSunEvent = j;
+                                break;
+                            }
+                        }
+                        let sun = '';
+                        if (j == 1) {
+                            sun = 'weather-sunset-down';
+                        } else {
+                            sun = 'weather-sunset-up';
+                        }
+
+                        payloadString += '~' + '~' + Icons.GetIcon(sun) + '~' + rgb_dec565(MSYellow) + '~' + 'Sonne' + '~' + formatDate(getDateObject(arraySunEvent[nextSunEvent]), 'hh:mm') + '~';
+                    } else if (weatherAdapterInstance == 'accuweather.' + weatherAdapterInstanceNumber + '.' && i == 6) {
                         let nextSunEvent = 0;
                         let valDateNow = new Date().getTime();
                         let arraySunEvent: number[] = [];
@@ -13594,53 +13684,102 @@ function GetAccuWeatherIconColor (icon: number): number {
 function GetDasWetterIcon (icon: number): string {
     try {
         switch (icon) {
-            case 1: // Sonnig
-                return 'weather-sunny'; // sunny
 
-            case 2: // Teils bewölkt
-            case 3: // Bewölkt
-                return 'weather-partly-cloudy'; // partlycloudy
+            case 1: // Klar
+            case 2: // Hohe Wolken
+            case 3: // Aufgelockerte Bewölkung
+                return 'weather-sunny';
 
-            case 4: // Bedeckt
-                return 'weather-cloudy'; // cloudy
+            case 4: // Teilweise bewölkt
+                return 'weather-partly-cloudy';
 
-            case 5: // Teils bewölkt mit leichtem Regen
-            case 6: // Bewölkt mit leichtem Regen
-            case 8: // Teils bewölkt mit mäßigem Regen
-            case 9: // Bewölkt mit mäßigem Regen
-                return 'weather-partly-rainy'; // partly-rainy
+            case 5: // Bedeckt
+                return 'weather-cloudy';
 
-            case 7: // Bedeckt mit leichtem Regen
-                return 'weather-rainy'; // rainy
+            case 6: 
+            case 7: // Staubdunst bei klarem Himmel
+                return 'weather-hazy';
 
-            case 10: // Bedeckt mit mäßigem Regen
-                return 'weather-pouring'; // pouring
+            case 8: // Nebel
+            case 9: // Dichter Nebel
+                return 'weather-fog';
 
-            case 11: // Teils bewölkt mit starken Regenschauern
-            case 12: // Bewölkt mit stürmischen Regenschauern
-                return 'weather-partly-lightning'; // partlylightning
+            case 10: // Trockengewitter bei teilweise bewölktem Himmel
+                return 'weather-partly-lightning';
 
-            case 13: // Bedeckt mit stürmischen Regenschauern
-                return 'weather-lightning'; // lightning
+            case 11: // Trockengewitter bei bewölktem Himmel
+                return 'weather-lightning';
 
-            case 14: // Teils bewölkt mit stürmischen Regenschauern und Hagel
-            case 15: // Bewölkt mit stürmischen Regenschauern und Hagel
-            case 16: // Bedeckt mit stürmischen Regenschauern und Hagel
-                return 'weather-hail'; // Hail
+            case 12: // Leichter Regen bei teilweise bewölktem Himmel
+            case 13: // Leichter Regen bei bewölktem Himmel
+                return 'weather-partly-rainy';
+            
+            case 14: // Mäßiger Regen bei teilweise bewölktem Himmel
+            case 15: // Mäßiger Regen bei bewölktem Himmel
+                return 'weather-pouring';
 
-            case 17: // Teils bewölkt mit Schnee
-            case 18: // Bewölkt mit Schnee
-                return 'weather-partly-snowy'; // partlysnowy
+            case 16: // Staubregegen bei teilweise bewölktem Himmel
+                return 'weather-hazy';
 
-            case 19: // Bedeckt mit Schneeschauern
-                return 'weather-snowy'; // snowy
+            case 17: // Staubregen bei bewölktem Himmel
+                return 'weather-fog';
 
-            case 20: // Teils bewölkt mit Schneeregen
-            case 21: // Bewölkt mit Schneeregen
+            case 18: // Gefrierender Regen bei teilweise bewölktem Himmel
+            case 19: // Gefrierender Regen bei bewölktem Himmel
+            case 20: // Regen und Schnee bei teilweise bewölktem Himmel
+            case 21: // Regen und Schnee bei bewölktem Himmel
+                return 'weather-snowy-rainy';
+
+            case 22: // Staubregen und Schnee bei teilweise bewölktem Himmel
+            case 23: // Staubregen und Schnee bei bewölktem Himmel
+                return 'weather-snowy-rainy';
+
+            case 24: // Schnee bei teilweise bewölktem Himmel
+            case 25: // Schnee bei bewölktem Himmel
+            case 26: // Staubschnee bei teilweise bewölktem Himmel
+            case 27: // Staubschnee bei bewölktem Himmel
+                return 'weather-snowy-rainy';
+
+            case 28: // Starker Regen bei teilweise bewölktem Himmel
+            case 29: // Starker Regen bei bewölktem Himmel
+            case 30: // Starker Regen und Schnee bei teilweise bewölktem Himmel
+            case 31: // Starker Regen und Schnee bei bewölktem Himmel
                 return 'weather-partly-snowy-rainy';
 
-            case 22: // Bedeckt mit Schneeregen
-                return 'weather-snowy-rainy'; // snowy-rainy
+            case 32: // Starker Schneefall bei teilweise bewölktem Himmel
+                return 'weather-partly-snowy-rainy';
+
+            case 33: // Starker Schneefall bei bewölktem Himmel
+                return 'weather-snowy-heavy';
+
+            case 34: // Gewitter bei teilweise bewölktem Himmel
+                return 'weather-partly-lightning';
+            
+            case 35: // Gewitter bei bewölktem Himmel
+                return 'weather-lightning';
+
+            case 36: // Hagel bei teilweise bewölktem Himmel
+            case 37: // Hagel bei bewölktem Himmel
+                return 'weather-hail';
+
+            case 38: // Gewitter mit Hagel bei teilweise bewölktem Himmel
+            case 39: // Gewitter mit Hagel bei bewölktem Himmel
+                return 'weather-lightning-rainy';
+
+            case 40: // Staubsturm
+                return 'weather-windy';
+
+            case 41: // Schneesturm
+                return 'weather-snowy-heavy';
+
+            case 50: // Klare Nacht
+                return 'weather-night';
+
+            case 51: // Bewölkte Nacht
+                return 'weather-night-partly-cloudy';
+
+            case 52:  // Regnerisch Nachts
+                return 'weather-rainy';
 
             default:
                 return 'alert-circle-outline';
@@ -13663,53 +13802,91 @@ function GetDasWetterIcon (icon: number): string {
 function GetDasWetterIconColor (icon: number): number {
     try {
         switch (icon) {
-            case 1: // Sonnig
+            case 1: // Klar
+            case 2: // Hohe Wolken
+            case 3: // Aufgelockerte Bewölkung
                 return rgb_dec565(swSunny);
 
-            case 2: // Teils bewölkt
-            case 3: // Bewölkt
+            case 4: // Teilweise bewölkt
                 return rgb_dec565(swPartlycloudy);
 
-            case 4: // Bedeckt
+            case 5: // Bedeckt
                 return rgb_dec565(swCloudy);
 
-            case 5: // Teils bewölkt mit leichtem Regen
-            case 6: // Bewölkt mit leichtem Regen
-            case 8: // Teils bewölkt mit mäßigem Regen
-            case 9: // Bewölkt mit mäßigem Regen
-                return rgb_dec565(swRainy);
+            case 6: 
+            case 7: // Staubdunst bei klarem Himmel
+                return rgb_dec565(swFog);
 
-            case 7: // Bedeckt mit leichtem Regen
-                return rgb_dec565(swRainy);
+            case 8: // Nebel
+            case 9: // Dichter Nebel
+                return rgb_dec565(swFog);
 
-            case 10: // Bedeckt mit mäßigem Regen
-                return rgb_dec565(swPouring);
-
-            case 11: // Teils bewölkt mit starken Regenschauern
-            case 12: // Bewölkt mit stürmischen Regenschauern
+            case 10: // Trockengewitter bei teilweise bewölktem Himmel
                 return rgb_dec565(swLightningRainy);
 
-            case 13: // Bedeckt mit stürmischen Regenschauern
+            case 11: // Trockengewitter bei bewölktem Himmel
                 return rgb_dec565(swLightning);
 
-            case 14: // Teils bewölkt mit stürmischen Regenschauern und Hagel
-            case 15: // Bewölkt mit stürmischen Regenschauern und Hagel
-            case 16: // Bedeckt mit stürmischen Regenschauern und Hagel
+            case 12: // Leichter Regen bei teilweise bewölktem Himmel
+            case 13: // Leichter Regen bei bewölktem Himmel
+                return rgb_dec565(swRainy);
+            
+            case 14: // Mäßiger Regen bei teilweise bewölktem Himmel
+            case 15: // Mäßiger Regen bei bewölktem Himmel
+                return rgb_dec565(swPouring);
+
+            case 16: // Staubregegen bei teilweise bewölktem Himmel
+            case 17: // Staubregen bei bewölktem Himmel
+                return rgb_dec565(swFog);
+
+            case 18: // Gefrierender Regen bei teilweise bewölktem Himmel
+            case 19: // Gefrierender Regen bei bewölktem Himmel
+            case 20: // Regen und Schnee bei teilweise bewölktem Himmel
+            case 21: // Regen und Schnee bei bewölktem Himmel
+                return rgb_dec565(swSnowyRainy);
+
+            case 22: // Staubregen und Schnee bei teilweise bewölktem Himmel
+            case 23: // Staubregen und Schnee bei bewölktem Himmel
+            case 24: // Schnee bei teilweise bewölktem Himmel
+            case 25: // Schnee bei bewölktem Himmel
+            case 26: // Staubschnee bei teilweise bewölktem Himmel
+            case 27: // Staubschnee bei bewölktem Himmel
+                return rgb_dec565(swSnowyRainy);
+
+            case 28: // Starker Regen bei teilweise bewölktem Himmel
+            case 29: // Starker Regen bei bewölktem Himmel
+            case 30: // Starker Regen und Schnee bei teilweise bewölktem Himmel
+            case 31: // Starker Regen und Schnee bei bewölktem Himmel
+                return rgb_dec565(swPouring);
+
+            case 32: // Starker Schneefall bei teilweise bewölktem Himmel
+            case 33: // Starker Schneefall bei bewölktem Himmel
+                return rgb_dec565(swSnowy);
+
+            case 34: // Gewitter bei teilweise bewölktem Himmel            
+            case 35: // Gewitter bei bewölktem Himmel
+                return rgb_dec565(swLightning);
+
+            case 36: // Hagel bei teilweise bewölktem Himmel
+            case 37: // Hagel bei bewölktem Himmel
                 return rgb_dec565(swHail);
 
-            case 17: // Teils bewölkt mit Schnee
-            case 18: // Bewölkt mit Schnee
-                return rgb_dec565(swSnowy);
+            case 38: // Gewitter mit Hagel bei teilweise bewölktem Himmel
+            case 39: // Gewitter mit Hagel bei bewölktem Himmel
+                return rgb_dec565(swHail);
 
-            case 19: // Bedeckt mit Schneeschauern
-                return rgb_dec565(swSnowy);
+            case 40: // Staubsturm
+            case 41: // Schneesturm
+                return rgb_dec565(swWindy);
 
-            case 20: // Teils bewölkt mit Schneeregen
-            case 21: // Bewölkt mit Schneeregen
-                return rgb_dec565(swSnowyRainy); // snowy-rainy
+            case 50: // Klare Nacht
+                return rgb_dec565(swClearNight);
+                
+            case 51: // Bewölkte Nacht
+                return rgb_dec565(swPartlycloudy);
 
-            case 22: // Bedeckt mit Schneeregen
-                return rgb_dec565(swSnowyRainy);
+            case 52:  // Regnerisch Nachts
+                return rgb_dec565(swRainy);
 
             default:
                 return rgb_dec565(White);
