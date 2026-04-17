@@ -893,9 +893,9 @@ class LuiPagesGen(object):
             else:
                 brightness = "disable"
             if "color_temp" in supported_color_modes:
-                if color_temp := entity.attributes.get("color_temp"):
+                if color_temp := entity.attributes.get("color_temp_kelvin"):
                     # scale ha color temp range to 0-100
-                    color_temp = int(scale(color_temp, (entity.attributes['min_mireds'], entity.attributes['max_mireds']),(0, 100)))
+                    color_temp = int(scale(color_temp, (entity.attributes['max_color_temp_kelvin'], entity.attributes['min_color_temp_kelvin']),(0, 100)))
                 else:
                     color_temp = "unknown"
             else:
