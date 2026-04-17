@@ -375,8 +375,8 @@ class LuiController(object):
         if button_type == "colorTempSlider":
             entity = apis.ha_api.get_entity(entity_id)
             #scale 0-100 from slider to color range of lamp
-            color_val = scale(int(value), (0, 100), (entity.attributes['min_mireds'], entity.attributes['max_mireds']))
-            apis.ha_api.get_entity(entity_id).call_service("turn_on", color_temp=color_val)
+            color_temp_val = scale(int(value), (0, 100), (entity.attributes['max_color_temp_kelvin'], entity.attributes['min_color_temp_kelvin']))
+            apis.ha_api.get_entity(entity_id).call_service("turn_on", color_temp_kelvin=color_temp_val)
         if button_type == "colorWheel":
             apis.ha_api.log(value)
             value = value.split('|')
