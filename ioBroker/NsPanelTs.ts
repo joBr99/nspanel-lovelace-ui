@@ -12096,29 +12096,45 @@ function GenerateDetailPage (type: NSPanel.PopupType, optional: NSPanel.mediaOpt
                                 optionalString = '0 Sec?1 Sec?2 Sec?3 Sec?4 Sec?5 Sec?6 Sec?7 Sec?8 Sec?9 Sec?10 Sec';
                             }
                             mode = 'crossfade';
-                        } else if (optional == 'speakerlist') {
-                            if (vAdapter == 'spotify-premium') {
-                                if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
-                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
-                                }
-                            } else if (vAdapter == 'alexa2') {
-                                if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
-                                    //Todo Richtiges Device finden
-                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
-                                }
-                            } else if (vAdapter == 'bosesoundtouch') {
-                                if (existsObject(pageItem.adapterPlayerInstance + 'deviceInfo.name')) {
-                                    actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'deviceInfo.name').val);
-                                }
-                            } else if (vAdapter == 'squeezeboxrpc') {
-                                actualState = pageItem.mediaDevice;
+                       } else if (optional == 'speakerlist') {
+                        if (vAdapter == 'spotify-premium') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'player.device.name').val);
                             }
-                            let tempSpeakerList: string[] = [];
-                            for (let i = 0; i < pageItem.speakerList!.length; i++) {
-                                tempSpeakerList[i] = formatInSelText(pageItem.speakerList![i]).trim();
+                        } else if (vAdapter == 'alexa2') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'player.device.name')) {
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'Echo-Devices.' + pageItem.mediaDevice + '.Info.name').val);
                             }
-                            optionalString = pageItem.speakerList != undefined ? tempSpeakerList.join('?') : '';
-                            mode = 'speakerlist';
+                        } else if (vAdapter == 'bosesoundtouch') {
+                            if (existsObject(pageItem.adapterPlayerInstance + 'deviceInfo.name')) {
+                                actualState = formatInSelText(getState(pageItem.adapterPlayerInstance + 'deviceInfo.name').val);
+                            }
+                        } else if (vAdapter == 'squeezeboxrpc') {
+                            actualState = pageItem.mediaDevice;
+                        }
+
+                        let tempSpeakerList: string[] = [];
+                        let currentMembers: string[] = [];
+
+                        if (vAdapter == 'sonos') {
+                            const membersPath = pageItem.adapterPlayerInstance + 'root.' + pageItem.mediaDevice + '.members';
+                            if (existsObject(membersPath)) {
+                                const membersState = getState(membersPath);
+                                const membersVal = membersState ? membersState.val as string : null;
+                                currentMembers = membersVal ? membersVal.split(',').map((s: string) => s.trim()) : [];
+                            }
+                        }
+
+                        if (pageItem.speakerList) {
+                            for (let i = 0; i < pageItem.speakerList.length; i++) {
+                                const name = pageItem.speakerList[i];
+                                const isMember = (vAdapter == 'sonos' && currentMembers.indexOf(name) !== -1);
+                                const marker = isMember ? '* ' : '';
+                                tempSpeakerList[i] = formatInSelText(marker + name).trim();
+                            }
+                            optionalString = tempSpeakerList.join('?');
+                        }
+                        mode = 'speakerlist';
                         } else if (optional == 'playlist') {
                             if (vAdapter == 'spotify-premium') {
                                 if (existsObject(pageItem.adapterPlayerInstance + 'player.playlist.name')) {
