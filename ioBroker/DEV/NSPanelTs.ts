@@ -7653,7 +7653,8 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
 
             let name = "";
             if (page.items[0].showOnlyPlayerHeadline && page.items[0].showOnlyPlayerHeadline != undefined) {
-                name = page.heading;
+                name = getState(page.items[0].adapterPlayerInstance + "Players.SqueezePlay.Playername").val;
+                //name = page.heading;
             } else {
                 name = getState(id + '.ALBUM').val;
             }
@@ -7736,6 +7737,9 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                         let lmstracklist = JSON.parse(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join('')).val);
                         let currentIndex: number = parseInt(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.PlaylistCurrentIndex'].join('')).val);
                         author = lmstracklist[currentIndex].Artist + '|' + lmstracklist[currentIndex].Album;
+                        if (author == undefined || author == "undefined") {
+                            author = getState(id + '.ARTIST').val;
+                        }
                         if (author.length > 37) {
                             author = author.slice(0, 37) + '...';
                         }
