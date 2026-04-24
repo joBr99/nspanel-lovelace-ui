@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.7 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.3.0
+TypeScript v5.1.1.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.4.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -106,6 +106,7 @@ ReleaseNotes:
 		- 29.03.2026 - v5.1.1.5  Fix DasWetter (meteored/Adapter Refactoring) and [BUG] Type at createEntity #1426
         - 31.03.2026 - v5.1.1.6  Refresh on cardPower not working in ioBroker/NsPanelTs.tst #1428 
         - 12.04.2026 - v5.5.1.7  Sonos: speakerlist and group volume not implemented #1434 by Smokey7672
+        - 24.04.2026 - v5.5.1.8  Fix DLNA Player Elapsed/Duration & Add Parameter showOnlyPlayerHeadline
 
 		
 ***************************************************************************************************************
@@ -1008,7 +1009,7 @@ export const config: Config = {
 // _________________________________ DE: Ab hier keine Konfiguration mehr _____________________________________
 // _________________________________ EN:  No more configuration from here _____________________________________
 
-const scriptVersion: string = 'v5.1.1.7';
+const scriptVersion: string = 'v5.1.1.8';
 const tft_version: string = 'v5.1.1';
 const desired_display_firmware_version = 61;
 const berry_driver_version = 10;
@@ -7649,7 +7650,13 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
         }
 
         if (existsObject(id)) {
-            let name = getState(id + '.ALBUM').val;
+
+            let name = "";
+            if (page.items[0].showOnlyPlayerHeadline && page.items[0].showOnlyPlayerHeadline != undefined) {
+                name = page.heading;
+            } else {
+                name = getState(id + '.ALBUM').val;
+            }
             let title = getState(id + '.TITLE').val;
             if (title && title.indexOf('~') !== -1) {
                 title = title.split('~')[0].trim();
@@ -7723,7 +7730,7 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
 
             let author = getState(id + '.ARTIST').val;
 
-            if (v2Adapter == 'squeezeboxrpc' && author.length == 0) {
+            if (v2Adapter == 'squeezeboxrpc' && author.length > 0) {
                 if (existsObject([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join(''))) {
                     if (existsObject([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join(''))) {
                         let lmstracklist = JSON.parse(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join('')).val);
@@ -15368,6 +15375,7 @@ namespace NSPanel {
         hiddenByTrigger?: boolean;
         thermoItems?: any;
         alwaysOnDisplay?: boolean;
+        showOnlyPlayerHeadline?: boolean;
     };
 
     export type PagetypeType = 'cardChart' | 'cardLChart' | 'cardEntities' | 'cardSchedule' | 'cardGrid' | 'cardGrid2' | 'cardGrid3' | 'cardThermo' | 'cardThermo2' | 'cardMedia' | 'cardUnlock' | 'cardQR' | 'cardAlarm' | 'cardPower'; //| 'cardBurnRec'
@@ -15549,6 +15557,7 @@ namespace NSPanel {
         fontSize?: number;
         actionStringArray?: string[];
         alwaysOnDisplay?: boolean;
+        showOnlyPlayerHeadline?: boolean;
         popupVersion?: number;
         shutterType?: string;
         shutterZeroIsClosed?: boolean;
