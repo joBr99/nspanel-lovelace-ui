@@ -1,6 +1,6 @@
 /*-----------------------------------------------------------------------
-TypeScript v5.1.1.8 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
-- abgestimmt auf TFT 61 / v5.1.1 (v5.1.2 us-p) / BerryDriver 10 / Tasmota 15.4.0
+TypeScript v5.1.1.9 zur Steuerung des SONOFF NSPanel mit dem ioBroker by @Armilar / @TT-Tom / @ticaki / @Britzelpuf / @Sternmiere / @ravenS0ne
+- abgestimmt auf TFT 61 / v5.1.1 (v5.1.3 us-p) / BerryDriver 10 / Tasmota 15.4.0
 
 Projekt:
 https://github.com/joBr99/nspanel-lovelace-ui/tree/main/ioBroker
@@ -107,6 +107,7 @@ ReleaseNotes:
         - 31.03.2026 - v5.1.1.6  Refresh on cardPower not working in ioBroker/NsPanelTs.tst #1428 
         - 12.04.2026 - v5.5.1.7  Sonos: speakerlist and group volume not implemented #1434 by Smokey7672
         - 24.04.2026 - v5.5.1.8  Fix DLNA Player Elapsed/Duration & Add Parameter showOnlyPlayerHeadline
+		- 25.05.2026 - v5.5.1.9  Final Fix SqueezeboxRPC-Player
 
 		
 ***************************************************************************************************************
@@ -7653,15 +7654,18 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
 
             let name = "";
             if (page.items[0].showOnlyPlayerHeadline && page.items[0].showOnlyPlayerHeadline != undefined) {
-                name = getState(page.items[0].adapterPlayerInstance + "Players.SqueezePlay.Playername").val;
+                //name = getState(page.items[0].adapterPlayerInstance + "Players.SqueezePlay.Playername").val;
+                name = getState(page.items[0].adapterPlayerInstance + "Players." + page.items[0].mediaDevice + ".Playername").val;
                 //name = page.heading;
             } else {
                 name = getState(id + '.ALBUM').val;
+                console.log("##### else name");
             }
             let title = getState(id + '.TITLE').val;
             if (title && title.indexOf('~') !== -1) {
                 title = title.split('~')[0].trim();
             }
+
             if (title.length > 24) {
                 title = title.slice(0, 24) + '...';
             }
@@ -7671,6 +7675,7 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     let Seconds = parseInt(getState(id + '.DURATION').val) % 60 < 10 ? '0' : '';
                     let Duration = Math.floor(getState(id + '.DURATION').val / 60) + ':' + Seconds + (getState(id + '.DURATION').val % 60);
                     let vElapsed = getState(id + '.ELAPSED').val;
+
                     if (vElapsed.length == 5) {
                         if (parseInt(vElapsed.slice(0, 2)) < 9) {
                             vElapsed = vElapsed.slice(1);
@@ -7736,10 +7741,12 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                     if (existsObject([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join(''))) {
                         let lmstracklist = JSON.parse(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.Playlist'].join('')).val);
                         let currentIndex: number = parseInt(getState([page.items[0].adapterPlayerInstance, 'Players.', page.items[0].mediaDevice, '.PlaylistCurrentIndex'].join('')).val);
-                        author = lmstracklist[currentIndex].Artist + '|' + lmstracklist[currentIndex].Album;
+                        
+                        author = lmstracklist[currentIndex].Artist;
                         if (author == undefined || author == "undefined") {
                             author = getState(id + '.ARTIST').val;
-                        }
+                        } 
+                        author = author + '|' + lmstracklist[currentIndex].Album;
                         if (author.length > 37) {
                             author = author.slice(0, 37) + '...';
                         }
