@@ -7888,7 +7888,7 @@ function GenerateMediaPage (page: NSPanel.PageMedia): NSPanel.Payload[] {
                         media_icon = Icons.GetIcon(page.items[0].playerMediaIcon);
                     }
                 }
-                if (name.length == 0) {
+                if (typeof name !== 'string' || name.length == 0) {
                     name = page.heading;
                 } else if (name.length > 16) {
                     name = name.slice(0, 16) + '...';
