@@ -62,7 +62,7 @@ IP Symcon: https://community.symcon.de/t/beta-modul-nspanel-lovelace-ui/130109
 
 SmartHomeNG: https://github.com/sisamiwe/shng-nspanel-plugin
 
-OpenHAB: https://github.com/donoo/o2n2l
+OpenHAB: https://github.com/olialb/nspanelMqttBridge
 
 NodeRed: https://github.com/laluz742/node-red-contrib-nspanel-lui
 
