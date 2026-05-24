@@ -410,7 +410,7 @@ class LuiPagesGen(object):
                     "weather/get_forecasts", target={"entity_id": entityId}, service_data={"type": rt}
                 )
                 forecast = results.get("result", {}).get("response", {}).get(entityId, {}).get('forecast') or entity.attributes.get('forecast', [])
-                if len(forecast) >= index:
+                if len(forecast) > index:
                     day_forecast = forecast[index]
                     fdate = dp.parse(day_forecast['datetime'])
                     global babel_spec
