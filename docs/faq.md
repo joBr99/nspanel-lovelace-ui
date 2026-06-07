@@ -2,7 +2,7 @@
 
 ## Waiting for content - This is taking longer than usual on the screen
 
-See also the [Home Assistant troubleshooting guide](troubleshooting.md) for additional checks around AppDaemon paths, stale configuration files, navigation targets, and templates.
+See also the [Home Assistant configuration checklist](config-validation-checklist.md) and the [Home Assistant troubleshooting guide](troubleshooting.md) for additional checks around AppDaemon paths, stale configuration files, navigation targets, and templates.
 
 You most likely have an error in your MQTT configuration somewhere. To find the error, follow these steps:
 

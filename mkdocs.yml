@@ -70,6 +70,7 @@ nav:
             - "Prepare Home Assistant": prepare_ha.md
             - "Configure MQTT": configure_mqtt.md
         - "FAQ": faq.md
+        - "Configuration checklist": config-validation-checklist.md
         - "Troubleshooting": troubleshooting.md
     - "Configuration - apps.yaml (Home Assistant)":
         - "Overview": config-overview.md
