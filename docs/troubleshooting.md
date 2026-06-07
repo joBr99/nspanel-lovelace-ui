@@ -2,6 +2,8 @@
 
 This page collects the most common checks for Home Assistant/AppDaemon installations where the panel does not show the expected content after setup, update, or configuration changes.
 
+If you are reviewing a configuration after an edit, start with the [Home Assistant configuration checklist](config-validation-checklist.md) and then use this page for deeper troubleshooting.
+
 ## AppDaemon is running the expected apps.yaml
 
 If the panel still shows old pages after editing `apps.yaml`, or if HACS shows an update but the running behavior looks unchanged, first verify that AppDaemon is reading the file you edited.
