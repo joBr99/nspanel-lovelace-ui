@@ -2,7 +2,9 @@
 
 ## Waiting for content - This is taking longer than usual on the screen
 
-You have most likely an error in your MQTT configuration somewhere. To find the error follow theese steps:
+See also the [Home Assistant troubleshooting guide](troubleshooting.md) for additional checks around AppDaemon paths, stale configuration files, navigation targets, and templates.
+
+You most likely have an error in your MQTT configuration somewhere. To find the error, follow these steps:
 
 1. Check the location of your apps.yaml
 With the AppDaemon Addon >= 15 the config dir has been moved.
