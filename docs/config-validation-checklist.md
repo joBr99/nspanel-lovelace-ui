@@ -61,6 +61,8 @@ Check that:
 
 ## 4. Validate cards and navigation targets
 
+For a quick static check, you can run the bundled [configuration checker](config-checker.md) against `apps.yaml` before restarting AppDaemon.
+
 Navigation entries use the `navigate.` prefix and target a card `key`:
 
 ```yaml
