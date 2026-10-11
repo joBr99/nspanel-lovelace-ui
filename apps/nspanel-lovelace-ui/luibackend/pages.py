@@ -853,7 +853,7 @@ class LuiPagesGen(object):
             item = card.uuid
             self.generate_unlock_page(navigation, item, card.title, destination, pin)
             return
-        if card.cardType in ["screensaver", "screensaver2"]:
+        if card.cardType in ["screensaver", "screensaver2", "screensaver3"]:
             theme = card.raw_config.get("theme")
             self.update_screensaver_weather(theme)
             self.update_status_icons()
