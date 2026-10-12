@@ -68,7 +68,7 @@ Configuration is similar, you just need to add `type: screensaver2` to switch th
         - entity: weather.demo_weather_north
 ```
 
-With Version 5.1.1 there is another alternative layout for the screensaver to position icons over the physical buttons:
+With Version 5.1.1 there is an alternative layout for the screensaver to position icons over the physical buttons:
 
 Configuration is similar, you just need to add `type: screensaver3` to switch the layout.
 
