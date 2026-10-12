@@ -68,6 +68,31 @@ Configuration is similar, you just need to add `type: screensaver2` to switch th
         - entity: weather.demo_weather_north
 ```
 
+With Version 5.1.1 there is another alternative layout for the screensaver to position icons over the physical buttons:
+
+Configuration is similar, you just need to add `type: screensaver3` to switch the layout.
+
+![screensaver2](img/screensaver3.png)
+
+```yaml
+    screensaver:
+	  type: screensaver3
+      entities:
+        - entity: light.light
+          icon: mdi:light-recessed
+          color:
+              "on": [255,255,0]
+              "off": [0,0,255]
+        - entity: delete
+        - entity: delete
+        - entity: fan.towelrail
+          name: " "
+          icon: mdi:heat-wave
+          color:
+              "on": [255,255,0]
+              "off": [144,213,255]
+```
+Note: US landscape layout does not support screensaver3. This will be included in a future update.
 
 #### Possible configuration values for screensaver theme config (only normal screensaver layout not screensaver2)
 
