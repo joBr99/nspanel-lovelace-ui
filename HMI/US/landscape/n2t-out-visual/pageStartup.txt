@@ -610,6 +610,10 @@ Timer tmSerial
                                         {
                                             page screensaver
                                         }
+                                        if(tId.txt=="screensaver3")
+                                        {
+                                            page screensaver3
+                                        }
                                         if(tId.txt=="screensaver2")
                                         {
                                             page screensaver2

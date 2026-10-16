@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2025-12-26 19:43:25.803166597 +0000
++++ /dev/fd/62	2026-10-16 13:23:22.772230432 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -145,13 +145,13 @@
 +ributes
 + Scope         : local
 + Text          : 
-+ Max. Text Size: 80
 + Max. Text Size: 38
 +
 +e (string) nent2
 +ributes
 + Scope         : local
 + Text          : 
++ Max. Text Size: 80
 + Max. Text Size: 38
 +14 +185,26 @@
 +e (string) type6
@@ -686,13 +686,6 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+                             }
-+                             if(tInstruction.txt=="pageType")
-+                             {
-+                                 sleepValue=0
-+                                 //command format pageType,specialPageName
-+                                 //write name of speical page to tId
-+                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardGrid.txt
 ++ HMI/US/portrait/n2t-out/cardGrid.txt
 + +7,14 @@
@@ -946,6 +939,13 @@
 +                                     spstr strCommand.txt,tEntity9.txt,"~",66
 +                                     vis tEntity9,1
 +                                 }
++                             }
++                             if(tInstruction.txt=="pageType")
++                             {
++                                 sleepValue=0
++                                 //command format pageType,specialPageName
++                                 //write name of speical page to tId
++                                 spstr strCommand.txt,tId.txt,"~",1
 +I/n2t-out/cardLChart.txt
 ++ HMI/US/portrait/n2t-out/cardLChart.txt
 + +7,14 @@
@@ -1358,7 +1358,7 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+15 +938,15 @@
++15 +942,15 @@
 +                                 }
 +                                 if(tId.txt=="cardChart")
 +                                 {
@@ -1487,6 +1487,56 @@
 +                             }
 +                             if(tInstruction.txt=="pageType")
 +                             {
++I/n2t-out/popupFan.txt
+++ HMI/US/portrait/n2t-out/popupFan.txt
++22 +562,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/popupInSel.txt
+++ HMI/US/portrait/n2t-out/popupInSel.txt
++22 +917,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/popupLight.txt
 ++ HMI/US/portrait/n2t-out/popupLight.txt
 +3 +48,33 @@
@@ -1547,6 +1597,54 @@
 +                                 covx tTmp.txt,sys0,0,0
 +                                 tIcon1.pco=sys0
 +                                 // get Button State
++22 +621,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/popupLightNew.txt
+++ HMI/US/portrait/n2t-out/popupLightNew.txt
++22 +592,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/popupNotify.txt
 ++ HMI/US/portrait/n2t-out/popupNotify.txt
 +15 +348,15 @@
@@ -1566,6 +1664,25 @@
 +                             }
 +                             if(tInstruction.txt=="exitPopup")
 +                             {
++18 +389,14 @@
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +18 +439,14 @@
 +                                 {
 +                                     page cardPower
@@ -1585,6 +1702,81 @@
 +                         }
 +                     }
 +                 }
++I/n2t-out/popupShutter.txt
+++ HMI/US/portrait/n2t-out/popupShutter.txt
++22 +613,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/popupThermo.txt
+++ HMI/US/portrait/n2t-out/popupThermo.txt
++22 +880,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
++I/n2t-out/popupTimer.txt
+++ HMI/US/portrait/n2t-out/popupTimer.txt
++22 +849,14 @@
++                                 {
++                                     page pageStartup
++                                 }
++                                 if(tId.txt=="screensaver")
++                                 {
++                                     page screensaver
++                                 }
++                                 if(tId.txt=="screensaver2")
++                                 {
++                                     page screensaver2
++                                 }
++                                 if(tId.txt=="screensaver3")
++                                 {
++                                     page screensaver3
++                                 }
++                                 if(tId.txt=="cardEntities")
++                                 {
++                                     page cardEntities
++                                 }
++                                 if(tId.txt=="cardGrid")
++                                 {
++                                     page cardGrid
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
 + +7,14 @@
@@ -1668,6 +1860,27 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : |
++20 +362,14 @@
++ Timer Event
++     if(tc0.val!=0)
++     {
++         xc2.val=tch0
++         yc2.val=tch1
++     }
++ 
++m1
++ributes
++ Scope      : local
++ Period (ms): 400
++ Enabled    : yes
++
++mSerial
++ributes
++ Scope      : local
++ Period (ms): 50
++ Enabled    : yes
++
++nts
 +17 +449,14 @@
 +                                 //get set time to global variable
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
@@ -2048,3 +2261,201 @@
 +                                 spstr strCommand.txt,tNotifyText.txt,"~",2
 +                                 if(tNotifyHead.txt!=""||tNotifyText.txt!="")
 +                                 {
++I/n2t-out/screensaver3.txt
+++ HMI/US/portrait/n2t-out/screensaver3.txt
++ +7,14 @@
++ Swide up page ID   : disabled
++ Swide down page ID : disabled
++ Swide left page ID : disabled
++ Swide right page ID: disabled
++
++nts
++ Preinitialize Event
++     tSend.txt="event,renderCurrentPage"
++     //send calc crc
++     btlen tSend.txt,sys0
++     crcrest 1,0xffff // reset CRC
++     crcputh 55 bb
++     crcputs sys0,2
++     crcputs tSend.txt,0
++     //send cmd
++     printh 55 bb
++     prints sys0,2
++     prints tSend.txt,0
++     prints crcval,2
++     dim=dimValueNormal
++     recmod=1
++     baud=115200
++     vis tInstruction,0
++     vis tTmp,0
++     vis p0,0
++     vis tNotifyHead,0
++     vis tNotifyText,0
++7 +28,14 @@
++     }
++     tDate.txt=pageIcons.vaDate.txt
++     dim=dimValue
++     vis tSend,0
++     //page open event
++     // clear weather elements, to keep example content in HMI
++ 
++ Postinitialize Event
++     click m0,1
++ 
++e (string) strCommand
++ributes
++ Scope         : local
++ Text          : 
++ Max. Text Size: 600
++
++e (string) strTmp
++34 +99,14 @@
++ Value: 0
++
++e (int32) ycR
++ributes
++ Scope: local
++ Value: 0
++
++
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : 
++ Max. Text Size     : 10
++
++nts
++ Touch Press Event
++     tTmp.txt="change model conf to us-l/p "
++     strlen tTmp.txt,sys1
++     sya1=sys1*11+m0.h-48/2
++     for(sys0=0;sys0<sys1;sys0++)
++     {
++         substr tTmp.txt,strTmp.txt,sys0,1
++         xstr m0.x-5,sys0*-11+m0.y+sya1,23,20,6,WHITE,RED,2,1,3,strTmp.txt
++     }
++ 
++0
++ributes
++ Scope              : local
++ Dragging           : 0
++ Send Component ID  : disabled
++ Associated Keyboard: none
++ Text               : |
++20 +254,14 @@
++ Timer Event
++     if(tc0.val!=0)
++     {
++         xc2.val=tch0
++         yc2.val=tch1
++     }
++ 
++m1
++ributes
++ Scope      : local
++ Period (ms): 400
++ Enabled    : yes
++
++mSerial
++ributes
++ Scope      : local
++ Period (ms): 50
++ Enabled    : yes
++
++nts
++17 +341,14 @@
++                                 //get set time to global variable
++                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
++                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
++                                 spstr pageIcons.vaTime.txt,tAMPM.txt,"?",1
++                                 if(tAMPM.txt=="")
++                                 {
++                                     vis tAMPM,0
++                                 }else
++                                 {
++                                     vis tAMPM,1
++                                 }
++                                 spstr strCommand.txt,tTimeAdd.txt,"~",2
++                                 ref tIcon1
++                                 ref tIcon2
++                             }
++                             if(tInstruction.txt=="date")
++                             {
++58 +384,46 @@
++                                 tMainIconAlt.txt=tMainIcon.txt
++                                 //tMainIcon Color
++                                 spstr strCommand.txt,tTmp.txt,"~",4
++                                 covx tTmp.txt,tMainIcon.pco,0,0
++                                 tMainIconAlt.pco=tMainIcon.pco
++                                 //tMainText
++                                 spstr strCommand.txt,tMainText.txt,"~",5
++                                 //tMainTextAlt.txt=tMainText.txt
++                                 //tForecast1
++                                 spstr strCommand.txt,tForecast1.txt,"~",11
++                                 //tF1Icon
++                                 spstr strCommand.txt,tF1Icon.txt,"~",9
++                                 tF1IconAlt.txt=tF1Icon.txt
++                                 //tF1Icon Color
++                                 spstr strCommand.txt,tTmp.txt,"~",10
++                                 covx tTmp.txt,tF1Icon.pco,0,0
++                                 tF1IconAlt.pco=tF1Icon.pco
++                                 // Hide/Move main icon depending on tMainTest value
++                                 if(tMainText.txt!="")
++                                 {
++                                     vis tMainIcon,1
++                                     vis tMainIconAlt,0
++                                     vis tMainText,1
++                                 }else
++                                 {
++                                     vis tMainIcon,0
++                                     vis tMainIconAlt,1
++                                     vis tMainText,0
++                                 }
++                                 if(tForecast1.txt!="")
++                                 {
++                                     vis tF1Icon,1
++                                     vis tF1IconAlt,0
++                                     vis tForecast1,1
++                                 }else
++                                 {
++                                     vis tF1Icon,0
++                                     vis tF1IconAlt,1
++                                     vis tForecast1,0
++                                 }
++                             }
++                             if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
++                             {
++                                 spstr strCommand.txt,tTmp.txt,"~",1
++                                 covx tTmp.txt,tTime.bco,0,0
++                                 if(tTime.bco!=screensaver3.bco)
++                                 {
++                                     screensaver3.bco=tTime.bco
++                                     tAMPM.bco=tTime.bco
++                                     tDate.bco=tTime.bco
++                                     tMainIcon.bco=tTime.bco
++                                     tMainText.bco=tTime.bco
++                                     tMainIconAlt.bco=tTime.bco
++                                     tIcon1.bco=tTime.bco
++                                     tIcon2.bco=tTime.bco
++                                     tForecast1.bco=tTime.bco
++                                     tF1Icon.bco=tTime.bco
++                                     tTimeAdd.bco=tTime.bco
++                                 }
++14 +433,15 @@
++                                 covx tTmp.txt,tAMPM.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",4
++                                 covx tTmp.txt,tDate.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",5
++                                 covx tTmp.txt,tMainText.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",6
++                                 covx tTmp.txt,tForecast1.pco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",14
++                                 covx tTmp.txt,t10.bco,0,0
++                                 spstr strCommand.txt,tTmp.txt,"~",16
++                                 covx tTmp.txt,tTimeAdd.pco,0,0
++                             }
++                             if(tInstruction.txt=="notify")
++                             {
++                                 spstr strCommand.txt,tNotifyHead.txt,"~",1

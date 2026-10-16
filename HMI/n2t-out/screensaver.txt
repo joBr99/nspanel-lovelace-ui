@@ -402,6 +402,12 @@ Timer tm0
                 yc2.val=tch1
             }
         
+Timer tm1
+    Attributes
+        Scope      : local
+        Period (ms): 400
+        Enabled    : yes
+    
 Timer tmSerial
     Attributes
         Scope      : local

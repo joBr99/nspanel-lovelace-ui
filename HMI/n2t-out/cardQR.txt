@@ -671,6 +671,10 @@ Timer tmSerial
                                         {
                                             page screensaver2
                                         }
+                                        if(tId.txt=="screensaver3")
+                                        {
+                                            page screensaver3
+                                        }
                                         if(tId.txt=="cardEntities")
                                         {
                                             page cardEntities
