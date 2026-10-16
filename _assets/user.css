@@ -1,0 +1,112 @@
+/*.md-header__button.md-logo img {
+	width: unset;
+}*/
+
+.md-main__inner {
+	margin-top: unset;
+}
+
+.md-nav__title {
+	display: none;
+}
+
+/*.md-header,*/ .md-footer,
+.md-footer-meta {
+	background-color: #333333;
+}
+
+/* Footer contrast fixes for Zensical/Material variants */
+:root {
+	--md-footer-bg-color: #333333;
+	--md-footer-bg-color--dark: #2b2b2b;
+	--md-footer-fg-color: #f2f2f2;
+	--md-footer-fg-color--light: #ffffff;
+	--md-footer-fg-color--lighter: #ffffff;
+}
+
+.md-footer,
+.md-footer-meta,
+.md-footer * {
+	color: #f2f2f2;
+}
+
+.md-footer a,
+.md-footer-meta a,
+.md-footer .md-footer__link {
+	color: #ffffff;
+}
+
+.md-footer a:hover,
+.md-footer-meta a:hover,
+.md-footer .md-footer__link:hover {
+	color: #d9e7ff;
+}
+
+.md-footer .md-icon svg,
+.md-footer-meta .md-icon svg {
+	fill: currentColor;
+}
+
+/* Zensical keeps footer content in the inner/meta containers.
+   Don't hide footer structure, only style it. */
+
+.md-sidebar {
+	padding-top: 0px;
+}
+
+/*.md-sidebar.md-sidebar--primary {
+	position: unset;
+}*/
+
+.md-sidebar.md-sidebar--secondary {
+	padding-top: 10px;
+}
+
+.md-sidebar.md-sidebar--primary .md-sidebar__scrollwrap {
+	/*overflow-y: unset;*/
+	padding-right: 1px;
+	border-right: 1px solid #adadad;
+}
+
+.md-sidebar.md-sidebar--primary .md-sidebar__inner {
+	/*border-right: 1px solid #adadad;*/
+	padding-bottom: 30px;
+}
+.md-sidebar.md-sidebar--secondary .md-sidebar__inner {
+	border-left: 1px solid #adadad;
+}
+
+.md-nav__item .md-nav__list {
+	padding-left: 10px;
+}
+
+.md-content {
+	margin-top: 25px;
+	/*border-left: 1px solid #adadad;
+	border-right: 1px solid #adadad;*/
+}
+
+.md-top {
+	display: none;
+}
+
+.md-typeset hr {
+	border-bottom: 1px solid #adadad;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5 {
+	font-weight: bold;
+}
+
+.md-typeset table:not([class]) td:not(:last-child),
+.md-typeset table:not([class]) th:not(:last-child) {
+	border-right: .05rem solid var(--md-typeset-table-color);
+}
+
+ol li::marker {
+	font-weight: bold;
+}
