@@ -20,7 +20,7 @@ logging.getLogger("watchdog").propagate = False
 settings = {}
 panels = {}
 panel_in_queues = {}
-panel_out_queue = Queue(maxsize=20)
+panel_out_queue = Queue()
 last_settings_file_mtime = 0
 mqtt_connect_time = 0
 has_sent_reload_command = False
