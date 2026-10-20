@@ -1,62 +1,23 @@
-# Subpages
+# Navigation and hidden cards
 
-You can configure entities with with the prefix `navigate`, that are navigating to cards, in case it's hidden card, the navigation items will change and the arrow is bringing you back to the previous page.
-
-```yaml
-          - entity: navigate.testKey
-```
-
-will allow you to navigate to a cardGrid page with the configured key testKey
+Use card `key` values as navigation targets. Put pages that should not appear in the main carousel under `hiddenCards` in the same panel.
 
 ```yaml
-    hiddenCards:
-      - type: cardGrid
-        title: Exmaple Grid
-        entities:
-          - entity: light.test_item
-        key: testKey
+cards:
+  - type: cardGrid
+    title: Home
+    key: home
+    entities:
+      - entity: navigate.settings
+        name: Settings
+        icon: mdi:cog
+hiddenCards:
+  - type: cardEntities
+    title: Settings
+    key: settings
+    entities:
+      - entity: input_number.panel_brightness
+defaultCard: navigate.home
 ```
 
-# Override Status of Navigation Items
-
-You can override the status of navigation items, to make them look like different entities.
-
-```yaml
-          - entity: navigate.testKey
-            status: climate.test
-```
-
-# Override Navigation Items itself
-
-![image](https://user-images.githubusercontent.com/29555657/210870248-dfbaf95a-3dcb-4482-a24f-afca2e426406.png)
-
-```yaml
-    cards:
-      - type: cardGrid
-        title: Wohnzimmer
-        navItem1:
-          entity: light.bad_lights
-        navItem2:
-          entity: light.bad_lights
-        entities:
-```
-
-This can be used to add an home button to your subpages:
-
-```yaml
-    cards:
-      - type: cardGrid
-        title: Home
-        key: home
-        entities:
-          - entity: light.bad
-
-    hiddenCards:
-      - type: cardGrid
-        title: Wohnzimmer
-        navItem2:
-          entity: navigate.home
-          icon: mdi:home
-        entities:
-          - entity: light.kitchen
-```
+This snippet belongs under `nspanels.<panel_name>`. `defaultCard` is a **panel-level** setting, alongside `cards` and `screensaver`. Use `navigate.<key>`, not the AppDaemon `screensaver.defaultCard` location. Keep keys unique within each panel. `navigate.UP` returns from a hidden page.

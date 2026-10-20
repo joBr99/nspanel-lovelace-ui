@@ -7,14 +7,14 @@
 key | required | type | default | description
 -- | -- | -- | -- | --
 `type` | no | string | `screensaver` | Layout type (`screensaver` / `screensaver2`).
-`entities` | yes* | list | none | Screensaver entities.
-`entity` | yes* | string | none | Single-entity shortcut.
+`entities` | no | list | none | Screensaver entities.
+`entity` | no | string | none | Single-entity shortcut.
 `statusIcon1` | no | object | none | Left status icon near date.
 `statusIcon2` | no | object | none | Right status icon near date.
 `doubleTapToUnlock` | no | bool | `false` | Requires double tap when leaving screensaver.
 `sleepTimeout` | no | int | panel `sleepTimeout` | Per-screensaver timeout override.
 
-`*` Provide at least one of `entity` or `entities`.
+Use `entities` to display weather and other Home Assistant data. An empty screensaver object is accepted when no entity content is wanted.
 
 ## Screensaver entities
 

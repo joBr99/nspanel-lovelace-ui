@@ -1,3 +1,6 @@
+!!! note "Legacy AppDaemon reference"
+    These examples target AppDaemon and may use unsupported options in the new backend. Use the [current card reference](cards.md) and [migration guide](config-migration-standalone.md) for the add-on.
+
 # Power Card (v3.9 and higher)
 
 ![card-power](img/card-power.png)

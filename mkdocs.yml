@@ -65,31 +65,45 @@ plugins:
 nav:
     - "Overview": index.md
     - "Getting started (Home Assistant)":
-        - "First steps":
-            - "Prepare NsPanel": prepare_nspanel.md
-            - "Prepare Home Assistant": prepare_ha.md
-            - "Configure MQTT": configure_mqtt.md
+        - "Prepare NSPanel": prepare_nspanel.md
+        - "Install the add-on": prepare_ha.md
+        - "Connect MQTT and add a panel": configure_mqtt.md
+        - "Web editor": web-editor.md
+        - "Import and migrate YAML": config-migration-standalone.md
+    - "Configuration - panels.yaml":
+        - "Overview": config-overview.md
+        - "Cards": cards.md
+        - "Screensaver": config-screensaver.md
+        - "Entities and templates": entities.md
+        - "Navigation and hidden cards": subpages.md
+        - "Connection modes": connection-modes.md
+    - "Help and development":
         - "FAQ": faq.md
         - "Configuration checklist": config-validation-checklist.md
         - "Troubleshooting": troubleshooting.md
-    - "Configuration - apps.yaml (Home Assistant)":
-        - "Overview": config-overview.md
-        #- "Migration to Standalone Rewrite": config-migration-standalone.md
-        - "Screensaver": config-screensaver.md
+        - "Test a branch": testing.md
+        - "Standalone operation": standalone-runtime.md
+    - "Legacy AppDaemon":
+        - "Installation (historical)": legacy-prepare_ha.md
+        - "MQTT and apps.yaml": legacy-configure_mqtt.md
+        - "Configuration": legacy-config-overview.md
+        - "Screensaver": legacy-config-screensaver.md
         - "Cards":
-            - "Entities Card": card-entities.md
-            - "Grid Card": card-grid.md
-            - "Climate/Thermo Card": card-climate.md
-            - "Media Card": card-media.md
-            - "Alarm Card": card-alarm.md
-            - "Wifi/QR Card": card-qr.md
-            - "Power Card": card-power.md
-            - "Unlock Card": card-unlock.md
-        - "Special Settings for Entities": entities.md
-        - "Subpages": subpages.md
+            - "Entities": card-entities.md
+            - "Grid": card-grid.md
+            - "Climate": card-climate.md
+            - "Media": card-media.md
+            - "Alarm": card-alarm.md
+            - "QR": card-qr.md
+            - "Power": card-power.md
+            - "Unlock": card-unlock.md
+        - "Entities": legacy-entities.md
+        - "Subpages": legacy-subpages.md
         - "Notifications": notifications.md
-        - "Physical Buttons": phys-btn.md
-
+        - "Physical buttons": phys-btn.md
+        - "FAQ": legacy-faq.md
+        - "Checklist": legacy-config-validation-checklist.md
+        - "Troubleshooting": legacy-troubleshooting.md
     - "Getting started (ioBroker)":
-        - "Prepare NsPanel": prepare_nspanel_ioBroker.md
+        - "Prepare NSPanel": prepare_nspanel_ioBroker.md
         - "Prepare ioBroker": iobroker-install.md

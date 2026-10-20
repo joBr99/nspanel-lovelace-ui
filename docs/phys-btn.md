@@ -1,3 +1,6 @@
+!!! note "Legacy AppDaemon reference"
+    These examples target AppDaemon and may use unsupported options in the new backend. Use the [current card reference](cards.md) and [migration guide](config-migration-standalone.md) for the add-on.
+
 # Change behaviour of hardware buttons
 
 ## Tasmota Rules

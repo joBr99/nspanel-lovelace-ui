@@ -1,6 +1,8 @@
-# Configuration
+# Configuration: panels.yaml
 
 The runtime reads one YAML file (default: `./panels.yaml`, add-on mode: `/config/panels.yaml`).
+
+Use the [web editor](https://docs.nspanel.pky.eu/web-editor/) to manage this file. For a complete starting configuration, see [your first panel](getting-started.md). Snippets in the card and screensaver references belong under `nspanels.<panel_name>`. Do not wrap them in AppDaemon `module`, `class`, or `config` keys.
 
 ## Top-level keys
 
@@ -39,7 +41,7 @@ key | required | type | default | description
 `featExperimentalSliders` | optional | int | `0` | Forwarded in dimmode command.
 `defaultCard` | optional | string | none | Default card when leaving screensaver (`navigate.<key>`).
 `screensaver` | yes | object | none | Screensaver definition.
-`cards` | yes | list | none | Top-level cards.
+`cards` | yes | list | none | At least one supported top-level card is required when saving in the editor.
 `hiddenCards` | optional | list | `[]` | Hidden cards addressable through `navigate.<key>`.
 
 ## Brightness behavior

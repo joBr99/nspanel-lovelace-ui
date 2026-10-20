@@ -57,7 +57,7 @@ key | required | type | description
 
 ## Template-based values
 
-The rewrite supports Home Assistant template rendering for selected fields when prefixed with `ha:`:
+The backend supports Home Assistant template rendering for selected fields when prefixed with `ha:`:
 
 - `icon: "ha:{{ ... }}"`
 - `color: "ha:{{ ... }}"` (must evaluate to JSON RGB list)

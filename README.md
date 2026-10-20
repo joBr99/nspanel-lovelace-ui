@@ -15,7 +15,7 @@ NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in th
 
 Supported Home Automation Systems:
 
-- [Home Assistant](https://docs.nspanel.pky.eu/prepare_nspanel/) - AppDaemon Backend
+- [Home Assistant](https://docs.nspanel.pky.eu/prepare_nspanel/) - Home Assistant add-on with web editor
 - [ioBroker](https://docs.nspanel.pky.eu/prepare_nspanel_ioBroker/) - 3rd-party Typescript Backend maintained by @britzelpuf and @Armilar
 
 NsPanel needs to be flashed with Tasmota (or through a 3rd-party Component with ESPHome)
@@ -38,7 +38,7 @@ NsPanel needs to be flashed with Tasmota (or through a 3rd-party Component with 
 - **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
 
 It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
-To control the panel and update it with content from HomeAssistant, there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
+The Home Assistant add-on controls the panel and updates its content. Configure it with the web editor or `panels.yaml`; existing AppDaemon configurations can be imported. See the [setup guide](docs/prepare_ha.md) and [migration guide](docs/config-migration-standalone.md).
 
 See the following picture to get an idea of the look of this firmware for NSPanel.
 

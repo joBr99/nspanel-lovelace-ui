@@ -80,7 +80,7 @@ Notes:
 
 Notes:
 
-- Main media entity must exist (`entity` or first generated entity).
+- Set `entity` to the main media entity; the editor requires it for media, thermostat, and alarm cards.
 - Additional `entities` are rendered as action buttons on the bottom row.
 
 ## `cardThermo`

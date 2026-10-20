@@ -1,63 +1,41 @@
-# Troubleshooting
+# Troubleshooting the Home Assistant add-on
 
-## Config does not load
+## Editor does not open
 
-Symptoms:
+Check that the add-on is running and that its installed version includes the editor. Open it through **Open Web UI** or the sidebar. Direct access to internal port 8099 is rejected. Inspect the add-on log for editor startup errors. The editor runs separately and can remain available while the backend waits for Home Assistant or MQTT.
 
-- no panel output
-- log shows YAML parse error or file missing
+## Waiting for content
 
-Checks:
+1. Check the **NSPanel Lovelace UI** add-on log and MQTT broker log for connection or authentication errors.
+2. Verify the panel is connected to the same broker as the add-on.
+3. Match `panelRecvTopic` and `panelSendTopic` to Tasmota's topic and Full Topic settings; see [MQTT configuration](getting-started.md).
+4. Confirm the display firmware matches `model` and the Berry driver is installed.
+5. Stop any old add-on or AppDaemon instance controlling the same topics.
 
-1. Confirm `CONFIG_FILE` path.
-2. Validate YAML syntax.
-3. Ensure required per-panel keys exist: `panelRecvTopic`, `panelSendTopic`, `locale`, `timeFormat`, `dateFormat`, `screensaver`, `cards`.
+For ESPHome event mode, check `use_ha_api: true`, the event device ID, and the expected service in [connection modes](connection-modes.md).
 
-## MQTT not connected
+## Changes do not appear
 
-Symptoms:
+Form and YAML edits are drafts until **Save & apply**. Advanced JSON fields have their own **Apply advanced options to draft** button. Inspect the log after saving: accepted YAML does not guarantee entity availability or panel connectivity.
 
-- log repeats MQTT connection retry
+The running add-on reads `/config/panels.yaml` inside its own container. This is not Home Assistant's `configuration.yaml` or AppDaemon's `apps.yaml`. A test-branch installation has separate configuration from the regular add-on. Check that you edited the installation actually driving your panel.
 
-Checks:
+## Import or save errors
 
-1. Verify `mqtt_server`, `mqtt_port`, `mqtt_username`, `mqtt_password`.
-2. Verify panel publishes on the same topic as `panelRecvTopic`.
-3. Verify payload includes `CustomRecv` JSON key.
+- Preview imports first. Unsupported card types and brightness schedules must be corrected before saving.
+- Inline `!include` and `!secret` references. Uploaded YAML cannot read local files.
+- Provide unique receive topics, required date/locale fields, a screensaver object, and at least one card per panel.
+- If the configuration changed on disk, export your draft before **Reload**, then reapply your edits to the latest revision.
+- On a save failure, inspect the log and verify that the add-on can write its configuration directory.
 
-## Home Assistant websocket not connected
+## Wrong page after leaving the screensaver
 
-Symptoms:
+Use `defaultCard: navigate.home` at panel level, with a matching card `key: home`. See [navigation](https://docs.nspanel.pky.eu/subpages/). The AppDaemon location under `screensaver` is not used by this backend.
 
-- log repeatedly waits for websocket/auth
+## Restore a configuration
 
-Checks:
+Each successful save backs up the previous file to `/config/panels.yaml.bak`. Export a known-good configuration before testing; this backup holds only the previous save. Restore by importing your exported YAML, or by copying the backup over `panels.yaml` in the add-on's configuration directory and restarting the add-on.
 
-1. Verify `home_assistant_address` and `home_assistant_token`.
-2. In add-on mode, verify Supervisor token access is available.
-3. Confirm HA is reachable from container network.
+## Information to include in a GitHub issue
 
-## Card does not open or navigate
-
-Checks:
-
-1. For `navigate.<key>`, confirm target card has matching `key`.
-2. For `cardUnlock`, confirm `destination` and `pin` are set.
-3. Confirm card `type` is one of the implemented types.
-
-## Brightness behaves unexpectedly
-
-Checks:
-
-1. If using entity-based brightness, verify entity state is numeric.
-2. Avoid list-based brightness schedules in this rewrite (not supported).
-3. Review interaction between `sleepTracking`, `sleepTrackingZones`, and `sleepOverride`.
-
-## Useful logs to look for
-
-- `Config file not found`
-- `Error while parsing YAML file`
-- `Connected to MQTT Server`
-- `Home Assistant auth OK`
-- `card type ... not implemented`
-- `Not implemented: <button action>`
+Include the add-on version, panel model, connection mode, relevant `panels.yaml` section, and add-on log after startup/save. Remove passwords and tokens, including those in YAML exports. For AppDaemon installations, use [legacy troubleshooting](https://docs.nspanel.pky.eu/legacy-troubleshooting/).

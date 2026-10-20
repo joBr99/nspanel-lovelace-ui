@@ -1,13 +1,13 @@
 # Connection Modes
 
-The rewrite supports two panel input/output modes.
+The backend supports two panel input/output modes.
 
 ## 1) MQTT mode (default)
 
 Enabled when:
 
 - `mqtt_server` is configured
-- `use_ha_api` is not present
+- `use_ha_api` is absent or `false`
 
 Behavior:
 
@@ -23,7 +23,7 @@ Example receive payload:
 
 ## 2) Home Assistant API mode (`use_ha_api`)
 
-Enabled when key `use_ha_api` exists in config.
+Enabled when `use_ha_api: true` is set at the top level of `panels.yaml`.
 
 Behavior:
 

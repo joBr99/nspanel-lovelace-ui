@@ -1,120 +1,41 @@
-# Troubleshooting Home Assistant setups
+# Troubleshooting the Home Assistant add-on
 
-This page collects the most common checks for Home Assistant/AppDaemon installations where the panel does not show the expected content after setup, update, or configuration changes.
+## Editor does not open
 
-If you are reviewing a configuration after an edit, start with the [Home Assistant configuration checklist](config-validation-checklist.md) and then use this page for deeper troubleshooting.
+Check that the add-on is running and that its installed version includes the editor. Open it through **Open Web UI** or the sidebar. Direct access to internal port 8099 is rejected. Inspect the add-on log for editor startup errors. The editor runs separately and can remain available while the backend waits for Home Assistant or MQTT.
 
-## AppDaemon is running the expected apps.yaml
+## Waiting for content
 
-If the panel still shows old pages after editing `apps.yaml`, or if HACS shows an update but the running behavior looks unchanged, first verify that AppDaemon is reading the file you edited.
+1. Check the **NSPanel Lovelace UI** add-on log and MQTT broker log for connection or authentication errors.
+2. Verify the panel is connected to the same broker as the add-on.
+3. Match `panelRecvTopic` and `panelSendTopic` to Tasmota's topic and Full Topic settings; see [MQTT configuration](configure_mqtt.md).
+4. Confirm the display firmware matches `model` and the Berry driver is installed.
+5. Stop any old add-on or AppDaemon instance controlling the same topics.
 
-With recent AppDaemon add-on versions the config directory changed. This project expects the Home Assistant add-on to use the classic app directory:
+For ESPHome event mode, check `use_ha_api: true`, the event device ID, and the expected service in [connection modes](connection-modes.md).
 
-```yaml
-app_dir: /config/appdaemon/apps
-```
+## Changes do not appear
 
-Check the following:
+Form and YAML edits are drafts until **Save & apply**. Advanced JSON fields have their own **Apply advanced options to draft** button. Inspect the log after saving: accepted YAML does not guarantee entity availability or panel connectivity.
 
-1. `appdaemon.yaml` contains the expected `app_dir` setting.
-2. Your NSPanel app configuration is in `/config/appdaemon/apps/apps.yaml`.
-3. There is no second stale `apps.yaml` in another AppDaemon config path.
-4. AppDaemon was restarted after changing the configuration or after updating through HACS.
+The running add-on reads `/config/panels.yaml` inside its own container. This is not Home Assistant's `configuration.yaml` or AppDaemon's `apps.yaml`. A test-branch installation has separate configuration from the regular add-on. Check that you edited the installation actually driving your panel.
 
-A stale AppDaemon path is a common reason for confusing symptoms such as:
+## Import or save errors
 
-- changes in `apps.yaml` do not appear on the panel;
-- the panel keeps using an older card layout;
-- HACS updated the backend but AppDaemon still behaves like the previous version.
+- Preview imports first. Unsupported card types and brightness schedules must be corrected before saving.
+- Inline `!include` and `!secret` references. Uploaded YAML cannot read local files.
+- Provide unique receive topics, required date/locale fields, a screensaver object, and at least one card per panel.
+- If the configuration changed on disk, export your draft before **Reload**, then reapply your edits to the latest revision.
+- On a save failure, inspect the log and verify that the add-on can write its configuration directory.
 
-## Check the AppDaemon log after each change
+## Wrong page after leaving the screensaver
 
-After editing `apps.yaml`, restart AppDaemon and check the add-on log. For a healthy MQTT plugin startup you should see a message similar to:
+Use `defaultCard: navigate.home` at panel level, with a matching card `key: home`. See [navigation](subpages.md). The AppDaemon location under `screensaver` is not used by this backend.
 
-```text
-INFO MQTT: MQTT Plugin initialization complete
-```
+## Restore a configuration
 
-If the MQTT plugin cannot connect, the panel will not receive content. Authentication and broker errors are usually visible in the AppDaemon log or in the MQTT broker log.
-
-Also check for Python tracebacks or YAML parse errors immediately after restart. A single indentation error in `apps.yaml` can prevent the AppDaemon app from loading.
-
-## Verify MQTT topics on both sides
-
-The Tasmota MQTT topic and the `apps.yaml` topics must match each other.
-
-Typical values look like this:
-
-```yaml
-panelRecvTopic: "tele/tasmota_your_mqtt_topic/RESULT"
-panelSendTopic: "cmnd/tasmota_your_mqtt_topic/CustomSend"
-```
-
-In Tasmota, avoid changing the `FullTopic` unless you also understand how it changes the MQTT send and receive topics. If the panel shows `Waiting for content`, it is often still publishing messages, but AppDaemon may be listening on a different topic.
-
-## Validate navigation targets
-
-Navigation items use the `navigate.` prefix and point to cards by their `key` value:
-
-```yaml
-entities:
-  - entity: navigate.livingroom
-```
-
-The target card must have a matching key in `cards` or `hiddenCards`:
-
-```yaml
-hiddenCards:
-  - type: cardGrid
-    title: Living Room
-    key: livingroom
-```
-
-If a navigation item does not work, check that:
-
-- the target card has a `key`;
-- the key matches exactly, including case;
-- the key is unique;
-- the target card is defined under `cards` or `hiddenCards` for the same panel app.
-
-## Check defaultCard
-
-`screensaver.defaultCard` is evaluated when leaving the screensaver. It should point to a card key that exists in the top-level `cards` list and is reachable as a navigation target.
-
-Example:
-
-```yaml
-screensaver:
-  defaultCard: home
-cards:
-  - type: cardGrid
-    title: Home
-    key: home
-```
-
-If the panel does not return to the expected page after the screensaver, verify the target card key first.
-
-## Template-based configuration
-
-Some configuration values can contain Home Assistant templates. If a template reads an entity state, make sure that entity exists and has the states or attributes used by the template.
-
-For example, climate entities often expose additional details through attributes such as `hvac_action`:
-
-```jinja2
-{{ state_attr('climate.living_room', 'hvac_action') }}
-```
-
-When debugging templates, test them in Home Assistant under **Developer Tools > Template** before placing them in `apps.yaml`.
+Each successful save backs up the previous file to `/config/panels.yaml.bak`. Export a known-good configuration before testing; this backup holds only the previous save. Restore by importing your exported YAML, or by copying the backup over `panels.yaml` in the add-on's configuration directory and restarting the add-on.
 
 ## Information to include in a GitHub issue
 
-If the checks above do not solve the problem, include the following when opening an issue:
-
-- the relevant `apps.yaml` section for the affected panel;
-- `appdaemon.yaml` with secrets removed;
-- the AppDaemon log directly after a restart;
-- screenshots of the Tasmota MQTT configuration with secrets removed;
-- the panel model (`eu`, `us-l`, or `us-p`);
-- whether the backend was installed through HACS or manually.
-
-Please remove passwords, access tokens, broker credentials, and private URLs before posting logs or configuration files.
+Include the add-on version, panel model, connection mode, relevant `panels.yaml` section, and add-on log after startup/save. Remove passwords and tokens, including those in YAML exports. For AppDaemon installations, use [legacy troubleshooting](legacy-troubleshooting.md).
