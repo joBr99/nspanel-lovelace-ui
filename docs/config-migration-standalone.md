@@ -73,3 +73,7 @@ brightness schedule lists | not supported | Rewrite supports integer or entity i
 If you are migrating now, use the standalone migration page for the complete mapping:
 
 - [Complete mapping and checklist](https://docs.nspanel.pky.eu/standalone/migration-appdaemon/)
+
+## Import through the add-on web interface
+
+In add-on version 4.7.92 and later, open **Web UI → Import YAML** to preview an existing `panels.yaml` or AppDaemon `apps.yaml`. Add panels to your current draft or replace it, review migration warnings, then **Save & apply**. Unsupported schedules and card types must be corrected before saving. Inline `!include` and `!secret` values before uploading. The previous configuration is backed up to `/config/panels.yaml.bak`.

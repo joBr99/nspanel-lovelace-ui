@@ -1,0 +1,2 @@
+#!/command/with-contenv bashio
+exec python /usr/bin/mqtt-manager/web.py

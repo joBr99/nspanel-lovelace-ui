@@ -48,6 +48,10 @@ Some (not all) screenshots from the US Portrait Version:
 
 ![screens-us-p](docs/img/screens-us-p.png)
 
+## Home Assistant add-on editor
+
+The Home Assistant add-on includes a web interface for editing panels, cards, entities, and screensavers. Import existing add-on or AppDaemon YAML, review migration warnings, then save and apply. See the [add-on instructions](nspanel-lovelace-ui/DOCS.md).
+
 ## Documentation
 
 Visit https://docs.nspanel.pky.eu/ for installation instructions and documentation of the configuration.
