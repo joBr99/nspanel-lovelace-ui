@@ -1,8 +1,10 @@
-# Home Assistant Add-on: NSPanel Lovelace UI
+# Home Assistant add-on: NSPanel Lovelace UI
 
+Control NSPanel Lovelace UI displays from Home Assistant with the new Python backend. Manage panels, cards, entities, and screensavers through the ingress web editor or `panels.yaml`, and import existing add-on or AppDaemon YAML.
 
-![Supports aarch64 Architecture][aarch64-shield]
-![Supports amd64 Architecture][amd64-shield]
+Supports `amd64` and `aarch64`. AppDaemon and HACS are not required.
 
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+- [Installation](../docs/prepare_ha.md)
+- [Web editor and migration](DOCS.md)
+- [Configuration reference](../docs/config-overview.md)
+- [Test-branch installation](../docs/testing.md)

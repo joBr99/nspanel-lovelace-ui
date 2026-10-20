@@ -55,7 +55,7 @@ FlashNextion http://nspanel.pky.eu/lui-us-l-release.tft
 
 After sending the command, the screen should show a progress bar. The flashing process takes around 5 minutes.
 
-Note for US users: You'll need to add the model config option to your apps.yaml later. More details can be found on the config overview page.
+Note for US users: You'll need to set the panel model (`us-p` or `us-l`) in the web editor or `panels.yaml` later. More details can be found on the config overview page.
 
 ---
 
@@ -63,7 +63,7 @@ Note for US users: You'll need to add the model config option to your apps.yaml 
 <summary>Alternatively, you can use your own web server or the one built into Home Assistant:</summary>
 <br>
 Upload the nspanel.tft from the latest release to a web server (for example, the www folder of Home Assistant) and execute the following command in the Tasmota Console.  
-(Development version: [TFT file from HMI folder](HMI/nspanel.tft))
+(Development version: [TFT file from HMI folder](https://github.com/joBr99/nspanel-lovelace-ui/blob/main/HMI/nspanel.tft))
 
 **The web server must be HTTP. HTTPS is not supported due to Berry language limitations in Tasmota.**
 

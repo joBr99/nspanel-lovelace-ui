@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
-name: NSPanel Lovelace UI Addon
-version: "4.7.91"
+name: NSPanel Lovelace UI Test
+version: "4.7.92-test.1"
 slug: nspanel-lovelace-ui
 description: NSPanel Lovelace UI Addon
 services:
@@ -19,4 +19,9 @@ options:
 schema:
   loglevel: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
   logtofile: bool
-image: "ghcr.io/jobr99/nspanel-lovelace-ui"
+
+
+ingress: true
+ingress_port: 8099
+panel_icon: mdi:tablet-dashboard
+panel_title: NSPanel

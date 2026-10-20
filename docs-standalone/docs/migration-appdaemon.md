@@ -1,120 +1,60 @@
-# Migration from AppDaemon Config
+# Import YAML and migrate from AppDaemon
 
-This page explains how to migrate panel configuration from the legacy AppDaemon `apps.yaml` format to the standalone rewrite `panels.yaml` format.
+The web editor accepts the old add-on `panels.yaml` format and NSPanel entries from AppDaemon `apps.yaml`. An import creates a draft; it does not write to the running configuration until **Save & apply**.
 
-## File and structure changes
+## Migration steps
 
-Old (AppDaemon):
+1. Export or copy your existing configuration before changing backends.
+2. [Install the new add-on](https://docs.nspanel.pky.eu/prepare_ha/) and open its web interface.
+3. Choose **Import YAML**, upload/paste the file, and select **Preview import**.
+4. Review the detected panels, skipped apps, migration warnings, and validation errors.
+5. Choose **Add to draft** to merge panel definitions while preserving current global connection settings. Duplicate names are rejected. Use **Replace draft** to replace the entire draft, including connection settings.
+6. Review the resulting YAML, replace example entities, and fix unsupported settings. Stop the old backend before applying the same MQTT topics.
+7. Select **Save & apply** and verify the add-on log and physical display.
 
-- panel config lived under `apps.yaml`
-- MQTT and Home Assistant base connection config was split across AppDaemon files (`appdaemon.yaml`, plugin config, and app config)
+The initial add-on configuration contains an example panel. Remove it if you merge an import and do not intend to use it. A successful save creates `panels.yaml.bak` containing the previous configuration; keep your own exported copy for longer-term rollback.
 
-New (rewrite):
+## Recognized input
 
-- panel config lives in one file: `panels.yaml` (usually `/config/panels.yaml`)
-- connection values are read from this file and/or environment variables
-
-## Minimal before/after example
-
-Old AppDaemon (`apps.yaml`):
+Existing add-on YAML uses `nspanels` at the top level and retains its configuration fields. AppDaemon input must contain entries with `module: nspanel-lovelace-ui` or `class: NsPanelLovelaceUIManager` and a `config` mapping. Other AppDaemon apps are skipped with warnings.
 
 ```yaml
-nspanel-1:
+# AppDaemon input
+kitchen:
   module: nspanel-lovelace-ui
   class: NsPanelLovelaceUIManager
   config:
-    panelRecvTopic: "tele/tasmota_panel/RESULT"
-    panelSendTopic: "cmnd/tasmota_panel/CustomSend"
-    model: eu
-    locale: en_US
-    timeFormat: "%H:%M"
-```
-
-New rewrite (`panels.yaml`):
-
-```yaml
-home_assistant_address: "http://supervisor"
-home_assistant_token: "YOUR_TOKEN"
-
-nspanels:
-  panel-1:
-    panelRecvTopic: "tele/tasmota_panel/RESULT"
-    panelSendTopic: "cmnd/tasmota_panel/CustomSend"
-    model: eu
-    locale: en_US
-    timeZone: "Europe/Berlin"
-    timeFormat: "%H:%M"
-    dateFormat: "full"
-    screensaver:
-      entities:
-        - entity: weather.home
+    panelRecvTopic: tele/nspanel_kitchen/RESULT
+    panelSendTopic: cmnd/nspanel_kitchen/CustomSend
     cards:
       - type: cardEntities
-        title: Main
+        title: Kitchen
         entities:
           - entity: light.kitchen
 ```
 
-## Key mapping
+The importer moves each `config` into `nspanels.<name>` and supplies missing `locale: en_US`, `timeZone: Europe/Berlin`, `timeFormat: "%H:%M"`, `dateFormat: full`, and an empty screensaver. Review those defaults for your location. A missing card list must be populated before saving.
 
-Legacy AppDaemon key or concept | Standalone rewrite | Notes
--- | -- | --
-`module`, `class`, `config` wrapper | removed | Rewrite uses `nspanels.<panel_name>` directly.
-`panelRecvTopic` | `panelRecvTopic` | Same meaning.
-`panelSendTopic` | `panelSendTopic` | Same meaning.
-`model` | `model` | Same meaning (`eu`, `us-p`, `us-l`).
-`locale` | `locale` | Same meaning.
-`timeFormat` | `timeFormat` | Same meaning.
-`timezone` (legacy docs casing) | `timeZone` | Use exact camelCase `timeZone`.
-`dateFormatBabel` / `dateFormat` | `dateFormat` | Rewrite expects `dateFormat`.
-`cards` | `cards` | Same concept.
-`hiddenCards` | `hiddenCards` | Same concept.
-`screensaver` | `screensaver` | Same concept; some legacy theme options are not available.
-`defaultCard` under screensaver usage | `defaultCard` (panel level) | Use as panel-level key in rewrite.
-`temperatureUnit` (card-level legacy usage) | `temp_unit` (panel level) | Rewrite reads panel-level `temp_unit`.
-`sleepBrightness` list schedule | not supported | Rewrite supports integer or entity id, not list-based schedules.
-`screenBrightness` list schedule | not supported | Rewrite supports integer or entity id, not list-based schedules.
-`sleepTracking` | `sleepTracking` | Same concept.
-`sleepTrackingZones` | `sleepTrackingZones` | Same concept.
-`sleepOverride` | `sleepOverride` | Same concept.
-`updateMode` / OTA URL overrides (`displayURL-*`, `berryURL`) | not supported | Rewrite does not implement these legacy update keys.
-`theme`, `dateAdditionalTemplate`, `timeAdditionalTemplate` | not supported | Not implemented in rewrite config.
+## Converted settings
 
-## Connection config differences
+| AppDaemon setting | New backend | Review |
+| --- | --- | --- |
+| `timezone` | `timeZone` | Time zone casing changes. |
+| `dateFormatBabel` | `dateFormat` | Babel format; a strftime-only format is replaced with `full` and warned about. |
+| `featureExperimentalSliders` | `featExperimentalSliders` | Boolean values become 0/1. |
+| `screensaver.defaultCard` | Panel-level `defaultCard` | Ensure the result is `navigate.<key>` for an existing card. |
+| Card `temperatureUnit` | Panel-level `temp_unit` | Mixed units on one panel cannot be converted automatically. |
+| Legacy weather `screensaver.entity` | Explicit screensaver `entities` | Current weather plus four daily entries; review forecast indices and overrides. |
+| `screensaver.alternativeLayout` | `screensaver.type: screensaver2` | Review layout on your display. |
 
-In AppDaemon setups, MQTT and Home Assistant connectivity was mostly configured via AppDaemon plugin settings.
+## Settings needing manual review
 
-In the rewrite, connectivity is resolved directly by the runtime:
+Brightness schedules are unsupported: replace lists with a number from 0 to 100 or an entity ID. Unknown card types cannot be saved. Legacy update/OTA options, conditional entity fields (`state`, `state_not`, `state_template`), `action_name`, and `service.*` entries are retained and flagged where recognized, but are not implemented by this backend. Review weather overrides and unit fields against the [screensaver reference](screensaver.md).
 
-- Home Assistant:
-  - `home_assistant_address`
-  - `home_assistant_token`
-- MQTT (for MQTT mode):
-  - `mqtt_server`, `mqtt_port`, `mqtt_username`, `mqtt_password`
-- Optional mode switch:
-  - set `use_ha_api` to use Home Assistant event mode instead of MQTT receive mode
+Preserved fields are not a promise of feature parity. See the current [cards](cards.md), [entities](entities.md), and [navigation](https://docs.nspanel.pky.eu/subpages/) references before migrating advanced setups. Legacy notification and physical-button examples are not migration instructions for this backend.
 
-## Entity-level differences to watch
+## Connections, includes, and secrets
 
-Some legacy entity config fields are not implemented in the rewrite parser/renderer:
+AppDaemon MQTT/HASS plugin credentials are not imported from `appdaemon.yaml`. In normal add-on operation, Supervisor supplies the HA connection and discovered MQTT settings. For an external broker or standalone process, set the [connection fields](configuration.md) explicitly.
 
-- `state`, `state_not`, `state_template`
-- direct `service.*` action entries with custom `data`
-- `action_name`
-
-Supported and commonly used fields in rewrite:
-
-- `entity`, `name`, `icon`, `color`, `value`, `font`
-- weather-related: `attribute`, `day`, `hour`, `unit`
-- light detail helper: `effectList`
-- navigation helper: `status` for `navigate.*` entities
-
-## Migration checklist
-
-1. Create `/config/panels.yaml` from the rewrite example.
-2. Move each old app entry (`nspanel-1`, `nspanel-2`, ...) into `nspanels`.
-3. Remove `module/class/config` wrappers.
-4. Rename `timezone` to `timeZone`.
-5. Ensure each panel has `dateFormat`, `timeFormat`, `screensaver`, and `cards`.
-6. Replace unsupported scheduled brightness lists with integer/entity-based values.
-7. Remove unsupported legacy-only keys listed above.
+Inline `!include` and `!secret` values before uploading: the importer never reads files referenced by custom YAML tags. Duplicate keys, recursive aliases, and oversized input are rejected. Imports are limited to 1 MiB. Exported YAML contains any credentials explicitly stored in the configuration.

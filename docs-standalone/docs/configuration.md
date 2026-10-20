@@ -1,6 +1,8 @@
-# Configuration
+# Configuration: panels.yaml
 
 The runtime reads one YAML file (default: `./panels.yaml`, add-on mode: `/config/panels.yaml`).
+
+Use the [web editor](https://docs.nspanel.pky.eu/web-editor/) to manage this file. For a complete starting configuration, see [your first panel](getting-started.md). Snippets in the card and screensaver references belong under `nspanels.<panel_name>`. Do not wrap them in AppDaemon `module`, `class`, or `config` keys.
 
 ## Top-level keys
 
@@ -13,7 +15,7 @@ key | required | type | default | description
 `mqtt_port` | required in MQTT mode | int | from env | MQTT port.
 `mqtt_username` | required in MQTT mode | string | from env | MQTT username.
 `mqtt_password` | required in MQTT mode | string | from env | MQTT password.
-`use_ha_api` | optional | any | absent | If present, MQTT input mode is disabled and HA event mode is used.
+`use_ha_api` | optional | boolean | `false` | When true, MQTT input mode is disabled and HA event mode is used.
 `timeZone` | optional | string | `Europe/Berlin` | Global fallback for panel `timeZone`.
 `hiddenCards` | optional | list | `[]` | Global fallback for panel `hiddenCards`.
 
@@ -39,7 +41,7 @@ key | required | type | default | description
 `featExperimentalSliders` | optional | int | `0` | Forwarded in dimmode command.
 `defaultCard` | optional | string | none | Default card when leaving screensaver (`navigate.<key>`).
 `screensaver` | yes | object | none | Screensaver definition.
-`cards` | yes | list | none | Top-level cards.
+`cards` | yes | list | none | At least one supported top-level card is required when saving in the editor.
 `hiddenCards` | optional | list | `[]` | Hidden cards addressable through `navigate.<key>`.
 
 ## Brightness behavior
@@ -59,3 +61,7 @@ sleepOverride:
   entity: light.bedroom
   brightness: 30
 ```
+
+## Web editor (Home Assistant add-on)
+
+From add-on version 4.7.92, **Open Web UI** provides a visual panel/card/entity editor and a full YAML editor. Import existing add-on or AppDaemon YAML into a draft, review warnings, and save to apply. Saves create `panels.yaml.bak` and reload the backend; stale browser drafts cannot overwrite newer disk revisions. The interface is available through authenticated Home Assistant ingress only.

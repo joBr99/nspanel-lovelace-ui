@@ -1,3 +1,11 @@
+## 4.7.92
+
+- Add an ingress configuration editor for panels, cards, entities, and screensavers.
+- Preview/import add-on and AppDaemon YAML, with migration warnings and validation.
+- Back up configuration before atomic saves and reject stale editor revisions.
+- Keep the editor available independently of panel connections.
+- Handle atomic config changes, fix global locale inheritance and use_ha_api false, and respect shutdown signals.
+
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
 ## 4.7.91

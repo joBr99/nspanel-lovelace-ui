@@ -1,0 +1,28 @@
+name: Configuration editor tests
+on:
+  push:
+    paths:
+      - 'nspanel-lovelace-ui/rootfs/usr/bin/mqtt-manager/**'
+      - 'tests/**'
+      - '.github/workflows/test-editor.yaml'
+  pull_request:
+    paths:
+      - 'nspanel-lovelace-ui/rootfs/usr/bin/mqtt-manager/**'
+      - 'tests/**'
+      - '.github/workflows/test-editor.yaml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: python -m pip install PyYAML
+      - run: python -m unittest discover -s tests -v
+      - run: node --check nspanel-lovelace-ui/rootfs/usr/bin/mqtt-manager/frontend/editor.js

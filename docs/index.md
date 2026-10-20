@@ -1,54 +1,33 @@
-# Overview
+# NSPanel Lovelace UI
 
-If you like this project consider buying me a pizza 🍕 <a href="https://paypal.me/joBr99" target="_blank"><img src="https://img.shields.io/static/v1?logo=paypal&label=&message=donate&color=slategrey"></a>
+NSPanel Lovelace UI brings Home Assistant entities, controls, and weather to the Nextion display inside a Sonoff NSPanel. EU and US models are supported, including US portrait and landscape layouts.
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
-![hacs validation](https://github.com/joBr99/nspanel-lovelace-ui/actions/workflows/hacs-validation.yaml/badge.svg)
-[![Man Hours](https://img.shields.io/endpoint?url=https%3A%2F%2Fmh.jessemillar.com%2Fhours%3Frepo%3Dhttps%3A%2F%2Fgithub.com%2FjoBr99%2Fnspanel-lovelace-ui.git)](https://jessemillar.com/r/man-hours)
+The **NSPanel Lovelace UI Home Assistant add-on** is the backend for new Home Assistant installations. It reads Home Assistant states, receives touch events, and sends display updates over MQTT or a compatible ESPHome event API. Configure panels through its web editor or `panels.yaml`; AppDaemon is not required.
 
-NsPanel Lovelace UI is a Firmware for the nextion screen inside of NSPanel in the Design of [HomeAssistant](https://www.home-assistant.io/)'s Lovelace UI Design.
+![NSPanel](img/nspanel-rl.png)
 
-**EU Model and US Model supported (in portrait and landscape orientation)**
+## Get started
 
-Content of the screen is controlled by a AppDaemon Python Script installed on your HomeAssistant Instance.
+1. [Prepare your NSPanel](prepare_nspanel.md): install the device firmware, Berry driver, and matching display firmware.
+2. [Install the Home Assistant add-on](prepare_ha.md).
+3. [Connect MQTT and create your first panel](configure_mqtt.md).
+4. [Use the web editor](web-editor.md) to add cards, entities, and a screensaver.
 
-Or an TypeScript on your ioBroker Instance in case you are an ioBroker User.
+Already running AppDaemon or an older add-on configuration? [Import your YAML and migrate](config-migration-standalone.md).
 
-NsPanel needs to be flashed with Tasmota (or with the 3rd Party ESPHome Component from [@sairon](https://github.com/sairon/esphome-nspanel-lovelace-ui))
+## What you can configure
 
-![nspanel-rl](img/nspanel-rl.png)
+- Entity lists and grids, lights and covers, climate, media, alarm, QR, power, and unlock cards.
+- Screensaver entities, weather forecasts, status icons, clock formats, and brightness.
+- Multiple panels, hidden cards, and navigation between pages.
+- Visual editing, full YAML editing, import previews, export, and backups on save.
 
-## Features
+![Display examples](img/screens.png)
 
-- Entities Page
-- Grid Page
-- Detail Pages for Lights (Brightness, Temperature and Color of the Light) and for Covers (Position)
-- Thermostat Page 
-- Media Player Card
-- Alarm Control Card
-- Screensaver Page with Time, Date and Weather Information
-- Card with QrCode to display WiFi Information
-- Localization (currently 40 languages)
+See the [configuration reference](config-overview.md), [cards](cards.md), and [screensaver](config-screensaver.md). The web editor is available in add-on versions that include it (4.7.92 onward); unreleased changes require a [test-branch installation](testing.md).
 
-- **Everything is dynamically configurable by a yaml config, no need to code or touch Nextion Editor**
+## Requirements and other backends
 
-It works with [Tasmota](https://tasmota.github.io/docs/) and MQTT. 
-To control the panel and update it with content from HomeAssistant there is an [AppDaemon](https://github.com/AppDaemon/appdaemon) App.
+For the add-on, use Home Assistant OS on `amd64` or `aarch64`, an NSPanel with compatible display firmware, and an MQTT broker for the Tasmota path. Home Assistant Container users can run the [standalone backend](standalone-runtime.md); the ingress editor requires Supervisor.
 
-See the following picture to get an idea of the look of this firmware for NSPanel.
-
-![screens](img/screens.png)
-
-Some (not all) screenshots from the US Portrait Version:
-
-![screens-us-p](img/screens-us-p.png)
-
-## Requirements
-
- - NSPanel
- - USB to Serial TTL Adapter
- - Running Instance of the Home Automation Platform of your Choise
-   - Running [Home Assistant Instance](https://www.home-assistant.io/installation/)
-     - with installed [MQTT Broker](https://www.home-assistant.io/docs/mqtt/broker)
-   - Running [ioBroker Instance](https://www.iobroker.net/#en/documentation)
-     - with installed MQTT Broker
+Existing AppDaemon installations have a separate [legacy reference](legacy-prepare_ha.md). ioBroker users should follow [the ioBroker installation guide](iobroker-install.md).

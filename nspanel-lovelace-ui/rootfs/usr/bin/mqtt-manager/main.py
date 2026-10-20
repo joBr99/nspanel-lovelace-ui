@@ -77,7 +77,7 @@ def process_output_to_panel():
 def connect():
     global settings, panel_out_queue
     ha_is_configured = settings["home_assistant_address"] != "" and settings["home_assistant_token"] != ""
-    if "mqtt_server" in settings and not "use_ha_api" in settings:
+    if "mqtt_server" in settings and not settings.get("use_ha_api"):
         MqttManager(settings, panel_out_queue, panel_in_queues)
     else:
         logging.info("MQTT values not configured, will not connect.")
@@ -109,7 +109,7 @@ def setup_panels():
         if "timeZone" not in settings_panel:
             settings_panel["timeZone"] = settings.get("timeZone", "Europe/Berlin")
         if "locale" not in settings_panel:
-            settings_panel["timezone"] = settings.get("locale", "en_US")
+            settings_panel["locale"] = settings.get("locale", "en_US")
         if "hiddenCards" not in settings_panel:
             settings_panel["hiddenCards"] = settings.get("hiddenCards", [])
 
@@ -170,6 +170,10 @@ def get_config(file):
             logging.exception("Something went wrong while parsing yaml file")
         return False
 
+    if not isinstance(settings, dict) or not isinstance(settings.get("nspanels"), dict):
+        logging.error("Config must contain a nspanels mapping")
+        return False
+
     if not settings.get("mqtt_username"):
         settings["mqtt_username"] = os.getenv('MQTT_USER')
     if not settings.get("mqtt_password"):
@@ -196,15 +200,14 @@ def config_watch():
             self.base_paths = base_paths
 
         def dispatch(self, event):
-            for base_path in self.base_paths:
-                if event.src_path.endswith(base_path):
-                    super(ConfigChangeEventHandler, self).dispatch(event)
-                    return
-
-        def on_modified(self, event):
-            logging.info('Modification detected. Reloading panels.')
-            pid = os.getpid()
-            os.kill(pid, signal.SIGTERM)
+            if event.is_directory or event.event_type not in {"modified", "created", "moved", "deleted"}:
+                return
+            paths = {os.path.abspath(event.src_path)}
+            if getattr(event, "dest_path", None):
+                paths.add(os.path.abspath(event.dest_path))
+            if any(os.path.abspath(path) in paths for path in self.base_paths):
+                logging.info('Configuration changed. Reloading panels.')
+                os.kill(os.getpid(), signal.SIGUSR1)
 
     logging.info('Watching for changes in config file')
     project_files = []
@@ -226,7 +229,7 @@ def signal_handler(signum, frame):
     os.execl(python, python, *sys.argv)
 
 if __name__ == '__main__':
-    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGUSR1, signal_handler)
     threading.Thread(target=config_watch).start()
     if (get_config(get_config_file())):
         connect()
