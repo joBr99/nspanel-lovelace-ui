@@ -4,8 +4,8 @@ import time
 from urllib.parse import urlsplit
 
 # Match the versioned firmware targets shipped with the AppDaemon backend.
-DISPLAY_VERSION = 53
-DISPLAY_RELEASE = 'v4.7.3'
+DISPLAY_VERSION = 54
+DISPLAY_RELEASE = 'v4.8.1'
 MODELS = {'eu': '', 'us-p': '-us-p', 'us-l': '-us-l'}
 PROMPT_ID = 'updateDisplayNoYes'
 
