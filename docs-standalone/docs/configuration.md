@@ -64,9 +64,9 @@ sleepOverride:
 
 ## Web editor (Home Assistant add-on)
 
-From add-on version 4.7.92, **Open Web UI** provides a visual panel/card/entity editor and a full YAML editor. Import existing add-on or AppDaemon YAML into a draft, review warnings, and save to apply. Saves create `panels.yaml.bak` and reload the backend; stale browser drafts cannot overwrite newer disk revisions. The interface is available through authenticated Home Assistant ingress only.
+From add-on version 4.8.0, **Open Web UI** provides a visual panel/card/entity editor and a full YAML editor. Import existing add-on or AppDaemon YAML into a draft, review warnings, and save to apply. Saves create `panels.yaml.bak` and reload the backend; stale browser drafts cannot overwrite newer disk revisions. The interface is available through authenticated Home Assistant ingress only.
 
-## TFT firmware updates (4.7.93+)
+## TFT firmware updates (4.8.1+)
 
 At panel startup, the backend checks the reported TFT version and model against its pinned firmware target (currently protocol version 53, release v4.7.3, matching the former AppDaemon target). It does not query the latest GitHub release. A backend release can advance this target separately from its add-on version.
 

@@ -37,4 +37,4 @@ With Playwright installed, run `node tests/test_editor_browser.cjs` for the end-
 
 The HTTP tests start temporary loopback servers and check that direct access to the production ingress handler is denied. The production editor service runs on internal port 8099. Build the add-on image from this directory to test changes in Home Assistant; the repository's configured prebuilt image must be published before installations using that image receive this version.
 
-From version 4.7.93, the panel editor includes **TFT firmware updates** (`auto-notify`, `manual`, `auto`). Update confirmation appears on the physical panel. AppDaemon `updateMode` and model-specific TFT URL overrides are supported; Berry driver updates remain manual.
+From version 4.8.1, the panel editor includes **TFT firmware updates** (`auto-notify`, `manual`, `auto`). Update confirmation appears on the physical panel. AppDaemon `updateMode` and model-specific TFT URL overrides are supported; Berry driver updates remain manual.

@@ -59,4 +59,4 @@ AppDaemon MQTT/HASS plugin credentials are not imported from `appdaemon.yaml`. I
 
 Inline `!include` and `!secret` values before uploading: the importer never reads files referenced by custom YAML tags. Duplicate keys, recursive aliases, and oversized input are rejected. Imports are limited to 1 MiB. Exported YAML contains any credentials explicitly stored in the configuration.
 
-From add-on 4.7.93, `updateMode` and model-specific `displayURL-*` settings are supported for TFT updates and preserved on import. Review imported `auto` mode: it authorizes flashing without a confirmation when the installed TFT is older. `berryURL` remains unsupported.
+From add-on 4.8.1, `updateMode` and model-specific `displayURL-*` settings are supported for TFT updates and preserved on import. Review imported `auto` mode: it authorizes flashing without a confirmation when the installed TFT is older. `berryURL` remains unsupported.

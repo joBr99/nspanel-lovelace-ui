@@ -26,4 +26,4 @@ Migration is not a guarantee of identical display behavior. Brightness schedules
 YAML anchors are supported within bounded size/depth limits. Duplicate mapping keys, recursive aliases, and custom tags such as `!include` or `!secret` are rejected. Inline those values before importing; the editor does not read arbitrary files from uploaded YAML paths. Imports are limited to 1 MiB.
 
 
-From version 4.7.93, the panel editor includes **TFT firmware updates** (`auto-notify`, `manual`, `auto`). Update confirmation appears on the physical panel. AppDaemon `updateMode` and model-specific TFT URL overrides are supported; Berry driver updates remain manual.
+From version 4.8.1, the panel editor includes **TFT firmware updates** (`auto-notify`, `manual`, `auto`). Update confirmation appears on the physical panel. AppDaemon `updateMode` and model-specific TFT URL overrides are supported; Berry driver updates remain manual.

@@ -24,7 +24,7 @@ Already running AppDaemon or an older add-on configuration? [Import your YAML an
 
 ![Display examples](img/screens.png)
 
-See the [configuration reference](config-overview.md), [cards](cards.md), and [screensaver](config-screensaver.md). The web editor is available in add-on versions that include it (4.7.92 onward); unreleased changes require a [test-branch installation](testing.md).
+See the [configuration reference](config-overview.md), [cards](cards.md), and [screensaver](config-screensaver.md). The web editor is available in add-on versions that include it (4.8.0 onward); unreleased changes require a [test-branch installation](testing.md).
 
 ## Requirements and other backends
 

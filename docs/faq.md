@@ -14,7 +14,7 @@ Yes. **Import YAML → Preview import** converts recognized NSPanel AppDaemon en
 
 ## How do I update?
 
-Update the add-on through Home Assistant's app/add-on store. TFT updates follow the panel’s `updateMode`: the default offers an on-panel confirmation; `auto` flashes older versions automatically. Berry driver updates remain manual. For device firmware, use the manual steps in [Prepare NSPanel](prepare_nspanel.md). From version 4.7.93, AppDaemon `updateMode` and model-specific TFT URL overrides are supported. See the [firmware configuration](config-overview.md#tft-firmware-updates-4793).
+Update the add-on through Home Assistant's app/add-on store. TFT updates follow the panel’s `updateMode`: the default offers an on-panel confirmation; `auto` flashes older versions automatically. Berry driver updates remain manual. For device firmware, use the manual steps in [Prepare NSPanel](prepare_nspanel.md). From version 4.8.1, AppDaemon `updateMode` and model-specific TFT URL overrides are supported. See the [firmware configuration](config-overview.md#tft-firmware-updates-481).
 
 ## How do I try unreleased changes?
 

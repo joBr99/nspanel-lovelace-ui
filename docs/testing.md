@@ -4,7 +4,7 @@ For local testing, create a branch containing your changes. In that branch's `ns
 
 ```yaml
 name: NSPanel Lovelace UI Test
-version: "4.7.92-test.1"
+version: "4.8.0-test.1"
 ```
 
 Remove the `image:` line **on the test branch** so Supervisor builds its Dockerfile locally. Leaving that line in place downloads the configured registry image, regardless of the source changes in the branch. Keep the production image configuration when merging back to the release branch.
