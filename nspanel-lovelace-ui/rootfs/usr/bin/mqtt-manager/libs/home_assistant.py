@@ -12,6 +12,8 @@ settings = {}
 auth_ok = False
 next_id = 0
 request_all_states_id = 0
+request_display_registry_id = None
+sensor_display_precision = {}
 ws_connected = False
 home_assistant_entity_state_cache = {}
 template_cache = {}
@@ -46,7 +48,7 @@ def register_on_disconnect_handler(handler):
 
 
 def on_message(ws, message):
-    global auth_ok, request_all_states_id, home_assistant_entity_state_cache, response_buffer, template_cache
+    global auth_ok, request_all_states_id, home_assistant_entity_state_cache, response_buffer, template_cache, sensor_display_precision
     try:
         json_msg = json.loads(message)
     except json.JSONDecodeError:
@@ -61,8 +63,14 @@ def on_message(ws, message):
         logging.info("Home Assistant auth OK. Requesting existing states.")
         subscribe_to_events()
         _get_all_states()
+        sensor_display_precision = {}
+        send_message(json.dumps({"id": next_id, "type": "subscribe_events",
+                                 "event_type": "entity_registry_updated"}))
+        _get_display_registry()
         if ON_CONNECT_HANDLER is not None:
             ON_CONNECT_HANDLER()
+    elif message_type == "event" and json_msg.get("event", {}).get("event_type") == "entity_registry_updated":
+        _get_display_registry()
     # for templates
     elif message_type == "event" and json_msg.get("id") in response_buffer:
         event = json_msg.get("event", {})
@@ -94,7 +102,22 @@ def on_message(ws, message):
     elif message_type == "result" and not json_msg.get("success"):
         logging.error("Home Assistant request failed: %s", json_msg)
     elif message_type == "result" and json_msg.get("success"):
-        if json_msg.get("id") == request_all_states_id:
+        if json_msg.get("id") == request_display_registry_id:
+            result = json_msg.get("result", {})
+            if not isinstance(result, dict) or not isinstance(result.get("entities"), list):
+                logging.warning("Unexpected Home Assistant display registry response")
+                return
+            previous = sensor_display_precision
+            sensor_display_precision = {
+                entry["ei"]: entry["dp"] for entry in result["entities"]
+                if isinstance(entry, dict) and isinstance(entry.get("ei"), str)
+                and entry["ei"].startswith("sensor.") and type(entry.get("dp")) is int
+                and 0 <= entry["dp"] <= 100
+            }
+            for entity_id in previous.keys() | sensor_display_precision.keys():
+                if previous.get(entity_id) != sensor_display_precision.get(entity_id):
+                    send_entity_update(entity_id)
+        elif json_msg.get("id") == request_all_states_id:
             for entity in json_msg.get("result", []):
                 home_assistant_entity_state_cache[entity["entity_id"]] = entity
         else:
@@ -338,3 +361,10 @@ def send_message(message):
         logging.error("WebSocket client is not initialized; dropping outgoing message")
     except Exception:
         logging.exception("Failed sending websocket message to Home Assistant")
+
+
+def _get_display_registry():
+    """HA resolves user and integration-suggested precision into the compact dp field."""
+    global request_display_registry_id
+    request_display_registry_id = next_id
+    send_message(json.dumps({"id": next_id, "type": "config/entity_registry/list_for_display"}))

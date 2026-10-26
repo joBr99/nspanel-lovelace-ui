@@ -1,4 +1,5 @@
 import libs.home_assistant
+from libs.sensor_display import format_sensor_value
 import ha_icons
 import ha_colors
 from libs.localization import get_translation
@@ -244,11 +245,11 @@ class HAEntity(panel_cards.Entity):
             case 'sensor':
                 device_class = self.attributes.get("device_class", "")
                 unit_of_measurement = self.attributes.get("unit_of_measurement", "")
-                value = self.state
+                value = format_sensor_value(self.state, libs.home_assistant.sensor_display_precision.get(status_entity or self.entity_id))
                 # limit value to 4 chars on us-p
                 if self.panel.model == "us-p" and cardType == "cardEntities":
-                    value = self.state[:4]
-                    if value[-1] == ".":
+                    value = value[:4]
+                    if value.endswith("."):
                         value = value[:-1]
 
                 if device_class != "temperature":

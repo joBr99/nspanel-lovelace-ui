@@ -75,3 +75,9 @@ Example:
     "on": [255, 210, 90]
     "off": [80, 120, 170]
 ```
+
+## Sensor display precision
+
+Numeric sensor values respect Home Assistant's resolved display precision, including the sensor's configured precision and integration-suggested precision when provided by HA. For example, `7.75165151099879` with precision 2 is sent as `7.75`, and precision 0 produces `8`. This applies before units and grid value icons are generated.
+
+Precision changes in Home Assistant refresh the display without restarting the add-on. Sensors without precision metadata retain their original value; nonnumeric states such as `unknown` and `unavailable` are not rounded. Explicit value templates continue to take precedence. This does not change the underlying HA state or add locale-specific decimal separators. The US portrait entity-card character limit still applies.

@@ -1,3 +1,7 @@
+## Unreleased
+
+- Respect Home Assistant sensor display precision before sending numeric values to cards and screensavers, and refresh precision when entity settings change.
+
 ## 4.8.1
 
 - Restore TFT update prompts and automatic/manual update modes for MQTT and compatible ESPHome panels.
