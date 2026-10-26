@@ -64,7 +64,7 @@ def process_output_to_panel():
             service = msg[0] + "_nspanelui_api_call"
             service_data = {
                 "data": msg[1],
-                "command": 2
+                "command": msg[2] if len(msg) > 2 else 2
             }
             libs.home_assistant.send_msg_to_panel(
                 service=service,
@@ -121,7 +121,7 @@ def setup_panels():
 
 def panel_thread_target(queue_in, name, settings_panel, queue_out):
     try:
-        panel = LovelaceUIPanel(name, settings_panel, queue_out)
+        panel = LovelaceUIPanel(name, settings_panel, queue_out, use_ha_api=bool(settings.get("use_ha_api")))
     except Exception:
         logging.exception("Failed to initialize panel thread for '%s'", name)
         return

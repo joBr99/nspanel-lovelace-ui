@@ -21,7 +21,9 @@ The editor stays available while the backend is waiting for Home Assistant or MQ
 
 AppDaemon imports recognize `module: nspanel-lovelace-ui` and `class: NsPanelLovelaceUIManager`. Other apps are skipped. The importer maps `timezone`, `dateFormatBabel`, experimental sliders, screensaver default navigation, and card temperature units. A legacy weather screensaver becomes an explicit entity/forecast list. Missing locale/date/time settings receive defaults shown in the draft.
 
-Migration is not a guarantee of identical display behavior. Brightness schedules and unsupported card types must be changed before saving. Legacy update/OTA options, conditional entity visibility, and service actions are retained with warnings where recognized, but are not implemented by this backend. Review weather forecasts and navigation after migration. AppDaemon plugin connection settings are not imported; the add-on normally discovers MQTT and uses the Supervisor HA API.
+Migration is not a guarantee of identical display behavior. Brightness schedules and unsupported card types must be changed before saving. Legacy Berry driver update options, conditional entity visibility, and service actions are retained with warnings where recognized, but are not implemented by this backend. Review weather forecasts and navigation after migration. AppDaemon plugin connection settings are not imported; the add-on normally discovers MQTT and uses the Supervisor HA API.
 
 YAML anchors are supported within bounded size/depth limits. Duplicate mapping keys, recursive aliases, and custom tags such as `!include` or `!secret` are rejected. Inline those values before importing; the editor does not read arbitrary files from uploaded YAML paths. Imports are limited to 1 MiB.
 
+
+From version 4.7.93, the panel editor includes **TFT firmware updates** (`auto-notify`, `manual`, `auto`). Update confirmation appears on the physical panel. AppDaemon `updateMode` and model-specific TFT URL overrides are supported; Berry driver updates remain manual.

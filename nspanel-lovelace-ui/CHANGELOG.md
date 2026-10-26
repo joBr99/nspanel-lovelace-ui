@@ -1,3 +1,9 @@
+## 4.7.93
+
+- Restore TFT update prompts and automatic/manual update modes for MQTT and compatible ESPHome panels.
+- Support model-specific firmware URLs and custom target versions.
+- Prevent duplicate update requests and keep normal page updates from replacing the firmware prompt.
+
 ## 4.7.92
 
 - Add an ingress configuration editor for panels, cards, entities, and screensavers.

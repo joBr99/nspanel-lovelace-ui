@@ -9,10 +9,12 @@ import time
 import babel.dates
 from ha_cards import Screensaver, card_factory, detail_open
 import ha_control
+from firmware import FirmwareUpdater
 
 class LovelaceUIPanel:
 
-    def __init__(self, name_panel, settings_panel, msg_out_queue):
+    def __init__(self, name_panel, settings_panel, msg_out_queue, use_ha_api=False):
+        self.updater = FirmwareUpdater(settings_panel, msg_out_queue, use_ha_api)
         self.name = name_panel
         self.settings = settings_panel
         self.msg_out_queue = msg_out_queue
@@ -132,6 +134,8 @@ class LovelaceUIPanel:
             return self.hidden_cards[iid]
 
     def ha_event_callback(self, entity_id):
+        if self.updater.active:
+            return
         #logging.debug(f"{self.name} {entity_id} updated/state changed")
         if self.current_card and entity_id in self.current_card.get_entities():
             self.render_current_page(requested=True)
@@ -169,6 +173,8 @@ class LovelaceUIPanel:
 
 
     def render_current_page(self, switchPages=False, requested=False):
+        if self.updater.active:
+            return
         if not self.current_card:
             return
         if switchPages:
@@ -209,10 +215,22 @@ class LovelaceUIPanel:
         if len(msg) < 2:
             logging.error("Malformed panel message on '%s': %s", self.name, msg)
             return
+        if msg[0] == "event" and msg[1] == "startup" and len(msg) >= 4:
+            self.current_card = (self.get_default_card() if self.settings.get("screensaver", {}).get("disable", False) else self.screensaver)
+            if self.updater.startup(msg):
+                return
+        if msg[0] == "event" and msg[1] == "buttonPress2":
+            result = self.updater.button(msg)
+            if result == "resume":
+                self.customrecv_event_callback("event,startup")
+                return
+            if result is not None:
+                return
+        if self.updater.active:
+            return
         # run action based on received command
         if msg[0] == "event":
             if msg[1] == "startup":
-                # TODO: Handle Update Messages
                 self.update_date()
                 self.update_time()
 

@@ -49,7 +49,7 @@ The importer moves each `config` into `nspanels.<name>` and supplies missing `lo
 
 ## Settings needing manual review
 
-Brightness schedules are unsupported: replace lists with a number from 0 to 100 or an entity ID. Unknown card types cannot be saved. Legacy update/OTA options, conditional entity fields (`state`, `state_not`, `state_template`), `action_name`, and `service.*` entries are retained and flagged where recognized, but are not implemented by this backend. Review weather overrides and unit fields against the [screensaver reference](config-screensaver.md).
+Brightness schedules are unsupported: replace lists with a number from 0 to 100 or an entity ID. Unknown card types cannot be saved. Legacy Berry driver update options, conditional entity fields (`state`, `state_not`, `state_template`), `action_name`, and `service.*` entries are retained and flagged where recognized, but are not implemented by this backend. Review weather overrides and unit fields against the [screensaver reference](config-screensaver.md).
 
 Preserved fields are not a promise of feature parity. See the current [cards](cards.md), [entities](entities.md), and [navigation](subpages.md) references before migrating advanced setups. Legacy notification and physical-button examples are not migration instructions for this backend.
 
@@ -58,3 +58,5 @@ Preserved fields are not a promise of feature parity. See the current [cards](ca
 AppDaemon MQTT/HASS plugin credentials are not imported from `appdaemon.yaml`. In normal add-on operation, Supervisor supplies the HA connection and discovered MQTT settings. For an external broker or standalone process, set the [connection fields](config-overview.md) explicitly.
 
 Inline `!include` and `!secret` values before uploading: the importer never reads files referenced by custom YAML tags. Duplicate keys, recursive aliases, and oversized input are rejected. Imports are limited to 1 MiB. Exported YAML contains any credentials explicitly stored in the configuration.
+
+From add-on 4.7.93, `updateMode` and model-specific `displayURL-*` settings are supported for TFT updates and preserved on import. Review imported `auto` mode: it authorizes flashing without a confirmation when the installed TFT is older. `berryURL` remains unsupported.

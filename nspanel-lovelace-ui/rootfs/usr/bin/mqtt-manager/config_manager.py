@@ -8,6 +8,7 @@ import tempfile
 import threading
 
 import yaml
+from firmware import firmware_settings
 
 CARD_TYPES = ["cardEntities", "cardGrid", "cardQR", "cardPower", "cardMedia",
               "cardThermo", "cardAlarm", "cardUnlock"]
@@ -78,6 +79,10 @@ def validate(config):
     for name, panel in config["nspanels"].items():
         if not isinstance(name, str) or not name.strip() or not isinstance(panel, dict):
             raise ConfigError("Each panel needs a name and an object configuration.")
+        try:
+            firmware_settings(panel)
+        except ValueError as exc:
+            raise ConfigError(f"{name}: {exc}") from exc
         for field in ("panelRecvTopic", "panelSendTopic"):
             if not isinstance(panel.get(field), str) or not panel[field].strip():
                 raise ConfigError(f"{name}.{field} is required.")
@@ -184,8 +189,8 @@ def import_yaml(text):
     def inspect(value, path):
         if isinstance(value, dict):
             for key, item in value.items():
-                if key in {"updateMode", "berryURL", "dateAdditionalTemplate", "timeAdditionalTemplate",
-                           "state", "state_not", "state_template", "action_name"} or key.startswith("displayURL-"):
+                if key in {"berryURL", "dateAdditionalTemplate", "timeAdditionalTemplate",
+                           "state", "state_not", "state_template", "action_name"}:
                     warnings.append(f"{path}.{key}: retained, but unsupported by the add-on runtime.")
                 if key.startswith("weatherOverrideForecast") or key in {"weatherUnit", "forecastSkip"}:
                     warnings.append(f"{path}.{key}: retained; review explicit weather entities after migration.")

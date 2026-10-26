@@ -65,3 +65,29 @@ sleepOverride:
 ## Web editor (Home Assistant add-on)
 
 From add-on version 4.7.92, **Open Web UI** provides a visual panel/card/entity editor and a full YAML editor. Import existing add-on or AppDaemon YAML into a draft, review warnings, and save to apply. Saves create `panels.yaml.bak` and reload the backend; stale browser drafts cannot overwrite newer disk revisions. The interface is available through authenticated Home Assistant ingress only.
+
+## TFT firmware updates (4.7.93+)
+
+At panel startup, the backend checks the reported TFT version and model against its pinned firmware target (currently protocol version 53, release v4.7.3, matching the former AppDaemon target). It does not query the latest GitHub release. A backend release can advance this target separately from its add-on version.
+
+Set **TFT firmware updates** in the visual editor, or add the following under your panel:
+
+```yaml
+updateMode: auto-notify
+```
+
+- `auto-notify` (default): show an Install/Dismiss dialog on the physical panel when an update is needed.
+- `auto`: start an update automatically when the installed version is older. A model change still requires confirmation.
+- `manual`: do not offer or start TFT updates.
+
+Dismissing a prompt suppresses further prompts until the backend restarts. A newer TFT on the same model is not downgraded. The backend sends at most one flash request per panel per backend run; check device logs before restarting to retry a failed transfer. Keep power connected while flashing. A new startup message reports the resulting version; no startup after ten minutes is logged as an unconfirmed update, not success.
+
+Tasmota installations need the Berry driver with `FlashNextion` support and a `panelSendTopic` ending in `/CustomSend`. Compatible ESPHome installations use the existing `nspanelui_api_call` service with command `255`; support depends on the installed ESPHome component. TFTs older than protocol version 16 require manual flashing. Berry driver updates remain manual.
+
+Advanced YAML options retain the AppDaemon names `displayURL-EU`, `displayURL-US-P`, and `displayURL-US-L`. Only the URL for the selected model is used. Custom URLs must use HTTP and be reachable from the panel. Set `displayFirmwareVersion` to the protocol version embedded in a custom TFT (not its release string), for example:
+
+```yaml
+updateMode: auto-notify
+displayURL-EU: http://homeassistant.local:8123/local/nspanel.tft
+displayFirmwareVersion: 53
+```

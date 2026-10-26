@@ -33,7 +33,7 @@ class ConfigurationTests(unittest.TestCase):
             'timezone': 'UTC', 'dateFormatBabel': 'medium', 'dateFormat': '%A',
             'screensaver': {'entity': 'weather.home', 'defaultCard': 'navigate.main'},
             'cards': [{'type': 'cardThermo', 'entity': 'climate.room', 'temperatureUnit': 'fahrenheit'}],
-            'updateMode': 'auto', 'custom_option': 42}}
+            'updateMode': 'auto', 'berryURL': 'http://example/driver.be', 'custom_option': 42}}
         result = import_yaml(yaml.safe_dump({'panel': old, 'other': {'module': 'something_else'}}))
         panel = result['config']['nspanels']['panel']
         self.assertEqual(panel['dateFormat'], 'medium')
@@ -43,7 +43,7 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(panel['screensaver']['entities'][1]['day'], 1)
         self.assertEqual(panel['custom_option'], 42)
         self.assertEqual(result['errors'], [])
-        self.assertTrue(any('updateMode' in w for w in result['warnings']))
+        self.assertTrue(any('berryURL' in w for w in result['warnings']))
 
     def test_schedules_preview_but_cannot_save(self):
         panel = next(iter(self.config['nspanels'].values()))

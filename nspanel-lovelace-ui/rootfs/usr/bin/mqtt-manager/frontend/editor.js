@@ -103,6 +103,9 @@ function render() {
   const fields = element("div", undefined, "fields");
   for (const [key, title] of [["panelRecvTopic", "Receive topic"], ["panelSendTopic", "Send topic"], ["locale", "Locale"], ["timeZone", "Time zone"], ["timeFormat", "Time format"], ["dateFormat", "Date format"]]) field(fields, panel, key, title);
   field(fields, panel, "model", "Panel model", ["eu", "us-p", "us-l"]); view.append(fields);
+  const firmwareFields = element("div", undefined, "fields");
+  field(firmwareFields, panel, "updateMode", "TFT firmware updates", ["auto-notify", "manual", "auto"]);
+  view.append(firmwareFields);
   advanced(view, panel, "All panel options (JSON)");
   renderCards(view, panel, "cards", "Cards"); renderCards(view, panel, "hiddenCards", "Hidden cards");
   view.append(element("h2", "Screensaver"));
