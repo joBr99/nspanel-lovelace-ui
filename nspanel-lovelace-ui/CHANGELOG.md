@@ -1,6 +1,11 @@
-## Unreleased
+## 4.8.2
 
-- Respect Home Assistant sensor display precision before sending numeric values to cards and screensavers, and refresh precision when entity settings change.
+- Respect Home Assistant sensor display precision on cards and screensavers, with automatic refresh when precision settings change.
+- Restore daily schedules for `sleepBrightness` and `screenBrightness`, using the panel time zone and handling overnight periods and backend restarts.
+- Support importing AppDaemon daily brightness schedules, with validation of schedule times and values.
+- Clamp entity-driven brightness to 0–100 for dynamic control through numeric sensors or Home Assistant helpers.
+- Fix brightness `0` being ignored, including in sleep overrides.
+- Update configuration and migration documentation for sensor precision and dynamic brightness.
 
 ## 4.8.1
 

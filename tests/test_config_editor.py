@@ -45,12 +45,16 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(result['errors'], [])
         self.assertTrue(any('berryURL' in w for w in result['warnings']))
 
-    def test_schedules_preview_but_cannot_save(self):
+    def test_schedules_preview_and_save(self):
         panel = next(iter(self.config['nspanels'].values()))
         panel['sleepBrightness'] = [{'time': '22:00', 'value': 10}]
         result = import_yaml(yaml.safe_dump(self.config))
-        self.assertIn('schedules', result['errors'][0])
-        with self.assertRaises(ConfigError): validate(result['config'])
+        self.assertEqual(result['errors'], [])
+        validate(result['config'])
+        with tempfile.TemporaryDirectory() as directory:
+            store = ConfigStore(Path(directory) / 'panels.yaml')
+            store.save(yaml.safe_dump(result['config']), store.read()['revision'])
+            self.assertEqual(parse_yaml(store.read()['yaml']), result['config'])
 
     def test_reject_bad_yaml(self):
         for text in ['[]', 'a: 1\na: 2', 'a: !include /etc/passwd', 'a: &x [*x]', 'a: .nan', 'a: 2020-01-01', '1: value']:

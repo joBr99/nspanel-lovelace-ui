@@ -32,8 +32,8 @@ key | required | type | default | description
 `model` | optional | string | `eu` | Panel model (`eu`, `us-p`, `us-l`).
 `temp_unit` | optional | string | `celsius` | Thermostat card unit (`celsius` or `fahrenheit`).
 `sleepTimeout` | optional | int | `20` | Seconds before screensaver.
-`sleepBrightness` | optional | int or entity_id | `10` | Screensaver brightness.
-`screenBrightness` | optional | int or entity_id | `100` | Active-screen brightness.
+`sleepBrightness` | optional | int, entity_id, or schedule | `10` | Screensaver brightness.
+`screenBrightness` | optional | int, entity_id, or schedule | `100` | Active-screen brightness.
 `sleepTracking` | optional | entity_id | none | Forces sleep brightness to 0 when entity state matches `sleepTrackingZones`.
 `sleepTrackingZones` | optional | list | `["not_home", "off"]` | States that trigger forced dimming.
 `sleepOverride` | optional | object | none | Override sleep brightness when entity is `on`/`true`/`home`.
@@ -48,7 +48,7 @@ key | required | type | default | description
 
 - Integer values are used directly.
 - Entity values read Home Assistant state and cast to number.
-- List/schedule style brightness is not supported in this rewrite.
+- Daily time/value schedules are supported for both sleep and active-screen brightness.
 
 Example:
 
@@ -91,3 +91,22 @@ updateMode: auto-notify
 displayURL-EU: http://homeassistant.local:8123/local/nspanel.tft
 displayFirmwareVersion: 53
 ```
+
+## Dynamic brightness
+
+Set the following under your panel in the YAML editor (or **All panel options** using JSON):
+
+```yaml
+timeZone: Europe/Berlin
+sleepBrightness:
+  - time: "07:00"
+    value: 35
+  - time: "22:00"
+    value: 0
+```
+
+This uses brightness 35 during the day and 0 overnight. Times are daily local wall-clock times in the panel's `timeZone`; quote them in YAML. HH:MM and HH:MM:SS are accepted. Entries may be unordered but must have unique times and integer values from 0 to 100. The last entry from the previous day applies before the first entry, including after a restart. The backend checks schedules every second and sends a brightness command only when the resolved settings change. The same schedule format is supported by `screenBrightness`. Sunrise/sunset expressions are not supported.
+
+For illumination-driven control, set `sleepBrightness: input_number.nspanel_sleep` and use a Home Assistant automation to update that helper from your illuminance sensor. A numeric sensor entity can also be used directly if its state already represents a desired brightness percentage. Values are clamped to 0–100; raw lux is not automatically converted into a brightness curve. Entity changes update the panel without a restart.
+
+`sleepTracking` still forces sleep brightness to zero when its configured state matches; an active `sleepOverride` takes precedence over that and the schedule. An override brightness of zero is supported.

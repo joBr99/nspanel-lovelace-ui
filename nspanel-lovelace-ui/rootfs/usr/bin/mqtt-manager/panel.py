@@ -15,6 +15,7 @@ class LovelaceUIPanel:
 
     def __init__(self, name_panel, settings_panel, msg_out_queue, use_ha_api=False):
         self.updater = FirmwareUpdater(settings_panel, msg_out_queue, use_ha_api)
+        self._last_dim_command = None
         self.name = name_panel
         self.settings = settings_panel
         self.msg_out_queue = msg_out_queue
@@ -109,6 +110,8 @@ class LovelaceUIPanel:
         while True:
             try:
                 self.schedule.exec_jobs()
+                if any(isinstance(self.settings.get(key), list) for key in ("sleepBrightness", "screenBrightness")):
+                    self.dimmode(only_if_changed=True)
             except Exception:
                 logging.exception("Scheduler execution failed for panel '%s'", self.name)
             time.sleep(1)
@@ -166,6 +169,7 @@ class LovelaceUIPanel:
             self.settings.get("sleepBrightness"),
             self.settings.get("screenBrightness"),
             self.settings.get("sleepOverride"),
+            timezone=self.settings.get("timeZone", "Europe/Berlin"),
             return_involved_entities=True
         )
         if entity_id in involved_entities:
@@ -182,7 +186,9 @@ class LovelaceUIPanel:
         if requested:
             self.current_card.render()
 
-    def dimmode(self):
+    def dimmode(self, only_if_changed=False):
+        if self.updater.active:
+            return
         # send dimmode
         dimValue, dimValueNormal = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
@@ -190,6 +196,7 @@ class LovelaceUIPanel:
             self.settings.get("sleepBrightness"),
             self.settings.get("screenBrightness"),
             self.settings.get("sleepOverride"),
+            timezone=self.settings.get("timeZone", "Europe/Berlin"),
         )
 
         backgroundColor = self.settings.get("defaultBackgroundColor", "ha-dark")
@@ -199,7 +206,10 @@ class LovelaceUIPanel:
             backgroundColor = 0
         fontColor = ""
         featExperimentalSliders = self.settings.get("featExperimentalSliders", 0)
-        libs.panel_cmd.dimmode(self.msg_out_queue, self.sendTopic, dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
+        command = (dimValue, dimValueNormal, backgroundColor, fontColor, featExperimentalSliders)
+        if not only_if_changed or command != self._last_dim_command:
+            libs.panel_cmd.dimmode(self.msg_out_queue, self.sendTopic, *command)
+            self._last_dim_command = command
 
     def get_default_card(self):
         defaultCard = self.settings.get("defaultCard")

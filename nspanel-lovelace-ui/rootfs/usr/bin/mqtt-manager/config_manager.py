@@ -8,6 +8,7 @@ import tempfile
 import threading
 
 import yaml
+from libs.brightness import validate_brightness
 from firmware import firmware_settings
 
 CARD_TYPES = ["cardEntities", "cardGrid", "cardQR", "cardPower", "cardMedia",
@@ -98,8 +99,10 @@ def validate(config):
             raise ConfigError(f"{name}.sleepTimeout must be a non-negative integer.")
         for field in ("sleepBrightness", "screenBrightness"):
             value = panel.get(field, 20)
-            if not (type(value) is int and 0 <= value <= 100 or isinstance(value, str)):
-                raise ConfigError(f"{name}.{field}: use a number from 0 to 100 or an entity; schedules are unsupported.")
+            try:
+                validate_brightness(value)
+            except ValueError as exc:
+                raise ConfigError(f"{name}.{field}: {exc}") from exc
         if not isinstance(panel.get("screensaver"), dict):
             raise ConfigError(f"{name}.screensaver must be an object.")
         cards = []

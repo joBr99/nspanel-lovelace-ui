@@ -22,7 +22,7 @@ The running add-on reads `/config/panels.yaml` inside its own container. This is
 
 ## Import or save errors
 
-- Preview imports first. Unsupported card types and brightness schedules must be corrected before saving.
+- Preview imports first. Unsupported card types and invalid brightness schedule entries must be corrected before saving.
 - Inline `!include` and `!secret` references. Uploaded YAML cannot read local files.
 - Provide unique receive topics, required date/locale fields, a screensaver object, and at least one card per panel.
 - If the configuration changed on disk, export your draft before **Reload**, then reapply your edits to the latest revision.

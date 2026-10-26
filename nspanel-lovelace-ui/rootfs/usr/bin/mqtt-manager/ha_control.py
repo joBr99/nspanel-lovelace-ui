@@ -1,4 +1,5 @@
 import libs.home_assistant
+from libs.brightness import scheduled_brightness
 import logging
 import time
 from libs.helper import pos_to_color, scale
@@ -12,41 +13,41 @@ def wait_for_ha_cache():
         logging.warning("Home Assistant entity cache is still empty after waiting 5 seconds")
     time.sleep(1)
 
-def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, screenBrightness, sleepOverride, return_involved_entities=False):
+def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, screenBrightness, sleepOverride, return_involved_entities=False, timezone="Europe/Berlin", now=None):
     dimmode = 10
     dimValueNormal = 100
     involved_entities = []
 
-    if sleepBrightness:
+    if sleepBrightness is not None:
         if isinstance(sleepBrightness, int):
             dimmode = sleepBrightness
         elif isinstance(sleepBrightness, list):
-            logging.error("list style config for sleepBrightness no longer supported")
+            dimmode = scheduled_brightness(sleepBrightness, timezone, now)
         #elif sleepBrightness.startswith("ha:"):
         #    time.sleep(1)
         #    dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
         #    involved_entities.extend(libs.home_assistant.get_template_listener_entities(sleepBrightness))
-        elif libs.home_assistant.is_existent(sleepBrightness):
+        elif isinstance(sleepBrightness, str):
             involved_entities.append(sleepBrightness)
             try:
-                dimmode = int(float(libs.home_assistant.get_entity_data(sleepBrightness).get('state', 10)))
-            except (TypeError, ValueError):
+                dimmode = int(float((libs.home_assistant.get_entity_data(sleepBrightness) or {}).get('state', 10)))
+            except (TypeError, ValueError, OverflowError):
                 logging.exception("sleepBrightness entity '%s' has an invalid state value", sleepBrightness)
 
-    if screenBrightness:
+    if screenBrightness is not None:
         if isinstance(screenBrightness, int):
             dimValueNormal = screenBrightness
         elif isinstance(screenBrightness, list):
-            logging.error("list style config for screenBrightness no longer supported")
+            dimValueNormal = scheduled_brightness(screenBrightness, timezone, now)
         #elif screenBrightness.startswith("ha:"):
         #    time.sleep(1)
         #    dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
         #    involved_entities.extend(libs.home_assistant.get_template_listener_entities(screenBrightness))
-        elif libs.home_assistant.is_existent(screenBrightness):
+        elif isinstance(screenBrightness, str):
             involved_entities.append(screenBrightness)
             try:
-                dimValueNormal = int(float(libs.home_assistant.get_entity_data(screenBrightness).get('state', 100)))
-            except (TypeError, ValueError):
+                dimValueNormal = int(float((libs.home_assistant.get_entity_data(screenBrightness) or {}).get('state', 100)))
+            except (TypeError, ValueError, OverflowError):
                 logging.exception("screenBrightness entity '%s' has an invalid state value", screenBrightness)
     # force sleep brightness to zero in case sleepTracking is active
     if sleepTracking:
@@ -58,7 +59,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
                 dimmode = 0
 
     # overwrite everything with sleepOverwrite
-    if sleepOverride and isinstance(sleepOverride, dict) and sleepOverride.get("entity") and sleepOverride.get("brightness"):
+    if sleepOverride and isinstance(sleepOverride, dict) and sleepOverride.get("entity") and sleepOverride.get("brightness") is not None:
         entity = sleepOverride.get("entity")
         if libs.home_assistant.is_existent(entity):
             involved_entities.append(entity)
@@ -69,7 +70,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
     if return_involved_entities:
         return involved_entities
     else:
-        return dimmode, dimValueNormal
+        return max(0, min(100, dimmode)), max(0, min(100, dimValueNormal))
 
 def handle_buttons(entity_id, btype, value, entity_config=None, action_context=None):
     action_context = action_context or {}
