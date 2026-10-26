@@ -2,8 +2,6 @@
 
 If you like this project consider buying me a pizza 🍕 <a href="https://paypal.me/joBr99" target="_blank"><img src="https://img.shields.io/static/v1?logo=paypal&label=&message=donate&color=slategrey"></a>
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
-![hacs validation](https://github.com/joBr99/nspanel-lovelace-ui/actions/workflows/hacs-validation.yaml/badge.svg)
 [![GitHub Release](https://img.shields.io/github/release/joBr99/nspanel-lovelace-ui.svg)](https://github.com/joBr99/nspanel-lovelace-ui/releases)
 ![Project Maintenance](https://img.shields.io/maintenance/yes/2026.svg)
 [![GitHub Activity](https://img.shields.io/github/commit-activity/y/joBr99/nspanel-lovelace-ui.svg)](https://github.com/joBr99/nspanel-lovelace-ui/commits/main)
