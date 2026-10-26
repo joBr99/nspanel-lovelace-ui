@@ -307,6 +307,12 @@ class HAEntity(panel_cards.Entity):
             value = libs.home_assistant.get_template(self.value_overwrite)[3:]
 
 
+        # Grid icon/value fonts use TFT IDs 0–3, unlike screensaver status fonts.
+        if cardType in ("cardGrid", "cardGrid2"):
+            grid_font = {"small": 0, "medium-icon": 1, "medium": 2, "large": 3}.get(self.config.get("font"))
+            if grid_font is not None:
+                icon_char = f"{icon_char}¬{grid_font}"
+
         return f"~{entity_type_panel}~iid.{self.iid}~{icon_char}~{color}~{name}~{value}"
 
 class HACard(panel_cards.Card):

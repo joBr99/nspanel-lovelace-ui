@@ -89,3 +89,23 @@ class SensorPrecisionTests(unittest.TestCase):
                 if card in ('cardGrid', 'cardGrid2'):
                     self.assertEqual(result[3], '7.75 kW')
             self.assertEqual(state['state'], '7.75165151099879')
+
+    def test_grid_font_sizes(self):
+        stubs = {name: types.ModuleType(name) for name in ('websocket', 'dateutil', 'dateutil.parser', 'babel')}
+        with patch.dict(sys.modules, stubs):
+            import ha_cards
+        ha = ha_cards.libs.home_assistant
+        state = {'state': '12.2', 'attributes': {'unit_of_measurement': '%'}}
+        with patch.object(ha, 'get_entity_data', return_value=state), patch.object(ha, 'sensor_display_precision', {}):
+            for font, number in [('small', 0), ('medium-icon', 1), ('medium', 2), ('large', 3), (None, None)]:
+                entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'font': font}, types.SimpleNamespace(model='eu'))
+                for card in ('cardGrid', 'cardGrid2', 'cardEntities', 'screensaver'):
+                    fields = entity.render(cardType=card).split('~')
+                    self.assertEqual(fields[-1], '12.2 %')
+                    if card in ('cardGrid', 'cardGrid2'):
+                        suffix = '' if number is None else f'¬{number}'
+                        self.assertEqual(fields[3], '12.2 %' + suffix)
+                    else:
+                        self.assertNotIn('¬', fields[3])
+            entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'font': 'small', 'icon': 'mdi:water-percent'}, types.SimpleNamespace(model='eu'))
+            self.assertTrue(entity.render(cardType='cardGrid').split('~')[3].endswith('¬0'))

@@ -1,3 +1,9 @@
+## 4.8.3
+
+- Restore per-entity grid font selection: `small`, `medium`, `medium-icon`, and `large` now work on `cardGrid` and its automatic `cardGrid2` layout.
+- Apply font selection to sensor values displayed in place of grid icons, allowing more compact humidity and other numeric readings.
+- Preserve existing screensaver status-icon font handling and non-grid card rendering.
+
 ## 4.8.2
 
 - Respect Home Assistant sensor display precision on cards and screensavers, with automatic refresh when precision settings change.
