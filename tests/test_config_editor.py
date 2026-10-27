@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BACKEND = ROOT / 'nspanel-lovelace-ui/rootfs/usr/bin/mqtt-manager'
 sys.path.insert(0, str(BACKEND))
 from config_manager import ConfigError, ConfigStore, ConflictError, import_yaml, parse_yaml, validate
-from web import handler_for
+from web import handler_for, standalone_credentials
 import yaml
 
 
@@ -102,10 +102,10 @@ class HttpTests(unittest.TestCase):
     def tearDown(self):
         self.server.shutdown(); self.server.server_close(); self.thread.join(); self.temp.cleanup()
 
-    def request(self, method, path, data=None, content_type='application/json'):
+    def request(self, method, path, data=None, content_type='application/json', headers=None):
         connection = http.client.HTTPConnection(*self.server.server_address)
         connection.request(method, path, json.dumps(data) if data is not None else None,
-                           {'Content-Type': content_type})
+                           {'Content-Type': content_type, **(headers or {})})
         response = connection.getresponse()
         status, body = response.status, response.read()
         connection.close()
@@ -127,6 +127,33 @@ class HttpTests(unittest.TestCase):
         self.server.RequestHandlerClass = handler_for(self.store)
         self.assertEqual(self.request('GET', '/api/config')[0], 403)
         self.assertEqual(self.request('POST', '/api/config', {})[0], 403)
+
+    def test_standalone_authentication_and_save(self):
+        import base64
+        credentials = standalone_credentials({'WEB_STANDALONE': 'true', 'WEB_PASSWORD': 'test-secret'})
+        self.server.RequestHandlerClass = handler_for(self.store, credentials=credentials)
+        for path in ('/', '/editor.js', '/api/config'):
+            self.assertEqual(self.request('GET', path)[0], 401)
+            self.assertEqual(self.request('GET', path, headers={'Authorization': 'Basic !!!'})[0], 401)
+        self.assertEqual(self.request('POST', '/api/config', {})[0], 401)
+        bad = {'Authorization': 'Basic ' + base64.b64encode(b'admin:wrong').decode()}
+        self.assertEqual(self.request('GET', '/api/config', headers=bad)[0], 401)
+        good = {'Authorization': 'Basic ' + base64.b64encode(credentials).decode()}
+        status, body = self.request('GET', '/api/config', headers=good)
+        self.assertEqual(status, 200)
+        revision = json.loads(body)['revision']
+        self.assertEqual(self.request('POST', '/api/config', {'yaml': 'nspanels: {}', 'revision': revision}, headers=good)[0], 200)
+        self.assertEqual(self.request('GET', '/', headers=good)[0], 200)
+
+
+class StandaloneSettingsTests(unittest.TestCase):
+    def test_opt_in_and_required_password(self):
+        self.assertIsNone(standalone_credentials({}))
+        self.assertIsNone(standalone_credentials({'WEB_STANDALONE': 'false', 'WEB_PASSWORD': 'secret'}))
+        self.assertEqual(standalone_credentials({'WEB_STANDALONE': '1', 'WEB_USERNAME': 'user', 'WEB_PASSWORD': 'secret'}), b'user:secret')
+        for env in ({'WEB_STANDALONE': 'true'}, {'WEB_STANDALONE': 'yes'},
+                    {'WEB_STANDALONE': 'true', 'WEB_USERNAME': 'a:b', 'WEB_PASSWORD': 'secret'}):
+            with self.assertRaises(ValueError): standalone_credentials(env)
 
 
 if __name__ == '__main__': unittest.main()

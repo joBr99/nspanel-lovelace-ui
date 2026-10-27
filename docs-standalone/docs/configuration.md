@@ -64,7 +64,7 @@ sleepOverride:
 
 ## Web editor (Home Assistant add-on)
 
-From add-on version 4.8.0, **Open Web UI** provides a visual panel/card/entity editor and a full YAML editor. Import existing add-on or AppDaemon YAML into a draft, review warnings, and save to apply. Saves create `panels.yaml.bak` and reload the backend; stale browser drafts cannot overwrite newer disk revisions. The interface is available through authenticated Home Assistant ingress only.
+From add-on version 4.8.0, **Open Web UI** provides a visual panel/card/entity editor and a full YAML editor. Import existing add-on or AppDaemon YAML into a draft, review warnings, and save to apply. Saves create `panels.yaml.bak` and reload the backend; stale browser drafts cannot overwrite newer disk revisions. Home Assistant ingress is the default access mode. Standalone Docker installations can opt into direct access with `WEB_STANDALONE=true` and `WEB_PASSWORD`; see the [standalone guide](https://docs.nspanel.pky.eu/standalone-runtime/).
 
 ## TFT firmware updates (4.8.1+)
 

@@ -1,3 +1,10 @@
+## 4.8.4
+
+- Add authenticated standalone web editor access using WEB_STANDALONE, WEB_USERNAME, and WEB_PASSWORD.
+- Require a password for standalone access while preserving Supervisor ingress as the default.
+- Use LOGLEVEL and LOGTOFILE environment settings outside Supervisor.
+- Document Docker Compose configuration and standalone editor authentication.
+
 ## 4.8.3
 
 - Restore per-entity grid font selection: `small`, `medium`, `medium-icon`, and `large` now work on `cardGrid` and its automatic `cardGrid2` layout.

@@ -17,8 +17,13 @@ fi
 
 declare LOGLEVEL
 declare logtofile
-LOGLEVEL=$(bashio::config 'loglevel')
-logtofile=$(bashio::config 'logtofile')
+if [ -z ${STANDALONE+x} ]; then
+  LOGLEVEL=$(bashio::config 'loglevel')
+  logtofile=$(bashio::config 'logtofile')
+else
+  LOGLEVEL=${LOGLEVEL:-INFO}
+  logtofile=${LOGTOFILE:-false}
+fi
 
 export LOGLEVEL
 

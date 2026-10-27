@@ -26,4 +26,4 @@ Check broker connectivity, matching topics, backend logs, and competing backend 
 
 ## Does the editor work without Supervisor?
 
-The bundled editor is ingress-only. The backend can run as a standalone Python process with an explicitly configured Home Assistant connection and MQTT broker; see [standalone operation](standalone-runtime.md).
+Yes. Set `WEB_STANDALONE=true` and `WEB_PASSWORD`, then publish port 8099; the browser prompts for credentials. The backend can run as a standalone Python process with an explicitly configured Home Assistant connection and MQTT broker; see [standalone operation](standalone-runtime.md).

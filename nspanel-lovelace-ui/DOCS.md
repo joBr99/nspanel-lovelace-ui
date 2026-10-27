@@ -4,7 +4,7 @@ The add-on drives existing NSPanel Lovelace UI displays using MQTT or the Home A
 
 ## Open the editor
 
-Start the add-on, then select **Open Web UI**. Enable **Show in sidebar** for quick access. Home Assistant provides authentication; the editor has no exposed host port and accepts only Supervisor ingress connections.
+Start the add-on, then select **Open Web UI**. Enable **Show in sidebar** for quick access. Home Assistant provides authentication; in the default add-on mode, the editor has no exposed host port and accepts only Supervisor ingress connections. Standalone Docker access is described below.
 
 Select a panel to edit its connection topics, locale, clock formats, cards, entities, and screensaver. Use **Advanced options** for settings outside the forms. Advanced edits use JSON and must be applied to the draft using the button below the field. The **YAML editor** exposes the complete configuration, including global connection settings. Switching from forms to YAML regenerates YAML formatting and comments; values and additional fields are preserved.
 
@@ -35,6 +35,31 @@ python -m unittest discover -s tests -v
 
 With Playwright installed, run `node tests/test_editor_browser.cjs` for the end-to-end browser smoke test. Set `PYTHON` if your Python executable is not `python3`. Screenshots and the test configuration are written to a temporary directory.
 
-The HTTP tests start temporary loopback servers and check that direct access to the production ingress handler is denied. The production editor service runs on internal port 8099. Build the add-on image from this directory to test changes in Home Assistant; the repository's configured prebuilt image must be published before installations using that image receive this version.
+The HTTP tests start temporary loopback servers and check that direct access to the production ingress handler is denied. The editor service runs on port 8099. Build the add-on image from this directory to test changes in Home Assistant; the repository's configured prebuilt image must be published before installations using that image receive this version.
 
 From version 4.8.1, the panel editor includes **TFT firmware updates** (`auto-notify`, `manual`, `auto`). Update confirmation appears on the physical panel. AppDaemon `updateMode` and model-specific TFT URL overrides are supported; Berry driver updates remain manual.
+
+## Standalone Docker web editor (4.8.4+)
+
+Enable direct browser access with `WEB_STANDALONE: "true"` and set `WEB_PASSWORD`. `WEB_USERNAME` defaults to `admin`. Without this opt-in, only Home Assistant Supervisor ingress is accepted. Standalone mode refuses to start the editor if the password is missing or blank; every page and API request requires HTTP Basic authentication.
+
+```yaml
+services:
+  nspanel-lovelace-ui:
+    image: ghcr.io/jobr99/nspanel-lovelace-ui:latest
+    environment:
+      STANDALONE: "1"
+      WEB_STANDALONE: "true"
+      WEB_USERNAME: admin
+      WEB_PASSWORD: "${NSPANEL_WEB_PASSWORD:?Set NSPANEL_WEB_PASSWORD}"
+      LOGLEVEL: INFO
+    ports:
+      - "8099:8099"
+    volumes:
+      - ./nspanel-config:/config
+    restart: unless-stopped
+```
+
+Set `NSPANEL_WEB_PASSWORD` in your Compose environment or `.env`, then recreate the container. Open `http://<docker-host>:8099` and enter the username/password in the browser login prompt. Basic authentication is not encrypted over HTTP; use a trusted local network or an HTTPS reverse proxy for remote access. Restrict the published port to the intended network.
+
+`STANDALONE` disables Supervisor MQTT discovery and uses `LOGLEVEL`/`LOGTOFILE` for logging; `WEB_STANDALONE` independently enables authenticated direct access to the editor. The panel backend still needs a Home Assistant connection and MQTT settings in `/config/panels.yaml`. This enables the editor without Supervisor, not operation of panels without Home Assistant. Environment-provided editor credentials are not included in YAML exports. Use an image built with this feature; older images do not recognize these variables.

@@ -27,4 +27,4 @@ nspanels:
           - entity: light.kitchen
 ```
 
-For Home Assistant Container or a standalone process, follow the [standalone operation guide](https://docs.nspanel.pky.eu/standalone-runtime/). Supply your own HA address/token and MQTT settings; the bundled editor requires Supervisor ingress.
+For Home Assistant Container or a standalone process, follow the [standalone operation guide](https://docs.nspanel.pky.eu/standalone-runtime/). Supply your own HA address/token and MQTT settings; enable authenticated standalone editor access as described in that guide.

@@ -28,6 +28,6 @@ See the [configuration reference](config-overview.md), [cards](cards.md), and [s
 
 ## Requirements and other backends
 
-For the add-on, use Home Assistant OS on `amd64` or `aarch64`, an NSPanel with compatible display firmware, and an MQTT broker for the Tasmota path. Home Assistant Container users can run the [standalone backend](standalone-runtime.md); the ingress editor requires Supervisor.
+For the add-on, use Home Assistant OS on `amd64` or `aarch64`, an NSPanel with compatible display firmware, and an MQTT broker for the Tasmota path. Home Assistant Container users can run the [standalone backend](standalone-runtime.md); direct editor access requires standalone mode and authentication.
 
 Existing AppDaemon installations have a separate [legacy reference](legacy-prepare_ha.md). ioBroker users should follow [the ioBroker installation guide](iobroker-install.md).

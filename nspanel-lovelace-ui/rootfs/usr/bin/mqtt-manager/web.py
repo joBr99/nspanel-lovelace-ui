@@ -1,4 +1,7 @@
-"""Ingress-only configuration editor, independent of panel connectivity."""
+"""Configuration editor with ingress or opt-in standalone authentication."""
+import base64
+import binascii
+import hmac
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import logging
@@ -12,7 +15,20 @@ from config_manager import CARD_TYPES, MAX_BYTES, ConfigError, ConfigStore, Conf
 FRONTEND = Path(__file__).with_name("frontend")
 
 
-def handler_for(store, allowed_peer="172.30.32.2"):
+def standalone_credentials(environ):
+    enabled = environ.get("WEB_STANDALONE", "false").lower()
+    if enabled not in ("true", "false", "1", "0"):
+        raise ValueError("WEB_STANDALONE must be true or false (or 1/0)")
+    if enabled in ("false", "0"):
+        return None
+    username = environ.get("WEB_USERNAME", "admin")
+    password = environ.get("WEB_PASSWORD", "")
+    if not username or ":" in username or not password.strip():
+        raise ValueError("Standalone editor requires WEB_PASSWORD and a non-empty WEB_USERNAME without ':'")
+    return f"{username}:{password}".encode("utf-8")
+
+
+def handler_for(store, allowed_peer="172.30.32.2", credentials=None):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, fmt, *args):
             logging.info("Editor: " + fmt, *args)
@@ -21,6 +37,8 @@ def handler_for(store, allowed_peer="172.30.32.2"):
             if content_type == "application/json":
                 body = json.dumps(body).encode()
             self.send_response(status)
+            if status == 401:
+                self.send_header("WWW-Authenticate", 'Basic realm="NSPanel editor", charset="UTF-8"')
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
@@ -30,6 +48,16 @@ def handler_for(store, allowed_peer="172.30.32.2"):
             self.wfile.write(body)
 
         def authorized(self):
+            if credentials is not None:
+                scheme, _, token = self.headers.get("Authorization", "").partition(" ")
+                try:
+                    supplied = base64.b64decode(token, validate=True) if scheme.lower() == "basic" else b""
+                except (ValueError, binascii.Error):
+                    supplied = b""
+                if not hmac.compare_digest(supplied, credentials):
+                    self.respond(401, {"error": "Authentication required"})
+                    return False
+                return True
             # Never trust forwarding headers: only the Supervisor may reach this port.
             if self.client_address[0] != allowed_peer:
                 self.respond(403, {"error": "Use Home Assistant ingress to open the editor."})
@@ -96,4 +124,6 @@ def handler_for(store, allowed_peer="172.30.32.2"):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     store = ConfigStore(os.environ.get("CONFIG_FILE", "/config/panels.yaml"))
-    ThreadingHTTPServer(("0.0.0.0", 8099), handler_for(store)).serve_forever()
+    credentials = standalone_credentials(os.environ)
+    logging.info("Editor access mode: %s", "standalone (authentication required)" if credentials else "Supervisor ingress")
+    ThreadingHTTPServer(("0.0.0.0", 8099), handler_for(store, credentials=credentials)).serve_forever()

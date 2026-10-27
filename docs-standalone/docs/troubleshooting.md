@@ -2,7 +2,7 @@
 
 ## Editor does not open
 
-Check that the add-on is running and that its installed version includes the editor. Open it through **Open Web UI** or the sidebar. Direct access to internal port 8099 is rejected. Inspect the add-on log for editor startup errors. The editor runs separately and can remain available while the backend waits for Home Assistant or MQTT.
+Check that the add-on is running and that its installed version includes the editor. Open it through **Open Web UI** or the sidebar. Direct access to port 8099 is rejected unless standalone editor mode is enabled. In standalone mode, set `WEB_STANDALONE=true` and a non-empty `WEB_PASSWORD`, publish port 8099, and log in with `WEB_USERNAME` (default `admin`) and that password. Inspect the add-on log for editor startup errors. The editor runs separately and can remain available while the backend waits for Home Assistant or MQTT.
 
 ## Waiting for content
 
