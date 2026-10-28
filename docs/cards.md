@@ -65,7 +65,18 @@ Keys:
 Notes:
 
 - `entities` is required.
-- `speed` key is accepted in config but currently not applied by the renderer.
+- Set `speed` on each entity to control animation. It accepts numbers or Home Assistant templates, with or without the `ha:` prefix.
+- Speeds are clamped to the TFT range of -120 to 120. Negative values reverse the flow; zero stops it. Invalid or unavailable values use zero. Fractional values are truncated toward zero.
+
+```yaml
+- type: cardPower
+  title: Energy
+  entities:
+    - entity: sensor.house_power
+    - entity: delete
+    - entity: sensor.solar_power
+      speed: '{{ states("sensor.solar_animation_speed") }}'
+```
 
 ## `cardMedia`
 
@@ -135,3 +146,21 @@ hiddenCards:
     entities:
       - entity: switch.maintenance_mode
 ```
+
+## Hidden-card navigation (4.8.5+)
+
+Hidden cards retain their left-hand Back/Up button. Configure `navItem2` to add a right-hand button, for example a shortcut to a card with `key: home`:
+
+```yaml
+hiddenCards:
+  - type: cardGrid
+    title: Lights
+    key: lights
+    navItem2:
+      entity: navigate.home
+      icon: mdi:home
+    entities:
+      - entity: light.kitchen
+```
+
+Main cards continue to use automatic previous/next navigation.

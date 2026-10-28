@@ -1,4 +1,5 @@
 from libs.helper import iid, rgb_dec565
+from ha_colors import get_entity_color
 from libs.icon_mapping import get_icon_char
 from libs.localization import get_translation
 
@@ -43,7 +44,7 @@ class Entity:
         icon_char = self.icon_overwrite or "mdi:gesture-tap-button"
         color = rgb_dec565([68, 115, 158])
         if self.color_overwrite:
-            color = rgb_dec565(self.color_overwrite)
+            color = get_entity_color(self.etype, "off", {}, self.color_overwrite)
         name = self.name_overwrite or ""
         value = ""
         match self.etype:

@@ -1,14 +1,37 @@
 from libs.helper import rgb_dec565, rgb_brightness
+import ast
+import re
+
+
+def _normalize_rgb(value):
+    """Accept [r,g,b], JSON/python RGB text, #RRGGBB or rgb(r,g,b)."""
+    if isinstance(value, str):
+        value = value.strip()
+        if re.fullmatch(r"#[0-9a-fA-F]{6}", value):
+            return [int(value[i:i+2], 16) for i in (1, 3, 5)]
+        match = re.fullmatch(r"rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)", value, re.I)
+        if match:
+            value = [int(x) for x in match.groups()]
+        else:
+            try:
+                value = ast.literal_eval(value)
+            except (ValueError, SyntaxError, TypeError, MemoryError, RecursionError):
+                return None
+    if isinstance(value, (list, tuple)) and len(value) == 3:
+        if all(type(x) is int and 0 <= x <= 255 for x in value):
+            return list(value)
+    return None
 
 
 def get_entity_color(etype, state, attr, overwrite=None):
     if overwrite is not None:
-        if type(overwrite) in [str, list]:
-            return rgb_dec565(overwrite)
-        if type(overwrite) is dict:
-            for overwrite_state, overwrite_val in overwrite.items():
-                if overwrite_state == state:
-                    return rgb_dec565(overwrite_val)
+        # Original AppDaemon color entities return text. Normalize safely to
+        # integer RGB triples before passing them to the RGB565 converter.
+        # Invalid/unavailable colors fall back to the standard entity color.
+        candidate = overwrite.get(state) if isinstance(overwrite, dict) else overwrite
+        color = _normalize_rgb(candidate)
+        if color is not None:
+            return rgb_dec565(color)
 
     default_color_on = rgb_dec565([253, 216, 53])
     default_color_off = rgb_dec565([68, 115, 158])

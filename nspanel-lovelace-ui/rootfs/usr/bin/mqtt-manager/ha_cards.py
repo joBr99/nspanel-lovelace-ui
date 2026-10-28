@@ -1,4 +1,5 @@
 import libs.home_assistant
+import libs.panel_cmd
 from libs.sensor_display import format_sensor_value
 import ha_icons
 import ha_colors
@@ -13,6 +14,7 @@ import time
 import threading
 import datetime
 import json
+import math
 
 DEFAULT_SCREENSAVER_COLOR_MAPPING = {
     "background": 0,
@@ -68,24 +70,24 @@ class HAEntity(panel_cards.Entity):
         return overwrite.get(state, overwrite.get("off", default))
 
     def prerender(self):
-        # pre render templates
-        for p in ["color_overwrite", "icon_overwrite", "value_overwrite"]:
-            val = getattr(self, p)
-            if val and "ha:" in val:
-                libs.home_assistant.cache_template(val)
+        for field in ("color", "icon", "value", "name", "speed"):
+            template = self.config.get(field)
+            if isinstance(template, str) and (template.startswith("ha:") or
+                    (field == "speed" and ("{{" in template or "{%" in template))):
+                libs.home_assistant.cache_template(template, self.entity_id)
 
     def render(self, cardType=""):
-
-        config_icon = self.config.get("icon", None)
-        if config_icon and isinstance(config_icon, str) and config_icon.startswith("ha:"):
-            self.icon_overwrite = libs.home_assistant.get_template(config_icon)
-        elif config_icon and self.etype in ["navigate", "iText"]:
-            self.icon_overwrite = self._resolve_internal_overwrite(config_icon, "mdi:gesture-tap-button")
-        config_color = self.config.get("color", None)
-        if config_color and isinstance(config_color, str) and config_color.startswith("ha:"):
-            self.color_overwrite = json.loads(libs.home_assistant.get_template(config_color)[3:])
-        elif config_color and self.etype in ["navigate", "iText"]:
-            self.color_overwrite = self._resolve_internal_overwrite(config_color)
+        # Resolve from config each time: do not replace the subscribed expression.
+        self.name_overwrite = self.config.get("name")
+        for field in ("name", "icon", "color"):
+            configured = self.config.get(field)
+            if isinstance(configured, str) and configured.startswith("ha:"):
+                resolved = libs.home_assistant.get_template(configured, self.entity_id)
+                if field == "name" and resolved is not None:
+                    resolved = str(resolved)
+                setattr(self, field + "_overwrite", resolved)
+            elif field in ("icon", "color") and self.etype in ("navigate", "iText"):
+                setattr(self, field + "_overwrite", self._resolve_internal_overwrite(configured))
 
         if self.etype in ["delete", "navigate", "iText"]:
             out = super().render()
@@ -131,9 +133,7 @@ class HAEntity(panel_cards.Entity):
 
         color = ha_colors.get_entity_color(self.etype, self.state, self.attributes, self.color_overwrite)
 
-        name = self.config.get("name", self.attributes.get("friendly_name", "unknown"))
-        if self.name_overwrite:
-            name = self.name_overwrite
+        name = self.name_overwrite if self.name_overwrite is not None else self.attributes.get("friendly_name", "unknown")
         value = ""
 
         match self.etype:
@@ -252,11 +252,12 @@ class HAEntity(panel_cards.Entity):
                     if value.endswith("."):
                         value = value[:-1]
 
+                # Keep grid values unitless so the TFT retains the font suffix.
+                if cardType in ["cardGrid", "cardGrid2"] and not self.icon_overwrite:
+                    icon_char = value
                 if device_class != "temperature":
                     value = value + " "
                 value = value + unit_of_measurement
-                if cardType in ["cardGrid", "cardGrid2"] and not self.icon_overwrite:
-                    icon_char = value
             case 'binary_sensor':
                 device_class = self.attributes.get("device_class", "")
                 value = get_translation(self.locale, f"backend.component.binary_sensor.state.{device_class}.{self.state}")
@@ -266,23 +267,16 @@ class HAEntity(panel_cards.Entity):
 
                 # settings for forecast
                 forecast_type = None
-                if self.config.get("day"):
+                if self.config.get("day") is not None:
                     forecast_type = "daily"
                     pos = self.config.get("day")
                     datetime_format = "E"
-                if self.config.get("hour"):
+                if self.config.get("hour") is not None:
                     forecast_type = "hourly"
                     pos = self.config.get("hour")
                     datetime_format = "H:mm"
                 if forecast_type:
-                    forecast = libs.home_assistant.execute_script(
-                        entity_name=self.entity_id,
-                        domain='weather',
-                        service="get_forecasts",
-                        service_data={
-                            'type': forecast_type
-                        }
-                    ).get(self.entity_id,{}).get("forecast", [])
+                    forecast = libs.home_assistant.get_forecast(self.entity_id, forecast_type).get(self.entity_id,{}).get("forecast", [])
                     if len(forecast) > pos:
                         forcast_pos = forecast[pos]
                         forcast_condition = forcast_pos.get("condition", "")
@@ -294,7 +288,7 @@ class HAEntity(panel_cards.Entity):
                         attr = self.config.get("attribute", "temperature")
                         value = str(forcast_pos.get(attr, "not found"))
                     else:
-                        name: "unknown"
+                        name = "unknown"
                 # add units
                 if attr in ["temperature", "apparent_temperature", "templow"]:
                     value += self.config.get("unit", "°C")
@@ -304,7 +298,8 @@ class HAEntity(panel_cards.Entity):
                 name = "unsupported"
 
         if self.value_overwrite and self.value_overwrite.startswith("ha:"):
-            value = libs.home_assistant.get_template(self.value_overwrite)[3:]
+            resolved = libs.home_assistant.get_template(self.value_overwrite, self.entity_id)
+            value = "" if resolved is None else resolved
 
 
         # Grid icon/value fonts use TFT IDs 0–3, unlike screensaver status fonts.
@@ -328,16 +323,24 @@ class HACard(panel_cards.Card):
                 entity = HAEntity(locale, e, panel)
                 self.entities.append(entity)
 
+    def navigation_entities(self):
+        if not self.hidden:
+            return []
+        if not hasattr(self, "_nav_item2"):
+            config = self.config.get("navItem2")
+            self._nav_item2 = HAEntity(self.locale, config, self.panel) if isinstance(config, dict) and config.get("entity") else None
+        return [self._nav_item2] if self._nav_item2 else []
+
     def get_iid_entities(self):
-        return [(e.iid, e.entity_id) for e in self.entities]
+        return [(e.iid, e.entity_id) for e in self.entities + self.navigation_entities()]
 
     def get_entities(self):
-        entities = [e.entity_id for e in self.entities]
-        for entity in self.entities:
+        entities = [e.entity_id for e in self.entities + self.navigation_entities()]
+        for entity in self.entities + self.navigation_entities():
             status_entity = entity.config.get("status")
             if status_entity and status_entity not in entities:
                 entities.append(status_entity)
-        return entities
+        return entities + [self.iid]
 
     def gen_nav(self):
         leftBtn = "delete~~~~~"
@@ -366,6 +369,8 @@ class HACard(panel_cards.Card):
                                              'color': [255, 255, 255],
                                          }, self.panel
                                          ).render()[1:]
+        if self.navigation_entities():
+            rightBtn = self.navigation_entities()[0].render()[1:]
         result = f"{leftBtn}~{rightBtn}"
         return result
 
@@ -386,9 +391,11 @@ class QRCard(HACard):
         super().__init__(locale, config, panel)
         self.qrcode = config.get("qrCode", "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     def render(self):
-        if self.qrcode.startswith("ha:"):
-            self.qrcode = libs.home_assistant.get_template(self.qrcode)[3:]
-        result = f"{self.title}~{self.gen_nav()}~{self.qrcode}"
+        qrcode = self.qrcode
+        if qrcode.startswith("ha:"):
+            resolved = libs.home_assistant.get_template(qrcode, self.iid)
+            qrcode = "" if resolved is None else str(resolved)
+        result = f"{self.title}~{self.gen_nav()}~{qrcode}"
         for e in self.entities:
             result += e.render()
         libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
@@ -401,13 +408,15 @@ class PowerCard(HACard):
         result = f"{self.title}~{self.gen_nav()}"
         for e in self.entities:
             result += e.render()
-            speed = 0
-            # TODO: Implement speed card power
-            #if apis.ha_api.entity_exists(item.entityId):
-            #    entity = apis.ha_api.get_entity(item.entityId)
-            #    speed = str(item.entity_input_config.get("speed", 0))
-            #    if isinstance(speed, str):
-            #        speed = apis.ha_api.render_template(speed)
+            speed_input = e.config.get("speed", 0)
+            if isinstance(speed_input, str) and (speed_input.startswith("ha:") or "{{" in speed_input or "{%" in speed_input):
+                speed_input = libs.home_assistant.get_template(speed_input, e.entity_id)
+            try:
+                numeric = float(speed_input)
+                # The TFT supports signed speeds: negative values reverse flow.
+                speed = int(max(-120, min(120, numeric))) if math.isfinite(numeric) else 0
+            except (TypeError, ValueError, OverflowError):
+                speed = 0
             result += f"~{speed}"
         libs.panel_cmd.entityUpd(self.panel.msg_out_queue, self.panel.sendTopic, result)
 

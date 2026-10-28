@@ -31,6 +31,7 @@ class SensorPrecisionTests(unittest.TestCase):
         with patch.dict(sys.modules, {'websocket': types.ModuleType('websocket')}):
             spec.loader.exec_module(self.ha)
         self.ha.ws = Mock()
+        self.ha.auth_ok = True
         self.ha.on_ha_update = Mock()
 
     def message(self, message):
@@ -87,7 +88,7 @@ class SensorPrecisionTests(unittest.TestCase):
                 result = entity.render(cardType=card).split('~')
                 self.assertEqual(result[-1], '7.75 kW')
                 if card in ('cardGrid', 'cardGrid2'):
-                    self.assertEqual(result[3], '7.75 kW')
+                    self.assertEqual(result[3], '7.75')
             self.assertEqual(state['state'], '7.75165151099879')
 
     def test_grid_font_sizes(self):
@@ -104,8 +105,24 @@ class SensorPrecisionTests(unittest.TestCase):
                     self.assertEqual(fields[-1], '12.2 %')
                     if card in ('cardGrid', 'cardGrid2'):
                         suffix = '' if number is None else f'¬{number}'
-                        self.assertEqual(fields[3], '12.2 %' + suffix)
+                        self.assertEqual(fields[3], '12.2' + suffix)
                     else:
                         self.assertNotIn('¬', fields[3])
             entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'font': 'small', 'icon': 'mdi:water-percent'}, types.SimpleNamespace(model='eu'))
             self.assertTrue(entity.render(cardType='cardGrid').split('~')[3].endswith('¬0'))
+
+    def test_grid_absolute_humidity_keeps_font_suffix_without_unit(self):
+        stubs = {name: types.ModuleType(name) for name in ('websocket', 'dateutil', 'dateutil.parser', 'babel')}
+        with patch.dict(sys.modules, stubs):
+            import ha_cards
+        ha = ha_cards.libs.home_assistant
+        state = {'state': '8.441', 'attributes': {'unit_of_measurement': 'g/m³'}}
+        with patch.object(ha, 'get_entity_data', return_value=state), \
+             patch.object(ha, 'sensor_display_precision', {'sensor.humidity': 2}):
+            for font, suffix in [('small', '¬0'), ('medium', '¬2')]:
+                entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'font': font}, types.SimpleNamespace(model='eu'))
+                for card in ('cardGrid', 'cardGrid2'):
+                    with self.subTest(font=font, card=card):
+                        self.assertEqual(entity.render(cardType=card).split('~')[3], '8.44' + suffix)
+                for card in ('cardEntities', 'screensaver'):
+                    self.assertEqual(entity.render(cardType=card).split('~')[-1], '8.44 g/m³')

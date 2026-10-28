@@ -1,3 +1,15 @@
+## 4.8.5
+
+- Restore dynamic entity names, hidden-card `navItem2`, and numeric or templated `cardPower` animation speeds, including reverse flow.
+- Accept safe RGB color strings from Home Assistant templates, with fallback for invalid colors.
+- Serialize WebSocket request IDs and correlate responses before sending; restore template and ESPHome subscriptions after reconnects.
+- Share template subscriptions and refresh displayed entities when template results change; keep QR templates dynamic across renders.
+- Refresh weather forecasts in the background with shared caching, an eight-second forecast timeout, and last-good results after transient errors. Support forecast index zero.
+
+- Omit units from sensor values displayed in the icon area of `cardGrid` and its automatic `cardGrid2` layout, restoring AppDaemon behavior.
+- Keep grid sensor text shorter so units do not get clipped or crowd out the font-selection suffix sent to the TFT.
+- Preserve Home Assistant display precision and units on entity cards and screensavers.
+
 ## 4.8.4
 
 - Add authenticated standalone web editor access using WEB_STANDALONE, WEB_USERNAME, and WEB_PASSWORD.
