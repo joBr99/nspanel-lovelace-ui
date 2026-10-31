@@ -1,4 +1,4 @@
-## Unreleased
+## 4.8.7
 
 - Suppress unchanged screensaver weather, theme, and status messages; force a full refresh on page entry, panel requests, and connection recovery.
 - Keep sensor display precision during Home Assistant reconnects and ignore older registry responses that arrive late.

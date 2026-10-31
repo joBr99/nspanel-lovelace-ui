@@ -257,3 +257,68 @@ class RenderingTests(unittest.TestCase):
                 self.assertEqual(entity.render().split('~')[3], '0')
         entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'icon': 'mdi:water-percent'}, self.panel)
         self.assertEqual(entity.render().split('~')[3], ha_cards.get_icon_char('mdi:water-percent'))
+
+    def test_screensaver_deduplicates_each_payload_and_can_force_refresh(self):
+        self.panel.model = 'us-l'
+        card = ha_cards.Screensaver('en_US', {
+            'entities': [{'entity': 'sensor.power', 'icon': 'mdi:transmission-tower',
+                          'color': 'ha:{{ color }}'}],
+            'theme': {'background': 0},
+            'statusIcon1': {'entity': 'sensor.power', 'icon': 'ha:{{ status }}'},
+        }, self.panel)
+        results = {'ha:{{ color }}': '[0,255,0]', 'ha:{{ status }}': '85%'}
+        self.state['state'] = '1910.0'
+        self.state['attributes']['unit_of_measurement'] = 'W'
+        with patch.object(self.ha, 'sensor_display_precision', {'sensor.power': 0}), \
+             patch.object(self.ha, 'get_template', side_effect=lambda expression, target: results[expression]), \
+             patch.object(ha_cards.libs.panel_cmd, 'weatherUpdate') as weather, \
+             patch.object(ha_cards.libs.panel_cmd, 'screensaverColor') as color, \
+             patch.object(ha_cards.libs.panel_cmd, 'statusUpdate') as status:
+            for raw in ('1910.0', '1910', '1910.0', '1910'):
+                self.state['state'] = raw
+                card.render()
+            self.assertEqual((weather.call_count, color.call_count, status.call_count), (1, 1, 1))
+            self.assertIn('1910 W', weather.call_args.args[2])
+            self.state['state'] = '1911'
+            card.render()
+            self.assertEqual((weather.call_count, color.call_count, status.call_count), (2, 1, 1))
+            results['ha:{{ status }}'] = ''
+            card.render()
+            self.assertEqual((weather.call_count, color.call_count, status.call_count), (2, 1, 2))
+            card.theme['background'] = 1
+            card.render()
+            self.assertEqual((weather.call_count, color.call_count, status.call_count), (2, 2, 2))
+            card.invalidate()
+            card.render()
+            self.assertEqual((weather.call_count, color.call_count, status.call_count), (3, 3, 3))
+
+    def test_panel_refresh_invalidation_preserves_brightness_updates(self):
+        stubs = {name: types.ModuleType(name) for name in
+                 ('dateutil', 'dateutil.tz', 'babel', 'babel.dates', 'scheduler', 'scheduler.trigger')}
+        stubs['ha_cards'] = ha_cards
+        stubs['libs.home_assistant'] = self.ha
+        stubs['scheduler'].Scheduler = Mock()
+        spec = importlib.util.spec_from_file_location('refresh_test_panel', BACKEND / 'panel.py')
+        module = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, stubs):
+            spec.loader.exec_module(module)
+        panel = module.LovelaceUIPanel.__new__(module.LovelaceUIPanel)
+        panel.updater = types.SimpleNamespace(active=False)
+        panel.screensaver = Mock()
+        panel.screensaver.get_entities.return_value = ['sensor.power']
+        panel.current_card = panel.screensaver
+        panel.settings = {}
+        panel.msg_out_queue = Mock()
+        panel.sendTopic = 'test'
+        panel.name = 'test'
+        panel.dimmode = Mock()
+        with patch.object(module.ha_control, 'calculate_dim_values', return_value=['sensor.power']):
+            panel.ha_event_callback('sensor.power')
+        panel.dimmode.assert_called_once()
+        panel.screensaver.invalidate.assert_not_called()
+        panel.screensaver.render.assert_called_once()
+        panel.customrecv_event_callback('event,renderCurrentPage')
+        panel.screensaver.invalidate.assert_called_once()
+        with patch.object(module.libs.panel_cmd, 'page_type'):
+            panel.render_current_page(switchPages=True)
+        self.assertEqual(panel.screensaver.invalidate.call_count, 2)

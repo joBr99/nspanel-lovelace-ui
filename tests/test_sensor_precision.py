@@ -56,7 +56,7 @@ class SensorPrecisionTests(unittest.TestCase):
     def test_auth_reconnect_and_registry_event(self):
         self.ha.sensor_display_precision = {'sensor.old': 3}
         self.message({'type': 'auth_ok'})
-        self.assertEqual(self.ha.sensor_display_precision, {})
+        self.assertEqual(self.ha.sensor_display_precision, {'sensor.old': 3})
         sent = [json.loads(call.args[0]) for call in self.ha.ws.send.call_args_list]
         self.assertTrue(any(m.get('event_type') == 'entity_registry_updated' for m in sent))
         self.assertEqual(sent[-1]['type'], 'config/entity_registry/list_for_display')
@@ -126,3 +126,21 @@ class SensorPrecisionTests(unittest.TestCase):
                         self.assertEqual(entity.render(cardType=card).split('~')[3], '8.44' + suffix)
                 for card in ('cardEntities', 'screensaver'):
                     self.assertEqual(entity.render(cardType=card).split('~')[-1], '8.44 g/m³')
+
+    def test_older_registry_response_cannot_replace_new_precision(self):
+        self.ha._get_display_registry()
+        older = self.ha.request_display_registry_id
+        self.registry([{'ei': 'sensor.power', 'dp': 0}])
+        self.message({'type': 'result', 'success': True, 'id': older,
+                      'result': {'entities': [{'ei': 'sensor.power', 'dp': 1}]}})
+        self.assertEqual(self.ha.sensor_display_precision, {'sensor.power': 0})
+
+    def test_reconnect_retains_precision_until_valid_registry_response(self):
+        self.ha.sensor_display_precision = {'sensor.power': 0}
+        self.message({'type': 'auth_ok'})
+        for state in ('1910.0', '1910'):
+            self.assertEqual(format_sensor_value(state, self.ha.sensor_display_precision['sensor.power']), '1910')
+        self.message({'type': 'result', 'success': False, 'id': self.ha.request_display_registry_id})
+        self.assertEqual(self.ha.sensor_display_precision, {'sensor.power': 0})
+        self.registry([{'ei': 'sensor.power', 'dp': 1}])
+        self.assertEqual(format_sensor_value('1910', self.ha.sensor_display_precision['sensor.power']), '1910.0')
