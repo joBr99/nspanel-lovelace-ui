@@ -1,3 +1,7 @@
+## 4.8.6
+
+- Fix icon templates displaying an exclamation mark instead of text or embedded `<I>mdi:...</I>` icons, including screensaver status icons and empty results.
+
 ## 4.8.5
 
 - Restore dynamic entity names, hidden-card `navItem2`, and numeric or templated `cardPower` animation speeds, including reverse flow.

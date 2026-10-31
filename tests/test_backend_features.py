@@ -225,3 +225,35 @@ class RenderingTests(unittest.TestCase):
         with patch.object(self.ha, 'get_template', return_value=0):
             fields = entity.render().split('~')
             self.assertEqual(fields[5:], ['0', '0'])
+
+    def test_screensaver_status_icon_templates_render_text_and_embedded_icons(self):
+        humidity = 'ha:{{states("sensor.temp_wohn_humidity")}}%'
+        heating = 'ha:{{iif(state_attr("climate.wohnzimmer_boden", "hvac_action")!="heating", "<I>mdi:heat-wave</I> ", "", "")}}'
+        config = {
+            'statusIcon1': {'entity': 'sensor.temp_wohn_humidity', 'icon': humidity},
+            'statusIcon2': {'entity': 'climate.wohnzimmer_boden', 'icon': heating},
+        }
+        card = ha_cards.Screensaver('en_US', config, self.panel)
+        heat_icon = ha_cards.get_icon_char('mdi:heat-wave')
+        for humidity_result, heating_result, expected in [
+            ('45%', '<I>mdi:heat-wave</I> ', heat_icon + ' '),
+            ('46%', '', ''),
+            ('0%', '<I>mdi:heat-wave</I> ', heat_icon + ' '),
+        ]:
+            with self.subTest(humidity=humidity_result, heating=heating_result), \
+                 patch.object(self.ha, 'get_template', side_effect=lambda template, target: humidity_result if template == humidity else heating_result), \
+                 patch.object(ha_cards.libs.panel_cmd, 'statusUpdate') as send:
+                card.render()
+                payload = send.call_args.args[2].split('~')
+                self.assertEqual(payload[0], humidity_result)
+                self.assertEqual(payload[2], expected)
+        self.assertEqual(card.statusIcon1.config['icon'], humidity)
+        self.assertEqual(card.statusIcon2.config['icon'], heating)
+
+    def test_icon_template_zero_and_static_icons(self):
+        for entity_id in ('sensor.humidity', 'iText.test', 'navigate.home'):
+            entity = ha_cards.HAEntity('en_US', {'entity': entity_id, 'icon': 'ha:{{ 0 }}'}, self.panel)
+            with patch.object(self.ha, 'get_template', return_value=0):
+                self.assertEqual(entity.render().split('~')[3], '0')
+        entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'icon': 'mdi:water-percent'}, self.panel)
+        self.assertEqual(entity.render().split('~')[3], ha_cards.get_icon_char('mdi:water-percent'))

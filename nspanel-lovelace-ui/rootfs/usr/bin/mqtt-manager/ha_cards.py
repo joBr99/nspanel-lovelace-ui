@@ -83,6 +83,10 @@ class HAEntity(panel_cards.Entity):
             configured = self.config.get(field)
             if isinstance(configured, str) and configured.startswith("ha:"):
                 resolved = libs.home_assistant.get_template(configured, self.entity_id)
+                # Icon templates render literal text with optional <I>mdi:...</I> tags.
+                # Keep this marker at the renderer boundary, not in the shared cache.
+                if field == "icon" and resolved is not None:
+                    resolved = "ha:" + str(resolved)
                 if field == "name" and resolved is not None:
                     resolved = str(resolved)
                 setattr(self, field + "_overwrite", resolved)
