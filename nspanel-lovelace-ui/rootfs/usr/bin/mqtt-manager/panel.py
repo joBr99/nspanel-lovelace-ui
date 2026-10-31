@@ -176,11 +176,13 @@ class LovelaceUIPanel:
             self.dimmode()
 
 
-    def render_current_page(self, switchPages=False, requested=False):
+    def render_current_page(self, switchPages=False, requested=False, force=False):
         if self.updater.active:
             return
         if not self.current_card:
             return
+        if (switchPages or force) and self.current_card is self.screensaver:
+            self.screensaver.invalidate()
         if switchPages:
             libs.panel_cmd.page_type(self.msg_out_queue, self.sendTopic, self.current_card.type)
         if requested:
@@ -262,7 +264,7 @@ class LovelaceUIPanel:
                 self.current_card = self.screensaver
                 self.render_current_page(switchPages=True)
             if msg[1] == "renderCurrentPage":
-                self.render_current_page(requested=True)
+                self.render_current_page(requested=True, force=True)
             if msg[1] == "buttonPress2":
                 if len(msg) < 4:
                     logging.error("Malformed buttonPress2 payload on '%s': %s", self.name, msg)

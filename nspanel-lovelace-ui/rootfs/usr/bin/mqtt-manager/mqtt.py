@@ -50,6 +50,9 @@ class MqttManager:
             result, _ = client.subscribe(topic)
             if result == mqtt.MQTT_ERR_SUCCESS:
                 logging.debug("Subscribed to panel topic: %s", topic)
+                queue = self.msg_out_queue_list.get(topic)
+                if queue is not None:
+                    queue.put(("MQTT:", "event,renderCurrentPage"))
             else:
                 logging.error("Failed to subscribe to panel topic '%s' (result=%s)", topic, result)
 

@@ -1,3 +1,8 @@
+## Unreleased
+
+- Suppress unchanged screensaver weather, theme, and status messages; force a full refresh on page entry, panel requests, and connection recovery.
+- Keep sensor display precision during Home Assistant reconnects and ignore older registry responses that arrive late.
+
 ## 4.8.6
 
 - Fix icon templates displaying an exclamation mark instead of text or embedded `<I>mdi:...</I>` icons, including screensaver status icons and empty results.

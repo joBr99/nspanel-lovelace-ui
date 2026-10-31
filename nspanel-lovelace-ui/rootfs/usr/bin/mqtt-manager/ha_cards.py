@@ -670,6 +670,15 @@ class Screensaver(HACard):
         if "statusIcon2" in config:
             self.statusIcon2 = HAEntity(locale, config.get("statusIcon2"), panel)
         self.theme = config.get("theme")
+        self.invalidate()
+
+    def invalidate(self):
+        self._last_payloads = {}
+
+    def _send_changed(self, command, payload):
+        if self._last_payloads.get(command) != payload:
+            command(self.panel.msg_out_queue, self.panel.sendTopic, payload)
+            self._last_payloads[command] = payload
 
     def get_entities(self):
         ent = [e.entity_id for e in self.entities]
@@ -683,11 +692,10 @@ class Screensaver(HACard):
         result = ""
         for e in self.entities:
             result += e.render(cardType=self.type)
-        libs.panel_cmd.weatherUpdate(self.panel.msg_out_queue, self.panel.sendTopic, result[1:])
+        self._send_changed(libs.panel_cmd.weatherUpdate, result[1:])
         if self.type == "screensaver" and self.theme:
-            libs.panel_cmd.screensaverColor(
-                self.panel.msg_out_queue,
-                self.panel.sendTopic,
+            self._send_changed(
+                libs.panel_cmd.screensaverColor,
                 get_screensaver_color_output(self.theme),
             )
 
@@ -707,7 +715,7 @@ class Screensaver(HACard):
         else:
             statusUpdateResult += "~~"
 
-        libs.panel_cmd.statusUpdate(self.panel.msg_out_queue, self.panel.sendTopic, f"{statusUpdateResult}~{icon1font}~{icon2font}")
+        self._send_changed(libs.panel_cmd.statusUpdate, f"{statusUpdateResult}~{icon1font}~{icon2font}")
 
 
 def card_factory(locale, settings, panel):

@@ -23,6 +23,7 @@ FORECAST_TIMEOUT_SECONDS = 8
 request_all_states_id = 0
 request_display_registry_id = None
 sensor_display_precision = {}
+last_display_registry_result_id = 0
 ws_connected = False
 home_assistant_entity_state_cache = {}
 template_cache = {}
@@ -57,7 +58,7 @@ def register_on_disconnect_handler(handler):
 
 
 def on_message(ws, message):
-    global auth_ok, next_id, sensor_display_precision
+    global auth_ok, next_id, sensor_display_precision, last_display_registry_result_id
     try:
         reply = json.loads(message)
     except json.JSONDecodeError:
@@ -73,7 +74,8 @@ def on_message(ws, message):
             next_id = 0
             template_cache.clear()
             subscribed_templates.clear()
-            sensor_display_precision = {}
+            # Keep precision during reconnect; replace only after a valid response.
+            last_display_registry_result_id = 0
             auth_ok = True
             templates = tuple(known_templates)
         logging.info("Home Assistant auth OK. Requesting existing states.")
@@ -133,10 +135,13 @@ def on_message(ws, message):
             return
         kind = pending.get("kind") if pending else None
         if kind == "display_registry":
+            if reply["id"] < last_display_registry_result_id:
+                return
             result = reply.get("result", {})
             if not isinstance(result, dict) or not isinstance(result.get("entities"), list):
                 logging.warning("Unexpected Home Assistant display registry response")
                 return
+            last_display_registry_result_id = reply["id"]
             previous = sensor_display_precision
             sensor_display_precision = {
                 entry["ei"]: entry["dp"] for entry in result["entities"]
@@ -170,8 +175,6 @@ def _ws_connection_open(ws):
         ws_connected = True
         auth_ok = False
     logging.info("WebSocket connection to Home Assistant opened.")
-    if ON_CONNECT_HANDLER is not None:
-        ON_CONNECT_HANDLER()
 
 
 def _ws_connection_close(ws, close_status_code, close_msg):

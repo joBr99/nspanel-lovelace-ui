@@ -47,6 +47,11 @@ def on_ha_update(entity_id):
         except Exception:
             logging.exception("Failed to enqueue HA update for entity '%s'", entity_id)
 
+def refresh_panels_after_reconnect():
+    for queue in panel_in_queues.values():
+        queue.put(("MQTT:", "event,renderCurrentPage"))
+
+
 def on_ha_panel_event(device_id, msg):
     global panel_in_queues
 
@@ -85,6 +90,7 @@ def connect():
     # MQTT Connected, start APIs if configured
     if ha_is_configured:
         libs.home_assistant.init(settings, on_ha_update)
+        libs.home_assistant.register_on_connect_handler(refresh_panels_after_reconnect)
         libs.home_assistant.connect()
     else:
         logging.info("Home Assistant values not configured, will not connect.")
