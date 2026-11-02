@@ -121,3 +121,16 @@ Color templates can return RGB text such as `[223, 255, 0]`, `(223, 255, 0)`, `#
 `day: 0` selects the first daily forecast entry; `day: 1` selects the next entry. `hour: 0` likewise selects the first hourly entry. Dates depend on the forecast supplied by the Home Assistant integration.
 
 Forecast entries share a cache by weather entity and forecast type. When rendered, missing or expired forecasts are refreshed in the background, with an eight-second response timeout and a five-minute cache lifetime. A successful refresh updates the panel automatically. Slow responses do not block panel interaction. Failed refreshes retain the last valid forecast and allow another attempt on a subsequent render after 30 seconds.
+
+## Conditional items (4.8.8+)
+
+`state_template` is a **hide condition**, matching AppDaemon: `true` hides the item and `false` shows it. Hidden items are omitted, so subsequent grid items fill their places. The configured grid layout remains unchanged.
+
+```yaml
+- entity: input_boolean.stop_robot_mower
+  name: Stop & Return
+  icon: mdi:home-lightning-bolt-outline
+  state_template: '{{ states("binary_sensor.raccoon_mower_e5019c_mowing") == "off" }}'
+```
+
+The condition may reference different entities from the displayed item. Changes to the template result refresh the card automatically. Both bare Jinja and `ha:` templates are supported. Pending or unavailable template results leave the item visible; visibility conditions are not access controls. Existing `state` and `state_not` filters continue to apply.

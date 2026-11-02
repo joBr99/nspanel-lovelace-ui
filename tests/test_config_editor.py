@@ -27,6 +27,16 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(result['config'], self.config)
         self.assertEqual(result['errors'], [])
 
+    def test_import_preserves_state_template_without_unsupported_warning(self):
+        panel = next(iter(self.config['nspanels'].values()))
+        panel['cards'] = [{'type': 'cardGrid', 'entities': [{
+            'entity': 'input_boolean.stop_robot_mower',
+            'state_template': '{{ states("binary_sensor.mowing") == "off" }}'}]}]
+        old = {'panel': {'module': 'nspanel-lovelace-ui', 'class': 'NsPanelLovelaceUIManager', 'config': panel}}
+        result = import_yaml(yaml.safe_dump(old))
+        self.assertEqual(result['config']['nspanels']['panel']['cards'], panel['cards'])
+        self.assertFalse(any('state_template' in warning for warning in result['warnings']))
+
     def test_appdaemon_conversion(self):
         old = {'module': 'nspanel-lovelace-ui', 'class': 'NsPanelLovelaceUIManager', 'config': {
             'panelRecvTopic': 'tele/p/RESULT', 'panelSendTopic': 'cmnd/p/CustomSend',

@@ -70,13 +70,23 @@ class HAEntity(panel_cards.Entity):
         return overwrite.get(state, overwrite.get("off", default))
 
     def prerender(self):
-        for field in ("color", "icon", "value", "name", "speed"):
+        for field in ("color", "icon", "value", "name", "speed", "state_template"):
             template = self.config.get(field)
-            if isinstance(template, str) and (template.startswith("ha:") or
+            if isinstance(template, str) and template and (template.startswith("ha:") or
+                    field == "state_template" or
                     (field == "speed" and ("{{" in template or "{%" in template))):
                 libs.home_assistant.cache_template(template, self.entity_id)
 
     def render(self, cardType=""):
+        # AppDaemon compatibility: a true condition hides the item entirely.
+        condition = self.config.get("state_template")
+        if isinstance(condition, str) and condition:
+            condition = libs.home_assistant.get_template(condition, self.entity_id)
+        if (condition is True
+                or (isinstance(condition, str) and condition.strip().lower() in ("true", "on", "yes", "1"))
+                or (type(condition) in (int, float) and condition != 0)):
+            return ""
+
         # Resolve from config each time: do not replace the subscribed expression.
         self.name_overwrite = self.config.get("name")
         for field in ("name", "icon", "color"):
@@ -374,7 +384,7 @@ class HACard(panel_cards.Card):
                                          }, self.panel
                                          ).render()[1:]
         if self.navigation_entities():
-            rightBtn = self.navigation_entities()[0].render()[1:]
+            rightBtn = self.navigation_entities()[0].render()[1:] or "delete~~~~~"
         result = f"{leftBtn}~{rightBtn}"
         return result
 
@@ -703,13 +713,13 @@ class Screensaver(HACard):
         icon1font = ""
         icon2font = ""
         if self.statusIcon1:
-            si1 = self.statusIcon1.render().split('~')
+            si1 = (self.statusIcon1.render() or "~~~~~~").split('~')
             statusUpdateResult += f"{si1[3]}~{si1[4]}"
             icon1font = self.statusIcon1.font
         else:
             statusUpdateResult += "~"
         if self.statusIcon2:
-            si2 = self.statusIcon2.render().split('~')
+            si2 = (self.statusIcon2.render() or "~~~~~~").split('~')
             statusUpdateResult += f"~{si2[3]}~{si2[4]}"
             icon2font = self.statusIcon2.font
         else:

@@ -193,7 +193,7 @@ def import_yaml(text):
         if isinstance(value, dict):
             for key, item in value.items():
                 if key in {"berryURL", "dateAdditionalTemplate", "timeAdditionalTemplate",
-                           "state", "state_not", "state_template", "action_name"}:
+                           "action_name"}:
                     warnings.append(f"{path}.{key}: retained, but unsupported by the add-on runtime.")
                 if key.startswith("weatherOverrideForecast") or key in {"weatherUnit", "forecastSkip"}:
                     warnings.append(f"{path}.{key}: retained; review explicit weather entities after migration.")

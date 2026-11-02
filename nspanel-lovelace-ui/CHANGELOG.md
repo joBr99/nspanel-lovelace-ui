@@ -1,3 +1,9 @@
+## 4.8.8
+
+- Restore AppDaemon-compatible `state_template`: true hides an item without reserving a grid slot; false shows it.
+- Refresh conditional items when templates referencing other entities change. Support bare Jinja and `ha:` templates.
+- Remove outdated migration warnings for supported state filters.
+
 ## 4.8.7
 
 - Suppress unchanged screensaver weather, theme, and status messages; force a full refresh on page entry, panel requests, and connection recovery.

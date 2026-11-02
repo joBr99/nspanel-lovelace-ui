@@ -133,6 +133,31 @@ class ConnectionTests(unittest.TestCase):
         self.ha._refresh_forecast(('weather.home', 'daily'), entry)
         self.assertEqual(entry['response'], response)
 
+    def test_state_template_subscription_updates_and_compacts_grid(self):
+        panel = types.SimpleNamespace(model='eu', msg_out_queue=Mock(), sendTopic='test')
+        template = '{{ states("binary_sensor.mowing") == "off" }}'
+        self.ha.home_assistant_entity_state_cache = {
+            entity: {'state': '1', 'attributes': {}} for entity in ('sensor.action', 'sensor.next')}
+        for prefix in ('', 'ha:'):
+            with patch.object(ha_cards.libs, 'home_assistant', self.ha):
+                card = ha_cards.EntitiesCard('en_US', {'type': 'cardGrid', 'entities': [
+                    {'entity': 'sensor.action', 'state_template': prefix + template},
+                    {'entity': 'sensor.next'}]}, panel)
+                card.entities[0].prerender()
+                subscription = next(m for m in self.sent() if m['type'] == 'render_template')
+                for condition, count in [(True, 1), ('False', 2), ('True', 1), (False, 2)]:
+                    self.ha.on_ha_update.reset_mock()
+                    self.reply(type='event', id=subscription['id'], event={
+                        'result': condition, 'listeners': {'entities': ['binary_sensor.mowing']}})
+                    self.ha.on_ha_update.assert_called_with('sensor.action')
+                    with patch.object(ha_cards.libs.panel_cmd, 'entityUpd') as send:
+                        card.render()
+                    payload = send.call_args.args[2]
+                    self.assertEqual(payload.count('~text~'), count)
+                    expected = ''.join(entity.render(cardType='cardGrid') for entity in card.entities)
+                    self.assertEqual(payload, card.title + '~' + card.gen_nav() + expected)
+        self.assertEqual(sum(m['type'] == 'render_template' for m in self.sent()), 1)
+
 
 class RenderingTests(unittest.TestCase):
     def setUp(self):
@@ -322,3 +347,14 @@ class RenderingTests(unittest.TestCase):
         with patch.object(module.libs.panel_cmd, 'page_type'):
             panel.render_current_page(switchPages=True)
         self.assertEqual(panel.screensaver.invalidate.call_count, 2)
+
+    def test_state_template_results_and_internal_items(self):
+        for entity_id in ('sensor.humidity', 'navigate.home', 'iText.test'):
+            entity = ha_cards.HAEntity('en_US', {'entity': entity_id, 'state_template': '{{ condition }}'}, self.panel)
+            for result, hidden in [(True, True), (' True ', True), ('False', False), (False, False),
+                                   (None, False), ('unavailable', False), ('', False), (0, False), (1, True)]:
+                with self.subTest(entity=entity_id, result=result), patch.object(self.ha, 'get_template', return_value=result):
+                    self.assertEqual(entity.render() == '', hidden)
+        entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'state_template': '{{ condition }}', 'state': 'other'}, self.panel)
+        with patch.object(self.ha, 'get_template', return_value=False):
+            self.assertEqual(entity.render(), '')
