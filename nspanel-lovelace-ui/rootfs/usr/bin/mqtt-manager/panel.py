@@ -16,6 +16,8 @@ class LovelaceUIPanel:
     def __init__(self, name_panel, settings_panel, msg_out_queue, use_ha_api=False):
         self.updater = FirmwareUpdater(settings_panel, msg_out_queue, use_ha_api)
         self._last_dim_command = None
+        self._active_detail = None
+        self._last_detail_payload = None
         self.name = name_panel
         self.settings = settings_panel
         self.msg_out_queue = msg_out_queue
@@ -139,29 +141,12 @@ class LovelaceUIPanel:
     def ha_event_callback(self, entity_id):
         if self.updater.active:
             return
-        #logging.debug(f"{self.name} {entity_id} updated/state changed")
-        if self.current_card and entity_id in self.current_card.get_entities():
+        active_detail = getattr(self, "_active_detail", None)
+        if active_detail:
+            if entity_id == active_detail[1]:
+                self._render_detail()
+        elif self.current_card and entity_id in self.current_card.get_entities():
             self.render_current_page(requested=True)
-
-            # send update for detail popup in case it's open
-            etype = entity_id.split('.')[0]
-            if etype in ['light', 'timer', 'cover', 'input_select', 'select', 'fan', 'climate']:
-                # figure out iid of entity
-                entity_id_iid = ""
-                for e in self.current_card.entities:
-                    if entity_id == e.entity_id:
-                        entity_id_iid = f'iid.{e.iid}'
-
-                    effectList = None
-                    if etype=="light":
-                        effectList = e.config.get("effectList")
-                if etype == 'light':
-                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], "popupInSel", entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
-                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], "popupLight", entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic))
-                elif etype in ['input_select', 'media_player']:
-                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic))
-                else:
-                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], etype, entity_id, entity_id_iid, self.msg_out_queue, sendTopic=self.sendTopic))
 
         involved_entities = ha_control.calculate_dim_values(
             self.settings.get("sleepTracking"),
@@ -176,11 +161,25 @@ class LovelaceUIPanel:
             self.dimmode()
 
 
+    def _render_detail(self, force=False):
+        detail_type, entity_id, panel_id, options = self._active_detail
+        payload = detail_open(self.settings["locale"], detail_type, entity_id, panel_id,
+                              self.msg_out_queue, sendTopic=self.sendTopic, options_list=options)
+        if payload is None:
+            return
+        if force or payload != self._last_detail_payload:
+            command = libs.panel_cmd.entityUpdateDetail2 if detail_type == "popupInSel" else libs.panel_cmd.entityUpdateDetail
+            command(self.msg_out_queue, self.sendTopic, payload)
+            self._last_detail_payload = payload
+
     def render_current_page(self, switchPages=False, requested=False, force=False):
         if self.updater.active:
             return
         if not self.current_card:
             return
+        if switchPages or force:
+            self._active_detail = None
+            self._last_detail_payload = None
         if (switchPages or force) and self.current_card is self.screensaver:
             self.screensaver.invalidate()
         if switchPages:
@@ -364,9 +363,6 @@ class LovelaceUIPanel:
                             entity_id = e.entity_id
                             if entity_id.startswith("light"):
                                 effectList = e.config.get("effectList")
-                if msg[2] == "popupInSel": #entity_id.split(".")[0] in ['input_select', 'media_player']:
-                    libs.panel_cmd.entityUpdateDetail2(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], self.msg_out_queue, sendTopic=self.sendTopic, options_list=effectList))
-                else:
-                    libs.panel_cmd.entityUpdateDetail(self.msg_out_queue, self.sendTopic, detail_open(self.settings["locale"], msg[2], entity_id, msg[3], self.msg_out_queue, sendTopic=self.sendTopic))
-
-
+                self._active_detail = (msg[2], entity_id, msg[3], effectList)
+                self._last_detail_payload = None
+                self._render_detail(force=True)

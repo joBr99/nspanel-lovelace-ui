@@ -358,3 +358,84 @@ class RenderingTests(unittest.TestCase):
         entity = ha_cards.HAEntity('en_US', {'entity': 'sensor.humidity', 'state_template': '{{ condition }}', 'state': 'other'}, self.panel)
         with patch.object(self.ha, 'get_template', return_value=False):
             self.assertEqual(entity.render(), '')
+
+    def test_light_kelvin_service_and_popup_agree(self):
+        with patch.dict(sys.modules, {'libs.home_assistant': self.ha}):
+            import ha_control
+        self.state.update(state='on', attributes={
+            'min_color_temp_kelvin': 2000, 'max_color_temp_kelvin': 6500,
+            'color_temp_kelvin': 3665, 'supported_color_modes': ['color_temp'], 'brightness': 128})
+        with patch.object(ha_control.libs, 'home_assistant', self.ha, create=True), patch.object(ha_control, 'call_ha_service') as service:
+            ha_control.handle_buttons('light.test', 'colorTempSlider', '63')
+            service.assert_called_once_with('light.test', 'turn_on', service_data={'color_temp_kelvin': 3665}, action_context={})
+            payload = ha_cards.detail_open('en_US', 'popupLight', 'light.test', 'iid.test', Mock())
+            self.assertEqual(payload.split('~')[5], '63')
+            self.state['attributes'] = {'supported_color_modes': ['color_temp']}
+            service.reset_mock()
+            ha_control.handle_buttons('light.test', 'colorTempSlider', '63')
+            service.assert_not_called()
+            payload = ha_cards.detail_open('en_US', 'popupLight', 'light.test', 'iid.test', Mock())
+            self.assertEqual(payload.split('~')[5], 'disable')
+
+    def test_only_active_detail_updates_and_duplicate_payloads_are_skipped(self):
+        stubs = {name: types.ModuleType(name) for name in
+                 ('dateutil', 'dateutil.tz', 'babel', 'babel.dates', 'scheduler', 'scheduler.trigger')}
+        stubs['ha_cards'] = ha_cards
+        stubs['libs.home_assistant'] = self.ha
+        stubs['scheduler'].Scheduler = Mock()
+        spec = importlib.util.spec_from_file_location('light_test_panel', BACKEND / 'panel.py')
+        module = importlib.util.module_from_spec(spec)
+        with patch.dict(sys.modules, stubs):
+            spec.loader.exec_module(module)
+        panel = module.LovelaceUIPanel.__new__(module.LovelaceUIPanel)
+        panel.updater = types.SimpleNamespace(active=False)
+        panel.current_card = Mock()
+        panel.current_card.entities = [types.SimpleNamespace(iid='test', entity_id='light.test', config={})]
+        panel.current_card.get_entities.return_value = ['light.test', 'light.other']
+        panel.screensaver = Mock()
+        panel.settings = {'locale': 'en_US'}
+        panel.name = 'test'
+        panel.msg_out_queue = Mock()
+        panel.sendTopic = 'test'
+        with patch.object(module, 'detail_open', return_value='initial') as detail, \
+             patch.object(module.libs.panel_cmd, 'entityUpdateDetail') as send, \
+             patch.object(module.libs.panel_cmd, 'entityUpdateDetail2') as selector, \
+             patch.object(module.ha_control, 'calculate_dim_values', return_value=[]):
+            panel.customrecv_event_callback('event,pageOpenDetail,popupLight,iid.test')
+            self.assertEqual(send.call_count, 1)
+            panel.ha_event_callback('light.other')
+            self.assertEqual(detail.call_count, 1)
+            for _ in range(4):
+                panel.ha_event_callback('light.test')
+            self.assertEqual(send.call_count, 1)
+            detail.return_value = 'changed'
+            panel.ha_event_callback('light.test')
+            self.assertEqual(send.call_count, 2)
+            panel.current_card.render.assert_not_called()
+            selector.assert_not_called()
+            panel.customrecv_event_callback('event,pageOpenDetail,popupInSel,iid.test')
+            selector.assert_called_once()
+            panel.customrecv_event_callback('event,renderCurrentPage')
+            self.assertIsNone(panel._active_detail)
+            panel.ha_event_callback('light.test')
+            self.assertEqual(panel.current_card.render.call_count, 2)
+            self.assertEqual(send.call_count, 2)
+
+    def test_rgbww_light_popup_enables_color_wheel(self):
+        self.state['state'] = 'on'
+        for modes, expected in [(['color_temp', 'rgbww'], 'enable'),
+                                (['rgbww'], 'enable'), (['rgb'], 'enable'),
+                                (['color_temp'], 'disable'), (['brightness'], 'disable'),
+                                (None, 'disable')]:
+            with self.subTest(modes=modes):
+                self.state['attributes'] = {
+                    'supported_color_modes': modes, 'brightness': 128,
+                    'min_color_temp_kelvin': 2000, 'max_color_temp_kelvin': 6500,
+                    'color_temp_kelvin': 3665,
+                }
+                payload = ha_cards.detail_open('en_US', 'popupLight', 'light.wled', 'iid.test', Mock())
+                fields = payload.split('~')
+                self.assertEqual(fields[6], expected)
+                if modes == ['color_temp', 'rgbww']:
+                    self.assertEqual(fields[5], '63')
+                    self.assertNotEqual(fields[4], 'disable')

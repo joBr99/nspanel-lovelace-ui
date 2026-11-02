@@ -1,3 +1,10 @@
+## 4.8.10
+
+- Show the light-detail color wheel for RGBWW lights, including WLED entities supporting both color temperature and RGBWW.
+- Use Kelvin attributes and `color_temp_kelvin` for light temperature control and popup rendering, preserving cold-to-warm slider direction.
+- Safely handle missing or invalid light temperature limits, with compatibility for legacy mired attributes.
+- Update only the open detail popup and suppress identical payloads instead of redrawing the parent card and both light popups on every state update.
+
 ## 4.8.9
 
 - Retry unavailable Supervisor MQTT discovery every 10 seconds instead of starting with empty settings.

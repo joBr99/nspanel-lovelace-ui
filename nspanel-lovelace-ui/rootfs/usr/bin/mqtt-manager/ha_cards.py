@@ -1,5 +1,6 @@
 import libs.home_assistant
 import libs.panel_cmd
+from libs.light_temperature import temperature_slider
 from libs.sensor_display import format_sensor_value
 import ha_icons
 import ha_colors
@@ -834,7 +835,7 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id, msg_out_queue, sen
             color = "disable"
             effect_supported = "disable"
 
-            if "onoff" not in attributes.get("supported_color_modes"):
+            if "onoff" not in (attributes.get("supported_color_modes") or []):
                 brightness = 0
             if state == "on":
                 if "brightness" in attributes and attributes.get("brightness"):
@@ -842,16 +843,12 @@ def detail_open(locale, detail_type, ha_entity_id, entity_id, msg_out_queue, sen
                     brightness = int(scale(attributes.get("brightness"),(0,255),(0,100)))
                 else:
                     brightness = "disable"
-                if "color_temp" in attributes.get("supported_color_modes"):
-                    if "color_temp" in attributes and attributes.get("color_temp"):
-                        # scale ha color temp range to 0-100
-                        color_temp = int(scale(attributes.get("color_temp"), (attributes.get("min_mireds"), attributes.get("max_mireds")),(0,100)))
-                    else:
-                        color_temp = "unknown"
+                if "color_temp" in (attributes.get("supported_color_modes") or []):
+                    color_temp = temperature_slider(attributes)
                 else:
                     color_temp = "disable"
-                list_color_modes = ["xy", "rgb", "rgbw", "hs"]
-                if any(item in list_color_modes for item in attributes.get("supported_color_modes")):
+                list_color_modes = ["xy", "rgb", "rgbw", "rgbww", "hs"]
+                if any(item in list_color_modes for item in (attributes.get("supported_color_modes") or [])):
                     color = "enable"
                 else:
                     color = "disable"

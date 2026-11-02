@@ -1,4 +1,5 @@
 import libs.home_assistant
+from libs.light_temperature import slider_to_kelvin
 from libs.brightness import scheduled_brightness
 import logging
 import time
@@ -156,15 +157,12 @@ def handle_buttons(entity_id, btype, value, entity_config=None, action_context=N
             }
             call_ha_service(entity_id, "turn_on", service_data=service_data, action_context=action_context)
         case 'colorTempSlider':
-            attr = libs.home_assistant.get_entity_data(entity_id).get('attributes', [])
-            min_mireds = attr.get("min_mireds")
-            max_mireds = attr.get("max_mireds")
-            # scale 0-100 to ha brightness range
-            color_val = int(scale(int(value), (0, 100), (min_mireds, max_mireds)))
-            service_data = {
-                "color_temp": color_val
-            }
-            call_ha_service(entity_id, "turn_on", service_data=service_data, action_context=action_context)
+            data = libs.home_assistant.get_entity_data(entity_id) or {}
+            color_val = slider_to_kelvin(value, data.get('attributes') or {})
+            if color_val is None:
+                logging.warning("Cannot change color temperature for %s: invalid slider value or missing light temperature limits", entity_id)
+                return
+            call_ha_service(entity_id, "turn_on", service_data={"color_temp_kelvin": color_val}, action_context=action_context)
         case 'colorWheel':
             value = value.split('|')
             color = pos_to_color(int(value[0]), int(value[1]), int(value[2]))
