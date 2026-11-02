@@ -14,6 +14,7 @@ import signal
 import sys
 from queue import Queue
 from mqtt import MqttManager
+from libs.mqtt_settings import MQTTConfigurationError, resolve_mqtt
 
 logging.getLogger("watchdog").propagate = False
 
@@ -81,12 +82,23 @@ def process_output_to_panel():
 
 def connect():
     global settings, panel_out_queue
-    ha_is_configured = settings["home_assistant_address"] != "" and settings["home_assistant_token"] != ""
-    if "mqtt_server" in settings and not settings.get("use_ha_api"):
-        MqttManager(settings, panel_out_queue, panel_in_queues)
+    while not settings.get("use_ha_api"):
+        try:
+            mqtt_settings = resolve_mqtt(settings)
+        except MQTTConfigurationError as exc:
+            logging.error("%s Retrying in 10 seconds; the configuration editor remains available.", exc)
+            time.sleep(10)
+            # Re-read YAML and environment settings, not an earlier failed discovery.
+            while not get_config(get_config_file()):
+                logging.error("Cannot reload panel configuration. Retrying in 10 seconds.")
+                time.sleep(10)
+            continue
+        MqttManager(mqtt_settings, panel_out_queue, panel_in_queues)
+        break
     else:
         logging.info("MQTT values not configured, will not connect.")
 
+    ha_is_configured = bool(settings.get("home_assistant_address") and settings.get("home_assistant_token"))
     # MQTT Connected, start APIs if configured
     if ha_is_configured:
         libs.home_assistant.init(settings, on_ha_update)

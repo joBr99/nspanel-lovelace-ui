@@ -30,3 +30,9 @@ The add-on's Configuration tab contains logging options (`loglevel`, `logtofile`
 Use [Import YAML](config-migration-standalone.md) to bring over `panels.yaml` or AppDaemon `apps.yaml`. Stop the old backend before applying the same panel topics in the new one.
 
 If you use Home Assistant Container without Supervisor, see [standalone operation](standalone-runtime.md). Historical AppDaemon instructions remain in the [legacy section](legacy-prepare_ha.md).
+
+## MQTT discovery unavailable
+
+If Supervisor reports `Service not enabled`, the backend retries MQTT service discovery every 10 seconds, with a 10-second timeout per request. The editor remains available. Check that the broker add-on is running and provides Supervisor's MQTT service; an MQTT integration connected in Home Assistant alone does not provide these settings.
+
+You can bypass discovery by setting `mqtt_server`, `mqtt_port`, `mqtt_username`, and `mqtt_password` at the top level of `/config/panels.yaml`. With an explicit broker host, provide a valid port (usually `1883`) and any required credentials. The backend will not mix manually configured broker settings with credentials from a discovered broker. Invalid settings produce an actionable error and are re-read on retry. ESPHome API mode skips MQTT discovery.

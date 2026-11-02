@@ -1,4 +1,5 @@
 from uuid import getnode as get_mac
+from libs.mqtt_settings import validate_mqtt
 import paho.mqtt.client as mqtt
 import logging
 import time
@@ -8,6 +9,7 @@ import threading
 
 class MqttManager:
     def __init__(self, settings, msg_in_queue, msg_out_queue_list):
+        settings = validate_mqtt(settings)
         mqtt_client_name = "NSPanelLovelaceManager_" + str(get_mac())
         self.client = mqtt.Client(mqtt_client_name)
         self.msg_in_queue = msg_in_queue
@@ -17,7 +19,7 @@ class MqttManager:
         self.client.on_connect = self.on_mqtt_connect
         self.client.on_message = self.on_mqtt_message
         self.client.username_pw_set(
-            settings["mqtt_username"], settings["mqtt_password"])
+            settings.get("mqtt_username"), settings.get("mqtt_password"))
         # Wait for connection
         mqtt_server = settings["mqtt_server"]
         mqtt_port = int(settings["mqtt_port"])

@@ -1,3 +1,8 @@
+## Unreleased
+
+- Retry unavailable Supervisor MQTT discovery every 10 seconds instead of starting with empty settings.
+- Validate MQTT host and port with actionable errors; keep the editor available while retrying. Explicit broker settings and ESPHome mode bypass discovery.
+
 ## 4.8.8
 
 - Restore AppDaemon-compatible `state_template`: true hides an item without reserving a grid slot; false shows it.
