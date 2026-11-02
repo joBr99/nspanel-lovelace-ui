@@ -1,4 +1,4 @@
-## Unreleased
+## 4.8.9
 
 - Retry unavailable Supervisor MQTT discovery every 10 seconds instead of starting with empty settings.
 - Validate MQTT host and port with actionable errors; keep the editor available while retrying. Explicit broker settings and ESPHome mode bypass discovery.
