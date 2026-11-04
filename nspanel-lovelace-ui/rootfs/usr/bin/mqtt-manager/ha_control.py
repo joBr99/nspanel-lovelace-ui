@@ -271,7 +271,7 @@ def button_press(entity_id, value, action_context=None):
     match etype:
         case 'scene' | 'script':
             call_ha_service(entity_id, "turn_on", action_context=action_context)
-        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan':
+        case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan' | 'cover':
             call_ha_service(entity_id, "toggle", action_context=action_context)
         case 'lock':
             state = libs.home_assistant.get_entity_data(entity_id).get('state', '')
