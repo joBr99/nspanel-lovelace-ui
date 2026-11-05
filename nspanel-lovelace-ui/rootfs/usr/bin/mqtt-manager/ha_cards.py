@@ -352,7 +352,7 @@ class HACard(panel_cards.Card):
         if not hasattr(self, "_nav_item1"):
             config = self.config.get("navItem1")
             # self._nav_item2 = HAEntity(self.locale, config, self.panel) if isinstance(config, dict) and config.get("entity") else None
-        return [config]
+        return [config] if config else []
 
     def get_iid_entities(self):
         return [(e.iid, e.entity_id) for e in self.entities + self.navigation_entities()]
