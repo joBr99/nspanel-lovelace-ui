@@ -390,8 +390,8 @@ class HACard(panel_cards.Card):
                 leftBtn = panel_cards.Entity(self.locale,
                                          {
                                              'entity': f'navigate.UP',
-                                             'icon': upNavIconAttributes["icon"] or 'mdi:arrow-up-bold',
-                                             'color': upNavIconAttributes["color"] or [255, 255, 255],
+                                             'icon': upNavIconAttributes['icon'] if upNavIconAttributes.get('icon') else 'mdi:arrow-up-bold',
+                                             'color': upNavIconAttributes['color'] if upNavIconAttributes.get('color') else [255, 255, 255],
                                          }, self.panel
                                          ).render()[1:]
             else:
