@@ -348,11 +348,10 @@ class HACard(panel_cards.Card):
 
     def navigation_up_icon(self):
         if not self.hidden:
-            return []
-        if not hasattr(self, "_nav_item1"):
-            config = self.config.get("navItem1")
-            # self._nav_item2 = HAEntity(self.locale, config, self.panel) if isinstance(config, dict) and config.get("entity") else None
-        return [config] if config else []
+            return None
+        if self.config.get("navItem1"):
+            return self.config.get("navItem1")       
+        return None
 
     def get_iid_entities(self):
         return [(e.iid, e.entity_id) for e in self.entities + self.navigation_entities()]
@@ -386,7 +385,7 @@ class HACard(panel_cards.Card):
                                           ).render()[1:]
         if self.hidden:
             if self.navigation_up_icon():
-                upNavIconAttributes=self.navigation_up_icon()[0]
+                upNavIconAttributes=self.navigation_up_icon()
                 leftBtn = panel_cards.Entity(self.locale,
                                          {
                                              'entity': f'navigate.UP',
