@@ -1124,65 +1124,9 @@
 │                                          //command format pageType,specialPageName
 │                                          //write name of speical page to tId
 │                                          spstr strCommand.txt,tId.txt,"~",1
-│   --- HMI/n2t-out/cardGrid.txt
-├── +++ HMI/US/portrait/n2t-out/cardGrid.txt
-│ @@ -7,26 +7,14 @@
-│          Swide up page ID   : disabled
-│          Swide down page ID : disabled
-│          Swide left page ID : disabled
-│          Swide right page ID: disabled
-│      
-│      Events
-│          Preinitialize Event
-│ -            tSend.txt="event,renderCurrentPage"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│              dim=dimValueNormal
-│              //remove background & activate reparse mode
-│              vis p0,0
-│              recmod=1
-│              baud=115200
-│              //debug stuff
-│              vis tTmp,0
 │   --- HMI/n2t-out/cardGrid2.txt
 ├── +++ HMI/US/portrait/n2t-out/cardGrid2.txt
-│ @@ -7,26 +7,14 @@
-│          Swide up page ID   : disabled
-│          Swide down page ID : disabled
-│          Swide left page ID : disabled
-│          Swide right page ID: disabled
-│      
-│      Events
-│          Preinitialize Event
-│ -            tSend.txt="event,renderCurrentPage"
-│ -            //send calc crc
-│ -            btlen tSend.txt,sys0
-│ -            crcrest 1,0xffff // reset CRC
-│ -            crcputh 55 bb
-│ -            crcputs sys0,2
-│ -            crcputs tSend.txt,0
-│ -            //send cmd
-│ -            printh 55 bb
-│ -            prints sys0,2
-│ -            prints tSend.txt,0
-│ -            prints crcval,2
-│              dim=dimValueNormal
-│              //remove background & activate reparse mode
-│              vis p0,0
-│              recmod=1
-│              baud=115200
-│              //debug stuff
-│              vis tTmp,0
-│ @@ -37,26 +25,28 @@
+│ @@ -37,26 +37,28 @@
 │              vis bEntity2,0
 │              vis bEntity3,0
 │              vis bEntity4,0
@@ -1212,7 +1156,7 @@
 │                      b[sys0].pco=defaultFontColor
 │                  }
 │              }
-│ @@ -105,14 +95,20 @@
+│ @@ -105,14 +107,20 @@
 │      
 │  Variable (string) entn8
 │      Attributes
@@ -1233,7 +1177,7 @@
 │          Max. Text Size: 80
 │      
 │  Variable (string) nent2
-│ @@ -177,14 +173,20 @@
+│ @@ -177,14 +185,20 @@
 │      
 │  Variable (string) type8
 │      Attributes
@@ -1254,7 +1198,7 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : tEntity1
-│ @@ -249,14 +251,23 @@
+│ @@ -249,14 +263,23 @@
 │          Scope              : local
 │          Dragging           : 0
 │          Send Component ID  : disabled
@@ -1278,7 +1222,7 @@
 │          Send Component ID  : disabled
 │          Associated Keyboard: none
 │          Text               : 
-│ @@ -643,14 +654,58 @@
+│ @@ -643,14 +666,58 @@
 │              crcputs tSend.txt,0
 │              //send cmd
 │              printh 55 bb
@@ -1302,10 +1246,10 @@
 │ +            pageIcons.tTmp1.txt=tEntity9.txt
 │ +            pageIcons.tTmp2.txt=entn9.txt
 │ +            pageIcons.tTmp3.txt=bEntity9.txt
-│ +            if(type9.txt=="shutter")
-│ +            {
-│ +                page popupShutter
-│ +            }
+│ +            //if(type9.txt=="shutter")
+│ +            //{
+│ +            //  page popupShutter
+│ +            //}
 │ +            if(type9.txt=="input_sel")
 │ +            {
 │ +                page popupInSel
@@ -1337,7 +1281,7 @@
 │          Send Component ID: disabled
 │          State            : unpressed
 │          Text             : î³
-│ @@ -1105,14 +1160,46 @@
+│ @@ -1109,14 +1176,46 @@
 │                                              spstr strCommand.txt,tTmp.txt,"~",59
 │                                              covx tTmp.txt,sys0,0,0
 │                                              bEntity8.pco=sys0
@@ -2841,51 +2785,7 @@
 │                                      }
 │                                      if(tInstruction.txt=="date")
 │                                      {
-│ @@ -429,58 +384,46 @@
-│                                          tMainIconAlt.txt=tMainIcon.txt
-│                                          //tMainIcon Color
-│                                          spstr strCommand.txt,tTmp.txt,"~",4
-│                                          covx tTmp.txt,tMainIcon.pco,0,0
-│                                          tMainIconAlt.pco=tMainIcon.pco
-│                                          //tMainText
-│                                          spstr strCommand.txt,tMainText.txt,"~",5
-│ -                                        //tMainTextAlt.txt=tMainText.txt
-│                                          //tForecast1
-│                                          spstr strCommand.txt,tForecast1.txt,"~",11
-│                                          //tF1Icon
-│                                          spstr strCommand.txt,tF1Icon.txt,"~",9
-│                                          tF1IconAlt.txt=tF1Icon.txt
-│                                          //tF1Icon Color
-│                                          spstr strCommand.txt,tTmp.txt,"~",10
-│                                          covx tTmp.txt,tF1Icon.pco,0,0
-│                                          tF1IconAlt.pco=tF1Icon.pco
-│ +                                        // Hide/Move main icon depending on tMainTest value
-│                                          if(tMainText.txt!="")
-│                                          {
-│                                              vis tMainIcon,1
-│                                              vis tMainIconAlt,0
-│                                              vis tMainText,1
-│                                          }else
-│                                          {
-│                                              vis tMainIcon,0
-│                                              vis tMainIconAlt,1
-│                                              vis tMainText,0
-│                                          }
-│ -                                        if(tForecast1.txt!="")
-│ -                                        {
-│ -                                            vis tF1Icon,1
-│ -                                            vis tF1IconAlt,0
-│ -                                            vis tForecast1,1
-│ -                                        }else
-│ -                                        {
-│ -                                            vis tF1Icon,0
-│ -                                            vis tF1IconAlt,1
-│ -                                            vis tForecast1,0
-│ -                                        }
-│                                      }
-│                                      if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
-│                                      {
-│                                          spstr strCommand.txt,tTmp.txt,"~",1
+│ @@ -472,15 +427,14 @@
 │                                          covx tTmp.txt,tTime.bco,0,0
 │                                          if(tTime.bco!=screensaver3.bco)
 │                                          {
@@ -2901,7 +2801,7 @@
 │                                              tF1Icon.bco=tTime.bco
 │                                              tTimeAdd.bco=tTime.bco
 │                                          }
-│ @@ -490,14 +433,15 @@
+│ @@ -490,14 +444,15 @@
 │                                          covx tTmp.txt,tAMPM.pco,0,0
 │                                          spstr strCommand.txt,tTmp.txt,"~",4
 │                                          covx tTmp.txt,tDate.pco,0,0

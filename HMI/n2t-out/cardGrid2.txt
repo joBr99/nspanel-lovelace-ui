@@ -311,10 +311,10 @@ Button bEntity1
             pageIcons.tTmp1.txt=tEntity1.txt
             pageIcons.tTmp2.txt=entn1.txt
             pageIcons.tTmp3.txt=bEntity1.txt
-            if(type1.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type1.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type1.txt=="input_sel")
             {
                 page popupInSel
@@ -355,10 +355,10 @@ Button bEntity2
             pageIcons.tTmp1.txt=tEntity2.txt
             pageIcons.tTmp2.txt=entn2.txt
             pageIcons.tTmp3.txt=bEntity2.txt
-            if(type2.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type2.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type2.txt=="input_sel")
             {
                 page popupInSel
@@ -399,10 +399,10 @@ Button bEntity3
             pageIcons.tTmp1.txt=tEntity3.txt
             pageIcons.tTmp2.txt=entn3.txt
             pageIcons.tTmp3.txt=bEntity3.txt
-            if(type3.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type3.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type3.txt=="input_sel")
             {
                 page popupInSel
@@ -443,10 +443,10 @@ Button bEntity4
             pageIcons.tTmp1.txt=tEntity4.txt
             pageIcons.tTmp2.txt=entn4.txt
             pageIcons.tTmp3.txt=bEntity4.txt
-            if(type4.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type4.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type4.txt=="input_sel")
             {
                 page popupInSel
@@ -487,10 +487,10 @@ Button bEntity5
             pageIcons.tTmp1.txt=tEntity5.txt
             pageIcons.tTmp2.txt=entn5.txt
             pageIcons.tTmp3.txt=bEntity5.txt
-            if(type5.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type5.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type5.txt=="input_sel")
             {
                 page popupInSel
@@ -531,10 +531,10 @@ Button bEntity6
             pageIcons.tTmp1.txt=tEntity6.txt
             pageIcons.tTmp2.txt=entn6.txt
             pageIcons.tTmp3.txt=bEntity6.txt
-            if(type6.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type6.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type6.txt=="input_sel")
             {
                 page popupInSel
@@ -575,10 +575,10 @@ Button bEntity7
             pageIcons.tTmp1.txt=tEntity7.txt
             pageIcons.tTmp2.txt=entn7.txt
             pageIcons.tTmp3.txt=bEntity7.txt
-            if(type7.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type7.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type7.txt=="input_sel")
             {
                 page popupInSel
@@ -619,10 +619,10 @@ Button bEntity8
             pageIcons.tTmp1.txt=tEntity8.txt
             pageIcons.tTmp2.txt=entn8.txt
             pageIcons.tTmp3.txt=bEntity8.txt
-            if(type8.txt=="shutter")
-            {
-                page popupShutter
-            }
+            //if(type8.txt=="shutter")
+            //{
+            //  page popupShutter
+            //}
             if(type8.txt=="input_sel")
             {
                 page popupInSel
@@ -762,6 +762,10 @@ Timer tmLP
             if(tTmp.txt=="fan")
             {
                 page popupFan
+            }
+            if(tTmp.txt=="shutter")
+            {
+                page popupShutter
             }
         
 Timer tmSerial

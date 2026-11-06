@@ -1,4 +1,4 @@
-+++ /dev/fd/62	2026-10-16 13:23:22.772230432 +0000
++++ /dev/fd/62	2026-11-06 19:01:52.177444838 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
@@ -686,65 +686,9 @@
 +                                     covx tTmp.txt,sys0,0,0
 +                                     hSlider6.maxval=sys0
 +                                 }
-+I/n2t-out/cardGrid.txt
-++ HMI/US/portrait/n2t-out/cardGrid.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     //remove background & activate reparse mode
-+     vis p0,0
-+     recmod=1
-+     baud=115200
-+     //debug stuff
-+     vis tTmp,0
 +I/n2t-out/cardGrid2.txt
 ++ HMI/US/portrait/n2t-out/cardGrid2.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     //remove background & activate reparse mode
-+     vis p0,0
-+     recmod=1
-+     baud=115200
-+     //debug stuff
-+     vis tTmp,0
-+6 +25,28 @@
++6 +37,28 @@
 +     vis bEntity2,0
 +     vis bEntity3,0
 +     vis bEntity4,0
@@ -774,7 +718,7 @@
 +             b[sys0].pco=defaultFontColor
 +         }
 +     }
-+14 +95,20 @@
++14 +107,20 @@
 +
 +e (string) entn8
 +ributes
@@ -795,7 +739,7 @@
 + Max. Text Size: 80
 +
 +e (string) nent2
-+14 +173,20 @@
++14 +185,20 @@
 +
 +e (string) type8
 +ributes
@@ -816,7 +760,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : tEntity1
-+14 +251,23 @@
++14 +263,23 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -840,7 +784,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+14 +654,58 @@
++14 +666,58 @@
 +     crcputs tSend.txt,0
 +     //send cmd
 +     printh 55 bb
@@ -864,10 +808,10 @@
 +     pageIcons.tTmp1.txt=tEntity9.txt
 +     pageIcons.tTmp2.txt=entn9.txt
 +     pageIcons.tTmp3.txt=bEntity9.txt
-+     if(type9.txt=="shutter")
-+     {
-+         page popupShutter
-+     }
++     //if(type9.txt=="shutter")
++     //{
++     //  page popupShutter
++     //}
 +     if(type9.txt=="input_sel")
 +     {
 +         page popupInSel
@@ -899,7 +843,7 @@
 + Send Component ID: disabled
 + State            : unpressed
 + Text             : î³
-+,14 +1160,46 @@
++,14 +1176,46 @@
 +                                     spstr strCommand.txt,tTmp.txt,"~",59
 +                                     covx tTmp.txt,sys0,0,0
 +                                     bEntity8.pco=sys0
@@ -2383,51 +2327,7 @@
 +                             }
 +                             if(tInstruction.txt=="date")
 +                             {
-+58 +384,46 @@
-+                                 tMainIconAlt.txt=tMainIcon.txt
-+                                 //tMainIcon Color
-+                                 spstr strCommand.txt,tTmp.txt,"~",4
-+                                 covx tTmp.txt,tMainIcon.pco,0,0
-+                                 tMainIconAlt.pco=tMainIcon.pco
-+                                 //tMainText
-+                                 spstr strCommand.txt,tMainText.txt,"~",5
-+                                 //tMainTextAlt.txt=tMainText.txt
-+                                 //tForecast1
-+                                 spstr strCommand.txt,tForecast1.txt,"~",11
-+                                 //tF1Icon
-+                                 spstr strCommand.txt,tF1Icon.txt,"~",9
-+                                 tF1IconAlt.txt=tF1Icon.txt
-+                                 //tF1Icon Color
-+                                 spstr strCommand.txt,tTmp.txt,"~",10
-+                                 covx tTmp.txt,tF1Icon.pco,0,0
-+                                 tF1IconAlt.pco=tF1Icon.pco
-+                                 // Hide/Move main icon depending on tMainTest value
-+                                 if(tMainText.txt!="")
-+                                 {
-+                                     vis tMainIcon,1
-+                                     vis tMainIconAlt,0
-+                                     vis tMainText,1
-+                                 }else
-+                                 {
-+                                     vis tMainIcon,0
-+                                     vis tMainIconAlt,1
-+                                     vis tMainText,0
-+                                 }
-+                                 if(tForecast1.txt!="")
-+                                 {
-+                                     vis tF1Icon,1
-+                                     vis tF1IconAlt,0
-+                                     vis tForecast1,1
-+                                 }else
-+                                 {
-+                                     vis tF1Icon,0
-+                                     vis tF1IconAlt,1
-+                                     vis tForecast1,0
-+                                 }
-+                             }
-+                             if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
-+                             {
-+                                 spstr strCommand.txt,tTmp.txt,"~",1
++15 +427,14 @@
 +                                 covx tTmp.txt,tTime.bco,0,0
 +                                 if(tTime.bco!=screensaver3.bco)
 +                                 {
@@ -2443,7 +2343,7 @@
 +                                     tF1Icon.bco=tTime.bco
 +                                     tTimeAdd.bco=tTime.bco
 +                                 }
-+14 +433,15 @@
++14 +444,15 @@
 +                                 covx tTmp.txt,tAMPM.pco,0,0
 +                                 spstr strCommand.txt,tTmp.txt,"~",4
 +                                 covx tTmp.txt,tDate.pco,0,0

@@ -388,6 +388,7 @@ Timer tmSerial
                                         tMainIconAlt.pco=tMainIcon.pco
                                         //tMainText
                                         spstr strCommand.txt,tMainText.txt,"~",5
+                                        //tMainTextAlt.txt=tMainText.txt
                                         //tForecast1
                                         spstr strCommand.txt,tForecast1.txt,"~",11
                                         //tF1Icon
@@ -397,7 +398,6 @@ Timer tmSerial
                                         spstr strCommand.txt,tTmp.txt,"~",10
                                         covx tTmp.txt,tF1Icon.pco,0,0
                                         tF1IconAlt.pco=tF1Icon.pco
-                                        // Hide/Move main icon depending on tMainTest value
                                         if(tMainText.txt!="")
                                         {
                                             vis tMainIcon,1
@@ -408,6 +408,17 @@ Timer tmSerial
                                             vis tMainIcon,0
                                             vis tMainIconAlt,1
                                             vis tMainText,0
+                                        }
+                                        if(tForecast1.txt!="")
+                                        {
+                                            vis tF1Icon,1
+                                            vis tF1IconAlt,0
+                                            vis tForecast1,1
+                                        }else
+                                        {
+                                            vis tF1Icon,0
+                                            vis tF1IconAlt,1
+                                            vis tForecast1,0
                                         }
                                     }
                                     if(tInstruction.txt=="color"&&tNotifyHead.txt==""&&tNotifyText.txt=="")
