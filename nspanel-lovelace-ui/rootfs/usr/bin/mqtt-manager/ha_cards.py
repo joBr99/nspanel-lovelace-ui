@@ -346,6 +346,13 @@ class HACard(panel_cards.Card):
             self._nav_item2 = HAEntity(self.locale, config, self.panel) if isinstance(config, dict) and config.get("entity") else None
         return [self._nav_item2] if self._nav_item2 else []
 
+    def navigation_up_icon(self):
+        if not self.hidden:
+            return None
+        if self.config.get("navItem1"):
+            return self.config.get("navItem1")       
+        return None
+
     def get_iid_entities(self):
         return [(e.iid, e.entity_id) for e in self.entities + self.navigation_entities()]
 
@@ -377,13 +384,23 @@ class HACard(panel_cards.Card):
                                           }, self.panel
                                           ).render()[1:]
         if self.hidden:
-            leftBtn = panel_cards.Entity(self.locale,
+            if self.navigation_up_icon():
+                upNavIconAttributes=self.navigation_up_icon()
+                leftBtn = panel_cards.Entity(self.locale,
                                          {
                                              'entity': f'navigate.UP',
-                                             'icon': 'mdi:arrow-up-bold',
-                                             'color': [255, 255, 255],
+                                             'icon': upNavIconAttributes['icon'] if upNavIconAttributes.get('icon') else 'mdi:arrow-up-bold',
+                                             'color': upNavIconAttributes['color'] if upNavIconAttributes.get('color') else [255, 255, 255],
                                          }, self.panel
                                          ).render()[1:]
+            else:
+                leftBtn = panel_cards.Entity(self.locale,
+                                            {
+                                                'entity': f'navigate.UP',
+                                                'icon': 'mdi:arrow-up-bold',
+                                                'color': [255, 255, 255],
+                                            }, self.panel
+                                            ).render()[1:]
         if self.navigation_entities():
             rightBtn = self.navigation_entities()[0].render()[1:] or "delete~~~~~"
         result = f"{leftBtn}~{rightBtn}"
