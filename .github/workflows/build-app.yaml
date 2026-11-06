@@ -53,7 +53,7 @@ jobs:
 
       - name: Prepare build matrix
         id: matrix
-        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@2026.03.2
+        uses: home-assistant/builder/actions/prepare-multi-arch-matrix@2026.06.0
         with:
           architectures: ${{ steps.info.outputs.architectures }}
           image-name: ${{ steps.normalize.outputs.image_name }}
@@ -77,7 +77,7 @@ jobs:
           persist-credentials: false
 
       - name: Build image
-        uses: home-assistant/builder/actions/build-image@2026.03.2
+        uses: home-assistant/builder/actions/build-image@2026.06.0
         with:
           arch: ${{ matrix.arch }}
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
@@ -104,7 +104,7 @@ jobs:
       packages: write
     steps:
       - name: Publish multi-arch manifest
-        uses: home-assistant/builder/actions/publish-multi-arch-manifest@2026.03.2
+        uses: home-assistant/builder/actions/publish-multi-arch-manifest@2026.06.0
         with:
           architectures: ${{ needs.prepare.outputs.architectures }}
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
