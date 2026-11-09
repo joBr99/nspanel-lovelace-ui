@@ -83,8 +83,11 @@ class LovelaceUIPanel:
         #request templates on cards
         if isinstance(self.settings.get("sleepBrightness",""), str) and self.settings.get("sleepBrightness", "").startswith("ha:"):
             libs.home_assistant.cache_template(self.settings.get("sleepBrightness"))
-        if isinstance(self.settings.get("sleepBrightness",""), str) and self.settings.get("screenBrightness", "").startswith("ha:"):
+        if isinstance(self.settings.get("screenBrightness",""), str) and self.settings.get("screenBrightness", "").startswith("ha:"):
             libs.home_assistant.cache_template(self.settings.get("screenBrightness"))
+        # Subscribe now so the first time/date message already carries the text.
+        for key in ("timeAdditionalTemplate", "dateAdditionalTemplate"):
+            self.additional_text(key)
         for c in self.cards.values():
             if hasattr(c, "qrcode"):
                 if c.qrcode.startswith("ha:"):
@@ -118,17 +121,29 @@ class LovelaceUIPanel:
                 logging.exception("Scheduler execution failed for panel '%s'", self.name)
             time.sleep(1)
 
+    def additional_text(self, key):
+        # AppDaemon treats these settings as templates, so the "ha:" prefix is optional.
+        # The setting name is the update target: ha_event_callback resends time/date on change.
+        template = self.settings.get(key)
+        if not isinstance(template, str) or not template:
+            return ""
+        result = libs.home_assistant.get_template(template, key)
+        return "" if result is None else str(result)
+
     def update_time(self):
         use_timezone = tz.gettz(self.settings["timeZone"])
         time_string = datetime.datetime.now(
             use_timezone).strftime(self.settings["timeFormat"])
-        libs.panel_cmd.send_time(self.msg_out_queue, self.sendTopic, time_string)
+        libs.panel_cmd.send_time(self.msg_out_queue, self.sendTopic, time_string,
+                                 self.additional_text("timeAdditionalTemplate"))
 
     def update_date(self):
         dateformat = self.settings["dateFormat"]
         date_string = babel.dates.format_date(
-            datetime.datetime.now(), dateformat, locale=self.settings["locale"])
-        libs.panel_cmd.send_date(self.msg_out_queue, self.sendTopic, date_string)
+            datetime.datetime.now(tz.gettz(self.settings["timeZone"])), dateformat, locale=self.settings["locale"])
+        # Like AppDaemon, the extra text follows the date directly (use dateFormat: '' for text only).
+        libs.panel_cmd.send_date(self.msg_out_queue, self.sendTopic,
+                                 date_string + self.additional_text("dateAdditionalTemplate"))
 
     def searchCard(self, iid):
         if iid in self.navigate_keys:
@@ -141,6 +156,10 @@ class LovelaceUIPanel:
     def ha_event_callback(self, entity_id):
         if self.updater.active:
             return
+        if entity_id == "timeAdditionalTemplate":
+            return self.update_time()
+        if entity_id == "dateAdditionalTemplate":
+            return self.update_date()
         active_detail = getattr(self, "_active_detail", None)
         if active_detail:
             if entity_id == active_detail[1]:

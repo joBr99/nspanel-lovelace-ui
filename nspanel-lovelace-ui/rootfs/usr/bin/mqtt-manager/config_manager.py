@@ -192,13 +192,10 @@ def import_yaml(text):
     def inspect(value, path):
         if isinstance(value, dict):
             for key, item in value.items():
-                if key in {"berryURL", "dateAdditionalTemplate", "timeAdditionalTemplate",
-                           "action_name"}:
+                if key in {"berryURL", "action_name"}:
                     warnings.append(f"{path}.{key}: retained, but unsupported by the add-on runtime.")
                 if key.startswith("weatherOverrideForecast") or key in {"weatherUnit", "forecastSkip"}:
                     warnings.append(f"{path}.{key}: retained; review explicit weather entities after migration.")
-                if key == "entity" and isinstance(item, str) and item.startswith("service."):
-                    warnings.append(f"{path}: legacy service actions require manual migration.")
                 inspect(item, f"{path}.{key}")
         elif isinstance(value, list):
             for index, item in enumerate(value):

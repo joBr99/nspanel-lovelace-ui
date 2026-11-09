@@ -6,13 +6,14 @@ Entities are used in cards and screensaver lists.
 
 key | required | type | description
 -- | -- | -- | --
-`entity` | yes | string | Home Assistant entity id, or internal entity (`navigate.*`, `delete`, `iText.*`).
+`entity` | yes | string | Home Assistant entity id, or internal entity (`navigate.*`, `delete`, `iText.*`, `service.*`).
 `name` | no | string | Display name override; supports `ha:` templates.
 `icon` | no | string or map | Icon override (`mdi:*`), optionally per state.
 `color` | no | `[r,g,b]`, template string, or map | Color override, optionally per state.
 `value` | no | string | Value override.
 `font` | no | string | Icon font variant (`small`, `medium`, `medium-icon`, `large`).
-`status` | no | string | Extra status entity for `navigate.*` items.
+`status` | no | string | Extra status entity for `navigate.*` and `service.*` items.
+`data` | no | map | Action data for `service.*` items.
 `effectList` | no | list | Custom light effect list for detail popup.
 `attribute` | no | string | Weather attribute to display.
 `day` | no | int | Weather daily forecast index.
@@ -54,6 +55,25 @@ key | required | type | description
 - `navigate.UP`: Navigate back.
 - `delete`: Placeholder/empty slot.
 - `iText.<text>`: Static text entry.
+- `service.<domain>.<action>`: Button that calls a Home Assistant action with `data`, as in AppDaemon.
+
+## Action buttons (`service.*`)
+
+A `service.<domain>.<action>` item shows a button labelled "Run". Pressing it calls the action with `data` as its action data, so name target entities in `data`. With `status`, the icon and color follow that entity's state, and per-state `icon`/`color` maps apply.
+
+```yaml
+- entity: service.water_heater.set_operation_mode
+  name: Boiler on
+  icon: mdi:water-boiler
+  status: water_heater.boiler
+  color:
+    electric: [255, 128, 0]
+  data:
+    entity_id: water_heater.boiler
+    operation_mode: electric
+```
+
+Only items configured on the current card can call actions. A raw MQTT event naming a `service.*` entity is refused.
 
 ## Template-based values
 

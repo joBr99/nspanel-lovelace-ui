@@ -37,6 +37,18 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(result['config']['nspanels']['panel']['cards'], panel['cards'])
         self.assertFalse(any('state_template' in warning for warning in result['warnings']))
 
+    def test_import_keeps_time_date_text_service_buttons_and_sun_schedule(self):
+        panel = next(iter(self.config['nspanels'].values()))
+        panel.update({'timeAdditionalTemplate': "{{ states('sensor.text') }}", 'dateAdditionalTemplate': ' - x',
+                      'sleepBrightness': [{'time': 'sunrise', 'value': 20}, {'time': 'sunset', 'value': 1}]})
+        panel['cards'] = [{'type': 'cardEntities', 'entities': [{
+            'entity': 'service.water_heater.set_operation_mode', 'data': {'operation_mode': 'off'}}]}]
+        old = {'panel': {'module': 'nspanel-lovelace-ui', 'class': 'NsPanelLovelaceUIManager', 'config': panel}}
+        result = import_yaml(yaml.safe_dump(old))
+        self.assertEqual(result['errors'], [])
+        self.assertEqual(result['config']['nspanels']['panel']['sleepBrightness'], panel['sleepBrightness'])
+        self.assertFalse([w for w in result['warnings'] if 'Template' in w or 'service' in w])
+
     def test_appdaemon_conversion(self):
         old = {'module': 'nspanel-lovelace-ui', 'class': 'NsPanelLovelaceUIManager', 'config': {
             'panelRecvTopic': 'tele/p/RESULT', 'panelSendTopic': 'cmnd/p/CustomSend',

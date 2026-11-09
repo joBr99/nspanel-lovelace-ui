@@ -1,3 +1,11 @@
+## Unreleased
+
+- Restore AppDaemon `timeAdditionalTemplate` (text below the time) and `dateAdditionalTemplate` (text after the date). Both update when their template result changes.
+- Support `sunrise`/`sunset` brightness schedule times, with optional offsets such as `"sunset + 1:00:00"`, from Home Assistant's `sun.sun`. One-digit hours such as `"7:00:00"` are accepted.
+- Restore AppDaemon `service.<domain>.<action>` buttons with `data` and optional `status`. Only configured card items can call actions.
+- Show the date in the panel's `timeZone`, like the time.
+- Fix a panel startup crash when `sleepBrightness` is an entity ID and `screenBrightness` is a number.
+
 ## 4.8.10
 
 - Show the light-detail color wheel for RGBWW lights, including WLED entities supporting both color temperature and RGBWW.
