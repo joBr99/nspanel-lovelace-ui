@@ -130,6 +130,10 @@ class HAEntity(panel_cards.Entity):
         if data:
             self.state = data.get("state")
             self.attributes = data.get("attributes", [])
+        elif self.etype == "service" and not status_entity:
+            # A service.* button has no state of its own.
+            self.state = ""
+            self.attributes = {}
         else:
             self.state = "not found"
             self.attributes = []
@@ -144,9 +148,13 @@ class HAEntity(panel_cards.Entity):
 
         # HA Entities
         entity_type_panel = "text"
-        icon_char = ha_icons.get_icon_ha(self.etype, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.icon_overwrite)
+        # Like AppDaemon, a service.* button looks like its status entity, or like a script.
+        style_type = self.etype
+        if style_type == "service":
+            style_type = status_entity.split(".")[0] if status_entity else "script"
+        icon_char = ha_icons.get_icon_ha(style_type, self.state, device_class=self.attributes.get("device_class", None), media_content_type=self.attributes.get("media_content_type", None), overwrite=self.icon_overwrite)
 
-        color = ha_colors.get_entity_color(self.etype, self.state, self.attributes, self.color_overwrite)
+        color = ha_colors.get_entity_color(style_type, self.state, self.attributes, self.color_overwrite)
 
         name = self.name_overwrite if self.name_overwrite is not None else self.attributes.get("friendly_name", "unknown")
         value = ""
@@ -178,7 +186,7 @@ class HAEntity(panel_cards.Entity):
                 entity_type_panel = "button"
                 value = get_translation(
                     self.locale, "frontend.ui.card.scene.activate")
-            case 'script':
+            case 'script' | 'service':
                 entity_type_panel = "button"
                 value = get_translation(
                     self.locale, "frontend.ui.card.script.run")

@@ -29,6 +29,8 @@ key | required | type | default | description
 `timeZone` | recommended | string | from top-level `timeZone` | Time zone for clock.
 `timeFormat` | yes | string | none | Python `strftime` format.
 `dateFormat` | yes | string | none | Babel date format (example: `full`, `medium`).
+`timeAdditionalTemplate` | optional | template | none | Text below the screensaver time, as in AppDaemon. The `ha:` prefix is optional. Updates when the result changes.
+`dateAdditionalTemplate` | optional | template | none | Text appended directly to the date. With `dateFormat: ''` only this text is shown.
 `model` | optional | string | `eu` | Panel model (`eu`, `us-p`, `us-l`).
 `temp_unit` | optional | string | `celsius` | Thermostat card unit (`celsius` or `fahrenheit`).
 `sleepTimeout` | optional | int | `20` | Seconds before screensaver.
@@ -105,7 +107,19 @@ sleepBrightness:
     value: 0
 ```
 
-This uses brightness 35 during the day and 0 overnight. Times are daily local wall-clock times in the panel's `timeZone`; quote them in YAML. HH:MM and HH:MM:SS are accepted. Entries may be unordered but must have unique times and integer values from 0 to 100. The last entry from the previous day applies before the first entry, including after a restart. The backend checks schedules every second and sends a brightness command only when the resolved settings change. The same schedule format is supported by `screenBrightness`. Sunrise/sunset expressions are not supported.
+This uses brightness 35 during the day and 0 overnight. Times are daily local wall-clock times in the panel's `timeZone`; quote them in YAML. HH:MM and HH:MM:SS are accepted, also with a one-digit hour. Entries may be unordered but must have unique times and integer values from 0 to 100. The last entry from the previous day applies before the first entry, including after a restart. The backend checks schedules every second and sends a brightness command only when the resolved settings change. The same schedule format is supported by `screenBrightness`.
+
+AppDaemon-style `sunrise` and `sunset` times are supported, optionally with an offset such as `"sunset + 1:00:00"` or `"sunrise - 0:30"`:
+
+```yaml
+sleepBrightness:
+  - time: "sunrise"
+    value: 20
+  - time: "sunset"
+    value: 1
+```
+
+Sun times come from the `next_rising` and `next_setting` attributes of Home Assistant's `sun.sun` entity (Sun integration). While it is unavailable, sun entries are skipped; if no entry is left, the default brightness applies. After an event has passed, today's time is estimated from the next day's, which can differ by a few minutes.
 
 For illumination-driven control, set `sleepBrightness: input_number.nspanel_sleep` and use a Home Assistant automation to update that helper from your illuminance sensor. A numeric sensor entity can also be used directly if its state already represents a desired brightness percentage. Values are clamped to 0–100; raw lux is not automatically converted into a brightness curve. Entity changes update the panel without a restart.
 

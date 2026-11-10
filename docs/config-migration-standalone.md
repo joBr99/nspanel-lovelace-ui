@@ -49,7 +49,7 @@ The importer moves each `config` into `nspanels.<name>` and supplies missing `lo
 
 ## Settings needing manual review
 
-Daily brightness schedules using `time`/`value` entries are supported, alongside static values and entity IDs. Use quoted HH:MM or HH:MM:SS times; sunrise/sunset expressions are not supported. Unknown card types cannot be saved. Legacy Berry driver update options, conditional entity fields (`state`, `state_not`, `state_template`), `action_name`, and `service.*` entries are retained and flagged where recognized, but are not implemented by this backend. Review weather overrides and unit fields against the [screensaver reference](config-screensaver.md).
+Daily brightness schedules using `time`/`value` entries are supported, alongside static values and entity IDs. Use quoted HH:MM or HH:MM:SS times, or `sunrise`/`sunset` with an optional offset. `timeAdditionalTemplate`, `dateAdditionalTemplate`, conditional entity fields (`state`, `state_not`, `state_template`) and `service.*` buttons work as in AppDaemon. Unknown card types cannot be saved. Legacy Berry driver update options and `action_name` are retained and flagged, but are not implemented by this backend. Review weather overrides and unit fields against the [screensaver reference](config-screensaver.md).
 
 Preserved fields are not a promise of feature parity. See the current [cards](cards.md), [entities](entities.md), and [navigation](subpages.md) references before migrating advanced setups. Legacy notification and physical-button examples are not migration instructions for this backend.
 

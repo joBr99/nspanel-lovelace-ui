@@ -271,10 +271,10 @@ def call_service(entity_name: str, domain: str, service: str, service_data: dict
             "domain": domain,
             "service": service,
             "service_data": service_data,
-            "target": {
-                "entity_id": entity_name
-            },
         }
+        # service.* buttons name their entities in service_data; a target would replace them.
+        if entity_name:
+            msg["target"] = {"entity_id": entity_name}
         return send_message(msg) is not None
     except Exception:
         logging.exception(

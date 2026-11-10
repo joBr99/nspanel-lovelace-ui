@@ -3,7 +3,19 @@ from libs.light_temperature import slider_to_kelvin
 from libs.brightness import scheduled_brightness
 import logging
 import time
+from datetime import datetime
 from libs.helper import pos_to_color, scale
+
+def sun_events():
+    """Next sunrise/sunset from Home Assistant's sun.sun, for brightness schedules."""
+    attributes = (libs.home_assistant.get_entity_data("sun.sun") or {}).get("attributes") or {}
+    events = {}
+    for event, attribute in (("sunrise", "next_rising"), ("sunset", "next_setting")):
+        try:
+            events[event] = datetime.fromisoformat(attributes[attribute])
+        except (KeyError, TypeError, ValueError):
+            pass
+    return events
 
 def wait_for_ha_cache():
     mustend = time.time() + 5
@@ -23,7 +35,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
         if isinstance(sleepBrightness, int):
             dimmode = sleepBrightness
         elif isinstance(sleepBrightness, list):
-            dimmode = scheduled_brightness(sleepBrightness, timezone, now)
+            dimmode = scheduled_brightness(sleepBrightness, timezone, now, sun_events(), default=dimmode)
         #elif sleepBrightness.startswith("ha:"):
         #    time.sleep(1)
         #    dimmode = int(float(libs.home_assistant.get_template(sleepBrightness)[3:]))
@@ -39,7 +51,7 @@ def calculate_dim_values(sleepTracking, sleepTrackingZones, sleepBrightness, scr
         if isinstance(screenBrightness, int):
             dimValueNormal = screenBrightness
         elif isinstance(screenBrightness, list):
-            dimValueNormal = scheduled_brightness(screenBrightness, timezone, now)
+            dimValueNormal = scheduled_brightness(screenBrightness, timezone, now, sun_events(), default=dimValueNormal)
         #elif screenBrightness.startswith("ha:"):
         #    time.sleep(1)
         #    dimValueNormal = int(float(libs.home_assistant.get_template(screenBrightness)[3:]))
@@ -77,7 +89,7 @@ def handle_buttons(entity_id, btype, value, entity_config=None, action_context=N
     action_context = action_context or {}
     match btype:
         case 'button':
-            button_press(entity_id, value, action_context=action_context)
+            button_press(entity_id, value, entity_config=entity_config, action_context=action_context)
         case 'OnOff':
             on_off(entity_id, value, action_context=action_context)
         case 'number-set':
@@ -237,14 +249,14 @@ def handle_buttons(entity_id, btype, value, entity_config=None, action_context=N
         case _:
            logging.error("Not implemented: %s", btype)
 
-def call_ha_service(entity_id, service, service_data=None, action_context=None):
+def call_ha_service(entity_id, service, service_data=None, action_context=None, domain=None):
     if service_data is None:
         service_data = {}
     action_context = action_context or {}
-    etype = entity_id.split(".")[0]
     ok = libs.home_assistant.call_service(
-        entity_name=entity_id,
-        domain=etype,
+        # An explicit domain means a service.* button: not a target, its data names one.
+        entity_name=None if domain else entity_id,
+        domain=domain or entity_id.split(".")[0],
         service=service,
         service_data=service_data
     )
@@ -266,9 +278,19 @@ def call_ha_service(entity_id, service, service_data=None, action_context=None):
             service_data,
         )
 
-def button_press(entity_id, value, action_context=None):
+def button_press(entity_id, value, entity_config=None, action_context=None):
     etype = entity_id.split(".")[0]
     match etype:
+        case 'service':
+            # AppDaemon-style service.<domain>.<service> button. Only a configured card entry
+            # (resolved from its iid) may call it, so raw MQTT cannot invoke arbitrary actions.
+            parts = entity_id.split(".")
+            entity_config = entity_config or {}
+            data = entity_config.get("data") or {}
+            if len(parts) != 3 or entity_config.get("entity") != entity_id or not isinstance(data, dict):
+                logging.error("Service button '%s' must be a configured service.<domain>.<service> entity with mapping data", entity_id)
+                return
+            call_ha_service(entity_id, parts[2], service_data=data, action_context=action_context, domain=parts[1])
         case 'scene' | 'script':
             call_ha_service(entity_id, "turn_on", action_context=action_context)
         case 'light' | 'switch' | 'input_boolean' | 'automation' | 'fan' | 'cover':
@@ -291,10 +313,6 @@ def button_press(entity_id, value, action_context=None):
                 call_ha_service(entity_id, "return_to_base", action_context=action_context)
         case _:
             logging.error("buttonpress for entity type %s not implemented", etype)
-
-    #      elif entity_id.startswith('service'):
-    #          apis.ha_api.call_service(entity_id.replace(
-    #              'service.', '', 1).replace('.', '/', 1), **entity_config.data)
 
 def on_off(entity_id, value, action_context=None):
     etype = entity_id.split(".")[0]
