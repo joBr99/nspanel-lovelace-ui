@@ -141,3 +141,61 @@ class ServiceButtonTests(unittest.TestCase):
         self.assertEqual(action, {'type': 'call_service', 'domain': 'water_heater', 'service': 'set_operation_mode',
                                   'service_data': SERVICE['data'], 'id': 1})
         self.assertEqual(toggle['target'], {'entity_id': 'light.desk'})
+
+
+class PageSwitchTests(unittest.TestCase):
+    def setUp(self):
+        self.module, self.panel = load_panel()
+        panel = self.panel
+        panel.model = 'us-p'
+        panel.settings = {'locale': 'en_US', 'screensaver': {'doubleTapToUnlock': True}}
+        panel.screensaver = ha_cards.Screensaver('en_US', {'type': 'screensaver', 'entities': []}, panel)
+        self.card = ha_cards.EntitiesCard('en_US', {'type': 'cardGrid', 'title': 'Lights', 'entities': []}, panel)
+        panel.current_card = panel.screensaver
+        panel.privious_cards = []
+        panel.get_default_card = Mock(return_value=self.card)
+        panel.update_time = Mock()
+        panel.update_date = Mock()
+        panel.dimmode = Mock()
+        panel.updater.startup.return_value = False
+
+    def messages(self):
+        return [call.args[0][1] for call in self.panel.msg_out_queue.put.call_args_list]
+
+    def test_startup_sends_screensaver_content_without_ha_update(self):
+        self.panel.customrecv_event_callback('event,startup,54,us-p')
+        messages = self.messages()
+        self.assertEqual(messages[0], 'pageType~screensaver')
+        self.assertTrue(messages[1].startswith('weatherUpdate~'))
+        self.assertTrue(messages[2].startswith('statusUpdate~'))
+
+    def test_double_tap_navigation_and_return_render_content(self):
+        panel = self.panel
+        panel.screensaver.render()  # Prime the duplicate-message cache.
+        panel.msg_out_queue.reset_mock()
+        panel.customrecv_event_callback('event,buttonPress2,screensaver,bExit,1')
+        self.assertEqual(self.messages(), [])
+        panel.customrecv_event_callback('event,buttonPress2,screensaver,bExit,2')
+        messages = self.messages()
+        self.assertEqual(messages[0], 'pageType~cardGrid')
+        self.assertTrue(messages[1].startswith('entityUpd~Lights~'))
+        panel.msg_out_queue.reset_mock()
+        panel.customrecv_event_callback('event,sleepReached,cardGrid')
+        messages = self.messages()
+        self.assertEqual(messages[0], 'pageType~screensaver')
+        self.assertTrue(messages[1].startswith('weatherUpdate~'))
+        self.assertTrue(messages[2].startswith('statusUpdate~'))
+
+    def test_switch_and_requested_render_once_and_update_guard_remains(self):
+        panel = self.panel
+        panel.current_card = self.card
+        panel.render_current_page(switchPages=True, requested=True)
+        self.assertEqual(len(self.messages()), 2)
+        panel.msg_out_queue.reset_mock()
+        panel.render_current_page(requested=True)
+        self.assertEqual(len(self.messages()), 1)
+        self.assertTrue(self.messages()[0].startswith('entityUpd~'))
+        panel.msg_out_queue.reset_mock()
+        panel.updater.active = True
+        panel.render_current_page(switchPages=True, requested=True)
+        self.assertEqual(self.messages(), [])

@@ -1,3 +1,7 @@
+## 4.8.12
+
+- Render page content immediately after page switches, including startup, navigation, and returning to the screensaver, without waiting for a firmware request or Home Assistant state change.
+
 ## 4.8.11
 
 - Update the default TFT target to version 55 and release v4.8.11 for EU, US portrait, and US landscape panels, in both Python backends.

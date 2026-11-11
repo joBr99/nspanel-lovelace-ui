@@ -203,7 +203,7 @@ class LovelaceUIPanel:
             self.screensaver.invalidate()
         if switchPages:
             libs.panel_cmd.page_type(self.msg_out_queue, self.sendTopic, self.current_card.type)
-        if requested:
+        if requested or switchPages:
             self.current_card.render()
 
     def dimmode(self, only_if_changed=False):
