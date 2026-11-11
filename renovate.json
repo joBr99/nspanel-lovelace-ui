@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["custom.regex"],
+  "schedule": ["before 6am on monday"],
+  "timezone": "Europe/Berlin",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^nspanel-lovelace-ui/Dockerfile$/"],
+      "matchStrings": [
+        "FROM ghcr\\.io/hassio-addons/base-python/\\$\\{BUILD_ARCH\\}:(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)\\s"
+      ],
+      "depNameTemplate": "ghcr.io/hassio-addons/base-python/amd64",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
+  ]
+}
