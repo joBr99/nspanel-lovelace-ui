@@ -145,7 +145,7 @@ Text tVersion
         Dragging           : 0
         Send Component ID  : disabled
         Associated Keyboard: none
-        Text               : 54
+        Text               : 55
         Max. Text Size     : 10
     
 Picture p0

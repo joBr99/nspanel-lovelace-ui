@@ -10,14 +10,14 @@ pageTest
 	25   Component(s)
 	68   Line(s) of event code
 	66   Unique line(s) of event code
-pageStartup
-	20   Component(s)
-	202  Line(s) of event code
-	139  Unique line(s) of event code
 popupNotify
 	19   Component(s)
 	275  Line(s) of event code
 	176  Unique line(s) of event code
+pageStartup
+	20   Component(s)
+	202  Line(s) of event code
+	139  Unique line(s) of event code
 popupLight
 	28   Component(s)
 	425  Line(s) of event code

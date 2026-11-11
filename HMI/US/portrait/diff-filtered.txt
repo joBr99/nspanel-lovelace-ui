@@ -1,84 +1,13 @@
-+++ /dev/fd/62	2026-11-06 19:01:52.177444838 +0000
++++ /dev/fd/62	2026-11-11 22:15:33.740245863 +0000
 +I/n2t-out/Program.s.txt
 ++ HMI/US/portrait/n2t-out/Program.s.txt
 +1 +12,11 @@
 +eature flags
 + featNewSliders=0
 +nth 00 00 00 ff ff ff 88 ff ff ff//Output power on information to serial port
-+I/n2t-out/cardAlarm.txt
-++ HMI/US/portrait/n2t-out/cardAlarm.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis arm1,0
-+I/n2t-out/cardChart.txt
-++ HMI/US/portrait/n2t-out/cardChart.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis bPrev,0
 +I/n2t-out/cardEntities.txt
 ++ HMI/US/portrait/n2t-out/cardEntities.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
++5 +20,14 @@
 +     crcputs tSend.txt,0
 +     //send cmd
 +     printh 55 bb
@@ -93,7 +22,8 @@
 +     recmod=1
 +     baud=115200
 +     //debug stuff
-+6 +60,36 @@
++     vis tTmp,0
++6 +72,36 @@
 +     //ui e6
 +     vis btOnOff6,0
 +     vis bUp6,0
@@ -108,7 +38,7 @@
 +     for(sys0=0;sys0<90;sys0++)
 +         }
 +         if(b[sys0].type==53&&defaultBcoColor==0)
-+5 +105,57 @@
++5 +117,57 @@
 +         }
 +     }
 + 
@@ -153,7 +83,7 @@
 + Text          : 
 + Max. Text Size: 80
 + Max. Text Size: 38
-+14 +185,26 @@
++14 +197,26 @@
 +e (string) type6
 +ributes
 + Scope         : local
@@ -165,7 +95,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Value              : 0
-+14 +229,30 @@
++14 +241,30 @@
 +ributes
 + Scope              : local
 + Dragging           : 0
@@ -190,7 +120,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : tEntity1
-+14 +281,32 @@
++14 +293,32 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -217,7 +147,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+14 +344,32 @@
++14 +356,32 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -244,7 +174,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+14 +503,68 @@
++14 +515,68 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
@@ -283,7 +213,7 @@
 + Send Component ID: disabled
 + State            : unpressed
 + Text             : î
-+14 +653,62 @@
++14 +665,62 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
@@ -319,7 +249,7 @@
 + Send Component ID: disabled
 + State            : unpressed
 + Text             : î³
-+14 +845,62 @@
++14 +857,62 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
@@ -355,7 +285,7 @@
 + Send Component ID: disabled
 + State            : unpressed
 + Text             : 
-+14 +989,62 @@
++14 +1001,62 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
@@ -391,7 +321,7 @@
 + Send Component ID: disabled
 + State            : unpressed
 + Text             : î
-+14 +1133,62 @@
++14 +1145,62 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
@@ -427,7 +357,7 @@
 + Send Component ID: disabled
 + State            : unpressed
 + Text             : 
-+14 +1285,66 @@
++14 +1297,66 @@
 + Scope            : local
 + Dragging         : 0
 + Send Component ID: disabled
@@ -464,7 +394,7 @@
 + Dragging         : 0
 + Send Component ID: disabled
 +nts
-+,14 +1493,92 @@
++,14 +1505,92 @@
 +         page popupInSel
 +     if(type4.txt=="timer")
 +         page popupTimer
@@ -525,7 +455,7 @@
 + Dragging         : 0
 + Send Component ID: disabled
 +nts
-+,14 +2302,312 @@
++,14 +2314,312 @@
 +                                 spstr strCommand.txt,type5.txt,"~",38
 +                                 spstr strCommand.txt,entn5.txt,"~",39
 +                                     spstr strCommand.txt,tIcon5.txt,"~",40
@@ -890,94 +820,9 @@
 +                                 //command format pageType,specialPageName
 +                                 //write name of speical page to tId
 +                                 spstr strCommand.txt,tId.txt,"~",1
-+I/n2t-out/cardLChart.txt
-++ HMI/US/portrait/n2t-out/cardLChart.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis bPrev,0
-+I/n2t-out/cardMedia.txt
-++ HMI/US/portrait/n2t-out/cardMedia.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis t5,0
 +I/n2t-out/cardPower.txt
 ++ HMI/US/portrait/n2t-out/cardPower.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis bPrev,0
-+6 +45,16 @@
++6 +57,16 @@
 +             b[sys0].bco=defaultBcoColor
 +             b[sys0].pco=defaultFontColor
 +         }
@@ -996,7 +841,7 @@
 + 
 +e (string) nent1
 +ributes
-+9 +75,75 @@
++9 +87,75 @@
 + Max. Text Size: 1000
 +
 +e (int32) t0Speed
@@ -1072,7 +917,7 @@
 + Max. Text Size: 20
 +
 +e (string) tInstruction
-+23 +169,14 @@
++23 +181,14 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1096,7 +941,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+23 +196,14 @@
++23 +208,14 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1120,7 +965,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+23 +214,14 @@
++23 +226,14 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1144,7 +989,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+23 +232,14 @@
++23 +244,14 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1168,7 +1013,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+23 +250,14 @@
++23 +262,14 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1192,7 +1037,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+23 +268,14 @@
++23 +280,14 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -1216,7 +1061,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : 
-+85 +480,79 @@
++85 +492,79 @@
 +             h0.val=h0.minval
 +         }
 +         if(sys0<h0.minval)
@@ -1302,7 +1147,7 @@
 + Scope      : local
 + Period (ms): 50
 + Enabled    : yes
-+15 +942,15 @@
++15 +954,15 @@
 +                                 }
 +                                 if(tId.txt=="cardChart")
 +                                 {
@@ -1319,64 +1164,6 @@
 +                                 // get set time to global variable
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                             }
-+I/n2t-out/cardQR.txt
-++ HMI/US/portrait/n2t-out/cardQR.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis bPrev,0
-+I/n2t-out/cardThermo.txt
-++ HMI/US/portrait/n2t-out/cardThermo.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
-+     crcputs sys0,2
-+     crcputs tSend.txt,0
-+     //send cmd
-+     printh 55 bb
-+     prints sys0,2
-+     prints tSend.txt,0
-+     prints crcval,2
-+     dim=dimValueNormal
-+     vis p0,0
-+     vis tSend,0
-+     vis tInstruction,0
-+     vis tTmp,0
-+     vis tId,0
-+     vis xTempMin1,0
 +I/n2t-out/pageStartup.txt
 ++ HMI/US/portrait/n2t-out/pageStartup.txt
 +0 +34,14 @@
@@ -1723,19 +1510,7 @@
 +                                     page cardGrid
 +I/n2t-out/screensaver.txt
 ++ HMI/US/portrait/n2t-out/screensaver.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
++5 +19,14 @@
 +     crcputs sys0,2
 +     crcputs tSend.txt,0
 +     //send cmd
@@ -1751,7 +1526,7 @@
 +     vis p0,0
 +     vis tNotifyHead,0
 +     vis tNotifyText,0
-+7 +28,14 @@
++7 +40,14 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
 +     dim=dimValue
@@ -1769,7 +1544,7 @@
 + Max. Text Size: 600
 +
 +e (string) strTmp
-+34 +99,14 @@
++34 +111,14 @@
 + Value: 0
 +
 +e (int32) ycR
@@ -1804,7 +1579,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : |
-+20 +362,14 @@
++20 +374,14 @@
 + Timer Event
 +     if(tc0.val!=0)
 +     {
@@ -1825,7 +1600,7 @@
 + Enabled    : yes
 +
 +nts
-+17 +449,14 @@
++17 +461,14 @@
 +                                 //get set time to global variable
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -1843,7 +1618,7 @@
 +                             }
 +                             if(tInstruction.txt=="date")
 +                             {
-+20 +573,14 @@
++20 +585,14 @@
 +                                 {
 +                                     vis tMainIcon,1
 +                                     vis tMainIconAlt,0
@@ -1866,19 +1641,7 @@
 +                                 if(tTime.bco!=screensaver.bco)
 +I/n2t-out/screensaver2.txt
 ++ HMI/US/portrait/n2t-out/screensaver2.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
++5 +19,14 @@
 +     crcputs sys0,2
 +     crcputs tSend.txt,0
 +     //send cmd
@@ -1894,7 +1657,7 @@
 +     vis p0,0
 +     vis tNotifyHead,0
 +     vis tNotifyText,0
-+2 +28,19 @@
++2 +40,19 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
 +     dim=dimValue
@@ -1948,7 +1711,7 @@
 + Text          : 
 + Max. Text Size: 2
 +
-+7 +50,27 @@
++7 +62,27 @@
 + Text          : 
 + Max. Text Size: 25
 +
@@ -1978,7 +1741,7 @@
 + Value: 0
 +
 +e (int32) xc1
-+165 +324,50 @@
++165 +336,50 @@
 + Scope              : local
 + Dragging           : 0
 + Send Component ID  : disabled
@@ -2144,7 +1907,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : PM
-+15 +549,14 @@
++15 +561,14 @@
 +                                 if(tTmp.txt!="")
 +                                 {
 +                                     covx tTmp.txt,defaultFontColor,0,0
@@ -2160,7 +1923,7 @@
 +                                 if(tAMPM.txt=="")
 +                                 {
 +                                     vis tAMPM,0
-+44 +677,34 @@
++44 +689,34 @@
 +                                 //e6Val
 +                                 spstr strCommand.txt,e6Val.txt,"~",60
 +                                 //f1Icon
@@ -2207,19 +1970,7 @@
 +                                 {
 +I/n2t-out/screensaver3.txt
 ++ HMI/US/portrait/n2t-out/screensaver3.txt
-+ +7,14 @@
-+ Swide up page ID   : disabled
-+ Swide down page ID : disabled
-+ Swide left page ID : disabled
-+ Swide right page ID: disabled
-+
-+nts
-+ Preinitialize Event
-+     tSend.txt="event,renderCurrentPage"
-+     //send calc crc
-+     btlen tSend.txt,sys0
-+     crcrest 1,0xffff // reset CRC
-+     crcputh 55 bb
++5 +19,14 @@
 +     crcputs sys0,2
 +     crcputs tSend.txt,0
 +     //send cmd
@@ -2235,7 +1986,7 @@
 +     vis p0,0
 +     vis tNotifyHead,0
 +     vis tNotifyText,0
-+7 +28,14 @@
++7 +40,14 @@
 +     }
 +     tDate.txt=pageIcons.vaDate.txt
 +     dim=dimValue
@@ -2253,7 +2004,7 @@
 + Max. Text Size: 600
 +
 +e (string) strTmp
-+34 +99,14 @@
++34 +111,14 @@
 + Value: 0
 +
 +e (int32) ycR
@@ -2288,7 +2039,7 @@
 + Send Component ID  : disabled
 + Associated Keyboard: none
 + Text               : |
-+20 +254,14 @@
++20 +266,14 @@
 + Timer Event
 +     if(tc0.val!=0)
 +     {
@@ -2309,7 +2060,7 @@
 + Enabled    : yes
 +
 +nts
-+17 +341,14 @@
++17 +353,14 @@
 +                                 //get set time to global variable
 +                                 spstr strCommand.txt,pageIcons.vaTime.txt,"~",1
 +                                 spstr pageIcons.vaTime.txt,tTime.txt,"?",0
@@ -2327,7 +2078,7 @@
 +                             }
 +                             if(tInstruction.txt=="date")
 +                             {
-+15 +427,14 @@
++15 +439,14 @@
 +                                 covx tTmp.txt,tTime.bco,0,0
 +                                 if(tTime.bco!=screensaver3.bco)
 +                                 {
@@ -2343,7 +2094,7 @@
 +                                     tF1Icon.bco=tTime.bco
 +                                     tTimeAdd.bco=tTime.bco
 +                                 }
-+14 +444,15 @@
++14 +456,15 @@
 +                                 covx tTmp.txt,tAMPM.pco,0,0
 +                                 spstr strCommand.txt,tTmp.txt,"~",4
 +                                 covx tTmp.txt,tDate.pco,0,0
