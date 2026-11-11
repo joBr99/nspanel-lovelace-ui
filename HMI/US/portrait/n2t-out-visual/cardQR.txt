@@ -19,6 +19,18 @@ Page cardQR
     
     Events
         Preinitialize Event
+            tSend.txt="event,renderCurrentPage"
+            //send calc crc
+            btlen tSend.txt,sys0
+            crcrest 1,0xffff // reset CRC
+            crcputh 55 bb
+            crcputs sys0,2
+            crcputs tSend.txt,0
+            //send cmd
+            printh 55 bb
+            prints sys0,2
+            prints tSend.txt,0
+            prints crcval,2
             dim=dimValueNormal
             vis p0,0
             vis tSend,0
