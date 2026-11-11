@@ -1,6 +1,5 @@
 ## 4.8.11
 
-- Update the default TFT target to version 55 and release v4.8.11 for EU, US portrait, and US landscape panels, in both Python backends.
 - Add cover/shutter toggle actions and hidden-card `navItem1` icon/color customization.
 - Add HMI ready notifications on `cardGrid` and `cardGrid2`.
 - Update the container base image and multi-architecture build tooling.
