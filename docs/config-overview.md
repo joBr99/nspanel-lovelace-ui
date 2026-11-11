@@ -70,7 +70,7 @@ From add-on version 4.8.0, **Open Web UI** provides a visual panel/card/entity e
 
 ## TFT firmware updates (4.8.1+)
 
-At panel startup, the backend checks the reported TFT version and model against its pinned firmware target (currently protocol version 53, release v4.7.3, matching the former AppDaemon target). It does not query the latest GitHub release. A backend release can advance this target separately from its add-on version.
+At panel startup, the backend checks the reported TFT version and model against its pinned firmware target (currently protocol version 55, release v4.8.11). It does not query the latest GitHub release. A backend release can advance this target separately from its add-on version.
 
 Set **TFT firmware updates** in the visual editor, or add the following under your panel:
 

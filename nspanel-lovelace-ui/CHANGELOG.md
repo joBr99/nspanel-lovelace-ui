@@ -1,4 +1,9 @@
-## Unreleased
+## 4.8.11
+
+- Update the default TFT target to version 55 and release v4.8.11 for EU, US portrait, and US landscape panels, in both Python backends.
+- Add cover/shutter toggle actions and hidden-card `navItem1` icon/color customization.
+- Add HMI ready notifications on `cardGrid` and `cardGrid2`.
+- Update the container base image and multi-architecture build tooling.
 
 - Restore AppDaemon `timeAdditionalTemplate` (text below the time) and `dateAdditionalTemplate` (text after the date). Both update when their template result changes.
 - Support `sunrise`/`sunset` brightness schedule times, with optional offsets such as `"sunset + 1:00:00"`, from Home Assistant's `sun.sun`. One-digit hours such as `"7:00:00"` are accepted.
