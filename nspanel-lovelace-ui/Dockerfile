@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
 ARG BUILD_ARCH
-FROM ghcr.io/hassio-addons/base-python/${BUILD_ARCH}:12.0.2
+FROM ghcr.io/hassio-addons/base-python/${BUILD_ARCH}:20.0.1
 
 LABEL org.opencontainers.image.title="Home Assistant Add-on: NSPanel Lovelace UI"
 LABEL org.opencontainers.image.description=""
