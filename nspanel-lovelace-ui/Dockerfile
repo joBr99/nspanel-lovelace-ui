@@ -13,3 +13,8 @@ RUN pip install -r /tmp/requirements.txt
 COPY rootfs /
 
 RUN chmod +x /usr/bin/mqtt-manager/run.sh
+
+# These base services run before our backend and otherwise query Supervisor
+# even when the container was explicitly started in standalone mode.
+COPY guard_base_init.py /tmp/nspanel-guard-base-init.py
+RUN python /tmp/nspanel-guard-base-init.py

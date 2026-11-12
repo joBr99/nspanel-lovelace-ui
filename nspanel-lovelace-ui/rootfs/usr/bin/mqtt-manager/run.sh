@@ -10,7 +10,7 @@ fi
 
 declare LOGLEVEL
 declare logtofile
-if [ -z ${STANDALONE+x} ]; then
+if [ -z "${STANDALONE+x}" ] && [ -n "${SUPERVISOR_TOKEN:-}" ]; then
   LOGLEVEL=$(bashio::config 'loglevel')
   logtofile=$(bashio::config 'logtofile')
 else

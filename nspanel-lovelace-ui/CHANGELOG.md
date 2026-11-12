@@ -1,3 +1,8 @@
+## 4.8.13
+
+- Skip Supervisor-only base-image banner and log-level initialization in standalone containers, preventing Supervisor DNS errors and the fatal empty log_level error.
+- Use environment logging settings when Supervisor credentials are absent, while preserving normal add-on initialization.
+
 ## 4.8.12
 
 - Render page content immediately after page switches, including startup, navigation, and returning to the screensaver, without waiting for a firmware request or Home Assistant state change.
