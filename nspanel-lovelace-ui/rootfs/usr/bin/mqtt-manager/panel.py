@@ -299,14 +299,14 @@ class LovelaceUIPanel:
                     "value": value,
                 }
                 if btype == "bExit":
-                    if entity_id in ["screensaver", "screensaver2"] and self.settings.get("screensaver").get("doubleTapToUnlock") and value == "1":
+                    if entity_id in ["screensaver", "screensaver2", "screensaver3"] and self.settings.get("screensaver").get("doubleTapToUnlock") and value == "1":
                         return
 
                     # in case privious_cards is empty add a default card
                     if len(self.privious_cards) == 0:
                         self.privious_cards.append(self.get_default_card())
 
-                    if self.settings.get("defaultCard") and entity_id in ["screensaver", "screensaver2"]:
+                    if self.settings.get("defaultCard") and entity_id in ["screensaver", "screensaver2", "screensaver3"]:
                         logging.debug("Defaulting to card %s", self.settings.get("defaultCard"))
                         self.privious_cards = [self.get_default_card()]
 
