@@ -26,7 +26,7 @@ jobs:
       version: ${{ steps.normalize.outputs.version }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7
 
       - name: Get app information
         id: info
@@ -72,7 +72,7 @@ jobs:
       matrix: ${{ fromJSON(needs.prepare.outputs.build_matrix) }}
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
