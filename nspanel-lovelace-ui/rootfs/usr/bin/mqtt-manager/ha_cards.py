@@ -306,6 +306,7 @@ class HAEntity(panel_cards.Entity):
                         forcast_date = dp.parse(forcast_pos.get("datetime")).astimezone()
 
                         icon_char = ha_icons.get_icon_ha(self.etype, forcast_condition)
+                        color = ha_colors.get_entity_color(self.etype, forcast_condition, self.attributes, self.color_overwrite)
                         name = babel.dates.format_datetime(forcast_date, datetime_format, locale=self.locale)
 
                         attr = self.config.get("attribute", "temperature")
