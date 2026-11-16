@@ -75,7 +75,7 @@ class LuiPagesGen(object):
                 if state == "clear-night":
                     icon_color = 38060 #yellow grey
                 if state == "windy-variant":
-                    icon_color: 64495 #red grey
+                    icon_color = 64495 #red grey
                 if state == "cloudy":
                     icon_color = 31728 #grey-blue
                 if state == "exceptional":
