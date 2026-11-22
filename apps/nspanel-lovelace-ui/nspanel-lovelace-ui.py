@@ -1,4 +1,4 @@
-import adbase as ad
+from appdaemon import adbase as ad
 
 from luibackend.config import LuiBackendConfig
 from luibackend.controller import LuiController
